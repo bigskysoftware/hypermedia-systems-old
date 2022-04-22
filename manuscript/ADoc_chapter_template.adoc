@@ -1,0 +1,190 @@
+= BOOK title
+:chapter: 1
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 0
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+= CHAPTER title
+
+
+This chapter covers
+
+* TEXT
+* TEXT
+
+== Level 1 Section Title
+
+Paragraph
+
+=== Level 2 Section Title
+
+Paragraph
+
+==== Level 3 Section Title
+
+Paragraph
+
+=== Lists
+
+Itemized
+
+* level 1
+** level 2
+*** level 3
+**** level 4
+***** level 5
+* level 1
+
+Ordered
+
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+
+
+=== Paragraph level formatting
+
+_italic phrase_
+__i__talic le__tt__ers
+*bold phrase*
+**b**old le**tt**ers
+*_bold italic phrase_*
+**__b__**old italic le**__tt__**ers
+`monospace phrase` and le``tt``ers
+`_monospace italic phrase_` and le``__tt__``ers
+`*monospace bold phrase*` and le``**tt**``ers
+`*_monospace bold italic phrase_*` and le``**__tt__**``ers
+^super^script phrase
+~sub~script phrase
+'`single curved quotes`'
+"`double curved quotes`"
+
+[.underline]#underline#
+
+[.line-through]#strikethrough#
+
+[.superscript]#superscript#
+
+
+
+//In a standard listing or snippet, limit your code to 76 characters or less.
+//A code line with an annotation next to it should be no longer than 55 characters, to leave room for the annotation
+//The half column width is  34 characters for the first line, and 28 for subsequent lines.
+
+=== Code listings
+
+This code is shown in listing <<listing-XYZ-1>>.
+
+
+//code listing
+[#listing-XYZ-1, reftext={chapter}.{counter:listing}]
+.Listing title
+[source,java]
+----
+code code code <1>
+----
+<1> Annotation
+
+And the code shown in <<listing-XYZ-2>> explains ...
+
+//code listing
+[id="listing-XYZ-2", reftext="Listing {chapter}.{counter:listing}"]
+.Listing with paragraph level formatting
+[subs="+quotes,+macros"]
+----
+code **boldcode** __italicscode__ code <1>
+----
+<1> Annotation
+
+
+//code snippet
+----
+literal code code code
+----
+
+=== Figures
+
+
+
+
+[#figure-XYZ-1, reftext="Figure {chapter}.{counter:figure}"]
+.Figure 1
+image::../images/06_01.png[,600]
+
+This is a reference for <<figure-XYZ-1>>.
+
+
+
+[#figure-XYZ-2, reftext={chapter}.{counter:figure}]
+.Figure 1
+image::../images/06_01.png[,600]
+
+This is a reference for figure <<figure-XYZ-2>>.
+
+
+
+=== Admonition blocks
+
+//Code lines in sidebars should be no longer than 70 characters.
+
+//SIDEBAR
+.TITLE
+****
+
+Content can contain from regular text, bullet lists, numbered lists to figures
+
+****
+
+//you can't have figures within this kind of block
+NOTE: An admonition paragraph
+TIP: Pro tip...
+IMPORTANT: Don't forget...
+WARNING: Watch out for...
+CAUTION: Ensure that...
+
+//you can't have figures within this kind of block
+[NOTE]
+An admonition paragraph...
+Second admonition paragraph...
+Third admonition paragraph...
+
+
+//note that the empty line is delimiter for the [NOTE] block or any other [ADMONITION] block
+Normal text
+
+//you can have figures here as well
+[NOTE]
+.Admonition title
+====
+An admonition block may contain complex content.
+
+A list:
+
+* one
+* two
+* three
+
+Another paragraph.
+====
+
+//you can have figures here as well
+[IMPORTANT,definition]
+.Definition
+====
+Text
+====
+
+=== Quotes
+
+[quote, Abraham Lincoln, Address at Gettysburg]
+____
+TEXT
+____

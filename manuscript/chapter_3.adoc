@@ -1,0 +1,113 @@
+:chapter: 3
+
+= ContactApp
+
+This chapter covers:
+
+* Building a simple contact mangement web application
+* Server Side Rendering (SSR) with HTML
+
+== A Contact Management Web Application
+
+To begin our journey into Hypermedia Driven Applications, we are going to create a simple contact management web
+application named Contacts.app.  We will start with a basic, Web 1.0-style multi-page application, in the grand
+CRUD tradition.  It will not be a great contact management application, because it is going to be designed to be
+simple and easily demonstrate how to use libraries like htmx, rather than be a real-world, professional application.
+
+None the less, when we are done working with it, we will have some very slick features that many developers would assume
+would require sophisticated client-side infrastructure.  We will implement these features entirely using hypermedia and
+a bit of light client side scripting.
+
+== What Stack To Use?
+
+To build Contacts.app, we first need to decide on what server side platform to use.  This is no doubt a huge decision
+for you when faced with a new web project: do I go with what I know?  Do I try something new?  Am I losing touch
+with the comically fast turnover in web development technologies?
+
+Here, if we were building a Single Page Application, the decision would be even more fraught: we are going to have
+to write a lot of JavaScript for our front end.  Why wouldn't we, therefore, adopt JavaScript (or perhaps TypeScript)
+on the back end?  Everyone is moving to node and react anyway...
+
+As luck would have it, we aren't writing a web application with a heavy JavaScript front end.  We will be building
+a Hypermedia Driven Application, mainly via HTML.  By using hypermedia, we have more freedom in picking the back
+end technology appropriate for the problem domain we are addressing.  If we are doing something in big data, perhaps
+we pick Python, which has tremendous support for that domain.  If we are doing AI, perhaps we pick Lisp, leaning
+on a language with a long history in that area of research.  Perhaps we prefer functional programming and wish to
+use OCaml or Haskell.  Again, by using hypermedia as our front end technology, we are freed up to make any of
+these choices because there isn't a large JavaScript front end code base pressuring us to adopt JavaScript on the
+back end.
+
+In the htmx community, we talk about the HOWL stack: Hypermedia On Whatever you'd Like, to capture this idea.  We
+like the idea of a multi-language future.  To be frank, a future of JavaScript dominance (with maybe some TypeScript
+throw in) sounds pretty awful to us.  We'd prefer to see many different language communities, each with their own
+strengths and cultures, participating in the web development world via the power of hypermedia.
+
+== OK, But What Stack Are We Going To Use?
+
+Right, so, for our application we are going to pick a somewhat interesting stack: Python & Flask, with Jinja2 templates.
+
+Why pick this stack?  Well, we picked Python because it is the most popular programming language right now, and even
+if you don't know or like Python, it's easy to read.
+
+We picked Flask because it does not impose a lot of structure on top of the basics of HTTP routing.  This bare bones
+approach isn't for everyone: many people prefer the "Batteries Included" nature of django, for example.  We understand
+that, but for _demonstration_ purposes, we feel that an unopionated and light-weight library will make it easier for
+non-Python developers to follow along, and anyone who prefers django or some other Python web framework shoudl be able
+to easily convert Flask examples into their native framework.
+
+Jinja2 templates are simple enough and standard enough that most people who understand any templating library will
+be able to pick them up quickly and easily.  We will intentionally keep things simple (some times sacrificing other
+design principles to do so!) to maximize the teaching value of our code: it won't be perfectly factored code, but
+it will be easy enough to follow for the majority of people interested in web development.
+
+== Contact.app Functionality
+
+So, what will Contact.app do?  Initially, it will provide the following functionality:
+
+* Provide a list of contacts, including first name, last name, phone and email address
+* Provide the ability to add a new contact to the list
+* Provide the ability to view the details of a contact on the list
+* Provide the ability to edit the details of a contact on the list
+* Provide the ability to delete a contact from the list
+* Provide the ability to search the list of contacts
+
+So, you can see, this is a pretty basic CRUD application, the sort of application that is perfect for an online
+web application.
+
+=== Flask
+
+Flask is a very simple but flexible web framework for Python.  This book is not a Flask book and we will not go
+into too much detail about it, but it is necessary to use *something* to produce our hypermedia, and Flask is simple
+enough that most web developers shouldn't have a problem following along.
+
+A Flask application consists of a series of _routes_ tied to functions to execute when a request to that route is
+made.  Let's look at the first route in Contacts.app
+
+```python
+@app.route("/")
+def index():
+    return redirect("/contacts")
+```
+
+Don't worry about the `@app` stuff, just note the first line is saying: "When someone navigates to the root of this
+web application, invoke the index() method"
+
+This is followed by a simple function definition, `index`, which simply issues an HTTP Redirect to the path `/contacts`.
+
+So when someone naviagates to the root directory of our web application, we redirect them to the `/contacts` URL.  Pretty
+simple and I hope nothing too surprising for you, regardless of what web framework you are used to.
+
+Next let's look at the `/contacts` route:
+
+```python
+@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    if search:
+        contacts = Contact.search(search)
+    else:
+        contacts = Contact.all()
+    return render_template("index.html", contacts=contacts)
+```
+
+Once again, we map a path

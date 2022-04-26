@@ -1,0 +1,317 @@
+:chapter: 1
+
+= Hypermedia
+
+This chapter covers
+
+* The reintroduction to the concepts of hypermedia
+* A history of the idea of hypermedia
+* A history of the World Wide Web
+* Web 1.0 and its discontents
+
+== Hypermedia: A Reintroduction
+
+Hypermedia is a universal technology today, nearly as common as electricity.  Billions of people use a hypermedia-based
+systems every day, mainly by interacting with the _HyperText Markup Language (HTML)_  over the _HyperText Transfer
+Protocol (HTTP)_ via a Web Browser on the World Wide Web.  They use these systems to get their news, check in on friends,
+buy things online, play games, send emails and so forth: the variety and sheer number of online services is truly
+astonishing.
+
+And yet, despite this ubiquity, hypermedia itself is a strangely unexplored concept, left mainly to specialists.  Yes,
+you can find a lot of tutorials on how to author HTML, create links and forms, etc.  But it is rare to see a discussion
+of HTML __as a hypermedia__.  This is in sharp contrast with the early web development era, when concepts like
+_Representational State Transfer (REST)_ and _Hypermedia As The Engine of Application State (HATEOAS)_ were constantly
+discussed and debated.
+
+It is sad to say, but today HTML is, in some circles, viewed almost resentfully: it's a janky, legacy GUI description language
+that must be used build Javascript-based applications in, simply because that's what happens to be there, in
+the browser.
+
+We view this as a shame, and we hope we can convince you that the hypermedia architecture is, instead, a tremendously
+innovative, flexible and _simple_ way to build robust distributed systems.  It deserves a seat at the table when you,
+the developer, are considering the architecture of your next system.
+
+In this book we aim to re-introduce the reader to the concept of hypermedia, and show that it is a truly unique and
+powerful __network architecture__, in the words of Roy Fielding.  We will go through the history of the idea of
+hypermedia, and then the early web.  We will go through the early theoretical work that Roy Fielding did and discuss
+REST, the core concept to come out of his work.  We will note the moment when the idea of hypermedia began to fade as
+an important concept in web development.  And then, for the remainder of the book, we will show how hypermedia, and HTML
+in particular, can return to a place of prominence in modern web development.
+
+I hope you enjoy this book and that it helps you understand the fundamental REST-ful architecture of the original web,
+and how you might use this architecture to build modern web applications.  Even if you choose not to use it (and it
+isn't an appropriate architecture for everything!) then at the very least you should come away with a deeper appreciation
+for this novel approach to building networked systems and understand where it might be applicable.
+
+== HTML
+
+> In the beginning was the hyperlink, and the hyperlink was with the web, and the hyperlink was the web.  And it was good.
+
+Before we get into the history of hypermedia, let us take a brief look at HTML.
+
+HTML is the most widely used hypermedia in existence, and this book assumes that the reader has a reasonable familiarity
+with it.  You don't need to be an HTML or CSS ninja to understand our examples, but the better you understand the core
+tags and concepts of HTML and HTTP, the more you will get out of this book.
+
+Let us consider the two ur-elements of the hypermedia architecture: the anchor tag (which produces a hyperlink) and
+the form tag.
+
+Here is a simple anchor tag:
+
+```html
+  <a href="https://www.manning.com/">Manning Books</a>
+```
+
+In a typical browser, this tag would be interpreted to mean: "Show the text 'Manning Books' and, when the user clicks
+on that text, issue an HTTP GET to the url `https://www.manning.com/`.  Take the resulting HTML content and use it
+to replace the entire screen."
+
+Now let us consider a simple form tag:
+
+```html
+  <form action="/signup" method="post">
+    <input type="text" name="email" placeholder="Enter Email To Sign Up..."/>
+    <button>Sign Up</button>
+  </form>
+```
+
+This little bit of HTML would be intepreted roughly as: "Show an input and button to the user.  When the user submits
+the form by clicking the button or another action, issue an HTTP POST to the relative URL '/signup'.  Take the resulting
+HTML content and use it to replace the entire screen."
+
+You also have the option of issuing an HTTP `GET` with forms.
+
+At this point, more experienced developers may be rolling their eyes.  "I paid money to read _this_?"
+
+But bear with me!
+
+Consider the fact that the two above mechanisms are the _only_ easy ways to interact with a server via HTML.  That's
+barely anything at all!  And yet, armed with only these two tools, the early web was able to grow exponentially and offer
+a staggeringly large amount of functionality to an even more staggeringly large number of people!
+
+This is evidence of the power of hypermedia.  Even today, in web development world increasingly dominated by large
+javascript front end frameworks, many people simply use vanilla HTML to achieve their goals.
+
+Even with just these two little tags, hypermedia manages to pack a heck of a punch!
+
+== A History of Hypermedia
+
+> The English prefix "hyper-" comes from the Greek prefix "ὑπερ-" and means "over" or "beyond"...
+> It signifies the overcoming of the previous linear constraints of written text. [https://en.wikipedia.org/wiki/Hypertext]
+
+=== Origins
+
+While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
+to the article _"As We May Think"_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
+has become modern hypermedia.
+
+In this article Bush described a device called a Memex, which, using a complex mechanical system of reels and microfilm,
+along with an encoding system, would allow users to jump between related frames of content.  The Memex was never actually
+implemented, but it was an inspiration for later work on the idea of hypermedia.
+
+The terms "hypertext" and "hypermedia" were coined in 1963 by Ted Nelson, who would go on to work on the _Hypertext Editing
+System_ and, later the _File Retrieval and Editing System (FRESS)_, a shockingly advanced system for its time.
+
+While Nelson was working on his ideas, Douglas Engelbart was busy at work at the Stanford Research Institute, explicitly
+attempting to make Vannevar Bush's Memex a reality.  In 1968, Englebart gave "The Mother of All Demos" in San Francisco,
+California.
+
+Englebart demonstrated an unbelievable amount of technology:
+
+* Remote, collaborative text editing with his peers in Menlo Park
+* Video and audio chat
+* An integrated windowing system, with window resizing, etc.
+* A recognizable hypertext, whereby clicking on underlined text navigated to new content
+
+Despite a standing ovation after his talk, it was decades before these technologies became mainstream.
+
+=== Emergence
+
+In 1990, Tim Berners-Lee, working a CERN, published the first web site.  He had been working on the idea of hypertext
+for a decade and was finally, out of desperation at the fact it was so hard for researchers to share their research,
+found the right moment and institutional support to create the world wide web:
+
+> Creating the web was really an act of desperation, because the situation without it was very difficult when I was working
+> at CERN later. Most of the technology involved in the web, like the hypertext, like the Internet, multifont text objects, had all
+> been designed already. I just had to put them together. It was a step of generalising, going to a higher level of abstraction,
+> thinking about all the documentation systems out there as being possibly part of a larger imaginary documentation system.
+> -- Tim Berners-Lee
+
+By 1994 the web had grown so massively that Berners-Lee founded the W3C, a working group of companies and researchers
+tasked with improving the web.  All standards created by the W3C were royalty-free and could be adopted and implemented
+by anyone, cementing the open, collaborative nature of the web.
+
+In 2000, Roy Fielding published his seminal PhD Thesis: "Architectural Styles and the Design of Network-based Software
+Architectures" at U.C. Irvine.  Fielding had been working on the open source Apache HTTP Server and his thesis
+was a description of what he felt was a new and distinct networking architecture that had emerged in the early
+web.  Fielding was responsible for the HTTP specification and, in the paper, defined the web's hypermedia
+network model using the term _REpresentationalState Transfer (REST)_.
+
+Fielding's paper became a touchstone for early web developers, giving them a language to discuss the new technical
+medium they were building in.  Many developers today are familiar with the term REST only in terms of JSON APIs, but
+it is important to remember that Fielding was describing _the web_, that is, the hypermedia, HTML-based system he
+helped build with his thesis: JSON didn't even exist when he was writing!
+
+We will take an in-depth look at Fielding's thesis in the next chapter.
+
+=== Javascript & AJAX
+
+In 1994 Netscape Navigator was released, quickly becoming the most popular browser on the web.  In 1995, LiveScript,
+a scripting language that merged concepts from Scheme (a lisp variant) and Java (a hot language from Sun Mirosystems)
+together, allowing users to create more dynamic behavior in the browser via client-side scripting.
+
+It is worth noting that Fielding had explicitly allowed for client-side scripting in his paper on REST, in section 5.1.7, entitled "Code-On-Demand"
+
+> Code-On-Demand
+The final addition to our constraint set for REST comes from the code-on-demand style of Section 3.5.3 (Figure 5-8).
+> REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This
+> simplifies clients by reducing the number of features required to be pre-implemented. Allowing features to be
+> downloaded after deployment improves system extensibility. However, it also reduces visibility, and thus is
+> only an optional constraint within REST.
+
+The new scripting language was renamed to JavaScript for marketing reasons and soon all major browsers had implemented
+some form of the language.  In 1997, in an attempt to standardize the language across browsers, Netscape submitted
+a proposal to ECMA International, leading to a specification known as ECMAScript.
+
+In 1999, a new browser API was released by Microsoft: the `XMLHttpRequest` object.  This API allowed developers to
+make HTTP requests directly from JavaScript, rather than using elements embedded in the DOM.  In 2005 the term
+AJAX, short for "Asynchronous JavaScript and XML", was adopted to describe this new mechanism for building web
+applications.  In 2006, the W3C released the first draft of a specification standardizing this API across all the
+major browsers.
+
+AJAX issued HTTP requests and, as the X in its name suggests, the response to these requests was often (althoug not
+always) expected to be XML, a popular format in the early web.  Developers created XML APIs that could be used to
+download contacts in XML format, for example, and that API could be used to dynamically populate web pages using
+JavaScript.  The APIs, over time, came to be known as "Web Services".
+
+The early Web Service development community quickly realized that many of these new XML APIs seemed different
+than "regular" HTML-based web requests: the XML APIs often did not use hypermedia concepts, but rather were plain data APIs,
+returning raw data without any additional context or information.  This fact was viewed with ambivalence: the web
+had proven to be extremely flexible and vibrant, surely the core REST-ful concepts that it was built on should also be
+part of this new approach as well!
+
+In 2010, Martin Fowler proposed "The Richardson Maturity Model" as a measure of how "mature" a given web service was.
+The levels were:
+
+//TODO - response examples
+
+==== Level 0: Plain Old XML
+
+At this level, the XML API was simply exchanging plain XML with the client through arbitrary URLs.
+This approach was disdainfully referred to as POX, or PLain Old XML.
+
+==== Level 1: Resources
+
+At this more mature level, URLs are organized into coherent *resources*, so, if, for example, you
+wanted to retrieve the details for the contact with id `42`, you would issue a `GET` to
+`/contacts/42`, where the path `contacts/42` represents a *resource* on the server that can be
+retrieved:
+
+```http
+// request
+GET /contacts/42 HTTP/1.1
+```
+
+==== Level 2: HTTP Verbs
+
+In another step up the maturity level, and API can support multiple HTTP Actions or Verbs for a
+given resource: `GET` for retrieval, `POST` or `PUT` for updating and creating resources, etc.
+
+==== Level 3: Hypermedia Controls
+
+The final and most mature level of an API, according to this model, was to adopt hypermedia
+controls.  In all the examples above, the data being returned from the XML API was still a
+simple XML representation of the resource.
+
+At this level, the responses should include *hypermedia controls*, that is content indicating exactly
+what actions and relationships exist for that piece of data.
+
+//TODO - example
+
+=== JSON
+
+While early Web Service APIs typically used XML, another format was rapidly gaining popularity among web developers: JSON.
+
+JSON stands for "JavaScript Object Notation", a simple data format that is a subset of JavaScript itself.  The initial
+specification was proposed by Douglas Crockford in the early 2000s and, in 2005, Yahoo began offering some of its
+web services in JSON rather than XML.
+
+Because of its simplicity and JavaScript compatibility, JSON eventually took over the Web Service world entirely: the
+vast majority of APIs being created today are JSON-based.
+
+//TODO - contact example
+
+=== The Emergence of Single-Page Applications (SPAs)
+
+Early adopters of AJAX included Microsoft (Outlook Web Access) and Google (GMail, Google Maps).  By the early 2010s
+AJAX was a hot technology, with developers clamoring for better tools to manage their increasingly complex JavaScript
+code.
+
+// TODO - make this an aside
+
+It is worth taking a step back at this point and ask: why did JavaScript and AJAX become so popular?  What need were they
+satisfying?  The answer is that HTML and the hypermedia model of the web, for all the amazing aspects of them, felt
+a little clunky when compared with "real" (that is, native) applications.  A user would click on a link and wait,
+and eventually a whole new page of content would be downloaded and rendered onto the screen.  This often caused
+visually-disturbing screen flicker, it reset the scroll position in the page, and so forth.
+
+By using JavaScript and AJAX requests, the web could compete with native applications, smoothly updating content in
+a web page without any flicker or other jarring visual issues.  Addiitonally, a richer UI event model was available to
+Javascript: any event could drive a server request, not just clicks and submits.  This allowed web applications like
+Google Maps to smoothly respond to scroll wheel events, dragging, etc. in a way that was simply impossible to
+achieve in plain HTML.
+
+// end aside
+
+In 2010, Google released AngularJS, a framework for building what was becoming known as "Single Page Applications".
+Single page applications did away with the traditional notion of HTML navigation via hyperlinks and replaced it with
+dynamic content, managed by JavaScript and updated entirely via AJAX interactions, typically using JSON to communicate
+with the server.
+
+AngularJS was followed by React, from Facebook, in 2013.  React introduced the notion of reactive programming, where
+a backing JavaScript model could be updated, and the DOM would automatically update to reflect the new state of the world.
+This made management of JavaScript-based web applications much easier in some ways, but also pushed React-based web
+applications further away from the original REST-ful model of the web in which *hypermedia* was intended to store (i.e. encode)
+the state of the application.
+
+As of this writing, React is king of the hill in Single Page Application frameworks, but there are many up and coming
+challengers: Vue.js and Svelte.js are two examples.  Today, many web developers will automatically reach for these tools
+for any web project that they work on and employers are clamoring for more React developers.
+
+== But What About Hypermedia?
+
+Since the rise of JavaScript and then SPAs, for many developers hypermedia has become an afterthought, if it is thought
+of at all.  You simply can't get the sort of modern interactivity out of the hypermedia we all use day to day, HTML,
+that users demand, using links and forms.
+
+But what if history had worked out differently?
+
+What if HTML, instead of adding more and more client-side infrastructure, had continued to develop _as a hypermedia_?
+
+Would it be possible to build modern web applications within the original, hypermedia-oriented and REST-ful model that
+made the web so powerful, so flexible, so... fun?  Would hypermedia be a legitimate architecture to consider when
+developing a new web application?
+
+The answer is yes, and there are a few libraries that are attempting to do exactly this: re-center hypermedia as a
+viable and, indeed, excellent choice for your next web application.
+
+One such library is htmx, which the authors of this book work on, and which will be the focus of much of the remainder
+of the book.  We hope to show you that you can, in fact, create many common "modern" UI features in a web application
+entirely within the hypermedia model and that, in fact, it is refreshingly simple to do so.  And htmx is not alone:
+other libraries like unpoly.js and hotwire from 37Signals are working in this same conceptual space, making hypermedia,
+once again, the basis for building web applications.
+
+In the web development world today there is a debate going on between SPAs and what are now being called "Multi-Page Applications"
+or MPAs.  MPAs are, usually, just the old, traditional way of building web applications and thus are, by their nature,
+hypermedia oriented.  Many web developers have become exasperated at the complexity of SPA applications and have looked
+longingly back at the simplicity and flexibility of MPAs.  Some thought leaders, such as Rich Harris, propose a mix
+of the two approaches.  Rich terms this approach to building web applications "Transitional", in that it attempts to
+mix both the old MPA approach and the new SPA approach in a coherent whole.
+
+We prefer a slightly different term to MPA.  As we wish to emphasize the _hypermedia_ aspect of the older (and, with htmx,
+newer) approach, we like the term _Hypermedia Driven Applications (HDAs)_.  This clarifies that the core distinction between
+this approach and others isn't the number of pages in the application, but rather the underlying architecture.
+
+Before we get into the practical details of implementing a modern Hypermedia Driven Application, let's take a bit of time
+to make an in-depth study of hypermedia, and, in particular, the concepts of REST & HATEOAS, by reviewing the famous
+Chapter 5 of Roy Fielding's PhD dissertation on the web.

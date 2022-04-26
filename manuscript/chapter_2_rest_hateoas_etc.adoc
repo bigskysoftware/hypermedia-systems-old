@@ -32,18 +32,20 @@ HTML also provides form tags, which can submit either `GET` requests or `POST` r
 
 Consider this small fragment of HTML:
 
-```html
+[source,html]
+----
 <a href="/contacts/42">Joe Smith</a>
-```
+----
 
 When a user clicks on this anchor, rendered as a  hyperlink in a browser, an HTTP request will be issued by the browser
 that looks something like this:
 
-```
+[source]
+----
 GET http://example.com/contacts/42 HTTP/1.1
 Accept: text/html,*/*
 Host: example.com
-```
+----
 
 The first line specifies that this is an HTTP `GET` request, then specifies the URL or resource being requested, finally
 followed by the HTTP version for this request.
@@ -54,7 +56,8 @@ client is saying it would prefer HTML as a response format, but will accept anyt
 
 An HTTP response to this request might look something like this:
 
-```
+[source]
+----
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=utf-8
 Content-Length: 870
@@ -74,7 +77,7 @@ Date: Sat, 23 Apr 2022 18:27:55 GMT
 </main>
 </body>
 </html>
-```
+----
 
 Here the response specifies a _Response Code_ of `200`, indicating that the given resource was found, and the
 request succeeded.
@@ -186,7 +189,8 @@ a representation of a Contact.
 
 The first implementation returns an HTML representation:
 
-```html
+[source,html]
+----
 <html lang="en">
 <head>
 <h1>Joe Smith</h1>
@@ -200,17 +204,18 @@ The first implementation returns an HTML representation:
 </main>
 </body>
 </html>
-```
+----
 
 The second implementation returns a JSON representation:
 
-```json
+[source,json]
+----
 {
   "name": "Joe Smith",
   "email": "joe@example.com",
   "status: "Active"
 }
-```
+----
 
 What can we say about the differences between these two responses?  Well, one thing that jumps out at me
 is that  the second JSON representation is less verbose than the HTML representation.  Feilding noted exactly
@@ -248,7 +253,8 @@ What do the responses now look like?
 
 The first implementation returns the following HTML:
 
-```html
+[source,html]
+----
 <html lang="en">
 <head>
 <h1>Joe Smith</h1>
@@ -262,17 +268,18 @@ The first implementation returns the following HTML:
 </main>
 </body>
 </html>
-```
+----
 
 The second implementation returns the following JSON representation:
 
-```json
+[source,json]
+----
 {
   "name": "Joe Smith",
   "email": "joe@example.com",
   "status": "Archived"
 }
-```
+----
 
 What to notice here is that, by virtue of being a self-describing message, the HTML response now shows that the "Archive"
 operation is no longer available, but that a new "Unarchive" operation is.  The representation *encodes* the state of
@@ -300,7 +307,8 @@ to a given Contact.  How does this change the two responses from the server?
 
 The HTML representation might now look like this:
 
-```html
+[source,html]
+----
 <html lang="en">
 <head>
 <h1>Joe Smith</h1>
@@ -315,17 +323,18 @@ The HTML representation might now look like this:
 </main>
 </body>
 </html>
-```
+----
 
 The JSON representation might look like this:
 
-```json
+[source,json]
+----
 {
   "name": "Joe Smith",
   "email": "joe@example.com",
   "status": "Active"
 }
-```
+----
 
 Note that, once again, the JSON representation is unchanged.  There is no indication of this new functionality.  Instead,
 a client must *know* about the change, presumably via some shared documentation between the client and the server.

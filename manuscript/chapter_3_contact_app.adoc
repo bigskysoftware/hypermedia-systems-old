@@ -93,11 +93,12 @@ enough that most web developers shouldn't have a problem following along.
 A Flask application consists of a series of _routes_ tied to functions to execute when a request to that route is
 made.  Let's look at the first route in Contacts.app
 
-```python
+[source,python]
+----
 @app.route("/")
 def index():
     return redirect("/contacts")
-```
+----
 
 Don't worry about the `@app` stuff, just note the first line is saying: "When someone navigates to the root of this
 web application, invoke the index() method"
@@ -109,7 +110,8 @@ simple and I hope nothing too surprising for you, regardless of what web framewo
 
 Next let's look at the `/contacts` route:
 
-```python
+[source,python]
+----
 @app.route("/contacts")
 def contacts():
     search = request.args.get("q")
@@ -118,6 +120,6 @@ def contacts():
     else:
         contacts = Contact.all()
     return render_template("index.html", contacts=contacts)
-```
+----
 
 Once again, we map a path

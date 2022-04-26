@@ -1,10 +1,20 @@
+= Hypermedia In Action
 :chapter: 3
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 2
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
 
 = ContactApp
 
 This chapter covers:
 
-* Building a simple contact mangement web application
+* Building a simple contact management web application
 * Server Side Rendering (SSR) with HTML
 
 == A Contact Management Web Application

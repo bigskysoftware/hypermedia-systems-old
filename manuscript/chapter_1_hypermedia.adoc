@@ -1,10 +1,20 @@
+= Hypermedia In Action
 :chapter: 1
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 0
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
 
 = Hypermedia
 
 This chapter covers
 
-* The reintroduction to the concepts of hypermedia
+* A reintroduction to the concept of hypermedia
 * A history of the idea of hypermedia
 * A history of the World Wide Web
 * Web 1.0 and its discontents
@@ -43,24 +53,51 @@ and how you might use this architecture to build modern web applications.  Even 
 isn't an appropriate architecture for everything!) then at the very least you should come away with a deeper appreciation
 for this novel approach to building networked systems and understand where it might be applicable.
 
+== Hypermedia
+
+[quote, Wikipedia, https://en.wikipedia.org/wiki/Hypertext]
+____
+The English prefix "hyper-" comes from the Greek prefix "ὑπερ-" and means "over" or "beyond"...
+It signifies the overcoming of the previous linear constraints of written text.
+____
+
+What is hypermedia?  Simply, it is a media, for example a text, that includes non-linear branching from one location to
+another, via, for example, hyperlinks embedded directly in the media.
+
+You are probably more familiar with the term _hypertext_, whose Wikipedia page the above quote is taken from.  Hypertext
+is a sub-set of hypermedia and much of this book is going to discuss how to build modern web applications with HTML, the
+HyperText Markup Language.
+
+However, even when working with applications built mainly in HTML, there are nearly always
+other medias involved: images, videos and so forth, making _hypermedia_ a more appropriate term for discussing
+applications built in this manner.
+
 == HTML
 
-> In the beginning was the hyperlink, and the hyperlink was with the web, and the hyperlink was the web.  And it was good.
+[quote, Rescuing REST From the API Winter, https://intercoolerjs.org/2016/01/18/rescuing-rest.html]
+____
+In the beginning was the hyperlink, and the hyperlink was with the web, and the hyperlink was the web.  And it was good.
+____
 
-Before we get into the history of hypermedia, let us take a brief look at HTML.
+Before we get into the history of hypermedia, let's take a brief look at HTML.
 
 HTML is the most widely used hypermedia in existence, and this book assumes that the reader has a reasonable familiarity
 with it.  You don't need to be an HTML or CSS ninja to understand our examples, but the better you understand the core
 tags and concepts of HTML and HTTP, the more you will get out of this book.
 
-Let us consider the two ur-elements of the hypermedia architecture: the anchor tag (which produces a hyperlink) and
+Consider the two ur-elements of the hypermedia architecture: the anchor tag (which produces a hyperlink) and
 the form tag.
 
 Here is a simple anchor tag:
 
-```html
-  <a href="https://www.manning.com/">Manning Books</a>
-```
+[#listing-1-1, reftext={chapter}.{counter:listing}]
+.A Simple Hyperlink
+[source,html]
+----
+<a href="https://www.manning.com/">
+  Manning Books
+</a>
+----
 
 In a typical browser, this tag would be interpreted to mean: "Show the text 'Manning Books' and, when the user clicks
 on that text, issue an HTTP GET to the url `https://www.manning.com/`.  Take the resulting HTML content and use it
@@ -68,14 +105,17 @@ to replace the entire screen."
 
 Now let us consider a simple form tag:
 
-```html
-  <form action="/signup" method="post">
-    <input type="text" name="email" placeholder="Enter Email To Sign Up..."/>
-    <button>Sign Up</button>
-  </form>
-```
+[#listing-1-2, reftext={chapter}.{counter:listing}]
+.A Simple Form
+[source,html]
+----
+<form action="/signup" method="post">
+  <input type="text" name="email" placeholder="Enter Email To Sign Up..."/>
+  <button>Sign Up</button>
+</form>
+----
 
-This little bit of HTML would be intepreted roughly as: "Show an input and button to the user.  When the user submits
+This little bit of HTML would be interpreted roughly as: "Show an input and button to the user.  When the user submits
 the form by clicking the button or another action, issue an HTTP POST to the relative URL '/signup'.  Take the resulting
 HTML content and use it to replace the entire screen."
 
@@ -95,11 +135,6 @@ javascript front end frameworks, many people simply use vanilla HTML to achieve 
 Even with just these two little tags, hypermedia manages to pack a heck of a punch!
 
 == A History of Hypermedia
-
-> The English prefix "hyper-" comes from the Greek prefix "ὑπερ-" and means "over" or "beyond"...
-> It signifies the overcoming of the previous linear constraints of written text. [https://en.wikipedia.org/wiki/Hypertext]
-
-=== Origins
 
 While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
 to the article _"As We May Think"_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
@@ -125,17 +160,19 @@ Englebart demonstrated an unbelievable amount of technology:
 
 Despite a standing ovation after his talk, it was decades before these technologies became mainstream.
 
-=== Emergence
+=== Widespread Adoption
 
 In 1990, Tim Berners-Lee, working a CERN, published the first web site.  He had been working on the idea of hypertext
 for a decade and was finally, out of desperation at the fact it was so hard for researchers to share their research,
 found the right moment and institutional support to create the world wide web:
 
-> Creating the web was really an act of desperation, because the situation without it was very difficult when I was working
-> at CERN later. Most of the technology involved in the web, like the hypertext, like the Internet, multifont text objects, had all
-> been designed already. I just had to put them together. It was a step of generalising, going to a higher level of abstraction,
-> thinking about all the documentation systems out there as being possibly part of a larger imaginary documentation system.
-> -- Tim Berners-Lee
+[quote, Tim Berners-Lee]
+____
+Creating the web was really an, because the situation without it was very difficult when I was working
+at CERN later. Most of the technology involved in the web, like the hypertext, like the Internet, multifont text objects, had all
+been designed already. I just had to put them together. It was a step of generalising, going to a higher level of abstraction,
+thinking about all the documentation systems out there as being possibly part of a larger imaginary documentation system.
+____
 
 By 1994 the web had grown so massively that Berners-Lee founded the W3C, a working group of companies and researchers
 tasked with improving the web.  All standards created by the W3C were royalty-free and could be adopted and implemented
@@ -162,12 +199,16 @@ together, allowing users to create more dynamic behavior in the browser via clie
 
 It is worth noting that Fielding had explicitly allowed for client-side scripting in his paper on REST, in section 5.1.7, entitled "Code-On-Demand"
 
-> Code-On-Demand
+[quote, Roy Fielding, https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm]
+____
+*Code-On-Demand*
+
 The final addition to our constraint set for REST comes from the code-on-demand style of Section 3.5.3 (Figure 5-8).
-> REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This
-> simplifies clients by reducing the number of features required to be pre-implemented. Allowing features to be
-> downloaded after deployment improves system extensibility. However, it also reduces visibility, and thus is
-> only an optional constraint within REST.
+REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This
+simplifies clients by reducing the number of features required to be pre-implemented. Allowing features to be
+downloaded after deployment improves system extensibility. However, it also reduces visibility, and thus is
+only an optional constraint within REST.
+____
 
 The new scripting language was renamed to JavaScript for marketing reasons and soon all major browsers had implemented
 some form of the language.  In 1997, in an attempt to standardize the language across browsers, Netscape submitted
@@ -184,40 +225,119 @@ always) expected to be XML, a popular format in the early web.  Developers creat
 download contacts in XML format, for example, and that API could be used to dynamically populate web pages using
 JavaScript.  The APIs, over time, came to be known as "Web Services".
 
+=== Early Web Services (The XML Era)
+
 The early Web Service development community quickly realized that many of these new XML APIs seemed different
 than "regular" HTML-based web requests: the XML APIs often did not use hypermedia concepts, but rather were plain data APIs,
 returning raw data without any additional context or information.  This fact was viewed with ambivalence: the web
 had proven to be extremely flexible and vibrant, surely the core REST-ful concepts that it was built on should also be
 part of this new approach as well!
 
+==== The Richarson Maturity Model
+
 In 2010, Martin Fowler proposed "The Richardson Maturity Model" as a measure of how "mature" a given web service was.
-The levels were:
 
-//TODO - response examples
+In this model, your web service API could be characterized as on of the following levels:
 
-==== Level 0: Plain Old XML
+1. Level 0: Plain Old XML
+2. Level 1: Using Resources Properly
+3. Level 2: Using HTTP Verbs Properly
+4. Level 3: Using Hypermedia Controls Properly
+
+===== Level 0: Plain Old XML
 
 At this level, the XML API was simply exchanging plain XML with the client through arbitrary URLs.
-This approach was disdainfully referred to as POX, or PLain Old XML.
 
-==== Level 1: Resources
+Here is what a request might look like footnote:[NB: I will omit HTTP Headers for the sake of clarity in many of the examples]:
+
+[#listing-1-3, reftext={chapter}.{counter:listing}]
+.A POX HTTP Request
+[source, http request]
+----
+GET /myApplicationServlet?handler=contact&ctx=WfVrDr0Y16yBSmjhXMNS1dOYZTsZ49dc&id=42&Operation=view HTTP/1.1
+----
+
+You can see that the path requested is essentially arbitary.  Why `myApplicationServlet`?  If we wanted to update a
+given contact what URL would we use?  It is hard to say given this URL schema.
+
+Here is what a response might look like:
+
+[#listing-1-4, reftext={chapter}.{counter:listing}]
+.An XML Response
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8" ?>
+<Contact>
+  <FirstName>Jeff</FirstName>
+  <LastName>Smith</LastName>
+  <Phone>123-456-7890</Phone>
+  <Email>jeff@example.com</Email>
+</Contact>
+----
+
+If you are old enough, you will recognize this as an XML document, a file format that was popular around the time of
+Martin Fowler's writing.  Note that the data here is "plain": we don't see any additional data beyond the names of
+properties and their values.
+
+This approach was disdainfully referred to as "The Swamp of POX", or Plain Old XML.  Fowler made the point that,
+in adopting this technique for exchanging information with a remote system, you have abandoned the hypermedia
+model entirely and are really using HTTP to implement your own Remote Procedure Call mechanism.
+
+===== Level 1: Resources
 
 At this more mature level, URLs are organized into coherent *resources*, so, if, for example, you
 wanted to retrieve the details for the contact with id `42`, you would issue a `GET` to
 `/contacts/42`, where the path `contacts/42` represents a *resource* on the server that can be
 retrieved:
 
-```http
-// request
+[#listing-1-5, reftext={chapter}.{counter:listing}]
+.A Resource Aware HTTP Request
+[source, http request]
+----
 GET /contacts/42 HTTP/1.1
-```
+----
 
-==== Level 2: HTTP Verbs
+Here, contacts are being treated as a resource, and we are retrieving the contact with the id 42.  The URL organization
+is coherent and treats particular paths as resouces correctly.
+
+The response to this this request might look identical to the POX request in Level 0:
+
+[#listing-1-4, reftext={chapter}.{counter:listing}]
+.An XML Response
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8" ?>
+<Contact>
+  <FirstName>Jeff</FirstName>
+  <LastName>Smith</LastName>
+  <Phone>123-456-7890</Phone>
+  <Email>jeff@example.com</Email>
+</Contact>
+----
+
+This level of maturity (or the next one) does not put any demands on the content itself.
+
+===== Level 2: HTTP Verbs
 
 In another step up the maturity level, and API can support multiple HTTP Actions or Verbs for a
 given resource: `GET` for retrieval, `POST` or `PUT` for updating and creating resources, etc.
 
-==== Level 3: Hypermedia Controls
+[#listing-1-5, reftext={chapter}.{counter:listing}]
+.An HTTP Request Using Put To Update A Contact
+[source, http request]
+----
+PUT /contacts/42 HTTP/1.1
+
+first-name=Jeff&last-name=Smith&phone=123-456-7890&email=jeffsmith@example.com
+----
+
+Here we see a `PUT` being used to update a resource at the given URL.
+
+The response to this request could be a redirect (to cause the client to issue a `GET` request), an XML representation
+of the updated resource (if any) or an XML document indicating the result of the operation.  Again, at this level,
+there is no significant constraint on the updated content.
+
+===== Level 3: Hypermedia Controls
 
 The final and most mature level of an API, according to this model, was to adopt hypermedia
 controls.  In all the examples above, the data being returned from the XML API was still a
@@ -226,9 +346,44 @@ simple XML representation of the resource.
 At this level, the responses should include *hypermedia controls*, that is content indicating exactly
 what actions and relationships exist for that piece of data.
 
-//TODO - example
+[#listing-1-7, reftext={chapter}.{counter:listing}]
+.An XML Response With Hypermedia Controls
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8" ?>
+<Contact>
+  <link rel="next" uri="/contacts/43"/>
+  <FirstName>Jeff</FirstName>
+  <LastName>Smith</LastName>
+  <Phone>123-456-7890</Phone>
+  <Email>jeff@example.com</Email>
+</Contact>
+----
 
-=== JSON
+Note the presence of a new tag in this XML, the `link` tag.  This link tag indicates that there is a _relationship_
+between this resource and some other resource.  In this case, the relationship is that of "next", and the URL for the
+next contact can be found at `/contacts/43` on the same server.
+
+This is a _hypermedia control_: it embeds metadata about the resource that the client can interpret and use.
+
+Fowler said that there were two major benefits to this final level of hypermedia maturity:
+
+* Servers can change their URI scheme without breaking clients
+* The API was discoverable to developers working with the end points
+
+===== Adoption
+
+It is worth noting that, even during the XML era, it was rare for web services to reach the third level of Richardson
+maturity.  There were, at the time, heated arguments around whether or not a particular API is REST-ful or not, but
+those arguments have largely faded away.
+
+Most APIs stopped at level 2 of the Richarson Maturity Model and simply published API documentation rather than embedding
+hypermedia controls.  There were scattered examples of successful hypermedia controls in APIs, around paging and things
+like that, but it never took off in the same way that HTML took off.
+
+We will discuss data APIs, and why we think this might be the case, in a later chapter.
+
+=== Modern Web Services (The JSON Era)
 
 While early Web Service APIs typically used XML, another format was rapidly gaining popularity among web developers: JSON.
 
@@ -236,10 +391,34 @@ JSON stands for "JavaScript Object Notation", a simple data format that is a sub
 specification was proposed by Douglas Crockford in the early 2000s and, in 2005, Yahoo began offering some of its
 web services in JSON rather than XML.
 
-Because of its simplicity and JavaScript compatibility, JSON eventually took over the Web Service world entirely: the
-vast majority of APIs being created today are JSON-based.
+If you were take the API above and render the response in JSON rather than XML, it would look something like this:
 
-//TODO - contact example
+[#listing-1-7, reftext={chapter}.{counter:listing}]
+.An XML Response
+[source, json]
+----
+{
+  "firstName" : "Jeff",
+  "lastName" : "Smith",
+  "phone" : "123-456-7890",
+  "email" : "jeff@example.com"
+}
+----
+
+This file format had many advantages, particularly:
+
+* It was terser
+* It was easy to parse in JavaScript, which was becoming the primary consumer of Web Services
+
+It ended up in a route: JSON  took over the Web Service world entirely and the vast majority of APIs being created today
+are now JSON-based.
+
+Something to notice about JSON is that, unlike XML, there is no obvious relationship to HTML.  XML still had a document
+"flavor" to it, and the presence of link tags seemed like a reasonable step from HTML.
+
+JSON, on the other hand, is plain data representation, and it becomes harder to see how hypermedia controls fit in with
+it.  It's possible to do, and some JSON APIs include them, but, in moving to JSON as a file format, the Web Service world,
+or, what today would be called the API world, took another step away from hypermedia.
 
 === The Emergence of Single-Page Applications (SPAs)
 

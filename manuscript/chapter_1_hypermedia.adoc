@@ -39,7 +39,7 @@ the browser.
 
 We view this as a shame, and we hope we can convince you that the hypermedia architecture is, instead, a tremendously
 innovative, flexible and _simple_ way to build robust distributed systems.  It deserves a seat at the table when you,
-the developer, are considering the architecture of your next system.
+the developer, are considering the architecture of your next online software system.
 
 In this book we aim to re-introduce the reader to the concept of hypermedia, and show that it is a truly unique and
 powerful __network architecture__, in the words of Roy Fielding.  We will go through the history of the idea of
@@ -64,13 +64,14 @@ ____
 What is hypermedia?  Simply, it is a media, for example a text, that includes non-linear branching from one location to
 another, via, for example, hyperlinks embedded directly in the media.
 
-You are probably more familiar with the term _hypertext_, whose Wikipedia page the above quote is taken from.  Hypertext
+You are probably more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-set of hypermedia and much of this book is going to discuss how to build modern web applications with HTML, the
 HyperText Markup Language.
 
 However, even when working with applications built mainly in HTML, there are nearly always
 other medias involved: images, videos and so forth, making _hypermedia_ a more appropriate term for discussing
-applications built in this manner.
+applications built in this manner.  We will use the term hypermedia for most of this book, to capture this more
+general concept.
 
 == HTML
 
@@ -79,13 +80,13 @@ ____
 In the beginning was the hyperlink, and the hyperlink was with the web, and the hyperlink was the web.  And it was good.
 ____
 
-Before we get into the history of hypermedia, let's take a brief look at HTML.
+Before we get into the history of hypermedia, let's take a brief look at a concrete example of it: HTML.
 
-HTML is the most widely used hypermedia in existence, and this book assumes that the reader has a reasonable familiarity
-with it.  You don't need to be an HTML or CSS ninja to understand our examples, but the better you understand the core
-tags and concepts of HTML and HTTP, the more you will get out of this book.
+HTML is the most widely used hypermedia in existence, and this book naturally assumes that the reader has a reasonable familiarity
+with it.  You don't need to be an HTML or CSS ninja to understand the code in this book, but the better you understand the core
+tags and concepts of both HTML and HTTP, the more you will get out of this book.
 
-Consider the two ur-elements of the hypermedia architecture: the anchor tag (which produces a hyperlink) and
+Consider the two ur-elements of the hypermedia in HTML: the anchor tag (which produces a hyperlink) and
 the form tag.
 
 Here is a simple anchor tag:
@@ -103,6 +104,9 @@ In a typical browser, this tag would be interpreted to mean: "Show the text 'Man
 on that text, issue an HTTP GET to the url `https://www.manning.com/`.  Take the resulting HTML content and use it
 to replace the entire screen."
 
+This is the main mechanism we use to navigate around the web today, and is a canonical example of a hypermedia link,
+or a hyperlink.
+
 Now let us consider a simple form tag:
 
 [#listing-1-2, reftext={chapter}.{counter:listing}]
@@ -119,9 +123,10 @@ This little bit of HTML would be interpreted roughly as: "Show an input and butt
 the form by clicking the button or another action, issue an HTTP POST to the relative URL '/signup'.  Take the resulting
 HTML content and use it to replace the entire screen."
 
-You also have the option of issuing an HTTP `GET` with forms.
+I am omitting a few details and complications here: you also have the option of issuing an HTTP `GET` with forms, the
+result may _redirect_ you to another URL and so on, but this is the crux of the form tag.
 
-At this point, more experienced developers may be rolling their eyes.  "I paid money to read _this_?"
+Now, at this point, more experienced developers may be rolling their eyes.  "I paid money to read _this_?"
 
 But bear with me!
 
@@ -130,11 +135,14 @@ barely anything at all!  And yet, armed with only these two tools, the early web
 a staggeringly large amount of functionality to an even more staggeringly large number of people!
 
 This is evidence of the power of hypermedia.  Even today, in web development world increasingly dominated by large
-javascript front end frameworks, many people simply use vanilla HTML to achieve their goals.
+javascript front end frameworks, many people simply use vanilla HTML to achieve their goals and are perfectly happy
+with the results.
 
 Even with just these two little tags, hypermedia manages to pack a heck of a punch!
 
 == A History of Hypermedia
+
+Where did the idea of hypermedia come from?
 
 While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
 to the article _"As We May Think"_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
@@ -160,7 +168,7 @@ Englebart demonstrated an unbelievable amount of technology:
 
 Despite a standing ovation after his talk, it was decades before these technologies became mainstream.
 
-=== Widespread Adoption
+=== Implementation
 
 In 1990, Tim Berners-Lee, working a CERN, published the first web site.  He had been working on the idea of hypertext
 for a decade and was finally, out of desperation at the fact it was so hard for researchers to share their research,
@@ -197,7 +205,8 @@ In 1994 Netscape Navigator was released, quickly becoming the most popular brows
 a scripting language that merged concepts from Scheme (a lisp variant) and Java (a hot language from Sun Mirosystems)
 together, allowing users to create more dynamic behavior in the browser via client-side scripting.
 
-It is worth noting that Fielding had explicitly allowed for client-side scripting in his paper on REST, in section 5.1.7, entitled "Code-On-Demand"
+It is worth noting that Fielding had explicitly allowed for client-side scripting in his paper on REST, in section 5.1.7,
+entitled "Code-On-Demand"
 
 [quote, Roy Fielding, https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm]
 ____
@@ -209,6 +218,8 @@ simplifies clients by reducing the number of features required to be pre-impleme
 downloaded after deployment improves system extensibility. However, it also reduces visibility, and thus is
 only an optional constraint within REST.
 ____
+
+So scripting was a natural and sanctioned aspect of the new medium, the World Wide Web.
 
 The new scripting language was renamed to JavaScript for marketing reasons and soon all major browsers had implemented
 some form of the language.  In 1997, in an attempt to standardize the language across browsers, Netscape submitted
@@ -237,7 +248,7 @@ part of this new approach as well!
 
 In 2010, Martin Fowler proposed "The Richardson Maturity Model" as a measure of how "mature" a given web service was.
 
-In this model, your web service API could be characterized as on of the following levels:
+In this model, your web service API could "ranked" at one of the following levels:
 
 1. Level 0: Plain Old XML
 2. Level 1: Using Resources Properly
@@ -257,7 +268,7 @@ Here is what a request might look like footnote:[NB: I will omit HTTP Headers fo
 GET /myApplicationServlet?handler=contact&ctx=WfVrDr0Y16yBSmjhXMNS1dOYZTsZ49dc&id=42&Operation=view HTTP/1.1
 ----
 
-You can see that the path requested is essentially arbitary.  Why `myApplicationServlet`?  If we wanted to update a
+You can see that the path requested is essentially arbitrary.  Why `myApplicationServlet`?  If we wanted to update a
 given contact what URL would we use?  It is hard to say given this URL schema.
 
 Here is what a response might look like:
@@ -280,8 +291,8 @@ Martin Fowler's writing.  Note that the data here is "plain": we don't see any a
 properties and their values.
 
 This approach was disdainfully referred to as "The Swamp of POX", or Plain Old XML.  Fowler made the point that,
-in adopting this technique for exchanging information with a remote system, you have abandoned the hypermedia
-model entirely and are really using HTTP to implement your own Remote Procedure Call mechanism.
+in adopting this technique for exchanging information with a remote system, engineers were abandoning the hypermedia
+model entirely and were really using HTTP to implement their own Remote Procedure Call (RPC) mechanism.
 
 ===== Level 1: Resources
 
@@ -298,9 +309,9 @@ GET /contacts/42 HTTP/1.1
 ----
 
 Here, contacts are being treated as a resource, and we are retrieving the contact with the id 42.  The URL organization
-is coherent and treats particular paths as resouces correctly.
+is coherent and treats particular paths as resources correctly.
 
-The response to this this request might look identical to the POX request in Level 0:
+The response to this request might look identical to the POX request in Level 0:
 
 [#listing-1-4, reftext={chapter}.{counter:listing}]
 .An XML Response
@@ -315,12 +326,12 @@ The response to this this request might look identical to the POX request in Lev
 </Contact>
 ----
 
-This level of maturity (or the next one) does not put any demands on the content itself.
+This level of maturity (nor the next one) does not put any demands on the return content itself.
 
 ===== Level 2: HTTP Verbs
 
 In another step up the maturity level, and API can support multiple HTTP Actions or Verbs for a
-given resource: `GET` for retrieval, `POST` or `PUT` for updating and creating resources, etc.
+given resource: `GET` for retrieval, `POST` or `PUT` for updating and creating resources, and so on:
 
 [#listing-1-5, reftext={chapter}.{counter:listing}]
 .An HTTP Request Using Put To Update A Contact
@@ -335,7 +346,7 @@ Here we see a `PUT` being used to update a resource at the given URL.
 
 The response to this request could be a redirect (to cause the client to issue a `GET` request), an XML representation
 of the updated resource (if any) or an XML document indicating the result of the operation.  Again, at this level,
-there is no significant constraint on the updated content.
+there is no significant constraint placed on the response content.
 
 ===== Level 3: Hypermedia Controls
 
@@ -343,8 +354,8 @@ The final and most mature level of an API, according to this model, was to adopt
 controls.  In all the examples above, the data being returned from the XML API was still a
 simple XML representation of the resource.
 
-At this level, the responses should include *hypermedia controls*, that is content indicating exactly
-what actions and relationships exist for that piece of data.
+At Level 3, the responses should include *hypermedia controls*, that is content indicating actions and relationships that
+exist for that piece of data being represented.
 
 [#listing-1-7, reftext={chapter}.{counter:listing}]
 .An XML Response With Hypermedia Controls
@@ -366,22 +377,25 @@ next contact can be found at `/contacts/43` on the same server.
 
 This is a _hypermedia control_: it embeds metadata about the resource that the client can interpret and use.
 
-Fowler said that there were two major benefits to this final level of hypermedia maturity:
+Fowler felt that there were two major benefits to this final level of hypermedia maturity:
 
 * Servers can change their URI scheme without breaking clients
 * The API was discoverable to developers working with the end points
 
+both of which seem reasonably true.
+
 ===== Adoption
 
-It is worth noting that, even during the XML era, it was rare for web services to reach the third level of Richardson
-maturity.  There were, at the time, heated arguments around whether or not a particular API is REST-ful or not, but
-those arguments have largely faded away.
+Despite these benefits, and even during the XML API era, when REST was a well known and hypermedia oriented concept
+,it was rare for web services to reach the third level of Richardson maturity.  There were, at the time, heated arguments
+around whether or not a particular API is REST-ful.  Over time, those arguments have, to a large extent, faded away.
 
 Most APIs stopped at level 2 of the Richarson Maturity Model and simply published API documentation rather than embedding
 hypermedia controls.  There were scattered examples of successful hypermedia controls in APIs, around paging and things
 like that, but it never took off in the same way that HTML took off.
 
-We will discuss data APIs, and why we think this might be the case, in a later chapter.
+We will discuss web services or, as they are often called today Data APIs or just APIs, and why we think this might be
+the case, in a later chapter.
 
 === Modern Web Services (The JSON Era)
 
@@ -405,42 +419,46 @@ If you were take the API above and render the response in JSON rather than XML, 
 }
 ----
 
-This file format had many advantages, particularly:
+This file format had many advantages.  In particular:
 
 * It was terser
 * It was easy to parse in JavaScript, which was becoming the primary consumer of Web Services
 
-It ended up in a route: JSON  took over the Web Service world entirely and the vast majority of APIs being created today
-are now JSON-based.
+JSON ended up winning in a route, and took over the Web Service world entirely.  The vast majority of APIs being created
+today are now JSON-based.
 
 Something to notice about JSON is that, unlike XML, there is no obvious relationship to HTML.  XML still had a document
-"flavor" to it, and the presence of link tags seemed like a reasonable step from HTML.
+"flavor" to it, and the presence of link tags seemed like a reasonable, incremental step away from HTML.  The outline
+of a hypermedia was still there.
 
-JSON, on the other hand, is plain data representation, and it becomes harder to see how hypermedia controls fit in with
-it.  It's possible to do, and some JSON APIs include them, but, in moving to JSON as a file format, the Web Service world,
-or, what today would be called the API world, took another step away from hypermedia.
+JSON, on the other hand, is a plain data representation.  It becomes harder to see how hypermedia controls fit in with
+this format.  It's possible to do, and some JSON APIs do include them, but, in moving to JSON as a response format, the
+Web Service world, or, today, the JSON API world, took another step away from hypermedia.
+
+.REST-ful JSON APIs?
+****
+A funny thing that happened along the way here was that the term REST, which was coined to described the HTML-based
+web: it increasingly became associated with JSON APIs which were _not_, for the most part, REST-ful, at least in the original
+sense of that term.  Today it is mostly JSON API engineers and you are unlikely to see or hear the term being discussed
+among web developers.
+
+This lead an exasperated Roy Fielding to say:
+
+[quote, Roy Fielding, https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven]
+____
+I am getting frustrated by the number of people calling any HTTP-based interface a REST API. Today’s example is the SocialSite REST API. That is RPC. It screams RPC. There is so much coupling on display that it should be given an X rating.
+
+What needs to be done to make the REST architectural style clear on the notion that hypertext is a constraint? In other words, if the engine of application state (and hence the API) is not being driven by hypertext, then it cannot be RESTful and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
+____
+
+This book, in part, is an attempt to fix that "broken manual"!
+****
 
 === The Emergence of Single-Page Applications (SPAs)
 
 Early adopters of AJAX included Microsoft (Outlook Web Access) and Google (GMail, Google Maps).  By the early 2010s
 AJAX was a hot technology, with developers clamoring for better tools to manage their increasingly complex JavaScript
 code.
-
-// TODO - make this an aside
-
-It is worth taking a step back at this point and ask: why did JavaScript and AJAX become so popular?  What need were they
-satisfying?  The answer is that HTML and the hypermedia model of the web, for all the amazing aspects of them, felt
-a little clunky when compared with "real" (that is, native) applications.  A user would click on a link and wait,
-and eventually a whole new page of content would be downloaded and rendered onto the screen.  This often caused
-visually-disturbing screen flicker, it reset the scroll position in the page, and so forth.
-
-By using JavaScript and AJAX requests, the web could compete with native applications, smoothly updating content in
-a web page without any flicker or other jarring visual issues.  Addiitonally, a richer UI event model was available to
-Javascript: any event could drive a server request, not just clicks and submits.  This allowed web applications like
-Google Maps to smoothly respond to scroll wheel events, dragging, etc. in a way that was simply impossible to
-achieve in plain HTML.
-
-// end aside
 
 In 2010, Google released AngularJS, a framework for building what was becoming known as "Single Page Applications".
 Single page applications did away with the traditional notion of HTML navigation via hyperlinks and replaced it with
@@ -457,18 +475,35 @@ As of this writing, React is king of the hill in Single Page Application framewo
 challengers: Vue.js and Svelte.js are two examples.  Today, many web developers will automatically reach for these tools
 for any web project that they work on and employers are clamoring for more React developers.
 
+.Why Did Javascript & AJAX Win?
+****
+It is worth taking a step back at this point and ask: why did JavaScript and AJAX become so popular?  What need were they
+satisfying?  The answer is that HTML and the hypermedia model of the web, for all the amazing aspects of them, felt
+a little clunky when compared with "real" (that is, native) applications.  A user would click on a link and wait...
+and, _eventually_, a whole new page of content would be downloaded and rendered onto the screen.  This often caused
+visually-disturbing screen flickers, it reset the scroll position in the page, and so forth.  It could and can be
+a jarring experience.
+
+By using JavaScript and AJAX requests, the web could compete with native applications, smoothly updating content in
+a web page without any flicker or other jarring visual issues.  Additionally, a richer UI event model was available to
+Javascript: any event could drive a server request, not just clicks and submits.  This allowed web applications like
+Google Maps to smoothly respond to scroll wheel events, dragging, etc. in a way that was simply impossible to
+achieve in plain old HTML.
+****
+
 == But What About Hypermedia?
 
-Since the rise of JavaScript and then SPAs, for many developers hypermedia has become an afterthought, if it is thought
-of at all.  You simply can't get the sort of modern interactivity out of the hypermedia we all use day to day, HTML,
-that users demand, using links and forms.
+For many develoeprs, since the rise of JavaScript and SPAs, hypermedia has become an afterthought, if it is thought
+of at all.  You simply can't get the sort of modern interactivity out of HTML, the hypermedia we all use day to day,
+necessary for todays modern web applications.
 
-But what if history had worked out differently?
+But, what if history had worked out differently?
 
-What if HTML, instead of adding more and more client-side infrastructure, had continued to develop _as a hypermedia_?
+What if HTML, instead of stalling _as a hypermedia_, had continued to develop, adding new mechanisms for exchanging
+hypermedia with servers?
 
 Would it be possible to build modern web applications within the original, hypermedia-oriented and REST-ful model that
-made the web so powerful, so flexible, so... fun?  Would hypermedia be a legitimate architecture to consider when
+made the early web so powerful, so flexible, so... fun?  Would hypermedia be a legitimate architecture to consider when
 developing a new web application?
 
 The answer is yes, and there are a few libraries that are attempting to do exactly this: re-center hypermedia as a
@@ -477,20 +512,24 @@ viable and, indeed, excellent choice for your next web application.
 One such library is htmx, which the authors of this book work on, and which will be the focus of much of the remainder
 of the book.  We hope to show you that you can, in fact, create many common "modern" UI features in a web application
 entirely within the hypermedia model and that, in fact, it is refreshingly simple to do so.  And htmx is not alone:
-other libraries like unpoly.js and hotwire from 37Signals are working in this same conceptual space, making hypermedia,
+other libraries like unpoly.js and hotwire are working in this same conceptual space, making hypermedia,
 once again, the basis for building web applications.
 
 In the web development world today there is a debate going on between SPAs and what are now being called "Multi-Page Applications"
 or MPAs.  MPAs are, usually, just the old, traditional way of building web applications and thus are, by their nature,
 hypermedia oriented.  Many web developers have become exasperated at the complexity of SPA applications and have looked
-longingly back at the simplicity and flexibility of MPAs.  Some thought leaders, such as Rich Harris, propose a mix
-of the two approaches.  Rich terms this approach to building web applications "Transitional", in that it attempts to
-mix both the old MPA approach and the new SPA approach in a coherent whole.
+longingly back at the simplicity and flexibility of MPAs.
+
+Some thought leaders in web development, such as Rich Harris, creator of svelte.js, propose a mix
+of the two styles.  Rich calls this approach to building web applications "Transitional", in that it attempts to
+mix both the old MPA approach and the newer SPA approach in a coherent whole.
 
 We prefer a slightly different term to MPA.  As we wish to emphasize the _hypermedia_ aspect of the older (and, with htmx,
 newer) approach, we like the term _Hypermedia Driven Applications (HDAs)_.  This clarifies that the core distinction between
-this approach and others isn't the number of pages in the application, but rather the underlying architecture.
+this approach and the SPA approach isn't the number of pages in the application, but rather the underlying _network_ architecture.
 
-Before we get into the practical details of implementing a modern Hypermedia Driven Application, let's take a bit of time
-to make an in-depth study of hypermedia, and, in particular, the concepts of REST & HATEOAS, by reviewing the famous
-Chapter 5 of Roy Fielding's PhD dissertation on the web.
+But before we get into the practical details of implementing a modern Hypermedia Driven Application, let's take a bit of time
+to make an in-depth study of the original idea of hypermedia, and, in particular, the concepts of REST & HATEOAS, by
+reviewing the famous Chapter 5 of Roy Fielding's PhD dissertation on the web.
+
+Let's see if we can help address Roy's frustrations!

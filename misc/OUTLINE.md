@@ -32,6 +32,7 @@ After discussing scripting
     * The Uniform Interface
     * HATOEAS
     * Summary
+  * ContactApp
 
 * Part 2 Modern Hypermedia Applications
   * htmx: A Hypermedia Library

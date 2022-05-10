@@ -1,0 +1,12 @@
+{
+    "peacock.color": "#638",
+    "workbench.colorCustomizations": {
+        "sash.hoverBorder": "#8241ad",
+        "titleBar.activeBackground": "#663388",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#66338899",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.affectTitleBar": true,
+    "peacock.affectPanelBorder": false
+}

@@ -34,29 +34,24 @@ The last constraint of REST as described by Fielding is _((Code on Demand))_. Im
 "REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented."
 -- Roy Fielding,  Architectural Styles and the Design of Network-based Software Architectures
 
-From the application developer's perspective, the main role of scripts is to extend the browser to the application's needs -- like browser extensions. A ((polyfill)) is an example of this kind of script. As we eill see later, however, there are other ways of using scripting that go well with hypermedia.
+By this explanation, the main role of scripts from the application developer's perspective is to extend the browser to the application's needs -- like browser extensions. A ((polyfill)) is an example of this kind of script. As we eill see later, however, there are other ways of using scripting that go well with hypermedia.
 
-.continued:
-____
-Allowing features to be downloaded after deployment improves system extensibility.
-____
+"Allowing features to be downloaded after deployment improves system extensibility."
+-- (continued)
 
 In the case of the Web, it improves system extensibility so much that the RESTful protocol can be used as a generic delivery mechanism for non-RESTful applications. The ubiquity and freedom of the Web, along with the fact that applications can be downloaded and used immediately without an installation phase, has made it an attractive medium for distributing applications. In particular, the Web is a compelling alternative to the app stores to which some newer consumer operating systems restrict users (i.e.: Android, iOS, to a lesser extent: Chrome OS).
 
 The advantages of using the Web this way are not without peril. Some disadvantages are discussed in <<web-as-app-delivery>>.
 
-.continued:
-____
-However, it also reduces visibility, and thus is only an optional constraint within REST.
-____
+"However, it also reduces visibility, and thus is only an optional constraint within REST."
+-- (continued)
 
 ...
 
-Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures &sect;2.3.5 _Visibility_
-____
 
-[...] Visibility in this case refers to the ability of a component to monitor or mediate the interaction between two other components. [.line-through]#Visibility can enable improved performance via shared caching of interactions, scalability through layered services, reliability through reflective monitoring, and security by allowing the interactions to be inspected by mediators (e.g., network firewalls).#
-____
+"[...] Visibility in this case refers to the ability of a component to monitor or mediate the interaction between two other components. [.line-through]#Visibility can enable improved performance via shared caching of interactions, scalability through layered services, reliability through reflective monitoring, and security by allowing the interactions to be inspected by mediators (e.g., network firewalls)."
+-- Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures, &sect;2.3.5 _Visibility_
+
 
 .continued:
 ____

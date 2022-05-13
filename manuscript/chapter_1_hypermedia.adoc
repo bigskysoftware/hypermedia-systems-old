@@ -15,9 +15,8 @@
 This chapter covers
 
 * A reintroduction to the concept of hypermedia
-* A history of the idea of hypermedia
-* A history of the World Wide Web
-* Web 1.0 and its discontents
+* Why you might choose hypermedia over other approaches
+* How hypermedia can be used to build modern web applications
 
 Hypermedia is a universal technology today, nearly as common as electricity.  Billions of people use a hypermedia-based
 systems every day, mainly by interacting with the _HyperText Markup Language (HTML)_  over the _HyperText Transfer

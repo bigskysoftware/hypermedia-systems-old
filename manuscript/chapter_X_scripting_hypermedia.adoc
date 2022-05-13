@@ -1,0 +1,154 @@
+= Hypermedia In Action
+:chapter: N
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 0
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+= Scripting Hypermedia Applications
+
+This chapter covers
+
+* The role of scripting in hypermedia applications
+* The use of scripting for non-hypermedia applications on the Web
+* Tools, guidelines and patterns for writing scripts in a hypermedia application
+
+[partintro]
+== Introduction: Do you just hate JavaScript?
+
+This chapter is not about the merits of JavaScript as a programming language.
+
+On the Web, the need for scripting is fulfilled by JavaScript. It is not the only language option. Some qualities that make a language good for hypermedia scripting are discussed, though we leave it to readers to decide whether they hold for JavaScript.
+
+The discussion of scripting is framed around tools you can use for it (who doesn't like a new, shiny tool?) all of which are written in JavaScript. With each tool, we introduce archetypes, patterns/antipatterns, tips and resources.
+
+== Scripts and REST
+
+The last constraint of REST as described by Fielding is _((Code on Demand))_. Implementing servers enclose code in hypermedia documents and user agents execute them.
+
+"REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented."
+-- Roy Fielding,  Architectural Styles and the Design of Network-based Software Architectures
+
+By this explanation, the main role of scripts from the application developer's perspective is to extend the browser to the application's needs -- like browser extensions. A ((polyfill)) is an example of this kind of script. As we eill see later, however, there are other ways of using scripting that go well with hypermedia.
+
+"Allowing features to be downloaded after deployment improves system extensibility."
+-- (continued)
+
+In the case of the Web, it improves system extensibility so much that the RESTful protocol can be used as a generic delivery mechanism for non-RESTful applications. The ubiquity and freedom of the Web, along with the fact that applications can be downloaded and used immediately without an installation phase, has made it an attractive medium for distributing applications. In particular, the Web is a compelling alternative to the app stores to which some newer consumer operating systems restrict users (i.e.: Android, iOS, to a lesser extent: Chrome OS).
+
+The advantages of using the Web this way are not without peril. Some disadvantages are discussed in <<web-as-app-delivery>>.
+
+"However, it also reduces visibility, and thus is only an optional constraint within REST."
+-- (continued)
+
+...
+
+
+"[...] Visibility in this case refers to the ability of a component to monitor or mediate the interaction between two other components. [.line-through]#Visibility can enable improved performance via shared caching of interactions, scalability through layered services, reliability through reflective monitoring, and security by allowing the interactions to be inspected by mediators (e.g., network firewalls)."
+-- Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures, &sect;2.3.5 _Visibility_
+
+
+.continued:
+____
+The mobile agent style is an example where the lack of visibility may lead to security concerns.
+____
+
+[example]
+Gemini is a modern hypermedia system, similar to the Web, that does not include scripting (along with many other features).
+
+
+[#web-as-app-delivery]
+== The Web as a medium for application delivery
+
+The HTML, CSS, JS trio of languages have demonstrated their capability as a GUI toolkit so extensively, that to cite evidence seems inane. Although controversial, some developers turn to tools like Electron for applications that may never be run in a browser context.
+
+[example]
+Balena Etcher is an Electron application that writes ISO images onto drives, usually to create OS installation media such as Live USBs -- a task that cannot be done in a browser.
+
+=== The web is ubiquitous and fragmented
+
+Web applications are not just cross-platform but _platform-independent_. The web browser provides a standard interface that abstracts many aspects of hardware and operating systems:
+
+* Mode of input, i.e.: mouse, touchscreen, D-pad
+* Executable formats and application packaging
+
+The ubiquity of the web means that:
+
+* *Your application will be run in environments you have not tested them in.* The only way to minimize this is to minimize the amount of code running on the user's device.
+* *You will need to create an appropriate user experience for different platforms in one codebase.* You can try to avoid this by trying to detect the kind of device that is requesting the app and delivering a different app accordingly. For instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile, which will likely be neglected by this kind of application until one form factor gains widespread use.
++
+Hypermedia-driven applications will shift as much of this burden as possible to the platform developer, who is responsible for providing a spec-compliant Web browser.
+
+
+[.line-through]
+== Paradigm of scripting for hypermedia
+
+// This chapter discusses archetypes of scripts. These are better introduced with examples, interspersed into the sections on various libraries.
+[.line-through]
+--
+One form of script that goes well with hypermedia is similar to a polyfill; which extends the interaction capabilities of the client. The specific behavior to be used is still encoded in the document, usually in an application-specific format. For examples of such scripts, one might implement a rich text input for forms, or enhance links with previews that appear when hovered. 
+
+The polyfill-style script, which can be called the _((behavior script))_, must be written with a great care for accessibility. Accessibility in web applications is an intricate dance between browsers, operating systems and assistive tools. The identities of these systems are all unknown to the application developer, who must somehow step in time. As one builds further beyond the features the user agent provides, the risk of stepping on someone's toes tends to increase.
+
+Another category of script can be termed the _processor_, which comprises batch transformations applied to transmissions between server and client. An example processor of server->client transmissions is a script that visually positions footnotes in a document next to where they're referenced. It is important to also process fragments inserted into the document by scripts.
+
+The most important role of scripts is to respond to user interactions. As a result, they deal heavily with ((events)). They modify the client's in-memory representation of the document.
+--
+
+== _hyperscript
+
+<https://hyperscript.org>. Stylized __hyperscript_.
+
+Hyperscript is a language derived from ((HyperTalk)), the scripting language accompanying the early hypermedia system ((HyperCard)). This makes it a member of the ((xTalk)) family.
+
+=== _Principle:_ Events
+
+=== _Example:_ Draggable window
+
+.Draggable._hs
+[source,hyperscript]
+-------------
+behavior Draggable(dragHandle)
+  init
+    default dragHandle to me
+  end
+  on pointerdown(clientX, clientY) from dragHandle
+    halt the event
+    trigger draggable:start
+    measure my x, y
+    set xoff to clientX - x
+    set yoff to clientY - y
+    repeat until event pointerup from document
+      wait for pointermove(pageX, pageY) or
+               pointerup  (pageX, pageY) from document
+      add { left: ${pageX - xoff}px; top: ${pageY - yoff}px; }
+      trigger draggable:move
+    end
+    trigger draggable:end
+end
+-------------
+
+=== _Pattern:_ Reusable Behavior
+
+== Alpine.js
+
+=== _Principle:_ Locality
+
+=== _Example:_ Search form
+
+=== _Pattern:_ Sprinkle
+
+== Vanilla JavaScript
+
+=== _Example:_ Rich text input
+
+=== _Pattern:_ Component
+
+=== _Principle:_ Element Lifecycle
+
+== Summary

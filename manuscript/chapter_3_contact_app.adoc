@@ -52,7 +52,7 @@ like the idea of a multi-language future.  To be frank, a future of JavaScript d
 throw in) sounds pretty awful to us.  We'd prefer to see many different language communities, each with their own
 strengths and cultures, participating in the web development world via the power of hypermedia.
 
-== OK, But What Stack Are We Going To Use?
+=== OK, But What Stack Are We Going To Use?
 
 Right, so, for our application we are going to pick a somewhat interesting stack: Python & Flask, with Jinja2 templates.
 
@@ -70,7 +70,7 @@ be able to pick them up quickly and easily.  We will intentionally keep things s
 design principles to do so!) to maximize the teaching value of our code: it won't be perfectly factored code, but
 it will be easy enough to follow for the majority of people interested in web development.
 
-== Contact.app Functionality
+== Contact.App Functionality
 
 So, what will Contact.app do?  Initially, it will provide the following functionality:
 

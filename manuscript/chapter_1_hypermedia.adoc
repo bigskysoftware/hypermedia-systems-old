@@ -276,7 +276,7 @@ However, at the level of a network architecture, these more sophisticated are es
 example above: they cast aside the hypermedia network model in favor of a data network model, exchanging JSON with
 the server.
 
-== Hypermedia Strike Back
+== Hypermedia Strikes Back
 
 For many developers, since the rise of JavaScript and SPAs, hypermedia has become an afterthought, if it is thought
 of at all.  You simply can't get the sort of modern interactivity out of HTML, the hypermedia we all use day to day,
@@ -341,7 +341,7 @@ it is based on are extremely different architectures.  And, similarly, this appr
 by most SPA frameworks.
 
 This may seem all well and good: a neat little demo of a simple tool that maybe makes HTML a bit more expressive.  But
-surely this is just a toy.  It can't scale up to large, complex modern web applications.  To the contrary: just as the
+surely this is just a toy.  It can't scale up to large, complex modern web applications, can it?  In fact, it can: just as the
 original web handled internet scale confoundingly well via hypermedia, due to its simplicity this approach can often scale
 extremely well with your application needs.
 

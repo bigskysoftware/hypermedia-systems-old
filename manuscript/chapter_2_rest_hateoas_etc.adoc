@@ -584,9 +584,9 @@ We will go into more detail on this matter in the "Scripting In Hypermedia" chap
 
 == Conclusion
 
-I hope you now have a better understanding of REST, and in particular, the uniform interface and HATEOAS. And I hope
-you can see _why_ these characteristics make hypermedia systems so darned flexible.  If you didn't really appreciate what
-REST and HATEOAS meant before now, don't feel bad: it took me over a decade of working in web development, and building
+After this deep dive into Chapter 5 of Roy Fielding's dissertation, I hope you have much better understanding of REST,
+and in particular, the uniform interface and HATEOAS. And I hope you can see _why_ these characteristics make hypermedia
+systems so flexible.  If you didn't really appreciate what REST and HATEOAS meant before now, don't feel bad: it took me over a decade of working in web development, and building
 a hypermedia-oriented library to boot, to realize just how special HTML is!
 
 Of course, traditional Hypermedia Driven Applications were not without issues, which is why Single Page Applications

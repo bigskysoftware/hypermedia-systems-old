@@ -28,67 +28,69 @@ None the less, when we are done working with it, we will have some very slick fe
 would require sophisticated client-side infrastructure.  We will implement these features entirely using hypermedia and
 a bit of light client side scripting.
 
-== What Stack To Use?
+=== Which Stack?
 
-To build Contacts.app, we first need to decide on what server side platform to use.  This is no doubt a huge decision
-for you when faced with a new web project: do I go with what I know?  Do I try something new?  Am I losing touch
-with the comically fast turnover in web development technologies?
+For our application we are going to pick a somewhat interesting stack: Python & Flask, with Jinja2 templates.
 
-Here, if we were building a Single Page Application, the decision would be even more fraught: we are going to have
-to write a lot of JavaScript for our front end.  Why wouldn't we, therefore, adopt JavaScript (or perhaps TypeScript)
-on the back end?  Everyone is moving to node and react anyway...
-
-As luck would have it, we aren't writing a web application with a heavy JavaScript front end.  We will be building
-a Hypermedia Driven Application, mainly via HTML.  By using hypermedia, we have more freedom in picking the back
-end technology appropriate for the problem domain we are addressing.  If we are doing something in big data, perhaps
-we pick Python, which has tremendous support for that domain.  If we are doing AI, perhaps we pick Lisp, leaning
-on a language with a long history in that area of research.  Perhaps we prefer functional programming and wish to
-use OCaml or Haskell.  Again, by using hypermedia as our front end technology, we are freed up to make any of
-these choices because there isn't a large JavaScript front end code base pressuring us to adopt JavaScript on the
-back end.
-
-In the htmx community, we talk about the HOWL stack: Hypermedia On Whatever you'd Like, to capture this idea.  We
-like the idea of a multi-language future.  To be frank, a future of JavaScript dominance (with maybe some TypeScript
-throw in) sounds pretty awful to us.  We'd prefer to see many different language communities, each with their own
-strengths and cultures, participating in the web development world via the power of hypermedia.
-
-=== OK, But What Stack Are We Going To Use?
-
-Right, so, for our application we are going to pick a somewhat interesting stack: Python & Flask, with Jinja2 templates.
-
-Why pick this stack?  Well, we picked Python because it is the most popular programming language right now, and even
-if you don't know or like Python, it's easy to read.
+Why pick this stack?  Well, we picked Python because it is the most popular programming language today, and even
+if you don't know or like Python, it is very easy to read.
 
 We picked Flask because it does not impose a lot of structure on top of the basics of HTTP routing.  This bare bones
-approach isn't for everyone: many people prefer the "Batteries Included" nature of django, for example.  We understand
-that, but for _demonstration_ purposes, we feel that an unopionated and light-weight library will make it easier for
-non-Python developers to follow along, and anyone who prefers django or some other Python web framework shoudl be able
-to easily convert Flask examples into their native framework.
+approach isn't for everyone: many people prefer the "Batteries Included" nature of Django, for example.  We understand
+that, but for demonstration purposes, we feel that an unopionated and light-weight library will make it easier for
+non-Python developers to follow along, and anyone who prefers django or some other Python web framework, or some
+other language entirely, should be able to easily convert the Flask examples into their native framework.
 
-Jinja2 templates are simple enough and standard enough that most people who understand any templating library will
-be able to pick them up quickly and easily.  We will intentionally keep things simple (some times sacrificing other
-design principles to do so!) to maximize the teaching value of our code: it won't be perfectly factored code, but
-it will be easy enough to follow for the majority of people interested in web development.
+Flask uses Jinja2 templates, which are simple enough and standard enough that most people who understand any server side
+(or client side) templating library will be able to pick them up quickly and easily.  We will intentionally keep things
+simple (sometimes sacrificing other design principles to do so!) to maximize the teaching value of our code: it won't be
+perfectly factored code, but it will be easy enough to follow for the majority of people interested in web development.
+
+.The HOWL Stack: Hypermedia On Whatever you'd Like
+****
+We picked Python and Flask for this book, but we could have picked anything.  One of the wonderful things about
+building a hypermedia-based application is that your backend can be... whatever you'd like!
+
+If we were building a web application with a large JavaScript-based front end application, we would feel pressure to
+adopt JavaScript on the back end, especially now that there are very good server side options such as node and deno.
+Why maintain two separate code bases?  Why not reuse domain logic on the client-side as well as the server-side?  When
+you choose a JavaScript heavy front end there are many forces pushing you to adopt the same langauge on the backend.
+
+By using hypermedia, in contrast, you have more freedom in picking the back end technology appropriate
+for the problem domain you are addressing.  You certainly aren't writing your server side logic in HTML, and every
+major programming langauge has at least one good templating library that can produce HTML cleanly.
+
+If we are doing something in big data, perhaps we pick Python, which has tremendous support for that domain.  If we are doing AI,
+perhaps we pick Lisp, leaning on a language with a long history in that area of research.  Perhaps we prefer functional
+programming and wish to use OCaml or Haskell.  Maybe you just really like Julia.  Again, by using hypermedia as our front
+end technology, we are freed up to make any of these choices because there isn't a large JavaScript front end code base
+pressuring us to adopt JavaScript on the back end.
+
+In the htmx community, we call this the HOWL stack: Hypermedia On Whatever you'd Like.  We like the idea of a multi-language
+future.  To be frank, a future of total JavaScript dominance (with maybe some TypeScript
+throw in) sounds pretty boring to us.  We'd prefer to see many different language communities, each with their own
+strengths and cultures, participating in the web development world via the power of hypermedia.  HOWL.
+****
 
 == Contact.App Functionality
 
-So, what will Contact.app do?  Initially, it will provide the following functionality:
+OK, let's get down to brass tacks: what will Contact.app do?  Initially, it will provide the following functionality:
 
 * Provide a list of contacts, including first name, last name, phone and email address
+* Provide the ability to search the list of contacts
 * Provide the ability to add a new contact to the list
 * Provide the ability to view the details of a contact on the list
 * Provide the ability to edit the details of a contact on the list
 * Provide the ability to delete a contact from the list
-* Provide the ability to search the list of contacts
 
-So, you can see, this is a pretty basic CRUD application, the sort of application that is perfect for an online
+So, you can see, this is a pretty basic CRUD application, the sort of thing that is perfect for an online
 web application.
 
-=== Flask
+== Our Flask App
 
 Flask is a very simple but flexible web framework for Python.  This book is not a Flask book and we will not go
 into too much detail about it, but it is necessary to use *something* to produce our hypermedia, and Flask is simple
-enough that most web developers shouldn't have a problem following along.
+enough that most web developers shouldn't have a problem following along.  Let's go over the basics.
 
 A Flask application consists of a series of _routes_ tied to functions to execute when a request to that route is
 made.  Let's look at the first route in Contacts.app
@@ -105,8 +107,10 @@ web application, invoke the index() method"
 
 This is followed by a simple function definition, `index`, which simply issues an HTTP Redirect to the path `/contacts`.
 
-So when someone naviagates to the root directory of our web application, we redirect them to the `/contacts` URL.  Pretty
-simple and I hope nothing too surprising for you, regardless of what web framework you are used to.
+So when someone navigates to the root directory of our web application, we redirect them to the `/contacts` URL.  Pretty
+simple and I hope nothing too surprising for you, regardless of what web framework or language you are used to.
+
+=== Showing A Searchable List Of Contacts
 
 Next let's look at the `/contacts` route:
 
@@ -122,4 +126,382 @@ def contacts():
     return render_template("index.html", contacts=contacts)
 ----
 
-Once again, we map a path
+Once again, we map a path, `/contacts` to a handling function, `contacts()`
+
+The implementation here is a bit more elaborate: we check to see if a search query named `q` is part of the request
+(e.g. `/contacts/q=joe`).  If so, we delegate to a `Contact` model to do the search and return all matching contacts.
+If not, we simply get all contacts.  We then render a template, `index.html` that displays the given contacts.
+
+Note that we are not going to dig into the code in the `Contact` domain object.  The implementation of the `Contact class
+is not relevant to hypermedia, beyond the API that it provides us.  We will treat it as a _resource_ and will provide
+hypermedia representations of that resource to clients, in the form of HTML.
+
+Next let's take a look at the `index.html` template:
+
+[source, html]
+----
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <form action="/contacts" method="get">
+        <fieldset>
+            <legend>Contact Search</legend>
+            <p>
+                <label for="search">Search Term</label>
+                <input id="search" type="search" name="q" value="{{ request.args.get("q") or '' }}"/>
+            </p>
+            <p>
+                <input type="submit" value="Search"/>
+            </p>
+        </fieldset>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>First</th>
+            <th>Last</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.first }}</td>
+                <td>{{ contact.last }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.email }}</td>
+                <td><a href="/contacts/{{ contact.id }}/edit">Edit</a></td> <a href="/contacts/{{ contact.id }}">View</a></td>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/contacts/new">Add Contact</a>
+    </p>
+
+{% endblock %}
+----
+
+This Jinja2 template be a fairly understandable to anyone who has done web development:
+
+* We extend a base template `layout.html` which provides the layout for the page (sometimes called "the chrome"): it imports
+  any necessary CSS, and scripts, includes the `<head>` element, and so forth.
+* We then have a simple form that allows you to search contacts by issuing a `GET` request to `/contacts`.  Note that
+  the input in this form keeps its value set to the value that is submitted with the name `q`.
+* We then have a simple table as has been used since time immemorial on the web, where we iterate over all the `contacts`
+  and display a row for each one
+** Recall that `contacts` has been either set to the result of a search or to all contacts, depending on what exactly was
+submitted to the server.
+** Each row has two anchors in it: one to edit and one to view the contact associated with that row
+* Finally, we have an anchor tag that leads to a page that we can create new Contacts on
+
+So far, so hypermedia!  Notice that this template provides all the functionality necessary to both see all the contacts,
+search them and create a new one.  It does this without the browser knowing a thing about Contacts or anything else: it
+just knows how to recieve and render HTML.  This is a truly REST-ful application!
+
+=== Adding A New Contact
+
+To add a new contact, a user clicks on the "Add Contact" link above.  This will issue a `GET` request to the
+`/contacts/new` URL, which is handled by this bit of code:
+
+[source,python]
+----
+@app.route("/contacts/new", methods=['POST', 'GET'])
+def contacts_new():
+    if request.method == 'GET':
+        return render_template("new.html", contact=Contact())
+    else:
+        c = Contact(None, request.form['first_name'], request.form['last_name'], request.form['phone'],
+                    request.form['email'])
+        if c.save():
+            flash("Created New Contact!")
+            return redirect("/contacts")
+        else:
+            return render_template("new.html", contact=c)
+----
+
+This is a bit more complicated than the `/contacts` handler, but not by a whole lot:
+
+* The `/contacts/new` path is mapped to this python function
+** Note that this route declare that this method should handle both `GET` and `POST` requests made to this path
+* If the request is a `GET` we create a new, empty Contact and render the `new.html` template
+* If the request is a `POST`, a new contact is created based on the values passed in by a form
+** If we are able to save the contact (that is, there were no validation errors), we create a _flash_ message indicating
+   success and redirect the browser back to the list page.  A flash is a common feature in web frameworks that allows
+   you to store a message that will be available on the _next_ request, typically in a cookie or in a session store.
+** If we are unable to save the contact, we rerender the `new.html` template with the contact so it can provide feedback
+   to the user as to what validation failed.
+
+Note that, in the case of a successful creation of a contact, we have implemented the Post/Redirect/Get pattern we
+discussed earlier.
+
+Let's look at the `new.html` Jinja2 template:
+
+[source, html]
+----
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<form action="/contacts/new" method="post">
+    <fieldset>
+        <legend>Contact Values</legend>
+        <div class="table rows">
+            <p>
+                <label for="email">Email</label>
+                <input name="email" id="email" type="text" placeholder="Email" value="{{ contact.email or '' }}">
+                <span class="error">{{ contact.errors['email'] }}</span>
+            </p>
+            <p>
+                <label for="first_name">First Name</label>
+                <input name="first_name" id="first_name" type="text" placeholder="First Name" value="{{ contact.first or '' }}">
+                <span class="error">{{ contact.errors['first'] }}</span>
+            </p>
+            <p>
+                <label for="last_name">Last Name</label>
+                <input name="last_name" id="last_name" type="text" placeholder="Last Name" value="{{ contact.last or '' }}">
+                <span class="error">{{ contact.errors['last'] }}</span>
+            </p>
+            <p>
+                <label for="phone">Phone</label>
+                <input name="phone" id="phone" type="text" placeholder="Phone" value="{{ contact.phone or '' }}">
+                <span class="error">{{ contact.errors['phone'] }}</span>
+            </p>
+        </div>
+        <button>Save</button>
+    </fieldset>
+</form>
+
+<p>
+    <a href="/contacts">Back</a>
+</p>
+
+{% endblock %}
+----
+
+Here you can see we render a simple form which issues a `POST` to the `/contacts/new` path and, thus should be handled
+by our logic above.
+
+The form has a set of fields corresponding to the Contact and is populated with the values of the contact that is passed
+in.
+
+Note that each form input also has a `span` element below it that displays an error message associated with the field, if any.
+
+Once again we are seeing the flexibility of hypermedia: if we add a new field, or change the logic around how fields
+are validated or work with one another, it is simply reflected in the hypermedia response given to users.  Users
+will see the new state of affairs and be able to work with it.  No software update required!
+
+=== Viewing The Details Of A Contact
+
+To view the details of a Contact, a user will click on the "View" link on one of the rows in thelist of contacts.
+
+This will take them to the path `/contact/<contact id>` (e.g. `/contacts/22`).  Note that this is a common pattern
+in web development: Contacts are being treated as resources and are organized in a coherent manner:
+
+* If you wish to view all contacts, you issue a `GET` to `/contacts`
+* If you wish to get a hypermedia representation allowing you to create a new contact, you issue a `GET` to `/contacts/new`
+* If you wish to view a specific contacts (with, say, and id of `42), you issue a `GET` to `/contacts/42`
+
+It is easy to quibble about what particular path scheme you should use ("Should we `POST` to `/contacts/new` or to `contacts`)
+but what is more important is the overarching idea of resources (and the hypermedia representations of them.)
+
+Here is what the controller logic looks like:
+
+[source,python]
+----
+@app.route("/contacts/<contact_id>")
+def contacts_view(contact_id=0):
+    contact = Contact.find(contact_id)
+    return render_template("show.html", contact=contact)
+----
+
+Very simple, just look the contact up by id, which is extracted from the end of the path, and display it with the
+`show.html` template.  The `show.html` template looks like this:
+
+[source, html]
+----
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1>{{contact.first}} {{contact.last}}</h1>
+
+<div>
+<div>Phone: {{contact.phone}}</div>
+<div>Email: {{contact.email}}</div>
+</div>
+
+<p>
+<a href="/contacts/{{contact.id}}/edit">Edit</a>
+<a href="/contacts">Back</a>
+</p>
+
+
+{% endblock %}
+----
+
+A very simple template that just displays the information about the contact in a nice format, and includes links to
+edit the contact as well as to go back to the list of contacts.
+
+=== Editing The Details Of A Contact
+
+Editing a contact is more interesting than viewing one.  Here is the Flask code:
+
+[source, python]
+----
+@app.route("/contacts/<contact_id>/edit", methods=["POST", "GET"])
+def contacts_edit(contact_id=0):
+    contact = Contact.find(contact_id)
+    if request.method == 'GET':
+        return render_template("edit.html", contact=contact)
+    else:
+        if contact.update(request.form['first_name'], request.form['last_name'],
+                          request.form['phone'], request.form['email']):
+            flash("Updated Contact!")
+            return redirect("/contacts/" + str(contact_id))
+        else:
+            return render_template("edit.html", contact=contact)
+----
+
+As with the `contacts_new` handler, this handler supports both `GET` and `POST`.  The logic is very similar to
+that handler as well:
+
+* Look the contact up by the ID encoded in the path
+* If the request is a `GET`, render a form for editing this contact
+* If the request is a `POST`, update the contact with the form data submitted
+** If the contact updates successfully, render a flash and redirect
+** If not, rerender the `edit.html` form, showing the errors
+
+Once again, Post/Redirect/Get pattern in this control code.
+
+Here is what the `edit.html` template looks like:
+
+[source, html]
+----
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <form action="/contacts/{{ contact.id }}/edit" method="post">
+        <fieldset>
+            <legend>Contact Values</legend>
+            <div class="table rows">
+                <p>
+                    <label for="email">Email</label>
+                    <input name="email" id="email" type="text" placeholder="Email" value="{{ contact.email }}">
+                    <span class="error">{{ contact.errors['email'] }}</span>
+                </p>
+                <p>
+                    <label for="first_name">First Name</label>
+                    <input name="first_name" id="first_name" type="text" placeholder="First Name"
+                           value="{{ contact.first }}">
+                    <span class="error">{{ contact.errors['first'] }}</span>
+                </p>
+                <p>
+                    <label for="last_name">Last Name</label>
+                    <input name="last_name" id="last_name" type="text" placeholder="Last Name"
+                           value="{{ contact.last }}">
+                    <span class="error">{{ contact.errors['last'] }}</span>
+                </p>
+                <p>
+                    <label for="phone">Phone</label>
+                    <input name="phone" id="phone" type="text" placeholder="Phone" value="{{ contact.phone }}">
+                    <span class="error">{{ contact.errors['phone'] }}</span>
+                </p>
+            </div>
+            <button>Save</button>
+        </fieldset>
+    </form>
+
+    <form action="/contacts/{{ contact.id }}/delete" method="post">
+        <button>Delete Contact</button>
+    </form>
+
+    <p>
+        <a href="/contacts/">Back</a>
+    </p>
+
+{% endblock %}
+----
+
+Once again, very similar to the `new.html` template.  In fact, if we were to factor (that is, organize or split up) this
+application properly, we would probably share the form between the two views so as to avoid redundancy and only have one place to maintain.
+Since this is a simple application for demonstrating hypermedia, however, we will keep them separate for now.
+
+.Factoring Your Applications
+****
+One thing that often trips people up who are coming to hypermedia applications from a JavaScript background is the
+notion of "components".  In JavaScript-oriented applications it is common to break your app up into small components
+that are then composed together on the client side.  These components are often developed and tested in isolation and
+provide a nice abstraction for developers to build with.
+
+In hypermedia applications, in contrast, you factor your application on the server side.  The above code could be
+refactored into a shared template between the two other templates, allowing you to achieve a reusable and DRY (Don't
+Repeat Yourself) implementation.
+
+Note that the factoring on the server side tends to be coarser-grained than on the client side.  This has both benefits
+(simplicty) and drawbacks (less isolation).  Overall, however, a properly factored server-side hypermedia application
+can be extremely DRY!
+****
+
+Returning to the `edit.html` template, we again see a form that issues a `POST` request, now to the edit URL for a given
+contact.  The fields are populated by the contact that is passed in from the control logic.
+
+Below the main editing form, we see a second form that allows you to delete a contact.  It does this by issuing a `POST`
+to the `/contacts/<contact id>/delete` path.  (This is a bit junky, more on that in a bit.)
+
+Finally, there is a simple hyperlink back to the list of contacts.
+
+=== Deleting A Contact
+
+The delete functionally only involves a bit of Flask code when a `POST` request is made to the `/contacts/<contact id>/delete`
+path:
+
+[source, python]
+----
+@app.route("/contacts/<contact_id>/delete", methods=["POST"])
+def contacts_delete(contact_id=0):
+    contact = Contact.find(contact_id)
+    contact.delete()
+    flash("Deleted Contact!")
+    return redirect("/contacts")
+----
+
+Here we simply look up and delete the contact in question and redirect back to the list of contacts.
+
+No need for a template, the hypermedia response is simply a redirect.
+
+=== Summary
+
+So that's our simple contact application.  Hopefully the Flask and Jinja2 code is simple enough that you were able to
+follow along easily, even if Python isn't your preferred language or Flask isn't your preferred web application framework.
+
+Now, admittedly, this isn't a huge, sophisticated application at this point, but it
+demonstrates many of the aspects of traditional, web 1.0 applications: CRUD, the Post/Redirect/Get pattern, working
+with domain logic in a controller, organizing our URLs in a coherent, resource-oriented manner.
+
+And, furthermore, this is a _deeply RESTful_ web application.  Without thinking about it very much we have been using
+HATEOAS to perfection.  I would be that this simple little app we have built is more REST-ful than 99% of all JSON
+APIs ever built, and it was all effortless: just by virtue of using a _hypermedia_, HTML, we naturally fall into the
+REST-ful network architecture.
+
+Great, so what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style
+applications we used to build?  Well, at some level, nothing is wrong with it.  Particularly for an application of
+this size and complexity, this older way of building web apps is likely fine.  However, there is that clunkiness
+we mentioned earlier when discussing older web applications: every request replaces the entire screen and there is often
+a noticeable flicker when navigating between pages.  You lose your scroll state.  You have to click things a bit more
+than you might in a more sophisticated application.  It just doesn't have the same feel as a "modern" web application,
+does it?
+
+So, are we going to have to adopt JavaScript after all?  Pitch hypermedia in the bin, install NPM and start pulling
+down thousands of JavaScript dependencies, in the name of a better user experience?  Well, I wouldn't be writing this
+book if that were the case.
+
+It turns out you can improve the user experience of this application _without_ abandoning the hypermedia architecture.
+This can be accomplished with htmx, a small JavaScript library that eXtends HTML (hence, htmx) in a natural manner.  In
+the next few chapters we will take a look at this library and how it can be used to build surprisingly interactive
+user experiences, all within the origina, REST-ful architecture of the web.

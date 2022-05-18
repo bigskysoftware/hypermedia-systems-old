@@ -1,0 +1,6 @@
+
+include::chapter_1_hypermedia.adoc[]
+
+include::chapter_2_rest_hateoas_etc.adoc[]
+
+include::chapter_3_contact_app.adoc[]

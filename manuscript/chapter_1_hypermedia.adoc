@@ -155,10 +155,10 @@ browser: the user does not see a request indicator and it is up to the JavaScrip
 Despite the name, the response to this request will almost certainly be in the JavaScript Object Notation (JSON)
 format rather than XML.  (That is a long story!)
 
-The response might look something like this:
+The response to this request might look something like this:
 
 [#listing-1-3, reftext={chapter}.{counter:listing}]
-.Javascript
+.JSON
 [source,json]
 ----
 {
@@ -167,33 +167,35 @@ The response might look something like this:
 }
 ----
 
-The JavaScript code above converts this JSON text into a Javascript object (which is very easy when using the JSON notation) which
-is then handed off to the `updateTable()` method.  This method, not
- shown here to keep things simple, would then update the UI based on the data that has been received from the server.
+The JavaScript code above converts this JSON text recieved from the server into a Javascript object
+(which is very easy when using the JSON notation) which is then handed off to the `updateTable()` method.  The `updateTable()`
+method, not shown here to keep things simple, would then update the UI based on the data that has been received from the
+server.
 
-What we want to stress is that this server interaction is _not_ using hypermedia.  The JSON API being used here does not
-return a hypermedia response, it is rather a _Data API_, returning simple, plain old domain data.  It is up to the browser,
-in its `updateTable()` method, to understand how to turn this plain old data into HTML, typically via some sort of
-client-side templating library.
+What we want to stress at this point of the book is that this server interaction is _not_ using hypermedia.  The JSON API being
+used here does not  return a hypermedia response.  This is, rather, a _Data API_, returning simple, plain old domain data
+in JSON format.  It is up to the code in the  `updateTable()` method to understand how to turn this plain old data
+into HTML, which would typically be done via some sort of client-side templating library.
 
-This bit of javascript is the beginnings of what has come to be called a Single Page Application (SPA): we are not navigating
-between pages using hypermedia.  Instead, we are, within a single page, exchanging _data_ with the server and updating
-that page content.
+This bit of javascript is the beginnings of what has come to be called a Single Page Application (SPA): the application is
+no longer navigating between pages using hypermedia.  Instead, we are, within a single page, exchanging _data_ with the
+server and updating the content within that page.
 
 Of course, today, the vast majority of web applications adopt far more sophisticated frameworks for managing the user interface
-than this simple example: React, Angular, Vue.js, etc.  With these more complex frameworks you typically work with a
-much more elaborate client-side model (that is, JavaScript objects stored locally in the browsers memory that represent
-the model of your application.)  You update these JavaScript objects in memory and then, in many frameworks, you allow the
-UI to "react" to those changes via infrastructure baked into the framework itself.  (This is where the term "Reactive" programming
+than this simple example, libraries like React, Angular, Vue.js, etc.  With these more complex frameworks you typically work with a
+much more elaborate client-side model (that is, JavaScript objects stored locally in the browser's memory that represent
+the model of your application.)  You update these JavaScript objects in memory and then you allow the UI to "react" to
+those changes via infrastructure baked into the framework itself.  (This is where the term "Reactive" programming
 comes from.)
 
 In this approach, you, the developer, do not interact with hypermedia much at all.  You use it to build your user interface,
 but the anchor tag is de-emphasized and forms become mere data collection mechanisms.  Neither interact with the server
-in their "native tongue".
+in their native language of HTML, and instead become user interface elements that drive local interactions with the
+in memory domain model.
 
-Now, modern SPAs are much more complex than the basic JavaScript example above.  However, at the level of a _network
-architecture_, these more sophisticated frameworks are essentially equivalent to our example: they exchange JSON with the
-server rather than exchanging hypermedia.
+So modern SPAs are much more complex than the basic JavaScript example above.  However, at the level of a _network
+architecture_, these more sophisticated frameworks are essentially equivalent to our simple example: they exchange plain
+data via JSON with the server rather than exchanging hypermedia.
 
 == Why Use Hypermedia?
 
@@ -237,10 +239,10 @@ so, if hypermedia is so great and can address these problems so obvious in the w
 been largely abandoned web developers today?  After all, web developers are a pretty smart lot.  Why wouldn't they use
 this obvious, native web technology?
 
-In our opinion there are two related reasons for this strange state of affairs.  The first is that hypermedia (and HTML
-in particular) hasn't advanced much since the late 1990s _as hypermedia_.  Sure, lots of new features have been added to
-it, but HTML hasn't added any new ways to interact with a server via pure HTML in over two decades!  HTML developers are
-still working with only anchor tags and forms, and issuing `GET` and `POST` requests.
+In our opinion there are two related reasons for this somewhat strange state of affairs.  The first is this: hypermedia (and HTML
+in particular) hasn't advanced much _since the late 1990s_ as hypermedia.  Sure, lots of new features have been added to
+HTML, but there haven't been _any_ new ways to interact with a server via pure HTML added in over two decades!  HTML developers are
+still working with only anchor tags and forms, and can only issue `GET` and `POST` requests.
 
 This somewhat baffling lack of progress leads immediately to the second and more practical reason that hypermedia has
 been abandoned: as the interactivity and expressiveness of HTML remained frozen in time, the technology world marched on, demanding more
@@ -248,7 +250,7 @@ and more interactive web applications.  JavaScript, coupled to data-oriented JSO
 interactive features in web applications to end users.  It was this, the _user experience_ that
 really drove the web developer community over to the JavaScript-heavy Single Page Application approach.
 
-This is unfortunate and it didn't have to be this way.  There is nothing _intrinsic_ to hypermedia that prevents a richer,
+This is unfortunate, and it didn't have to be this way.  There is nothing _intrinsic_ to the idea of hypermedia that prevents a richer,
 more expressive interactivity model.  Rather than abandoning the hypermedia architecture, the industry could have
 kept pushing it forward and enabling more and more interactivity _within_ that original, hypermedia model of the web.
 If history had worked out that way, perhaps we could have retained much of the simplicity of the original web while
@@ -256,25 +258,25 @@ still providing better user experiences.
 
 === A Hypermedia Comeback?
 
-So, for many developers today workgin in an industry dominated by JavaScript and SPA frameworks, hypermedia has become a
+So, for many developers today working in an industry dominated by JavaScript and SPA frameworks, hypermedia has become a
 n afterthought, if it is thought of at all.  You simply can't get the sort of modern interactivity out of HTML, the
 hypermedia we all use day to day, necessary for today's modern web applications.
 
-But, what if history had worked out differently?
+But, what if history _had_ worked out differently?
 
-What if HTML, instead of stalling _as a hypermedia_, had continued to develop, adding new mechanisms for exchanging
+What if HTML, instead of stalling as a hypermedia, had continued to develop, adding new mechanisms for exchanging
 hypermedia with servers and increasing its general expressiveness?
 
 What if this made it possible to build modern web applications within the original, hypermedia-oriented and REST-ful model that
 made the early web so powerful, so flexible, so... fun?  Could hypermedia be a legitimate architecture to consider when
 developing a new web application?
 
-The answer is yes and, in fact, in the last decade, some alternative front end (JavaScript!) libraries have arisen that
-attempt to do exactly this.  These libraries use JavaScript not as a __replacement__ for the hypermedia architecture, but
-rather use it to augment HTML itself _as a hypermedia_.
+The answer is yes and, in fact, in the last decade, some alternative front end libraries (ironically, written in JavaScript!)
+have arisen that  attempt to do exactly this.  These libraries use JavaScript not as a __replacement__ for the hypermedia
+architecture, but rather use it to augment HTML itself _as a hypermedia_.
 
-These _hypermedia-oriented_ libraries re-center hypermedia as a viable and, indeed, excellent architectural choice for
-your next web application.
+These _hypermedia-oriented_ libraries re-center the hypermedia approach as a viable and, indeed, excellent architectural
+choice for your next web application.
 
 === htmx
 
@@ -292,7 +294,7 @@ Again, the crux of the tradeoffs between SPAs and MPAs is the _user experience_ 
 this is typically the driving decision when choosing one approach versus the other for an application or, in the case
 of Transitional Web Applications, for a feature.
 
-However, by adopting a hypermedia oriented library, it turns out that this interactivity gap closes dramatically betwee
+However, by adopting a hypermedia oriented library, it turns out that this interactivity gap closes dramatically between
 the MPA and SPA approach.  A hypermedia oriented library allows you to make the decision based on other considerations,
 such as overall system complexity.
 
@@ -303,14 +305,14 @@ entirely within the hypermedia model.  Not only that, but it is refreshingly fun
 When building a web application with htmx and other hypermedia oriented libraries the term Multi-Page Application applies
 _roughly_, but it doesn't really capture the crux of the application architecture.  htmx, as you will see, does not need
 to replace entire pages and, in fact, an htmx-based application can reside entirely within a single page.  (We don't
-_recommend_ this practice, but it is certainly doable!)
+recommend this practice, but it is certainly doable!)
 
 We rather like to emphasize the _hypermedia_ aspect of both the older MPA approach and the newer htmx-based approach.
-Therefore we use the term _Hypermedia Driven Applications (HDAs)_ to describe both.  This clarifies that the core distinction
+Therefore, we use the term _Hypermedia Driven Applications (HDAs)_ to describe both.  This clarifies that the core distinction
 between these approaches and the SPA approach _isn't_ the number of pages in the application, but rather the underlying
 _network_ architecture.
 
-What would the htmx and, let us say, HDA equivalent of the JavaScript-based SPA-style button we discussed above look like?
+What would the htmx and, let us say, the HDA equivalent of the JavaScript-based SPA-style button we discussed above look like?
 
 It might look like this:
 
@@ -330,7 +332,7 @@ clicks this button, issue a `GET` request to `/contacts`".  The `hx-target` attr
 returns, take the resulting HTML and place it into the element with the id `contact-table`".
 
 I want to emphasize here that the response here is expected to be in _HTML format_, not in JSON.  This means that
-htmx is exchaning hypermedia with the server, and thus the interaction is still firmly within this original hypermedia
+htmx is exchanging hypermedia with the server, and thus the interaction is still firmly within this original hypermedia
 model of the web.  htmx is adding browser functionality via JavaScript, but that functionality is _augmenting_ HTML as a
 hypermedia, rather than _replacing_ the network model with a Data-oriented JSON API.
 
@@ -347,8 +349,8 @@ at just how much we can accomplish in creating modern, sophisticated user experi
 
 == When should You Use Hypermedia?
 
-Even if you decide not to use something like htmx and just accept the limitations of HTML, there are times when it, and the
-hypermedia architecture, is worth considering for your project:
+Even if you decide not to use something like htmx and just accept the limitations of plain HTML, there are times when it,
+and the hypermedia architecture, is worth considering for your project:
 
 Perhaps you are building a web application that doesn't _need_ a huge amount of user-experience innovation.  These are
 very common and there is no shame in that!  Perhaps your application adds its value on the server side, by coordinating
@@ -365,11 +367,11 @@ will be able to focus your efforts on your server, where your application is act
 
 And by layering htmx or another hypermedia-oriented library on top of this approach, you can address many of the usability
 issues of it with finer-grained hypermedia transfers.  This opens up a whole slew of new user interface and experience
-possibilities.
+possibilities, and will be a focus of later chapters.
 
 == When shouldn't You Use Hypermedia?
 
-That being said, there are cases where hypermedia is not the right choice.  What would a good example be?
+But, that being said, there are cases where hypermedia is not the right choice.  What would a good example be?
 
 One example that springs to mind is an online spreadsheet application, where updating one cell could have a large
 number of cascading changes that need to be made on every keystroke.  In this case, we have a highly inter-dependent
@@ -378,11 +380,13 @@ introducing a server round-trip on every cell change would bog performance down 
 amenable to that "large-grain hypermedia data transfer" approach.  We would heartily recommend using JavaScript-based
 infrastructure for building an application like this!
 
-_However_, perhaps this online spreadsheet application has a settings page.  And perhaps that settings page _is_ amenable to
+_However_, perhaps this online spreadsheet application also has a settings page.  And perhaps that settings page _is_ amenable to
 the hypermedia approach.  If it is simply a set of relatively straight-forward forms that need to be persisted to the
-server, the chances are high that hypermedia would, in fact, work great for this part of the app.  And, by adopting hypermedia
-for that part of your application, you can save more of your _complexity budget_ for the core, complicated spreadsheet
-logic.
+server, the chances are high that hypermedia would, in fact, work great for this part of the app.
+
+And, by adopting hypermedia for that part of your application, you could simplify this part of the application quite a bit.
+You can then save more of your _complexity budget_ for the core, complicated spreadsheet logic, keeping the simple
+stuff simple.
 
 .What Is A Complexity Budget?
 ****
@@ -418,13 +422,21 @@ the ideal way to minimize your web applications complexity.
 
 == Summary
 
-I hope this book helps you understand the fundamental REST-ful hypermedia architecture of the original web,
-and how you can use this architecture to build modern web applications.  Even if you choose not to adopt hypermedia
-as a core technology for your own web development work (and, again, it isn't an appropriate architecture for everything!) then
-at the very least you should come away with a deeper appreciation for this novel approach to building networked systems
-and understand where it might be applicable.
+In this chapter, you have been reintroduced the concept of hypermedia and, I hope, you have a better understanding
+of what it is, and how it is an integral aspect of the web.  We also talked about what is _not_ hypermedia, focusing
+on a simple Data-Oriented JSON API.  Here are the important points to remember:
 
-Before we get into the practical details of implementing a modern Hypermedia Driven Application, let's take a bit of time
-to make an in-depth study of one of the most famous foundational documents of the web, Chapter 5 of Roy Fielding's PhD
-dissertation,  and, in particular, focus on the core hypermedia concepts of REpresentational State Transfer (REST) & Hypermedia As
-The Engine of Application State (HATEOAS).
+* Hypermedia is a unique architecture for building web applications
+* Using Data APIs, which is very common in today's web development world, is very dramatically different
+  than the hypermedia approach
+* Hypermedia lost out to SPAs & Data APIs due to interactivity limitations, not due to fundamental limitations of
+  the concept
+* There is an emerging class of front-end libraries, htmx being one, that recenter hypermedia as the core technology
+  for web development and address these interactivity limitations
+* These libraries make Hypermedia Driven Applications (HDAs) a more compelling choice for a much larger set of online
+  applications
+
+Before we get into the practical details of implementing a modern Hypermedia Driven Application, in the next chapter we
+will take a bit of time to make an in-depth study of one of the most influential documents ever written on the hypermedia
+architecture of the web, the famous Chapter 5 of Roy Fielding's PhD dissertation and the two concepts it defined and
+codified: REpresentational State Transfer (REST) & Hypermedia As The Engine of Application State (HATEOAS).

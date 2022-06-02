@@ -10,7 +10,7 @@
 :sourcedir: ../code/src
 :source-language:
 
-= Hypermedia: A Reintroduction
+= Reintroducing Hypermedia
 
 This chapter covers
 
@@ -278,7 +278,7 @@ architecture, but rather use it to augment HTML itself _as a hypermedia_.
 These _hypermedia-oriented_ libraries re-center the hypermedia approach as a viable and, indeed, excellent architectural
 choice for your next web application.
 
-=== htmx
+=== Hypermedia-Oriented Javascript Libraries
 
 In the web development world today there is a debate going on between the SPAs approach and what are now being called
 "Multi-Page Applications" or MPAs.  MPAs are, usually, just the old, traditional way of building web applications and thus
@@ -430,7 +430,7 @@ on a simple Data-Oriented JSON API.  Here are the important points to remember:
 * Using Data APIs, which is very common in today's web development world, is very dramatically different
   than the hypermedia approach
 * Hypermedia lost out to SPAs & Data APIs due to interactivity limitations, not due to fundamental limitations of
-  the concept
+=   the concept
 * There is an emerging class of front-end libraries, htmx being one, that recenter hypermedia as the core technology
   for web development and address these interactivity limitations
 * These libraries make Hypermedia Driven Applications (HDAs) a more compelling choice for a much larger set of online

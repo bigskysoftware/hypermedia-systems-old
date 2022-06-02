@@ -10,14 +10,14 @@
 :sourcedir: ../code/src
 :source-language:
 
-= ContactApp
+= Creating A Web 1.0 Hypermedia Application
 
 This chapter covers:
 
-* Building a simple contact management web application
+* Building a simple contact management web application in the web 1.0 style
 * Server Side Rendering (SSR) with HTML
 
-== A Contact Management Web Application
+== A Simple Contact Management Web Application
 
 To begin our journey into Hypermedia Driven Applications, we are going to create a simple contact management web
 application named Contacts.app.  We will start with a basic, Web 1.0-style multi-page application, in the grand

@@ -1,6 +1,4 @@
 
-include::chapter_1_hypermedia.adoc[]
+include::CH01_gross_hypermedia.adoc[]
+include::CH02_gross_creating_a_web_app.adoc[]
 
-include::chapter_2_rest_hateoas_etc.adoc[]
-
-include::chapter_3_contact_app.adoc[]

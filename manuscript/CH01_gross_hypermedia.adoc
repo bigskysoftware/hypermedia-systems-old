@@ -422,7 +422,7 @@ the ideal way to minimize your web applications complexity.
 
 == Summary
 
-In this chapter, you have been reintroduced the concept of hypermedia and, I hope, you have a better understanding
+In this chapter, you have been reintroduced the concept of hypermedia and it is our hope that you have a better understanding
 of what it is, and how it is an integral aspect of the web.  We also talked about what is _not_ hypermedia, focusing
 on a simple Data-Oriented JSON API.  Here are the important points to remember:
 
@@ -430,13 +430,11 @@ on a simple Data-Oriented JSON API.  Here are the important points to remember:
 * Using Data APIs, which is very common in today's web development world, is very dramatically different
   than the hypermedia approach
 * Hypermedia lost out to SPAs & Data APIs due to interactivity limitations, not due to fundamental limitations of
-=   the concept
-* There is an emerging class of front-end libraries, htmx being one, that recenter hypermedia as the core technology
+  the concept
+* There is an emerging class of Hypermedia Oriented front-end libraries that recenter hypermedia as the core technology
   for web development and address these interactivity limitations
 * These libraries make Hypermedia Driven Applications (HDAs) a more compelling choice for a much larger set of online
   applications
 
-Before we get into the practical details of implementing a modern Hypermedia Driven Application, in the next chapter we
-will take a bit of time to make an in-depth study of one of the most influential documents ever written on the hypermedia
-architecture of the web, the famous Chapter 5 of Roy Fielding's PhD dissertation and the two concepts it defined and
-codified: REpresentational State Transfer (REST) & Hypermedia As The Engine of Application State (HATEOAS).
+In the next chapter we will look at a simple, Web 1.0 style application, Contact.app, that will form the basis for the
+remainder of our exploration of the abilities and possibilities of Hypermedia.

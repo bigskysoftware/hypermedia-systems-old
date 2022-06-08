@@ -26,7 +26,7 @@
 . Extending HTML As Hypermedia
 [arabic]
 .. The Shortcomings of HTML
-.. htmx, an Extension to HTML
+.. htmx: Extending HTML as a Hypermedium
 .. Triggering HTTP Requests
 .. Targeting Other Elements
 .. Passing Request Parameters
@@ -35,11 +35,13 @@
 
 . Implementing Advanced UX Patterns With Hypermedia
 [arabic]
-.. Active Search
-.. Inline Editing
-.. Infinite Scroll
-.. Bulk Editing
-.. Lazy Loading
+.. Adding AJAX Navigation
+.. Deleting Contacts
+.. Inline Editing of Contacts
+.. Bulk Editing Contacts
+.. Infinite Scroll of Contacts
+.. Lazy Loading Counts
+.. Active Search of Contacts
 .. Summary
 
 . Hyperview: A Mobile Hypermedia

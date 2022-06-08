@@ -5,7 +5,7 @@
 :listing-caption: Listing {chapter}.
 :table-caption: Table {chapter}.
 :sectnumoffset: 0
-// line above:  :sectnumoffset: 5  (chapter# minus 1)
+// line above:  :sectnumoffset: 0  (chapter# minus 1)
 :leveloffset: 1
 :sourcedir: ../code/src
 :source-language:
@@ -35,10 +35,10 @@ interface description language that must be used build Javascript-based applicat
 there, in the browser.
 
 This as a shame, and we hope that with this book we can convince you that the hypermedia architecture is not simply a
-piece of legacy technology that we have to begrudgingly deal with.  Instead, we ain to show that it is a tremendously
-innovative, flexible and _simple_ way to build robust distributed systems.  Not only that, but this hypermedia approach
-deserves a seat at the table when you, a web developer, are considering the architecture of your next online software
-system.
+piece of legacy technology that we have to begrudgingly deal with.  Instead, we aim to show you that it is a tremendously
+innovative, simple and _flexible_ way to build robust distributed systems.  Not only that, but the hypermedia approach
+deserves a seat at the table when you, a web developer, are considering what the architecture of your next online software
+system will be.
 
 == So, What Is Hypermedia?
 
@@ -48,15 +48,15 @@ The English prefix "hyper-" comes from the Greek prefix "ὑπερ-" and means "
 It signifies the overcoming of the previous linear constraints of written text.
 ____
 
-Right.  So what is hypermedia?  Simply, it is a media, for example a text, that includes non-linear branching from one location to
-another, via, for example, hyperlinks embedded directly in the media.
+Right.  So what is hypermedia?  Simply, it is a media, for example a text, that includes non-linear branching from one location
+in the media to another, via, for example, hyperlinks embedded that the media.
 
 You are probably more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-set of hypermedia and much of this book is going to discuss how to build modern web applications with HTML, the
 HyperText Markup Language.
 
-However, even when working with applications built mainly in HTML, there are nearly always
-other medias involved: images, videos and so forth.  This makes _hypermedia_ a more appropriate term for discussing
+However, even when you build applications using HTML, there are nearly always other types of media involved: images,
+videos and so forth.  Because of this, we prefer the term _hypermedia_ a more appropriate for discussing
 applications built in this manner.  We will use the term hypermedia for most of this book in order to capture this more
 general concept.
 
@@ -67,11 +67,11 @@ ____
 In the beginning was the hyperlink, and the hyperlink was with the web, and the hyperlink was the web.  And it was good.
 ____
 
-Before we discuss the more general concepts of hypermedia, let's take a brief look at a concrete, familiar example
-of it: HTML.
+In order to help us understand the more general concepts of hypermedia, it would be worthwhile to take a brief look at a
+concrete and familiar example of the technology: HTML.
 
 HTML is the most widely used hypermedia in existence, and this book naturally assumes that the reader has a reasonable familiarity
-with it.  You don't need to be an HTML or CSS expert to understand the code in this book, but the better you understand the core
+with it.  You do not need to be an HTML or CSS expert to understand the code in this book, but the better you understand the core
 tags and concepts of both HTML, the more you will get out of this book.
 
 Now, let's consider the two defining elements of hypermedia in HTML: the anchor tag (which produces a hyperlink) and

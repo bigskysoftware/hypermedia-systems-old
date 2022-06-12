@@ -1,10 +1,10 @@
 = Hypermedia In Action
-:chapter: N
+:chapter: 6
 :sectnums:
 :figure-caption: Figure {chapter}.
 :listing-caption: Listing {chapter}.
 :table-caption: Table {chapter}.
-:sectnumoffset: 0
+:sectnumoffset: 5
 // line above:  :sectnumoffset: 5  (chapter# minus 1)
 :leveloffset: 1
 :sourcedir: ../code/src
@@ -34,7 +34,7 @@ The last constraint of REST as described by Fielding is _((Code on Demand))_. Im
 "REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented."
 -- Roy Fielding,  Architectural Styles and the Design of Network-based Software Architectures
 
-By this explanation, the main role of scripts from the application developer's perspective is to extend the browser to the application's needs -- like browser extensions. A ((polyfill)) is an example of this kind of script. As we eill see later, however, there are other ways of using scripting that go well with hypermedia.
+By this explanation, the main role of scripts from the application developer's perspective is to extend the browser to the application's needs in the same way as browser extensions extend the browser to the user's needs. A _((polyfill))_ is an example of this kind of script. As we eill see later, however, there are other ways of using scripting that go well with hypermedia.
 
 "Allowing features to be downloaded after deployment improves system extensibility."
 -- (continued)
@@ -65,7 +65,7 @@ Gemini is a modern hypermedia system, similar to the Web, that does not include 
 [#web-as-app-delivery]
 == The Web as a medium for application delivery
 
-The HTML, CSS, JS trio of languages have demonstrated their capability as a GUI toolkit so extensively, that to cite evidence seems inane. Although controversial, some developers turn to tools like Electron for applications that may never be run in a browser context.
+The HTML, CSS, JS trio of languages have demonstrated their capability as a GUI toolkit so extensively, that to cite evidence seems inane. Some developers turn to tools like Electron for applications that may never be run in a browser context, as controversial as such tools may be.
 
 [example]
 Balena Etcher is an Electron application that writes ISO images onto drives, usually to create OS installation media such as Live USBs -- a task that cannot be done in a browser.
@@ -80,9 +80,9 @@ Web applications are not just cross-platform but _platform-independent_. The web
 The ubiquity of the web means that:
 
 * *Your application will be run in environments you have not tested them in.* The only way to minimize this is to minimize the amount of code running on the user's device.
-* *You will need to create an appropriate user experience for different platforms in one codebase.* You can try to avoid this by trying to detect the kind of device that is requesting the app and delivering a different app accordingly. For instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile, which will likely be neglected by this kind of application until one form factor gains widespread use.
+* *You will need to create an appropriate user experience for different platforms in one codebase.* This is known as ((responsive web design)). You can try to avoid this by trying to detect the kind of device that is requesting the app and delivering a different app accordingly. This technique may be frowned upon but it finds signfiicant use; for instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile. These devices will likely be neglected by this kind of application until one of them gains widespread use.
 +
-Hypermedia-driven applications will shift as much of this burden as possible to the platform developer, who is responsible for providing a spec-compliant Web browser.
+Hypermedia-driven applications shift as much of the burden of responsive web design as possible to the platform developer, who provides a spec-compliant Web browser.
 
 
 [.line-through]

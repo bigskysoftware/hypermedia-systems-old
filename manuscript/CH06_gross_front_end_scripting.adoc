@@ -79,7 +79,7 @@ Web applications are not just cross-platform but _platform-independent_. The web
 
 The ubiquity of the web means that:
 
-* *Your application will be run in environments you have not tested them in.* The only way to minimize this is to minimize the amount of code running on the user's device.
+* *Your application is destined to run in environments you have not tested them in.* The only way to minimize this is to minimize the amount of code running on the user's device.
 * *You will need to create an appropriate user experience for different platforms in one codebase.* This is known as ((responsive web design)). You can try to avoid this by trying to detect the kind of device that is requesting the app and delivering a different app accordingly. This technique may be frowned upon but it finds signfiicant use; for instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile. These devices will likely be neglected by this kind of application until one of them gains widespread use.
 +
 Hypermedia-driven applications shift as much of the burden of responsive web design as possible to the platform developer, who provides a spec-compliant Web browser.
@@ -91,12 +91,6 @@ Hypermedia-driven applications shift as much of the burden of responsive web des
 // This chapter discusses archetypes of scripts. These are better introduced with examples, interspersed into the sections on various libraries.
 [.line-through]
 --
-One form of script that goes well with hypermedia is similar to a polyfill; which extends the interaction capabilities of the client. The specific behavior to be used is still encoded in the document, usually in an application-specific format. For examples of such scripts, one might implement a rich text input for forms, or enhance links with previews that appear when hovered. 
-
-The polyfill-style script, which can be called the _((behavior script))_, must be written with a great care for accessibility. Accessibility in web applications is an intricate dance between browsers, operating systems and assistive tools. The identities of these systems are all unknown to the application developer, who must somehow step in time. As one builds further beyond the features the user agent provides, the risk of stepping on someone's toes tends to increase.
-
-Another category of script can be termed the _processor_, which comprises batch transformations applied to transmissions between server and client. An example processor of server->client transmissions is a script that visually positions footnotes in a document next to where they're referenced. It is important to also process fragments inserted into the document by scripts.
-
 The most important role of scripts is to respond to user interactions. As a result, they deal heavily with ((events)). They modify the client's in-memory representation of the document.
 --
 
@@ -132,8 +126,6 @@ behavior Draggable(dragHandle)
     trigger draggable:end
 end
 -------------
-
-=== _Pattern:_ Reusable Behavior
 
 == Alpine.js
 
@@ -231,7 +223,48 @@ Of course, this code could be extracted as a reusable behavior:
 
 === _Example:_ Rich text input
 
-=== _Pattern:_ Component
+=== _Pattern:_ Reusable Behavior
+
+One form of script that goes well with hypermedia is similar to a polyfill; which extends the interaction capabilities of the client. Unlike a polyfill, however, they introduce capabilities not in any specification and their use may be completely unique to one application. The specific behavior to be used is not programmed but still encoded in the document, usually in an application-specific format. For example, one might implement a rich text input for forms which is instantiated by adding a class to an `<input>` tag, or enhance all anchor links with previews that appear when hovered. 
+
+The polyfill-style script, which can be called the _((behavior script))_, must be written with a great care for accessibility. Accessibility in web applications is an intricate dance between browsers, operating systems and assistive tools. The identities of these systems are all unknown to the application developer, but they still have to step in time. As one builds further beyond the features the user agent provides, the risk of stepping on someone's toes tends to increase.
+
+=== RSJS
+
+<https://ricostacruz.com/rsjs/>. Stands for "Reasonable System for JavaScript Structure".
+
+A system for creating reusable behaviors in JavaScript. RSJS is a set of guidelines for writing client-side JavaScript for non-single-page applications.
+
+* *"Think in component behaviors".* A behavior is a piece of code that only affects a select part of the document. Behaviors are linked to elements using HTML data attributes:
++
+[source,html]
+----
+<div class='main-navbar' data-js-collapsible-nav>
+  <button class='expand' data-js-expand>Expand</button>
+  <a href='/'>Home</a>
+  <ul>...</ul>
+</div>
+----
++
+This is Locality of Behavior in action. Note that LoB does not require that behavior is _implemented_ at the site of use, only _invoked_.
+
+* *"One component per file".* Each .js file should be named after the data attribute it is invoked by. This is also important for locality: There should be a clear, deterministic path from invocation to definition.
+
+* *"Load components in all pages".*
+
++
+[quote]
+--
+Your main .js file should be a concatenation of all your behaviors. 
+
+It should be safe to load all behaviors for all pages. Since your behaviors are localized to their respective components, they will not have any effect unless the element it applies to is on the page.
+--
+
+* *"Use a data attribute".* "You can use ID’s and classes, but this can be confusing since it isn’t obvious which class names are for styles and which have JS behaviors bound to them." This is a case if Locality of Behavior and Separation of Concerns in unison.
+
+* *"No inline scripts".* "By putting imperative logic outside your .js files (eg, JavaScript in your .html), it makes your application harder to test and they pose a significant maintenance burden". This is a departure from _hyperscript and Alpine practices. An important concern around testing. In hypermedia-driven applications, client scripting is usually reserved for interactions. Manual testing is often more appropriate for this kind of code. However, if your application requires a lot of logic to be computed client-side, this is a good principle to follow.
+
+Remember that these are only a few of the guidelines RSJS comprises. We present the structural guidelines that are relevant to the topics we covered. 
 
 === _Principle:_ Element Lifecycle
 

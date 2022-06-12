@@ -137,6 +137,90 @@ end
 
 == Alpine.js
 
+<https://alpinejs.dev/>.
+
+Alpine.js is a library inspired by Vue.js. It emphasizes being lightweight.
+
+.Sample code from the Alpine.js website
+[source,html]
+----
+<div x-data="{ open: false }">
+    <button @click="open = true">Expand</button>
+ 
+    <span x-show="open">
+      Content...
+    </span>
+</div>
+----
+
+Like _hyperscript, it allows you to invoke behavior directly from markup. Unlike _hyperscript, it uses JavaScript instead of a bespoke programming language.
+
+In an Alpine application, code will rarely modify the document directly. Instead, Alpine uses a reactivity system borrowed from Vue. `x-data` is used to define JavaScript objects accessible from a given subtree of the document. Templating directives like `x-show` or `x-for` are used to modify elements based on those objects. Then, when that data is modified, Alpine will update the document accordingly.
+
+In _hyperscript, one might write the above component as such:
+
+[source,html]
+----
+<div id="disclosure">
+    <button _="on click toggle *display of #popup"
+      >Expand</button>
+ 
+    <span id="popup">
+      Content...
+    </span>
+</div>
+----
+
+Compared to the original Alpine example, the _hyperscript version has a lot less indirection. That can be a disadvantage -- see how handling all document mutations in the framework allows Alpine to give us easy animations:
+
+[source,html]
+----
+<div x-data="{ open: false }">
+    <button @click="open = true">Expand</button>
+ 
+    <span x-show="open" x-transition> <1>
+      Content...
+    </span>
+</div>
+----
+<1> The `x-transition` attribute will add a fade animation by default. Examples of more intricate control over transitions can be found in the Alpine.js documentation.
+
+When the page author directly modifies the document via code, it's a lot more difficult for tools to provide this kind of convenience because the transition logic needs to be sandwiched around the addition/removal of elements. Achieving the above in _hyperscript would look a bit like this:
+
+[source,html]
+----
+<div id="disclosure">
+    <button _="on click
+      if #popup's *display is 'none'
+        show #popup
+        transition the #popup's opacity from 0 to 1
+      else
+        transition the #popup's opacity from 1 to 0
+        hide #popup
+      "
+      >Expand</button>
+ 
+    <span id="popup">
+      Content...
+    </span>
+</div>
+----
+
+Of course, this code could be extracted as a reusable behavior:
+
+[source,html]
+----
+<div _="install Disclosure">
+    <button _="on click trigger Disclosure:toggle"
+      >Expand</button>
+ 
+    <span>
+      Content...
+    </span>
+</div>
+----
+
+
 === _Principle:_ Locality
 
 === _Example:_ Search form

@@ -14,8 +14,10 @@
 
 This chapter covers:
 
-* Building a simple contact management web application in the web 1.0 style
-* Server Side Rendering (SSR) with HTML
+* Picking a "web stack" to build our sample hypermedia application in
+* A brief introduction to Flask & Jinja2 for Server Side Rendering (SSR)
+* An overview of the functionality of our sample hypermedia application, Contact.App
+* Implementing the basic CRUD (Create, Read, Update, Delete) operations + search for Contact.App
 
 == A Simple Contact Management Web Application
 
@@ -148,7 +150,8 @@ web framework or language you are used to!
 
 == Contact.App Functionality
 
-OK, with that brief introduction to Flask out of the way, let's get down to brass tacks.  What will Contact.app do?
+OK, with that brief introduction to Flask out of the way, let's get down to specifying and implementing our application.
+What will Contact.app do?
 
 Initially, it will provide the following functionality:
 
@@ -712,7 +715,7 @@ back to the list of contacts with a success flash message.
 
 No need for a template in this case!
 
-=== Summary
+=== Contact.App... Implemented!
 
 Believe it or not, that's our entire contact application!  Hopefully the Flask and Jinja2 code is simple enough that
 you were able to follow along easily, even if Python isn't your preferred language or Flask isn't your preferred web
@@ -723,24 +726,41 @@ Now, admittedly, this isn't a large or sophisticated application, but it does de
 traditional, web 1.0 applications: CRUD, the Post/Redirect/Get pattern, working
 with domain logic in a controller, organizing our URLs in a coherent, resource-oriented manner.
 
-And, furthermore, this is a _deeply RESTful_ web application.  Without thinking about it very much we have been using
-HATEOAS to perfection.  I would be that this simple little app we have built is more REST-ful than 99% of all JSON
-APIs ever built, and it was all effortless: just by virtue of using a _hypermedia_, HTML, we naturally fall into the
-REST-ful network architecture.
+And, furthermore, this is a deeply _hypermedia-based_ web application.  Without even thinking about it (or maybe even understanding
+it!) we have been using REST, HATEOAS and all the other hypermedia concepts.  I would bet that this simple little app
+we have built is more REST-ful than 99% of all JSON APIs ever built, and it was all effortless: just by virtue of using
+a _hypermedia_, HTML, we naturally fall into the REST-ful network architecture.
 
-Great, so what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style
-applications we used to build?  Well, at some level, nothing is wrong with it.  Particularly for an application of
-this size and complexity, this older way of building web apps is likely fine.  However, there is that clunkiness
-we mentioned earlier when discussing older web applications: every request replaces the entire screen and there is often
-a noticeable flicker when navigating between pages.  You lose your scroll state.  You have to click things a bit more
-than you might in a more sophisticated application.  It just doesn't have the same feel as a "modern" web application,
-does it?
+So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style
+applications people used to build?
 
-So, are we going to have to adopt JavaScript after all?  Pitch hypermedia in the bin, install NPM and start pulling
-down thousands of JavaScript dependencies, in the name of a better user experience?  Well, I wouldn't be writing this
-book if that were the case, now would I?!
+Well, at some level, nothing is wrong with it.  Particularly for an application that is as simple as this one it, the older
+way of building web apps may be a fine approach!
 
-We _can_ improve the user experience of this application _without_ abandoning the hypermedia architecture.
-This can be accomplished with htmx, a small JavaScript library that eXtends HTML (hence, htmx) in a natural manner.  In
-the next few chapters we will take a look at this library and how it can be used to build surprisingly interactive
-user experiences, all within the original, REST-ful architecture of the web.
+However, the application does suffer from that "clunkiness" that we mentioned earlier when discussing web 1.0 applications:
+every request replaces the entire screen, introducing a noticeable flicker when navigating between pages.  You lose your
+scroll state.  You have to click around a bit more than you might in a more sophisticated web application.  Contact.App,
+at this point, just doesn't feel like a "modern" web application, does it?
+
+Well.  Are we going to have to adopt JavaScript after all?  Should we pitch this hypermedia approach in the bin, install
+NPM and start pulling down thousands of JavaScript dependencies, and rebuild the application using a "modern" JavaScript
+library like React?
+
+Well, I wouldn't be writing this book if that were the case, now would I?!
+
+No, I wouldn't.  It turns out that we can improve the user experience of this application _without_ abandoning the
+hypermedia architecture. One way this can be accomplished is to introduce htmx, a small JavaScript library that
+eXtends HTML (hence, htmx), to our application.  In the next few chapters we will take a look at this library and how
+it can be used to build surprisingly interactive user experiences, all within the original hypermedia architecture of
+the web.
+
+== Summary
+
+* A Hypermedia Driven Application is an application that primarily relies on hypermedia exchanges for its network
+  architecture
+* Web 1.0 applications are naturally Hypermedia Driven Applications
+* Flask is a simple Python library for connecting routes to server-side logic, or handlers
+* Jinja2 is a simple Python template library
+* Combining them to implementing a basic CRUD-style application for managing contacts, Contacts.app, is surprisingly
+  simple.
+* We will be looking at how to address the UX problems associated with Web 1.0 applications next

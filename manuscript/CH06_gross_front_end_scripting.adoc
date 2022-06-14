@@ -1,10 +1,10 @@
 = Hypermedia In Action
-:chapter: N
+:chapter: 6
 :sectnums:
 :figure-caption: Figure {chapter}.
 :listing-caption: Listing {chapter}.
 :table-caption: Table {chapter}.
-:sectnumoffset: 0
+:sectnumoffset: 5
 // line above:  :sectnumoffset: 5  (chapter# minus 1)
 :leveloffset: 1
 :sourcedir: ../code/src
@@ -34,7 +34,7 @@ The last constraint of REST as described by Fielding is _((Code on Demand))_. Im
 "REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented."
 -- Roy Fielding,  Architectural Styles and the Design of Network-based Software Architectures
 
-By this explanation, the main role of scripts from the application developer's perspective is to extend the browser to the application's needs -- like browser extensions. A ((polyfill)) is an example of this kind of script. As we eill see later, however, there are other ways of using scripting that go well with hypermedia.
+By this explanation, the main role of scripts from the application developer's perspective is to extend the browser to the application's needs in the same way as browser extensions extend the browser to the user's needs. A _((polyfill))_ is an example of this kind of script. As we eill see later, however, there are other ways of using scripting that go well with hypermedia.
 
 "Allowing features to be downloaded after deployment improves system extensibility."
 -- (continued)
@@ -65,7 +65,7 @@ Gemini is a modern hypermedia system, similar to the Web, that does not include 
 [#web-as-app-delivery]
 == The Web as a medium for application delivery
 
-The HTML, CSS, JS trio of languages have demonstrated their capability as a GUI toolkit so extensively, that to cite evidence seems inane. Although controversial, some developers turn to tools like Electron for applications that may never be run in a browser context.
+The HTML, CSS, JS trio of languages have demonstrated their capability as a GUI toolkit so extensively, that to cite evidence seems inane. Some developers turn to tools like Electron for applications that may never be run in a browser context, as controversial as such tools may be.
 
 [example]
 Balena Etcher is an Electron application that writes ISO images onto drives, usually to create OS installation media such as Live USBs -- a task that cannot be done in a browser.
@@ -79,10 +79,10 @@ Web applications are not just cross-platform but _platform-independent_. The web
 
 The ubiquity of the web means that:
 
-* *Your application will be run in environments you have not tested them in.* The only way to minimize this is to minimize the amount of code running on the user's device.
-* *You will need to create an appropriate user experience for different platforms in one codebase.* You can try to avoid this by trying to detect the kind of device that is requesting the app and delivering a different app accordingly. For instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile, which will likely be neglected by this kind of application until one form factor gains widespread use.
+* *Your application is destined to run in environments you have not tested them in.* The only way to minimize this is to minimize the amount of code running on the user's device.
+* *You will need to create an appropriate user experience for different platforms in one codebase.* This is known as ((responsive web design)). You can try to avoid this by trying to detect the kind of device that is requesting the app and delivering a different app accordingly. This technique may be frowned upon but it finds signfiicant use; for instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile. These devices will likely be neglected by this kind of application until one of them gains widespread use.
 +
-Hypermedia-driven applications will shift as much of this burden as possible to the platform developer, who is responsible for providing a spec-compliant Web browser.
+Hypermedia-driven applications shift as much of the burden of responsive web design as possible to the platform developer, who provides a spec-compliant Web browser.
 
 
 [.line-through]
@@ -91,12 +91,6 @@ Hypermedia-driven applications will shift as much of this burden as possible to 
 // This chapter discusses archetypes of scripts. These are better introduced with examples, interspersed into the sections on various libraries.
 [.line-through]
 --
-One form of script that goes well with hypermedia is similar to a polyfill; which extends the interaction capabilities of the client. The specific behavior to be used is still encoded in the document, usually in an application-specific format. For examples of such scripts, one might implement a rich text input for forms, or enhance links with previews that appear when hovered. 
-
-The polyfill-style script, which can be called the _((behavior script))_, must be written with a great care for accessibility. Accessibility in web applications is an intricate dance between browsers, operating systems and assistive tools. The identities of these systems are all unknown to the application developer, who must somehow step in time. As one builds further beyond the features the user agent provides, the risk of stepping on someone's toes tends to increase.
-
-Another category of script can be termed the _processor_, which comprises batch transformations applied to transmissions between server and client. An example processor of server->client transmissions is a script that visually positions footnotes in a document next to where they're referenced. It is important to also process fragments inserted into the document by scripts.
-
 The most important role of scripts is to respond to user interactions. As a result, they deal heavily with ((events)). They modify the client's in-memory representation of the document.
 --
 
@@ -133,9 +127,91 @@ behavior Draggable(dragHandle)
 end
 -------------
 
-=== _Pattern:_ Reusable Behavior
-
 == Alpine.js
+
+<https://alpinejs.dev/>.
+
+Alpine.js is a library inspired by Vue.js. It emphasizes being lightweight.
+
+.Sample code from the Alpine.js website
+[source,html]
+----
+<div x-data="{ open: false }">
+    <button @click="open = true">Expand</button>
+ 
+    <span x-show="open">
+      Content...
+    </span>
+</div>
+----
+
+Like _hyperscript, it allows you to invoke behavior directly from markup. Unlike _hyperscript, it uses JavaScript instead of a bespoke programming language.
+
+In an Alpine application, code will rarely modify the document directly. Instead, Alpine uses a reactivity system borrowed from Vue. `x-data` is used to define JavaScript objects accessible from a given subtree of the document. Templating directives like `x-show` or `x-for` are used to modify elements based on those objects. Then, when that data is modified, Alpine will update the document accordingly.
+
+In _hyperscript, one might write the above component as such:
+
+[source,html]
+----
+<div id="disclosure">
+    <button _="on click toggle *display of #popup"
+      >Expand</button>
+ 
+    <span id="popup">
+      Content...
+    </span>
+</div>
+----
+
+Compared to the original Alpine example, the _hyperscript version has a lot less indirection. That can be a disadvantage -- see how handling all document mutations in the framework allows Alpine to give us easy animations:
+
+[source,html]
+----
+<div x-data="{ open: false }">
+    <button @click="open = true">Expand</button>
+ 
+    <span x-show="open" x-transition> <1>
+      Content...
+    </span>
+</div>
+----
+<1> The `x-transition` attribute will add a fade animation by default. Examples of more intricate control over transitions can be found in the Alpine.js documentation.
+
+When the page author directly modifies the document via code, it's a lot more difficult for tools to provide this kind of convenience because the transition logic needs to be sandwiched around the addition/removal of elements. Achieving the above in _hyperscript would look a bit like this:
+
+[source,html]
+----
+<div id="disclosure">
+    <button _="on click
+      if #popup's *display is 'none'
+        show #popup
+        transition the #popup's opacity from 0 to 1
+      else
+        transition the #popup's opacity from 1 to 0
+        hide #popup
+      "
+      >Expand</button>
+ 
+    <span id="popup">
+      Content...
+    </span>
+</div>
+----
+
+Of course, this code could be extracted as a reusable behavior:
+
+[source,html]
+----
+<div _="install Disclosure">
+    <button _="on click trigger Disclosure:toggle"
+      >Expand</button>
+ 
+    <span>
+      Content...
+    </span>
+</div>
+----
+
 
 === _Principle:_ Locality
 
@@ -147,7 +223,48 @@ end
 
 === _Example:_ Rich text input
 
-=== _Pattern:_ Component
+=== _Pattern:_ Reusable Behavior
+
+One form of script that goes well with hypermedia is similar to a polyfill; which extends the interaction capabilities of the client. Unlike a polyfill, however, they introduce capabilities not in any specification and their use may be completely unique to one application. The specific behavior to be used is not programmed but still encoded in the document, usually in an application-specific format. For example, one might implement a rich text input for forms which is instantiated by adding a class to an `<input>` tag, or enhance all anchor links with previews that appear when hovered. 
+
+The polyfill-style script, which can be called the _((behavior script))_, must be written with a great care for accessibility. Accessibility in web applications is an intricate dance between browsers, operating systems and assistive tools. The identities of these systems are all unknown to the application developer, but they still have to step in time. As one builds further beyond the features the user agent provides, the risk of stepping on someone's toes tends to increase.
+
+=== RSJS
+
+<https://ricostacruz.com/rsjs/>. Stands for "Reasonable System for JavaScript Structure".
+
+A system for creating reusable behaviors in JavaScript. RSJS is a set of guidelines for writing client-side JavaScript for non-single-page applications.
+
+* *"Think in component behaviors".* A behavior is a piece of code that only affects a select part of the document. Behaviors are linked to elements using HTML data attributes:
++
+[source,html]
+----
+<div class='main-navbar' data-js-collapsible-nav>
+  <button class='expand' data-js-expand>Expand</button>
+  <a href='/'>Home</a>
+  <ul>...</ul>
+</div>
+----
++
+This is Locality of Behavior in action. Note that LoB does not require that behavior is _implemented_ at the site of use, only _invoked_.
+
+* *"One component per file".* Each .js file should be named after the data attribute it is invoked by. This is also important for locality: There should be a clear, deterministic path from invocation to definition.
+
+* *"Load components in all pages".*
+
++
+[quote]
+--
+Your main .js file should be a concatenation of all your behaviors. 
+
+It should be safe to load all behaviors for all pages. Since your behaviors are localized to their respective components, they will not have any effect unless the element it applies to is on the page.
+--
+
+* *"Use a data attribute".* "You can use ID’s and classes, but this can be confusing since it isn’t obvious which class names are for styles and which have JS behaviors bound to them." This is a case if Locality of Behavior and Separation of Concerns in unison.
+
+* *"No inline scripts".* "By putting imperative logic outside your .js files (eg, JavaScript in your .html), it makes your application harder to test and they pose a significant maintenance burden". This is a departure from _hyperscript and Alpine practices. An important concern around testing. In hypermedia-driven applications, client scripting is usually reserved for interactions. Manual testing is often more appropriate for this kind of code. However, if your application requires a lot of logic to be computed client-side, this is a good principle to follow.
+
+Remember that these are only a few of the guidelines RSJS comprises. We present the structural guidelines that are relevant to the topics we covered. 
 
 === _Principle:_ Element Lifecycle
 

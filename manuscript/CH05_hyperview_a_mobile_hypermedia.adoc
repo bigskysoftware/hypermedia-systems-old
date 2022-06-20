@@ -1,0 +1,201 @@
+= Hypermedia In Action
+:chapter: 5
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 2
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+= Hyperview: A Mobile Hypermedia
+
+This chapter covers:
+
+* Shortcomings with the state of mobile app development
+* How Hyperview brings Hypermedia to mobile apps
+* Rewriting our contacts app as a native mobile app
+
+== State of mobile app development
+
+In web development, you deliver JS,HTML,CSS,JSON on-demand to a standard web browser. This is not the case with a native mobile app.
+
+With native mobile apps, you compile code into an executable binary targeting the operating system (Android or iOS).
+This binary gets uploaded and approved through app stores controlled by Google and Apple.
+When you install or update an app, you're downloading the binary and running the code directly on your device's OS.
+In this way, mobile apps have a lot in common with old-school desktop apps for Mac or Windows.
+
+There is one important difference between old-school desktop apps and today's mobile apps.
+These days, almost all mobile apps are "networked".
+By networked, I mean the app needs to read and write data over the Internet to implement core functionality.
+What's the easiest way to make a mobile app networked?
+Well, the app stores already require developer to write & distribute code that runs on the user's device.
+So why not have that frontend code make requests to a backend, and update the UI based on the response?
+
+Developers are naturally led into a SPA-like pattern for developing mobile apps:
+- The frontend on the mobile device, runs code to create and update the UI
+- The backend is an API, called by the frontend
+
+Just like with SPAs on the web, this architecture has a big downside: the app's logic gets spread across the frontend and backend.
+Sometimes, logic needs to be duplicated (like to validate form data).
+Other times, the frontend and backend each implement one part of the app's overall logic.
+To understand what the app does, a developer needs to trace interactions between two very different codebases.
+
+There's another downside which affects mobile apps more than SPAs: API churn.
+Remember, the app stores control how your app gets distributed and updated.
+Users can even control if and when they get updated versions of your app.
+As a mobile developer, you can't assume that every user will be on the latest version of your app. 
+Your frontend code gets fragmented across many versions, and now your backend needs to support all of them.
+
+
+== Hypermedia for Mobile Apps
+We’ve seen that the hypermedia architecture can address the problems of SPAs on the web.
+But can hypermedia work for mobile apps as well?
+The answer is yes!
+There are two approaches employing hypermedia to build & ship native mobile apps today:
+- Web views, which wraps the trusty web platform in a mobile app shell
+- Hyperview, a new hypermedia format designed specifically for mobile apps
+
+
+=== Web views
+The simplest way to use hypermedia on mobile is make a web app!
+Android and iOS ship with powerful web browser engines that can be embedded in a native app.
+Tools like Apache Cordova make it easy to build a native app that takes a URL and spits out binaries for Android and iOS.
+If you already have a responsive web app, you can have a native app for "free".
+Sounds too good to be true, right?
+
+Of course, there is a fundamental limitation with this approach.
+The web and native mobile apps are different platforms, with different UX conventions.
+HTML doesn't natively support common UI patterns of mobile apps.
+The biggest disconnect is around navigation.
+On the web, navigation is page-based, with one page replacing another and the browser providing back/forward buttons to navigate the page history.
+On mobile, navigation is more complex, and tuned for the physicality of gesture-based interactions.
+
+- Screens slide over right to left, forming stacks.
+- A persistant nav bar at the bottom of the screens may switch between various stacks.
+- Modals may slide up from the bottom, covering the other stacks and nav bar.
+- Unlike with web pages, all of these screens are still present in memory, rendered and updating based on app state.
+
+The web platform has no way to natively implement the UX of mobile app navigation.
+Of course, these interactions can be simulated with JS libraries.
+But these libraries will never have the same feel and performance as native gestures.
+And using these libraries means we typically need to embrace a JS-heavy SPA architecture.
+This puts us back at square 1!
+We wanted to avoid using the typical SPA architecture of native mobile app development, so we turned to a Web view.
+The web view allows us to use good-old hypermedia-based HTML.
+But to get the desired look & feel of a mobile app, we end up building a SPA in JS!
+
+Many mobile apps on iOS and Android are implemented as web views, and they work perfectly fine.
+If you already have a responsive web app, perhaps wrapping it in a Web view and distributing it through app stores is an easy proposition.
+I tend to think "let the web be the web", and "let mobile be mobile".
+Your responsive web app already works perfectly fine through the mobile device's web browser.
+Does it need to be in the app store too?
+Progressive web app support has come a long way on iOS and Android.
+Users can "install" your web app to their home screen, to launch it with a single click.
+
+To build a hypermedia-based mobile app that feels and acts native, HTML isn't going to cut it.
+We need a format designed to represent the interactions and patterns of native mobile apps.
+That's exactly what Hyperview does.
+
+
+=== Hyperview
+
+* Yes! However, the mindset needs to be slightly different:
+   * On web, other companies provide the hypermedia client in the form of a web browser (Chrome, Safari, Firefox, etc). As a developer, you only need to worry about your HDA backend.
+   * On mobile, there is no universal hypermedia client for native apps. But we can build mobile app as a thin hypermedia client that talks only to our backend.
+   * But it’s a lot of work to build a hypermedia client, define the data format, etc.
+
+* That’s where Hyperview comes in. It’s a framework that provides:
+   * A pre-defined hypermedia format for defining mobile apps called HXML
+   * A hypermedia client for HXML that can be bundled into your mobile app binary to render the HDA
+   * Extension points to extend HXML and the client to support unique features your app may need.
+
+* With Hyperview, we can use all the same server-side techniques we use to build Hypermedia-driven web apps.
+* Hyperview has learned from htmx, a lot of the ideas are built in.
+* One backend can be used to serve both apps!
+
+
+=== Why create a new Hypermedia?
+* HTML was designed for typesetting documents. Some of the decisions are sub-optimal for describing mobile apps. Libraries like htmx can be layered on top, but they’re not built-in.
+* We wanted something more expressive and bespoke for defining mobile apps:
+   * Elements representing common mobile UI patterns
+   * Built-in support for rich interactions (like those possible in htmx)
+   * Extensible for custom components and interactions
+      * No scripting: pure Hypermedia to improve readability and performance
+      * scripting support opens Pandora's box
+
+
+== Introduction to HXML
+* HTML is the most popular hypermedia format. We wanted someone familiar with HTML to feel comfortable with HXML.
+   * Start with XML format. Gives us familiar syntax, and it is by nature extensible.
+   * Basic building blocks: view, text, list, image, inputs
+      * <Show basic example>
+   * Point of extensibility, developers can create their own
+      * <Show example of custom element)
+* When it comes to interactions, that’s where HXML starts to diverge from HTML
+   * HTML has two primary ways of interaction:
+      * Click a link: GET request to load a new page
+      * Click a form submit button: POST (usually) request to load a new page
+   * These ways of interaction are not enough to build rich UIs. Interactions (clicks, form submits) are tightly coupled to a single action (request a new page).
+   * htmx (and Intercooler before it) broke that paradigm:
+      * Interactions and actions are decoupled via triggers
+      * Actions can modify the current page, not just request a new page
+   * This allows a wide range of new possibilities to build rich HDAs.
+* HXML builds in this idea of triggers, actions and targets into the spec itself. Collectively, we refer to these as behaviors.
+   * Navigation behaviors, equivalent to links in HTML.
+      * Can push new screen onto a stack, or open as a modal
+      * <Show navigation example>
+      * Can submit a form to update a fragment
+      * <Show form submission example>
+* HXML takes it further:
+   * A user interaction can trigger multiple behaviors, causing multiple actions
+      * <Show example>
+   * Actions do not necessarily cause HTTP requests, they can be used for local interactions
+      * <Show example of triggering share sheet or dialog>
+   * Actions are extensible, developers can create their own
+      * <Show example of custom behavior>
+
+
+== Building a Contacts Mobile App
+* HDAs can easily target multiple Hypermedia formats
+* Our contacts app can easily become a native mobile app with Hyperview!
+
+
+=== Basics
+   * Add support for returning either HTML or XML based on request
+   * Create base layout templates
+   * Set up a demo Hyperview client (using Expo)
+* Contacts screen:
+   * Convert to <list> and <items>
+   * Add behavior to open details
+   * Pull to refresh
+   * Add infinite scroll
+* Contact view:
+   * Show data and buttons to edit/delete
+   * Edit button: replace data with form
+      * On submit: show spinner, then go back
+   * Delete button: show spinner, then go back
+   * Problem: Contacts screen is not updated!
+      * Solution: add event dispatch, contacts screen listens to updates
+
+
+=== Extending Hyperview
+* Problem: how to show a toast confirming the action?
+   * Remember, no scripting to add functionality
+   * Need to extend Hyperview with a toast component
+   * Find a RN library, show how to wrap it as custom component.
+
+* Problem: we want to call/email our contacts.
+  * Remember, no scripting to add functionality
+  * Need to extend Hyperview with behaviors for sms, call, email
+  * Find a RN library, show how to wrap it as custom behaviors.
+
+* With custom components and behaviors, we can do almost anything a native app can do.
+* Note how we cleanly extend the client:
+  * HXML remains pure XML, no scripts
+  * We've essentially added features to the Hyperview "browser" that we need
+
+
+== Summary

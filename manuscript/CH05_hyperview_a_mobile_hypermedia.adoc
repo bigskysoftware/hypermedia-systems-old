@@ -35,6 +35,7 @@ Well, the app stores already require developer to write & distribute code that r
 So why not have that frontend code make requests to a backend, and update the UI based on the response?
 
 Developers are naturally led into a SPA-like pattern for developing mobile apps:
+
 - The frontend on the mobile device, runs code to create and update the UI
 - The backend is an API, called by the frontend
 
@@ -55,14 +56,15 @@ We’ve seen that the hypermedia architecture can address the problems of SPAs o
 But can hypermedia work for mobile apps as well?
 The answer is yes!
 There are two approaches employing hypermedia to build & ship native mobile apps today:
+
 - Web views, which wraps the trusty web platform in a mobile app shell
 - Hyperview, a new hypermedia format designed specifically for mobile apps
 
 
 === Web views
-The simplest way to use hypermedia on mobile is make a web app!
+The simplest way to use hypermedia on mobile is to make a web app!
 Android and iOS ship with powerful web browser engines that can be embedded in a native app.
-Tools like Apache Cordova make it easy to build a native app that takes a URL and spits out binaries for Android and iOS.
+Tools like Apache Cordova make it easy to build a native app that takes a URL and spits out binaries for each platform.
 If you already have a responsive web app, you can have a native app for "free".
 Sounds too good to be true, right?
 
@@ -73,9 +75,9 @@ The biggest disconnect is around navigation.
 On the web, navigation is page-based, with one page replacing another and the browser providing back/forward buttons to navigate the page history.
 On mobile, navigation is more complex, and tuned for the physicality of gesture-based interactions.
 
-- Screens slide over right to left, forming stacks.
-- A persistant nav bar at the bottom of the screens may switch between various stacks.
-- Modals may slide up from the bottom, covering the other stacks and nav bar.
+- To drill down, screens slide on top of each other, forming stacks of screens.
+- A nav bar at the bottom of the app allows switching between various stacks of screens.
+- Modals slide up from the bottom of the app, covering the other stacks and the nav bar.
 - Unlike with web pages, all of these screens are still present in memory, rendered and updating based on app state.
 
 The web platform has no way to natively implement the UX of mobile app navigation.
@@ -85,7 +87,7 @@ And using these libraries means we typically need to embrace a JS-heavy SPA arch
 This puts us back at square 1!
 We wanted to avoid using the typical SPA architecture of native mobile app development, so we turned to a Web view.
 The web view allows us to use good-old hypermedia-based HTML.
-But to get the desired look & feel of a mobile app, we end up building a SPA in JS!
+But to get the desired look & feel of a mobile app, we end up building a SPA in JS.
 
 Many mobile apps on iOS and Android are implemented as web views, and they work perfectly fine.
 If you already have a responsive web app, perhaps wrapping it in a Web view and distributing it through app stores is an easy proposition.

@@ -12,11 +12,12 @@
 
 = Hyperview: A Mobile Hypermedia
 
-This chapter covers:
+In this chapter, we will:
 
-* Shortcomings with the state of mobile app development
-* How Hyperview brings Hypermedia to mobile apps
+* Discuss shortcomings with the current state of mobile app development
+* Explain how to address those problem with a Hypermedia architecture using Hyperview
 * Rewriting our contacts app as a native mobile app
+* Showing how one backend can serve multiple Hypermedia formats to support both web and mobile apps
 
 == State of mobile app development
 
@@ -55,6 +56,14 @@ Your frontend code gets fragmented across many versions, and now your backend ne
 We’ve seen that the hypermedia architecture can address the problems of SPAs on the web.
 But can hypermedia work for mobile apps as well?
 The answer is yes!
+
+Just like on the web, we can use Hypermedia formats on mobile to let the backend serve as the engine of app state.
+All of the logic is controlled from the backend, rather than being spread between two codebases.
+Hypermedia architecture also solves the annoying problem of API churn on mobile apps.
+Since the backend server a Hypermedia response containing both data and actions, there's no way for the data and UI to get out of sync.
+No more worries about backwards compatibility or maintaining multiple API versions.
+
+So how can you use Hypermedia for your mobile app?
 There are two approaches employing hypermedia to build & ship native mobile apps today:
 
 - Web views, which wraps the trusty web platform in a mobile app shell
@@ -63,8 +72,11 @@ There are two approaches employing hypermedia to build & ship native mobile apps
 
 === Web views
 The simplest way to use hypermedia on mobile is to make a web app!
-Android and iOS ship with powerful web browser engines that can be embedded in a native app.
-Tools like Apache Cordova make it easy to build a native app that takes a URL and spits out binaries for each platform.
+Both Android and iOS SDKs provide "web views": ways to embed a chromeless web browser in a native app.
+Tools like Apache Cordova make it easy to wrap an existing web app
+
+build native apps around these web views. You provide your web app's UR
+
 If you already have a responsive web app, you can have a native app for "free".
 Sounds too good to be true, right?
 
@@ -79,6 +91,13 @@ On mobile, navigation is more complex, and tuned for the physicality of gesture-
 - A nav bar at the bottom of the app allows switching between various stacks of screens.
 - Modals slide up from the bottom of the app, covering the other stacks and the nav bar.
 - Unlike with web pages, all of these screens are still present in memory, rendered and updating based on app state.
+
+The navigation architecture is a big difference between mobile and web platforms, but it's not the only one.
+There are other UX patterns that are native on mobile, and not natively present on web:
+
+- pull-to-refresh to refresh content in a screen
+- horizontal swipe on UI elements to reveal actions
+- sectioned lists with sticky headers
 
 The web platform has no way to natively implement the UX of mobile app navigation.
 Of course, these interactions can be simulated with JS libraries.
@@ -102,7 +121,46 @@ We need a format designed to represent the interactions and patterns of native m
 That's exactly what Hyperview does.
 
 
-=== Hyperview
+=== Designing a Modern Hypermedia
+
+We're used to thinking of HTML and the Web as the one and only Hypermedia architecture.
+But that can lead us to conflate the design decisions of the Web with those of the Hypermedia architecture.
+To design a mobile Hypermedia, it's important to untangle Hypermedia from the Web.
+That way, we can thoughtfully choose which features to embrace, and which ones to eschew.
+
+One of the defining characteristics of the web is its open nature.
+On the web:
+
+- Anyone can create a website (Hypermedia content)
+- Anyone can link to anyone else's website
+- Users can access websites through any web browser (Hypermedia client)
+
+So Hypermedia on the Web is shaped by the fact that the Web is an open platform.
+Users are comfortable using one web browser to access infinite content.
+But as I described at the beginning of the chapter, that's not the experience using native mobile apps.
+Apple and Google maintain strict control over their platforms.
+Users expect mobile apps to be focused in their scope, not portals to a world of experiences.
+This has ramifications for how we design a mobile app Hypermedia.
+We don't need to design with the constraint of openness.
+Instead, we need to assume a closed system, where an app developer controls both the server and client.
+I call it the single-app browser.
+
+==== The Format
+Design goals:
+
+* The format should feel familiar to HTML users.
+  * Easy to pick up.
+  * Use the same server side techniques that work for HTML (templating engines)
+* Support common mobile patterns.
+* Build in ideas from htmx. Decouple actions from triggers. Allow partial updates to screens
+* Extensibility. Don't try to cover every use case.
+
+==== The Client
+* There’s one more problem with implementing our own Hypermedia.
+
+
+Leaving the HTML ecosystem
+create a new Hypermedia format, we nee
 
 * Yes! However, the mindset needs to be slightly different:
    * On web, other companies provide the hypermedia client in the form of a web browser (Chrome, Safari, Firefox, etc). As a developer, you only need to worry about your HDA backend.
@@ -117,16 +175,6 @@ That's exactly what Hyperview does.
 * With Hyperview, we can use all the same server-side techniques we use to build Hypermedia-driven web apps.
 * Hyperview has learned from htmx, a lot of the ideas are built in.
 * One backend can be used to serve both apps!
-
-
-=== Why create a new Hypermedia?
-* HTML was designed for typesetting documents. Some of the decisions are sub-optimal for describing mobile apps. Libraries like htmx can be layered on top, but they’re not built-in.
-* We wanted something more expressive and bespoke for defining mobile apps:
-   * Elements representing common mobile UI patterns
-   * Built-in support for rich interactions (like those possible in htmx)
-   * Extensible for custom components and interactions
-      * No scripting: pure Hypermedia to improve readability and performance
-      * scripting support opens Pandora's box
 
 
 == Introduction to HXML
@@ -160,10 +208,9 @@ That's exactly what Hyperview does.
       * <Show example of custom behavior>
 
 
-== Building a Contacts Mobile App
+== Building a Contacts Mobile App With Hyperview
 * HDAs can easily target multiple Hypermedia formats
 * Our contacts app can easily become a native mobile app with Hyperview!
-
 
 === Basics
    * Add support for returning either HTML or XML based on request
@@ -198,6 +245,29 @@ That's exactly what Hyperview does.
 * Note how we cleanly extend the client:
   * HXML remains pure XML, no scripts
   * We've essentially added features to the Hyperview "browser" that we need
+
+
+== One Backend, Multiple Hypermedias
+* We turned out simple Contacts app into a native mobile app
+  * mostly, we changed templates from HTML to HXML
+* But the app doesn't work on the web anymore.
+* Can we use the same backend for both a rich web app and a native mobile app?
+* Yes! The same backend logic can be used for both, we just need to respond with HTML or HXML based on the client.
+* There are a couple of relevant approaches.
+* The important thing is to detect whether the client speaks HTML or HXML.
+  * Luckily, this is what the HTTP Accept header is for!
+  * HV client uses two headers: one for full docs, and one for fragments
+* Using the Accept header, we know if the client is a web browser of mobile app using Hyperview, and we can respond with HTML or HXML.
+* But what's the best way to organize our code? Two approaches to consider with different tradeoffs:
+
+* Approach 1: share the same view, but select template based on header
+  * easiest approach, minor changes
+  * works well if the interactions on both platforms is the same
+  * may not be the best approach if the two platforms have different behaviors
+
+* Approach 2: share the same model logic, but create separate views
+  * some duplication required to parse requests
+  * the context can be uniquely crafted for the given platform
 
 
 == Summary

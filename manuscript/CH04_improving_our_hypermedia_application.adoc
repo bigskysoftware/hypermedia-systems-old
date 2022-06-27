@@ -1,0 +1,506 @@
+= Hypermedia In Action
+:chapter: 4
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 3
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+
+= Improving Our Hypermedia Application
+
+This chapter covers:
+
+* Installing htmx in our application
+* Adding AJAX-based navigation to our application
+* Implementing a proper delete mechanic for contacts
+* Implementing inline editing of contacts
+
+== Installing htmx
+
+Now that we've seen how htmx extends HTML as a hypermedia, it's time to put it into action.  We will still be
+exchanging hypermedia with our server, no need to create a JSON API, but we will be able to improve the user
+experience nonetheless.
+
+The first thing we need to do is install htmx in our web application.  We are going to do this by downloading the
+source and saving it locally in our application, so we aren't dependent on any external systems.  We can grab the
+latest htmx version by going to `https://unpkg.com/htmx.org`, which will redirect to the current version of the
+library.  We can copy and paste that into the `static/js/htmx.js` file.  (You may want to add the version of htmx
+to the file name, to keep things straight.)
+
+You can, of course, use something like Node Package Manager (NPM) or some other dependency management system if you
+would prefer, but we won't need a lot of javascript, and htmx is dependency free, so we'll keep it simple for our
+contact application.
+
+With htmx downloaded locally to our system, we can now add the following code to the `head` tag in our `layout.html`
+file, so it will be included on every page in our web application:
+
+[#listing-4-1, reftext={chapter}.{counter:listing}]
+.Installing htmx
+[source,html]
+----
+    <script src="/js/htmx.js"></script>
+----
+
+That's it!  No need to add a build step or anything else to our project, this simple inclusion of the htmx script
+file will make functionality available across our entire application.
+
+== Adding AJAX Navigation
+
+The first feature of we are going to take advantage of is a bit of a "cheater" feature: `hx-boost`.  The `hx-boost`
+attribute is unlike most other attributes in htmx.  Other htmx attributes tend to be very focused on
+one aspect of HTML: `hx-trigger` focuses on the events that trigger a request, `hx-swap` focuses on how responses
+are swapped into the DOM, and so forth.  The `hx-boost` attribute, in contrast, operates at a very high level: when
+you put it on an element with the value `true`, it will "boost" all anchor tags and forms within that element.  Boost,
+in this case, means it will convert those elements from regular anchor tags and forms into AJAX-powered anchors and
+forms.
+
+So boosted anchors, for example, rather than issuing a "normal" browser request, will issue an AJAX `GET` and replace
+the whole body with the response.
+
+Here is an example of a boosted link:
+
+[#listing-4-1, reftext={chapter}.{counter:listing}]
+.A Boosted Link
+[source,html]
+----
+<a href="/settings" hx-boost="true">Settings</a> <1>
+----
+<1> A simple attribute makes this link AJAX-powered
+
+Here we have a link to a hypothetical settings page.  Because it has `hx-boost="true"` on it, htmx will prevent the normal
+link behavior and instead issue an AJAX request to `/settings`, taking the result and replacing the `body` element with
+the new content.
+
+Now, you might wonder: what's the advantage here?  We are issuing an AJAX request and simply replacing the entire body.
+Is that significantly different from just issuing a normal link request?
+
+The answer is yes: in a boosted link, the browser is able to avoid any processing associated with the head tag.  The head
+tag often contains many scripts and CSS file references.  In the boosted scenario, it is not necessary to re-process those
+resources: the scripts and styles have already been processed and will continue to apply to the new content.  This can
+often be a very easy way to speed up your hypermedia application.
+
+A second question you might have is: does the response have to be formatted specially to work with `hx-boost`?  After all,
+the settings page would normally render an `html` tag, with a `head` tag and so forth.  Do you need to handle "boosted"
+requests specially?
+
+The answer in this case is no: htmx is smart enough to pull out only the content of the body to swap in to the new page.
+The `head` tag, etc. are all ignored.  This means you don't need to do anything special on the server side to render
+templates that `hx-boost` can handle: just return the normal HTML for your page and it should work fine.
+
+Boosted form tags work in a similar way to boosted anchor tags: a boosted form will use an AJAX request rather than the
+usual browser-issued request, and will replace the entire body with the response:
+
+[#listing-4-2, reftext={chapter}.{counter:listing}]
+.A Boosted Form
+[source,html]
+----
+<form action="/messages" method="post" hx-boost="true"><1>
+  <input type="text" name="message" placeholder="Enter A Message...">
+  <button>Post Your Message</button>
+</form>
+----
+<1> As with the link, a simple attribute makes this form AJAX-powered
+
+This form posts messages to the `/messages` end point with an HTTP `POST`.  By adding `hx-boost` to it, those requests
+will be done in AJAX, rather than the normal browser behavior.
+
+Another advantage of the AJAX-based request that `hx-boost` issues is that it avoids what is known as a "flash of unstyled
+content", which is when a page renders before all of the styling information has been downloaded for it.  This causes
+a disconcerting momentary flash of the unstyled content, which is then restyled when all the style information is available.
+You probably notice this as a flicker when you move around the internet, where text can "jump around" on the page as styles
+are applied to it.
+
+With `hx-boost` the styling is already loaded before the content is retrieved, so there is no such flash of unstyled
+content.  This makes "boosted" applications feel smoother and less jarring in general.
+
+=== Attribute Inheritance
+
+Let's expand on our previous example of a boosted link, and add a few more boosted links along side it:
+
+[#listing-4-3, reftext={chapter}.{counter:listing}]
+.A Set of Boosted Links
+[source,html]
+----
+<a href="/contacts" hx-boost="true">Contacts</a>
+<a href="/settings" hx-boost="true">Settings</a>
+<a href="/help" hx-boost="true">Help</a>
+----
+
+We now have a link to the `/contacts` page as well as the `/help` page.  All these links are boosted and will behave
+in the manner that we have described.  But this feels a little redundant, doesn't it.  It is a shame we have to say
+`hx-boost="true"` three times here, right next to one another.
+
+htmx offers a feature to help reduce redundancy here: attribute inheritance.  For many attributes in htmx, by placing it
+on a parent, it will apply to all children elements.  This is how Cascading Style Sheets work, and the idea was inspired
+by CSS.
+
+So to avoid the redundancy in this example, lets introduce a `div` element that encloses all the links and "hoist" the
+`hx-boost` attribute up to it:
+
+[#listing-4-3, reftext={chapter}.{counter:listing}]
+. Boosting Links Via The Parent
+[source,html]
+----
+<div hx-boost="true"> <1>
+    <a href="/contacts">Contacts</a>
+    <a href="/settings">Settings</a>
+    <a href="/help">Help</a>
+</div>
+----
+<1> The `hx-boost` has been moved to the parent div
+
+Now we have removed the redundant `hx-boost` attributes, but all the links are still boosted, inheriting that functionality
+from the parent element.  Note that any legal element type could be used here, we just used a `div` out of habit.
+
+But what if you have a link that you _don't_ want boosted within an element that has `hx-boost="true"` on it?  A good
+example is a link to a resource to be downloaded, such as a PDF.  Downloading a file can't be handled well by an AJAX
+request, so you'd want that link to behave normally.
+
+To deal with this situation, you would override the parent `hx-boost` value with `hx-boost="false"` on the element
+in question:
+
+[#listing-4-3, reftext={chapter}.{counter:listing}]
+. Boosting Links Via The Parent
+[source,html]
+----
+<div hx-boost="true"> <1>
+    <a href="/contacts">Contacts</a>
+    <a href="/settings">Settings</a>
+    <a href="/help">Help</a>
+    <a href="/help/documentation.pdf" hx-boost="false">Download Docs</a> <2>
+</div>
+----
+<1> The `hx-boost` is still on the parent div
+<2> The boosting behavior is overridden for this link
+
+Here we have a new link to a documentation PDF that we wish to function normally.  We have added `hx-boost="false"` to
+the link and this will override the `hx-boost="true"` on the parent, reverting this link to regular link behavior and
+allowing the download behavior that we want.
+
+=== Progressive Enhancement
+
+A very nice aspect of `hx-boost` is that it "progressively enhances" web applications.  Consider the links in the
+example above.  What would happen if someone did not have JavaScript enabled?  Nothing much!  The application would
+continue to work, but it would issue regular HTTP requests, rather than AJAX-based HTTP requests.  This means that
+your web application will work for the maximum number of users, with users of more modern browsers (or users who
+have not turned off JavaScript) able to take advantage of the benefits of AJAX-style navigation, but other people
+still able to use the app just fine.
+
+Compare this with a JavaScript heavy Single Page Application: it simply won't function without JavaScript, obviously.
+It is very difficult to adopt a progressive enhancement approach within that model.
+
+This is not to say that htmx _always_ offers progressive enhancement.  It is certainly possible to build features that
+do not offer a "No JS" fallback in htmx, and, in fact, many of the features we will build later in the book will fall
+into this category.  (I will note when a feature is progressive enhancement friendly and when it is not.)  Ultimately,
+it is up to you, the developer, to decide if the tradeoffs of progressive enhancement (more basic UX functionality, a
+limited improvement over plain HTML) are worth the benefits for your applications users.
+
+=== Adding `hx-boost` to Contact.app
+
+For our contact app we want this "boost" behavior... well, everywhere.  Right?  Why not?  How could we accomplish that?
+
+Pretty darned easy: just add `hx-boost` on the `body` tag of our `layout.html` template, and be done with it!
+
+[#listing-4-3, reftext={chapter}.{counter:listing}]
+. Boosting The Entire Contact.app
+[source,html]
+----
+<html>
+...
+<body hx-boost="true"><1>
+...
+</body>
+</html>
+----
+<1> All links and forms will be boosted now!
+
+Now every link and form in our application will use AJAX by default, making it feel much snappier!  All with one,
+single attribute.  This extremely high power-to-weight ratio is why `hx-boost`, which is so different from every other attribute
+in htmx, is part of the library.  It's just too good an idea not to include!
+
+So, that's it, books over!  You've got yourself an AJAX-powered hypermedia application now!
+
+Of course, I'm kidding.  There is a lot more to htmx, and there is a lot more room for improvement in our application,
+so let's keep rolling.
+
+== Deleting Contacts
+
+In Chapter 2 you'll recall that we had a small form on the edit page of a contact to delete the contact:
+
+[source, html]
+.Plain HTML Form To Delete A Contact
+----
+    <form action="/contacts/{{ contact.id }}/delete" method="post">
+        <button>Delete Contact</button>
+    </form>
+----
+
+This form issued an HTTP `POST` to, for example, `/contacts/42/delete`, in order to delete the contact with the ID 42.
+
+I mentioned previously that one of the tremendously annoying things about HTML is that you can't issue an HTTP `DELETE`
+(or `PUT` or `PATCH`) request directly, even though these are all part of HTTP and HTTP is _obviously designed_ for
+transferring HTML!  But now, with htmx, we have a chance to rectify this situation.
+
+The "right thing", from a REST-ful, resource oriented perspective is, rather than issuing an HTTP `POST` to
+`/contacts/42/delete`, to issue an HTTP `DELETE` to `/contacts/42`.  We want to delete the contact.  The contact is
+a resource.  The URL for that resource is `/contacts/42`.  So the ideal situation is a `DELETE` to ``/contacts/42/`.
+
+So, how can we update our application to do this while still staying within the hypermedia model?  We can simply take
+advantage of the `hx-delete` attribute, like so:
+
+[source, html]
+.An htmx Powered Button For Deleting A Contact
+----
+  <button hx-delete="/contacts/{{ contact.id }}">Delete Contact</button>
+----
+
+Pretty simple!  There are two things, in particular, to notice about this new implementation:
+
+* We no longer need a `form` tag to wrap the button, because the button itself carries the hypermedia action that
+  it performs directly on itself.
+* We no longer need to use the somewhat awkward `"/contacts/{{ contact.id }}delete"` route, but can simply use the
+  `"/contacts/{{ contact.id }}` route, since we are issuing a `DELETE`, which disambiguates the operation we are
+  performing on the resource from other potential operations!
+
+=== Updating The Server Side
+
+Since we have updated both the route and the HTTP action we are using to delete a contact, we are going to need to
+update our server side implementation as well.  Here is the original code:
+
+[source, python]
+----
+@app.route("/contacts/<contact_id>/delete", methods=["POST"])
+def contacts_delete(contact_id=0):
+    contact = Contact.find(contact_id)
+    contact.delete()
+    flash("Deleted Contact!")
+    return redirect("/contacts")
+----
+
+We are going to have to do two things: first we need to update the route for our handler to the new location and method
+we are using to delete contacts.  This will be relatively straight forward.
+
+Secondly, and this is a bit more subtle, we are going to need to change the HTTP Response Code that the handler sends back.
+HTTP Response Codes are numeric values that are embedded in an HTTP response that let the client know what the result
+of a request was.  The most familiar response code for most web developers is `404`, which stands for "Not Found" and
+is the response code that is returned by web servers when a resource that does not exist is requested.
+
+HTTP redirects similarly issue an HTTP Response Code, typically in the low 300s range.  By default, in Flask the `redirect()`
+method responds with a `302` response code.  According to the Mozilla Developer Network (MDN) web docs, this means that
+the HTTP method and body of the requests will be unchanged when the redirected request is issued.  Well, in our case,
+we certainly don't want to issue a `DELETE` to `/contacts` when we redirect the user!
+
+So we are going to need to update this to a `303` response code, which will convert the redirected request to a GET.
+Fortunately this is very easy: there is a second parameter to `redirect()` that takes the response code you wish to send.
+
+Here is our new handler code:
+
+[source, python]
+----
+@app.route("/contacts/<contact_id>", methods=["DELETE"]) <1>
+def contacts_delete(contact_id=0):
+    contact = Contact.find(contact_id)
+    contact.delete()
+    flash("Deleted Contact!")
+    return redirect("/contacts", 303) <2>
+----
+<1> A slightly different path and method for the handler
+<2> The response code is now a 303
+
+As you can see, we removed the `/delete` ending of the path and change the method that this handler is associated with
+to `DELETE`.  A much more natural hypermedia approach to deleting a resource!
+
+=== Targeting The Right Element
+
+We aren't quite out of the woods yet, however.  As you may recall, by default htmx "targets" the element that triggers a request,
+and will place the HTML returned by the server inside that element.  In this case, since the redirect to `/contacts` is
+going to re-render the entire contact list, we will end up in the humorous situation where the entire list ends up
+inside the "Delete Contact" button.  Mis-targeting elements comes up from time to time in htmx and can lead to some
+pretty funny situations.
+
+The fix for this is to add an explicit target to the button, targeting the `body` element with the response:
+
+[source, html]
+.A fixed htmx Powered Button For Deleting A Contact
+----
+  <button hx-delete="/contacts/{{ contact.id }}"
+          hx-target="body"> <1>
+    Delete Contact
+  </button>
+----
+<1> We have added an explicit target to the button now
+
+Now our button behaves as expected: clicking on the button will issue an HTTP `DELETE` to the server against the URL for
+the current contact, delete the contact and redirect back to the contact list page, with a nice flash message.  Perfect!
+
+=== Updating The Location Bar URL Properly
+
+Well, almost.  If you click on the button you will notice that, despite the redirect, the URL in the location bar is
+not correct.  It still points to `/contacts/{{ contact.id }}/delete`.  This is because we haven't told htmx to update
+the URL.  Boosting will naturally do this for you, but here we are building a custom button, and so we need to let
+htmx know that we want the resulting URL "pushed" into the location bar:
+
+[source, html]
+.Deleting A Contact, Now With Proper Location Information
+----
+  <button hx-delete="/contacts/{{ contact.id }}"
+          hx-push-url="true" <1>
+          hx-target="body">
+    Delete Contact
+  </button>
+----
+<1> We tell htmx to push the redirected URL up into the location bar
+
+_Now_ we are done.  We have a button that, all by itself, is able to issue a properly formatted HTTP `DELETE` request to
+the correct URL, and the UI and location bar are all updated correctly.  This was accomplished with three attribute
+placed directly on the button, and we were able to remove the enclosing form tag as a bonus.
+
+=== One Last Thing
+
+And yet, if you are like me, something probably doesn't feel quite right here.  Deleting a contact is a pretty darned
+destructive action, isn't it?  And what if someone accidentally clicked on the "Delete Contact" button when they meant
+to click on the "Save" button?
+
+As it stands now we would just delete that contact and too bad, so sad for the user.
+
+Fortunately htmx has an easy mechanism for adding a confirmation message on destructive operations like this: the
+`hx-confirm` attribute.  You can place this attribute on an element, with a message as its value, and the JavaScript
+method `confirm()` will be called before a request is issued, which will show a simple confirmation dialog to the user
+asking them to confirm the action.  Very easy and a great way to prevent accidents.
+
+Here is how we would add confirmation of the contact delete operation:
+
+[source, html]
+.Confirming Deletion
+----
+  <button hx-delete="/contacts/{{ contact.id }}"
+          hx-push-url="true"
+          hx-confirm="Are you sure you want to delete this contact?" <1>
+          hx-target="body">
+    Delete Contact
+  </button>
+----
+<1> This message will be shown to the user, asking them to confirm the delete
+
+Now, when someone clicks on the "Delete Contact" button, they will be presented with a prompt that asks "Are you sure
+you want to delete this contact?" and they will have an opportunity to cancel if they clicked the button in error.  Very
+nice.
+
+With this final change we now have a pretty solid "delete contact" mechanic: we are using the correct, REST-ful routes
+and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
+all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
+
+One thing to note about our solution, however, is that it is _not_ a progressive enhancement to our web application: if
+someone has disabled JavaScript then this functionality will no longer work.  You could do additional work to keep
+the older mechanism working in a JavaScript-disabled environment, but it would introduce additional and redundant code.
+It is up to you to determine if that tradeoff is worth the cost.
+
+== Inline Editing
+
+OK, let's move on to the next feature we are going to implement: inline editing.  Inline editing is when, rather than
+navigating to an edit page to update some data, you can edit it directly "in place" where you are viewing it.  We
+are going to make this work directly, in the table of contacts.  In the process, we will need to restructure our server
+side templates a bit.
+
+Let's consider the current mechanism for getting to the edit page, a (boosted) link found in the `show.html` and
+`index.html` templates:
+
+[source, html]
+.Initial Edit Link
+----
+  <a href="/contacts/{{contact.id}}/edit">Edit</a>
+----
+
+And this ends up rendering the following HTML form in `edit.html`:
+
+[source, html]
+.Initial Edit Link
+----
+   <form action="/contacts/{{ contact.id }}/edit" method="post">
+----
+
+This is a simple setup, to be sure, but a little unsatisfying for the following reasons:
+
+* You navigate to an edit URL as a separate page.  Does editing a contact rise to the level of a whole separate page?
+  Would you ever copy a link of a contact editing URL and send it to someone?  Seems unlikely.
+* The form itself submits a `POST` to `/contacts/{{ contact.id }}/edit`.  It would be more REST-ful if, instead, it issued
+  a `PUT` or `PATCH` to `/contacts/{{ contact.id }}`, similar to how we issued a `DELETE` in the case of deleting
+  a contact.
+
+Let's look at how to turn this into an inline edit form directly within the table of contacts using htmx.
+
+Here is the code that generates our table of contacts on in the `index.html` template:
+
+[source, html]
+.Template Code To Generate A Table of Contacts
+----
+<tbody>
+  {% for contact in contacts %}
+      <tr>
+          <td>{{ contact.first }}</td>
+          <td>{{ contact.last }}</td>
+          <td>{{ contact.phone }}</td>
+          <td>{{ contact.email }}</td>
+          <td><a href="/contacts/{{ contact.id }}/edit">Edit</a>
+              <a href="/contacts/{{ contact.id }}">View</a></td>
+      </tr>
+  {% endfor %}
+</tbody>
+----
+
+Right now the Edit link navigates to an entirely different page.  What we want to do, instead, is insert a form (well,
+a form-like row, anyway) in place of a given row when someone clicks on the "Edit" link.
+
+We can begin implementing this feature like so:
+
+[source, html]
+.Updated to Retrieve An Inline Editing Form
+----
+<tbody>
+  {% for contact in contacts %}
+      <tr>
+          <td>{{ contact.first }}</td>
+          <td>{{ contact.last }}</td>
+          <td>{{ contact.phone }}</td>
+          <td>{{ contact.email }}</td>
+          <td><a hx-get="/contacts/{{ contact.id }}/edit" <1>
+                 hx-target="closest tr">Edit</a> <2>
+              <a href="/contacts/{{ contact.id }}">View</a></td>
+      </tr>
+  {% endfor %}
+</tbody>
+----
+<1> Issue a `GET` to the `/contacts/{{ contact.id }}/edit` URL, retrieving a row set up to edit the contact
+<2> We want to replace the closest table row element with the new content
+
+So we add an `hx-get` attribute to fetch the edit UI for this contact.  Currently, the `edit.html` template is designed
+to be serve up an entire page.  But there is no reason it needs to do so!  Here we are seeing our first example of
+_partial HTML_: we want to return a partial bit of HTML, not an entire HTML document, to replace the current row.
+
+We can leave our server side handler the same, we just need to update `edit.html` to fit into a row:
+
+[source, html]
+.Updated to Retrieve An Inline Editing Form
+----
+<tbody>
+  {% for contact in contacts %}
+      <tr>
+          <td>{{ contact.first }}</td>
+          <td>{{ contact.last }}</td>
+          <td>{{ contact.phone }}</td>
+          <td>{{ contact.email }}</td>
+          <td><a hx-get="/contacts/{{ contact.id }}/edit" <1>
+                 hx-target="closest tr">Edit</a> <2>
+              <a href="/contacts/{{ contact.id }}">View</a></td>
+      </tr>
+  {% endfor %}
+</tbody>
+----
+
+
+

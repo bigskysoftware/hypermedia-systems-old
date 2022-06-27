@@ -299,7 +299,7 @@ Finally, we have an additional cell that includes two links:
 
 * A link to the "Edit" page for the contact, located at `/contacts/{{ contact.id }}/edit` (e.g. For the contact with
   id 42, the edit link will point to `/contacts/42/edit`)
-* A like to the "View" page for the contact `/contacts/{{ contact.id }}` (using our previous contact example, the show
+* A link to the "View" page for the contact `/contacts/{{ contact.id }}` (using our previous contact example, the show
   page would be at `/contacts/42`)
 
 This is our contacts table.
@@ -663,7 +663,7 @@ another route that handles the path as the `GET` above.
 
 Here is the definition:
 
-[source, pythog]
+[source, python]
 ----
 @app.route("/contacts/<contact_id>/edit", methods=["POST"]) <1>
 def contacts_edit_post(contact_id=0):

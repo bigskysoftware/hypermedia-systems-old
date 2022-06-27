@@ -34,11 +34,15 @@
 .. History Support
 .. Summary
 
-. Implementing Advanced UX Patterns With Hypermedia
+. Improving Our Hypermedia Application
 [arabic]
 .. Adding AJAX Navigation
 .. Deleting Contacts
-.. Inline Editing of Contacts
+.. Inline Validation of Emails
+.. Inline Adding of Contacts
+.. Summary
+
+. Advanced UX Patterns With Hypermedia
 .. Bulk Editing Contacts
 .. Infinite Scroll of Contacts
 .. Lazy Loading Counts

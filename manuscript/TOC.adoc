@@ -1,41 +1,42 @@
 == Outline
 
-. Reintroducing Hypermedia
-[arabic]
-.. What Is Hypermedia?
-.. Why Use Hypermedia?
-.. A Hypermedia Comeback?
-.. Hypermedia-Oriented Javascript Libraries
-.. REST
-.. When Should You Use Hypermedia?
-.. When Shouldn't You Use Hypermedia?
-.. Summary
+[none]
+. 1 Reintroducing Hypermedia
+[none]
+.. 1.1 What Is Hypermedia?
+.. 1.2 Why Use Hypermedia?
+.. 1.3 A Hypermedia Comeback?
+.. 1.4 Hypermedia-Oriented Javascript Libraries
+.. 1.5 REST
+.. 1.6 When Should You Use Hypermedia?
+.. 1.7 When Shouldn't You Use Hypermedia?
+.. 1.8 Summary
 
-. Creating A Web 1.0 Hypermedia Application
-[arabic]
-.. Contact.app: A Simple Web 1.0-style Web Application
-.. Which Stack Should To Use?
-.. Contact.App Functionality
-.. Listing Contacts
-.. Adding Contacts
-.. Viewing Contact Details
-.. Editing Contacts
-.. Deleting Contacts
-.. Searching Contacts
-.. Summary
+. 2 Creating A Web 1.0 Hypermedia Application
+[none]
+.. 2.1 Contact.app: A Simple Web 1.0-style Web Application
+.. 2.2 Which Stack Should We Use?
+.. 2.3 Contact.App Functionality
+.. 2.4 Listing Contacts
+.. 2.5 Adding Contacts
+.. 2.6 Viewing Contact Details
+.. 2.7 Editing Contacts
+.. 2.8 Deleting Contacts
+.. 2.9 Searching Contacts
+.. 2.10 Summary
 
-. Extending HTML As Hypermedia
-[arabic]
-.. The Shortcomings of HTML
-.. htmx: Extending HTML as a Hypermedium
-.. Triggering HTTP Requests
-.. Targeting Other Elements
-.. Passing Request Parameters
-.. History Support
-.. Summary
+. 3 Extending HTML As Hypermedia
+[none]
+.. 3.1 The Shortcomings of Plain HTML
+.. 3.2 htmx: Extending HTML as a Hypermedium
+.. 3.3 riggering HTTP Requests
+.. 3.4 Targeting Other Elements
+.. 3.5 Passing Request Parameters
+.. 3.6 History Support
+.. 3.7 Summary
 
 . Improving Our Hypermedia Application
-[arabic]
+[none]
 .. Adding AJAX Navigation
 .. Deleting Contacts
 .. Inline Validation of Emails
@@ -50,7 +51,7 @@
 .. Summary
 
 . Hyperview: A Mobile Hypermedia
-[arabic]
+[none]
 .. Who says hypermedia is only for the web?
 .. Getting Started with Hyperview
 .. HXML vs HTML
@@ -63,7 +64,7 @@
 .. Case Studies
 
 . Front-End Scripting In Hypermedia Applications
-[arabic]
+[none]
 .. Are Scripts Still allowed? (Yes!)
 .. Hypermedia-oriented Scripting
 .. Hyperscript
@@ -72,14 +73,14 @@
 .. Summary
 
 . JSON Data APIs In Hypermedia Applications
-[arabic]
+[none]
 .. Are JSON APIs Still allowed? (Yes!)
 .. The Differing Characteristics of JSON and HTML/REST APIs
 .. Separating Concerns: The Good Parts
 .. Summary
 
 . Advanced htmx
-[arabic]
+[none]
 .. Web Sockets
 .. Server Sent Events
 .. Animations
@@ -92,7 +93,7 @@
 .. An example extension
 
 . Other Hypermedia-Oriented Javascript Libraries
-[arabic]
+[none]
 .. Unpoly
 .. Hotwire
 .. jQuery
@@ -100,7 +101,7 @@
 .. Summary
 
 . Hypermedia: A Return To The Web's Roots
-[arabic]
+[none]
 .. Trends in Software Development
 .. Complexity Sells, Simplicity Endures
 .. Summary

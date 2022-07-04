@@ -85,14 +85,27 @@ The ubiquity of the web means that:
 Hypermedia-driven applications shift as much of the burden of responsive web design as possible to the platform developer, who provides a spec-compliant Web browser.
 
 
-[.line-through]
-== Paradigm of scripting for hypermedia
+== Pervasive scripting, localized scripting
 
-// This chapter discusses archetypes of scripts. These are better introduced with examples, interspersed into the sections on various libraries.
-[.line-through]
+There is sometimes a distinction made between ((high-JS)) and ((low-JS)) applications. Supposedly, a single-page application is high-JS, and the main purpose of adopting a hypermedia architecture is to reduce the amount of JavaScript you have to write. While some developers do avoid JavaScript this way, it's a reductive way of viewing hypermedia architectures and related tools.
+
+The amount of JavaScript code (whether measured in SLoC or KB minified and gzipped) is not a good proxy for the paradigm its programmers used. Consider these two applications:
+
+* _Artifice_ is a CMS, with a bespoke rich text editor that is implemented as a Web Component. Otherwise, it's not very interesting, using full page reloads for navigation.
+* _Beholder_ is a Hacker News client, which fetches posts and comments from an API and presents them with little processing in between. It uses an SPA framework to provide a flashy experience to distinguish itself.
+
+A good rich text editor takes a lot of consideration and code to implement properly, whereas a Hacker News client is a common exercise for newcomers to web development. Thus, it's quite likely that Artifice has more JavaScript than Beholder. However, it is much closer in architecture and programming style to the average _low-JS_ application.
+
+This is why I find it much more useful to talk about ((pervasive-JS)) and ((localized-JS)). Artifice's rich text editor is localized, relegated to a specific part of the system (both in the codebase, and in the document). As a result, it would be trivial to use it in a different application. In comparison, most components (component in the sense used in SPA frameworks) of Beholder are only reusable within Beholder.
+
+This is not a criticism of Beholder or SPAs. Non-reusable aspects are still there in Artifice, in the server-side controllers and templates. Rather, it's an illustration of a style of scripting hypermedia creates. Application-specific code lives in servers, while generic, interoperable code and data is transmitted to clients.
+
+[aside]
+.Components
 --
-The most important role of scripts is to respond to user interactions. As a result, they deal heavily with ((events)). They modify the client's in-memory representation of the document.
+
 --
+
 
 == _hyperscript
 

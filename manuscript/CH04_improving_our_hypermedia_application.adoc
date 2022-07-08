@@ -400,107 +400,440 @@ someone has disabled JavaScript then this functionality will no longer work.  Yo
 the older mechanism working in a JavaScript-disabled environment, but it would introduce additional and redundant code.
 It is up to you to determine if that tradeoff is worth the cost.
 
-== Inline Editing
+== Validating Emails
 
-OK, let's move on to the next feature we are going to implement: inline editing.  Inline editing is when, rather than
-navigating to an edit page to update some data, you can edit it directly "in place" where you are viewing it.  We
-are going to make this work directly, in the table of contacts.  In the process, we will need to restructure our server
-side templates a bit.
+A big part of any web application is validating the data that is submitted to the server side.  Currently, our
+application has a small amount of validation that is done server side and that displays an error message when
+an error is detected.
 
-Let's consider the current mechanism for getting to the edit page, a (boosted) link found in the `show.html` and
-`index.html` templates:
+We are not going to go into the details of how validation works in the model objects, but recall that
+the code for updating a contact looks like this:
+
+[source, python]
+.Server Side Validation On Contact Update
+----
+def contacts_edit_post(contact_id=0):
+    c = Contact.find(contact_id)
+    c.update(request.form['first_name'], request.form['last_name'], request.form['phone'], request.form['email'])
+    if c.save(): <1>
+        flash("Updated Contact!")
+        return redirect("/contacts/" + str(contact_id))
+    else:
+        return render_template("edit.html", contact=c) <2>
+----
+<1> We attempt to save the contact
+<2> If the save does not succeed we re-render the form to display error messages
+
+And the form code in our template looks like this:
 
 [source, html]
-.Initial Edit Link
+.Validation Error Messages
 ----
-  <a href="/contacts/{{contact.id}}/edit">Edit</a>
+<p>
+    <label for="email">Email</label>
+    <input name="email" id="email" type="text" placeholder="Email" value="{{ contact.email }}">
+    <span class="error">{{ contact.errors['email'] }}</span><1>
+</p>
 ----
+<1> Display any errors associated with the email field
 
-And this ends up rendering the following HTML form in `edit.html`:
+Right now there is a bit of logic in the contact class that checks if there are any other contacts with
+the same email, and adds an error if so: we do not want to have duplicate emails in our contacts database.  This is a
+very common validation example: emails are usually unique and adding two contacts with the same email
+is almost certainly a user error.
+
+The error message shown when a user attempts to save a contact with a duplicate email is "Email Must Be Unique":
+
+TODO - screen shot of application validation error
+
+All of this is done using plain HTML and web 1.0 techniques, and it works well.  However, as the application
+currently stands, there are two annoyances:
+
+* First, there is no email format validation: you can enter whatever characters you'd like as an email and,
+  as long as they are unique, the system will allow it
+* Second, if a user has entered a duplicate email, they will not find this fact out until they have filled in
+  all the fields because we only check the email's uniqueness when all the data is submitted.  This could be
+  quite annoying if the user was accidentally rentering a contact and had to put all the contact information in
+  before being made aware of this fact!
+
+=== Updating Our Input Type
+
+For the first issue, we have a pure HTML mechanism for improving our application: HTML 5 supports inputs of
+type `email`!  All we need to do is switch our input from type `text` to type `email`, and the browser will
+enforce that the value entered properly matches the email format:
 
 [source, html]
-.Initial Edit Link
+.Changing The Input To Type `email`
 ----
-   <form action="/contacts/{{ contact.id }}/edit" method="post">
+<p>
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email" placeholder="Email" value="{{ contact.email }}"> <1>
+    <span class="error">{{ contact.errors['email'] }}</span><1>
+</p>
 ----
+<1> A simple change of the `type` attribute to `email` ensures that values entered are valid emails
 
-This is a simple setup, to be sure, but a little unsatisfying for the following reasons:
+With this change, when the user enters a value that isn't a valid email, the browser will display an
+error message asking for a properly formed email in that field.
 
-* You navigate to an edit URL as a separate page.  Does editing a contact rise to the level of a whole separate page?
-  Would you ever copy a link of a contact editing URL and send it to someone?  Seems unlikely.
-* The form itself submits a `POST` to `/contacts/{{ contact.id }}/edit`.  It would be more REST-ful if, instead, it issued
-  a `PUT` or `PATCH` to `/contacts/{{ contact.id }}`, similar to how we issued a `DELETE` in the case of deleting
-  a contact.
+So a simple single-attribute change done in pure HTML improves our validation and addresses the first
+annoyance we noted!
 
-Let's look at how to turn this into an inline edit form directly within the table of contacts using htmx.
+Not bad!
 
-Here is the code that generates our table of contacts on in the `index.html` template:
+.Server Side vs. Client Side Validations
+****
+More experienced web developers might be grinding their teeth a bit at the code above: this validation
+is done entirely on _the client side_.  That is, we are relying on the browser to detect the malformed
+email and correct the user.  Unfortunately, the client side is not trustworthy: a browser may have a
+bug in it that allows the user to circumvent the validation code.  Or, worse, the user may be malicious
+and figure out a mechanism around our validation entirely.  For example: they could simply inspect the
+email input and revert its type to text.
+
+This is a perpetual danger in web development: all validations done on the client side cannot be trusted
+and, if the validation is important, _must be redone_ on the server side.  This is less of a problem in
+Hypermedia Driven Applications than in Single Page Applications, because the focus of HDAs is the server
+side, but it is still something worth bearing in mind as you build your application!
+****
+
+=== Inline Validation
+
+While we have improved our validation experience a bit, the user must still submit the form to get any feedback
+on duplicate emails.  We can use htmx to improve this user experience.
+
+It would be better if the user were able to see a duplicate email error immediately after entering the the value.  It
+turns out that inputs fire a "change" event and, in fact, that is the default trigger for inputs in htmx.  What we
+want to have happen is, when the user enters an email, we immediately issue a request to the server and validate that
+email, then render an error message if necessary.
+
+Recall the current HTML configuration:
 
 [source, html]
-.Template Code To Generate A Table of Contacts
+.The Initial Email Configuration
 ----
-<tbody>
-  {% for contact in contacts %}
-      <tr>
-          <td>{{ contact.first }}</td>
-          <td>{{ contact.last }}</td>
-          <td>{{ contact.phone }}</td>
-          <td>{{ contact.email }}</td>
-          <td><a href="/contacts/{{ contact.id }}/edit">Edit</a>
-              <a href="/contacts/{{ contact.id }}">View</a></td>
-      </tr>
-  {% endfor %}
-</tbody>
+<p>
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email" placeholder="Email" value="{{ contact.email }}"> <1>
+    <span class="error">{{ contact.errors['email'] }}</span>
+</p>
 ----
 
-Right now the Edit link navigates to an entirely different page.  What we want to do, instead, is insert a form (well,
-a form-like row, anyway) in place of a given row when someone clicks on the "Edit" link.
-
-We can begin implementing this feature like so:
+So we want to add an `hx-get` to this input so that it will issue a `GET` request to a URL to validate the email.  And
+we want to target the error span following the input with any error message returned from the server.
 
 [source, html]
-.Updated to Retrieve An Inline Editing Form
+.Our Updated HTML
 ----
-<tbody>
-  {% for contact in contacts %}
-      <tr>
-          <td>{{ contact.first }}</td>
-          <td>{{ contact.last }}</td>
-          <td>{{ contact.phone }}</td>
-          <td>{{ contact.email }}</td>
-          <td><a hx-get="/contacts/{{ contact.id }}/edit" <1>
-                 hx-target="closest tr">Edit</a> <2>
-              <a href="/contacts/{{ contact.id }}">View</a></td>
-      </tr>
-  {% endfor %}
-</tbody>
+<p>
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email"
+           hx-get="/contacts/{{ contact.id }}/email" <1>
+           hx-target="next .error" <2>
+           placeholder="Email" value="{{ contact.email }}"> <1>
+    <span class="error">{{ contact.errors['email'] }}</span>
+</p>
 ----
-<1> Issue a `GET` to the `/contacts/{{ contact.id }}/edit` URL, retrieving a row set up to edit the contact
-<2> We want to replace the closest table row element with the new content
+<1> We issue an HTTP `GET` to the new `email` endpoint for this contact
+<2> We target the next element with the class `error` on it, which is the next span that holds the error message
 
-So we add an `hx-get` attribute to fetch the edit UI for this contact.  Currently, the `edit.html` template is designed
-to be serve up an entire page.  But there is no reason it needs to do so!  Here we are seeing our first example of
-_partial HTML_: we want to return a partial bit of HTML, not an entire HTML document, to replace the current row.
+Now, with these two simple attributes in place, whenever someone changes the value of the input, an HTTP request will
+be issued to the given URL and, if there are errors, they will be loaded into the error span.
 
-We can leave our server side handler the same, we just need to update `edit.html` to fit into a row:
+Now let's look at the server side implementation.  We are going to add another end point, similar to our edit
+end point in some ways: it is going to look up the contact based on the ID encoded in the URL.  In this case, however,
+we only want to update the email of the contact, and we obviously don't want to save it!  Instead, we will call the
+`validate()` method on it.
+
+That method will validate the email is unique and so forth.  At that point we can return any errors associated with the
+email directly, or the empty string if none exist.
+
+Here is the code:
+
+[source, python]
+.Our Email Validation End-Point
+----
+@app.route("/contacts/<contact_id>/email", methods=["GET"])
+def contacts_email_get(contact_id=0):
+    c = Contact.find(contact_id) <1>
+    c.email = request.args.get('email') <2>
+    c.validate() <3>
+    return c.errors.get('email') or "" <4>
+----
+<1> Look up the contact by id
+<2> Update its email (note that since this is a `GET`, we use the `args` property rather than the `form` property)
+<3> Validate the contact
+<4> Return a string, either the errors associated with the email field or, if there are none, the empty string
+
+With this small bit of code in place, we now have the following very nice user experience: when a user enters an email
+and tabs to the next field, they are immediately notified if the email is already taken!
+
+Here again I want to stress that this interaction is done entirely within the hypermedia model: we are using declarative
+attributes to exchange hypermedia with the server in a manner very similar to how links or forms work, but we have managed
+to improve our user experience dramatically!
+
+Note that the email validation is _still_ done when the entire contact is submitted for an update, so there is no danger
+of allowing duplicate email contacts to slip through: we have simply made it possible for users to catch this situation
+earlier by use of htmx.
+
+It is also worth noting that this email validation _must_ be done on the server side: you cannot
+determine that an email is unique across all contacts unless you have access to the data store of record.  This is another
+simplifying aspect of Hypermedia Driven Applications: since validations are done server side, you have access to all
+the data you might need to do any sort of validation you'd like.
+
+=== Going Further
+
+Now, despite the fact that we haven't written a lot of code here, this is a fairly sophisticated user interface, at
+least when compared with plain HTML-based applications.  However, if you have used more advanced web applications you
+have probably seen the pattern where an email field (or similar) is validated _as you type_.
+
+This is surely beyond the reach of a Hypermedia Driven Application, right?  Only a sophisticated Single Page Application
+framework could provide that level of interactivity!
+
+Oh ye of little faith.  With a bit more effort, we can use htmx to achieve this user experience.
+
+In fact, all we need to do is to change our trigger.  Currently, we are using the default trigger for inputs, which is the
+`change` event.  To validate as the user types, we would want to capture the `keyup` event as well:
 
 [source, html]
-.Updated to Retrieve An Inline Editing Form
+.Triggering With `keyup` Events
 ----
-<tbody>
-  {% for contact in contacts %}
-      <tr>
-          <td>{{ contact.first }}</td>
-          <td>{{ contact.last }}</td>
-          <td>{{ contact.phone }}</td>
-          <td>{{ contact.email }}</td>
-          <td><a hx-get="/contacts/{{ contact.id }}/edit" <1>
-                 hx-target="closest tr">Edit</a> <2>
-              <a href="/contacts/{{ contact.id }}">View</a></td>
-      </tr>
-  {% endfor %}
-</tbody>
+<p>
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email"
+           hx-get="/contacts/{{ contact.id }}/email"
+           hx-target="next .error"
+           hx-trigger="change, keyup" <1>
+           placeholder="Email" value="{{ contact.email }}"> <1>
+    <span class="error">{{ contact.errors['email'] }}</span>
+</p>
 ----
+<1> An explicit trigger has been declared, and it triggers on both the `change` and `keyup` events
 
+With this tiny change, every time a user types a character we will issue a request and validate the email!  Simple!
 
+Unfortunately, this is probably not what you want: issuing a new request on every key up event would be very wasteful
+and could potentially overwhelm your server.  What we want to do is only issue the request if the user has paused for
+a small amount of time.  This is called "debouncing" the input, where requests are delayed until things have "settled down".
+
+htmx supports a `delay` modifier for triggers that allows you to debounce a request by adding a delay before the request
+is sent. If another event of the same kind appears within that interval, htmx will not issue the request and will reset
+the timer.  This is exactly what we want for this situation.  Let's add a delay of 200 milliseconds to the `keyup` trigger:
+
+[source, html]
+.Debouncing the `keyup` Event
+----
+<p>
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email"
+           hx-get="/contacts/{{ contact.id }}/email"
+           hx-target="next .error"
+           hx-trigger="change, keyup delay:200ms" <1>
+           placeholder="Email" value="{{ contact.email }}">
+    <span class="error">{{ contact.errors['email'] }}</span>
+</p>
+----
+<1> We debounce the `keyup` event by adding a `delay` modifier
+
+Now we no longer issue a stream of validation requests as the user types.  Instead, we wait until the user pauses for
+a bit and then issue the request.  Much better for our server, and still a great user experience!
+
+There is one last thing we might want to address: as it stand we will issue a request no matter _which_ keys are pressed,
+even if they are keys like the arrow keys, which have no effect on the value of the input.  It would be nice if there were
+a way to only issue a request if the input value has changed.  It turns out that htmx has support for that pattern using
+the `changed` modifier for events.  (Not to be confused with the `change` event!)
+
+By adding `changed` to our `keyup` trigger, the input will not issue validation requests unless the keyup event actually
+updates the inputs value:
+
+[source, html]
+.Only Sending Requests When The Input Value Changes
+----
+<p>
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email"
+           hx-get="/contacts/{{ contact.id }}/email"
+           hx-target="next .error"
+           hx-trigger="change, keyup delay:200ms changed" <1>
+           placeholder="Email" value="{{ contact.email }}">
+    <span class="error">{{ contact.errors['email'] }}</span>
+</p>
+----
+<1> We do away with pointless requests by only issuing them when the inputs value has actually changed
+
+Now that's some pretty good-looking code!  With a total of three attributes and a simple new server-side end point, we
+have added a fairly sophisticated user experience to our web application.   Even better, any email validation rules we
+add on the server side will _automatically_ just work using this model: because we are using hypermedia as our
+communication mechanism there is no need to keep a client-side and server-side model in sync with one another.
+
+This is a great demonstration of the power of the hypermedia architecture!
+
+== Paging
+
+Currently, our application does not support paging: if there are 100 contacts in the database we will show
+100 contacts on the main page.  Let's fix that, so that we only show ten contacts at a time with a "Next" and
+"Previous" link if there are more than 10 or if we are beyond the first page.
+
+The first change we will need to make is to add a simple paging widget to our `index.html` template.  Here
+we will conditionally include two links:
+
+* If we are beyond the first page, we will include a link to the previous page
+* If there are ten contacts in the current result set, we will include a link to the next page
+
+This isn't a perfect paging widget: ideally we'd show the number of pages and offer the ability to do more
+specific page navigation, and there is the possibility that the next page might have 0 results in it since
+we aren't checking the total results count, but it will do for now for our simple application.
+
+Let's look at the jinja template code for this.
+
+[source, html]
+.Adding Paging Widgets To Our List of Contacts
+----
+<div>
+    <span  style="float: right"> <1>
+        {% if page > 1 %}
+          <a href="/contacts?page={{ page - 1 }}">Previous</a> <2>
+        {% endif %}
+        {% if contacts|length == 10 %}
+          <a href="/contacts?page={{ page + 1 }}">Next</a> <3>
+        {% endif %}
+    </span>
+</div>
+----
+<1> Include a new div under the table to hold our navigation links
+<2> If we are beyond page 1, include an anchor tag with the page decremented by one
+<3> If there are 10 contacts in the current page, include an anchor tag linking to the next page by incrementing it by one
+
+Note that here we are using the special jinja syntax `contacts|length` to compute the length of the contacts
+list.
+
+Now lets address the server side implementation.
+
+We need to look for the `page` parameter and pass that through to our model as an integer so the model knows
+what page of contacts to return:
+
+[source, python]
+.Adding Paging To Our Request Handler
+----
+@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    page = int(request.args.get("page", 1)) <1>
+    if search:
+        contacts_set = Contact.search(search)
+    else:
+        contacts_set = Contact.all(page) <2>
+    return render_template("index.html", contacts=contacts_set, page=page)
+----
+<1> Resolve the page parameter, defaulting to page 1 if no page is passed in
+<2> Pass the page through to the model when loading all contacts so it knows which page of 10 contacts to
+    return
+
+This is fairly straightforward: we just need to get another parameter, like the `q` parameter we passed in for
+searching contacts earlier, convert it to an integer and then pass it through to the `Contact` model so it
+knows which page to return.
+
+And that's it.  We now have a very basic paging mechanism for our web application.  And, believe it or not,
+it is already using AJAX, thanks to our use of `hx-boost` in the application.  Easy!
+
+=== Click To Load
+
+Now, the current paging mechanism is fine, although it could use some additional polish.  But sometimes you
+don't want to have to page through items and lose your place in the application.  In cases like this a different
+UI pattern might be better.  For example, you may want to load the next page _inline_ in the current page.  This
+is the common "click to load more" UX pattern.
+
+Let's see how we can implement this in htmx.
+
+It's actually surprisingly simple: we can just take the existing "Next" link and repurpose it a bit using
+nothing but htmx attributes!
+
+We want to have a button that, when clicked, appends the rows from the next page of contacts to the current,
+exiting table, rather than re-rendering the whole table.  This can be achieved by adding a row to our table
+that has just such a button in it:
+
+[source, html]
+.Changing To "Click To Load"
+----
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.first }}</td>
+                <td>{{ contact.last }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.email }}</td>
+                <td><a href="/contacts/{{ contact.id }}/edit">Edit</a> <a href="/contacts/{{ contact.id }}">View</a></td>
+            </tr>
+        {% endfor %}
+        {% if contacts|length == 10 %} <1>
+            <tr>
+                <td colspan="5" style="text-align: center">
+                    <button hx-target="closest tr" <2>
+                            hx-swap="outerHTML"   <3>
+                            hx-select="tbody > tr" <4>
+                            hx-get="/contacts?page={{ page + 1 }}">Load More</button>
+                </td>
+            </tr>
+        {% endif %}
+        </tbody>
+----
+<1> As with the "Next" link in our paging example, we only show "Load More" if there are 10 contact results in the current page
+<2> In this case, the button needs to target the closest enclosing row, which is what the `closest` syntax allows
+<3> We want to replace this row with the response from the server
+<4> Of course, we don't want to replace the row with the entire response, we only want to replace it with the
+    rows within the table body of the response, so we use the `hx-select` attribute to select those rows out using
+    a standard CSS selector
+
+Believe it or not, that's all we need to change to enable a "Click To Load" style UI!  No server side changes are necessary
+because of the flexibility that htmx gives you with respect to how we process server responses.  Pretty cool, eh?
+
+=== Infinite Scroll
+
+Another somewhat common pattern for dealing with long lists of things is known as "infinite scroll", where,
+as the end of a list or table is scrolled into view, more elements are loaded.  This behavior makes more sense
+in situations where a user is exploring a category or series of social media posts, rather than in the context of
+a contact application, but for completeness we will show how to achieve this in htmx.
+
+We can repurpose the "Click To Load" code to implement this new pattern.  If you think about it for a moment, really
+infinite scroll is just the "Click To Load" logic, but rather than loading when a click occurs, we want to
+load when an element is "revealed" in the view portal of the browser.
+
+As luck would have it, htmx offers a synthetic (non-standard) DOM event, `revealed` that can be used in tandem
+with the `hx-trigger` attribute, to trigger a request when, well, when an element is revealed.  Let's convert
+our button to a span and take advantage of this event:
+
+[source, html]
+.Changing To "Click To Load"
+----
+{% if contacts|length == 10 %} <1>
+    <tr>
+        <td colspan="5" style="text-align: center">
+            <span hx-target="closest tr" <1>
+                    hx-trigger="revealed" <2>
+                    hx-swap="outerHTML"
+                    hx-select="tbody > tr"
+                    hx-get="/contacts?page={{ page + 1 }}">Loading More...</span>
+        </td>
+    </tr>
+{% endif %}
+----
+<1> We have converted our element from a button to a span, since the user will not be clicking on it
+<2> We trigger the request when the element is revealed, that is when it comes into view in the portal
+
+So all we needed to do to convert from "Click to Load" to "Infinite Scroll" was update our element to be
+a span and add the `revealed` trigger.  The fact that this was so easy shows how well htmx generalizes
+HTML: just a few attributes allow us to dramatically expand what we can achieve with our hypermedia.  And,
+again, I note that we are doing all this within the original, REST-ful model of the web, exchanging hypermedia
+with the server.  As the web was designed!
+
+== Summary
+
+* In this chapter we began improving our Hypermedia-Driven Application (HDA) by using the htmx library
+* A simple and quick way to improve the application was to use the `hx-boost` attribute, which "boosts"
+  all links and forms to use AJAX interactions
+* Deleting a contact could be updated to use the proper `DELETE` HTTP request, using the `hx-delete` attribute
+* Validating the email of a contact as the user entered it was achieved using a combination of `hx-get` and `hx-target`
+* Paging was added to the application using standard server-side techniques
+* We implemented the "Click To Load" pattern using a simple button and a few htmx attributes, without any server side changes
+* We repurposed the "Click To Load" example to implement "Infinite Scroll" by adding a single attribute, `hx-trigger` with
+  the value `reveal`
 

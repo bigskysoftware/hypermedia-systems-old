@@ -137,11 +137,14 @@ The familiarity of XML and the ease of integration on the backend make it simple
 ```
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
+    <styles />
     <body>
       <header>
         <text>My first app</text>
       </header>
-      <text>Hello World!</text>
+      <view>
+        <text>Hello World!</text>
+      </view>
     </body>
   </screen>
 </doc>
@@ -235,15 +238,18 @@ Then, we'll re-build our contacts app in Hyperview.
 
 === Hello World!
 Like I mentioned above, HXML was designed to feel natural to web developers coming from HTML.
-Here's an example of the simplest "Hello World" app defined in HXML:
+Let's take a closer look at the "Hello World" app defined in HXML:
 
 ```
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles />
     <body>
+      <header>
+        <text>My first app</text>
+      </header>
       <view>
-        <text>Hello, World!</text>
+        <text>Hello World!</text>
       </view>
     </body>
   </screen>
@@ -264,8 +270,8 @@ Note that the `<doc>` element contains an attribute `xmlns="https://hyperview.or
 This defines the default namespace for the doc.
 Namespaces are a feature of XML that allow one doc to contain elements defined by different developers.
 To prevent conflicts when two developers use the same name for their element, each developer defines a unique namespace.
-We will talk more about namespaces when we add customizations to our app later in this chapter.
-For now, it's enough to know that elements in a doc without an explicit namespace (like `<body>` or `<text>`) are considered to be part of the `https://hyperview.org/hyperview` namespace.
+We will talk more about namespaces when we discuss custom elements & behaviors later in this chapter.
+For now, it's enough to know that elements in an HXML doc without an explicit namespace are considered to be part of the `https://hyperview.org/hyperview` namespace.
 
 `<screen>` represents the UI that gets rendered on a single screen of a mobile app.
 It's possible for one `<doc>` to contain multiple `<screen>` elements, but we won't get into that now.
@@ -279,27 +285,196 @@ These rules are then explicitly referenced by UI elements, much like using class
 
 `<body>` defines the actual UI of the screen.
 The body includes all text, images, buttons, forms, etc that will be shown to the user.
-This is pretty much equivalent to the `<body>` element in HTML.
+This is equivalent to the `<body>` element in HTML.
+
+`<header>` defines the header of the screen.
+Typically in mobile apps, the header includes some navigation (like a back button), and the title of the screen. 
+It's useful to define the header separately from the rest of the body.
+Some mobile OSes will use a different transition for the header than the rest of the screen content.
 
 `<view>` is the basic building block for layouts and structure within the screen's body.
-This is pretty much equivalent to a `<div>` in HTML.
+Think of it like a `<div>` in HTML.
 Note that unlike in HTML, a `<div>` cannot directly contain text.
 
 `<text>` elements are the only way to render text in the UI.
 In this example, "Hello World" is contained within a  `<text>` element.
 
+That's all there is to define a basic "Hello World" app in HXML.
+Of course, this isn't very exciting.
+Let's cover some other built-in display elements
 
-* HTML is the most popular hypermedia format. We wanted someone familiar with HTML to feel comfortable with HXML.
-   * Start with XML format. Gives us familiar syntax, and it is by nature extensible.
-  
+=== UI Elements
 
+==== Lists
 
-   * Basic building blocks: view, text, list, image, inputs
-      * <Show basic example>
+A very common pattern in mobile apps is to scroll through a list of items.
+The physical properties of a phone screen (long & vertical) and the intuitive gesture of swiping a thumb up & down makes this a good choice for many screens.
 
-   * Note on styling
-   * Point of extensibility, developers can create their own
-      * <Show example of custom element)
+HXML has dedicated elements for representing lists and items.
+
+```
+<list>
+  <item>
+  </item>
+  <item>
+  </item>
+</list>
+```
+
+You might be asking, "why do we need a custom syntax for lists of items? Can't we just use a bunch of `<view>` elements?".
+
+==== Images
+
+Showing images in Hyperview is pretty similar to HTML, but there are a few differences.
+
+```
+<image source="/profiles/1.jpg" style="avatar" />
+```
+
+The `source` attribute specifies how to load the image.
+Like in HTML, the source can be an absolute or relative URL.
+Additionally, the source can be an encoded data URI, for example `data:image/png;base64,iVBORw`.
+However, the source can also be a "local" URL, refering to an image that is bundled as an asset in the mobile app.
+The local URL is prefixed with `./`:
+
+```
+<image source="./logo.png" style="logo" />
+```
+
+Using Local URLs is an optimization.
+Since the images are on the mobile device, they don't require a network request and will appear quickly.
+However, bundling the image with the mobile app binary increases the binary size.
+Using local images is a good tradeoff for images that are frequently accessed but rarely change.
+Good examples include the app logo, or common button icons.
+
+The other thing to note is the presence of the `style` attribute on the `<image>` element.
+In HXML, images are required to have a style that has rules for the image's `width` and `height`.
+This is different from HTML, where `<img>` elements do not need to explicitly set a width and height.
+Web browsers will re-flow the content of a web page once the image is fetched and the dimensions are known.
+While re-flowing content is a reasonable behavior for web-based documents, users do not expect mobile apps to re-flow as content loads.
+To maintain a static layout, HXML requires the dimensions to be known before the image loads.
+
+=== Inputs
+
+=== Styling
+
+So far, we haven't mentioned how to apply styling to all of the HXML elements.
+We've seen from the Hello World app that each `<screen>` can contain a `<styles>` element.
+Let's re-visit the Hello World app and fill out the `<styles>` element.
+
+```
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style class="body" flex="1" flexDirection="column" />
+      <style class="header" borderBottomWidth="1" borderBottomColor="#ccc" />
+      <style class="main" margin="24" />
+      <style class="h1" fontSize="32" />
+      <style class="info" color="blue" />
+    </styles>
+
+    <body style="body">
+      <header style="header">
+        <text style="info">My first app</text>
+      </header>
+      <view style="main">
+        <text style="h1 info">Hello World!</text>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+You'll note that in HXML, styling is part of the XML format, rather than using a separate language like CSS.
+However, we can draw some parallels between CSS rules and the `<style>` element.
+A CSS rule consists of a selector and declarations.
+In the current version of HXML, the only available selector is a class name, indicated by the `class` attribute.
+The rest of the attributes on the `<style>` element are declarations, consisting of properties and property values.
+
+UI elements within the `<screen>` can reference the `<style>` rules by adding the class names to their `<style>` property.
+Note the `<text>` element around "Hello World!" references two style classes: `h1` and `info`. The styles from the corresponding classes are merged together in the order they appear on the element.
+It's worth noting that styling properties are similar to those in CSS (color, margins/padding, borders, etc).
+Currently, the only available layout engine is based on flexbox.
+
+Styles rules can get quite verbose.
+For the sake of brevity, I won't include the `<styles>` element in the rest of the examples in this chapter unless necessary.
+
+=== Custom elements
+
+The core UI elements that ship with Hyperview are quite basic.
+Most mobile apps require richer elements to deliver a great user experience.
+Luckily, HXML can easily accomodate custom elements in its syntax.
+This is because HXML is really just XML, aka "Extensible Markup Language".
+Extensibility is already built into the format!
+Developers are free to define new elements and attributes to represent custom elements.
+
+Let's see this in action with a concrete example.
+Assume that we want to add a map element to our Hello World app.
+We want the map to display a defined area, and one or more markers at specific coordinates in that area.
+Let's translate these requirements into XML:
+
+- An `<area>` element will represent the area displayed by the map. To specify the area, the element will include attributes for `latitude` and `longitude` for the center of the area, and a `latitude-delta` and `longitude-delta` indicating the +/- display area around the center.
+- A `<marker>` element will represent a marker in the area. The coordinates of the marker will be defined by `latitude` and `longitude` attributes on the marker.
+
+Using these custom XML elements, an instance of the map in our app might look like this:
+
+```
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <view>
+        <text>Hello World!</text>
+        <area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1">
+          <marker latitude="37.8118" longitude="-122.4177" />
+        </area>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+The syntax feels right at home among the core HXML elements.
+However, there's a potential problem.
+"area" and "marker" are pretty generic names.
+I could see `<area>` and `<marker>` elements being used by a customization to render charts & graphs.
+If our app renders both maps and charts, the HXML markup would be ambiguous.
+What should the client render when it sees `<area>` or `<marker>`?
+
+This is where XML namespaces come in. XML namespaces eliminate ambiguity and collisions between elements and attributes used to represent different things.
+Remember that the `<doc>` element declares that `https://hyperview.org/hyperview` is the default namespace for the entire document.
+Since no other elements define namespaces, every element in the example above is part of the `https://hyperview.org/hyperview` namespace.
+
+Let's define a new namespace for our map elements. Since this namespace will not be the default for the document, we also need to assign the namespace to a prefix we will add to our elements:
+
+`<doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map">`
+
+This new attribute declares that the `map:` prefix is associated with the namespace "https://mycompany.com/hyperview-map".
+This namespace could be anything, but remember the goal is to use something unique that won't have collisions.
+Using your company/app domain is a good way to guarantee uniqueness.
+Now that we have a namespace and prefix, we need to use it for our elements:
+
+```
+<doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map">
+  <screen>
+    <body>
+      <view>
+        <text>Hello World!</text>
+        <map:area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1">
+          <map:marker latitude="37.8118" longitude="-122.4177" />
+        </map:area>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+That's it! If we introduced a custom charting library with "area" and "marker" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate `<map:area>` from `<chart:area>`.
+
+At this point you might be wondering, "how does the Hyperview client know to render a map when my doc includes `<map:area>`"?
+It's true, so far we only defined the custom element format, but we haven't implemented the element as a feature in our app.
+We will get into the details of implementing custom elements later in this chapter.
+
+=== Behaviors
 
 * When it comes to interactions, that’s where HXML starts to diverge from HTML
    * HTML has two primary ways of interaction:

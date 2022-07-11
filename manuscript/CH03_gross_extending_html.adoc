@@ -24,7 +24,8 @@ This chapter covers:
 In the previous chapter we introduced a simple Web 1.0-style hypermedia application to manage contacts.  This application
 supported the normal CRUD operations for contacts, as well as a simple mechanism for searching contacts.  Our application
 was built using nothing but forms and anchor tags, the traditional tags used to interact with servers, and it exchanges
-hypermedia (HTML) with the server via HTTP.  It is definitely a Hypermedia Driven Application.
+hypermedia (HTML) with the server over HTTP, issuing `GET` and `POST` HTTP requests and receiving back full HTML documents
+in response.  It is pretty simple, but it is also definitely a Hypermedia Driven Application.
 
 Our application is robust, leverages the web's strengths and is simple to understand.  So what's not to like?
 Well, unfortunately, our application isn't completely satisfying from either a user experience perspective, or
@@ -36,7 +37,7 @@ Two obvious problems that jump out are:
   delete a contact.  This is because every user interaction (link click or form submission) requires a full page
   refresh, with a whole new HTML document to process after each action.
 * From a technical perspective, all the updates are done with the `POST` HTTP action.  This is despite the fact that
-  more logical actions HTTP request types like `PUT` and`DELETE` exist and would make far more sense for some of the
+  more logical actions HTTP request types like `PUT` and `DELETE` exist and would make far more sense for some of the
   operations.  Somewhat ironically, since we are using pure HTML, we are unable to access the full expressive power
   of HTTP!
 
@@ -47,8 +48,8 @@ cousins.
 Single Page Applications eliminate this clunkiness by updating a web page directly, mutating the Document Object Model (DOM),
 the JavaScript API to the underlying HTML page.  There are a few of different styles of SPA, but, as we
 discussed in Chapter 1, the most common today is to tie the DOM to a JavaScript model and let an SPA framework like
-react _reactively_ update the DOM when the JavaScript model is updated: make a change to a java object and the web page
-magically updates.
+react _reactively_ update the DOM when the JavaScript model is updated: you make a change to a JavaScript object and the
+web page magically updates its state to reflect the change in the model.
 
 Recall that in this style of application communication with the server is typically done via a JSON Data API,
 with the application sacrificing the advantages of hypermedia in order to provide a better, smoother user experience.
@@ -59,12 +60,13 @@ Web 1.0 style applications.
 The second, technical point may strike you as a bit pedantic, and I am the first to admit that conversations around
 REST and which HTTP Action is right for a given operation can become very tedious.  But, nonetheless, it has to be
 admitted that, when using plain HTML, it is impossible to use HTTP to its full power and, therefore, it is impossible
-to realize the full vision of the web as a REST-ful system.
+to realize the full vision of the web as a REST-ful system: a complete, stateless, resource-oriented distributed networking
+architecture that is flexible and resilient.
 
 === A Close Look At A Hyperlink
 
 As we have been saying, it turns out that you can actually get a lot of interactivity out of the hypermedia model, if
-you adopt a hypermedia-oriented library like htmx.  To understand conceptually how htmx allows us to address the UX
+you adopt a hypermedia-oriented library like htmx.  To understand conceptually how htmx allows us to better address the UX
 concerns of Web 1.0 style applications, let's revisit the hyperlink/anchor tag from Chapter 1 and really drill in to
 each facet of it:
 
@@ -82,38 +84,38 @@ This simple anchor tag, when interpreted by a browser, creates a hyperlink to th
 Breaking down exactly what this link will tell the browser to do, we have the following list:
 
 * The browser will render the text "Manning Books" to the screen, likely with a decoration indicating it is clickable
-* The, when a user clicks on it...
+* Then, when a user clicks on the text...
 * The browser will issue an HTTP `GET` to `https://www.manning.com` and then...
-* The broswer will load the HTTP response into the browser window, replacing the current document
+* The browser will load the HTTP response into the browser window, replacing the current document
 
 So we have four aspects of a simple hypermedia link like this, with the last three being the mechanic that distinguishes
 a hyperlink from "normal" text.
 
-Let's take a moment and think about how we can generalize this hypermedia mechanic of HTML.  There is no rule saying that
+Let's take a moment and think about how we can generalize this fundamental hypermedia mechanic of HTML.  There is no rule saying that
 hypermedia can _only_ work this way, after all!
 
-The first thing to consider is: why are anchor tags so special?  Shouldn't other elements (besides forms) be able to
+An initial observation is: why are anchor tags so special?  Shouldn't other elements (besides forms) be able to
 issue HTTP requests as well?  For example, shouldn't `button` elements be able to do so?  It seemed silly to have to
 wrap a form tag around a button to make deleting contacts work in our application.  Why should only anchor tags and
 forms be able to issue requests?
 
-This is our first opportunity to expand the expressiveness of HTML: we can allow _any_ element to issue a request to
+This presents our first opportunity to expand the expressiveness of HTML: we can allow _any_ element to issue a request to
 the server.
 
-Next, let's consider the event that triggers the request to the server on our link, a click.  What's so special about
-clicking (in the case of anchors) or submitting (in the case of forms)?  Those are just one of many, many events that
-are fired by the DOM, after all.  Events like mouse down, or key up, or blur are all events you might want to use to issue an HTTP request.
-Why shouldn't these other events be able to trigger requests as well?
+For our next observation, let's consider the event that triggers the request to the server on our link: a click.
+Well, what's so special about clicking (in the case of anchors) or submitting (in the case of forms)?  Those are just two
+of many, many events that are fired by the DOM, after all.  Events like mouse down, or key up, or blur are all events
+you might want to use to issue an HTTP request. Why shouldn't these other events be able to trigger requests as well?
 
-Here is our second opportunity to expand the expressiveness of HTML: we can allow _any_ event, not just a click, as in
-the case of our hyperlink, to trigger the request.
+This gives us our second opportunity to expand the expressiveness of HTML: we can allow _any_ event, not just a click, as in
+the case of our hyperlink, to trigger an HTTP request.
 
-The next limitation to consider is the technical problem we noted earlier: plain HTML only give us access to the `GET` and
-`POST` actions of HTTP?  HTTP _stands_ for HyperText Transfer Protocol, and yet the format it was explicitly designed for,
-HTML, only supports two of the five developer-facing request types!  You _have_ to use JavaScript to get at the other
-three: `DELETE`, `PUT` and `PATCH`.
+Getting a bit more technical in our thinking leads us to the problem we noted earlier in the chapter: plain HTML only
+give us access to the `GET` and `POST` actions of HTTP?  HTTP _stands_ for HyperText Transfer Protocol, and yet the format
+it was explicitly designed for, HTML, only supports two of the five developer-facing request types!  You _have_ to use
+JavaScript and issue an AJAX request to get at the other three: `DELETE`, `PUT` and `PATCH`.
 
-What are all of these different HTTP request types designed to represent?
+Let's recall what are all of these different HTTP request types designed to represent?
 
 * `GET` corresponds with "getting" a representation for a resource from a URL: it is a pure read, with no mutation of
   the resource
@@ -122,20 +124,19 @@ What are all of these different HTTP request types designed to represent?
 * `PATCH` is similar to `PUT` but implies a partial update rather than a complete replacement of the entity
 * `DELETE` deletes the given resource
 
-These operations correspond closely to the CRUD operations we discussed in Chapter 2, and only have access to two of them
-is a severe limitation.
+These operations correspond closely to the CRUD operations we discussed in Chapter 2, and by only giving us access to two
+of them, HTML is presenting us with a severe and obvious technical limitation.
 
-This is our third opportunity to expand the expressiveness of HTML: we can allow HTML to have access to the missing three
+So here is our third opportunity to expand the expressiveness of HTML: we can allow HTML to have access to the missing three
 HTTP actions, `PUT`, `PATCH` and `DELETE`.
 
+As a final observation, consider that last aspect of a hyperlink: it replaces  the _entire_ screen when a user clicks on it.  It
+is this technical detail that makes for a poor user experience: it causes flashes of unstyled content, a loss of scroll
+state and so forth.  But, again, there is no rule saying that hypermedia exchanges _must_ replace the entire document.
 
-Finally, consider the last aspect of a hyperlink, where it replaces  the _entire_ screen when a user clicks on it.  This
-is what makes for a poor user experience, with flashes of unstyled content, loss of scroll state and so forth.  But there
-is no rule saying that hypermedia exchanges _must_ replace the entire document.
-
-Here is our forth and perhaps most important opportunity to generalize HTML: what if we allowed the hypermedia response
+This gives us our forth, final and perhaps most important opportunity to generalize HTML: what if we allowed the hypermedia response
 to replace elements _within_ the current document, rather than requiring that it replace the entire document.  This would
-make hypermedia-driven applications function much more like a Single Page Application, where only part of the DOM is
+make Hypermedia Driven Applications function much more like a Single Page Application, where only part of the DOM is
 updated by a given user interaction or network request.
 
 If we were to take these four opportunities to generalize HTML, we would be extending HTML far beyond its normal
@@ -153,29 +154,8 @@ HTML as a hypermedia!
 
 One such library is htmx, which will be the focus of the next few chapters.  htmx is not the only JavaScript library that
 takes this hypermedia-oriented approach, but it is perhaps the purest in the pursuit of extending HTML as a hypermedia.
-It focuses intensely on the four issues discussed above and attempts to incrementally address each one, without
+It focuses intensely on the four limitations discussed above and attempts to incrementally address each one, without
 introducing a significant amount of additional conceptual infrastructure for web developers.
-
-This pure-HTML extension approach is not without tradeoffs: by staying so close to HTML, htmx does not give you a lot
-of infrastructure that many developers might feel should be there "by default".  A good example is the concept of modals.
-Many web applications today make heavy use of modal dialogs, effectively in-page pop-ups that sit "on top" of the existing
-page.  (Of course, in reality, this is an optical illusion and it is all just a web page: the web has no notion of
-"modals" in this regard.)
-
-A web developer might expect htmx to provide some sort of modal dialog component out of the box, since it is, after all,
-a front-end library, and many front end libraries offer support for this pattern.
-
-However, htmx has no notion of modals.  That's not to say you can't use modals with htmx, and we will look at how you
-can do so later.  But htmx, like HTML itself, won't give you an API specifically for creating modals.  You
-would need to use a 3rd party library or roll your own modal implementation and integrate htmx into it if you want
-to use modals within an htmx-based application.
-
-So this is the design tradeoff that htmx makes: it retains the conceptual purity of a straight extension of HTML in
-exchange for some of the "batteries included" features found in other front end libraries.
-
-It's worth nothing that htmx _can_ be used to effectively implement a different UX pattern, inline editing, which is
-often a good alternative to modals, and, in our opinion, is more consistent with the stateless nature of the web.  We
-will take a look at inline editing in the next chapter.
 
 === Installing and Using htmx
 
@@ -253,14 +233,22 @@ htmx will see the `hx-get` attribute on this button, and hook up some JavaScript
 `GET` AJAX request to the `/contacts` path when the user clicks on it.  Very easy to understand and very consistent
 with the rest of HTML.
 
-Now we get to perhaps the most important thing to understand about htmx: it expects the response to this AJAX request _to be
-HTML_, not JSON!  htmx is an extension of HTML and, just as the response to an anchor tag click or form submission is
-typically HTML, htmx expects the server to respond with a hypermedia, namely with HTML.
+=== It's All Just HTML!
 
-.htmx vs. "normal" responses
+Now we get to perhaps the most important thing to understand about htmx: it expects the response to this AJAX request _to be
+HTML_!  htmx is an extension of HTML and, just as the response to an anchor tag click or form submission is usually
+expected to be HTML, htmx expects the server to respond with a hypermedia, namely with HTML.
+
+This may come as a shock to web developers who are unused to responding to an AJAX request with anything other than JSON,
+which is far and away the most common response format for such requests.  But AJAX requests are just HTTP requests and
+there is no rule saying they must be JSON!  Recall again that AJAX stands for Asynchronous Javascript & XML, so JSON
+is already a step away from the format originally envisioned for this API: XML.  htmx simply goes another direction
+and expects HTML.
+
+.htmx vs. "plain" HTML responses
 ****
 
-We have established that htmx is expecting HTML responses to the HTTP requests it makes.  But there is an important
+So, we have established that htmx expects HTML responses to the HTTP requests it makes.  But there is an important
 difference between the HTTP responses to normal anchor and form driven requests and to htmx-powered requests like the one
 made by this button: in the case of htmx triggered requests, responses are often only _partial_ bits of HTML.
 
@@ -268,7 +256,6 @@ In htmx-powered interactions we are typically not replacing the entire document,
 HTML document from the server to the browser.  This fact can be used to save bandwidth as well as resource loading time,
 since less overall content is transferred from the server to the client and since it isn't necessary to reprocess a
 `head` tag with style sheets,script tags, and so forth.
-
 ****
 
 A simple _partial_ HTML response to the button's htmx request might look like this:
@@ -305,10 +292,10 @@ request.  That's obviously _not_ a good thing in this situation: we will end up 
 a button element on the page!  That will look pretty silly and is obviously not what we want.
 
 Fortunately htmx provides another attribute, `hx-target` which can be used to specify exactly where in the DOM the
-new content should be swapped.  The value of the `hx-target` attribute is a Cascading Style Sheet (CSS) _selector_ that
+new content should be placed.  The value of the `hx-target` attribute is a Cascading Style Sheet (CSS) _selector_ that
 allows you to specify the element to put the new hypermedia content into
 
-Let's add a `div` tag that encloses the button with the id `main`.  We will then target this div with the response:
+Let's add a `div` tag that encloses the button with the id `main`.  We will then target this `div` with the response:
 
 [#listing-3-4, reftext={chapter}.{counter:listing}]
 .A Simple htmx-Powered Button
@@ -370,8 +357,13 @@ the DOM.  (Are you beginning to sense a pattern here?)  The `hx-swap` attribute 
 * `none` - No swap will be performed
 
 The first two values, `innerHTML` and `outerHTML`, are taken from the standard DOM properties that allow you to replace content
-within an element or in place of an entire element respectively.  The next four values are taken from the
-`Element.insertAdjacentHTML()` DOM API.  The last two values are specific to htmx, but are fairly obvious to understand.
+within an element or in place of an entire element respectively.
+
+The next four values are taken from the `Element.insertAdjacentHTML()` DOM API, which allow you to place an element or
+elements around a given element in various ways.
+
+The last two values, `delete` and `none` are specific to htmx, but should be fairly obvious for you understand.
+
 Again, you can see that htmx tries to stay as close as possible to the existing web standards to keep your conceptual
 load to a minimum.
 
@@ -461,7 +453,7 @@ To do this, we would add the following attribute to our button:
 
 </div>
 ----
-<1> Issue a request... on mouseenter?
+<1> Issue a request... on the `mouseenter` event?
 
 Now, whenever the mouse enters this button, a request will be triggered.  Hey, we didn't say this was a _good_ idea!
 
@@ -733,6 +725,33 @@ onto the top of the stack of history entries.
 
 With this (relatively) simple mechanism, htmx allows you to integrate with the back button in a way that mimics the
 "normal" behavior of HTML.  Not bad if you look at what other javascript librarires require of you!
+
+.Drawbacks To The htmx Approach
+****
+htmx is a very pure extension to HTML, aiming to incrementally improve the language as a hypermedia in a manner that is
+conceptually coherent with the underlying markup language.  This approach, like any technical choice, is not without
+tradeoffs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel
+should be there "by default".
+
+A good example is the concept of modal dialogs. Many web applications today make heavy use of modal dialogs, effectively
+in-page pop-ups that sit "on top" of the existing page.  (Of course, in reality, this is an optical illusion and it is
+all just a web page: the web has no notion of"modals" in this regard.)
+
+A web developer might expect htmx to provide some sort of modal dialog component out of the box, since it is, after all,
+a front-end library, and many front end libraries offer support for this pattern.
+
+htmx, however, has no notion of modals.  That's not to say you can't use modals with htmx, and we will look at how you
+can do so later.  But htmx, like HTML itself, won't give you an API specifically for creating modals.  You
+would need to use a 3rd party library or roll your own modal implementation and then integrate htmx into it if you want
+to use modals within an htmx-based application.
+
+This is the design tradeoff that htmx makes: it retains conceptual purity as an extension of HTML, and, in exchange,
+lacks some of the "batteries included" features found in other front end libraries.
+
+As an aside, it's worth nothing that htmx _can_ be used to effectively implement a slightly different UX pattern, inline
+editing, which is often a good alternative to modals, and, in our opinion, is more consistent with the stateless nature
+of the web.
+****
 
 == Summary
 

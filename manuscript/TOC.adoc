@@ -35,20 +35,22 @@
 .. 3.6 History Support
 .. 3.7 Summary
 
-. Improving Our Hypermedia Application
+. 4 Improving Our Hypermedia Application
 [none]
-.. Adding AJAX Navigation
-.. Deleting Contacts
-.. Inline Validation of Emails
-.. Inline Adding of Contacts
-.. Summary
+.. 4.1 Adding AJAX Navigation
+.. 4.2 Deleting Contacts
+.. 4.3 Inline Validation of Emails
+.. 4.4 The Click To Load Pattern
+.. 4.5 The Infinite Scroll Pattern
+.. 4.6 Summary
 
-. Advanced UX Patterns With Hypermedia
-.. Bulk Editing Contacts
-.. Infinite Scroll of Contacts
-.. Lazy Loading Counts
-.. Active Search of Contacts
-.. Summary
+. 5 Advanced Hypermedia Patterns
+[none]
+.. 5.1 Active Search of Contacts
+.. 5.2 Lazy Loading Contact Count
+.. 5.3 Inline Contact Delete
+.. 5.3 Bulk Delete
+.. 5.4 Summary
 
 . Hyperview: A Mobile Hypermedia
 [none]

@@ -18,7 +18,9 @@ This chapter covers:
 * Installing htmx in our application
 * Adding AJAX-based navigation to our application
 * Implementing a proper delete mechanic for contacts
-* Implementing inline editing of contacts
+* Implementing paging in our application
+* Implementing the "Click To Load" pattern
+* Implementing the "Infinite Scroll" pattern
 
 == Installing htmx
 

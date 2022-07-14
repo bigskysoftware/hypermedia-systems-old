@@ -180,6 +180,7 @@ This function is going to do one of two things:
 
 Here is the code:
 
+.Server Side Search
 [source,python]
 ----
 @app.route("/contacts")
@@ -262,13 +263,13 @@ the page re-renders.
 
 The next bit of Jinja template has the actual contacts table code in it:
 
+.The Contacts Table
 [source, html]
 ----
     <table>
         <thead>
         <tr>
             <th>First</th> <th>Last</th> <th>Phone</th> <th>Email</th> <th></th><1>
-
         </tr>
         </thead>
         <tbody>

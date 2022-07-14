@@ -1,0 +1,346 @@
+= Hypermedia In Action
+:chapter: 5
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 4
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+
+= Advanced Hypermedia Patterns
+
+This chapter covers:
+
+* Adding the "Active Search" pattern to our application
+* Adding the "Lazy Load" pattern to our application
+* Implementing inline deletion of contacts from the list view
+* Implementing a bulk delete of contacts
+
+== Active Search
+
+In this chapter we will add some more advanced features to our contacts application, all while staying within the
+hypermedia model.  (We will do some client-side scripting in our application later on, but, even when we do add
+scripting based features, we will keep the network communication model firmly within the hypermedia architecture!)
+
+The first advanced feature we will create is known as the "Active Search" pattern.  Active Search is a feature when, as a
+user types text into a search box, the results of that search are dynamically updated.  This pattern was made popular
+when Google adopted it for search results, and many applications now implement it.
+
+As you might suspect, we are going to use some of the same techniques we used for dynamically updating emails in the
+previous chapter, since we are once again going to want to issue requests on the `keyup` event.
+
+Let's look at the current search field in our application once again:
+
+.Our Search Form
+[source,html]
+----
+<form action="/contacts" method="get" class="tool-bar">
+    <label for="search">Search Term</label>
+    <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"/>
+    <input type="submit" value="Search"/>
+</form>
+----
+
+You will recall that we have some server side code that looks for the `q` parameter and, if it is present, searches
+the contacts for that term.
+
+As it stands right now, the user must hit enter when the search input is focused, or click the "Search" button.  Both
+of these events will trigger a `submit` event on the form, causing it to issue an HTTP `GET` and re-rendering the whole
+page.  Recall that currently, thanks to `hx-boost` the form will still use an AJAX request for this `GET`, but we don't
+get the nice search-as-you-type behavior we want.
+
+To add active search behavior, we will need to add a few htmx attributes to the search input.  We will leave the form
+as is, so that, in case a user does not have JavaScript enabled, search continues to work.  (As a reminder, this is
+called "progressive enhancement" and this pattern is progressive.)  We want to issue an HTTP `GET` request to the same URL that
+the form does when it is submitted.  And we want to do so when a key up occurs, but only after a small delay.  We can
+take the `hx-trigger` attribute directly from our email validation example!
+
+.Adding Active Search Behavior
+[source,html]
+----
+<form action="/contacts" method="get" class="tool-bar">
+    <label for="search">Search Term</label>
+    <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}" <1>
+           hx-get="/contacts" <2>
+           hx-trigger="change, keyup delay:200ms changed"/> <3>
+    <input type="submit" value="Search"/>
+</form>
+----
+<1> We keep everything the same on the input, so it functions the way it always has if JavaScript isn't enabled
+<2> We issue a `GET` to the same URL as the form
+<3> We use the same `hx-trigger` specification as we did for the email input validation example
+
+This is pretty close to what we want, but recall that the default target for an element is itself.  As things currently
+stand, an HTTP `GET` request will be issued to the `/contacts` path, which will, as of now, return an entire HTML document
+of search results!  This whole document will then be inserted into the inner HTML of an input!  Well, that's pretty
+meaningless, and the browser will just ignore a request to do this.
+
+What do we want to target with the update?  Ideally we'd like to just target the actual results: there is no reason to
+update the header or search input, and that could cause an annoying flash as focus jumps around.  So lets use the `hx-target`
+attribute to target the results body:
+
+.Adding Active Search Behavior
+[source,html]
+----
+<form action="/contacts" method="get" class="tool-bar">
+    <label for="search">Search Term</label>
+    <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+           hx-get="/contacts"
+           hx-trigger="change, keyup delay:200ms changed"
+           hx-target="tbody"/> <1>
+    <input type="submit" value="Search"/>
+</form>
+----
+<1> Target the `tbody` tag on the page
+
+Because there is only one `tbody` on the page, we can use the CSS selector `tbody` and htmx will target the first element
+matching that selector.
+
+Now if you try typing something into the search box, you'll get some action.  A request is made and the results are inserted
+into the document within the tbody.  Unfortunately, the results are... the entire document still!  So you get all the
+other stuff, the search box, the application header, etc. and a somewhat humorous double-render.
+
+Now, we could use the same trick we reached for in the "Click To Load" and "Infinite Scroll" features: `hx-select`.  Recall
+that `hx-select` allows us to pick out the part of the response we are interested in using CSS selectors.  So we could
+add this to our input:
+
+.Using `hx-select` for Active Search
+[source, html]
+----
+<input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+       hx-get="/contacts"
+       hx-trigger="change, keyup delay:200ms changed"
+       hx-target="tbody"
+       hx-select="tbody tr"/> <1>
+----
+<1> Adding an `hx-select` that picks out the table rows in the `tbody` of the response
+
+=== Server Side Tricks With htmx
+
+This works fine, but we are not going to use this approach.  Here we are letting the server create a full HTML document
+in response and then, on the client side, filtering it down.  This is easy and might be necessary if we don't control
+the server side or can't easily modify responses.  But here we can modify our server responses so, instead of using this
+client-side approach, we are going to use this as an opportunity to explore returning different bits of HTML based on
+the context information that htmx provides with requests.
+
+Let's take a look again at the server side code for our search logic:
+
+.Server Side Search
+[source,python]
+----
+@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    if search:
+        contacts_set = Contact.search(search) <1>
+    else:
+        contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set) <2>
+----
+<1> This is where the search logic happens
+<2> We simply rerender the `index.html` template every time, no matter what
+
+What we want to do on the server side is _conditionally_ render only the table rows when we are serving an "Active Search"
+request.  Remember, though, we _also_ need to handle "regular" search requests submitted by the form, in case JavaScript
+is disabled, or the user clicks the "Search" button.  In these cases we want the current logic, where we render the entire
+`index.html` template, to execute.
+
+So we need some way to determine exactly _who_ made the request to the `/contact` URL to know what to render.  It turns
+out that htmx helps us out here by including a number of HTTP _Request Headers_ when it makes requests.  Request Headers
+are name/value pairs of metadata associated with the request and are a standard, if underutilized, feature of HTTP.
+
+Here are the headers that htmx gives us to work with:
+
+[cols="1,1"]
+|===
+|Header | Description
+
+|HX-Boosted
+|This will be the string "true" if the request is made via an element using hx-boost
+
+|HX-Current-URL
+|This will be the current URL of the browser
+
+|HX-History-Restore-Request
+|This will be the string "true" if the request is for history restoration after a miss in the local history cache
+
+|HX-Prompt
+|This will contain the user response to an hx-prompt
+
+|HX-Request
+|This value is always "true" for htmx-based requests
+
+|HX-Target
+|This value will be the id of the target element if it exists
+
+|HX-Trigger-Name
+|This value will be the name of the triggered element if it exists
+
+|HX-Trigger
+|This value will be the id of the triggered element if it exists
+|===
+
+Looking through this list of headers, the last one stands out: we have an id, `search` on our search input.  So the
+value of the `HX-Trigger` header should be set to `search` when the request is coming from the search input.  Perfect!
+
+Let's add some conditional logic to our controller:
+
+.Updating Our Server Side Search
+[source,python]
+----
+@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    if search:
+        contacts_set = Contact.search(search)
+        if request.headers.get('HX-Trigger') == 'search': <1>
+          ??? <2>
+    else:
+        contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set) <2>
+----
+<1> If the request header `HX-Trigger` is equal to "search", we want to do something different
+<2> But what is that something?
+
+OK, we have the conditional logic in place in our controller, but what do we want to do here?  Well, we want to do something
+akin to what we were achieving using `hx-select` previously: we only want to render the _rows_ of the table within the
+table body!
+
+How can we achieve that?
+
+=== Factoring Your Templates
+
+Here we come to a common pattern in htmx: we want to _factor_ our server side templates.  This means that we want to
+break them up a bit so they can be called from multiple contexts.  In this situation, we want to break the rows of
+the results table out to a separate template.  We will call this new template `rows.html` and we will include it from
+the main `index.html` template, as well as render it directly in the controller when we want to respond with only the
+rows to Active Search requests.
+
+Recall what the table in our `index.html` file currently looks like:
+
+.The Contacts Table
+[source, html]
+----
+    <table>
+        <thead>
+        <tr>
+            <th>First</th> <th>Last</th> <th>Phone</th> <th>Email</th> <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %} <2>
+            <tr>
+                <td>{{ contact.first }}</td>
+                <td>{{ contact.last }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.email }}</td>
+                <td><a href="/contacts/{{ contact.id }}/edit">Edit</a>
+                    <a href="/contacts/{{ contact.id }}">View</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+----
+
+What we want to do is to move that for loop and the rows it creates out so a separate file, and save that as `row.html`:
+
+.Our New `rows.html` file
+[source, html]
+----
+        {% for contact in contacts %} <2>
+            <tr>
+                <td>{{ contact.first }}</td>
+                <td>{{ contact.last }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.email }}</td>
+                <td><a href="/contacts/{{ contact.id }}/edit">Edit</a>
+                    <a href="/contacts/{{ contact.id }}">View</a></td>
+            </tr>
+        {% endfor %}
+----
+
+We can then include this new file in our table in `index.html` by using the Jinja2 `include` directive:
+
+.Including The New File
+[source, html]
+----
+    <table>
+        <thead>
+        <tr>
+            <th>First</th>
+            <th>Last</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'rows.html' %} <1>
+        </tbody>
+    </table>
+----
+<1> This directive includes the `rows.html` file, inserting the content from that template into the `index.html` template
+
+So far, so good.  The application still works and if we navigate to the `/contacts` page, everything is still rendering
+properly.  But we need to go back and fix up our controller now to take advantage of this new file when we are doing
+an Active Search.  Luckily, the update is simple: we just need to call the `render_template` function with this
+new file:
+
+.Updating Our Server Side Search
+[source,python]
+----
+@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    if search:
+        contacts_set = Contact.search(search)
+        if request.headers.get('HX-Trigger') == 'search':
+          return render_template("rows.html", contacts=contacts_set) <1>
+    else:
+        contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set)
+----
+<1> Render the new template in the case of an active search
+
+Now, when an Active Search request is made, rather than getting an entire HTML document back, we only get a partial
+bit of HTML, the table rows for the contacts that match the search.  These rows are then inserted into the `tbody` on
+the index page, without any need for an `hx-select` or any other client side processing.
+
+And the old form-based search still works as well, thanks to the fact that we conditionally render the rows only when
+the `search` input issues the HTTP request.
+
+=== Updating History
+
+You may have noticed one shortcoming of our Active Search when compared with submitting the form: the form puts the
+query into the navigation bar as a URL parameter.  So if you search for "joe" in the search box, you will end up with
+a url that looks like this:
+
+`https://example.com/contacts?q=joe`
+
+This features makes it such that you can copy the URL and send it to someone else, and they can simply click on the link
+to repeat the exact same search.  As it stands right now, during Active Search, we do not update the URL.
+
+Let's fix that by adding the `hx-push-url` attribute:
+
+.Updating The URL During Active Search
+[source, html]
+----
+<input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+       hx-get="/contacts"
+       hx-trigger="change, keyup delay:200ms changed"
+       hx-target="tbody"
+       hx-push-url="true"/> <1>
+----
+<1> By adding the `hx-push-url` attribute with the value `true`, htmx will update the URL when it makes a request
+
+That's all it takes and now, as Active Search requests are sent, the URL in the browser is updated to have the query
+in it, just like when the form is submitted.
+
+Now, you might not _want_ this behavior.  You might feel it would be confusing to users to see the navigation bar updated
+and have history entries for every Active Search made, for example.  Which is fine!  You can simply omit the `hx-push-url`
+attribute and it will go back ot the behavior you want.  htmx tries to be flexible enough that you can achieve the UX
+you want, while staying largely within the declarative HTML model.

@@ -66,22 +66,31 @@ take the `hx-trigger` attribute directly from our email validation example!
     <label for="search">Search Term</label>
     <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}" <1>
            hx-get="/contacts" <2>
-           hx-trigger="change, keyup delay:200ms changed"/> <3>
+           hx-trigger="search, keyup delay:200ms changed"/> <3>
     <input type="submit" value="Search"/>
 </form>
 ----
 <1> We keep everything the same on the input, so it functions the way it always has if JavaScript isn't enabled
 <2> We issue a `GET` to the same URL as the form
-<3> We use the same `hx-trigger` specification as we did for the email input validation example
+<3> We use a similar `hx-trigger` specification as we did for the email input validation example
 
-This is pretty close to what we want, but recall that the default target for an element is itself.  As things currently
+The small change that we made to the `hx-trigger` attribute is we switched out the `change` event for the `search` event.
+The `search` event is triggered when someone clears the search or hits the enter key.  It is a non-standard event, but
+doesn't hurt to include here.  The main functionality of the feature is provided by the second triggering event, the `keyup`
+which, as with the email example, is delayed to debounce the input requests and avoid issuing too many requests.
+
+What we have is pretty close to what we want, but recall that the default target for an element is itself.  As things currently
 stand, an HTTP `GET` request will be issued to the `/contacts` path, which will, as of now, return an entire HTML document
 of search results!  This whole document will then be inserted into the inner HTML of an input!  Well, that's pretty
-meaningless, and the browser will just ignore a request to do this.
+meaningless, and the browser will, sensibly, just ignore htmx's request to do this.  So, at this point, when a user
+types anything into our input, a request will be issued, but it will appear to the user as if nothing has happened.
 
-What do we want to target with the update?  Ideally we'd like to just target the actual results: there is no reason to
-update the header or search input, and that could cause an annoying flash as focus jumps around.  So lets use the `hx-target`
-attribute to target the results body:
+OK, so to fix this issue, what do we want to target with the update instead?  Ideally we'd like to just target the actual
+results: there is no reason to update the header or search input, and that could cause an annoying flash as focus jumps
+around.
+
+Fortunately the `hx-target` attribute allows us to do exactly that!  Lets use it to target the results body, the
+`tbody` element in the table of contacts:
 
 .Adding Active Search Behavior
 [source,html]
@@ -344,3 +353,49 @@ Now, you might not _want_ this behavior.  You might feel it would be confusing t
 and have history entries for every Active Search made, for example.  Which is fine!  You can simply omit the `hx-push-url`
 attribute and it will go back ot the behavior you want.  htmx tries to be flexible enough that you can achieve the UX
 you want, while staying largely within the declarative HTML model.
+
+=== Adding A Request Indicator
+
+A final touch for our Active Search pattern is to add a request indicator to let the user know that a search is in
+progress.  As it stands the user has to know that the active search functionality is doing a request implicitly and,
+if the search takes a bit, may end up thinking that the feature isn't working.  By adding a request indicator we let
+the user know that the hypermedia application is busy and they can wait (hopefully not too long!) for the request to
+complete.
+
+htmx provides support for request indicators via the `hx-indicator` attribute.  This attribute takes, you guessed it,
+a CSS selector that points to the indicator for a given element.  The indicator can be anything, but it is typically
+some sort of animated image, such as a gif or svg file, that spins or otherwise communicates visually that "something
+is happening".
+
+Let's add a spinner next to our input:
+
+.Updating The URL During Active Search
+[source, html]
+----
+<input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+       hx-get="/contacts"
+       hx-trigger="change, keyup delay:200ms changed"
+       hx-target="tbody"
+       hx-push-url="true"
+       hx-indicator="#spinner"/> <1>
+<img id="spinner" class="htmx-indicator" src="/static/img/spinning-circles.svg" alt="Request In Flight..."/> <2>
+----
+<1> The `hx-indicator` attribute points to the indicator image after the input
+<2> The indicator is a spinning circle svg file, and has the `htmx-indicator` class on it
+
+We have added the spinner right after the input.  This visually co-locates the request indicator with the element
+making the request, and makes it easy for a user to see that something is in fact happening.
+
+Note that the indicator `img` tag has the `htmx-indicator` class on it.  This is a CSS class automatically injected
+by htmx that defaults the element to an `opacity` of 0.  When an htmx request is triggered that points to this indicator,
+another class, `htmx-request` is added to the indicator which transitions its opacity to 1.  So you can use just about
+anything as an indicator and it will be hidden by default, and will be shown when a request is in flight.  This is all
+done via standard CSS classes, allowing you to control the transitions and even the mechanism by which the indicator
+is show (e.g. you might use `display` rather than `opacity`).  htmx is flexible in this regard.
+
+Request indicators are an important UX aspect of any distributed application.  It is unfortunate that browsers have
+de-emphasized their native request indicators over time, and it is doubly unfortunate that request indicators are not
+part of the JavaScript ajax APIs.
+
+Be sure not to neglect this important aspect of your application!  Even though requests might seem instant when you are
+working on your application locally, in the real world

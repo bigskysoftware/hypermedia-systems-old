@@ -11,13 +11,14 @@
 :source-language:
 
 
-= Improving Our Hypermedia Application
+= Putting Hypermedia Into Action With htmx
 
-This chapter covers:
+This chapter covers
 
 * Installing htmx in our application
-* Adding AJAX-based navigation to our application
+* Adding AJAX-based navigation to our application via "boosting"
 * Implementing a proper delete mechanic for contacts
+* Validating emails as the user types
 * Implementing paging in our application
 * Implementing the "Click To Load" pattern
 * Implementing the "Infinite Scroll" pattern
@@ -25,14 +26,17 @@ This chapter covers:
 == Installing htmx
 
 Now that we've seen how htmx extends HTML as a hypermedia, it's time to put it into action.  We will still be
-exchanging hypermedia with our server, no need to create a JSON API, but we will be able to improve the user
-experience nonetheless.
+exchanging hypermedia, that is HTML, with our server, but we will have a more powerful hypermedia to work with.  This
+will allow us to address user experience issues, such as long feedback cycles or painful page refreshes, without needing
+to write much, if any, JavaScript, without creating an elaborate JSON API, and so on: everything will be implemented
+in hypermedia, using the core concepts of the original web.
 
 The first thing we need to do is install htmx in our web application.  We are going to do this by downloading the
 source and saving it locally in our application, so we aren't dependent on any external systems.  We can grab the
 latest htmx version by going to `https://unpkg.com/htmx.org`, which will redirect to the current version of the
 library.  We can copy and paste that into the `static/js/htmx.js` file.  (You may want to add the version of htmx
-to the file name, to keep things straight.)
+to the file name, in order to make it obvious which version of htmx you are using.  Fortunately, unlike many JavaScript
+libraries, htmx does not change rapidly.)
 
 You can, of course, use something like Node Package Manager (NPM) or some other dependency management system if you
 would prefer, but we won't need a lot of javascript, and htmx is dependency free, so we'll keep it simple for our
@@ -61,10 +65,15 @@ you put it on an element with the value `true`, it will "boost" all anchor tags 
 in this case, means it will convert those elements from regular anchor tags and forms into AJAX-powered anchors and
 forms.
 
-So boosted anchors, for example, rather than issuing a "normal" browser request, will issue an AJAX `GET` and replace
+So boosted links, for example, rather than issuing a "normal" browser request, will issue an AJAX `GET` and replace
 the whole body with the response.
 
-Here is an example of a boosted link:
+=== Boosted Links
+
+Let's take a look at an example of a boosted link.  Here we have a link to a hypothetical settings page.  Because it has
+`hx-boost="true"` on it, htmx will prevent the normal link behavior of issuing a request to the `/settings` path and replacing
+the entire page with the response.  Instead, htmx will issue an AJAX request to `/settings`, taking the result and replacing
+the `body` element with the new content.
 
 [#listing-4-1, reftext={chapter}.{counter:listing}]
 .A Boosted Link
@@ -74,11 +83,8 @@ Here is an example of a boosted link:
 ----
 <1> A simple attribute makes this link AJAX-powered
 
-Here we have a link to a hypothetical settings page.  Because it has `hx-boost="true"` on it, htmx will prevent the normal
-link behavior and instead issue an AJAX request to `/settings`, taking the result and replacing the `body` element with
-the new content.
-
 Now, you might wonder: what's the advantage here?  We are issuing an AJAX request and simply replacing the entire body.
+
 Is that significantly different from just issuing a normal link request?
 
 The answer is yes: in a boosted link, the browser is able to avoid any processing associated with the head tag.  The head
@@ -94,8 +100,13 @@ The answer in this case is no: htmx is smart enough to pull out only the content
 The `head` tag, etc. are all ignored.  This means you don't need to do anything special on the server side to render
 templates that `hx-boost` can handle: just return the normal HTML for your page and it should work fine.
 
+=== Boosted Forms
+
 Boosted form tags work in a similar way to boosted anchor tags: a boosted form will use an AJAX request rather than the
 usual browser-issued request, and will replace the entire body with the response:
+
+Here is an example of a form that posts messages to the `/messages` end point using an HTTP `POST` request.  By adding
+`hx-boost` to it, those requests will be done in AJAX, rather than the normal browser behavior.
 
 [#listing-4-2, reftext={chapter}.{counter:listing}]
 .A Boosted Form
@@ -108,21 +119,23 @@ usual browser-issued request, and will replace the entire body with the response
 ----
 <1> As with the link, a simple attribute makes this form AJAX-powered
 
-This form posts messages to the `/messages` end point with an HTTP `POST`.  By adding `hx-boost` to it, those requests
-will be done in AJAX, rather than the normal browser behavior.
-
-Another advantage of the AJAX-based request that `hx-boost` issues is that it avoids what is known as a "flash of unstyled
+Another advantage of the AJAX-based request that `hx-boost` uses is that it avoids what is known as a "flash of unstyled
 content", which is when a page renders before all of the styling information has been downloaded for it.  This causes
-a disconcerting momentary flash of the unstyled content, which is then restyled when all the style information is available.
-You probably notice this as a flicker when you move around the internet, where text can "jump around" on the page as styles
-are applied to it.
+a disconcerting momentary flash of the unstyled content.  The content is then restyled when all the style information is available.
+You probably notice this as a flicker when you move around the internet: text, images and other content can "jump around"
+on the page as styles are applied to it.
 
 With `hx-boost` the styling is already loaded before the content is retrieved, so there is no such flash of unstyled
-content.  This makes "boosted" applications feel smoother and less jarring in general.
+content.  This can make a "boosted" application feel smoother and less jarring in general.
 
 === Attribute Inheritance
 
-Let's expand on our previous example of a boosted link, and add a few more boosted links along side it:
+Let's expand on our previous example of a boosted link, and add a few more boosted links along side it.  We add links
+so we ahve a link to the `/contacts` page, the `/settings` page, and  the `/help` page.  All these links are boosted
+and will behave in the manner that we have described.
+
+But this feels a little redundant, doesn't it?  It is a shame we have to annotate three links with the `hx-boost="true"`
+right next to one another.
 
 [#listing-4-3, reftext={chapter}.{counter:listing}]
 .A Set of Boosted Links
@@ -133,16 +146,14 @@ Let's expand on our previous example of a boosted link, and add a few more boost
 <a href="/help" hx-boost="true">Help</a>
 ----
 
-We now have a link to the `/contacts` page as well as the `/help` page.  All these links are boosted and will behave
-in the manner that we have described.  But this feels a little redundant, doesn't it.  It is a shame we have to say
-`hx-boost="true"` three times here, right next to one another.
-
 htmx offers a feature to help reduce redundancy here: attribute inheritance.  For many attributes in htmx, by placing it
 on a parent, it will apply to all children elements.  This is how Cascading Style Sheets work, and the idea was inspired
 by CSS.
 
 So to avoid the redundancy in this example, lets introduce a `div` element that encloses all the links and "hoist" the
-`hx-boost` attribute up to it:
+`hx-boost` attribute up to it.  This will let us remove the redundant `hx-boost` attributes, but ensure all the links are
+still boosted, inheriting that functionality from the parent `div`.  Note that any legal element type could be used here,
+we just used a `div` out of habit.
 
 [#listing-4-3, reftext={chapter}.{counter:listing}]
 . Boosting Links Via The Parent
@@ -155,9 +166,6 @@ So to avoid the redundancy in this example, lets introduce a `div` element that 
 </div>
 ----
 <1> The `hx-boost` has been moved to the parent div
-
-Now we have removed the redundant `hx-boost` attributes, but all the links are still boosted, inheriting that functionality
-from the parent element.  Note that any legal element type could be used here, we just used a `div` out of habit.
 
 But what if you have a link that you _don't_ want boosted within an element that has `hx-boost="true"` on it?  A good
 example is a link to a resource to be downloaded, such as a PDF.  Downloading a file can't be handled well by an AJAX
@@ -271,8 +279,12 @@ Pretty simple!  There are two things, in particular, to notice about this new im
 
 === Updating The Server Side
 
-Since we have updated both the route and the HTTP action we are using to delete a contact, we are going to need to
-update our server side implementation as well.  Here is the original code:
+We have updated our client-side code, that is our HTML, so it now does "the right thing" from a hypermedia perspective:
+we want to delete a contact, and we are issuing a `DELETE` request.  But we still have some work to do!  Since we
+updated both the route and the HTTP action we are using, we are going to need to update the server side implementation
+as well to handle this new HTTP Request.
+
+Here is the original code:
 
 [source, python]
 ----
@@ -288,19 +300,66 @@ We are going to have to do two things: first we need to update the route for our
 we are using to delete contacts.  This will be relatively straight forward.
 
 Secondly, and this is a bit more subtle, we are going to need to change the HTTP Response Code that the handler sends back.
+
+.HTTP Response Codes
+****
 HTTP Response Codes are numeric values that are embedded in an HTTP response that let the client know what the result
 of a request was.  The most familiar response code for most web developers is `404`, which stands for "Not Found" and
 is the response code that is returned by web servers when a resource that does not exist is requested.
 
-HTTP redirects similarly issue an HTTP Response Code, typically in the low 300s range.  By default, in Flask the `redirect()`
-method responds with a `302` response code.  According to the Mozilla Developer Network (MDN) web docs, this means that
-the HTTP method and body of the requests will be unchanged when the redirected request is issued.  Well, in our case,
-we certainly don't want to issue a `DELETE` to `/contacts` when we redirect the user!
+HTTP breaks response codes up into various categories:
 
-So we are going to need to update this to a `303` response code, which will convert the redirected request to a GET.
-Fortunately this is very easy: there is a second parameter to `redirect()` that takes the response code you wish to send.
+[cols="1,4"]
+|===
+|`100`-`199`
+| Informational responses that provide information about how the server is processing the response
 
-Here is our new handler code:
+|`200`-`299`
+| Successful responses indicating that the request succeeded
+
+|`300`-`399`
+| Redirection responses indicating that the request should be sent to some other URL
+
+|`400`-`499`
+| Client error responses indicating that the client made some sort of bad request (e.g. asking for something that didn't
+  exist in the case of `404` errors)
+
+|`500`-`599`
+| Server error responses indicating that the server encountered an error internally as it attempted to respond to the request
+|===
+
+Within each of these categories there are multiple response codes for specific situations.  A good example is the `404 Not Found`
+response code that we already mentioned, which indicates that the requested resource was not fount.  This is in contrast
+with the `403 Forbidden` response code, which is still a "Client Error" response code, but which indicates that the current user
+is not allowed to view the given resource.
+
+Different response codes will often trigger different browser behaviors, so it is important to understand exactly which
+one you are returning, especially as you get deeper into creating a Hypermedia Driven Application.
+****
+
+It turns out that, by default, in Flask the `redirect()` method responds with a `302` response code.  According to the
+Mozilla Developer Network (MDN) web docs, this means that the HTTP method and body of the requests _will be unchanged_
+when the redirected request is issued.
+
+Since we are issuing a `DELETE` request and being redirected to the `/contacts` path, that would mean that the redirected
+request would retain the `DELETE` method, and we would issue a `DELETE` request to `/contacts`.  Yikes!  That looks like
+a request to delete all the contacts in our system, doesn't it?  It wouldn't do that, of course, since we haven't
+implemented that behavior, but that's still not what we want: we'd like it to simply issue a `GET`, slightly modifying
+the Post/Redirect/Get behavior we discussed earlier to be Delete/Redirect/Get.
+
+Fortunately for us, there is a response code, `30 See Other`, which will convert the redirected request to a GET.  So
+we want to use this response code in our flask application and, it turns out, this is very easy: there is a second
+parameter to `redirect()` that takes the numeric response code you wish to send.
+
+==== Putting It All Together
+
+So we want to make the following changes to our server side code:
+
+* We want to change the HTTP action associated with it to `DELETE`
+* We want to remove the ugly `/delete` at the end of the path, since we are now using a proper HTTP action
+* We want to be sure to issue a `303 See Other` response code so we properly issue a `GET` after the redirect
+
+Here is our updated code:
 
 [source, python]
 ----
@@ -314,16 +373,17 @@ def contacts_delete(contact_id=0):
 <1> A slightly different path and method for the handler
 <2> The response code is now a 303
 
-As you can see, we removed the `/delete` ending of the path and change the method that this handler is associated with
-to `DELETE`.  A much more natural hypermedia approach to deleting a resource!
+Now, when you want to remove a given contact, you can simply issue a `DELETE` to the same URL as you used to access the
+contact in the first place.  A much more natural hypermedia approach to deleting a resource!
 
 === Targeting The Right Element
 
 We aren't quite out of the woods yet, however.  As you may recall, by default htmx "targets" the element that triggers a request,
 and will place the HTML returned by the server inside that element.  In this case, since the redirect to `/contacts` is
-going to re-render the entire contact list, we will end up in the humorous situation where the entire list ends up
-inside the "Delete Contact" button.  Mis-targeting elements comes up from time to time in htmx and can lead to some
-pretty funny situations.
+going to re-render the entire contact list, we will end up in the unfortunate situation where the entire list ends up
+_inside_ the "Delete Contact" button!
+
+Mis-targeting elements comes up from time to time in htmx and can lead to some pretty funny situations.
 
 The fix for this is to add an explicit target to the button, targeting the `body` element with the response:
 
@@ -342,10 +402,16 @@ the current contact, delete the contact and redirect back to the contact list pa
 
 === Updating The Location Bar URL Properly
 
-Well, almost.  If you click on the button you will notice that, despite the redirect, the URL in the location bar is
-not correct.  It still points to `/contacts/{{ contact.id }}/delete`.  This is because we haven't told htmx to update
-the URL.  Boosting will naturally do this for you, but here we are building a custom button, and so we need to let
-htmx know that we want the resulting URL "pushed" into the location bar:
+Well, almost.
+
+If you click on the button you will notice that, despite the redirect, the URL in the location bar is
+not correct.  It still points to `/contacts/{{ contact.id }}`.  This is because we haven't told htmx to update
+the URL: it just issues the `DELETE` request and then updates the DOM with the response.
+
+Boosting will naturally update the location bar for you, mimicing normal anchors and forms, but here we are building a
+custom button because we want to issue a `DELETE`, something not possible in plain HTML.  We need to let
+htmx know that we want the resulting URL from this request "pushed" into the location bar.  We can achieve this by
+adding the `hx-push-url` with the value `true`:
 
 [source, html]
 .Deleting A Contact, Now With Proper Location Information
@@ -359,8 +425,9 @@ htmx know that we want the resulting URL "pushed" into the location bar:
 <1> We tell htmx to push the redirected URL up into the location bar
 
 _Now_ we are done.  We have a button that, all by itself, is able to issue a properly formatted HTTP `DELETE` request to
-the correct URL, and the UI and location bar are all updated correctly.  This was accomplished with three attribute
-placed directly on the button, and we were able to remove the enclosing form tag as a bonus.
+the correct URL, and the UI and location bar are all updated correctly.  This was accomplished with three declarative
+attributes placed directly on the button `hx-delete`, `hx-target` and `hx-push-url`.  Not only that, we were able to remove
+the enclosing form tag as a bonus!  Pretty clean!
 
 === One Last Thing
 
@@ -393,23 +460,31 @@ Now, when someone clicks on the "Delete Contact" button, they will be presented 
 you want to delete this contact?" and they will have an opportunity to cancel if they clicked the button in error.  Very
 nice.
 
-With this final change we now have a pretty solid "delete contact" mechanic: we are using the correct, REST-ful routes
+With this final change we now have a pretty solid "delete contact" mechanic: we are using the correct REST-ful routes
 and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
 all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
+
+=== Progressive Enhancement?
 
 One thing to note about our solution, however, is that it is _not_ a progressive enhancement to our web application: if
 someone has disabled JavaScript then this functionality will no longer work.  You could do additional work to keep
 the older mechanism working in a JavaScript-disabled environment, but it would introduce additional and redundant code.
-It is up to you to determine if that tradeoff is worth the cost.
 
-== Validating Emails
+Progressive Enhancement and a related topic, Accessibility, are hot-button topics in web development.  htmx, like most
+JavaScript libraries, makes it possible to create applications that do not function in the absence of JavaScript.
+Retaining support for non-JavaScript clients requires additional work and complexity.  It is important to determine
+how important supporting non-JavaScript clients is before you begin using htmx or any other JavaScript framework for
+improving your web applications.
 
-A big part of any web application is validating the data that is submitted to the server side.  Currently, our
-application has a small amount of validation that is done server side and that displays an error message when
-an error is detected.
+== Next Steps: Validating Emails
 
-We are not going to go into the details of how validation works in the model objects, but recall that
-the code for updating a contact looks like this:
+Let's move on to another improvement in our application: a big part of any web app is validating the data that is
+submitted to the server side: ensuring emails are correctly formatted and unique, numeric values are valid, dates are
+acceptable, and so forth.  Currently, our application has a small amount of validation that is done entirely server side
+andthat displays an error message when an error is detected.
+
+We are not going to go into the details of how validation works in the model objects, but recall what
+the code for updating a contact looks like:
 
 [source, python]
 .Server Side Validation On Contact Update
@@ -426,7 +501,12 @@ def contacts_edit_post(contact_id=0):
 <1> We attempt to save the contact
 <2> If the save does not succeed we re-render the form to display error messages
 
-And the form code in our template looks like this:
+So we attempt to save the contact, and, if the `save()` method returns true, we redirect to the contact's detail page.
+If the `save()` method does not return true, that indicates that there was a validation error and so, instead of redirecting
+we re-render the HTML for editing the contact.  This gives the user a chance to correct the errors, which are displayed
+along side the inputs.
+
+Let's tak a look at the HTML for the email input:
 
 [source, html]
 .Validation Error Messages
@@ -439,14 +519,26 @@ And the form code in our template looks like this:
 ----
 <1> Display any errors associated with the email field
 
+We have a label for the input, an input of type `text` and then a bit of HTML to display any error messages associated
+with the email.
+
+.Server Side Validation
+****
 Right now there is a bit of logic in the contact class that checks if there are any other contacts with
-the same email, and adds an error if so: we do not want to have duplicate emails in our contacts database.  This is a
+the same email, and adds an error if so since we do not want to have duplicate emails in our contacts database.  This is a
 very common validation example: emails are usually unique and adding two contacts with the same email
 is almost certainly a user error.
 
+Again, we are not going to go into the details in the interest of staying focused on hypermedia, but whatever server
+side framework you are using almost certainly has some sort of infrastructure available for validating data and collecting
+errors to display to the user.
+****
+
 The error message shown when a user attempts to save a contact with a duplicate email is "Email Must Be Unique":
 
-TODO - screen shot of application validation error
+[#figure-4-1, reftext="Figure {chapter}.{counter:figure}"]
+.Email Validation Error
+image::../images/screenshot_validation_error.png[]
 
 All of this is done using plain HTML and web 1.0 techniques, and it works well.  However, as the application
 currently stands, there are two annoyances:
@@ -455,7 +547,7 @@ currently stands, there are two annoyances:
   as long as they are unique, the system will allow it
 * Second, if a user has entered a duplicate email, they will not find this fact out until they have filled in
   all the fields because we only check the email's uniqueness when all the data is submitted.  This could be
-  quite annoying if the user was accidentally rentering a contact and had to put all the contact information in
+  quite annoying if the user was accidentally reentering a contact and had to put all the contact information in
   before being made aware of this fact!
 
 === Updating Our Input Type
@@ -470,7 +562,7 @@ enforce that the value entered properly matches the email format:
 <p>
     <label for="email">Email</label>
     <input name="email" id="email" type="email" placeholder="Email" value="{{ contact.email }}"> <1>
-    <span class="error">{{ contact.errors['email'] }}</span><1>
+    <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
 <1> A simple change of the `type` attribute to `email` ensures that values entered are valid emails
@@ -508,7 +600,7 @@ turns out that inputs fire a "change" event and, in fact, that is the default tr
 want to have happen is, when the user enters an email, we immediately issue a request to the server and validate that
 email, then render an error message if necessary.
 
-Recall the current HTML configuration:
+Recall the current HTML for our email input:
 
 [source, html]
 .The Initial Email Configuration
@@ -516,12 +608,16 @@ Recall the current HTML configuration:
 <p>
     <label for="email">Email</label>
     <input name="email" id="email" type="email" placeholder="Email" value="{{ contact.email }}"> <1>
-    <span class="error">{{ contact.errors['email'] }}</span>
+    <span class="error">{{ contact.errors['email'] }}</span> <2>
 </p>
 ----
+<1> This is the input that we want to have drive an HTTP request to validate the email
+<2> This is the span we want to put the error message, if any, into
 
-So we want to add an `hx-get` to this input so that it will issue a `GET` request to a URL to validate the email.  And
-we want to target the error span following the input with any error message returned from the server.
+So we want to add an `hx-get` to this input, which will cause it to issue an HTTP `GET` request to a given URL to validate
+the email.  Then we want to target the error span following the input with any error message returned from the server.
+
+Let's make those changes to our HTML:
 
 [source, html]
 .Our Updated HTML
@@ -541,7 +637,7 @@ we want to target the error span following the input with any error message retu
 Now, with these two simple attributes in place, whenever someone changes the value of the input, an HTTP request will
 be issued to the given URL and, if there are errors, they will be loaded into the error span.
 
-Now let's look at the server side implementation.  We are going to add another end point, similar to our edit
+Next, let's look at the server side implementation.  We are going to add another end point, similar to our edit
 end point in some ways: it is going to look up the contact based on the ID encoded in the URL.  In this case, however,
 we only want to update the email of the contact, and we obviously don't want to save it!  Instead, we will call the
 `validate()` method on it.
@@ -569,10 +665,6 @@ def contacts_email_get(contact_id=0):
 With this small bit of code in place, we now have the following very nice user experience: when a user enters an email
 and tabs to the next field, they are immediately notified if the email is already taken!
 
-Here again I want to stress that this interaction is done entirely within the hypermedia model: we are using declarative
-attributes to exchange hypermedia with the server in a manner very similar to how links or forms work, but we have managed
-to improve our user experience dramatically!
-
 Note that the email validation is _still_ done when the entire contact is submitted for an update, so there is no danger
 of allowing duplicate email contacts to slip through: we have simply made it possible for users to catch this situation
 earlier by use of htmx.
@@ -582,7 +674,11 @@ determine that an email is unique across all contacts unless you have access to 
 simplifying aspect of Hypermedia Driven Applications: since validations are done server side, you have access to all
 the data you might need to do any sort of validation you'd like.
 
-=== Going Further
+Here again I want to stress that this interaction is done entirely within the hypermedia model: we are using declarative
+attributes to exchange hypermedia with the server in a manner very similar to how links or forms work, but we have managed
+to improve our user experience dramatically!
+
+=== Taking Our User Experience Further
 
 Now, despite the fact that we haven't written a lot of code here, this is a fairly sophisticated user interface, at
 least when compared with plain HTML-based applications.  However, if you have used more advanced web applications you
@@ -605,7 +701,7 @@ In fact, all we need to do is to change our trigger.  Currently, we are using th
            hx-get="/contacts/{{ contact.id }}/email"
            hx-target="next .error"
            hx-trigger="change, keyup" <1>
-           placeholder="Email" value="{{ contact.email }}"> <1>
+           placeholder="Email" value="{{ contact.email }}">
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
@@ -613,13 +709,19 @@ In fact, all we need to do is to change our trigger.  Currently, we are using th
 
 With this tiny change, every time a user types a character we will issue a request and validate the email!  Simple!
 
+=== Debouncing Our Validation Requests
+
 Unfortunately, this is probably not what you want: issuing a new request on every key up event would be very wasteful
 and could potentially overwhelm your server.  What we want to do is only issue the request if the user has paused for
 a small amount of time.  This is called "debouncing" the input, where requests are delayed until things have "settled down".
 
 htmx supports a `delay` modifier for triggers that allows you to debounce a request by adding a delay before the request
 is sent. If another event of the same kind appears within that interval, htmx will not issue the request and will reset
-the timer.  This is exactly what we want for this situation.  Let's add a delay of 200 milliseconds to the `keyup` trigger:
+the timer.  This is exactly what we want for this situation: if the user is busy typing in an email we won't interrupt them,
+but as soon as they pause or leave the field, we'll issue a request.
+
+Let's add a delay of 200 milliseconds to the `keyup` trigger, which is long enough to detect that the user has stopped
+typing.:
 
 [source, html]
 .Debouncing the `keyup` Event
@@ -638,6 +740,8 @@ the timer.  This is exactly what we want for this situation.  Let's add a delay 
 
 Now we no longer issue a stream of validation requests as the user types.  Instead, we wait until the user pauses for
 a bit and then issue the request.  Much better for our server, and still a great user experience!
+
+=== Ignoring Non-Mutating Keys
 
 There is one last thing we might want to address: as it stand we will issue a request no matter _which_ keys are pressed,
 even if they are keys like the arrow keys, which have no effect on the value of the input.  It would be nice if there were
@@ -669,7 +773,7 @@ communication mechanism there is no need to keep a client-side and server-side m
 
 This is a great demonstration of the power of the hypermedia architecture!
 
-== Paging
+== Another Improvement: Paging
 
 Currently, our application does not support paging: if there are 100 contacts in the database we will show
 100 contacts on the main page.  Let's fix that, so that we only show ten contacts at a time with a "Next" and
@@ -804,12 +908,12 @@ with the `hx-trigger` attribute, to trigger a request when, well, when an elemen
 our button to a span and take advantage of this event:
 
 [source, html]
-.Changing To "Click To Load"
+.Changing To "Infinite Scroll"
 ----
 {% if contacts|length == 10 %} <1>
     <tr>
         <td colspan="5" style="text-align: center">
-            <span hx-target="closest tr" <1>
+            <span<1>hx-target="closest tr"
                     hx-trigger="revealed" <2>
                     hx-swap="outerHTML"
                     hx-select="tbody > tr"
@@ -834,8 +938,6 @@ with the server.  As the web was designed!
   all links and forms to use AJAX interactions
 * Deleting a contact could be updated to use the proper `DELETE` HTTP request, using the `hx-delete` attribute
 * Validating the email of a contact as the user entered it was achieved using a combination of `hx-get` and `hx-target`
-* Paging was added to the application using standard server-side techniques
-* We implemented the "Click To Load" pattern using a simple button and a few htmx attributes, without any server side changes
-* We repurposed the "Click To Load" example to implement "Infinite Scroll" by adding a single attribute, `hx-trigger` with
-  the value `reveal`
+* Paging was added to the application using standard server-side techniques, then the "Click To Load" and "Infinite Scroll"
+  patterns.
 

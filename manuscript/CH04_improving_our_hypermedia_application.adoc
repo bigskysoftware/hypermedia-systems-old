@@ -892,6 +892,18 @@ that has just such a button in it:
 Believe it or not, that's all we need to change to enable a "Click To Load" style UI!  No server side changes are necessary
 because of the flexibility that htmx gives you with respect to how we process server responses.  Pretty cool, eh?
 
+==== Relative Positional Targets
+
+Here we saw the first example of a target that was "relatively positioned": `closest tr`.  The `closest` keyword indicates
+that the closest parent that matches the following CSS selector is the target.  So in this example the target was the
+`tr` that was enclosing the button.
+
+htmx also supports `next` and `previous` relative positional expressions, allowing you to target the next element or
+previous element that matches a given CSS selector.
+
+Relative positional expressions like this are quite powerful and allow you to avoid having to generate `id` attributes
+in your HTML just so you can target a particular element.
+
 === Infinite Scroll
 
 Another somewhat common pattern for dealing with long lists of things is known as "infinite scroll", where,

@@ -870,3 +870,146 @@ Now, when a user clicks on a "Delete" link and confirms the delete, the row will
 faded to a 0 opacity, it will be removed.  Fancy!  And all done in a declarative, hypermedia oriented manner, no
 JavaScript required!  (Well, obviously htmx is written in JavaScript, but you know what I mean: we didn't have to write
 any JavaScript to implement the feature!)
+
+== Bulk Delete
+
+Our final feature in this chapter is going to be a "bulk delete" feature.  The current mechanism for deleting users
+is nice, but it would be annoying if a user wanted to delete five or ten contacts at a time.  For the bulk delete feature
+we'll add the ability to select rows via a checkbox input and delete them all in a single go by clicking a "Delete Selected
+Contacts" button.
+
+To get started, we need to add a checkbox input to each row in the `rows.html` template.  This input will have the name
+`contacts` and its value will be the id of the contact for the current row.  Here is what updated bit of code looks like:
+
+.Adding A Checkbox To Each Row
+[source, html]
+----
+{% for contact in contacts %}
+<tr>
+  <td><input type="checkbox" name="selected_contact_ids" value="{{ contact.id }}"></td> <1>
+  <td>{{ contact.first }}</td>
+  ... omitted
+</tr>
+{% endfor %}
+----
+<1> A new cell with the checkbox input whose value is set to the current contact's id
+
+We'll also need to add an empty column in the header for the table to accommodate the checkbox column.  With that
+done we now get a series of check boxes, one for each row, a pattern no doubt familiar to you from the web:
+
+[#figure-5-2, reftext="Figure {chapter}.{counter:figure}"]
+.Checkboxes For Our Contact Rows
+image::../images/screenshot_checkboxes.png[]
+
+If you are not familiar with or have forgotten the way checkboxes work in HTML, a checkbox will submit its value associated
+with the name of the input if and only if it is checked.  So if, for example, you checked the contacts with the ids 3,
+7 and 9, then those three values would all be submitted to the server.
+
+=== The "Delete Selected Contacts" button
+
+The next step is to add a button below the table that will delete all the selected contacts.  We want this button, like
+our delete links in each row, to issue an HTTP `DELETE`, but rather than issuing it to the URL for a given contact, like
+we do with the inline delete links and with the delete button on the edit page, here we want to issue the delete to
+the `/contacts` URL.  As with the other delete elements, we want to confirm that the user wishes to delete the contacts,
+and, for this case, we are going to target the body of page, since we are going to rerender the whole table.
+
+Here is what the template code looks like:
+
+.The Delete Selected Contacts Button.
+[source, html]
+----
+<button hx-delete="/contacts" <1>
+        hx-confirm="Are you sure you want to delete these contacts?" <2>
+        hx-target="body"> <3>
+    Delete Selected Contacts
+</button>
+----
+<1> Issue a `DELETE` to `/contacts`
+<2> Confirm that the user wants to delete the selected contacts
+<3> Target the body
+
+Great, pretty easy.  One question though: how are we going to include the values of all the selected checkboxes in the
+request?  As it stands right now, this is just a stand-alone button, and it doesn't have any information indicating that
+it should include any other information.  Fortunately, htmx has a few different ways to include values of inputs
+with a request.
+
+The first way would be to use the `hx-include` attribute, which allows you to use a CSS selector to specify the elements
+you want to include in the request.  That would work fine here, but we are going to use another approach.  By default,
+if an element is a child of a `form` element, htmx will include all the values of inputs within that form.  In situations
+like this, where there is a bulk operation for a table, it is common to enclose the whole table in a form tag so that
+it is easy to add buttons that operate on the selected items.
+
+Let's add that form tag around the form, and be sure to enclose the button in it as well:
+
+.The Delete Selected Contacts Button.
+[source, html]
+----
+    <form> <1>
+        <table>
+          ... omitted
+        </table>
+        <button hx-delete="/contacts"
+                hx-confirm="Are you sure you want to delete these contacts?"
+                hx-target="body">
+            Delete Selected Contacts
+        </button>
+    </form> <2>
+
+----
+<1> The form tag encloses the entire table
+<2> And also encloses the button
+
+Now, when the button issues a `DELETE`, it will include all the contact ids that have been selected as the
+`selected_contact_ids` request variable.  Great!
+
+=== The Server Side for Delete Selected Contacts
+
+The server side implementation is going to look an awful lot like our original server side code for deleting a contact.
+In fact, once again, we can just copy and paste, and fix a bit of stuff up:
+
+* We want to change the URL to `/contacts`
+* We want the handler to get _all_ the ids submitted as `selected_contact_ids` and iterate over each one, deleting the
+  given contact
+
+Those are really the only changes we need to make!  Here is what the server side code looks like:
+
+.The Delete Selected Contacts Button.
+[source, python]
+----
+@app.route("/contacts/", methods=["DELETE"]) <1>
+def contacts_delete_all():
+    contact_ids = list(map(int, request.form.getlist("selected_contact_ids"))) <2>
+    for contact_id in contact_ids: <3>
+        contact = Contact.find(contact_id)
+        contact.delete() <4>
+    flash("Deleted Contacts!") <5>
+    contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set)
+----
+<1> We handle a `DELETE` request to the `/contacts/` path
+<2> We convert the `selected_contact_ids` values submitted to the server from a list of strings to a list integers
+<3> We iterate over all of the ids
+<4> And delete the given contact with each id
+<5> Beyond that, it's the same code as our original delete handler: flash a message and render the `index.html` template
+
+So, as you can see, we just took the original delete logic and slightly modified it to deal with an array of ids, rather
+than a single id.  Readers with sharp eyes might notice one other small change: we did away with the redirect that was
+in the original delete code.  We did so because we are already on the page we want to rerender, so there is no reason
+to redirect and have the URL update to something new.  We can just rerender the page, and the new list of contacts (sans the
+contacts that were deleted) will be re-rendered.
+
+And there we go, we now have a bulk delete feature for our application.  Once again, not a huge amount of code, and we
+are implementing these features entirely by exchanging hypermedia with a server in the traditional, RESTful manner of
+the web.  Cool!
+
+== Summary
+
+* In this chapter dove into some more sophisticated user interfaces with htmx and hypermedia
+* We implemented a nifty "Active Search" feature, allowing users to type and immediately filter down the contacts list
+* We then introduced and fixed a performance issue by using the "Lazy Loading" pattern, which defers a calculation until
+  after the initial request for better perceived performance
+* Next we implemented an "Inline Delete" feature that allows users to delete contacts directly from the list view, complete
+  with a nice fade out effect
+* Finally, we implemented a "Bulk Delete" feature that alloweds users to select multiple contacts and delete them all with
+  a single click
+

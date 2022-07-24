@@ -1,0 +1,11 @@
+:chapter: ?
+
+= Data APIs & Hypermedia Driven Applications
+
+== Are Data APIs allowed in HDAs?
+
+== A Comparisons between Data API needs and Hypermedia API needs
+
+== Is REST appropriate for Data APIs?
+
+> The REST interface is designed to be efficient for large-grain hypermedia data transfer, optimizing for the common case of the Web, but resulting in an interface that is not optimal for other forms of architectural interaction.

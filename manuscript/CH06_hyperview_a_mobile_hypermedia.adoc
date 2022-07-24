@@ -1,0 +1,566 @@
+= Hypermedia In Action
+:chapter: 5
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 2
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+= Hyperview: A Mobile Hypermedia
+
+In this chapter, we will:
+
+* Discuss shortcomings with the current state of mobile app development
+* Explain how to address those problem with a Hypermedia architecture using Hyperview
+* Rewriting our contacts app as a native mobile app
+* Showing how one backend can serve multiple Hypermedia formats to support both web and mobile apps
+
+
+== State of mobile app development
+
+In web development, you deliver JS,HTML,CSS,JSON on-demand to a standard web browser. This is not the case with a native mobile app.
+
+With native mobile apps, you compile code into an executable binary targeting the underlying operating system (Android or iOS).
+This binary gets uploaded and approved through app stores controlled by Google and Apple.
+When you install or update an app, you're downloading the binary and running the code directly on your device's OS.
+In this way, mobile apps have a lot in common with old-school desktop apps for Mac or Windows.
+
+There is one important difference between PC desktop apps of yesteryear and today's mobile apps.
+These days, almost all mobile apps are "networked".
+By networked, I mean the app needs to read and write data over the Internet to implement core functionality.
+What's the easiest way to make a mobile app networked?
+Well, the app stores already require developer to write & distribute code that runs on the user's device.
+So why not have that frontend code make requests to a backend, and update the UI based on the response?
+
+Thus, developers are naturally led into a SPA-like pattern for developing mobile apps:
+
+- The frontend on the mobile device, runs code to create and update the UI
+- The backend is an API, called by the frontend
+
+Just like with SPAs on the web, this architecture has a big downside: the app's logic gets spread across the frontend and backend.
+Sometimes, logic needs to be duplicated (like to validate form data).
+Other times, the frontend and backend each implement one part of the app's overall logic.
+To understand what the app does, a developer needs to trace interactions between two very different codebases.
+
+There's another downside that affects mobile apps more than SPAs: API churn.
+Remember, the app stores control how your app gets distributed and updated.
+Users can even control if and when they get updated versions of your app.
+As a mobile developer, you can't assume that every user will be on the latest version of your app. 
+Your frontend code gets fragmented across many versions, and now your backend needs to support all of them.
+
+
+== Hypermedia for Mobile Apps
+We’ve seen that the hypermedia architecture can address the problems of SPAs on the web.
+But can hypermedia work for mobile apps as well?
+The answer is yes!
+
+Just like on the web, we can use Hypermedia formats on mobile and let it serve as the engine of application state.
+All of the logic is controlled from the backend, rather than being spread between two codebases.
+Hypermedia architecture also solves the annoying problem of API churn on mobile apps.
+Since the backend servs a Hypermedia response containing both data and actions, there's no way for the data and UI to get out of sync.
+No more worries about backwards compatibility or maintaining multiple API versions.
+
+So how can you use Hypermedia for your mobile app?
+There are two approaches employing hypermedia to build & ship native mobile apps today:
+
+- Web views, which wraps the trusty web platform in a mobile app shell
+- Hyperview, a new hypermedia format I designed specifically for mobile apps
+
+
+=== Web views
+The simplest way to use hypermedia on mobile is to make a web app!
+Both Android and iOS SDKs provide "web views": chromeless web browsers tbat can be embedded in native apps.
+Tools like Apache Cordova make it easy to take the URL of a website, and spit out native iOS and Android apps based on web views.
+If you already have a responsive web app, this gives you "native" Hypermedia apps for free.
+Sounds too good to be true, right?
+
+Of course, there is a fundamental limitation with this approach.
+The web and mobile are different platforms, with different capabilities and UX conventions.
+HTML doesn't natively support common UI patterns of mobile apps.
+One of the biggest differences is around how each platform handles navigation.
+On the web, navigation is page-based, with one page replacing another and the browser providing back/forward buttons to navigate the page history.
+On mobile, navigation is more complex, and tuned for the physicality of gesture-based interactions.
+
+- To drill down, screens slide on top of each other, forming stacks of screens.
+- A nav bar at the bottom of the app allows switching between various stacks of screens.
+- Modals slide up from the bottom of the app, covering the other stacks and the nav bar.
+- Unlike with web pages, all of these screens are still present in memory, rendered and updating based on app state.
+
+The navigation architecture is a major difference between how mobile and web apps function.
+But it's not the only one.
+Many other UX patterns are present in mobile apps, but are not natively supported on the web:
+
+- pull-to-refresh to refresh content in a screen
+- horizontal swipe on UI elements to reveal actions
+- sectioned lists with sticky headers
+
+While these interactions are not natively supported by web browsers, they can be simulated with JS libraries.
+Of course, these libraries will never have the same feel and performance as native gestures.
+And using these libraries usually requires embracing a JS-heavy SPA architecture.
+This puts us back at square 1!
+We wanted to avoid using the typical SPA architecture of native mobile app development, so we turned to a Web view.
+The web view allows us to use good-old hypermedia-based HTML.
+But to get the desired look & feel of a mobile app, we end up building a SPA in JS, losing the benefits of Hypermedia in the process.
+
+Many mobile apps on iOS and Android are implemented as web views, and they work perfectly fine.
+If you already have a responsive web app, perhaps wrapping it in a Web view and distributing it through app stores is an easy proposition.
+But I tend to believe: "let the web be the web, and let mobile be mobile".
+Your responsive web app already works perfectly fine when accessed through Mobile Chrome or Mobile Safari.
+Progressive web app support has come a long way on iOS and Android.
+Users can "install" your web app to their home screen, and launch it with a single tap.
+Does your web app need to be in the app store too?
+
+To build a hypermedia-based mobile app that feels and acts native, HTML isn't going to cut it.
+We need a format designed to represent the interactions and patterns of native mobile apps.
+That's exactly what Hyperview does.
+
+
+=== Hyperview
+
+Hyperview is an open-source framework that provides:
+
+- A pre-defined hypermedia format for defining mobile apps called HXML
+- A hypermedia client for HXML that can be embedded in an app binary on iOS and Android.
+- Extension points in HXML and the client to customize the experience on a per-app basis.
+
+==== The Format
+HXML was designed to feel familiar to web developers, used to working with HTML.
+That made it easy to choose XML for the base format.
+In addition to familiar ergonomics, XML is compatible with server-side rendering libraries.
+For example, Jinja2 is perfectly suited as a templating library to render HXML, as we'll see later in this chapter.
+The familiarity of XML and the ease of integration on the backend make it simple to adopt in both new and existing codebases.
+
+```
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles />
+    <body>
+      <header>
+        <text>My first app</text>
+      </header>
+      <view>
+        <text>Hello World!</text>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+htmx fill in the "missing parts of HTML" to enable rich web app experiences.
+If HTML was designed today, I believe the ideas of htmx would be part of the standrd spec, and natively supported by every browser without the need for a 3rd party JS library.
+Well, HXML was designed today!
+The HXML format has built-in support for htmx-like interactions.
+Specifically, HXML is not limited to "click to navigate" and "press to submit" interactions like in basic HTML.
+It supports a range of triggers and swap strategies for the content on a screen.
+These interactions are bundled together in a powerful concept of "behaviors".
+Developers can even define new behaviors to add new capabilities in an elegant way.
+We will learn more about behaviors in later sections of this chapter.
+
+==== The client
+Web developers are lucky.
+They can assume that their users have access to a web browser capable of rendering their web app.
+In Hypermedia terms, the Hypermedia (HTML) client is already built and distributed to users.
+Half the work is done!
+The developer has to only build the backend to serve Hypermedia responses.
+
+< diagram showing many browsers, pointing to one backend >
+
+This is possible because the web is an open ecosystem built on standards.
+Any developer can build and host a web app, and any user can access it directly.
+
+As we know, that's not the case with mobile platforms.
+There is no open standard for building and distributing native mobile apps.
+And there's definitely no widely distributed "HXML browser".
+So how can a developer deliver a Hypermedia mobile app using HXML?
+Well, unlike on the web, the mobile developer must provide both the backend to serve HXML, and a mobile client app to render those HXML responses.
+
+< diagram showing one Hypermedia client, pointing to one backend >
+
+It would be a lot to ask from developers to write their own Hyperview client.
+That's why Hyperview provides an open-source client library, written in React Native.
+This library can be used to bootstrap a new mobile app, or it can be embedded in an existing app.
+In either case, developers get a full "HXML browser" without needing to write it from scratch.
+
+At first, it might seem like the Hyperview approach requires extra work to write and maintain the mobile app client.
+But there is a benefit when the developer controls both the server and client.
+Did you ever wish you could fix a web browser bug?
+Or maybe add a new HTML element or features to the browser itself?
+The open nature of the web means that progress happens slowly.
+New features go through a lengthly standardization process.
+Browser vendors may prioritize bugs and features that don't match your individual priorities.
+As a web developer, you may need to wait years until browsers support the feature you need.
+Or, you can try to work around it with some kludgy JS.
+
+Well, with Hyperview, there is no standards body or lengthly process for new features.
+As a Hyperview developer, you control your backend and mobile app client.
+Do you want to add a new element to HXML?
+Go right ahead!
+In fact, the Hyperview client library was built with extensibility in mind.
+There are extension points for custom UI elements and custom behaviors.
+
+By extending the format and client itself, there's no need for Hyperview to include a scripting layey in HTMX.
+Features that require client-side logic get "built-in" to the client browser.
+HTMX responses remain pure, with UI and interactions represented in declarative XML.
+
+=== Which Hypermedia architecture should I use?
+
+We've discussed two approaches for creating mobile apps using Hypermedia architecture:
+
+- create a backend that returns HTML, and serve it in a mobile app through a web view
+- create a backend that returns HXML, and serve it in a mobile app with the Hyperview client
+
+I purposefully described the two approaches in a way to highlight their similarities.
+After all, they are both using the Hypermedia architecture, just with different formats and clients.
+Both approaches solve the fundamental issues with traditional, SPA-like mobile app development:
+
+- The backend controls the full state of the app.
+- Our app's logic is all in one place.
+- The app always runs the latest version, there's no API churn to worry about
+
+So which approach should you use for a Hypermedia-driven mobile app?
+Based on my experience building both types of apps, I strongly believe the Hyperview results in a better user experience.
+The web-view will always feel out-of-place on iOS and Android; there's just no good way to replicate the patterns of navigation and interaction that mobile users expect.
+Hyperview was created specifically to address the limitations of thick-client and web view approaches.
+After the initial investment to learn Hyperview, you'll get all of the benefits of the Hypermedia architecture, without the downsides of a degraded user experience.
+
+Of course, if you already have a simple, mobile-friendly web app, then using a web-view approach is sensible.
+You will certainly save time from not having to serve your app as HXML in addition to HTML.
+But as I will show at the end of this chapter, it doesn't take a lot of work to convert an existing Hypermedia-driven web app into a Hyperview mobile app.
+But before we get there, we need to introduce the concepts of elements and behaviors in Hyperview.
+Then, we'll re-build our contacts app in Hyperview.
+
+
+== Introduction to HXML
+
+=== Hello World!
+Like I mentioned above, HXML was designed to feel natural to web developers coming from HTML.
+Let's take a closer look at the "Hello World" app defined in HXML:
+
+```
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles />
+    <body>
+      <header>
+        <text>My first app</text>
+      </header>
+      <view>
+        <text>Hello World!</text>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+Nothing too strange here, right?
+The base syntax should be immediately familiar.
+Just like HTML, the syntax defines a tree of elements using start tags (`<screen>`) and end tags (`</screen>`).
+Elements can contain other elements (`<view>`) or text (`Hello World!`).
+Elements can also be empty, represented with an empty tag (`<styles />`).
+However, you'll notice that the names of the HXML element are different from those in HTML.
+Let's take a closer look at each of those elements to understand what they do.
+
+`<doc>` is the root of the HXML app.
+Think of it as equivalent to the `<html>` element in HTML.
+Note that the `<doc>` element contains an attribute `xmlns="https://hyperview.org/hyperview"`.
+This defines the default namespace for the doc.
+Namespaces are a feature of XML that allow one doc to contain elements defined by different developers.
+To prevent conflicts when two developers use the same name for their element, each developer defines a unique namespace.
+We will talk more about namespaces when we discuss custom elements & behaviors later in this chapter.
+For now, it's enough to know that elements in an HXML doc without an explicit namespace are considered to be part of the `https://hyperview.org/hyperview` namespace.
+
+`<screen>` represents the UI that gets rendered on a single screen of a mobile app.
+It's possible for one `<doc>` to contain multiple `<screen>` elements, but we won't get into that now.
+Typically, a `<screen>` element will contain elements that define the content and styling of the screen.
+
+`<styles>` defines the styles of the UI on the screen.
+We won't get too much into styling in Hyperview in this chapter.
+Suffice it to say, unlike HTML, Hyperview does not use a separate language (CSS) to define styles.
+Instead, styling rules such as colors, spacing, layout, and fonts are defined in HXML.
+These rules are then explicitly referenced by UI elements, much like using classes in CSS.
+
+`<body>` defines the actual UI of the screen.
+The body includes all text, images, buttons, forms, etc that will be shown to the user.
+This is equivalent to the `<body>` element in HTML.
+
+`<header>` defines the header of the screen.
+Typically in mobile apps, the header includes some navigation (like a back button), and the title of the screen. 
+It's useful to define the header separately from the rest of the body.
+Some mobile OSes will use a different transition for the header than the rest of the screen content.
+
+`<view>` is the basic building block for layouts and structure within the screen's body.
+Think of it like a `<div>` in HTML.
+Note that unlike in HTML, a `<div>` cannot directly contain text.
+
+`<text>` elements are the only way to render text in the UI.
+In this example, "Hello World" is contained within a  `<text>` element.
+
+That's all there is to define a basic "Hello World" app in HXML.
+Of course, this isn't very exciting.
+Let's cover some other built-in display elements
+
+=== UI Elements
+
+==== Lists
+
+A very common pattern in mobile apps is to scroll through a list of items.
+The physical properties of a phone screen (long & vertical) and the intuitive gesture of swiping a thumb up & down makes this a good choice for many screens.
+
+HXML has dedicated elements for representing lists and items.
+
+```
+<list>
+  <item>
+  </item>
+  <item>
+  </item>
+</list>
+```
+
+You might be asking, "why do we need a custom syntax for lists of items? Can't we just use a bunch of `<view>` elements?".
+
+==== Images
+
+Showing images in Hyperview is pretty similar to HTML, but there are a few differences.
+
+```
+<image source="/profiles/1.jpg" style="avatar" />
+```
+
+The `source` attribute specifies how to load the image.
+Like in HTML, the source can be an absolute or relative URL.
+Additionally, the source can be an encoded data URI, for example `data:image/png;base64,iVBORw`.
+However, the source can also be a "local" URL, refering to an image that is bundled as an asset in the mobile app.
+The local URL is prefixed with `./`:
+
+```
+<image source="./logo.png" style="logo" />
+```
+
+Using Local URLs is an optimization.
+Since the images are on the mobile device, they don't require a network request and will appear quickly.
+However, bundling the image with the mobile app binary increases the binary size.
+Using local images is a good tradeoff for images that are frequently accessed but rarely change.
+Good examples include the app logo, or common button icons.
+
+The other thing to note is the presence of the `style` attribute on the `<image>` element.
+In HXML, images are required to have a style that has rules for the image's `width` and `height`.
+This is different from HTML, where `<img>` elements do not need to explicitly set a width and height.
+Web browsers will re-flow the content of a web page once the image is fetched and the dimensions are known.
+While re-flowing content is a reasonable behavior for web-based documents, users do not expect mobile apps to re-flow as content loads.
+To maintain a static layout, HXML requires the dimensions to be known before the image loads.
+
+=== Inputs
+
+=== Styling
+
+So far, we haven't mentioned how to apply styling to all of the HXML elements.
+We've seen from the Hello World app that each `<screen>` can contain a `<styles>` element.
+Let's re-visit the Hello World app and fill out the `<styles>` element.
+
+```
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style class="body" flex="1" flexDirection="column" />
+      <style class="header" borderBottomWidth="1" borderBottomColor="#ccc" />
+      <style class="main" margin="24" />
+      <style class="h1" fontSize="32" />
+      <style class="info" color="blue" />
+    </styles>
+
+    <body style="body">
+      <header style="header">
+        <text style="info">My first app</text>
+      </header>
+      <view style="main">
+        <text style="h1 info">Hello World!</text>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+You'll note that in HXML, styling is part of the XML format, rather than using a separate language like CSS.
+However, we can draw some parallels between CSS rules and the `<style>` element.
+A CSS rule consists of a selector and declarations.
+In the current version of HXML, the only available selector is a class name, indicated by the `class` attribute.
+The rest of the attributes on the `<style>` element are declarations, consisting of properties and property values.
+
+UI elements within the `<screen>` can reference the `<style>` rules by adding the class names to their `<style>` property.
+Note the `<text>` element around "Hello World!" references two style classes: `h1` and `info`. The styles from the corresponding classes are merged together in the order they appear on the element.
+It's worth noting that styling properties are similar to those in CSS (color, margins/padding, borders, etc).
+Currently, the only available layout engine is based on flexbox.
+
+Styles rules can get quite verbose.
+For the sake of brevity, I won't include the `<styles>` element in the rest of the examples in this chapter unless necessary.
+
+=== Custom elements
+
+The core UI elements that ship with Hyperview are quite basic.
+Most mobile apps require richer elements to deliver a great user experience.
+Luckily, HXML can easily accomodate custom elements in its syntax.
+This is because HXML is really just XML, aka "Extensible Markup Language".
+Extensibility is already built into the format!
+Developers are free to define new elements and attributes to represent custom elements.
+
+Let's see this in action with a concrete example.
+Assume that we want to add a map element to our Hello World app.
+We want the map to display a defined area, and one or more markers at specific coordinates in that area.
+Let's translate these requirements into XML:
+
+- An `<area>` element will represent the area displayed by the map. To specify the area, the element will include attributes for `latitude` and `longitude` for the center of the area, and a `latitude-delta` and `longitude-delta` indicating the +/- display area around the center.
+- A `<marker>` element will represent a marker in the area. The coordinates of the marker will be defined by `latitude` and `longitude` attributes on the marker.
+
+Using these custom XML elements, an instance of the map in our app might look like this:
+
+```
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <view>
+        <text>Hello World!</text>
+        <area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1">
+          <marker latitude="37.8118" longitude="-122.4177" />
+        </area>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+The syntax feels right at home among the core HXML elements.
+However, there's a potential problem.
+"area" and "marker" are pretty generic names.
+I could see `<area>` and `<marker>` elements being used by a customization to render charts & graphs.
+If our app renders both maps and charts, the HXML markup would be ambiguous.
+What should the client render when it sees `<area>` or `<marker>`?
+
+This is where XML namespaces come in. XML namespaces eliminate ambiguity and collisions between elements and attributes used to represent different things.
+Remember that the `<doc>` element declares that `https://hyperview.org/hyperview` is the default namespace for the entire document.
+Since no other elements define namespaces, every element in the example above is part of the `https://hyperview.org/hyperview` namespace.
+
+Let's define a new namespace for our map elements. Since this namespace will not be the default for the document, we also need to assign the namespace to a prefix we will add to our elements:
+
+`<doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map">`
+
+This new attribute declares that the `map:` prefix is associated with the namespace "https://mycompany.com/hyperview-map".
+This namespace could be anything, but remember the goal is to use something unique that won't have collisions.
+Using your company/app domain is a good way to guarantee uniqueness.
+Now that we have a namespace and prefix, we need to use it for our elements:
+
+```
+<doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map">
+  <screen>
+    <body>
+      <view>
+        <text>Hello World!</text>
+        <map:area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1">
+          <map:marker latitude="37.8118" longitude="-122.4177" />
+        </map:area>
+      </view>
+    </body>
+  </screen>
+</doc>
+```
+
+That's it! If we introduced a custom charting library with "area" and "marker" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate `<map:area>` from `<chart:area>`.
+
+At this point you might be wondering, "how does the Hyperview client know to render a map when my doc includes `<map:area>`"?
+It's true, so far we only defined the custom element format, but we haven't implemented the element as a feature in our app.
+We will get into the details of implementing custom elements later in this chapter.
+
+=== Behaviors
+
+* When it comes to interactions, that’s where HXML starts to diverge from HTML
+   * HTML has two primary ways of interaction:
+      * Click a link: GET request to load a new page
+      * Click a form submit button: POST (usually) request to load a new page
+   * These ways of interaction are not enough to build rich UIs. Interactions (clicks, form submits) are tightly coupled to a single action (request a new page).
+   * htmx (and Intercooler before it) broke that paradigm:
+      * Interactions and actions are decoupled via triggers
+      * Actions can modify the current page, not just request a new page
+   * This allows a wide range of new possibilities to build rich HDAs.
+* HXML builds in this idea of triggers, actions and targets into the spec itself. Collectively, we refer to these as behaviors.
+   * Navigation behaviors, equivalent to links in HTML.
+      * Can push new screen onto a stack, or open as a modal
+      * <Show navigation example>
+      * Can submit a form to update a fragment
+      * <Show form submission example>
+* HXML takes it further:
+   * A user interaction can trigger multiple behaviors, causing multiple actions
+      * <Show example>
+   * Actions do not necessarily cause HTTP requests, they can be used for local interactions
+      * <Show example of triggering share sheet or dialog>
+   * Actions are extensible, developers can create their own
+      * <Show example of custom behavior>
+
+
+== Building a Contacts App With Hyperview
+* We will take our existing Contacts web app, and transform it to a mobile app just by tweaking the backend responses.
+* To enhance our app and make it more native, we will extend the Hyperview client with custom components and behaviors.
+* Finally, our Contacts app can serve both a web app and mobile app, just by tweaking the Hypermedia response!
+
+=== Basics
+   * Add support for returning either HTML or XML based on request
+   * Create base layout templates
+   * Set up a demo Hyperview client (using Expo)
+* Contacts screen:
+   * Convert to <list> and <items>
+   * Add behavior to open details
+   * Pull to refresh
+   * Add infinite scroll
+* Contact view:
+   * Show data and buttons to edit/delete
+   * Edit button: replace data with form
+      * On submit: show spinner, then go back
+   * Delete button: show spinner, then go back
+   * Problem: Contacts screen is not updated!
+      * Solution: add event dispatch, contacts screen listens to updates
+
+
+=== Extending the Client
+* Problem: how to show a toast confirming the action?
+   * Remember, no scripting to add functionality
+   * Need to extend Hyperview with a toast component
+   * Find a RN library, show how to wrap it as custom component.
+
+* Problem: we want to call/email our contacts.
+  * Remember, no scripting to add functionality
+  * Need to extend Hyperview with behaviors for sms, call, email
+  * Find a RN library, show how to wrap it as custom behaviors.
+
+* With custom components and behaviors, we can do almost anything a native app can do.
+* Note how we cleanly extend the client:
+  * HXML remains pure XML, no scripts
+  * We've essentially added features to the Hyperview "browser" that we need
+
+
+=== One Backend, Multiple Hypermedias
+* We turned out simple Contacts app into a native mobile app
+  * mostly, we changed templates from HTML to HXML
+* But the app doesn't work on the web anymore.
+* Can we use the same backend for both a rich web app and a native mobile app?
+* Yes! The same backend logic can be used for both, we just need to respond with HTML or HXML based on the client.
+* There are a couple of relevant approaches.
+* The important thing is to detect whether the client speaks HTML or HXML.
+  * Luckily, this is what the HTTP Accept header is for!
+  * HV client uses two headers: one for full docs, and one for fragments
+* Using the Accept header, we know if the client is a web browser of mobile app using Hyperview, and we can respond with HTML or HXML.
+* But what's the best way to organize our code? Two approaches to consider with different tradeoffs:
+
+* Approach 1: share the same view, but select template based on header
+  * easiest approach, minor changes
+  * works well if the interactions on both platforms is the same
+  * may not be the best approach if the two platforms have different behaviors
+
+* Approach 2: share the same model logic, but create separate views
+  * some duplication required to parse requests
+  * the context can be uniquely crafted for the given platform
+
+
+== Summary

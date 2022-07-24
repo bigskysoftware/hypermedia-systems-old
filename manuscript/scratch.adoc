@@ -1,0 +1,54 @@
+= For Advanced Section
+
+== Inline Addition
+
+Now that we've started getting familiar with how htmx augments standard hypermedia-based applications, we are ready for
+a slightly more advanced feature: inline addition of contacts.
+
+We are going to modify our application such that, instead of going to a separate page to add contacts, you will add
+them directly, inline, on the main contacts page.  We will do this by swapping the form from the `new.html` template
+directly in to the `index.html` page.  With this change we will be more closely approximating how an SPA might work.
+
+Let's consider the "Add Contact" link currently within the `index.html` template:
+
+[source, html]
+.The "Add Contact" Link
+----
+<p>
+    <a href="/contacts/new">Add Contact</a>
+</p>
+----
+
+We want to modify this link to be a button, and have the button replace itself with the form needed to add a contact
+when you click it.  This turns out to be fairly straight forward: all we need to do is convert the anchor to a button
+element, and convert the `href` attribute to an `hx-get`:
+
+[source, html]
+.The "Add Contact" Button
+----
+<p>
+    <button hx-get="/contacts/new">Add Contact</button>
+</p>
+----
+
+Easy.  Unfortunately, if you click the button at this point you will end up with a pretty silly situation: `/contacts/new`
+will return an entire page and that page will end up being stuck inside the button.  Not exactly what we want!
+
+// TODO: screen shot?
+
+The first fix is to change the swap model from the default `innerHTML` to the more appropriate `outerHTML`.  This will
+make the returned content replace the button, rather than be stuck inside the button:
+
+[source, html]
+.Fixing the swap type
+----
+<p>
+    <button hx-get="/contacts/new"
+            hx-swap="outerHTML">
+      Add Contact
+     </button>
+</p>
+----
+
+Now if you click the button things are a little better: the form replaces the button properly at the bottom of the page.
+But, unfortunately, we still have

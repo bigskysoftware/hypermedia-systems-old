@@ -1,0 +1,124 @@
+= Hypermedia In Action
+:chapter: 6
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 5
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+= Client Side Scripting
+
+This chapter covers
+
+* How scripting can be effectively added to a Hypermedia Driven Application
+* Adding support for a drop-down in our contacts table
+* Adding support for re-ordering contacts
+* Adding a javascript-based confirmation for deleting contacts
+* Adding a keyboard shortcut for focusing the search input
+
+[partintro]
+== Scripting In Hypermedia Driven Applications
+
+Thus far we have avoided writing any JavaScript for Contact.app, and, at some level, that's what this book is all about:
+we want to show that it is possible to build sophisticated web applications using the original model of the web.  On the
+other hand, htmx itself _is_ written in JavaScript, so we don't want our message to be interpreted as "JavaScript bad",
+or, more generally, "Client-side scripting bad."
+
+Scripting was explicitly included in the original model of the web:
+
+[quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
+____
+REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts.
+This simplifies clients by reducing the number of features required to be pre-implemented."
+____
+
+So the question isn't "Should we be scripting for the web?" but rather "How should we be scripting for the web?"
+
+Client-side scripting is both congruent with and extremely useful in a Hypermedia Driven Application, _so long as it does
+not replace the underlying RESTful hypermedia architecture_.  We will discuss what exactly this means in much more detail
+in an appendix, but the short summary is: so long as the majority of your application retrieves and updates state using
+hypermedia requests and scripting is mainly limited to enhancing the front end experience, you are scripting in a manner
+compatible with Hypermedia Driven Applications.
+
+In this chapter we are going to look at four areas of our application that will benefit from adding a bit of client
+side scripting:
+
+* We will add support for a JavaScript-based drop-down to clean up the actions in the table
+* We will add support for drag-and-drop reordering using
+* We will add a JavaScript-based confirmation dialog library and use that to confirm the deletion of contacts
+* We will add a keyboard shortcut for focusing the search input
+
+The important conceptual idea in the implementation of each of these features is that they are entirely client-side
+and don't exchange information with the server using, for example, JSON.  This is what will keep them all within the
+bounds of a proper Hypermedia Driven Application.
+
+=== Scripting Languages For The Web
+
+The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today.  A
+bit of interesting internet lore, however, is that early on JavaScript was not the only scripting option.  As the quote
+from Roy Fielding above indicates, applets creating in other languages such as Java were considered part of the scripting
+infrastructure of the web.  In addition to that, there was a brief period when Internet Explorer supported VBScript, a
+scripting language based on Visual Basic.
+
+I bring this up because we are going to look at three different mechanisms for adding scripting to our Hypermedia Driven
+Application:
+
+* VanillaJS, that is, using JavaScript itself, without relying on any library support
+* AlpineJS, a javascript library for adding behavior directly in the HTML
+* _hyperscript, a non-JavaScript scripting language that we created to complement htmx.  Like AlpineJS, it is embedded
+  directly in the HTML.
+
+Let's take a quick look at each of these scripting options so we know what we are dealing with.
+
+==== VanillaJS
+
+TODO: describe basics of VanillaJS
+
+==== AlpineJS
+
+TODO: describe installing and overview of AlpineJS
+
+==== _hyperscript
+
+TODO: describe installing and overview of _hyperscript
+
+=== Events and The DOM
+
+One thing that you will notice in all the scripting that we add to Contact.app is the heavy use of _events_.  This is
+not an accident: proper scripting in a Hypermedia Driven Application should be heavily event driven.  Since htmx
+itself allows you to trigger requests with arbitrary events, those events provide an excellent bridge between
+client-side scripting and the hypermedia exchanges that define a RESTful Hypermedia Driven Application.
+
+Another thing you might notice about the scripting examples is that many of them mutate the DOM in some way, showing
+or hiding elements, or changing the focus of an element and so forth.  In many cases this change in state isn't
+synchronized with the server, so how can we claim that hypermedia is the engine of application state in this case?!?
+
+The answer is that this state is client side, and ephemeral: it is fine to have a script update the DOM in some way
+that improves the user experience, so long as that script is not updating _system state_ (e.g. a contact's details)
+via out-of-band, non-hypermedia communication.
+
+== Adding a Keyboard Shortcut for Focusing the Search Input With VanillaJS
+
+== Adding Support for Re-Ordering Contacts (No Scripting Needed!)
+
+== Adding Support for a Drop-Down with AlpineJS
+
+== Adding a Nicer Confirmation for Deleting Contacts With _hyperscript
+
+=== Adding a Keyboard Shortcut for Focusing the Search Input With _hyperscript
+
+TODO: Show how easy this is in hyperscript
+
+=== Adding Support for a Drop-Down with _hyeprscript
+
+TODO: Show how easy this is in hyperscript
+
+== Being Pragmatic About Scripting
+
+TODO: Sometimes going outside the lines is necessary, being pragmatic
+
+== Conclusion

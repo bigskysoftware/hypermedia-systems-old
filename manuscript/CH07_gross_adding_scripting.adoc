@@ -33,7 +33,7 @@ Scripting was explicitly included in the original model of the web:
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
 ____
 REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts.
-This simplifies clients by reducing the number of features required to be pre-implemented."
+This simplifies clients by reducing the number of features required to be pre-implemented.
 ____
 
 So the question isn't "Should we be scripting for the web?" but rather "How should we be scripting for the web?"
@@ -72,19 +72,194 @@ Application:
 * _hyperscript, a non-JavaScript scripting language that we created to complement htmx.  Like AlpineJS, it is embedded
   directly in the HTML.
 
-Let's take a quick look at each of these scripting options so we know what we are dealing with.
+Let's take a quick look at each of these scripting options so we know what we are dealing with.  As with CSS, we are
+not going to deep dive into any of these options: we are going to show just enough to give you a flavor of each and,
+we hope, spark your interest in looking into each of them more extensively.
 
 ==== VanillaJS
 
-TODO: describe basics of VanillaJS
+VanillaJS is just a somewhat tongue-in-cheek reference to simply using plain JavaScripot in your application.  The term
+came into vogue as a play on the fact that there were so many "JS" frameworks out there to help you write JavaScript.  As
+JavaScript matured as a scripting language, standardized across browsers and provided more and more functionality, the
+utility of many of these frameworks and libraries has diminished.
+
+A quote from http://vanilla-js.com captures the situation well:
+
+[quote, http://vanilla-js.com]
+____
+Vanilla JS is the lowest-overhead, most comprehensive framework I've ever used.
+____
+
+The joke here is that, since the browser already has JavaScript baked into it, there isn't any need to download large
+amounts of additional JavaScript for your application to function.  And that's a good point!  Installation of VanillaJS
+couldn't be easier: you don't have to.  You can just start writing JavaScript in your web application and it will
+simply work.
+
+That's the good news.  The bad news is that JavaScript has some limitations as a scripting language that often make
+it less than ideal as a stand-alone scripting technology for Hypermedia Driven Applications:
+
+* It is a relatively complex language, particular "modern" JavaScript.  A good example is asynchronous behavior: JavaScript
+  has many different mechanisms for working with asynchronous code which often have strange or annoying interactions
+  across code boundaries.
+* It is surprisingly difficult to work with events in the language
+* Common functionality is often buried in DOM APIs
+
+None of these are deal-killers, of course, and many people prefer the "close to the metal" (ha!) nature of JavaScript
+to more elaborate client-side scripting approaches.
+
+As a motivating example problem for all our scripting options, let's consider the following situation: We have a `span`
+element that contains some text.  We want to show the content when a user clicks a button in the UI.  Nothing too elaborate,
+but it will give you the flavor of each of the three scripting approaches we are going to use in this chapter.
+
+So, in VanillaJS, what does this look like?
+
+.Using AlpineJS To Show Content
+[source,html]
+----
+<div>
+    <button onclick="document.getElementById('span-1').style.display = 'inline'">Expand</button> <1>
+    <span id="span-1" style="display: none"> <2>
+      Content...
+    </span>
+</div>
+----
+<1> We use the `onclick` attribute to hook in to when a click occurs.  We then lookup the `span` element by id and set
+    the CSS property `dispay` to `inline`, which shows the span
+<2> The `span` initially starts with its `display` CSS property set to `none`, hiding it
+
+So, not too bad.  It's a little annoying that we needed to add an `id` to the span to make this work and, according to
+my admittedly idiosyncratic tastes, the API for looking up an element is a little ugly, but (but!) it works and it
+doesn't require any other JavaScript libraries.
 
 ==== AlpineJS
 
-TODO: describe installing and overview of AlpineJS
+AlpineJS is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself
+as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
+
+Installing AlpineJS is a breeze, you can simply include it via a CDN:
+
+.Installing AlpineJS
+[source,html]
+----
+<script src="//unpkg.com/alpinejs"></script>
+----
+
+As with htmx, you can also download it and host it on your own server.
+
+You use AlpineJS by putting attributes directly in your HTML.  To implement our example features in AlpineJS, you would
+establish a variable using the `x-data` attribute, which allows you to define variables.  Let's use it to establish
+a variable named `open` with the value `false` initially.  We would then have our `span` refer to that variable with a
+`x-show` attribute, which would tie the visibility of the `span` to the value of the `open` variable: if the value is
+`true`, then the span is visible, otherwise it is not.
+
+Finally, we can use the `x-on:click` attribute on the button to run some JavaScript when the button is clicked.  You can
+listen for any event with the `x-on` prefix, with the name of the event following a colon after the `x-on` prefix.  In
+this case we want to toggle the value of the `open` variable to `true`.
+
+Here is what the code would look like:
+
+.Using AlpineJS To Show Content
+[source,html]
+----
+<div x-data="{ open: false }"> <1>
+<button x-on:click="open = true">Expand</button> <2>
+
+    <span x-show="open"> <3>
+      Content...
+    </span>
+</div>
+----
+<1> The `open` variable is established with the value `false`
+<2> The `@click` handler sets `open` to `true`
+<3> The visibility of this span is tied to the `open` variable
+
+As you can see, this code is much tighter than the VanillaJS implementation.  It helps that AlpineJS supports a notion
+of variables, allowing you to bind the visibility of the `span` element to a variable that both it and the button
+can access.  Alpine allows for much more elaborate data bindings as well, it is an excellent general purpose client-side
+scripting library.
 
 ==== _hyperscript
 
-TODO: describe installing and overview of _hyperscript
+While previous two examples are JavaScript-oriented, _hyperscript is a completely different scripting language for
+front-end development.  It has a completely different syntax than JavaScript, derived from an older language called
+HyperTalk, which was the scripting language of HyperCard, an old development system on the Macintosh Computer.  The
+most noticable thing about _hyperscript is that it has an english-like syntax.  It was created as a sister project
+to htmx, to make it possible to do event-oriented, high level scripting in htmx-based applications.
+
+We will not be doing a deep dive on the language, but again just want to give you a flavor of what scripting in
+_hyperscript is like, so you can pursue the language in more depth later if you find it interesting.
+
+Like htmx and AlpineJS, _hyperscript can be installed via a CDN or installed locally
+
+.Installing Hyperscript Via CDN
+[source,html]
+----
+<script src="//unpkg.com/hyperscript.org"></script>
+----
+
+Like AlpineJS, in \_hyperscript you put attributes directly in your HTML.  Unlike AlpineJS, there is only one attribute
+for _hyperscript: the `_` (underscore) attribute.  You write all your hyperscript inside this one attribute!
+
+The implementation of our example button in hyperscript is similar, in some ways, to the VanillaJS implemenation: we will
+start with the span hidden via the CSS `display` property, and toggle it.  However, the code will look quite a bit
+different.  Let's look at the code first and then explain it:
+
+.Using _hyperscript To Show Content
+[source,html]
+----
+<div>
+    <button _="on click set the *display of the next <span/> to 'inline'">Expand</button> <1>
+    <span style="display: none"> <2>
+      Content...
+    </span>
+</div>
+----
+<1> This is what _hyperscript looks like, believe it or not
+<2> The `@click` handler sets `open` to `true`
+
+Now, if you are a JavaScript programmer, that hyperscript probably looks insane to you.  And that's OK, it is a little
+insane.  But let's parse what the code is saying, which isn't very hard since it looks so much like english: on a
+click event, look up the next element in the DOM that matches the `span` CSS selector and set its `display` style
+property to `inline`.  Simple, right!
+
+There are some syntactic tricks you need to know, such as using `</>` for a CSS selector, and using the `*` prefix to
+refer to a style property.  And you have to know about the `of` property access expression.  And how `set` works.
+
+OK, maybe it is a little more than a little insane.  But fun!
+
+.Locality of Behavior
+****
+Locality of Behavior (LoB) is a software design principle that we coined to describe the following characteristic of a
+piece of software:
+
+[quote, https://htmx.org/essays/locality-of-behaviour/]
+____
+The behaviour of a unit of code should be as obvious as possible by looking only at that unit of code
+____
+
+In simple terms: you should be able to tell what a button does by simply looking at that button.  You shouldn't need
+to consult a bunch of different places to determine what the button does or why it behaves like it behaves.
+
+All three of our examples demonstrate Locality of Behavior: by simply examining the button in question, you can see what
+the button is doing and trace the effects from there.  Both AlpineJS and htmx support LoB as explicit design goals: they
+are designed to be embedded directly within your HTML, putting the scripting on the elements in question.
+
+VanillaJS is trickier here: we took advantage of the `onclick` attribute defined in the HTML specification, and, indeed
+our VanillaJS example does have locality of behavior.  Unfortunately, there are only a fixed number of events that can
+be responded to via `on` attributes in HTML, limiting your ability to embed code directly on elements to the standard
+DOM events.  This limitation prevents you from handling custom events in this manner in VanillaJS.
+
+And, in fact, some people prefer to move their scripting out of HTML entirely and use a different approach to hooking
+in behavior to DOM elements: they will call the DOM API `addEventListener()` on elements from within a separate JavaScript
+file.  This is a severe violation of Locality of Behavior: you now need to look in multiple places to understand what
+the button does.  However this does satisfy another, and much more popular design principle: Separation of Concerns (SoC).
+
+SoC states that you should separate "concerns" such as code, markup and presentation information, into separate files,
+for a cleaner overall system.
+
+We feel that, in the case of front end scripting in a Hypermedia Driven Application, Locality of Behavior should be
+favored over Separation of Concerns.
+****
 
 === Events and The DOM
 

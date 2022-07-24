@@ -18,6 +18,7 @@ This chapter covers
 * The use of scripting for non-hypermedia applications on the Web
 * Tools, guidelines and patterns for writing scripts in a hypermedia application
 
+
 [partintro]
 == Introduction: Do you just hate JavaScript?
 
@@ -27,8 +28,27 @@ On the Web, the need for scripting is fulfilled by JavaScript. It is not the onl
 
 The discussion of scripting is framed around tools you can use for it (who doesn't like a new, shiny tool?) all of which are written in JavaScript. With each tool, we introduce archetypes, patterns/antipatterns, tips and resources.
 
-== Scripts and REST
 
+== Quality Criteria
+
+Local, restartable, generic.
+
+"... implementations that do not simply run on the Web but that actually exist in the web ..."
+-- Mike Amundsen, Building Hypermedia APIs with HTML5 and Node
+
+Use ((progressive enhancement)).
+
+The disadvantage is that scripting reduces ((visibility)), "in this case [...] the ability of a component to monitor or mediate the interaction between two other components" (Fielding).
+
+Make scripts generic, and specify details in markup.
+
+Scripts should be resilient to DOM modifications from other scripts.
+
+A script should not impose a programming model upon the rest of the application. To the greatest practical extent, do not assume anything not in a Web specification. When more structure is needed, it should only be required in parts of the page that explicitly invoke the script. For instance, do not call `document.querySelector` with generic CSS selectors and attach event listeners, but query for classes or attributes which are explicitly placed by the page author to call your script.
+
+Reuse HTML semantics, but do so carefully. For instance, a script that updates `<time>` elements to match the user's local timezone
+
+////
 The last constraint of REST as described by Fielding is _((Code on Demand))_. Implementing servers enclose code in hypermedia documents and user agents execute them.
 
 "REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented."
@@ -49,10 +69,6 @@ The advantages of using the Web this way are not without peril. Some disadvantag
 ...
 
 
-"[...] Visibility in this case refers to the ability of a component to monitor or mediate the interaction between two other components. [.line-through]#Visibility can enable improved performance via shared caching of interactions, scalability through layered services, reliability through reflective monitoring, and security by allowing the interactions to be inspected by mediators (e.g., network firewalls)."
--- Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures, &sect;2.3.5 _Visibility_
-
-
 .continued:
 ____
 The mobile agent style is an example where the lack of visibility may lead to security concerns.
@@ -60,17 +76,13 @@ ____
 
 [example]
 Gemini is a modern hypermedia system, similar to the Web, that does not include scripting (along with many other features).
+////
 
 
 [#web-as-app-delivery]
 == The Web as a medium for application delivery
 
-The HTML, CSS, JS trio of languages have demonstrated their capability as a GUI toolkit so extensively, that to cite evidence seems inane. Some developers turn to tools like Electron for applications that may never be run in a browser context, as controversial as such tools may be.
-
-[example]
-Balena Etcher is an Electron application that writes ISO images onto drives, usually to create OS installation media such as Live USBs -- a task that cannot be done in a browser.
-
-=== The web is ubiquitous and fragmented
+The HTML, CSS, JS trio of languages have demonstrated their capability as a GUI toolkit so extensively, that to cite evidence seems inane. Some developers turn to tools like Electron for applications that may never be run in a browser context, although other developers and users look at such applications disdainfully for their large use of hardware resources.
 
 Web applications are not just cross-platform but _platform-independent_. The web browser provides a standard interface that abstracts many aspects of hardware and operating systems:
 
@@ -82,7 +94,7 @@ The ubiquity of the web means that:
 * *Your application is destined to run in environments you have not tested them in.* The only way to minimize this is to minimize the amount of code running on the user's device.
 * *You will need to create an appropriate user experience for different platforms in one codebase.* This is known as ((responsive web design)). You can try to avoid this by trying to detect the kind of device that is requesting the app and delivering a different app accordingly. This technique may be frowned upon but it finds signfiicant use; for instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile. These devices will likely be neglected by this kind of application until one of them gains widespread use.
 +
-Hypermedia-driven applications shift as much of the burden of responsive web design as possible to the platform developer, who provides a spec-compliant Web browser.
+Hypermedia-driven applications should shift as much of the burden of responsive web design as possible to the platform developer, who provides a spec-compliant Web browser.
 
 
 == Pervasive scripting, localized scripting

@@ -318,7 +318,7 @@ DOM events.  This limitation prevents you from handling custom events in this ma
 And, in fact, some people prefer to move their scripting out of HTML entirely and use a different approach to hooking
 in behavior to DOM elements: they will call the DOM API `addEventListener()` on elements from within a separate JavaScript
 file.  This is a severe violation of Locality of Behavior: you now need to look in multiple places to understand what
-the button does.  However this does satisfy another, and much more popular design principle: Separation of Concerns (SoC).
+the button does.  However, this does satisfy another, and much more popular design principle: Separation of Concerns (SoC).
 
 SoC states that you should separate "concerns" such as code, markup and presentation information, into separate files,
 for a cleaner overall system.

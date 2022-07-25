@@ -23,34 +23,60 @@ This chapter covers
 [partintro]
 == Scripting In Hypermedia Driven Applications
 
-Thus far we have avoided writing any JavaScript for Contact.app, and, at some level, that's what this book is all about:
-we want to show that it is possible to build sophisticated web applications using the original model of the web.  On the
-other hand, htmx itself _is_ written in JavaScript, so we don't want our message to be interpreted as "JavaScript bad",
+"REST allows client functionality to be extended
+by downloading and executing code in the form of applets or scripts.
+This simplifies clients 
+by reducing the number of features required to be pre-implemented."
+-- Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures
+
+Thus far we have avoided writing any JavaScript for Contact.app,
+mainly because the functionality we implemented so far does not need it.
+Contrary to popular belief, hypermedia is not just for "documents"
+(where a document is considered essentially different to an "app"),
+and it has many affordances for building interactive experiences.
+We want to show that it is possible to
+build sophisticated web applications using the original model of the web
+without the abstractions provided by JavaScript frameworks.
+On the other hand, htmx itself _is_ written in JavaScript,
+and we don't want our message to be interpreted as "JavaScript bad",
 or, more generally, "Client-side scripting bad."
 
-Scripting was explicitly included in the original model of the web:
+Scripting has been a massive multiplier of the Web's capabilities.
+Through its use, Web application authors are
+not only able to enhance their hypertext-based websites,
+but also create full-fledged client-side applications
+that can compete with native apps in how they work
+(although they don't always win when they do).
 
-[quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
-____
-REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts.
-This simplifies clients by reducing the number of features required to be pre-implemented.
-____
+In other terms, the Web became a distribution medium for non-REST apps
+in addition to being a RESTful system.
 
-So the question isn't "Should we be scripting for the web?" but rather "How should we be scripting for the web?"
+So the question isn't "Should we be scripting for the web?"
+but rather "How should we be scripting for the web?"
 
-Client-side scripting is both congruent with and extremely useful in a Hypermedia Driven Application, _so long as it does
-not replace the underlying RESTful hypermedia architecture_.  We will discuss what exactly this means in much more detail
-in an appendix, but the short summary is: so long as the majority of your application retrieves and updates state using
-hypermedia requests and scripting is mainly limited to enhancing the front end experience, you are scripting in a manner
-compatible with Hypermedia Driven Applications.
+Scripting, when it's used as a replacement for the RESTful architecture provided by the Web,
+is extremely useful in Hypermedia Driven Applications.
+We discuss what this means in much greater detail in an appendix,
+but the practical implications for HDA developers is that if
+* The main data format exchanged between server of client is hypermedia,
+  the same as it would be in an application with no scripting
+* Client-side state (other than the DOM) is minimized
+then you are scripting in a way compatible with HDAs.
 
-In this chapter we are going to look at four areas of our application that will benefit from adding a bit of client
-side scripting:
+This style of scripting requires us to different practices than
+what is usually recommended for JavaScript,
+as the most common advice often comes from a server or SPA context.
+We will see these practices in action in the upcoming chapter.
 
-* We will add support for a JavaScript-based drop-down to clean up the actions in the table
-* We will add support for drag-and-drop reordering using
-* We will add a JavaScript-based confirmation dialog library and use that to confirm the deletion of contacts
-* We will add a keyboard shortcut for focusing the search input
+However, listing "best practices" is rarely convincing or edifying (and often boring).
+So, we instead frame them around shiny tools that work well for scripting in a HDA.
+We will use each of these tools to add a feature to ContactApp:
+
+* An overflow menu to hold the _Edit_, _View_ and _Delete_ actions,
+  to clean up visual clutter in our list of contacts
+* Reordering contacts by dragging and dropping
+* A dialog to confirm the deletion of contacts
+* A keyboard shortcut for focusing the search box
 
 The important conceptual idea in the implementation of each of these features is that they are entirely client-side
 and don't exchange information with the server using, for example, JSON.  This is what will keep them all within the

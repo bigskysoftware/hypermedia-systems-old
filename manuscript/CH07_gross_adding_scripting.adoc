@@ -174,6 +174,8 @@ Furthermore, imagine that we want to change the number field from an `<output>` 
 
 The tight coupling between components in this simple example suggests that separation between HTML and JavaScript (and CSS) is often an illusory separation of concerns. Contact.app is is not _concerned_ with structure, markup or data, it's concerned with collecting contact info and displaying it.
 
+image::../images/separation-of-concerns-expectation-v-reality.png[]
+
 Our suspicion is validated by developments in the JS framework world:
 
 * JSX

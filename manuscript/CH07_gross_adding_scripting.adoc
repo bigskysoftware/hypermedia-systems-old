@@ -354,7 +354,7 @@ You can also install it from npm, or vendor it from your own server.
 
 The main interface of Alpine is a set of HTML attributes, the main one of which is `x-data`. The content of `x-data` is a JavaScript expression which evaluates to an object, whose properties we can access in the element. For our counter, the only state is the current number, so let's create an object with one property:
 
-.Counter in Alpine, line 1
+.Counter with Alpine, line 1
 [source,html]
 ----
 <div class="counter" x-data="{ count: 0 }">
@@ -362,7 +362,7 @@ The main interface of Alpine is a set of HTML attributes, the main one of which 
 
 We've defined our state, let's actually use it:
 
-.Counter in Alpine, lines 1-2
+.Counter with Alpine, lines 1-2
 [source,html,highlight=2..2]
 ----
 <div class="counter" x-data="{ count: 0 }">
@@ -374,7 +374,7 @@ This attribute sets the text content of an element to a given expression. Notice
 
 To attach event listeners, we use `x-on`:
 
-.Counter in Alpine, the full thing
+.Counter with Alpine, the full thing
 [source,html,highlight=4..4]
 ----
 <div class="counter" x-data="{ count: 0 }">

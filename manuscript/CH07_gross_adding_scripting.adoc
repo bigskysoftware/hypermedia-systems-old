@@ -55,7 +55,7 @@ However, listing "best practices" is rarely convincing or edifying (and often bo
 
 The important idea in the implementation of each of these features is that they are entirely client-side and don't exchange information with the server using, for example, JSON. This is what will keep them all within the bounds of a proper Hypermedia Driven Application.
 
-=== Scripting Languages For The Web
+== Scripting Languages For The Web
 
 The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today. A bit of interesting internet lore, however, is that JavaScript was not always the only built-in option. As the quote from Roy Fielding above indicates, _applets_ written in other languages such as Java were considered part of the scripting infrastructure of the web. In addition, there was a brief period when Internet Explorer supported VBScript, a scripting language based on Visual Basic.
 
@@ -72,7 +72,7 @@ I bring this up because we are going to look at three different mechanisms for a
 Let's take a quick look at each of these scripting options so we know what we are dealing with.  As with CSS, we are not going to deep dive into any of these options: we are going to show just enough to give you a flavor of each and, we hope, spark your interest in looking into each of them more extensively.
 
 
-==== Vanilla JavaScript
+=== Vanilla JavaScript
 
 [quote]
 No code is faster than no code.
@@ -115,7 +115,7 @@ As our "hello world" example to showcase each of our scripting options, let's wr
 
 We have a problem, however, as one of the things frameworks provide is still missing: a standardized code style. There are solutions to this problem, but before we reach for it, let's take a journey through various styles, starting with the simplest thing possible.
 
-.Dismissible alert in JavaScript, inline version
+.Counter in vanilla JavaScript, inline version
 [source,html]
 ----
 <section class="counter">
@@ -137,7 +137,7 @@ So, not too bad. It's a little annoying that we needed to add an `id` to the spa
 
 A more "standard" way to write the above would be to put the above in a separate file, either linked via a `<script src>` or placed into an inline `<script>` by a build process:
 
-.Dismissible alert in JavaScript, in multiple files
+.Counter in vanilla JavaScript, in multiple files
 --
 [source,html]
 ----
@@ -178,6 +178,7 @@ image::../images/separation-of-concerns-expectation-v-reality.png[]
 
 Our suspicion is validated by developments in the JS framework world:
 
+// TODO: expand
 * JSX
 * Lit
 * CSS-in-JS
@@ -198,55 +199,71 @@ So, should we go back to the first example? Unfortunately, JavaScript and the `o
 * JavaScript code that directly manipulates the DOM can get verbose, and clutter the markup
 * An element cannot listen for events on another element. For example, if you want to dismiss a popup by clicking outside it, the listener will need to be on the body element. The body element will need to have listeners that deal with many unrelated components, some of which may not even be on a particular page when pages are generated from a template.
 
+// TODO: ****RSJS****
 
-==== AlpineJS
 
-AlpineJS is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself
-as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
+=== Alpine.js
+
+Alpine.js is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
 
 Installing AlpineJS is a breeze, you can simply include it via a CDN:
 
 .Installing AlpineJS
 [source,html]
 ----
-<script src="//unpkg.com/alpinejs"></script>
+<script src="https://unpkg.com/alpinejs"></script>
 ----
 
-As with htmx, you can also download it and host it on your own server.
+You can also install it from npm, or vendor it from your own server.
 
-You use AlpineJS by putting attributes directly in your HTML.  To implement our example features in AlpineJS, you would
-establish a variable using the `x-data` attribute, which allows you to define variables.  Let's use it to establish
-a variable named `open` with the value `false` initially.  We would then have our `span` refer to that variable with a
-`x-show` attribute, which would tie the visibility of the `span` to the value of the `open` variable: if the value is
-`true`, then the span is visible, otherwise it is not.
+The main interface of Alpine is a set of HTML attributes, the main one of which is `x-data`. The content of `x-data` is a JavaScript expression which evaluates to an object, whose properties we can access in the element. For our counter, the only state is the current number, so let's create an object with one property:
 
-Finally, we can use the `x-on:click` attribute on the button to run some JavaScript when the button is clicked.  You can
-listen for any event with the `x-on` prefix, with the name of the event following a colon after the `x-on` prefix.  In
-this case we want to toggle the value of the `open` variable to `true`.
-
-Here is what the code would look like:
-
-.Using AlpineJS To Show Content
+.Counter in Alpine, line 1
 [source,html]
 ----
-<div x-data="{ open: false }"> <1>
-<button x-on:click="open = true">Expand</button> <2>
+<div class="counter" x-data="{ count: 0 }">
+----
 
-    <span x-show="open"> <3>
-      Content...
-    </span>
+We've defined our state, let's actually use it:
+
+.Counter in Alpine, lines 1-2
+[source,html]
+----
+<div class="counter" x-data="{ count: 0 }">
+  <output x-text="count" <1>></output>
+----
+<1> The `x-text` attribute.
+
+This attribute sets the text content of an element to a given expression. Notice that we can access the data of a parent element.
+
+To attach event listeners, we use `x-on`:
+
+.Counter in Alpine, the full thing
+[source,html]
+----
+<div class="counter" x-data="{ count: 0 }">
+  <output x-text="count" <1>></output>
+
+  <button x-on:click="count++" <1>>Increment</button>
 </div>
 ----
-<1> The `open` variable is established with the value `false`
-<2> The `@click` handler sets `open` to `true`
-<3> The visibility of this span is tied to the `open` variable
+<1> With `x-on`, we specify the attribute in the attribute _name_.
+
+What we created is, incidentally, nearly identical to the first code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
+
+
+==== `@click` vs. `onclick`
+
+
+==== Reactivity and templating
+
 
 As you can see, this code is much tighter than the VanillaJS implementation.  It helps that AlpineJS supports a notion
 of variables, allowing you to bind the visibility of the `span` element to a variable that both it and the button
 can access.  Alpine allows for much more elaborate data bindings as well, it is an excellent general purpose client-side
 scripting library.
 
-==== _hyperscript
+=== _hyperscript
 
 While previous two examples are JavaScript-oriented, _hyperscript is a completely different scripting language for
 front-end development.  It has a completely different syntax than JavaScript, derived from an older language called

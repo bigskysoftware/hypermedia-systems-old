@@ -22,7 +22,7 @@ This chapter covers
 
 
 [partintro]
-== Scripting In Hypermedia Driven Applications
+== Scripting in Hypermedia-Driven Applications
 
 "REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented."
 -- Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures
@@ -55,7 +55,7 @@ However, listing "best practices" is rarely convincing or edifying (and often bo
 
 The important idea in the implementation of each of these features is that they are entirely client-side and don't exchange information with the server using, for example, JSON. This is what will keep them all within the bounds of a proper Hypermedia Driven Application.
 
-== Scripting Languages For The Web
+== Scripting languages for the Web
 
 The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today. A bit of interesting internet lore, however, is that JavaScript was not always the only built-in option. As the quote from Roy Fielding above indicates, _applets_ written in other languages such as Java were considered part of the scripting infrastructure of the web. In addition, there was a brief period when Internet Explorer supported VBScript, a scripting language based on Visual Basic.
 
@@ -215,7 +215,7 @@ RSJS ("Reasonable System for JavaScript Structure", https://ricostacruz.com/rsjs
 ****
 
 
-==== Vanilla JavaScript in Action: A Dropdown Menu
+==== Vanilla JavaScript in action: A dropdown menu
 
 
 === Alpine.js
@@ -292,7 +292,7 @@ _hyperscript is like, so you can pursue the language in more depth later if you 
 
 Like htmx and AlpineJS, _hyperscript can be installed via a CDN or installed locally
 
-.Installing Hyperscript Via CDN
+.Installing _hyperscript via CDN
 [source,html]
 ----
 <script src="//unpkg.com/hyperscript.org"></script>
@@ -305,7 +305,7 @@ The implementation of our example button in hyperscript is similar, in some ways
 start with the span hidden via the CSS `display` property, and toggle it.  However, the code will look quite a bit
 different.  Let's look at the code first and then explain it:
 
-.Using _hyperscript To Show Content
+.Using _hyperscript To show content
 [source,html]
 ----
 <div>
@@ -366,7 +366,7 @@ favored over Separation of Concerns.
 == Using off-the-shelf components
 
 
-== Events and The DOM
+== Events and the DOM
 
 One thing that you will notice in all the scripting that we add to Contact.app is the heavy use of _events_.  This is
 not an accident: proper scripting in a Hypermedia Driven Application should be heavily event driven.  Since htmx

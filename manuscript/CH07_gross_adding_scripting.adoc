@@ -15,10 +15,14 @@
 This chapter covers
 
 * How scripting can be effectively added to a Hypermedia Driven Application
-* Adding support for a drop-down in our contacts table
-* Adding a javascript-based confirmation for deleting contacts
+* Adding a javascript-based confirmation dialog for deleting contacts
+// js
+* Adding a three-dot menu in our contacts table
+// alpine
 * Adding a keyboard shortcut for focusing the search input
-* Adding support for re-ordering contacts
+// hyperscript
+* Adding support for re-ordering contacts via drag-and-drop
+// off the shelf
 
 
 [partintro]
@@ -175,7 +179,7 @@ You'll notice that we've had to add a class to the button so that we could find 
 
 Furthermore, imagine that we want to change the number field from an `<output>` tag to an `<input type="number">`. This change to our HTML will break our JavaScript. The fix is trivial (change `.textContent` to `.value`), but I hope you can see how this would increase in larger components or across a whole page.
 
-The tight coupling between components in this simple example suggests that separation between HTML and JavaScript (and CSS) is often an illusory separation of concerns. Contact.app is is not _concerned_ with structure, markup or data, it's concerned with collecting contact info and displaying it.
+The tight coupling between files in this simple example suggests that separation between HTML and JavaScript (and CSS) is often an illusory separation of concerns. Contact.app is is not _concerned_ with structure, markup or data, it's concerned with collecting contact info and displaying it.
 
 image::../images/separation-of-concerns-expectation-v-reality.png[]
 
@@ -186,6 +190,46 @@ Our suspicion is validated by developments in the JS framework world:
 * Lit
 * CSS-in-JS
 * Single-File Components
+
+
+==== Locality of Behavior
+
+Locality of Behavior (LoB) is a software design principle that we coined to describe the following characteristic of a piece of software:
+
+"The behaviour of a unit of code should be as obvious as possible by looking only at that unit of code."
+-- https://htmx.org/essays/locality-of-behaviour/
+
+In simple terms: you should be able to tell what a button does by simply looking at the code or markup that creates that button. This does not mean you need to inline the entire implementation, but that you shouldn't need to hunt for it or require prior knowledge of the codebase to find it.
+
+We will demonstrate Locality of Behavior in all of our examples, both the counter demos and the features we add to ContactApp. It is a design goal of both _hyperscript and Alpine.js (which we will cover later) as well as htmx. These tools achieve it through having you embed attributes and directly within your HTML, as opposed to having code pluck elements out of a document through CSS selectors and add event listeners onto them.
+
+The `addEventListener` method is, in a way, monkey-patching. Its functionality is the same for event listeners as ruby's `define_method`:
+
+.`define_method` in Ruby
+[source,ruby]
+----
+btn.define_method(:click <1>, ->{
+  count += 1 <2>
+})
+----
+<1> When a `click` method call is received,
+<2> Do this
+
+.`addEventListener` in JavaScript
+[source,js]
+----
+button.addEventListener('click' <1>, () => {
+  count++ <2>
+})
+----
+<1> When a `click` event is received,
+<2> Do this
+
+(The Ruby code is deliberately unidiomatic to make it easier to understand for non-Rubyists).
+
+Monkey-patching used to be the default way of adding methods in JavaScript: `Account.prototype.withdraw = function ...` However, classes were added in ES2015 and modifying the `.prototype` of things is increasingly discouraged. No such advancement has been made in for event listeners, however, leaving us stuck with `addEventListener` and `onclick`.
+
+This is a shame, because in the case of front end scripting in a Hypermedia Driven Application, Locality of Behavior is often the more important principle over Separation of Concerns.
 
 .2 > 1 > 2
 ****
@@ -215,7 +259,7 @@ RSJS ("Reasonable System for JavaScript Structure", https://ricostacruz.com/rsjs
 ****
 
 
-==== Vanilla JavaScript in action: A dropdown menu
+==== Vanilla JavaScript in action: A confirmation dialog
 
 
 === Alpine.js
@@ -265,7 +309,7 @@ To attach event listeners, we use `x-on`:
 ----
 <1> With `x-on`, we specify the attribute in the attribute _name_.
 
-What we created is, incidentally, nearly identical to the first code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
+Would you look at that, we're done already. (It's almost as though we wrote a trivial example). What we created is, incidentally, nearly identical to the first code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
 
 
 ==== `@click` vs. `onclick`
@@ -278,6 +322,10 @@ As you can see, this code is much tighter than the VanillaJS implementation.  It
 of variables, allowing you to bind the visibility of the `span` element to a variable that both it and the button
 can access.  Alpine allows for much more elaborate data bindings as well, it is an excellent general purpose client-side
 scripting library.
+
+
+==== Alpine in action: an overflow menu
+
 
 === _hyperscript
 
@@ -328,39 +376,7 @@ refer to a style property.  And you have to know about the `of` property access 
 
 OK, maybe it is a little more than a little insane.  But fun!
 
-.Locality of Behavior
-****
-Locality of Behavior (LoB) is a software design principle that we coined to describe the following characteristic of a
-piece of software:
-
-[quote, https://htmx.org/essays/locality-of-behaviour/]
-____
-The behaviour of a unit of code should be as obvious as possible by looking only at that unit of code
-____
-
-In simple terms: you should be able to tell what a button does by simply looking at that button.  You shouldn't need
-to consult a bunch of different places to determine what the button does or why it behaves like it behaves.
-
-All three of our examples demonstrate Locality of Behavior: by simply examining the button in question, you can see what
-the button is doing and trace the effects from there.  Both AlpineJS and htmx support LoB as explicit design goals: they
-are designed to be embedded directly within your HTML, putting the scripting on the elements in question.
-
-VanillaJS is trickier here: we took advantage of the `onclick` attribute defined in the HTML specification, and, indeed
-our VanillaJS example does have locality of behavior.  Unfortunately, there are only a fixed number of events that can
-be responded to via `on` attributes in HTML, limiting your ability to embed code directly on elements to the standard
-DOM events.  This limitation prevents you from handling custom events in this manner in VanillaJS.
-
-And, in fact, some people prefer to move their scripting out of HTML entirely and use a different approach to hooking
-in behavior to DOM elements: they will call the DOM API `addEventListener()` on elements from within a separate JavaScript
-file.  This is a severe violation of Locality of Behavior: you now need to look in multiple places to understand what
-the button does.  However, this does satisfy another, and much more popular design principle: Separation of Concerns (SoC).
-
-SoC states that you should separate "concerns" such as code, markup and presentation information, into separate files,
-for a cleaner overall system.
-
-We feel that, in the case of front end scripting in a Hypermedia Driven Application, Locality of Behavior should be
-favored over Separation of Concerns.
-****
+==== _hyperscript in action: a keyboard shortcut
 
 
 == Using off-the-shelf components

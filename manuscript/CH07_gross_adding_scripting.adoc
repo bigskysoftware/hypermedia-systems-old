@@ -16,9 +16,9 @@ This chapter covers
 
 * How scripting can be effectively added to a Hypermedia Driven Application
 * Adding support for a drop-down in our contacts table
-* Adding support for re-ordering contacts
 * Adding a javascript-based confirmation for deleting contacts
 * Adding a keyboard shortcut for focusing the search input
+* Adding support for re-ordering contacts
 
 
 [partintro]
@@ -168,7 +168,10 @@ Except... is that really the case?
 
 Notice that the HTML in the above example is not just the previous example with the onclick attribute removed. Can you spot the difference?
 
-You'll notice that we've had to add a class to the button so that we could find it in JS. In both the HTML and the JS, this ID is a string literal not subject to typechecking, and it certainly isn't checked if the ID is the same in both.
+You'll notice that we've had to add a class to the button so that we could find it in JS. In both the HTML and the JS, this ID is a string literal not subject to typechecking, and it certainly isn't checked if the ID is the same in both. The careless use of CSS selectors in JavaScript causes _jQuery soup_, where:
+* The JS that attaches behavior to a given element is unclear (though developer tools in browsers help with this).
+* Reuse is difficult.
+* The code is disorganized (if we have many components, how do we separate them into files (if at all?))
 
 Furthermore, imagine that we want to change the number field from an `<output>` tag to an `<input type="number">`. This change to our HTML will break our JavaScript. The fix is trivial (change `.textContent` to `.value`), but I hope you can see how this would increase in larger components or across a whole page.
 
@@ -191,7 +194,7 @@ Having two decoupled modules is better than having one big blob, but two tightly
 (Of course, having no code at all is the best, so 0 > 2 > 1 > 2.)
 ****
 
-So, should we go back to the first example? Unfortunately, JavaScript and the `on*` attributes are not a great way to program:
+So, should we go back to the first example? It certainly wins in the Locality of Behavior category. Unfortunately, JavaScript and the `on*` attributes are not a great way to program:
 
 * They don't support custom events.
 * There is no good mechanism for associating long-lasting variables with an element --- all variables are discarded when an event listener completes executing
@@ -199,12 +202,25 @@ So, should we go back to the first example? Unfortunately, JavaScript and the `o
 * JavaScript code that directly manipulates the DOM can get verbose, and clutter the markup
 * An element cannot listen for events on another element. For example, if you want to dismiss a popup by clicking outside it, the listener will need to be on the body element. The body element will need to have listeners that deal with many unrelated components, some of which may not even be on a particular page when pages are generated from a template.
 
-// TODO: ****RSJS****
+Unfortunately, JavaScript and Locality of Behavior don't seem to mesh as well as we want them to. This is partly our fault however --- we need to remember that LoB does not require behavior to be _defined_ at the use site, but merely invoked. Keeping this in mind, it's possible to achieve LoB while writing JS in a separate file, provided we have a reasonable system for structuring our scripts.
+
+
+==== RSJS
+
+RSJS ("Reasonable System for JavaScript Structure", https://ricostacruz.com/rsjs/) is a set of guidelines for JavaScript architecture targeted at "a typical non-SPA website". RSJS is a solution to the lack of a standard code style we mentioned earlier.
+
+.Event delegation
+****
+// TODO explain event delegation
+****
+
+
+==== Vanilla JavaScript in Action: A Dropdown Menu
 
 
 === Alpine.js
 
-Alpine.js is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
+Alpine.js (https://alpinejs.dev[]) is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
 
 Installing AlpineJS is a breeze, you can simply include it via a CDN:
 
@@ -346,7 +362,11 @@ We feel that, in the case of front end scripting in a Hypermedia Driven Applicat
 favored over Separation of Concerns.
 ****
 
-=== Events and The DOM
+
+== Using off-the-shelf components
+
+
+== Events and The DOM
 
 One thing that you will notice in all the scripting that we add to Contact.app is the heavy use of _events_.  This is
 not an accident: proper scripting in a Hypermedia Driven Application should be heavily event driven.  Since htmx
@@ -361,6 +381,8 @@ The answer is that this state is client side, and ephemeral: it is fine to have 
 that improves the user experience, so long as that script is not updating _system state_ (e.g. a contact's details)
 via out-of-band, non-hypermedia communication.
 
+
+////
 == Adding a Keyboard Shortcut for Focusing the Search Input With VanillaJS
 
 == Adding Support for Re-Ordering Contacts (No Scripting Needed!)
@@ -377,7 +399,9 @@ TODO: Show how easy this is in hyperscript
 
 TODO: Show how easy this is in hyperscript
 
-== Being Pragmatic About Scripting
+////
+
+== Being pragmatic
 
 TODO: Sometimes going outside the lines is necessary, being pragmatic
 

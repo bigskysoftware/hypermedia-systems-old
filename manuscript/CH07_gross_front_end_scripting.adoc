@@ -101,11 +101,6 @@ This is not a criticism of Beholder or SPAs. Non-reusable aspects are still ther
 
 In SPAs, frameworks like React, Vue, Svelte, Angular, Solid... are almost mandatory. A framework can provide
 
-* Client-side routing
-* An abstraction over DOM manipulation, i.e.: templates that automatically update when referenced variables change
-* Server side rendering (rendering here refers to HTML generation)
-  * Attaching dynamic behavior to server-rendered tags on load
-* Network requests with error handling
 
 Many of these requirements are 
 However, 

@@ -253,6 +253,82 @@ Unfortunately, JavaScript and Locality of Behavior don't seem to mesh as well as
 
 RSJS ("Reasonable System for JavaScript Structure", https://ricostacruz.com/rsjs/) is a set of guidelines for JavaScript architecture targeted at "a typical non-SPA website". RSJS is a solution to the lack of a standard code style we mentioned earlier.
 
+We don't want to replicate all of the guidelines here, but here are the ones most relevant to this book:
+
+* Use `data-` attributes --- invoking behavior via adding data attributes makes it obvious there is JavaScript happening, as opposed to random classes or IDs that may be mistakenly removed or changed
+* One component per file --- the name of the file should match the data attribute so that it can be found easily, preserving some LoB
+
+.Counter in vanilla JavaScript, with RSJS
+--
+[source,html]
+----
+<section class="counter" data-counter <1>>
+  <output id="my-output" data-counter-output <2>>0</output>
+  <button class="increment-btn" data-counter-increment>Increment</button>
+</section>
+----
+<1> Invoke a JavaScript behavior with a data attribute
+<2> Mark relevant child elements
+
+[source,js]
+----
+// counter.js <1>
+document.querySelectorAll("[data-counter]" <2>).forEach(el => {
+  const output = el.querySelector("[data-counter-output]"),
+    increment = el.querySelector("[data-counter-increment]") <3>
+
+  increment.addEventListener("click", e => output.textContent++) <4>
+})
+----
+<1> File should have the same name as the data attribute, so that we can locate it easily
+<2> Get all elements that invoke this behavior
+<3> Get any child elements we need
+<4> Register event handlers
+--
+
+You can see that this solves many of our gripes with the previous example of vanilla JS in a separate file:
+
+* The JS that attaches behavior to a given element is *clear* (though only through naming conventions).
+* Reuse is *easy* --- you can create another counter on the page and it will just work.
+* The code is *well-organized* --- one behavior per file
+
+You may remember the problem we discussed about replacing the output tag with `<input type="number">`. That problem still remains. There is a way to solve it, but it's a bit convoluted:
+
+.Counter with vanilla JavaScript, with extra-flexible RSJS
+--
+[source,html,highlight=2..2]
+----
+<section class="counter" data-counter <1>>
+  <output id="my-output" data-counter-output="innerHTML" <1>>0</output>
+  <button class="increment-btn" data-counter-increment>Increment</button>
+</section>
+----
+<1> Specify the property to put the value into
+
+[source,js]
+----
+// counter.js
+document.querySelectorAll("[data-counter]").forEach(el => {
+  const output = el.querySelector("[data-counter-output]"),
+    increment = el.querySelector("[data-counter-increment]")
+  
+  const outProp = output.dataset.counterOutput <1>
+
+  increment.addEventListener("click", e => output[outProp<2>]++)
+})
+----
+<1> Get the attribute's value
+<2> Dynamically access the property to increment
+--
+
+If we wanted to use an input, we would change the value of `data-counter-output` to `"value"`. Fun fact: this would also work with `<input type="range">`!
+
+On one hand, this is a way overengineered the solution to the problem. How often do we need to reuse a counter?
+
+On the other, let's think about where else we could go with this. With very little work, we could let the button markup specify the increment amount --- we could go 5-at-a-time, or decrement (increment by -1). It might be a little more puzzling to support multiple increment buttons with varying amounts if you aren't familiar with this kind of programming. However, as you continue hacking on this counter example, you could end up building a DSL for smart number inputs. The decoupling forced on us by putting our JavaScript in a separate file can lead us to invention; restriction breeds creativity.
+
+That's enough fun, however, let's get to work on ContactApp.
+
 .Event delegation
 ****
 // TODO explain event delegation
@@ -287,7 +363,7 @@ The main interface of Alpine is a set of HTML attributes, the main one of which 
 We've defined our state, let's actually use it:
 
 .Counter in Alpine, lines 1-2
-[source,html]
+[source,html,highlight=2..2]
 ----
 <div class="counter" x-data="{ count: 0 }">
   <output x-text="count" <1>></output>
@@ -299,7 +375,7 @@ This attribute sets the text content of an element to a given expression. Notice
 To attach event listeners, we use `x-on`:
 
 .Counter in Alpine, the full thing
-[source,html]
+[source,html,highlight=4..4]
 ----
 <div class="counter" x-data="{ count: 0 }">
   <output x-text="count" <1>></output>

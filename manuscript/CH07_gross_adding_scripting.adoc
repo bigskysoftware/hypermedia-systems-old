@@ -429,7 +429,7 @@ The implementation of our example button in hyperscript is similar, in some ways
 start with the span hidden via the CSS `display` property, and toggle it.  However, the code will look quite a bit
 different.  Let's look at the code first and then explain it:
 
-.Using _hyperscript To show content
+.Using _hyperscript to show content
 [source,html]
 ----
 <div>

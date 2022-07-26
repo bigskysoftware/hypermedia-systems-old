@@ -59,12 +59,12 @@ However, listing "best practices" is rarely convincing or edifying (and often bo
 
 The important idea in the implementation of each of these features is that they are entirely client-side and don't exchange information with the server using, for example, JSON. This is what will keep them all within the bounds of a proper Hypermedia Driven Application.
 
+
 == Scripting languages for the Web
 
 The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today. A bit of interesting internet lore, however, is that JavaScript was not always the only built-in option. As the quote from Roy Fielding above indicates, _applets_ written in other languages such as Java were considered part of the scripting infrastructure of the web. In addition, there was a brief period when Internet Explorer supported VBScript, a scripting language based on Visual Basic.
 
-Today, we have a variety of _transcompilers_ (often shortened to _transpiler_)
-that convert another language to JavaScript, such as TypeScript, Dart, Kotlin, ClojureScript, F#. There is also the WebAssembly bytecode format, which is supported as a compilation target for C, Rust, and the WASM-specific language AssemblyScript. However, most of these are not geared towards an HDA-compatible style of scripting --- compile-to-JS languages are paired with SPA-oriented libraries, and WASM is mainly geared toward linking to existing C/C++ libraries from JavaScript.
+Today, we have a variety of _transcompilers_ (often shortened to _transpiler_) that convert another language to JavaScript, such as TypeScript, Dart, Kotlin, ClojureScript, F#. There is also the WebAssembly bytecode format, which is supported as a compilation target for C, Rust, and the WASM-specific language AssemblyScript. However, most of these are not geared towards an HDA-compatible style of scripting --- compile-to-JS languages are paired with SPA-oriented libraries, and WASM is mainly geared toward linking to existing C/C++ libraries from JavaScript.
 
 I bring this up because we are going to look at three different mechanisms for adding scripting to our Hypermedia Driven Application:
 
@@ -376,10 +376,13 @@ refer to a style property.  And you have to know about the `of` property access 
 
 OK, maybe it is a little more than a little insane.  But fun!
 
+
 ==== _hyperscript in action: a keyboard shortcut
 
 
 == Using off-the-shelf components
+
+=== Off-the-shelf components in action: drag to reorder
 
 
 == Events and the DOM

@@ -1,11 +1,389 @@
-:chapter: ?
+= Hypermedia In Action
+:chapter: 8
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 7
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
 
 = Data APIs & Hypermedia Driven Applications
 
-== Are Data APIs allowed in HDAs?
+This chapter covers
 
-== A Comparisons between Data API needs and Hypermedia API needs
+* Data APIs and how the contrast with hypermedia APIs
+* Adding a JSON-Based Data API to our application
+* Adding hypermedia controls to our JSON Data API
 
-== Is REST appropriate for Data APIs?
+[partintro]
+== Data APIs
 
-> The REST interface is designed to be efficient for large-grain hypermedia data transfer, optimizing for the common case of the Web, but resulting in an interface that is not optimal for other forms of architectural interaction.
+In this book we have been focusing on using hypermedia to build Hypermedia Driven Applications.  In doing so we are
+following the original networking architecture of the web, building a RESTful system.
+
+However, today, many web applications are not built using this approach.  Instead, they use a front end library such
+as React to interact with JSON API on the server.  This JSON API typically does not use hypermedia, but, rather is
+a _Data API_, that is, it simply returns structured domain data to the client, for the client itself to interpret.
+
+Unfortunately, today, for historical reasons, these JSON APIs are often referred to REST APIs, despite the fact that
+they are, using the original definition of that term, not actually RESTful.
+
+[quote, Roy Fielding, https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven]
+____
+I am getting frustrated by the number of people calling any HTTP-based interface a REST API. Today’s example is the
+SocialSite REST API. That is RPC. It screams RPC. There is so much coupling on display that it should be given an X rating.
+
+What needs to be done to make the REST architectural style clear on the notion that hypertext is a constraint? In other
+words, if the engine of application state (and hence the API) is not being driven by hypertext, then it cannot be RESTful
+and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
+____
+
+The whole sordid story of how REST came to mean "JSON APIs" in the industry is a sordid and long one, and beyond the
+scope of this book.  However, if you are interested, you can refer t the "How Did REST Come To Mean The Opposite of
+REST?" essay on the htmx website.
+
+In this book we will use the term "Data API" to describe these JSON APIs, while acknowledging that the industry will
+likely continue to call them "REST APIs" for the foreseeable future.
+
+Now, believe it or not, we _have_ been creating a RESTful API for our web application.  This may sound confusing to you.
+API?  We have just been creating a web application, with paths that return HTML.  How is that a RESTful API?
+
+Well, it turns out that this is, indeed, an API, it just happens to be an API that a _hypermedia client_, that is, a
+browser, understands.  We are building an API for the browser to interact with over HTTP, and, thanks in no small part to
+HTML, the hypermedia we are using, we are building a RESTful API.  Building web applications like this is so natural and
+simple that you might not think of it as an API at all, but it is!
+
+== Hypermedia APIs & Data APIs
+
+So, we have a hypermedia API for Contact.app.  Should we include a Data API as well?
+
+Sure!  The existence of a hypermedia API in no way means that you can't also have a Data API and, in fact, this is a
+common situation in traditional web applications: there is a "web app" that is entered through one URL, say
+`https://mywebapp.example.com/`, and a JSON API that is accessible through another URL, say
+`https://mywebapp.example.com/api/v1`.  This is a reasonable way to split up the hypermedia interface to your application
+and the Data API you provide to other clients.
+
+Now, why would you want to include a Data API along with a hypermedia API?  Well, because non-hypermedia clients want to
+interact with your application.  For example, perhaps you have a mobile application that isn't built using HyperView
+(it's ok, we forgive you).  Or maybe you have automated script that needs to interact with the system on a regular
+basis.  Or 3rd party clients who wish to integrate with your system.
+
+For all of these use cases, a JSON Data API makes sense: these are not hypermedia clients and presenting them with
+a hypermedia API would be inefficient and complicated.  A simple JSON Data API fits the bill well here.
+
+."You Want Me To Parse HTML!?!"
+****
+A confusion we often run into in online discussions is that, when we advocate a hypermedia approach to building web
+applications, people think we mean that they should parse the HTML responses from the server to dump the data into their
+SPA framework or mobile applications.
+
+This is, of course, silly.  What we mean, instead, is that you should consider using a hypermedia API _with a hypermedia
+client_, like the browser, interpreting the hypermedia response itself.  If you are writing code to tease apart hypermedia,
+you are probably doing it wrong.
+
+A lot of confusion around this comes, again, from not understanding that an HTML response from a server _is_ and API
+response, just a very different one than most people think of when writing software.
+****
+
+=== Differences Between Hypermedia APIs & Data APIs
+
+So, OK, we _are_ going to have a Data API for our application.  At this point, some developers may be wondering: why
+ have both?  Why not have a single API, the JSON Data API, and have multiple clients use this one API to communicate
+with it?  Isn't it redundant to have both types of APIs for our application?
+
+This is true, we do advocate having multiple APIs to your web application if necessary and, yes, this may lead to
+some redundancy in code.  However, there are distinct advantages to both sorts of API and, even more so,
+distinct requirements for both sorts of APIs, which makes splitting the two APIs out from one another sensible.
+
+Let's consider the needs of a JSON Data API:
+
+* It must remain stable over time: you cannot change the API willy nilly or you risk breaking clients that use the API
+  and expect certain end points to behave in certain ways
+* It must be versioned: related to the first point, when you do make a major change, you need to version the API so
+  that clients that are using the old API continues to work
+* It should be rate limited: since these APIs are often used by other clients, not just your own internal web application
+  requests should be rate limited, often at the account leve, to avoid overloading the system
+* It should be a general API: since the API is for _all_ clients, not just for your web application, you should avoid
+  specialized end points that are driven by your own application needs.  Instead, the API should be general and expressive
+  enough to satisfy as many potential client needs as possible.
+* Authentication is token based, which we will discuss in more detail later
+
+Contrast these needs with that of a hypermedia API:
+
+* There is no need to remain stable over time: all URLs are discovered via HTML responses so you can be much more aggressive
+  in changing the shape of a hypermedia API
+* This means that versioning is not an issue, another strength of the hypermedia approach
+* Rate limiting probably isn't as important beyond the prevention of Distributed Denial of Service (DDoS) attacks
+* The API can be _very specific_ to your application needs: since it is designed only for your particular web application,
+  and since the API is discovered through hypermedia, you can add and remove highly tuned end points for specific
+  features in your application
+* Authentication is typically managed through a session cookie, again more on this a bit later
+
+These two different types of APIs have different strengths and weaknesses, as well as needs, so we think it makes sense
+to use both approaches: the hypermedia API for your web application, allowing you to specialize the API for the "shape"
+of your application, and the Data API approach for other, non-hypermedia clients like mobile, or integration partners.
+
+Note, in particular, that by splitting them apart from one another, you reduce the pressure that running your web
+application through your general Data API produces to be constantly changing the API to address application needs.  Rather
+than being thrashed around with every feature change, your Data API can focus on remaining stable and reliable.  This is
+the core strength of this split API approach, in our opinion.
+
+== Adding a JSON Data API To Contact.app
+
+Alright, so how are we going to add a JSON Data API to our application?  One approach, popularized by the Ruby on Rails
+web framework, is to use the same URL endpoints as your hypermedia application, but use the HTTP `Accept` header to
+determine if the client wants a JSON representation or an HTML representation.  The HTTP `Accept` header allows a client
+to specify what sort of  Multipurpose Internet Mail Extensions (MIME) types, that is file types, it wants back from the
+server: JSON, HTML, text and so on.
+
+So, if the client wanted a JSON representation of all contacts, they might issue a `GET` request that looks like this:
+
+[, reftext={chapter}.{counter:listing}]
+.A Request for a JSON Representation of All Contacts
+[source, http request]
+----
+Accept: application/json
+
+GET /contacts
+----
+
+If we adopted this pattern then our request handler for `/contacts/ would need to be updated to inspect this header and,
+depending on the value, return a JSON rather than HTML representation for the contacts.  Ruby on Rails has support for
+this pattern baked into the language, making it very easy to switch on the requested MIME type.
+
+Unfortunately, our experience with this pattern has not been great, for reasons that should be clear given the
+differences we outlined between Data and hypermedia APIs: they have different needs and often take on very different
+"shapes", and trying to pound them into the same set of URLs ends up creating a lot of tension in the application code.
+
+So, here, we advocate for applying the Separation of Concerns software design principle and breaking the JSON Data API
+out to its own set of URLs.  This will allow us to evolve the two APIs separately from one another, and give us room
+to improve each independently in a manner consistent with their own individual strengths.
+
+=== Picking a Root URL For Our API
+
+Given that we are going to split our JSON Data API routes out from our regular hypermedia routes, where should we place
+them?  One important consideration here is that we want to make sure that we can version our API cleanly in some way,
+regardless of the pattern we choose.  Looking around, a lot of places end up using a sub-domain for their apis, something
+like `https://api.mywebapp.example.com` and, in fact, often encode versioning in the subdomain:
+`https://vi.api.mywebapp.example.com`.
+
+While this makes sense for large companies, it seems like a bit of overkill for our modest little Contact.app.  Rather
+than using sub-domains, which are a pain for local development, we will use sub-paths within the existing application:
+
+* We will use `/api` as the root for our Data API functionality
+* We will use `/api/v1` as the entry point for version 1 of our Data API
+
+If and when we decide to bump the API version, we can move to `/api/v2` and so on.
+
+This approach isn't perfect, of course, but it will work for our simple application and can be adapted to a subdomain
+approach or various other methods at a later point, when our Contact.app has taken over the internet and we can afford
+a large team of API developers.  :)
+
+=== Our First JSON Endpoint: Listing All Contacts
+
+Let's add our first Data API End point.  It will handle an HTTP `GET` request to `/api/v1/contacts`, and return
+a JSON list of all contacts in the system.  In some ways it will look quite a bit like our initial code for the
+hypermedia route `/contacts`: we will load all the contacts from the contacts database and then render some text
+as a response.
+
+We are going to take advantage of a nice feature of Flask: if you simply return an object from a handler, it will
+serialized (that is, convert) that object into a JSON response.  This makes it very easy to build simple JSON APIs
+in flask!
+
+Here is our code:
+
+.A JSON Data API To Return All Contacts
+[source, python]
+----
+@app.route("/api/v1/contacts", methods=["GET"]) <1>
+def json_contacts():
+    contacts_set = Contact.all() <2>
+    contacts_dicts = [c.__dict__ for c in contacts_set] <3>
+    return {"contacts": contacts_dicts} <4>
+----
+<1> We put our JSON Data API in its own path
+<2> We aren't going to support paging or filtering, so we can just load all the contacts here
+<3> We convert the contacts array into an array of simple dictionary (map) objects, so they can be serialized to JSON easily
+<4> We return a simple dictionary that contains the `contacts` property, pointing to this new array.  Flask will automatically
+    serialize this dictionary to JSON for us
+
+The second to last line might look a little funky if you are not a python developer, it is called a "list comprehension",
+but it's just a way to convert or map a list of values, in this case contacts, to a list of dictionaries or maps.  Don't
+worry about the details, we just want you to understand the general idea: load up all the contacts, do some conversions
+to make them JSON serializeable, and then return that data structure.
+
+With this in place, if we make an HTTP `GET` request to `/api/v1/contacts`, we will see a response that looks something
+like this:
+
+.Some Sample Data From Our API
+[source, json]
+----
+{
+  "contacts": [
+    {
+      "email": "carson@example.comz",
+      "errors": {},
+      "first": "Carson",
+      "id": 2,
+      "last": "Gross",
+      "phone": "123-456-7890"
+    },
+    {
+      "email": "joe@example2.com",
+      "errors": {},
+      "first": "",
+      "id": 3,
+      "last": "",
+      "phone": ""
+    },
+    ...
+   // TODO how to indicate code ommitted
+----
+
+So, you can see, a relatively simple JSON representation of our contacts.  Not perfect, but good enough for the purposes
+of this book.  This is certainly good enough to, for example, write an automated script against, if, for example, you wanted
+to move your contacts to another system on a nightly basis.
+
+=== Adding Contacts
+
+Let's move on the next piece of functionality: adding a new contact to the system.  Once again, our code is going
+to look similar in some ways to the code that we wrote for our normal web application.  However, here we are also
+going to see the JSON API and the hypermedia API for our web application begin to obviously diverge.  In the web
+application, we needed a separate path, `/contacts/new` to host the HTML form for creating a new contact.  We made
+the decision to issue a `POST` to that same path to keep things consistent.
+
+In the case of the JSON API, there is no such path needed: the JSON API "just is" and doesn't need to provide any
+hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to to create a contact
+and that's it.
+
+Because of that fact, we can put the "create" handler on the same path as the "list" handler: `/api/v1/contacts`, but
+have it respond only to HTTP `POST` requests.
+
+The code here is relatively straight forward: populate a new contact with the information from the `POST` request,
+attempt to save it and, if it is not successful, show some error messages.  Here is the code:
+
+.Adding Contacts With Our JSON API
+[source, python]
+----
+@app.route("/api/v1/contacts", methods=["POST"]) <1>
+def json_contacts_new():
+    c = Contact(None, request.form.get('first_name'), request.form.get('last_name'), request.form.get('phone'),
+                request.form.get('email')) <2>
+    if c.save(): <3>
+        return c.__dict__
+    else:
+        return {"errors": c.errors}, 400 <4>
+----
+<1> This handler is on the same path as the first one for our JSON API, but handles `POST` requests
+<2> We create a new Contact based on values submitted with the request
+<3> We attempt to save the contact and, if successful, render it as a JSON object
+<4> If the save is not successful, we render an object showing the errors, with a response code of `400 (Bad Request)`
+
+In some ways similar to our `contacts_new()` handler from our web application (we are creating the contact and attempting
+to save it) but in other ways very different: there is no redirection happening here on a successful creation, and,
+in the case of a bad request, we return an error response code, `400 (Bad Request)`, whereas in the web application we simply rerendered
+the form with error messages in it.
+
+It is these sorts of differences that, over time, build up and make the idea of keeping your JSON and hypermedia APIs
+on the same set of URLs less and less appealing.
+
+=== Viewing Contact Details
+
+Next let's make it possible for a JSON API client to download the details for a single client.  We will naturally use an
+HTTP `GET` for this functionality and we will follow the convention we established for our regular web application, and
+put the path at `/api/v1/contacts/<contact id>`, so, for example, if you want to see the details of the contact with the
+id `42`, you would issue an HTTP `GET` to `/api/v1/contacts/42`.
+
+This code is quite simple:
+
+.Getting the Details of a Contact in JSON
+[source, python]
+----
+@app.route("/api/v1/contacts/<contact_id>", methods=["GET"]) <1>
+def json_contacts_view(contact_id=0):
+    contact = Contact.find(contact_id) <2>
+    return contact.__dict__ <3>
+----
+<1> Add a new `GET` route at the path we want to use for viewing contact details
+<2> Look the contact up via the id passed in through the path
+<3> Convert the contact to a dictionary, so it can be rendered as JSON response
+
+Pretty darned easy!  Let's add updating and deleting a contact as well.
+
+=== Updating & Deleting Contacts
+
+As with the create contact API end point, because there is no HTML UI to produce for them, we can reuse the
+`/api/v1/contacts/<contact id>` path.  We will use the `PUT` HTTP action for updating a contact and the `DELETE`
+action for deleting one.
+
+Our update code is going to look nearly identical to the create handler, except that, rather than creating a new contact,
+we will look up the contact by ID and update its fields.
+
+.Updating A Contact With Our JSON API
+[source, python]
+----
+@app.route("/api/v1/contacts/<contact_id>", methods=["PUT"]) <1>
+def json_contacts_edit(contact_id):
+    c = Contact.find(contact_id) <2>
+    c.update(request.form['first_name'], request.form['last_name'], request.form['phone'], request.form['email']) <3>
+    if c.save(): <4>
+        return c.__dict__
+    else:
+        return {"errors": c.errors}, 400
+----
+<1> We handle `PUT` requests to the URL for a given contact
+<2> Look the contact up via the id passed in through the path
+<3> We update the contact's data from the values included in the request
+<4> From here on the logic is identical to the `json_contacts_create()` handler
+
+Once again, very regular and, thanks to the built-in functionality in Flask, simple to implement.
+
+Let's look at deleting a contact now.  This turns out to be even simpler: as with the update handler we are going to
+look up the contact by id, and then, well, delete it.  At that point we can return a simple JSON object indicating
+success.
+
+.Deleting A Contact With Our JSON API
+[source, python]
+----
+@app.route("/api/v1/contacts/<contact_id>", methods=["DELETE"]) <1>
+def json_contacts_delete(contact_id=0):
+    contact = Contact.find(contact_id)
+    contact.delete() <2>
+    return jsonify({"success": True}) <3>
+----
+<1> We handle `DELETE` requests to the URL for a given contact
+<2> Look the contact up and invoke the `delete()` method on it
+<3> Return a simple JSON object indicating that the contact was successfully deleted
+
+And, with that, we have our simple little JSON Data API to live alongside our regular web application, nicely separated
+out from the main web application, so it can evolve separately as needed.
+
+=== OK, So What's Missing?
+
+Now, obviously, this is a toy API at this point, with lots of missing bits of functionality.  For example, we do not have
+rate limiting, which is important for any publicly facing Data API to avoid abusive clients.  Even more crucially, there
+is currently no authentication mechanism.  (We don't have one for our web application either!)  We don't support paging
+of our contact data as it stants.  And then there are lots of small issues that we aren't addressing, such as rendering
+a proper `404 (Not Found)` response if someone makes a request with a contact id that doesn't exist.
+
+The point of this chapter isn't to give you a fully developed, production ready JSON API: that would require an entire
+book!  The point is rather to show you how a JSON Data API might live alongside an existing web application, and to
+discuss how it is different from the hypermedia API used by that web application.
+
+=== The Model View Controller Paradigm
+
+You can see that the handlers for our JSON API are relatively simple and regular. Most of the hard work of updating
+data and so forth is done in the contact model itself, with the handlers acting as simple connectors that act as a
+go-between the HTTP requests and the model.  This is the ideal controller of the Model-View-Controller (MVC) paradigm that
+was so popular in the early web: a controller should be "thin", with the model containing the majority of the logic
+in the system.
+
+Thin controllers make it easy to split your JSON and hypermedia APIs out, because the important logic lives in the domain
+model that is shared by both.  This allows you to evolve both separately while still keeping logic in sync with one another
+and is a great argument in favor of the thin controller/fat model approach.
+
+
+

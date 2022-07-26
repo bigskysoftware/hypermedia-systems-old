@@ -767,7 +767,7 @@ Let's make that change to our server side code:
 def contacts_delete(contact_id=0):
     contact = Contact.find(contact_id)
     contact.delete()
-    if request.headers.get('HX-Trigger') == 'delete-brn': <1>
+    if request.headers.get('HX-Trigger') == 'delete-btn': <1>
         flash("Deleted Contact!")
         return redirect("/contacts", 303)
     else:

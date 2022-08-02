@@ -41,9 +41,9 @@ words, if the engine of application state (and hence the API) is not being drive
 and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
 ____
 
-The whole sordid story of how REST came to mean "JSON APIs" in the industry is a sordid and long one, and beyond the
-scope of this book.  However, if you are interested, you can refer t the "How Did REST Come To Mean The Opposite of
-REST?" essay on the htmx website.
+The story of how REST came to mean "JSON APIs" in the industry is a long and sordid long one, and beyond the
+scope of this book.  However, if you are interested, you can refer to an essay entitled "How Did REST Come To Mean The Opposite of
+REST?" on the htmx website.
 
 In this book we will use the term "Data API" to describe these JSON APIs, while acknowledging that the industry will
 likely continue to call them "REST APIs" for the foreseeable future.
@@ -51,28 +51,31 @@ likely continue to call them "REST APIs" for the foreseeable future.
 Now, believe it or not, we _have_ been creating a RESTful API for our web application.  This may sound confusing to you.
 API?  We have just been creating a web application, with paths that return HTML.  How is that a RESTful API?
 
-Well, it turns out that this is, indeed, an API, it just happens to be an API that a _hypermedia client_, that is, a
+It turns out that our web application is, indeed, providing an API.  It just happens to be an API that a _hypermedia client_, that is, a
 browser, understands.  We are building an API for the browser to interact with over HTTP, and, thanks in no small part to
 HTML, the hypermedia we are using, we are building a RESTful API.  Building web applications like this is so natural and
-simple that you might not think of it as an API at all, but it is!
+simple that you might not think of it as an API at all, but I assure you, it is!
 
 == Hypermedia APIs & Data APIs
 
 So, we have a hypermedia API for Contact.app.  Should we include a Data API as well?
 
-Sure!  The existence of a hypermedia API in no way means that you can't also have a Data API and, in fact, this is a
+Sure!  The existence of a hypermedia API _in no way means_ that you can't also have a Data API.  In fact, this is a
 common situation in traditional web applications: there is a "web app" that is entered through one URL, say
-`https://mywebapp.example.com/`, and a JSON API that is accessible through another URL, say
-`https://mywebapp.example.com/api/v1`.  This is a reasonable way to split up the hypermedia interface to your application
-and the Data API you provide to other clients.
+`https://mywebapp.example.com/`, and then a separate JSON API that is accessible through another URL, say
+`https://api.mywebapp.example.com/v1`.
+
+This is a perfectly reasonable way to split up the hypermedia interface to your application and the Data API you provide
+to other, non-hypermedia clients.
 
 Now, why would you want to include a Data API along with a hypermedia API?  Well, because non-hypermedia clients want to
-interact with your application.  For example, perhaps you have a mobile application that isn't built using HyperView
-(it's ok, we forgive you).  Or maybe you have automated script that needs to interact with the system on a regular
-basis.  Or 3rd party clients who wish to integrate with your system.
+interact with your application as well, of course!  For example, perhaps you have a mobile application that isn't built
+using HyperView (it's ok, we forgive you).  Or maybe you have automated script that needs to interact with the system on
+a regular basis.  Or perhaps there are 3rd party clients who wish to integrate with your system's data in some way.
 
-For all of these use cases, a JSON Data API makes sense: these are not hypermedia clients and presenting them with
-a hypermedia API would be inefficient and complicated.  A simple JSON Data API fits the bill well here.
+For all of these use cases, a JSON Data API makes sense: these are not hypermedia clients so presenting them with
+a hypermedia API like we have would be inefficient and complicated.  A simple JSON Data API fits the bill for what
+we want and, as always, we recommend using the right tool for the job.
 
 ."You Want Me To Parse HTML!?!"
 ****
@@ -81,8 +84,8 @@ applications, people think we mean that they should parse the HTML responses fro
 SPA framework or mobile applications.
 
 This is, of course, silly.  What we mean, instead, is that you should consider using a hypermedia API _with a hypermedia
-client_, like the browser, interpreting the hypermedia response itself.  If you are writing code to tease apart hypermedia,
-you are probably doing it wrong.
+client_, like the browser, interpreting the hypermedia response itself and presenting it to the user.  If you are writing
+code to tease apart hypermedia, you are probably doing it wrong.
 
 A lot of confusion around this comes, again, from not understanding that an HTML response from a server _is_ and API
 response, just a very different one than most people think of when writing software.
@@ -94,39 +97,41 @@ So, OK, we _are_ going to have a Data API for our application.  At this point, s
  have both?  Why not have a single API, the JSON Data API, and have multiple clients use this one API to communicate
 with it?  Isn't it redundant to have both types of APIs for our application?
 
-This is true, we do advocate having multiple APIs to your web application if necessary and, yes, this may lead to
-some redundancy in code.  However, there are distinct advantages to both sorts of API and, even more so,
-distinct requirements for both sorts of APIs, which makes splitting the two APIs out from one another sensible.
+It's a reasonable point: we do advocate having multiple APIs to your web application if necessary and, yes, this may
+lead to some redundancy in code.  However, there are distinct advantages to both sorts of API and, even more so,
+distinct requirements for both sorts of APIs.  By supporting both of these types of APIs separately you can get the
+strengths of both, while keeping their varying styles of code and infrastructure needs cleanly split out.
 
-Let's consider the needs of a JSON Data API:
+Let's consider some of the needs of a JSON Data API:
 
 * It must remain stable over time: you cannot change the API willy nilly or you risk breaking clients that use the API
   and expect certain end points to behave in certain ways
 * It must be versioned: related to the first point, when you do make a major change, you need to version the API so
   that clients that are using the old API continues to work
-* It should be rate limited: since these APIs are often used by other clients, not just your own internal web application
-  requests should be rate limited, often at the account leve, to avoid overloading the system
+* It should be rate limited: since data APIs are often used by other clients, not just your own internal web application,
+  requests should be rate limited, often by user, in order to avoid a single client overloading the system
 * It should be a general API: since the API is for _all_ clients, not just for your web application, you should avoid
   specialized end points that are driven by your own application needs.  Instead, the API should be general and expressive
   enough to satisfy as many potential client needs as possible.
-* Authentication is token based, which we will discuss in more detail later
+* Authentication for these sorts of API is typically token based, which we will discuss in more detail later
 
 Contrast these needs with that of a hypermedia API:
 
-* There is no need to remain stable over time: all URLs are discovered via HTML responses so you can be much more aggressive
+* There is no need to remain stable over time: all URLs are discovered via HTML responses, so you can be much more aggressive
   in changing the shape of a hypermedia API
 * This means that versioning is not an issue, another strength of the hypermedia approach
 * Rate limiting probably isn't as important beyond the prevention of Distributed Denial of Service (DDoS) attacks
 * The API can be _very specific_ to your application needs: since it is designed only for your particular web application,
   and since the API is discovered through hypermedia, you can add and remove highly tuned end points for specific
-  features in your application
-* Authentication is typically managed through a session cookie, again more on this a bit later
+  features or optimization needs in your application
+* Authentication is typically managed through a session cookie established by a login page
 
-These two different types of APIs have different strengths and weaknesses, as well as needs, so we think it makes sense
-to use both approaches: the hypermedia API for your web application, allowing you to specialize the API for the "shape"
-of your application, and the Data API approach for other, non-hypermedia clients like mobile, or integration partners.
+These two different types of APIs have different strengths and needs, so it makes sense to use both. The hypermedia
+approach can be used for your web application, allowing you to specialize the API for the "shape"
+of your application.  The Data API approach can be used for other, non-hypermedia clients like mobile, integration
+partners, etc.
 
-Note, in particular, that by splitting them apart from one another, you reduce the pressure that running your web
+Note in particular that, by splitting these two APIs apart from one another, you reduce the pressure that running your web
 application through your general Data API produces to be constantly changing the API to address application needs.  Rather
 than being thrashed around with every feature change, your Data API can focus on remaining stable and reliable.  This is
 the core strength of this split API approach, in our opinion.
@@ -251,13 +256,14 @@ to move your contacts to another system on a nightly basis.
 
 Let's move on the next piece of functionality: adding a new contact to the system.  Once again, our code is going
 to look similar in some ways to the code that we wrote for our normal web application.  However, here we are also
-going to see the JSON API and the hypermedia API for our web application begin to obviously diverge.  In the web
-application, we needed a separate path, `/contacts/new` to host the HTML form for creating a new contact.  We made
-the decision to issue a `POST` to that same path to keep things consistent.
+going to see the JSON API and the hypermedia API for our web application begin to obviously diverge.
 
-In the case of the JSON API, there is no such path needed: the JSON API "just is" and doesn't need to provide any
-hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to to create a contact
-and that's it.
+In the web application, we needed a separate path, `/contacts/new` to host the HTML form for creating a new contact.  In
+the web application we made the decision to issue a `POST` to that same path to keep things consistent.
+
+In the case of the JSON API, there is no such path needed: the JSON API "just is": it doesn't need to provide any
+hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to to create a contact,
+likely through some provided documentation about the API, and that's it.
 
 Because of that fact, we can put the "create" handler on the same path as the "list" handler: `/api/v1/contacts`, but
 have it respond only to HTTP `POST` requests.
@@ -283,9 +289,12 @@ def json_contacts_new():
 <4> If the save is not successful, we render an object showing the errors, with a response code of `400 (Bad Request)`
 
 In some ways similar to our `contacts_new()` handler from our web application (we are creating the contact and attempting
-to save it) but in other ways very different: there is no redirection happening here on a successful creation, and,
-in the case of a bad request, we return an error response code, `400 (Bad Request)`, whereas in the web application we simply rerendered
-the form with error messages in it.
+to save it) but in other ways very different:
+
+* There is no redirection happening here on a successful creation, because we are not dealing with a hypermedia client
+  like the browser
+* In the case of a bad request, we simply return an error response code, `400 (Bad Request)`.  This is in contrast with
+   the web application, where we simply re-render the form with error messages in it.
 
 It is these sorts of differences that, over time, build up and make the idea of keeping your JSON and hypermedia APIs
 on the same set of URLs less and less appealing.
@@ -311,7 +320,10 @@ def json_contacts_view(contact_id=0):
 <2> Look the contact up via the id passed in through the path
 <3> Convert the contact to a dictionary, so it can be rendered as JSON response
 
-Pretty darned easy!  Let's add updating and deleting a contact as well.
+Nothing too complicated: we look the contact up by ID, provided in the path to the controller, and look that contact up.
+We then render it as JSON.  You have to appreciate the simplicity of this code!
+
+Next, let's add updating and deleting a contact as well.
 
 === Updating & Deleting Contacts
 
@@ -320,7 +332,8 @@ As with the create contact API end point, because there is no HTML UI to produce
 action for deleting one.
 
 Our update code is going to look nearly identical to the create handler, except that, rather than creating a new contact,
-we will look up the contact by ID and update its fields.
+we will look up the contact by ID and update its fields.  In this sense we are just combining the code of the create
+handler and the detail view handler.
 
 .Updating A Contact With Our JSON API
 [source, python]
@@ -361,29 +374,115 @@ def json_contacts_delete(contact_id=0):
 And, with that, we have our simple little JSON Data API to live alongside our regular web application, nicely separated
 out from the main web application, so it can evolve separately as needed.
 
-=== OK, So What's Missing?
+=== Differences Between Our Hypermedia And JSON APIs
 
-Now, obviously, this is a toy API at this point, with lots of missing bits of functionality.  For example, we do not have
-rate limiting, which is important for any publicly facing Data API to avoid abusive clients.  Even more crucially, there
-is currently no authentication mechanism.  (We don't have one for our web application either!)  We don't support paging
-of our contact data as it stants.  And then there are lots of small issues that we aren't addressing, such as rendering
-a proper `404 (Not Found)` response if someone makes a request with a contact id that doesn't exist.
+Now, we obviously have a lot more to do if we want to make this a production ready JSON API:
 
-The point of this chapter isn't to give you a fully developed, production ready JSON API: that would require an entire
-book!  The point is rather to show you how a JSON Data API might live alongside an existing web application, and to
-discuss how it is different from the hypermedia API used by that web application.
+* We don't have any rate limiting, which is important for any publicly facing Data API to avoid abusive clients.
+* Even more crucially, there is currently no authentication mechanism.  (We don't have one for our web application either!)
+* We currently don't support paging of our contact data.
+* Lots of small issues that we aren't addressing, such as rendering a proper `404 (Not Found)` response if someone makes
+  a request with a contact id that doesn't exist.
 
-=== The Model View Controller Paradigm
+A full discussion around all of these topics is beyond the scope of this book, but I'd like to focus in on one in
+particular, authentication, in order to show the difference between our hypermedia and JSON API.  In order to secure
+our application we need to add authentication, some mechanism for determining who a request is coming from, and
+also authorization, determining if they have the right to perform the request.
 
-You can see that the handlers for our JSON API are relatively simple and regular. Most of the hard work of updating
-data and so forth is done in the contact model itself, with the handlers acting as simple connectors that act as a
-go-between the HTTP requests and the model.  This is the ideal controller of the Model-View-Controller (MVC) paradigm that
-was so popular in the early web: a controller should be "thin", with the model containing the majority of the logic
-in the system.
+We will set authorization aside for now and consider only authentication.
 
-Thin controllers make it easy to split your JSON and hypermedia APIs out, because the important logic lives in the domain
-model that is shared by both.  This allows you to evolve both separately while still keeping logic in sync with one another
-and is a great argument in favor of the thin controller/fat model approach.
+==== Authentication in Web Applications
 
+In the HTML web application world, authentication has traditionally been done via a login page that asks a user for
+their username (often their email) and a password.  This password is then checked against a database of (hashed)
+passwords to establish that the user is who they say they are.  If the password is correct, then a _session cookie_
+is established, indicating who the user is.  This cookie is then sent with every request that the user makes to
+the web application, allowing the application to know which user is making a given request.
 
+.HTTP Cookies
+****
+HTTP Cookies are kind of a strange feature of HTTP.  In some ways they violate the goal of remaining stateless, a
+major component of the REST-ful architecture: a server will often use a session cookie as an index into state kept
+on the server "on the side", such as a cache of the last action performed by the user.
 
+Nonetheless, cookies have proven extremely useful and so people tend not to complain about this aspect of them too much
+(I'm not sure what our other options would be here!)  An interesting example of pragmatism gone (relatively) right in
+web development.
+****
+
+In comparison with the typical web application approach to authentication, a JSON API will typically use some sort of
+_token based_ authentication: an authentication token will be established via a mechanism like OAuth, and that authentication
+token will then be passed, often as an HTTP Header, with every request that a client makes.
+
+At a high level this is similar to what happens in normal web application authentication: a token is established somehow
+and then then token is part of every request.  However, in practice, the mechanics tend to be wildly different:
+
+* Cookies are part of the HTTP specification and can be easily _set_ by an HTTP Server
+* JSON Authentication tokens, in contrast, often require elaborate exchange mechanics like OAuth to be established
+
+These differing mechanics for establishing authentication are yet another good reason for splitting our JSON and hypermedia
+APIs up.
+
+==== The "Shape" of Our Two APIs
+
+When we were building out our API, we noted that in many cases the JSON API didn't require as many end points as our
+hypermedia API did: we didn't need a `/contacts/new` handler, for example, to provide a hypermedia representation for
+creating contacts.
+
+Another aspect of our hypermedia API to consider was the performance improvement we made: we pulled the total contact count
+out to a separate end point and implemented the "Lazy Load" pattern, to improve the perceived performance of our
+application.
+
+Now, if we had both our hypermedia and JSON API sharing the same paths, would we want to publish this API as a JSON
+end point as well?
+
+Maybe, but maybe not.  This was a pretty specific need for our web application, and, absent a request from a user of
+our JSON API, it doesn't make sense to include it for JSON consumers.
+
+And what if, by some miracle, the performance issues with `Contact.count()` that we were addressing with the Lazy Load
+pattern goes away?  Well, in our Hypermedia Drive Application we can simply revert to the old code and include the
+count directly in the request to `/contacts`.  We can remove the `contacts/count` end point and all the logic associated
+with it.  By the miracle of hypermedia, the system will continue to work just fine!
+
+But what if we had tied our JSON API and hypermedia API together, and published `/contacts/count` as a supported end
+point for our JSON API?  In that case we couldn't simply remove the end point: a (non-hypermedia) client might be
+relying on it!
+
+Once again you can see the flexibility of the hypermedia approach and why separating your JSON API out from your
+hypermedia API lets you take maximum advantage of that flexibility.
+
+=== The Model View Controller (MVC) Paradigm
+
+One thing you may have noticed about the handlers for our JSON API is that they are relatively simple and regular.
+Most of the hard work of updating data and so forth is done within the contact model itself: the handlers act as simple
+connectors that provide a go-between the HTTP requests and the model.
+
+This is the ideal controller of the Model-View-Controller (MVC) paradigm that was so popular in the early web: a controller
+should be "thin", with the model containing the majority of the logic in the system.
+
+.The Model View Controller Pattern
+****
+The Model View Controller design pattern is a classic architectural pattern in software development, and was a major
+influence in early web development.  It is no longer emphasized as heavily, as web development has split into front-end
+and back-end camps, but most web developers are still familiar with the idea.
+
+Traditionally, the MVC pattern mapped into web development like so:
+
+* Model - A collection of "domain" classes that implement all the logic and rules for the particular domain your application
+  is designed for.  The model typically provides "resources" that are then presented to clients as HTML "representations".
+* View - Typically views would be some sort of client-side templating system, and would render the aforementioned HTML representation
+  for a given Model instance.
+* Controller - The controllers job is to take HTTP requests, convert them into sensible requests to the Model and forward
+  those requests on to the appropriate Model objects.  It then passes the HTML representation back to the client as an
+  HTTP response.
+****
+
+Thin controllers make it easy to split your JSON and hypermedia APIs out, because all the important logic lives in the domain
+model that is shared by both.  This allows you to evolve both separately, while still keeping logic in sync with one
+another.  With properly built "thin" controllers and "fat" models, keeping two separate APIs both in sync and yet
+still evolving separately is not as difficult or as crazy as it might sound at first.
+
+== Summary
+
+* Having a Hypermedia Driven API is not mutually exclusive with having a JSON Data API
+applications

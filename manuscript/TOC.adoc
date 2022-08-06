@@ -3,111 +3,106 @@
 [none]
 . 1 Reintroducing Hypermedia
 [none]
-.. 1.1 What Is Hypermedia?
+.. 1.1 So, What Is Hypermedia?
 .. 1.2 Why Use Hypermedia?
-.. 1.3 A Hypermedia Comeback?
-.. 1.4 Hypermedia-Oriented Javascript Libraries
-.. 1.5 REST
-.. 1.6 When Should You Use Hypermedia?
-.. 1.7 When Shouldn't You Use Hypermedia?
-.. 1.8 Summary
+.. 1.3 REST
+.. 1.4 When Should You Use Hypermedia?
+.. 1.5 When Shouldn't You Use Hypermedia?
+.. 1.6 Summary
 
-. 2 Creating A Web 1.0 Hypermedia Application
+. 2 A Simple Web Application
 [none]
-.. 2.1 Contact.app: A Simple Web 1.0-style Web Application
-.. 2.2 Which Stack Should We Use?
+.. 2.1 A Simple Contact Management Web Application
+.. 2.2 A Brief Introduction to Flask & Our First Route
 .. 2.3 Contact.App Functionality
-.. 2.4 Listing Contacts
-.. 2.5 Adding Contacts
-.. 2.6 Viewing Contact Details
-.. 2.7 Editing Contacts
-.. 2.8 Deleting Contacts
-.. 2.9 Searching Contacts
-.. 2.10 Summary
+.. 2.4 Summary
 
 . 3 Extending HTML As Hypermedia
 [none]
-.. 3.1 The Shortcomings of Plain HTML
-.. 3.2 htmx: Extending HTML as a Hypermedium
-.. 3.3 riggering HTTP Requests
+.. 3.1 The Shortcomings of "Plain" HTML
+.. 3.2 Extending HTML as a Hypermedia with htmx
+.. 3.3 Triggering HTTP Requests
 .. 3.4 Targeting Other Elements
-.. 3.5 Passing Request Parameters
-.. 3.6 History Support
-.. 3.7 Summary
+.. 3.5 Swap Styles
+.. 3.6 Using Other Events
+.. 3.7 Passing Request Parameters
+.. 3.8 History Support
+.. 3.9 Summary
 
-. 4 Putting Hypermedia Into Action With htmx
+. 4 Putting Hypermedia Into Action
 [none]
-.. 4.1 Adding AJAX Navigation
-.. 4.2 Deleting Contacts
-.. 4.3 Inline Validation of Emails
-.. 4.4 The Click To Load Pattern
-.. 4.5 The Infinite Scroll Pattern
+.. 4.1 Installing htmx
+.. 4.2 Adding AJAX Navigation
+.. 4.3 Deleting Contacts
+.. 4.4 Next Steps: Validating Emails
+.. 4.5 Another Improvement: Paging
 .. 4.6 Summary
 
 . 5 Advanced Hypermedia Patterns
 [none]
-.. 5.1 Active Search of Contacts
-.. 5.2 Lazy Loading Contact Count
-.. 5.3 Inline Contact Delete
+.. 5.1 Active Search
+.. 5.2 Lazy Loading
+.. 5.3 Inline Delete
 .. 5.3 Bulk Delete
 .. 5.4 Summary
 
-. Hyperview: A Mobile Hypermedia
+. 6 Hyperview: A Mobile Hypermedia
 [none]
-.. Who says hypermedia is only for the web?
-.. Getting Started with Hyperview
-.. HXML vs HTML
-.. Navigation
-.. Pull to Refresh
-.. Tabs
-.. Forms
-.. Advanced Forms
-.. Event Dispatch
-.. Case Studies
+.. 6.1 State of Mobile App Development
+.. 6.2 Hypermedia for Mobile Apps
+.. 6.3 Introduction to HXML
+.. 6.4 Summary
 
-. Front-End Scripting In Hypermedia Applications
+. 7 Building a Contacts App with Hyperview
 [none]
-.. Are Scripts Still allowed? (Yes!)
-.. Hypermedia-oriented Scripting
-.. Hyperscript
-.. Alpinejs
-.. VanillaJS
-.. Summary
+.. 7.1 Setup
+.. 7.2 Contacts screen
+.. 7.3 Contact screen
+.. 7.4 Extending the client
+.. 7.5 One Backend, Multiple Hypermedia
+.. 7.6 Summary
 
-. JSON Data APIs In Hypermedia Applications
+. 8 Client Side Scripting
 [none]
-.. Are JSON APIs Still allowed? (Yes!)
-.. The Differing Characteristics of JSON and HTML/REST APIs
-.. Separating Concerns: The Good Parts
-.. Summary
+.. 8.1 Scripting in Hypermedia-Driven Applications
+.. 8.2 Scripting languages for the Web
+.. 8.3 Using off-the-shelf components
+.. 8.4 Events and the DOM
+.. 8.5 Adding a Keyboard Shortcut for Focusing the Search Input With VanillaJS
+.. 8.6 Adding Support for Re-Ordering Contacts (No Scripting Needed!)
+.. 8.7 Adding Support for a Drop-Down with AlpineJS
+.. 8.8 Adding a Nicer Confirmation for Deleting Contacts With _hyperscript
+.. 8.9 Being Pragmatic
+.. 8.10 Summary
 
-. Advanced htmx
+. 9 Data APIs & Hypermedia Driven Applications
 [none]
-.. Web Sockets
-.. Server Sent Events
-.. Animations
-.. Debugging
-.. Security Concerns
-.. Configuration
-.. Understanding the event model
-.. Hooking into events
-.. Understanding the extension model
-.. An example extension
+.. 9.1 Data APIs
+.. 9.2 Hypermedia APIs & Data APIs
+.. 9.3 Adding a JSON Data API To Contact.app
+.. 9.4 Summary
 
-. Other Hypermedia-Oriented Javascript Libraries
+. 10 Advanced htmx
 [none]
-.. Unpoly
-.. Hotwire
-.. jQuery
-.. VanillaJS
-.. Summary
+.. 10.1 Configuration
+.. 10.2 Animations
+.. 10.3 Debugging
+.. 10.4 Security Concerns
+.. 10.5 Understanding the htmx event model
+.. 10.6 Understanding the extension model
 
-. Hypermedia: A Return To The Web's Roots
+. 11 Other Hypermedia-Oriented Javascript Libraries
 [none]
-.. Trends in Software Development
-.. Complexity Sells, Simplicity Endures
-.. Summary
+.. 11.1 Unpoly
+.. 11.2 Hotwire
+.. 11.3 jQuery
+.. 11.4 VanillaJS
+.. 11.5 Summary
+
+. 12 Hypermedia: A Return To The Web's Roots
+[none]
+.. 12.1 Trends in Software Development
+.. 12.2 Complexity Sells, Simplicity Endures
+.. 12.3 Summary
 
 . Appendix 1: A Review of Chapter 5 of Roy Fielding's Dissertation On The Web
-
-. Appendix 2: A Brief, Incomplete and Mostly Wrong History of The Web

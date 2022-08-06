@@ -14,7 +14,7 @@
 
 This chapter covers
 
-* A reintroduction to the core concepts of hypermedia
+* An introduction to the core concepts of hypermedia
 * Why you might choose hypermedia over other approaches
 * How hypermedia can be used to build modern web applications
 
@@ -123,8 +123,8 @@ Here is a visual representation of these two hypermedia interactions:
 image::../images/figure_1-1_http_mental_model.png[]
 
 As someone interested in web development, the above diagram should look very familiar to you, perhaps even boring.  But,
-despite its familiarity, consider the fact that the two above mechanisms are really the _only_ easy ways to interact with a server
-in HTML.  That's barely anything at all!  And yet, armed with only these two tools, the early web was able to grow
+despite its familiarity, consider the fact that the two above mechanisms are really the _only_ native ways for a user
+to interact with a server in HTML.  That's barely anything at all!  And yet, armed with only these two tools, the early web was able to grow
 exponentially and offer a staggeringly large amount of online, dynamic functionality to an even more staggeringly large
 number of people!
 
@@ -207,7 +207,7 @@ far more complex user interactions than our little demo.  With these more comple
 much more elaborate client-side model (that is, JavaScript objects stored locally in the browser's memory that represent
 the "model" or "domain" of your application.)  You then update these JavaScript objects and allow the framework to "react" to
 those changes via infrastructure baked into the framework itself, which will have the effect of updating the user
-interface.  (This is where the term "Reactive" programming comes from.)
+interface.  (This approach, while not new, popularized the term "Reactive Programming" in web development.)
 
 At this point, if you adopt one of these popular libraries, you, the developer, rarely interact with hypermedia at all.
 You may it to build your user interface, but the anchor tag's natural behavior is de-emphasized and forms become a
@@ -237,21 +237,22 @@ Tom is correct: JavaScript-based Single Page Applications have taken the web dev
 a far more interactive and immersive experience than the old, gronky, web 1.0 HTML-based application could.  Some
 SPAs are even able to rival native applications in their user experience and sophistication.
 
-So, why on earth would you abandon this new, increasingly standard (just do a job search for reactjs!) approach for an
+So, why on earth would you abandon this new, increasingly popular (just do a job search for reactjs!) approach for an
 older and less discussed one like hypermedia?
 
 Well, it turns out that, even in its original form, the hypermedia architecture has a number of advantages when compared with
 the JSON/Data API approach:
 
 * It is an extremely simple approach to building web applications
-* It survives network outages and changes relatively well
 * It is extremely tolerant of content and API changes (in fact, it thrives on them!)
+* It leverages tried and true features of web browsers, such as caching
 
-As someone interested in web development, these advantages should sound appealing to you. The first and last one, in
+As someone interested in web development, these advantages should sound appealing to you. The first two, in
 particular, address two pain points in modern web development:
 
 * Front end infrastructure has become extremely complex (sophisticated might be the nice way of saying it!)
-* API churn is a huge pain for many applications
+* JSON API churn, the constant changes made JSON APIs to support application needs, has become a huge pain for many
+  applications
 
 Taken together, these two problems have become known as "Javascript Fatigue": a general sense of exhaustion with all the
 hoops that are necessary to jump through to get anything done on the web.
@@ -268,23 +269,27 @@ HTML developers still only have anchor tags and forms available for building net
 `GET` and `POST` requests despite there being many more types of HTTP requests!
 
 This somewhat baffling lack of progress leads immediately to the second and more practical reason that hypermedia has
-fallen on hard times: as the interactivity and expressiveness of HTML has remained frozen in time, the web itself has marched on,
-demanding more and more interactive web applications.  JavaScript, coupled to data-oriented POJ APIs, has stepped in as
-a way to provide these new interactive features to end users.  It was the _user experience_ that you could achieve in
-JavaScript (and that you couldn't hope to achieve in HTML) that drove the web development community over to the
-JavaScript-heavy Single Page Application approach.
+fallen on hard times: as the interactivity and expressiveness of HTML _as a hypermedia_ has remained frozen in time, the
+web itself has marched on, demanding more and more interactive web applications.
+
+JavaScript, coupled to data-oriented POJ APIs, has stepped in as a way to provide these new interactive features to end users.
+It was the _user experience_ that you could achieve in JavaScript (and that you couldn't hope to achieve in HTML) that
+drove the web development community over to the JavaScript-heavy Single Page Application approach.
 
 This is unfortunate, and it didn't have to be this way.  There is nothing _intrinsic_ to the idea of hypermedia that
 prevents a richer, more expressive interactivity model.  Rather than abandoning the hypermedia architecture, the industry
 could have demanded more and more interactivity _within_ that original, hypermedia model of the web.  There is nothing
 written in stone saying "only forms and anchor elements can interact with a server, and only in response to a few
-user interactions."  JavaScript broke out of this model, why couldn't HTML have done the same?  But, reality is what
-it is: HTML froze in time as a hypermedia and the web development world moved on.
+user interactions."  JavaScript broke out of this model, why couldn't HTML have done the same?
+
+There have been heroic efforts to continue to advance hypermedia outside of HTML, efforts like HyTime, VoiceXML, and HAL.
+But HTML, the most widely used hypermedia in the world, stopped making progress as a hypermedia, and the web development
+world moved on, solving the interactivity problem using other tools.
 
 === A Hypermedia Comeback?
 
 So, for many developers today working in an industry dominated by JavaScript and SPA frameworks, hypermedia has become
-an afterthought, or isn't thought about at all.  You simply can't get the sort of modern interactivity out of HTML, the
+an afterthought, if it is thought about at all.  You simply can't get the sort of modern interactivity out of HTML, the
 hypermedia we all use day to day, necessary for today's modern web applications.
 
 Those of us passionate about hypermedia and the web in general can sit around wishing that, instead of stalling as a
@@ -292,7 +297,7 @@ hypermedia, HTML had continued to develop, adding new mechanisms for exchanging 
 its general expressiveness.  That it was possible to build modern web applications within the original, hypermedia-oriented
 and REST-ful model that made the early web so powerful, so flexible, so... fun!
 
-In short that hypermedia could, once again, be a legitimate architecture to consider when developing a new web application.
+In short that hypermedia could, once again, be a legitimate approach to consider when developing a new web application.
 
 Well, I have some good news.  In the last decade, a few idiosyncratic, alternative front end libraries have arisen that
 attempt to do exactly this!  Somewhat ironically, these libraries are all written in JavaScript.  However, these libraries

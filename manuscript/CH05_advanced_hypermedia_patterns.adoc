@@ -10,10 +10,9 @@
 :sourcedir: ../code/src
 :source-language:
 
+= Advanced Hypermedia Patterns
 
-= Implementing Advanced Patterns
-
-This chapter covers:
+This chapter covers
 
 * Adding the "Active Search" pattern to our application
 * Adding the "Lazy Load" pattern to our application
@@ -23,10 +22,14 @@ This chapter covers:
 == Active Search
 
 So far so good with Contact.app: we have a nice little web application with some significant improvements over a plain
-HTML-based application.  But we aren't done yet!  Let's keep pushing the envelope with hypermedia and see just how
-far we can get with this approach.  We _will_ do some client-side scripting, the standard way to add more advanced
-UX patterns to a web application, in our application a bit later on, but we still have quite a bit of pure
-hypermedia functionality in front of us !
+HTML-based application.  You might be thinking that we've gotten about as much interactivity as the hypermedia
+approach will allow for without using JavaScript.  Is it time wave the white flag and bring out the scripting tools
+to make any further progress with Contact.app?
+
+Nope, not yet!  We still have quite a few interesting and useful interactive UX patterns to add to our
+application, all of which can be done using good old hypermedia!  We _will_ eventually add some
+client-side scripting to our application: hypermedia may be powerful but it isn't _all powerful_ and sometimes scripting
+is the best way to achieve things.  But, for now, let's see what we can accomplish without it.
 
 The first advanced feature we will create is known as the "Active Search" pattern.  Active Search is a feature when, as a
 user types text into a search box, the results of that search are dynamically updated.  This pattern was made popular

@@ -12,7 +12,7 @@
 
 = A Simple Web Application
 
-This chapter covers:
+This chapter covers
 
 * Picking a "web stack" to build our sample hypermedia application in
 * A brief introduction to Flask & Jinja2 for Server Side Rendering (SSR)

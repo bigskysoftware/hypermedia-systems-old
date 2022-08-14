@@ -1,10 +1,10 @@
 = Hypermedia In Action
-:chapter: 8
+:chapter: 9
 :sectnums:
 :figure-caption: Figure {chapter}.
 :listing-caption: Listing {chapter}.
 :table-caption: Table {chapter}.
-:sectnumoffset: 7
+:sectnumoffset: 8
 // line above:  :sectnumoffset: 5  (chapter# minus 1)
 :leveloffset: 1
 :sourcedir: ../code/src
@@ -245,7 +245,6 @@ like this:
       "phone": ""
     },
     ...
-   // TODO how to indicate code ommitted
 ----
 
 So, you can see, a relatively simple JSON representation of our contacts.  Not perfect, but good enough for the purposes
@@ -484,5 +483,9 @@ still evolving separately is not as difficult or as crazy as it might sound at f
 
 == Summary
 
-* Having a Hypermedia Driven API is not mutually exclusive with having a JSON Data API
-applications
+* In this chapter we saw that a Hypermedia Driven Application can have a JSON Data API as well
+* Hypermedia APIs and JSON Data APIs have different needs and shapes
+* By properly factoring your back end code, much of the logic can be shared between the two APIs
+* By splitting your APIs into both a Hypermedia API and a JSON Data API, you can evolve both without interferring with
+  one another, allowing you to, for example, change your Hypermedia API dramatically without breaking your JSON API
+  clients

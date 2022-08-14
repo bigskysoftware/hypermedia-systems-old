@@ -120,7 +120,7 @@ Here is a visual representation of these two hypermedia interactions:
 
 [#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .HTTP Requests In Action
-image::../images/figure_1-1_http_mental_model.png[]
+image::../images/figure_1-1_http_mental_model.svg[]
 
 As someone interested in web development, the above diagram should look very familiar to you, perhaps even boring.  But,
 despite its familiarity, consider the fact that the two above mechanisms are really the _only_ native ways for a user
@@ -311,7 +311,7 @@ These _hypermedia-oriented_ libraries re-center the hypermedia approach as a via
 In the web development world today there is a debate going on between the SPAs approach and what are now being called
 "Multi-Page Applications" or MPAs.  MPAs are usually just the old, traditional way of building web applications with
 links and forms across multiple web pages and are thus, by their nature, hypermedia oriented.  They are clunky, but,
-despite this clunkiness, some web developers have become so exasperated at the complexity of SPA applications they have
+despite this clunkiness, some web developers have become so exasperated at the complexity of SPA applications they `have`
 decided to go back to this older way of building things and just accept the limitations of plain HTML.
 
 Some thought leaders in web development, such as Rich Harris, creator of svelte.js, a popular SPA library, propose a mix
@@ -320,7 +320,7 @@ it attempts to mix both the older MPA approach and the newer SPA approach into a
 like the "transitional" trend in architecture, which blends traditional and modern architectural styles.  It's a
 good term and a reasonable compromise between the two approaches to building web applications.
 
-But it still feels a bit unsatisfactory.  Why have two very different architectual models _by default_?  Recall that the
+But it still feels a bit unsatisfactory.  Why have two very different architectural models _by default_?  Recall that the
 crux of the tradeoffs between SPAs and MPAs is the _user experience_ or interactivity of the application.
 This is typically the driving decision when choosing one approach versus the other for an application or, in the case
 of Transitional Web Applications, for a particular feature.

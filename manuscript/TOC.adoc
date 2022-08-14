@@ -82,16 +82,23 @@
 .. 9.3 Adding a JSON Data API To Contact.app
 .. 9.4 Summary
 
-. 10 Advanced htmx
+. 10 Creating A Dynamic Download UI
 [none]
-.. 10.1 Configuration
-.. 10.2 Animations
-.. 10.3 Debugging
-.. 10.4 Security Concerns
-.. 10.5 Understanding the htmx event model
-.. 10.6 Understanding the extension model
+.. 10.1 A Dynamic Archive UI
+.. 10.2 Polling
+.. 10.3 Smoothing Things Out: More On The htmx Swap Model
+.. 10.4 Dismissing The Download UI
+.. 10.5 Auto-Download
+.. 10.6 Summary
 
-. 11 Other Hypermedia-Oriented Javascript Libraries
+. 11 Developing With htmx
+.. 11.1 Additional Attributes
+.. 11.2 Debugging
+.. 11.3 Security Concerns
+.. 11.4 Understanding the htmx event model
+.. 11.5 Understanding the extension model
+
+. 12 Other Hypermedia-Oriented Javascript Libraries
 [none]
 .. 11.1 Unpoly
 .. 11.2 Hotwire

@@ -11,17 +11,17 @@
 :source-language:
 
 
-= Putting Hypermedia Into Action With htmx
+= Putting Hypermedia Into Action
 
 This chapter covers
 
-* Installing htmx in our application
-* Adding AJAX-based navigation to our application via "boosting"
+* Installing htmx in Contact.app
+* Adding AJAX-based navigation to Contact.app via "boosting"
 * Implementing a proper delete mechanic for contacts
 * Validating emails as the user types
-* Implementing paging in our application
-* Implementing the "Click To Load" pattern
-* Implementing the "Infinite Scroll" pattern
+* Implementing paging in Contact.app
+* Creating a "Click To Load" button
+* Adding the "Infinite Scroll" pattern
 
 == Installing htmx
 
@@ -156,7 +156,7 @@ still boosted, inheriting that functionality from the parent `div`.  Note that a
 we just used a `div` out of habit.
 
 [#listing-4-3, reftext={chapter}.{counter:listing}]
-. Boosting Links Via The Parent
+.Boosting Links Via The Parent
 [source,html]
 ----
 <div hx-boost="true"> <1>
@@ -175,7 +175,7 @@ To deal with this situation, you would override the parent `hx-boost` value with
 in question:
 
 [#listing-4-3, reftext={chapter}.{counter:listing}]
-. Boosting Links Via The Parent
+.Disabling Boosting
 [source,html]
 ----
 <div hx-boost="true"> <1>

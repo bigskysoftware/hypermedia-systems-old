@@ -337,6 +337,37 @@ That's enough fun, however, let's get to work on ContactApp.
 
 ==== Vanilla JavaScript in action: A confirmation dialog
 
+Right now, clicking the `Delete` link on a contact instantly deletes it, making it prone to accidents. We'll write some JavaScript to add confirmation dialogs to elements and use it on the delete button.
+
+We'll write the JavaScript first before adding anything to our markup.
+
+.Confirmation dialog with Vanilla JS & RSJS
+[source,js]
+----
+document.querySelectorAll("[data-confirm]")<1>.forEach(el => {
+  // ...
+})
+----
+<1> Find relevant elements. Our attribute is `data-confirm`, so we'll write this code in a file named `confirm.js`.
+
+We need to show a confirmation dialog. There are libraries that let us show styled, rich alert dialogs, but let's just use `confirm()` for now. Adding in a library later will be a good test of how maintainable our code is.
+
+[source,js,highlight=2..4]
+----
+document.querySelectorAll("[data-confirm]")<1>.forEach(el => {
+  el.addEventListener("..."<1>, e => {
+    const didConfirm = confirm()
+    if (!didConfirm) {
+      event.stopImmediatePropagation(); <2>
+      event.stopPropagation(); <3>
+    }
+  })
+})
+----
+<1> **What event?**
+<2> Prevent listeners on this element from running 
+<3> Prevent listeners on parent elements from running
+
 
 === Alpine.js
 

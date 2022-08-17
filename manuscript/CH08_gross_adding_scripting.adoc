@@ -563,7 +563,7 @@ These factors make our menu annoying and possibly unusable for many people. Let'
     x-on:keydown.up="document.activeElement.previousElementSibling?.focus()<2>"
     x-on:keydown.down="document.activeElement.nextElementSibling?.focus()<3>"
     x-on:keydown.space="document.activeElement.click()<4>"
-    x-effect="show ? $el<5>.firstElementChild().focus()<6>"
+    x-effect="open ? $el<5>.firstElementChild().focus()<6> : null"
     x-on:keydown="key === 'Home'
       ? $el.firstChild.focus()
       : key === 'End'
@@ -594,7 +594,88 @@ That's a lot! And we still made some assumptions to make our code shorter:
 
 As we need more features, it might make more sense to use a library such as GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
 
-// TODO: talk about https://alpinejs.dev/directives/bind#bind-directives
+==== Reusable behavior in Alpine
+
+Our menu component has a lot of attributes that will be repeated in every item of the table. This is hard to maintain when manually writing HTML and increases payload sizes when generating it via a template. We can use an additional feature of the `x-bind` attribute to rectify this:
+
+[quote,"https://alpinejs.dev/directives/bind#bind-directives"]
+____
+x-bind allows you to bind an object of different directives and attributes to an element.
+
+The object keys can be anything you would normally write as an attribute name in Alpine. This includes Alpine directives and modifiers, but also plain HTML attributes. The object values are either plain strings, or in the case of dynamic Alpine directives, callbacks to be evaluated by Alpine.
+____
+
+We create a JavaScript function:
+
+[source,js]
+----
+function menu() {
+  return {
+    role: "menu",
+    "x-show"<1>() { return this<2>.open; }
+    "x-on:click.outside"() { this.open = false },
+    "x-on:keydown.up"() { document.activeElement.previousElementSibling?.focus() },
+    "x-on:keydown.down"() { document.activeElement.nextElementSibling?.focus() },
+    "x-on:keydown.space"() { document.activeElement.click() },
+    "x-effect"() { if (this.open) this.$el.firstElementChild().focus() },
+    "x-on:keydown"(event) { <3>
+      if (event.key === 'Home') $el.firstChild.focus()
+      else if (event.key === 'End') $el.lastChild.focus()
+    },
+  }
+}
+----
+<1> JavaScript allows any string literal to be the name of an object member. This even works with classes!
+<2> Values that would be globally accessible in an attribute are accessed through `this` in a function.
+<3> We can clean up longer functions.
+
+We can then reference it in HTML as follows:
+
+[source,html]
+----
+<div id="contents" x-bind="menu()">
+  <a role="menuitem<8>" tabindex="-1<9>" href="/contacts/{{ contact.id }}/edit">Edit</a>
+  <a role="menuitem" tabindex="-1" href="/contacts/{{ contact.id }}">View</a>
+</div>
+----
+
+This requires the function `menu` to be global. We can avoid that with `Alpine.data`, which is a function to make any data accessible to Alpine expressions:
+
+[source,js]
+----
+Alpine.data("menu", () => {
+  return {
+    role: "menu",
+    "x-show"<1>() { return this<2>.open; }
+    "x-on:click.outside"() { this.open = false },
+    "x-on:keydown.up"() { document.activeElement.previousElementSibling?.focus() },
+    "x-on:keydown.down"() { document.activeElement.nextElementSibling?.focus() },
+    "x-on:keydown.space"() { document.activeElement.click() },
+    "x-effect"() { if (this.open) this.$el.firstElementChild().focus() },
+    "x-on:keydown"(event) { <3>
+      if (event.key === 'Home') $el.firstChild.focus()
+      else if (event.key === 'End') $el.lastChild.focus()
+    },
+  }
+})
+----
+
+Another useful tool in factoring Alpine code is that we can call functions in `x-data` as follows:
+
+[source,js]
+----
+Alpine.data("toggleableMenu", () => ({ open: false }))
+----
+
+[source,html]
+----
+<div x-data="toggleableMenu()">
+  <button
+    aria-haspopup="menu"
+    ...>
+----
+
+Factoring our behavior in this way reduces the locality in our code, as it requires us to locate the `menu` and `toggleableMenu` functions to understand what our code does. You can use named files similarly to RSJS to somewhat alleviate this issue, but it's a tradeoff that needs to be considered.
 
 
 === _hyperscript
@@ -627,7 +708,7 @@ different.  Let's look at the code first and then explain it:
 [source,html]
 ----
 <div>
-    <button _="on click set the *display of the next <span/> to 'inline'">Expand</button> <1>
+    <button _="on click show the next span with display:inline">Expand</button> <1>
     <span style="display: none"> <2>
       Content...
     </span>

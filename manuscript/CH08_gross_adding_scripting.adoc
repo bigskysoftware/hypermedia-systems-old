@@ -680,16 +680,20 @@ Factoring our behavior in this way reduces the locality in our code, as it requi
 
 === _hyperscript
 
-While previous two examples are JavaScript-oriented, _hyperscript is a completely different scripting language for
+While previous two examples are JavaScript-oriented, _hyperscript (https://hyperscript.org[], the underscore is part of the name) is a entire new scripting language for
 front-end development.  It has a completely different syntax than JavaScript, derived from an older language called
-HyperTalk, which was the scripting language of HyperCard, an old development system on the Macintosh Computer.  The
-most noticable thing about _hyperscript is that it has an english-like syntax.  It was created as a sister project
-to htmx, to make it possible to do event-oriented, high level scripting in htmx-based applications.
+HyperTalk, which was the scripting language of HyperCard, an old hypermedia system, along with IDE and WYSIWYG editor on the Macintosh Computer.  The
+most noticeable thing about _hyperscript is that it resembles English prose more than it does code.  It was initially created as a sister project
+to htmx, to handle events and modify the document in htmx-based applications. Currently, it positions itself as a modern jQuery replacement and alternative to JavaScript.
+
+Like Alpine, _hyperscript allows you to program inline in HTML, but instead of using JavaScript, it has a syntax designed to be embedded into other languages.
+
+What it eschews is a reactive mechanism, instead focusing on making manual DOM manipulation easier. It has built-in constructs for many DOM operations, preventing you from needing to navigate sometimes-verbose APIs.
 
 We will not be doing a deep dive on the language, but again just want to give you a flavor of what scripting in
 _hyperscript is like, so you can pursue the language in more depth later if you find it interesting.
 
-Like htmx and AlpineJS, _hyperscript can be installed via a CDN or installed locally
+Like htmx and AlpineJS, _hyperscript can be installed via a CDN or from npm (package name `hyperscript.org`):
 
 .Installing _hyperscript via CDN
 [source,html]
@@ -698,9 +702,9 @@ Like htmx and AlpineJS, _hyperscript can be installed via a CDN or installed loc
 ----
 
 Like AlpineJS, in \_hyperscript you put attributes directly in your HTML.  Unlike AlpineJS, there is only one attribute
-for _hyperscript: the `_` (underscore) attribute.  You write all your hyperscript inside this one attribute!
+for _hyperscript: the `_` (underscore) attribute footnote:[You can also use a `script` attribute, or `data-script` to please HTML validators.]. This is where all the code responsible for an element goes.
 
-The implementation of our example button in hyperscript is similar, in some ways, to the VanillaJS implemenation: we will
+The implementation of our example button in hyperscript is similar, in some ways, to the VanillaJS implementation: we will
 start with the span hidden via the CSS `display` property, and toggle it.  However, the code will look quite a bit
 different.  Let's look at the code first and then explain it:
 
@@ -708,27 +712,98 @@ different.  Let's look at the code first and then explain it:
 [source,html]
 ----
 <div>
-    <button _="on click show the next span with display:inline">Expand</button> <1>
+    <button 
+      _="on click show the next <span /> with display:inline" <1>
+    >
+      Expand
+    </button>
     <span style="display: none"> <2>
       Content...
     </span>
 </div>
 ----
-<1> This is what _hyperscript looks like, believe it or not
-<2> The `@click` handler sets `open` to `true`
+<1> This is what _hyperscript looks like, believe it or not!
+<2> This element is what `the next <span />` evaluates to. We'll leave you to figure out the rest.
 
-Now, if you are a JavaScript programmer, that hyperscript probably looks insane to you.  And that's OK, it is a little
-insane.  But let's parse what the code is saying, which isn't very hard since it looks so much like english: on a
-click event, look up the next element in the DOM that matches the `span` CSS selector and set its `display` style
-property to `inline`.  Simple, right!
+Seasoned JavaScript programmers are often suspicious of _hyperscript: There have been many "natural language programming" projects that usually target non-programmers and beginner programmers, assuming that being able to read code will give you the ability to write it as well. (The authors' views on the usefulness of natural language for teaching programming are nuanced and out of scope for this book). _hyperscript is openly a programming language, in fact, its syntax is inspired in many places by the speech patterns of web developers. In addition, _hyperscript's readability is achieved not through complex heuristics or NLP, but common parsing tricks and a culture of readability.
 
-There are some syntactic tricks you need to know, such as using `</>` for a CSS selector, and using the `*` prefix to
-refer to a style property.  And you have to know about the `of` property access expression.  And how `set` works.
+As you can see in the above example, _hyperscript does not shy away from using punctuation when appropriate. We'll introduce every bit of syntax we use as we go. Here's an annotated version of the script above:
+
+[source,hyperscript]
+----
+-- Double dash marks comments.
+-- The top level of a _hyperscript command is made up of _features_.
+on -- One kind of feature is an event listener, introduced by the keyword "on",
+  click -- ... followed by the event name,
+  -- ... and a sequence of _commands_.
+  show -- The show command shows an element.
+    the -- The prefix "the" does nothing.
+    next -- "next" before a CSS expression (see later) finds the first match
+         -- after the element the script is written on (referred to as "me").
+    <span /> -- CSS selectors are wrapped in "<" and "/>".
+  with -- This "with" is part of the "show" command's syntax.
+    *display:inline -- The asterisk is used to refer to CSS properties.
+                    -- Here, we specify how to show the element
+                    -- (options are display, visibility or opacity).
+----
 
 OK, maybe it is a little more than a little insane.  But fun!
 
 
 ==== _hyperscript in action: a keyboard shortcut
+
+Since our keyboard shortcut focuses a search input, let's put the code on that search input. Here it is:
+
+[source,html]
+----
+<input id="search" name="q" type="search" placeholder="Search Contacts">
+----
+
+We begin with an event listener, which, as we explained, starts with `on`:
+
+[source,html]
+----
+<input id="search" name="q" type="search" placeholder="Search Contacts"
+  _="on keydown <1>[shiftKey<2> and<3> code is<4> 'KeyS']
+       -- ...">
+----
+<1> The square bracket notation is _event filtering_ --- any event for which the expression inside the brackets is falsey will be ignored by this listener.
+<2> Inside the event filter, properties of the event can be directly accessed.
+<3> `and` is `&&` in JavaScript.
+<3> `is` is `==` in JavaScript.
+
+We are using event filtering to listen to only the events we are interested in, i.e. the user pressing kbd:[Shift+S]. There is a problem, however: Keyboard events will only be sent to this input element if it is already focused. We need to attach the listener to the whole window instead. No problem:
+
+[source,html]
+----
+<input id="search" name="q" type="search" placeholder="Search Contacts"
+  _="on keydown [shiftKey and code is 'KeyS'] from the window<1>
+       -- ...">
+----
+<1> "from" is part of the "on" feature and lets us listen to events from other objects.
+
+We can attach the listener to the body while keeping its code on the element it logically relates to. Let's actually focus that element now:
+
+[source,html]
+----
+<input id="search" name="q" type="search" placeholder="Search Contacts"
+  _="on keydown[shiftKey and code is 'KeyS'] from the window
+       focus()<1> me<2>">
+----
+<1> Any method of any object can be used as a command. (This is called a "pseudocommand" in _hyperscript lingo). This line is equivalent to `me.focus()` (which is also valid syntax in _hyperscript).
+<2> "me" refers to the element that the script is written on.
+
+There's our code! Surprisingly terse for an English-like programming language, compared to the equivalent JavaScript:
+
+[source,js]
+----
+const search = document.querySelector("search")
+window.addEventListener("keydown", e => {
+  if (e.shiftKey && e.code === "KeyS") {
+    search.focus();
+  }
+})
+----
 
 
 == Using off-the-shelf components
@@ -750,26 +825,6 @@ synchronized with the server, so how can we claim that hypermedia is the engine 
 The answer is that this state is client side, and ephemeral: it is fine to have a script update the DOM in some way
 that improves the user experience, so long as that script is not updating _system state_ (e.g. a contact's details)
 via out-of-band, non-hypermedia communication.
-
-
-////
-== Adding a Keyboard Shortcut for Focusing the Search Input With VanillaJS
-
-== Adding Support for Re-Ordering Contacts (No Scripting Needed!)
-
-== Adding Support for a Drop-Down with AlpineJS
-
-== Adding a Nicer Confirmation for Deleting Contacts With _hyperscript
-
-=== Adding a Keyboard Shortcut for Focusing the Search Input With _hyperscript
-
-TODO: Show how easy this is in hyperscript
-
-=== Adding Support for a Drop-Down with _hyeprscript
-
-TODO: Show how easy this is in hyperscript
-
-////
 
 == Being pragmatic
 

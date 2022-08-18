@@ -9,7 +9,6 @@
 :leveloffset: 1
 :sourcedir: ../code/src
 :source-language:
-:toc:
 
 = Client Side Scripting
 
@@ -44,8 +43,8 @@ So the question isn't "Should we be scripting for the web?" but rather "How shou
 
 Scripting, when it's used as a replacement for the RESTful architecture provided by the Web, is extremely useful in Hypermedia Driven Applications. We discuss what this means in much greater detail in an appendix, but the practical implications for HDA developers is that if
 
-* The main data format exchanged between server of client is hypermedia, the same as it would be in an application with no scripting
-* Client-side state (other than the DOM) is minimized
+* The main data format exchanged between server of client is hypermedia, the same as it would be in an application with no scripting,
+* Client-side state (other than the DOM) is minimized,
 
 then you are scripting in a way compatible with HDAs.
 
@@ -65,7 +64,7 @@ The important idea in the implementation of each of these features is that they 
 
 The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today. A bit of interesting internet lore, however, is that JavaScript was not always the only built-in option. As the quote from Roy Fielding above indicates, _applets_ written in other languages such as Java were considered part of the scripting infrastructure of the web. In addition, there was a brief period when Internet Explorer supported VBScript, a scripting language based on Visual Basic.
 
-Today, we have a variety of _transcompilers_ (often shortened to _transpiler_) that convert another language to JavaScript, such as TypeScript, Dart, Kotlin, ClojureScript, F#. There is also the WebAssembly bytecode format, which is supported as a compilation target for C, Rust, and the WASM-specific language AssemblyScript. However, most of these are not geared towards an HDA-compatible style of scripting --- compile-to-JS languages are paired with SPA-oriented libraries, and WASM is mainly geared toward linking to existing C/C++ libraries from JavaScript.
+Today, we have a variety of _transcompilers_ (often shortened to _transpilers_) that convert another language to JavaScript, such as TypeScript, Dart, Kotlin, ClojureScript, F#. There is also the WebAssembly bytecode format, which is supported as a compilation target for C, Rust, and the WASM-specific language AssemblyScript. However, most of these are not geared towards an HDA-compatible style of scripting --- compile-to-JS languages are paired with SPA-oriented libraries, and WASM is mainly geared toward linking to existing C/C++ libraries from JavaScript.
 
 I bring this up because we are going to look at three different mechanisms for adding scripting to our Hypermedia Driven Application:
 
@@ -82,11 +81,7 @@ Let's take a quick look at each of these scripting options so we know what we ar
 [quote]
 No code is faster than no code.
 
-Vanilla JavaScript is simply using JavaScript in your application without any intermediate layers. The term came into vogue as a play on the fact that there were so many ".js" frameworks out there to help you write JavaScript. As JavaScript matured as a scripting language, standardized across browsers and provided more and more functionality, the utility of many of these frameworks and libraries has diminished.
-
-****
-At the same time, however, SPAs became more popular, requiring better frameworks.
-****
+Vanilla JavaScript is simply using JavaScript in your application without any intermediate layers. The term came into vogue as a play on the fact that there were so many ".js" frameworks out there to help you write JavaScript. As JavaScript matured as a scripting language, standardized across browsers and provided more and more functionality, the utility of many of these frameworks and libraries has diminished.(At the same time, however, SPAs became more popular, requiring better frameworks).
 
 A quote from the humorous website http://vanilla-js.com captures the situation well:
 
@@ -107,18 +102,18 @@ Installation of VanillaJS couldn't be easier: you don't have to. You can just st
 
 That's the good news. The bad news is that JavaScript has some limitations as a scripting language that often make it less than ideal  as a stand-alone scripting technology for Hypermedia Driven Applications:
 
-* It is a relatively complex language, having accreted a lot of features and warts.
-* Its model for concurrency involves _colored functions_, a concept described by Robert Nystrom in his oft-cited blog article _What Color is Your Function?_
+* It is a relatively complex language that has accreted a lot of features and warts.
+* Its model for asynchrony involves _colored functions_, a concept described by Robert Nystrom in his oft-cited blog article _What Color is Your Function?_
   footnote:[https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/]
 * It is surprisingly clunky to work with events in the language
 * DOM APIs (a large portion of which were originally designed for Java)
   are verbose and do not make common functionality easy to use
 
-None of these are deal breakers, of course, and many people prefer the "close to the metal" (for lack of a better term) nature of JavaScript to more elaborate client-side scripting approaches.
+None of these are deal breakers, of course, and many people prefer the "close to the metal" (for lack of a better term) nature of vanilla JavaScript to more elaborate client-side scripting approaches.
 
-As our "hello world" example to showcase each of our scripting options, let's write a counter. It will have a number and a button that increment the number. Nothing too elaborate, but it will give you the flavor of each of the three scripting approaches we are going to use in this chapter.
+As our "hello world" example to showcase each of our scripting options, let's write a counter footnote:[The counter is a common example widget for UI development tools, a trend that seems so have been started by React. İt's unclear if the "counterexample" pun was intentional.]. It will have a number and a button that increments the number. Nothing too elaborate, but it will give you the flavor of each of the three scripting approaches we are going to use in this chapter.
 
-We have a problem, however, as one of the things frameworks provide is still missing: a standardized code style. There are solutions to this problem, but before we reach for it, let's take a journey through various styles, starting with the simplest thing possible.
+We have a problem, however, as one of the things frameworks provide is still missing: a standardized code style. This is not an insurmountable problem, and in fact a great opportunity to take a small journey through various styles, starting with the simplest thing possible.
 
 .Counter in vanilla JavaScript, inline version
 [source,html]
@@ -173,24 +168,26 @@ Except... is that really the case?
 
 Notice that the HTML in the above example is not just the previous example with the onclick attribute removed. Can you spot the difference?
 
-You'll notice that we've had to add a class to the button so that we could find it in JS. In both the HTML and the JS, this ID is a string literal not subject to typechecking, and it certainly isn't checked if the ID is the same in both. The careless use of CSS selectors in JavaScript causes _jQuery soup_, where:
+We've had to add a class to the button so that we could find it in JS. In both the HTML and the JS, this ID is a string literal not subject to typechecking, and it certainly isn't checked if the ID is the same in both. The careless use of CSS selectors in JavaScript causes _jQuery soup_, where:
 * The JS that attaches behavior to a given element is unclear (though developer tools in browsers help with this).
 * Reuse is difficult.
 * The code is disorganized (if we have many components, how do we separate them into files (if at all?))
 
-Furthermore, imagine that we want to change the number field from an `<output>` tag to an `<input type="number">`. This change to our HTML will break our JavaScript. The fix is trivial (change `.textContent` to `.value`), but I hope you can see how this would increase in larger components or across a whole page.
-
-The tight coupling between files in this simple example suggests that separation between HTML and JavaScript (and CSS) is often an illusory separation of concerns. Contact.app is is not _concerned_ with structure, markup or data, it's concerned with collecting contact info and displaying it.
+Furthermore, imagine that we want to change the number field from an `<output>` tag to an `<input type="number">`. This change to our HTML will break our JavaScript. The fix is trivial (change `.textContent` to `.value`), but it's not hard to see how the burden of synchronizing markup and code across files would increase in larger components or across a whole page.
 
 image::../images/separation-of-concerns-expectation-v-reality.png[]
 
+The tight coupling between files in this simple example suggests that separation between HTML and JavaScript (and CSS) is often an illusory separation of concerns. Contact.app is is not _concerned_ with "structure", "styling" or "behavior", it's concerned with collecting contact info and presenting it.
+
 Our suspicion is validated by developments in the JS framework world:
 
-// TODO: expand
 * JSX
 * Lit
 * CSS-in-JS
 * Single-File Components
+****
+TODO: expand on list of JS developments that prove us right
+****
 
 
 ==== Locality of Behavior
@@ -209,7 +206,7 @@ The `addEventListener` method is, in a way, monkey-patching. Its functionality i
 .`define_method` in Ruby
 [source,ruby]
 ----
-btn.define_method(:click, ->{ <1>
+button.define_method(:click, ->{ <1>
   count += 1 <2>
 })
 ----
@@ -228,7 +225,20 @@ button.addEventListener('click', () => { <1>
 
 (The Ruby code is deliberately unidiomatic to make it easier to understand for non-Rubyists).
 
-Monkey-patching used to be the default way of adding methods in JavaScript: `Account.prototype.withdraw = function ...` However, classes were added in ES2015 and modifying the `.prototype` of things is increasingly discouraged. No such advancement has been made in for event listeners, however, leaving us stuck with `addEventListener` and `onclick`.
+Monkey-patching actually used to be the default way of adding methods in JavaScript: 
+
+[source,js]
+----
+'use strict'; <1>
+(function () {
+  Button.prototype.click = function () {
+    count++;
+  }
+})()
+----
+<1> Feeling nostalgic yet?
+
+After classes were added in ES2015, modifying the `.prototype` way of doing things is increasingly discouraged. No such advancement has been made for event listeners, however, leaving us stuck with `addEventListener` and `onclick`.
 
 This is a shame, because in the case of front end scripting in a Hypermedia Driven Application, Locality of Behavior is often the more important principle over Separation of Concerns.
 
@@ -239,25 +249,25 @@ Having two decoupled modules is better than having one big blob, but two tightly
 (Of course, having no code at all is the best, so 0 > 2 > 1 > 2.)
 ****
 
-So, should we go back to the first example? It certainly wins in the Locality of Behavior category. Unfortunately, JavaScript and the `on*` attributes are not a great way to program:
+So, should we go back to the `onclick` way of doing things? It certainly wins in the Locality of Behavior category. Unfortunately, JavaScript in `on*` attributes are not a great way to program:
 
 * They don't support custom events.
 * There is no good mechanism for associating long-lasting variables with an element --- all variables are discarded when an event listener completes executing
 * If you have multiple instances of an element, you will need to repeat the listener code on each, or use something more clever like event delegation.
-* JavaScript code that directly manipulates the DOM can get verbose, and clutter the markup
-* An element cannot listen for events on another element. For example, if you want to dismiss a popup by clicking outside it, the listener will need to be on the body element. The body element will need to have listeners that deal with many unrelated components, some of which may not even be on a particular page when pages are generated from a template.
+* JavaScript code that directly manipulates the DOM gets verbose, and clutters the markup
+* An element cannot listen for events on another element. For example, if you want to dismiss a popup by clicking outside it, the listener will need to be on the body element. The body element will need to have listeners that deal with many unrelated components, some of which may not even be on the page if it was generated from a common template.
 
-Unfortunately, JavaScript and Locality of Behavior don't seem to mesh as well as we want them to. This is partly our fault however --- we need to remember that LoB does not require behavior to be _defined_ at the use site, but merely invoked. Keeping this in mind, it's possible to achieve LoB while writing JS in a separate file, provided we have a reasonable system for structuring our scripts.
+Unfortunately, JavaScript and Locality of Behavior don't seem to mesh as well as we want them to. This is partly our fault, however --- it's important to be aware that LoB does not require behavior to be _defined_ at the use site, but merely invoked there. Keeping this in mind, it's possible to improve LoB while writing JS in a separate file, provided we have a reasonable system for structuring our JavaScript.
 
 
 ==== RSJS
 
 RSJS ("Reasonable System for JavaScript Structure", https://ricostacruz.com/rsjs/) is a set of guidelines for JavaScript architecture targeted at "a typical non-SPA website". RSJS is a solution to the lack of a standard code style we mentioned earlier.
 
-We don't want to replicate all of the guidelines here, but here are the ones most relevant to this book:
+We won't replicate all of the guidelines here, but here are the ones most relevant to this book:
 
-* Use `data-` attributes --- invoking behavior via adding data attributes makes it obvious there is JavaScript happening, as opposed to random classes or IDs that may be mistakenly removed or changed
-* One component per file --- the name of the file should match the data attribute so that it can be found easily, preserving some LoB
+* "Use `data-` attributes" --- invoking behavior via adding data attributes makes it obvious there is JavaScript happening, as opposed to random classes or IDs that may be mistakenly removed or changed
+* "One component per file" --- the name of the file should match the data attribute so that it can be found easily, a win for LoB
 
 .Counter in vanilla JavaScript, with RSJS
 --
@@ -288,7 +298,7 @@ document.querySelectorAll("[data-counter]") <2>
 <4> Register event handlers
 --
 
-You can see that this solves many of our gripes with the previous example of vanilla JS in a separate file:
+This methodology solves (or at least alleviates) many of our gripes with the previous example of vanilla JS in a separate file:
 
 * The JS that attaches behavior to a given element is *clear* (though only through naming conventions).
 * Reuse is *easy* --- you can create another counter on the page and it will just work.
@@ -323,7 +333,7 @@ document.querySelectorAll("[data-counter]").forEach(el => {
 <2> Dynamically access the property to increment
 --
 
-If we wanted to use an input, we would change the value of `data-counter-output` to `"value"`. Fun fact: this would also work with `<input type="range">`!
+If we wanted to use an input, we would change the value of `data-counter-output` to `"value"`. This would also work with `<input type="range">`!
 
 On one hand, this is a way overengineered the solution to the problem. How often do we need to reuse a counter?
 
@@ -333,7 +343,7 @@ That's enough fun, however, let's get to work on ContactApp.
 
 .Event delegation
 ****
-// TODO explain event delegation
+TODO explain event delegation
 ****
 
 
@@ -389,7 +399,7 @@ We need to decide what event we need to listen to:
 ----
 <1> Specify a default for convenience.
 
-In 9 lines of code, we have a generic confirmation library that we can use for any element as follows.
+In 9 lines of code, we have a generic confirmation library that we can use for any element as follows. It's definitely overengineered as a result of the forced decoupling, just like the counter earlier, but it works well and was reasonably fun to write.
 
 [source,html]
 ----
@@ -397,13 +407,13 @@ In 9 lines of code, we have a generic confirmation library that we can use for a
 <input type="radio" name="volume" value="100" data-confirm="input">
 ----
 
-// TODO: talk about how this is overengineered
-
 .Async ruins everything
 ****
 In the confirmation dialog code we wrote, we use `confirm()`, which is convenient, but displays a barebones dialog that cannot contain rich text. Can we write a similar script using a fancy alert dialog library, like SweetAlert2?
 
-// TODO: talk about why we can't
+*******
+TODO: talk about why we can't
+*******
 ****
 
 
@@ -454,7 +464,7 @@ To attach event listeners, we use `x-on`:
 ----
 <1> With `x-on`, we specify the attribute in the attribute _name_.
 
-Would you look at that, we're done already. (It's almost as though we wrote a trivial example). What we created is, incidentally, nearly identical to the second code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
+Would you look at that, we're done already! (It's almost as though we wrote a trivial example). What we created is, incidentally, nearly identical to the second code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
 
 
 ==== `x-on:click` vs. `onclick`
@@ -524,7 +534,7 @@ The use `x-bind` means that as we change the open state, the `aria-expanded` att
 
 .HTML ID Soup
 ****
-// TODO
+TODO: talk about HTML ID soup
 ****
 
 [source,html]
@@ -553,7 +563,7 @@ You should be able to open the menu now, and may be tempted to ship this code to
 * You can't navigate between menu items using arrow keys
 * You can't activate a menu item with the Space key
 
-These factors make our menu annoying and possibly unusable for many people. Let's fix it using guidance from the venerable cite:[ARIA Authoring Practices Guide]:
+These factors make our menu annoying and even unusable for many people. Let's fix it with the guidance of the venerable cite:[ARIA Authoring Practices Guide]:
 
 [source,html]
 ----
@@ -594,18 +604,19 @@ These factors make our menu annoying and possibly unusable for many people. Let'
 <8> Put the `menuitem` role on the individual items
 <9> Make the menu items non-tabbable
 
+
 `x-effect` is a cool attribute that lets you perform side-effects when a piece of element state changes. It automatically detects which state is accessed in the effect.
 
-That's a lot! And we still made some assumptions to make our code shorter:
+I'm pretty sure that covers all our bases. That's a lot of code! But it's code that encodes a lot of behavior. Not to mention that we still made some assumptions to make our code shorter:
 
 * All children are menu items with no wrappers, dividers, etc.
-* No submenus
+* There are no submenus
 
-As we need more features, it might make more sense to use a library such as GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
+As we need more features, it might make more sense to use a library --- for instance, GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
 
 ==== Reusable behavior in Alpine
 
-Our menu component has a lot of attributes that will be repeated in every item of the table. This is hard to maintain when manually writing HTML and increases payload sizes when generating it via a template. We can use an additional feature of the `x-bind` attribute to rectify this:
+Our menu component has a lot of attributes that will currently be repeated in every item of the table. This is hard to maintain when manually writing HTML and increases payload sizes when generating it via a template. We can rectify this using an nifty feature of the `x-bind` attribute:
 
 [quote,"https://alpinejs.dev/directives/bind#bind-directives"]
 ____
@@ -614,7 +625,7 @@ x-bind allows you to bind an object of different directives and attributes to an
 The object keys can be anything you would normally write as an attribute name in Alpine. This includes Alpine directives and modifiers, but also plain HTML attributes. The object values are either plain strings, or in the case of dynamic Alpine directives, callbacks to be evaluated by Alpine.
 ____
 
-We create a JavaScript function:
+It's far easier to understand what this means after seeing the attribute in use. To begin, we create a JavaScript function which will encapsulate all of our menu's behavior:
 
 [source,js]
 ----
@@ -623,7 +634,7 @@ function menu() {
     role: "menu",
     "x-show"() { <1>
       return this.open; <2>
-    }
+    },
     "x-on:click.outside"() { this.open = false },
     "x-on:keydown.up"() { document.activeElement.previousElementSibling?.focus() },
     "x-on:keydown.down"() { document.activeElement.nextElementSibling?.focus() },
@@ -640,12 +651,12 @@ function menu() {
 <2> Values that would be globally accessible in an attribute are accessed through `this` in a function.
 <3> We can clean up longer functions.
 
-We can then reference it in HTML as follows:
+The return value is a map of attribute names to values, with Alpine attributes having functions as values instead of strings of code. We can then reference this function in HTML as follows:
 
 [source,html]
 ----
 <div id="contents" x-bind="menu()">
-  <a role="menuitem<8>" tabindex="-1<9>" href="/contacts/{{ contact.id }}/edit">Edit</a>
+  <a role="menuitem" tabindex="-1" href="/contacts/{{ contact.id }}/edit">Edit</a>
   <a role="menuitem" tabindex="-1" href="/contacts/{{ contact.id }}">View</a>
 </div>
 ----
@@ -657,13 +668,13 @@ This requires the function `menu` to be global. We can avoid that with `Alpine.d
 Alpine.data("menu", () => {
   return {
     role: "menu",
-    "x-show"() { return this.open; }
+    "x-show"() { return this.open; },
     // ...
   }
 })
 ----
 
-Another useful tool in factoring Alpine code is that we can call functions in `x-data` as follows:
+Another useful tool in factoring Alpine code is calling functions in `x-data` as follows:
 
 [source,js]
 ----
@@ -678,12 +689,46 @@ Alpine.data("toggleableMenu", () => ({ open: false }))
     ...>
 ----
 
+You can combine the two techniques:
+
+[source,js]
+----
+Alpine.data("toggleableMenu", () => ({
+  open: false,
+  menuBehavior: { <1>
+    role: "menu",
+    "x-show"() { return this.open; },
+    // ...
+  },
+  buttonBehavior: { <2>
+    "aria-haspopup": "menu",
+    "aria-controls": "contents",
+    "x-bind:aria-expanded"() { return this.open },
+    "x-on:click"() { this.open = !this.open },
+  }
+}))
+----
+<1> The object that we bind to the menu has been moved into the data.
+<2> We can encapsulate the button's behavior in the same way.
+
+[source,html]
+----
+<div x-data="toggleableMenu()">
+  <button x-bind="buttonBehavior">Options</button> <1>
+  <div id="contents" x-bind="menuBehavior"> <2>
+    <!-- ... -->
+----
+<1> Access the button behavior object from the data.
+<2> Same for the menu... hey, does this look familiar?
+
+You may notice that the markup for the `x-bind` style quite resembles RSJS. Combined with Alpine's reactivity and concise syntax, it's quite a powerful style for writing localized as well as decoupled code.
+
 Factoring our behavior in this way reduces the locality in our code, as it requires us to locate the `menu` and `toggleableMenu` functions to understand what our code does. You can use named files similarly to RSJS to somewhat alleviate this issue, but it's a tradeoff that needs to be considered.
 
 
 === _hyperscript
 
-While previous two examples are JavaScript-oriented, _hyperscript (https://hyperscript.org[], the underscore is part of the name) is a entire new scripting language for
+While previous two examples are JavaScript-oriented, _hyperscript (https://hyperscript.org[], the underscore is part of the name but not pronounced) is a entire new scripting language for
 front-end development.  It has a completely different syntax than JavaScript, derived from an older language called
 HyperTalk, which was the scripting language of HyperCard, an old hypermedia system, along with IDE and WYSIWYG editor on the Macintosh Computer.  The
 most noticeable thing about _hyperscript is that it resembles English prose more than it does code.  It was initially created as a sister project
@@ -707,48 +752,18 @@ Like htmx and AlpineJS, _hyperscript can be installed via a CDN or from npm (pac
 Like AlpineJS, in \_hyperscript you put attributes directly in your HTML.  Unlike AlpineJS, there is only one attribute
 for _hyperscript: the `_` (underscore) attribute footnote:[You can also use a `script` attribute, or `data-script` to please HTML validators.]. This is where all the code responsible for an element goes.
 
-The implementation of our example button in hyperscript is similar, in some ways, to the VanillaJS implementation: we will
-start with the span hidden via the CSS `display` property, and toggle it.  However, the code will look quite a bit
-different.  Let's look at the code first and then explain it:
+****
+TODO: Counter in _hyperscript
+// <1> This is what _hyperscript looks like, believe it or not!
+****
 
-.Using _hyperscript to show content
-[source,html]
-----
-<div>
-    <button 
-      _="on click show the next <span /> with display:inline" <1>
-    >
-      Expand
-    </button>
-    <span style="display: none"> <2>
-      Content...
-    </span>
-</div>
-----
-<1> This is what _hyperscript looks like, believe it or not!
-<2> This element is what `the next <span />` evaluates to. We'll leave you to figure out the rest.
-
-Seasoned JavaScript programmers are often suspicious of _hyperscript: There have been many "natural language programming" projects that usually target non-programmers and beginner programmers, assuming that being able to read code will give you the ability to write it as well. (The authors' views on the usefulness of natural language for teaching programming are nuanced and out of scope for this book). _hyperscript is openly a programming language, in fact, its syntax is inspired in many places by the speech patterns of web developers. In addition, _hyperscript's readability is achieved not through complex heuristics or NLP, but common parsing tricks and a culture of readability.
+Seasoned JavaScript programmers are often suspicious of _hyperscript: There have been many "natural language programming" projects that usually target non-programmers and beginner programmers, assuming that being able to read code will give you the ability to write it as well. (The authors' views on the usefulness of natural language for teaching programming are nuanced and out of scope for this book). It should be noted that _hyperscript is openly a programming language, in fact, its syntax is inspired in many places by the speech patterns of web developers. In addition, _hyperscript's readability is achieved not through complex heuristics or NLP, but common parsing tricks and a culture of readability.
 
 As you can see in the above example, _hyperscript does not shy away from using punctuation when appropriate. We'll introduce every bit of syntax we use as we go. Here's an annotated version of the script above:
 
-[source,hyperscript]
-----
--- Double dash marks comments.
--- The top level of a _hyperscript command is made up of _features_.
-on -- One kind of feature is an event listener, introduced by the keyword "on",
-  click -- ... followed by the event name,
-  -- ... and a sequence of _commands_.
-  show -- The show command shows an element.
-    the -- The prefix "the" does nothing.
-    next -- "next" before a CSS expression (see later) finds the first match
-         -- after the element the script is written on (referred to as "me").
-    <span /> -- CSS selectors are wrapped in "<" and "/>".
-  with -- This "with" is part of the "show" command's syntax.
-    *display:inline -- The asterisk is used to refer to CSS properties.
-                    -- Here, we specify how to show the element
-                    -- (options are display, visibility or opacity).
-----
+****
+TODO: annotate counter example
+****
 
 OK, maybe it is a little more than a little insane.  But fun!
 
@@ -831,6 +846,8 @@ via out-of-band, non-hypermedia communication.
 
 == Being pragmatic
 
+****
 TODO: Sometimes going outside the lines is necessary, being pragmatic
+****
 
 == Summary

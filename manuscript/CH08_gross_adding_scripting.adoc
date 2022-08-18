@@ -1,14 +1,15 @@
 = Hypermedia In Action
-:chapter: 6
+:chapter: 8
 :sectnums:
 :figure-caption: Figure {chapter}.
 :listing-caption: Listing {chapter}.
 :table-caption: Table {chapter}.
-:sectnumoffset: 5
-// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:sectnumoffset: 7
+// line above:  :sectnumoffset: 7  (chapter# minus 1)
 :leveloffset: 1
 :sourcedir: ../code/src
 :source-language:
+:toc:
 
 = Client Side Scripting
 
@@ -208,7 +209,7 @@ The `addEventListener` method is, in a way, monkey-patching. Its functionality i
 .`define_method` in Ruby
 [source,ruby]
 ----
-btn.define_method(:click <1>, ->{
+btn.define_method(:click, ->{ <1>
   count += 1 <2>
 })
 ----
@@ -218,7 +219,7 @@ btn.define_method(:click <1>, ->{
 .`addEventListener` in JavaScript
 [source,js]
 ----
-button.addEventListener('click' <1>, () => {
+button.addEventListener('click', () => { <1>
   count++ <2>
 })
 ----
@@ -262,8 +263,8 @@ We don't want to replicate all of the guidelines here, but here are the ones mos
 --
 [source,html]
 ----
-<section class="counter" data-counter <1>>
-  <output id="my-output" data-counter-output <2>>0</output>
+<section class="counter" data-counter> <1>
+  <output id="my-output" data-counter-output>0</output> <2>
   <button class="increment-btn" data-counter-increment>Increment</button>
 </section>
 ----
@@ -273,12 +274,13 @@ We don't want to replicate all of the guidelines here, but here are the ones mos
 [source,js]
 ----
 // counter.js <1>
-document.querySelectorAll("[data-counter]" <2>).forEach(el => {
-  const output = el.querySelector("[data-counter-output]"),
-    increment = el.querySelector("[data-counter-increment]") <3>
+document.querySelectorAll("[data-counter]") <2>
+  .forEach(el => {
+    const output = el.querySelector("[data-counter-output]"),
+      increment = el.querySelector("[data-counter-increment]") <3>
 
-  increment.addEventListener("click", e => output.textContent++) <4>
-})
+    increment.addEventListener("click", e => output.textContent++) <4>
+  })
 ----
 <1> File should have the same name as the data attribute, so that we can locate it easily
 <2> Get all elements that invoke this behavior
@@ -298,8 +300,8 @@ You may remember the problem we discussed about replacing the output tag with `<
 --
 [source,html,highlight=2..2]
 ----
-<section class="counter" data-counter <1>>
-  <output id="my-output" data-counter-output="innerHTML" <1>>0</output>
+<section class="counter" data-counter>
+  <output id="my-output" data-counter-output="innerHTML">0</output> <1>
   <button class="increment-btn" data-counter-increment>Increment</button>
 </section>
 ----
@@ -314,7 +316,7 @@ document.querySelectorAll("[data-counter]").forEach(el => {
   
   const outProp = output.dataset.counterOutput <1>
 
-  increment.addEventListener("click", e => output[outProp<2>]++)
+  increment.addEventListener("click", e => output[outProp]++) <2>
 })
 ----
 <1> Get the attribute's value
@@ -344,9 +346,10 @@ We'll write the JavaScript first before adding anything to our markup.
 .Confirmation dialog with Vanilla JS & RSJS
 [source,js]
 ----
-document.querySelectorAll("[data-confirm]")<1>.forEach(el => {
-  // ...
-})
+document.querySelectorAll("[data-confirm]") <1>
+  .forEach(el => {
+    // ...
+  })
 ----
 <1> Find relevant elements. Our attribute is `data-confirm`, so we'll write this code in a file named `confirm.js`.
 
@@ -354,15 +357,16 @@ We need to show a confirmation dialog. There are libraries that let us show styl
 
 [source,js,highlight=2..4]
 ----
-document.querySelectorAll("[data-confirm]")<1>.forEach(el => {
-  el.addEventListener("..."<1>, e => {
-    const didConfirm = confirm()
-    if (!didConfirm) {
-      event.stopImmediatePropagation(); <2>
-      event.stopPropagation(); <3>
-    }
+document.querySelectorAll("[data-confirm]")
+  .forEach(el => {
+    el.addEventListener("...", e => { <1>
+      const didConfirm = confirm()
+      if (!didConfirm) {
+        event.stopImmediatePropagation(); <2>
+        event.stopPropagation(); <3>
+      }
+    })
   })
-})
 ----
 <1> **What event?**
 <2> Prevent listeners on this element from running 
@@ -376,12 +380,14 @@ We need to decide what event we need to listen to:
 
 [source,js]
 ----
-  el.addEventListener(el.dataset<1>.confirm || "click"<2>, e => {
-    // ...
-  })
+  el.addEventListener(
+    el.dataset.confirm || "click", <1>
+    e => {
+      // ...
+    }
+  )
 ----
-<1> The dataset property is a shorthand way to access and modify `data-` attributes. Attribute names are automatically mapped to camel case: `data-state-slice-reducer` becomes `dataset.stateSliceReducer`.
-<2> Specify a default for convenience.
+<1> Specify a default for convenience.
 
 In 9 lines of code, we have a generic confirmation library that we can use for any element as follows.
 
@@ -429,7 +435,7 @@ We've defined our state, let's actually use it:
 [source,html,highlight=2..2]
 ----
 <div class="counter" x-data="{ count: 0 }">
-  <output x-text="count" <1>></output>
+  <output x-text="count"></output> <1>
 ----
 <1> The `x-text` attribute.
 
@@ -441,9 +447,9 @@ To attach event listeners, we use `x-on`:
 [source,html,highlight=4..4]
 ----
 <div class="counter" x-data="{ count: 0 }">
-  <output x-text="count" <1>></output>
+  <output x-text="count"></output>
 
-  <button x-on:click="count++" <1>>Increment</button>
+  <button x-on:click="count++">Increment</button> <1>
 </div>
 ----
 <1> With `x-on`, we specify the attribute in the attribute _name_.
@@ -477,7 +483,7 @@ An overflow menu only has one bit of state: whether it is open.
 
 [source,html]
 ----
-<div x-data="{ open: false <1> }">
+<div x-data="{ open: false }"> <1>
   <button>Options</button> <2>
   <div>
     <a href="/contacts/{{ contact.id }}/edit">Edit</a>
@@ -498,8 +504,8 @@ While we have only one bit of state, we have many parts that depend on it. This 
     aria-controls="contents" <2>
     x-bind:aria-expanded="open" <3>
   >Options</button>
-  <template x-if="open"<4>>
-    <div id="contents"<5>>
+  <template x-if="open"> <4>
+    <div id="contents"> <5>
       <a href="/contacts/{{ contact.id }}/edit">Edit</a>
       <a href="/contacts/{{ contact.id }}">View</a>
     </div>
@@ -531,7 +537,7 @@ The use `x-bind` means that as we change the open state, the `aria-expanded` att
     x-on:click="open = !open" <1>
   >Options</button>
   <template x-if="open">
-    <div id="contents" x-on:click.outside="open = false"<2>>
+    <div id="contents" x-on:click.outside="open = false"> <2>
       <a href="/contacts/{{ contact.id }}/edit">Edit</a>
       <a href="/contacts/{{ contact.id }}">View</a>
     </div>
@@ -558,19 +564,22 @@ These factors make our menu annoying and possibly unusable for many people. Let'
     x-bind:aria-expanded="open"
     x-on:click="open = !open"
   >Options</button>
-  <div role="menu<1>" id="contents" x-show="open"
+  <div role="menu" <1>
+    id="contents" x-show="open"
     x-on:click.outside="open = false"
-    x-on:keydown.up="document.activeElement.previousElementSibling?.focus()<2>"
-    x-on:keydown.down="document.activeElement.nextElementSibling?.focus()<3>"
-    x-on:keydown.space="document.activeElement.click()<4>"
-    x-effect="open ? $el<5>.firstElementChild().focus()<6> : null"
+    x-on:keydown.up="document.activeElement.previousElementSibling?.focus()" <2>
+    x-on:keydown.down="document.activeElement.nextElementSibling?.focus()" <3>
+    x-on:keydown.space="document.activeElement.click()" <4>
+    x-effect="open ? $el.firstElementChild().focus() : null" <5><6>
     x-on:keydown="key === 'Home'
       ? $el.firstChild.focus()
       : key === 'End'
       ? $el.lastChild.focus()
-      : null <7>"
+      : null" <7>
     >
-    <a role="menuitem<8>" tabindex="-1<9>" href="/contacts/{{ contact.id }}/edit">Edit</a>
+    <a role="menuitem" <8>
+      tabindex="-1" <9>
+      href="/contacts/{{ contact.id }}/edit">Edit</a>
     <a role="menuitem" tabindex="-1" href="/contacts/{{ contact.id }}">View</a>
   </div>
 </div>
@@ -612,7 +621,9 @@ We create a JavaScript function:
 function menu() {
   return {
     role: "menu",
-    "x-show"<1>() { return this<2>.open; }
+    "x-show"() { <1>
+      return this.open; <2>
+    }
     "x-on:click.outside"() { this.open = false },
     "x-on:keydown.up"() { document.activeElement.previousElementSibling?.focus() },
     "x-on:keydown.down"() { document.activeElement.nextElementSibling?.focus() },
@@ -646,16 +657,8 @@ This requires the function `menu` to be global. We can avoid that with `Alpine.d
 Alpine.data("menu", () => {
   return {
     role: "menu",
-    "x-show"<1>() { return this<2>.open; }
-    "x-on:click.outside"() { this.open = false },
-    "x-on:keydown.up"() { document.activeElement.previousElementSibling?.focus() },
-    "x-on:keydown.down"() { document.activeElement.nextElementSibling?.focus() },
-    "x-on:keydown.space"() { document.activeElement.click() },
-    "x-effect"() { if (this.open) this.$el.firstElementChild().focus() },
-    "x-on:keydown"(event) { <3>
-      if (event.key === 'Home') $el.firstChild.focus()
-      else if (event.key === 'End') $el.lastChild.focus()
-    },
+    "x-show"() { return this.open; }
+    // ...
   }
 })
 ----
@@ -764,20 +767,20 @@ We begin with an event listener, which, as we explained, starts with `on`:
 [source,html]
 ----
 <input id="search" name="q" type="search" placeholder="Search Contacts"
-  _="on keydown <1>[shiftKey<2> and<3> code is<4> 'KeyS']
+  _="on keydown [shiftKey and code is 'KeyS'] <1><2><3><4>
        -- ...">
 ----
 <1> The square bracket notation is _event filtering_ --- any event for which the expression inside the brackets is falsey will be ignored by this listener.
 <2> Inside the event filter, properties of the event can be directly accessed.
 <3> `and` is `&&` in JavaScript.
-<3> `is` is `==` in JavaScript.
+<4> `is` is `==` in JavaScript.
 
 We are using event filtering to listen to only the events we are interested in, i.e. the user pressing kbd:[Shift+S]. There is a problem, however: Keyboard events will only be sent to this input element if it is already focused. We need to attach the listener to the whole window instead. No problem:
 
 [source,html]
 ----
 <input id="search" name="q" type="search" placeholder="Search Contacts"
-  _="on keydown [shiftKey and code is 'KeyS'] from the window<1>
+  _="on keydown [shiftKey and code is 'KeyS'] from the window <1>
        -- ...">
 ----
 <1> "from" is part of the "on" feature and lets us listen to events from other objects.
@@ -788,7 +791,7 @@ We can attach the listener to the body while keeping its code on the element it 
 ----
 <input id="search" name="q" type="search" placeholder="Search Contacts"
   _="on keydown[shiftKey and code is 'KeyS'] from the window
-       focus()<1> me<2>">
+       focus() me"> <1><2>
 ----
 <1> Any method of any object can be used as a command. (This is called a "pseudocommand" in _hyperscript lingo). This line is equivalent to `me.focus()` (which is also valid syntax in _hyperscript).
 <2> "me" refers to the element that the script is written on.

@@ -188,7 +188,7 @@ It turns out that htmx helps us distinguish between these two cases by including
 it makes requests.  Request Headers are a feature of HTTP, allowing clients (e.g. web browsers) to include name/value pairs
 of metadata associated with requests to help the server understand what the client is requesting.
 
-Here are the HTTP headers that htmx includes in every request that it makes:
+Here are the HTTP request headers that htmx includes in every request that it makes:
 
 [cols="1,1"]
 |===

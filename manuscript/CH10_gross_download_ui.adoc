@@ -1,10 +1,10 @@
 = Hypermedia In Action
-:chapter: 8
+:chapter: 10
 :sectnums:
 :figure-caption: Figure {chapter}.
 :listing-caption: Listing {chapter}.
 :table-caption: Table {chapter}.
-:sectnumoffset: 7
+:sectnumoffset: 9
 // line above:  :sectnumoffset: 5  (chapter# minus 1)
 :leveloffset: 1
 :sourcedir: ../code/src

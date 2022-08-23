@@ -10,3 +10,5 @@ include::CH10_gross_download_ui.adoc[]
 include::CH11_gross_developing_with_htmx.adoc[]
 include::CH12_gross_other_hypermedia_libraries.adoc[]
 include::CH13_gross_retvrn.adoc[]
+
+include::APP01_gross_roy_fieldings_dissertation.adoc[]

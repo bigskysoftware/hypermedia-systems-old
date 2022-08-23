@@ -264,17 +264,118 @@ Here is an example Atom document:
 .An Example Atom Document
 [source, atom]
 ----
- <?xml version="1.0"?>
-   <entry xmlns="http://www.w3.org/2005/Atom">
-     <title>Atom-Powered Robots Run Amok</title>
-     <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
-     <updated>2003-12-13T18:30:02Z</updated>
-     <author><name>John Doe</name></author>
-     <content>Some text.</content>
-     <link rel="edit" href="http://example.org/edit/first-post.atom"/>
+<?xml version="1.0"?>
+<entry xmlns="http://www.w3.org/2005/Atom">
+    <title>Atom-Powered Robots Run Amok</title>
+    <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
+    <updated>2003-12-13T18:30:02Z</updated>
+    <author><name>John Doe</name></author>
+    <content>Some text.</content>
+    <link rel="edit" href="http://example.org/edit/first-post.atom"/> <1>
 </entry>
 ----
+<1> A hypermedia control, telling an atom client where this entry can be updated
 
-TODO - Ask Mike for more help on this section
+As you can see, Atom looks, to an extent, like HTML, but HTML tailored to represent a feed of articles.  The `link`
+element within the document is a hypermedia control, telling an Atom client where this resource can be updated
+via either a `PUT` or `DELETE`.
 
+The Atom hypermedia format might be useful for you if you are, for example, creating a CMS or blogging system, and wish
+to expose a feed using a hypermedia format.
 
+=== Hypertext Application Language (HAL)
+
+The Hypertext Application Language (HAL) is another non-HTML hypermedia.  Interestingly, this hypermedia supports _both_
+XML and JSON.  Since most of the JSON APIs we have been looking at in this book have been Data APIs, let's take a look
+at how HAL imposes a hypermedia on top of that format.
+
+In its JSON form, HAL consists of a root JSON object with two reserved "meta-properties":
+
+* `_links` - contains links to other resources
+* `_embedded` - contains embedded resources
+
+The `_links` property in JSON responses provides hypermedia control information for the current resource.  For a collection
+of contacts, here is what a `_links` property might look like in a HAL response:
+
+.A HAL `_links` property
+[source, json]
+----
+ "_links": {
+   "self": { "href": "/contacts" },
+   "next": { "href": "/contacts?page=2" },
+   "find": { "href": "/contacts{?id}", "templated": true }
+----
+
+The `_embedded` property is used to enclose other resources, such as a collection of contacts with their own HAL
+controls.  In the case of our collection of contacts, this would include the details of each contact, as well as
+nested `_links` and/or `_embedded` entries within them.
+
+If we were to add HAL support to the contacts Data API we built in Chapter 9, we woudl add the `_links` property as
+a top level property in our response, and move the `contacts` property inside of the `embedded_` property.  Our
+response might look something like this:
+
+.Updating our Contacts Data API to include HAL controls
+[source, json]
+----
+{
+  "_links": {
+    "self": {
+      "href": "/contacts"
+    },
+    "next": {
+      "href": "/contacts?page=2"
+    },
+    "find": {
+      "href": "/contacts{?id}",
+      "templated": true
+    },
+    "_embedded": {
+      "contacts": [
+        {
+          "_links": {
+            "self": {
+              "href": "/contacts/2"
+            }
+          },
+          "email": "carson@example.comz",
+          "errors": {},
+          "first": "Carson",
+          "id": 2,
+          "last": "Gross",
+          "phone": "123-456-7890"
+        }
+      ]
+    }
+  }
+}
+----
+
+Our JSON API now includes hypermedia controls!  The top level `_links` property includes links to both the current
+and next page of contacts.  And, within the `_embedded` property, you can see nested `_links` properties for the
+contacts, with a "self" link to the URL for the given, embedded contact.  Very cool!
+
+This approach to building a JSON API exposes a general, uniform API to the outside world, and a proper hypermedia
+client will be able to work with these resources without any deep understanding of the internal meaning of the data.
+
+=== Creating Your Own Hypermedia Format
+
+Another approach, one championed by Mark Amundsen, is to build your _own_ hypermedia.  This may sound a bit crazy at
+first, but Mark has written a series of books on exactly this topic.  One, in particular, that we can recommend is
+"Restful Web Clients", which goes over the design of both good hypermedia APIs as well as how to write good hypermedia
+*clients* for those APIs.
+
+In our experience, the idea of hypermedia APIs are fairly clear to most developers.  However, understanding how to
+create a proper hypermedia *client* is a tricky, and much less discussed part of the hypermedia puzzle.  One of the reasons we
+are so excited about HyperView, and were thrilled to have Adam Stepinski, the creator of HyperView, join us as a co-author
+of this book, is because he did the hard work of not only defining a hypermedia format, but also of creating a hypermedia
+client that can work with that format.  By creating both sides of the hypermedia puzzle for mobile application, Adam has
+made HyperView a far more practical and useful technology!
+
+=== Summary
+
+* In this book we've looked at two hypermedia-based technologies in depth: htmx and HyperView
+* There are other hypermedia-oriented libraries out there worth considering, especially for web development. Unpoly
+  and Hotwire are two popular ones.
+* There are hypermedia beyond HTML, such as Atom, a hypermedia for representing feeds of articles and HAL, as simple
+  hypermedia format for enhancing your JSON APIs with hypermedia controls.
+* If you are ambitious, you might even consider creating your own hypermedia format and client!

@@ -1,5 +1,5 @@
 = Hypermedia In Action
-:chapter: 5
+:chapter: 6
 :sectnums:
 :figure-caption: Figure {chapter}.
 :listing-caption: Listing {chapter}.
@@ -134,7 +134,8 @@ In addition to familiar ergonomics, XML is compatible with server-side rendering
 For example, Jinja2 is perfectly suited as a templating library to render HXML, as we'll see later in this chapter.
 The familiarity of XML and the ease of integration on the backend make it simple to adopt in both new and existing codebases.
 
-```
+[source,xml]
+----
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles />
@@ -148,7 +149,7 @@ The familiarity of XML and the ease of integration on the backend make it simple
     </body>
   </screen>
 </doc>
-```
+----
 
 htmx fill in the "missing parts of HTML" to enable rich web app experiences.
 If HTML was designed today, I believe the ideas of htmx would be part of the standrd spec, and natively supported by every browser without the need for a 3rd party JS library.
@@ -240,21 +241,28 @@ Then, we'll re-build our contacts app in Hyperview.
 Like I mentioned above, HXML was designed to feel natural to web developers coming from HTML.
 Let's take a closer look at the "Hello World" app defined in HXML:
 
-```
-<doc xmlns="https://hyperview.org/hyperview">
-  <screen>
+[source,xml]
+----
+<doc xmlns="https://hyperview.org/hyperview"> <1>
+  <screen> <2>
     <styles />
-    <body>
-      <header>
+    <body> <3>
+      <header> <4>
         <text>My first app</text>
       </header>
-      <view>
-        <text>Hello World!</text>
+      <view> <5>
+        <text>Hello World!</text> <6>
       </view>
     </body>
   </screen>
 </doc>
-```
+----
+<1> The root element of the HXML app
+<2> The element representing a screen of the app
+<3> The element representing the UI of the screem
+<4> The element representing the top header of the screen
+<5> A wrapper element around the content shown on the screen
+<6> The text content shown on the screen
 
 Nothing too strange here, right?
 The base syntax should be immediately familiar.
@@ -312,24 +320,90 @@ The physical properties of a phone screen (long & vertical) and the intuitive ge
 
 HXML has dedicated elements for representing lists and items.
 
-```
-<list>
-  <item>
-  </item>
-  <item>
+[source,xml]
+----
+<list> <1>
+  <item key="item1"> <2>
+    <text>My first item</text> <3>
+  </item>`
+  <item key="item2">
+    <text>My second item</text>
   </item>
 </list>
-```
+----
+<1> Element representing a list
+<2> Element representing an item in the list, with a unique key
+<3> The content of the item in the list.
 
-You might be asking, "why do we need a custom syntax for lists of items? Can't we just use a bunch of `<view>` elements?".
+Lists are represented with two new elements.
+The `<list>` wraps all of items in the list.
+It can be styled like a generic `<view>` (width, height, etc).
+A `<list>` element should only contain `<item>` elements.
+Of course, these represent each unique item in the list.
+Note that `<item>` is required to have a `key` attribute, which is unique among all items in the list.
+
+You might be asking, "why do we need a custom syntax for lists of items?
+Can't we just use a bunch of `<view>` elements?".
+Yes, for lists with a small number of items, using nested `<views>` will work quite well.
+However, often the number of items in a list can be long enough to require optimizations to support smooth scrolling interactions.
+Consider browsing a feed of posts in a social media app.
+As you keep scrolling through the feed, it's not unusual for the app to show hundreds if not thousands of posts.
+At any time, you can flick your finger to scroll to almost any part of the feed.
+Mobile devices tend to be memory-constrained.
+Keeping the fully-rendered list of items in memory could consume more resources than available.
+That's why both iOS and Android provide APIs for optimized list UIs.
+These APIs know which part of the list is currently on-screen. To save memory, they clear out the non-visible list items, and recycle the item UI objects to conserve memory.
+
+By using explicit `<list>` and `<item>` elements in HXML, the Hyperview client knows to use these optimized list APIs to make your app more performant.
+
+It's also worth mentioning that HXML supports section lists.
+Section lists are useful for building screens like a list of contacts, where contacts are alphabetized and grouped in a section by their starting letter.
+
+[source,xml]
+----
+<section-list> <1>
+  <section> <2>
+    <section-title> <3>
+      <text>A</text>
+    </section-title>
+    <item key="1"> <4>
+      <text>Aaron</text>
+    </item>
+    <item key="2">
+      <text>Adam</text>
+    </item>
+  </section>
+
+  <section> <5>
+    <section-title>
+      <text>B</text>
+    </section-title>
+    <item key="3">
+      <text>Bart</text>
+    </item>
+  </section>
+</section-list>
+----
+<1> Element representing a list with sections
+<2> The first section of contacts with names that begin with the letter "A"
+<3> Element for the title of the section, rendering text of the letter "A"
+<4> An item representing a contact that belongs to this section.
+<5> A section for contacts with names that begin with "B".
+
+You'll notice a couple of differences between `<list>` and `<section-list>`.
+The section list element only contains `<section>` elements, representing a group of items.
+A section can contain a `<section-title>` element. This is used to render some UI that acts as the header of the section.
+This header is "sticky", meaning it stays on screen while scrolling through items that belong to the corresponding section.
+Finally, `<item>` elements act the same as in the regular list, but can only appear within a `<section>`.
 
 ==== Images
 
 Showing images in Hyperview is pretty similar to HTML, but there are a few differences.
 
-```
+[source,xml]
+----
 <image source="/profiles/1.jpg" style="avatar" />
-```
+----
 
 The `source` attribute specifies how to load the image.
 Like in HTML, the source can be an absolute or relative URL.
@@ -337,9 +411,10 @@ Additionally, the source can be an encoded data URI, for example `data:image/png
 However, the source can also be a "local" URL, refering to an image that is bundled as an asset in the mobile app.
 The local URL is prefixed with `./`:
 
-```
+[source,xml]
+----
 <image source="./logo.png" style="logo" />
-```
+----
 
 Using Local URLs is an optimization.
 Since the images are on the mobile device, they don't require a network request and will appear quickly.
@@ -356,34 +431,114 @@ To maintain a static layout, HXML requires the dimensions to be known before the
 
 === Inputs
 
+There's a lot to cover about inputs in Hyperview.
+Since this is meant to be an introduction and not an exhaustive resource, I'll highlight just a few types of inputs.
+Let's start with an example of the simplest type of input, a text field.
+
+[source,xml]
+----
+<text-field
+  name="first_name" <1>
+  style="input" <2>
+  value="Adam" <3>
+  placeholder="First name" <4>
+/>
+----
+<1> The name used when serializing data from this input
+<2> The style class applied to the UI element
+<3> The currently value set in the field
+<4> A placeholder to display when the value is empty
+
+This element should feel familiar to anyone who's created a text field in HTML.
+One difference is that most inputs in HTML use the `<input>` element with a `type` attribute, eg `<input type="text">`.
+In Hyperview, each input has a unique name, in this case `<text-field>`.
+By using different names, we can use more expressive XML to represent the input.
+
+For example, let's consider a case where we want to render a UI that lets the user select one among several options.
+In HTML, we would use a radio button input, something like `<input type="radio" name="choice" value="option1" />`.
+Each choice is represented as a unique input element.
+This never struck me as ideal.
+Most of the time, radio buttons are grouped together to affect the same name.
+The HTML approach leads to a lot of boilerplate (duplication of `type="radio"` and `name="choice"` for each choice).
+Also, unlike radio buttons on desktop, mobile OSes don't provide a strong standard UI for selecting one option.
+Most mobile apps use richer, custom UIs for these interactions.
+So in HXML, we implement this UI using an element called `<select-single>`:
+
+[source,xml]
+----
+<select-single name="choice"> <1>
+  <option value="option1"> <2>
+    <text>Option 1</text> <3>
+  </option>
+  <option value="option2">
+    <text>Option 2</text>
+  </option>
+</select-single>
+----
+<1> Element representing an input where a single choice is selected. The name of the selection is defined once here.
+<2> Element representing one of the choices. The choice value is defined here.
+<3> The UI of the selection. In this example, we use text, but we can use any UI elements.
+
+The `<select-single>` element is the parent of the input for selecting one choice out of many.
+This element contains the `name` attribute used when serializing the selected choice.
+`<option>` elements within `<select-single>` represent the available choices.
+Note that each `<option>` element has a `value` attribute.
+When pressed, this will be the selected value of the input.
+The `<option>` element can contain any other UI elements within it.
+This means that we're not hampered by rendering the input as a list of radio buttons with labels.
+We can render the options as radios, tags, images, or anything else that would be intuitive for our interface.
+HXML styling supports modifiers for pressed and selected states, letting us customize the UI to highlight the selected option.
+
+Like I mentioned, describing all features of inputs in HXML would take an entire chapter.
+Instead, I'll summarize a few other input elements and their features.
+
+- `<select-multiple>` works like `<select-single>`, but it supports toggling multiple options on & off. This replaces checkbox inputs in HTML.
+- The `<switch>` element renders a on/off switch that is common in mobile UIs
+- The `<date-field>` element supports entering in specific dates, and comes with a wide range of customizations for formatting, settings ranges, etc.
+
+Two more things to mention about inputs.
+First is the `<form>` element.
+The `<form>` element is used to group together inputs for serialization.
+When a user takes an action that triggers a backend request, the Hyperview client will serialize all inputs in the surrounding `<form>` and include them in the request.
+This is true for both `GET` and `POST` requests.
+We will cover this in more detail when talking about behaviors later in this chatper.
+Also later in this chapter, I'll talk about support for custom elements in HXML.
+With custom elements, you can also create your own input elements.
+Custom input elements allow you to build incredible powerful interactions with simple XML syntax that integrates well with the rest of HXML.
+
 === Styling
 
 So far, we haven't mentioned how to apply styling to all of the HXML elements.
 We've seen from the Hello World app that each `<screen>` can contain a `<styles>` element.
 Let's re-visit the Hello World app and fill out the `<styles>` element.
 
-```
+[source,xml]
+----
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
-    <styles>
-      <style class="body" flex="1" flexDirection="column" />
+    <styles> <1>
+      <style class="body" flex="1" flexDirection="column" /> <2>
       <style class="header" borderBottomWidth="1" borderBottomColor="#ccc" />
       <style class="main" margin="24" />
       <style class="h1" fontSize="32" />
       <style class="info" color="blue" />
     </styles>
 
-    <body style="body">
+    <body style="body"> <3>
       <header style="header">
         <text style="info">My first app</text>
       </header>
       <view style="main">
-        <text style="h1 info">Hello World!</text>
+        <text style="h1 info">Hello World!</text> <4>
       </view>
     </body>
   </screen>
 </doc>
-```
+----
+<1> Element encapsulating all of the styling for the screen
+<2> Example of a definition of a style class for "body"
+<3> Applying the "body" style class to a UI element
+<4> Example of applying multiple style classes (h1 and info) to an element
 
 You'll note that in HXML, styling is part of the XML format, rather than using a separate language like CSS.
 However, we can draw some parallels between CSS rules and the `<style>` element.
@@ -418,20 +573,23 @@ Let's translate these requirements into XML:
 
 Using these custom XML elements, an instance of the map in our app might look like this:
 
-```
+[source,xml]
+----
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <body>
       <view>
         <text>Hello World!</text>
-        <area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1">
-          <marker latitude="37.8118" longitude="-122.4177" />
+        <area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1"> <1>
+          <marker latitude="37.8118" longitude="-122.4177" /> <2>
         </area>
       </view>
     </body>
   </screen>
 </doc>
-```
+----
+<1> Custom element representing the area rendered by the map
+<2> Custom element representing a marker rendered at specific coordinates on the map
 
 The syntax feels right at home among the core HXML elements.
 However, there's a potential problem.
@@ -453,38 +611,100 @@ This namespace could be anything, but remember the goal is to use something uniq
 Using your company/app domain is a good way to guarantee uniqueness.
 Now that we have a namespace and prefix, we need to use it for our elements:
 
-```
-<doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map">
+[source,xml]
+----
+<doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map"> <1>
   <screen>
     <body>
       <view>
         <text>Hello World!</text>
-        <map:area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1">
-          <map:marker latitude="37.8118" longitude="-122.4177" />
-        </map:area>
+        <map:area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1"> <2>
+          <map:marker latitude="37.8118" longitude="-122.4177" /> <3>
+        </map:area> <4>
       </view>
     </body>
   </screen>
 </doc>
-```
+----
+<1> Definition of namespace aliased to "map"
+<2> Adding the namespace to the "area" start tag
+<3> Adding the namespace to the "marker" self-closing tag
+<4> Adding the nemsapce to the "area" end tag
 
 That's it! If we introduced a custom charting library with "area" and "marker" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate `<map:area>` from `<chart:area>`.
 
 At this point you might be wondering, "how does the Hyperview client know to render a map when my doc includes `<map:area>`"?
 It's true, so far we only defined the custom element format, but we haven't implemented the element as a feature in our app.
-We will get into the details of implementing custom elements later in this chapter.
+We will get into the details of implementing custom elements later in the next chapter.
+
 
 === Behaviors
 
-* When it comes to interactions, that’s where HXML starts to diverge from HTML
-   * HTML has two primary ways of interaction:
-      * Click a link: GET request to load a new page
-      * Click a form submit button: POST (usually) request to load a new page
-   * These ways of interaction are not enough to build rich UIs. Interactions (clicks, form submits) are tightly coupled to a single action (request a new page).
-   * htmx (and Intercooler before it) broke that paradigm:
-      * Interactions and actions are decoupled via triggers
-      * Actions can modify the current page, not just request a new page
-   * This allows a wide range of new possibilities to build rich HDAs.
+As discussed in earlier chapters, HTML supports two basic types of interactions:
+
+- Clicking a hyperlink: the client will make a GET request and render the response as a new web page.
+- Submitting a form: the client will make a (typically) POST request with the serialized content of the form, and render the response as a new web page.
+
+Clicking hyperlinks and submitting forms is enough to build simple web applications.
+But relying on just these two interactions limits our ability to build richer UIs.
+What if we want something to happen when the user mouses over a certain element, or perhaps when they scroll some content into the viewport?
+We can't do that with basic HTML.
+Additionally, both clicks and form submits result in loading a full new web page.
+What if we only want to update a small part of the current page?
+This is a very common scenario in rich web applications, where users expect to fetch and update content without navigating to a new page.
+
+So with basic HTML, interactions (clicks and submits) are limited and tightly coupled to a single action (loading a new page).
+Of course, using JavaScript, we can extend HTML and add some new syntax to support our desired interactions.
+Htmx (and Intercooler before it) do exactly that with new attributes that can be added to any element:
+
+- Interactions can be added to any element, not just links and forms.
+- The interaction can be triggered via a click, submit, mouseover, or any other JavaScript event.
+- The actions resulting from the trigger can modify the current page, not just request a new page.
+
+By decoupling elements, triggers, and actions, htmx allows us to build rich Hypermedia-driven applications in a way that feels very compatible with HTML syntax and server-side web development.
+
+HXML takes the idea of defining interactions via triggers & actions and builds them into the spec.
+We call these interactions "behaviors".
+We use a special `<behavior>` element to define then.
+Here's an example of a simple behavior that pushes a new mobile screen onto the navigation stack:
+
+[source,xml]
+----
+<text>
+  <behavior <1>
+    trigger="press" <2>
+    action="push" <3>
+    href="/next-screen" <4>
+  />
+  Press me!
+</text>
+----
+<1> The element encapsulating an interaction on the parent `<text>` element.
+<2> The trigger that will execute the interaction, in this case pressing the `<text>` element.
+<3> The action that will execute when triggered, in this case pushing a new screen onto the current stack.
+<4> The href to load on the new screen.
+
+Let's break down what's happening in this example.
+First, we have a `<text>` element with the content "Press me!".
+This is something we're familiar with from the previous section in this chapter.
+However, the `<text>` element contains a new child element, `<behavior>`.
+The `<behavior>` element represents an interaction on the parent `<text>` element.
+It contains several attributes that defines what should happen (the action) and when it should happen (the trigger).
+First, the `trigger` attribute is set to `press`.
+As you can imagine, that means the action of this behavior will happen when the `<text>` element is pressed.
+Other triggers include:
+
+  - `longPress`: triggers the action when the user presses and holds on the element. This is useful for providing extra actions for power-users.
+  - `visible`: triggers the action when the element is visible in the viewport. This is useful to load extra content when scrolling through a list.
+  - `refresh`: triggers the action when the user does a "pull-to-refresh" gesture on the element. Most commonly used on `<body>`, `<list>`, and `<section-list>` elements.
+  - and many more for interactions with inputs
+
+Next, the `action` attribute is set to `push`.
+This tells the Hyperview client that when 
+
+
+TODO
+
 * HXML builds in this idea of triggers, actions and targets into the spec itself. Collectively, we refer to these as behaviors.
    * Navigation behaviors, equivalent to links in HTML.
       * Can push new screen onto a stack, or open as a modal
@@ -498,69 +718,3 @@ We will get into the details of implementing custom elements later in this chapt
       * <Show example of triggering share sheet or dialog>
    * Actions are extensible, developers can create their own
       * <Show example of custom behavior>
-
-
-== Building a Contacts App With Hyperview
-* We will take our existing Contacts web app, and transform it to a mobile app just by tweaking the backend responses.
-* To enhance our app and make it more native, we will extend the Hyperview client with custom components and behaviors.
-* Finally, our Contacts app can serve both a web app and mobile app, just by tweaking the Hypermedia response!
-
-=== Basics
-   * Add support for returning either HTML or XML based on request
-   * Create base layout templates
-   * Set up a demo Hyperview client (using Expo)
-* Contacts screen:
-   * Convert to <list> and <items>
-   * Add behavior to open details
-   * Pull to refresh
-   * Add infinite scroll
-* Contact view:
-   * Show data and buttons to edit/delete
-   * Edit button: replace data with form
-      * On submit: show spinner, then go back
-   * Delete button: show spinner, then go back
-   * Problem: Contacts screen is not updated!
-      * Solution: add event dispatch, contacts screen listens to updates
-
-
-=== Extending the Client
-* Problem: how to show a toast confirming the action?
-   * Remember, no scripting to add functionality
-   * Need to extend Hyperview with a toast component
-   * Find a RN library, show how to wrap it as custom component.
-
-* Problem: we want to call/email our contacts.
-  * Remember, no scripting to add functionality
-  * Need to extend Hyperview with behaviors for sms, call, email
-  * Find a RN library, show how to wrap it as custom behaviors.
-
-* With custom components and behaviors, we can do almost anything a native app can do.
-* Note how we cleanly extend the client:
-  * HXML remains pure XML, no scripts
-  * We've essentially added features to the Hyperview "browser" that we need
-
-
-=== One Backend, Multiple Hypermedias
-* We turned out simple Contacts app into a native mobile app
-  * mostly, we changed templates from HTML to HXML
-* But the app doesn't work on the web anymore.
-* Can we use the same backend for both a rich web app and a native mobile app?
-* Yes! The same backend logic can be used for both, we just need to respond with HTML or HXML based on the client.
-* There are a couple of relevant approaches.
-* The important thing is to detect whether the client speaks HTML or HXML.
-  * Luckily, this is what the HTTP Accept header is for!
-  * HV client uses two headers: one for full docs, and one for fragments
-* Using the Accept header, we know if the client is a web browser of mobile app using Hyperview, and we can respond with HTML or HXML.
-* But what's the best way to organize our code? Two approaches to consider with different tradeoffs:
-
-* Approach 1: share the same view, but select template based on header
-  * easiest approach, minor changes
-  * works well if the interactions on both platforms is the same
-  * may not be the best approach if the two platforms have different behaviors
-
-* Approach 2: share the same model logic, but create separate views
-  * some duplication required to parse requests
-  * the context can be uniquely crafted for the given platform
-
-
-== Summary

@@ -580,11 +580,11 @@ These factors make our menu annoying and even unusable for many people. Let's fi
     x-on:keydown.up="document.activeElement.previousElementSibling?.focus()" <2>
     x-on:keydown.down="document.activeElement.nextElementSibling?.focus()" <3>
     x-on:keydown.space="document.activeElement.click()" <4>
-    x-effect="open ? $el.firstElementChild().focus() : null" <5><6>
-    x-on:keydown="key === 'Home'
-      ? $el.firstChild.focus()
-      : key === 'End'
-      ? $el.lastChild.focus()
+    x-effect="if (open) requestAnimationFrame(() => $el.firstElementChild.focus())" <5><6>
+    x-on:keydown="$event.key === 'Home'
+      ? $el.firstElementChild.focus()
+      : $event.key === 'End'
+      ? $el.lastElementChild.focus()
       : null" <7>
     >
     <a role="menuitem" <8>
@@ -605,7 +605,7 @@ These factors make our menu annoying and even unusable for many people. Let's fi
 <9> Make the menu items non-tabbable
 
 
-`x-effect` is a cool attribute that lets you perform side-effects when a piece of element state changes. It automatically detects which state is accessed in the effect.
+`x-effect` is a cool attribute that lets you perform side-effects when a piece of element state changes. It automatically detects which state is accessed in the effect. However, it can also complicate our code --- in this example, we need to use `requestAnimationFrame` because otherwise, the effect is executed before the `x-show` attribute reveals the element to focus.
 
 I'm pretty sure that covers all our bases. That's a lot of code! But it's code that encodes a lot of behavior. Not to mention that we still made some assumptions to make our code shorter:
 
@@ -639,7 +639,7 @@ function menu() {
     "x-on:keydown.up"() { document.activeElement.previousElementSibling?.focus() },
     "x-on:keydown.down"() { document.activeElement.nextElementSibling?.focus() },
     "x-on:keydown.space"() { document.activeElement.click() },
-    "x-effect"() { if (this.open) this.$el.firstElementChild().focus() },
+    "x-effect"() { if (this.open) this.$el.firstElementChild.focus() },
     "x-on:keydown"(event) { <3>
       if (event.key === 'Home') $el.firstChild.focus()
       else if (event.key === 'End') $el.lastChild.focus()
@@ -833,7 +833,14 @@ Array property access:: In _hyperscript, accessing a property on an array (other
 
 === Reusable behavior in _hyperscript
 
-// TODO: talk about behaviors
+The main mechanism for reuse in \_hyperscript is _behaviors_ --- named collections of _features_ (event listeners, function definitions etc.) that can be _installed_ as follows:
+
+[source,html]
+----
+
+----
+
+https://github.com/benpate/hyperscript-widgets
 
 
 == Using off-the-shelf components

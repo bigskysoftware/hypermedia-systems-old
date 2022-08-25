@@ -1,0 +1,73 @@
+= Hypermedia In Action
+:chapter: 7
+:sectnums:
+:figure-caption: Figure {chapter}.
+:listing-caption: Listing {chapter}.
+:table-caption: Table {chapter}.
+:sectnumoffset: 2
+// line above:  :sectnumoffset: 5  (chapter# minus 1)
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:
+
+= Building a Contacts App With Hyperview
+* We will take our existing Contacts web app, and transform it to a mobile app just by tweaking the backend responses.
+* To enhance our app and make it more native, we will extend the Hyperview client with custom components and behaviors.
+* Finally, our Contacts app can serve both a web app and mobile app, just by tweaking the Hypermedia response!
+
+== Basics
+   * Add support for returning either HTML or XML based on request
+   * Create base layout templates
+   * Set up a demo Hyperview client (using Expo)
+* Contacts screen:
+   * Convert to <list> and <items>
+   * Add behavior to open details
+   * Pull to refresh
+   * Add infinite scroll
+* Contact view:
+   * Show data and buttons to edit/delete
+   * Edit button: replace data with form
+      * On submit: show spinner, then go back
+   * Delete button: show spinner, then go back
+   * Problem: Contacts screen is not updated!
+      * Solution: add event dispatch, contacts screen listens to updates
+
+
+== Extending the Client
+* Problem: how to show a toast confirming the action?
+   * Remember, no scripting to add functionality
+   * Need to extend Hyperview with a toast component
+   * Find a RN library, show how to wrap it as custom component.
+
+* Problem: we want to call/email our contacts.
+  * Remember, no scripting to add functionality
+  * Need to extend Hyperview with behaviors for sms, call, email
+  * Find a RN library, show how to wrap it as custom behaviors.
+
+* With custom components and behaviors, we can do almost anything a native app can do.
+* Note how we cleanly extend the client:
+  * HXML remains pure XML, no scripts
+  * We've essentially added features to the Hyperview "browser" that we need
+
+
+== One Backend, Multiple Hypermedias
+* We turned out simple Contacts app into a native mobile app
+  * mostly, we changed templates from HTML to HXML
+* But the app doesn't work on the web anymore.
+* Can we use the same backend for both a rich web app and a native mobile app?
+* Yes! The same backend logic can be used for both, we just need to respond with HTML or HXML based on the client.
+* There are a couple of relevant approaches.
+* The important thing is to detect whether the client speaks HTML or HXML.
+  * Luckily, this is what the HTTP Accept header is for!
+  * HV client uses two headers: one for full docs, and one for fragments
+* Using the Accept header, we know if the client is a web browser of mobile app using Hyperview, and we can respond with HTML or HXML.
+* But what's the best way to organize our code? Two approaches to consider with different tradeoffs:
+
+* Approach 1: share the same view, but select template based on header
+  * easiest approach, minor changes
+  * works well if the interactions on both platforms is the same
+  * may not be the best approach if the two platforms have different behaviors
+
+* Approach 2: share the same model logic, but create separate views
+  * some duplication required to parse requests
+  * the context can be uniquely crafted for the given platform

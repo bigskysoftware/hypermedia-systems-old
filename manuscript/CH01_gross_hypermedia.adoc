@@ -42,14 +42,16 @@ system will be.
 
 == So, What Is Hypermedia?
 
-[quote, Wikipedia, https://en.wikipedia.org/wiki/Hypertext]
+[quote, Ted Nelson, https://archive.org/details/SelectedPapers1977/page/n7/mode/2up]
 ____
-The English prefix "hyper-" comes from the Greek prefix "ὑπερ-" and means "over" or "beyond"...
-It signifies the overcoming of the previous linear constraints of written text.
+Hypertexts: new forms of writing, appearing on computer screens, that will branch or perform at the reader’s
+command. A hypertext is a non-sequential piece of writing; only the computer display makes it practical.
 ____
 
 Right.  So what is hypermedia?  Simply, it is a media, for example a text, that includes non-linear branching from one location
-in the media to another, via, for example, hyperlinks embedded that the media.
+in the media to another, via, for example, hyperlinks embedded that the media.  The prefix "hyper-" derives from the Greek prefix
+"ὑπερ-" which means "beyond" or "over", indicating that hypermedia _goes beyond_ normal, passively consumed media.  Things
+like hyperlinks are _hypermedia controls_, that is, elements that allow the reader to control and interact with the hypermedia.
 
 You are probably more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-set of hypermedia and much of this book is going to discuss how to build modern web applications with HTML, the
@@ -538,9 +540,10 @@ novel and ubiquitous technology.
 
 == Summary
 
-* Hypermedia is a unique technology for building web applications
-* Using Data APIs, which is very common in today's web development world, is very dramatically different
-  than the hypermedia approach
+* Hypermedia is a unique technology that extends the concept of "media" to include non-linear user interaction, and
+  has shown itself to be a powerful technology for building large-scale, distributed applications
+* Using Data APIs, that is, APIs that do not utilize a hypermedia like HTML, is very common in today's web development
+  world, has significantly different characteristics than the hypermedia approach
 * Hypermedia lost out to SPAs & Data APIs due to interactivity limitations, not due to fundamental limitations of
   the concept
 * There is an emerging class of Hypermedia Oriented front-end libraries that recenter hypermedia as the core technology

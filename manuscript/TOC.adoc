@@ -92,24 +92,27 @@
 .. 10.6 Summary
 
 . 11 Developing With htmx
-.. 11.1 Additional Attributes
-.. 11.2 Debugging
-.. 11.3 Security Concerns
-.. 11.4 Understanding the htmx event model
-.. 11.5 Understanding the extension model
+.. 11.1 Getting Deeper Into htmx
+.. 11.2 htmx Attributes
+.. 11.3 Events
+.. 11.4 HTTP Requests & Responses
+.. 11.5 Updating Other Content
+.. 11.6 Debugging
+.. 11.7 Security Considerations
+.. 11.8 Configuring
+.. 11.9 Summary
 
-. 12 Other Hypermedia-Oriented Javascript Libraries
+. 12 Other Hypermedia-Oriented Technologies
 [none]
-.. 11.1 Unpoly
-.. 11.2 Hotwire
-.. 11.3 jQuery
-.. 11.4 VanillaJS
-.. 11.5 Summary
+.. 12.1 Unpoly
+.. 12.2 Hotwire
+.. 12.3 jQuery
+.. 12.4 VanillaJS
+.. 12.5 Summary
 
-. 12 Hypermedia: A Return To The Web's Roots
+. 13 Conclusion
 [none]
-.. 12.1 Trends in Software Development
-.. 12.2 Complexity Sells, Simplicity Endures
-.. 12.3 Summary
+.. 13.1 Hypermedia Reconsidered
+.. 13.3 Pausing, And Reflecting
 
 . Appendix 1: A Review of Chapter 5 of Roy Fielding's Dissertation On The Web

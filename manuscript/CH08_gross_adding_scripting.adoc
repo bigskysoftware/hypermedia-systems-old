@@ -343,7 +343,41 @@ That's enough fun, however, let's get to work on ContactApp.
 
 .Event delegation
 ****
-TODO explain event delegation
+Event delegation is a technique that makes use of bubbling in DOM events both as a form of code organization and to reduce memory usage, in situations where a large number of elements need to respond to an event in the same way. Instead of attaching event listeners to each individual element, we attach a single listener to a shared parent element. The parent listener determines which element the event arrived through.
+
+The following is how event delegation would be usually implemented:
+
+.With event delegation
+[source,js]
+----
+ul.addEventListener('click', e => {
+	const li = e.target.closest('li')
+	if (!li) return
+
+	doThingWith(li)
+})
+----
+
+whereas the alternative would be:
+
+.Without event delegation
+[source,js]
+----
+ul.querySelector('li').forEach(li => {
+  li.addEventListener('click', e => {
+    doThingWith(li)
+  })
+})
+----
+
+.Benefits of event delegation
+* If elements are dynamically added, there is no need to add the event listener onto them (this usually requires extracting the listener to a named function, and code repeated in every place where events are added).
+* Only one event listener takes up space in memory.
+* When code is inline in HTML, not using event delegation means code is repeated 
+
+.Drawbacks of event delegation
+* The listener will execute for every click in a subtree (or other event type) when not all may be relevant.
+* The listener will stay around even if no relevant elements remain.
 ****
 
 
@@ -759,7 +793,7 @@ TODO: Counter in _hyperscript
 
 Seasoned JavaScript programmers are often suspicious of _hyperscript: There have been many "natural language programming" projects that usually target non-programmers and beginner programmers, assuming that being able to read code will give you the ability to write it as well. (The authors' views on the usefulness of natural language for teaching programming are nuanced and out of scope for this book). It should be noted that _hyperscript is openly a programming language, in fact, its syntax is inspired in many places by the speech patterns of web developers. In addition, _hyperscript's readability is achieved not through complex heuristics or NLP, but common parsing tricks and a culture of readability.
 
-As you can see in the above example, _hyperscript does not shy away from using punctuation when appropriate. We'll introduce every bit of syntax we use as we go. Here's an annotated version of the script above:
+As you can see in the above example, _hyperscript does not shy away from using punctuation when appropriate. We'll come across quite a lot of new syntax we use as we go. To get our feet wet, here's an annotated version of the script above:
 
 ****
 TODO: annotate counter example
@@ -837,11 +871,118 @@ The main mechanism for reuse in \_hyperscript is _behaviors_ --- named collectio
 
 [source,html]
 ----
+<div _="install ToggleableMenu(button: .menu-button in me, menu: #contents)"> <1>
+  <button class="menu-button">Options</button>
+  <div id="contents">
+----
+<1> Behaviors can accept arguments.
 
+A nice aspect of _hyperscript behaviors is that any element's script can be refactored into a reusable behavior on a copy-paste basis:
+
+.The search bar keyboard shortcut code, extracted into a behavior
+----
+behavior SearchShortcut
+  on keydown[shiftKey and code is 'KeyS'] from the window
+    focus() me
+  end
+end
 ----
 
-https://github.com/benpate/hyperscript-widgets
+(TODO: positive adjective) examples of behavior usage can be found on Ben Pate's _Hyperscript Widgets_ collection (https://github.com/benpate/hyperscript-widgets). Reproduced here is a rich text editor implemented in 75 lines:
 
+.wysiwyg._hs, Git commit dd4b7d3 retrieved on 25 August
+----
+behavior wysiwyg(name)
+
+	-- WYSIWYG setup
+	init 
+		-- save links to important DOM nodes
+		set element form to beep! closest <form />
+		set element input to beep! form.elements[name]
+		set element editor to beep! first <.wysiwyg-editor /> in me
+
+		-- configure related DOM nodes
+		add [@tabIndex=0] to element editor
+		add [@contentEditable=true] to element editor
+
+		tell <button/> in me
+			add [@type="button"]
+		end
+
+	-- Clicking a toolbar button triggers a command on the content
+	on click(target)
+
+		if target's [@data-command] is null then 
+			set target to closest <[data-command]/> to target
+			if target is null then
+				exit
+			end
+		end
+
+		set command to target's [@data-command]
+
+		-- special handling for inertLink
+		if command is "createLink" then
+			get prompt("Enter Link URL")
+			call document.execCommand(command, false, result)
+			exit
+		end
+
+		-- fall through to all other commands
+		set value to target's [@data-command-value]
+		call document.execCommand(command, false, value)
+	end
+
+	-- Show the toolbar when focused
+	on focus(target) from <.wysiwyg-editor /> in me
+
+		tell <.wysiwyg-toolbar /> in me
+			remove [@hidden]
+		end
+	end
+
+	-- Hide the toolbar when blured
+	on blur from <.wysiwyg-editor /> in me
+
+		wait 200ms
+		if (<:focus/> in me) is empty then
+			tell <.wysiwyg-toolbar /> in me
+				add [@hidden=true]
+			end
+		end
+	end
+
+	-- Autosave the WYSIWYG after 15s of inactivity
+	on input debounced at 15s
+		send updated to form
+	end
+	
+	-- Autosave the WYSIWYG whenever it loses focus
+	on blur from <.wysiwyg-editor />
+		send updated to form
+	end
+
+	-- Push the value directly into the XHR request before it's sent.
+	on htmx:configRequest(parameters) from closest <form/>
+		set value to the editor's innerHTML
+		Object.defineProperty(parameters, name, {value: value, writable:'true'})
+	end
+----
+
+You can try the editor on https://benpate.github.io/hyperscript-widgets/wysiwyg/[].
+
+* * *
+
+_hyperscript, being a whole programming language, goes a lot deeper than what was introduced here. Further information is available at https://hyperscript.org/docs[].
+
+[quote, "https://benpate.github.io/hyperscript-widgets/"]
+____
+In keeping with general htmx principles, we will endeavor to create code that is:
+
+* Usable
+* Accessible
+* Un-Scalable
+____
 
 == Using off-the-shelf components
 

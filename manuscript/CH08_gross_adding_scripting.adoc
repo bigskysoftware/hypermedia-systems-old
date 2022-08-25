@@ -60,7 +60,7 @@ However, listing "best practices" is rarely convincing or edifying (and often bo
 The important idea in the implementation of each of these features is that they are entirely client-side and don't exchange information with the server using, for example, JSON. This is what will keep them all within the bounds of a proper Hypermedia Driven Application.
 
 
-== Scripting languages for the Web
+== Scripting tools for the Web
 
 The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today. A bit of interesting internet lore, however, is that JavaScript was not always the only built-in option. As the quote from Roy Fielding above indicates, _applets_ written in other languages such as Java were considered part of the scripting infrastructure of the web. In addition, there was a brief period when Internet Explorer supported VBScript, a scripting language based on Visual Basic.
 
@@ -76,7 +76,7 @@ I bring this up because we are going to look at three different mechanisms for a
 Let's take a quick look at each of these scripting options so we know what we are dealing with.  As with CSS, we are not going to deep dive into any of these options: we are going to show just enough to give you a flavor of each and, we hope, spark your interest in looking into each of them more extensively.
 
 
-=== Vanilla JavaScript
+== Vanilla JavaScript
 
 [quote]
 No code is faster than no code.
@@ -190,7 +190,7 @@ TODO: expand on list of JS developments that prove us right
 ****
 
 
-==== Locality of Behavior
+=== Locality of Behavior
 
 Locality of Behavior (LoB) is a software design principle that we coined to describe the following characteristic of a piece of software:
 
@@ -260,7 +260,7 @@ So, should we go back to the `onclick` way of doing things? It certainly wins in
 Unfortunately, JavaScript and Locality of Behavior don't seem to mesh as well as we want them to. This is partly our fault, however --- it's important to be aware that LoB does not require behavior to be _defined_ at the use site, but merely invoked there. Keeping this in mind, it's possible to improve LoB while writing JS in a separate file, provided we have a reasonable system for structuring our JavaScript.
 
 
-==== RSJS
+=== RSJS
 
 RSJS ("Reasonable System for JavaScript Structure", https://ricostacruz.com/rsjs/) is a set of guidelines for JavaScript architecture targeted at "a typical non-SPA website". RSJS is a solution to the lack of a standard code style we mentioned earlier.
 
@@ -347,7 +347,7 @@ TODO explain event delegation
 ****
 
 
-==== Vanilla JavaScript in action: A confirmation dialog
+=== Vanilla JavaScript in action: A confirmation dialog
 
 Right now, clicking the `Delete` link on a contact instantly deletes it, making it prone to accidents. We'll write some JavaScript to add confirmation dialogs to elements and use it on the delete button.
 
@@ -417,7 +417,7 @@ TODO: talk about why we can't
 ****
 
 
-=== Alpine.js
+== Alpine.js
 
 Alpine.js (https://alpinejs.dev[]) is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
 
@@ -467,7 +467,7 @@ To attach event listeners, we use `x-on`:
 Would you look at that, we're done already! (It's almost as though we wrote a trivial example). What we created is, incidentally, nearly identical to the second code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
 
 
-==== `x-on:click` vs. `onclick`
+=== `x-on:click` vs. `onclick`
 
 The `x-on:click` attribute (or its shorthand `@click`) differs from the browser built-in `onclick` attribute in significant ways that make it much more useful:
 
@@ -479,7 +479,7 @@ The `x-on:click` attribute (or its shorthand `@click`) differs from the browser 
 * You can listen to custom events, such as those dispatched by htmx.
 
 
-==== Reactivity and templating
+=== Reactivity and templating
 
 As you can see, this code is much tighter than the VanillaJS implementation.  It helps that AlpineJS supports a notion
 of variables, allowing you to bind the visibility of the `span` element to a variable that both it and the button
@@ -487,7 +487,7 @@ can access.  Alpine allows for much more elaborate data bindings as well, it is 
 scripting library.
 
 
-==== Alpine in action: an overflow menu
+=== Alpine in action: an overflow menu
 
 An overflow menu only has one bit of state: whether it is open.
 
@@ -614,7 +614,7 @@ I'm pretty sure that covers all our bases. That's a lot of code! But it's code t
 
 As we need more features, it might make more sense to use a library --- for instance, GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
 
-==== Reusable behavior in Alpine
+=== Reusable behavior in Alpine
 
 Our menu component has a lot of attributes that will currently be repeated in every item of the table. This is hard to maintain when manually writing HTML and increases payload sizes when generating it via a template. We can rectify this using an nifty feature of the `x-bind` attribute:
 
@@ -726,7 +726,7 @@ You may notice that the markup for the `x-bind` style quite resembles RSJS. Comb
 Factoring our behavior in this way reduces the locality in our code, as it requires us to locate the `menu` and `toggleableMenu` functions to understand what our code does. You can use named files similarly to RSJS to somewhat alleviate this issue, but it's a tradeoff that needs to be considered.
 
 
-=== _hyperscript
+== _hyperscript
 
 While previous two examples are JavaScript-oriented, _hyperscript (https://hyperscript.org[], the underscore is part of the name but not pronounced) is a entire new scripting language for
 front-end development.  It has a completely different syntax than JavaScript, derived from an older language called
@@ -768,7 +768,7 @@ TODO: annotate counter example
 OK, maybe it is a little more than a little insane.  But fun!
 
 
-==== _hyperscript in action: a keyboard shortcut
+=== _hyperscript in action: a keyboard shortcut
 
 Since our keyboard shortcut focuses a search input, let's put the code on that search input. Here it is:
 
@@ -815,13 +815,25 @@ There's our code! Surprisingly terse for an English-like programming language, c
 
 [source,js]
 ----
-const search = document.querySelector("search")
+const search = document.querySelector("#search")
 window.addEventListener("keydown", e => {
-  if (e.shiftKey && e.code === "KeyS") {
-    search.focus();
-  }
+  if (e.shiftKey && e.code === "KeyS") search.focus();
 })
 ----
+
+
+=== Why a new programming language?
+
+Being an interpreter written in JavaScript, the _hyperscript runtime has a lot of overhead. One might wonder why it isn't implemented as a JavaScript library. A new programming language allows us to provide features and fix warts in a way that wouldn't be possible otherwise:
+
+Async transparency:: In _hyperscript, asynchronous functions (i.e. functions that return `Promise` instances) can be invoked as if they were synchronous. Changing a function from sync to async does not break any _hyperscript code that calls it. This is achieved by checking for a Promise when evaluating any expression, and suspending the running script if one exists (only the current event handler is suspended and the main thread is not blocked). JavaScript does not allow us to hook into expression evaluation at the level of granularity needed to achieve this.
+Array property access:: In _hyperscript, accessing a property on an array (other than `length` or a number) will return an array of the values of property on each member of that array --- in other terms, `a.name` is equivalent to `a.map(el => el.name)`. jQuery has a similar feature, but only for its own data structure.
+
+
+
+=== Reusable behavior in _hyperscript
+
+// TODO: talk about behaviors
 
 
 == Using off-the-shelf components

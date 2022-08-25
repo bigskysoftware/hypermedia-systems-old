@@ -182,12 +182,10 @@ The tight coupling between files in this simple example suggests that separation
 Our suspicion is validated by developments in the JS framework world:
 
 * JSX
-* Lit
+* LitHTML
 * CSS-in-JS
 * Single-File Components
-****
-TODO: expand on list of JS developments that prove us right
-****
+* Filesystem based routing
 
 
 === Locality of Behavior
@@ -445,9 +443,47 @@ In 9 lines of code, we have a generic confirmation library that we can use for a
 ****
 In the confirmation dialog code we wrote, we use `confirm()`, which is convenient, but displays a barebones dialog that cannot contain rich text. Can we write a similar script using a fancy alert dialog library, like SweetAlert2?
 
-*******
-TODO: talk about why we can't
-*******
+[source,js,highlight=4..5]
+----
+document.querySelectorAll("[data-confirm]")
+  .forEach(el => {
+    el.addEventListener("click", e => {
+      const result = await Swal.fire("Are you sure?", "", "question")
+      const didConfirm = result.isConfirmed
+      if (!didConfirm) {
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+      }
+    })
+  })
+----
+
+[samp]
+----
+Uncaught SyntaxError: await is only valid in async functions, async generators and modules
+----
+
+Right. Let's fix that...
+
+
+[source,js,highlight=3]
+----
+document.querySelectorAll("[data-confirm]")
+  .forEach(el => {
+    el.addEventListener("click", async e => {
+      const result = await Swal.fire("Are you sure?", "", "question")
+      const didConfirm = result.isConfirmed
+      if (!didConfirm) {
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+      }
+    })
+  })
+----
+
+No more errors, but this code no longer works. This is because by the time we call `stopPropagation` and `stopImmediatePropagation`, the event has already propagated. We can avoid this when using the built-in `confirm` function because it has the privilege of blocking the main thread.
+
+There is no general solution to this problem.
 ****
 
 
@@ -568,7 +604,9 @@ The use `x-bind` means that as we change the open state, the `aria-expanded` att
 
 .HTML ID Soup
 ****
-TODO: talk about HTML ID soup
+Some features of HTML such as ARIA require you to assign unique IDs to elements. When pages are generated from templates dynamically, avoiding name conflicts in large apps can be difficult, as HTML IDs are not scoped the way identifiers in programming languages are.
+
+Some developers in the SPA world use randomized IDs with a tool like https://npmjs.com/nanoid[] to avoid the issue.
 ****
 
 [source,html]
@@ -888,7 +926,7 @@ behavior SearchShortcut
 end
 ----
 
-(TODO: positive adjective) examples of behavior usage can be found on Ben Pate's _Hyperscript Widgets_ collection (https://github.com/benpate/hyperscript-widgets). Reproduced here is a rich text editor implemented in 75 lines:
+Prime examples of behavior usage can be found on Ben Pate's _Hyperscript Widgets_ collection (https://github.com/benpate/hyperscript-widgets). Reproduced here is a rich text editor implemented in 75 lines:
 
 .wysiwyg._hs, Git commit dd4b7d3 retrieved on 25 August
 ----

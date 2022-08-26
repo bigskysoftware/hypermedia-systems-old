@@ -926,22 +926,22 @@ behavior SearchShortcut
 end
 ----
 
-Prime examples of behavior usage can be found on Ben Pate's _Hyperscript Widgets_ collection (https://github.com/benpate/hyperscript-widgets). Reproduced here is a rich text editor implemented in 75 lines:
+Prime examples of behavior usage can be found on Ben Pate's _Hyperscript Widgets_ collection (https://github.com/benpate/hyperscript-widgets). Reproduced here with minor cleanup is a rich text editor implemented in 68 lines:
 
-.wysiwyg._hs, Git commit dd4b7d3 retrieved on 25 August
+.wysiwyg._hs
 ----
 behavior wysiwyg(name)
 
 	-- WYSIWYG setup
 	init 
 		-- save links to important DOM nodes
-		set element form to beep! closest <form />
-		set element input to beep! form.elements[name]
-		set element editor to beep! first <.wysiwyg-editor /> in me
+		set :form to closest <form />
+		set :input to form.elements[name]
+		set :editor to first .wysiwyg-editor in me
 
 		-- configure related DOM nodes
-		add [@tabIndex=0] to element editor
-		add [@contentEditable=true] to element editor
+		add [@tabIndex=0] to :editor
+		add [@contentEditable=true] to :editor
 
 		tell <button/> in me
 			add [@type="button"]
@@ -949,15 +949,14 @@ behavior wysiwyg(name)
 
 	-- Clicking a toolbar button triggers a command on the content
 	on click(target)
-
-		if target's [@data-command] is null then 
-			set target to closest <[data-command]/> to target
+		if target's @data-command is null then 
+			set target to the closest <[data-command]/> to target
 			if target is null then
 				exit
 			end
 		end
 
-		set command to target's [@data-command]
+		set command to target's @data-command
 
 		-- special handling for inertLink
 		if command is "createLink" then
@@ -967,26 +966,20 @@ behavior wysiwyg(name)
 		end
 
 		-- fall through to all other commands
-		set value to target's [@data-command-value]
+		set value to target's @data-command-value
 		call document.execCommand(command, false, value)
 	end
 
 	-- Show the toolbar when focused
-	on focus(target) from <.wysiwyg-editor /> in me
-
-		tell <.wysiwyg-toolbar /> in me
-			remove [@hidden]
-		end
+	on focus(target) from the .wysiwyg-editor in me
+    remove @hidden from the .wysiwyg-toolbar in me
 	end
 
 	-- Hide the toolbar when blured
-	on blur from <.wysiwyg-editor /> in me
-
+	on blur from the .wysiwyg-editor in me
 		wait 200ms
 		if (<:focus/> in me) is empty then
-			tell <.wysiwyg-toolbar /> in me
-				add [@hidden=true]
-			end
+      add [@hidden=true] to the .wysiwyg-toolbar in me
 		end
 	end
 
@@ -996,7 +989,7 @@ behavior wysiwyg(name)
 	end
 	
 	-- Autosave the WYSIWYG whenever it loses focus
-	on blur from <.wysiwyg-editor />
+	on blur from the .wysiwyg-editor in me
 		send updated to form
 	end
 

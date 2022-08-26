@@ -1023,22 +1023,31 @@ ____
 == Events and the DOM
 
 One thing that you will notice in all the scripting that we add to Contact.app is the heavy use of _events_.  This is
-not an accident: proper scripting in a Hypermedia Driven Application should be heavily event driven.  Since htmx
-itself allows you to trigger requests with arbitrary events, those events provide an excellent bridge between
-client-side scripting and the hypermedia exchanges that define a RESTful Hypermedia Driven Application.
+not an accident; scripting in a Hypermedia Driven Application should be oriented around events --- mostly listening to DOM events, but also dispatching custom events. Since htmx allows requests to be triggered upon any type of event, custom events provide an excellent bridge between
+client-side scripts and the hypermedia exchanges that define a RESTful Hypermedia Driven Application.
 
-Another thing you might notice about the scripting examples is that many of them mutate the DOM in some way, showing
-or hiding elements, or changing the focus of an element and so forth.  In many cases this change in state isn't
-synchronized with the server, so how can we claim that hypermedia is the engine of application state in this case?!?
+Another thing you might notice about the scripting examples is that they all mutate the DOM in some way, such as showing
+or hiding elements, changing the text content of an element, or moving focus. In many cases this change in state isn't
+synchronized with the server, which may, at first, seem to discredit our aim of using hypermedia is the engine of application state.
 
-The answer is that this state is client side, and ephemeral: it is fine to have a script update the DOM in some way
-that improves the user experience, so long as that script is not updating _system state_ (e.g. a contact's details)
-via out-of-band, non-hypermedia communication.
+Both the use of events and the prevalence of DOM mutations point to the fact that the purpose of scripting in a HDA is to enhance UI interaction. Use of events reflects that we are mainly concerned with responding to the user's actions. DOM mutations make up a large portion of our code because we are concerned with UI as opposed to business logic when we write scripts. The state retained by client-side scripts should be an extension of state retained by the browser (e.g.: the value of an input element before it is submitted), ephemeral, not closely tied to the application domain, and _ephemeral_. Scripts may use tools like localStorage to keep some user-specific data, what they should not do is alter a canonical data store without going through a hypermedia channel. (As a *very rough* rule of thumb, this means that scripts should avoid making non-GET requests to your server).
+
 
 == Being pragmatic
 
-****
-TODO: Sometimes going outside the lines is necessary, being pragmatic
-****
+[quote, W3C, HTML Design Principles § 3.2 Priority of Constituencies]
+____
+In case of conflict, consider users over authors over implementors over specifiers over theoretical purity.
+____
+
+The sad truth is that there will never be a general theory of web development.
+Any guideline, methodology, or rule of thumb will hit degenerate cases.
+When this happens, there are a few ways to react:
+
+Denial:: Why would we want to implement this feature, anyway? Invent reasons why the problem should not be solved.
+Anger:: Vehemently refuse to abandon your principles and implement the feature with your method, without regard for the consequences.
+Bargaining:: Try to invent a new theory to accommodate the feature. It will be incoherent.
+Depression:: Fantasize about leaving the software industry. 
+Acceptance:: Implement the feature the way you always knew it should be. Leave a comment for any future developer who might be compulsed to "refactor" it.
 
 == Summary

@@ -129,9 +129,9 @@ Hyperview is an open-source framework that provides:
 
 ==== The Format
 HXML was designed to feel familiar to web developers, used to working with HTML.
-That made it easy to choose XML for the base format.
+Thus the choice of XML for the base format.
 In addition to familiar ergonomics, XML is compatible with server-side rendering libraries.
-For example, Jinja2 is perfectly suited as a templating library to render HXML, as we'll see later in this chapter.
+For example, Jinja2 is perfectly suited as a templating library to render HXML, as we'll see in the next chapter.
 The familiarity of XML and the ease of integration on the backend make it simple to adopt in both new and existing codebases.
 
 [source,xml]
@@ -155,15 +155,15 @@ htmx fill in the "missing parts of HTML" to enable rich web app experiences.
 If HTML was designed today, I believe the ideas of htmx would be part of the standrd spec, and natively supported by every browser without the need for a 3rd party JS library.
 Well, HXML was designed today!
 The HXML format has built-in support for htmx-like interactions.
-Specifically, HXML is not limited to "click to navigate" and "press to submit" interactions like in basic HTML.
-It supports a range of triggers and swap strategies for the content on a screen.
+Specifically, HXML is not limited to "click to navigate" and "press to submit" interactions like basic HTML.
+It supports a range of triggers and actions for modifying the content on a screen.
 These interactions are bundled together in a powerful concept of "behaviors".
-Developers can even define new behaviors to add new capabilities in an elegant way.
+Developers can even define new behavior actions to add new capabilities to their app, without the need for scripting.
 We will learn more about behaviors in later sections of this chapter.
 
 ==== The client
 Web developers are lucky.
-They can assume that their users have access to a web browser capable of rendering their web app.
+They can assume their users have access to a web browser capable of rendering any web app.
 In Hypermedia terms, the Hypermedia (HTML) client is already built and distributed to users.
 Half the work is done!
 The developer has to only build the backend to serve Hypermedia responses.
@@ -181,7 +181,7 @@ Well, unlike on the web, the mobile developer must provide both the backend to s
 
 < diagram showing one Hypermedia client, pointing to one backend >
 
-It would be a lot to ask from developers to write their own Hyperview client.
+It would be a lot to ask from developers to write their own HXML client.
 That's why Hyperview provides an open-source client library, written in React Native.
 This library can be used to bootstrap a new mobile app, or it can be embedded in an existing app.
 In either case, developers get a full "HXML browser" without needing to write it from scratch.
@@ -203,7 +203,7 @@ Go right ahead!
 In fact, the Hyperview client library was built with extensibility in mind.
 There are extension points for custom UI elements and custom behaviors.
 
-By extending the format and client itself, there's no need for Hyperview to include a scripting layey in HTMX.
+By extending the format and client itself, there's no need for Hyperview to include a scripting layer in HTMX.
 Features that require client-side logic get "built-in" to the client browser.
 HTMX responses remain pure, with UI and interactions represented in declarative XML.
 
@@ -238,7 +238,7 @@ Then, we'll re-build our contacts app in Hyperview.
 == Introduction to HXML
 
 === Hello World!
-Like I mentioned above, HXML was designed to feel natural to web developers coming from HTML.
+HXML was designed to feel natural to web developers coming from HTML.
 Let's take a closer look at the "Hello World" app defined in HXML:
 
 [source,xml]
@@ -291,6 +291,7 @@ Suffice it to say, unlike HTML, Hyperview does not use a separate language (CSS)
 Instead, styling rules such as colors, spacing, layout, and fonts are defined in HXML.
 These rules are then explicitly referenced by UI elements, much like using classes in CSS.
 
+
 `<body>` defines the actual UI of the screen.
 The body includes all text, images, buttons, forms, etc that will be shown to the user.
 This is equivalent to the `<body>` element in HTML.
@@ -309,7 +310,7 @@ In this example, "Hello World" is contained within a  `<text>` element.
 
 That's all there is to define a basic "Hello World" app in HXML.
 Of course, this isn't very exciting.
-Let's cover some other built-in display elements
+Let's cover some other built-in display elements.
 
 === UI Elements
 
@@ -338,11 +339,11 @@ HXML has dedicated elements for representing lists and items.
 Lists are represented with two new elements.
 The `<list>` wraps all of items in the list.
 It can be styled like a generic `<view>` (width, height, etc).
-A `<list>` element should only contain `<item>` elements.
+A `<list>` element only contains `<item>` elements.
 Of course, these represent each unique item in the list.
 Note that `<item>` is required to have a `key` attribute, which is unique among all items in the list.
 
-You might be asking, "why do we need a custom syntax for lists of items?
+You might be asking, "Why do we need a custom syntax for lists of items?
 Can't we just use a bunch of `<view>` elements?".
 Yes, for lists with a small number of items, using nested `<views>` will work quite well.
 However, often the number of items in a list can be long enough to require optimizations to support smooth scrolling interactions.
@@ -353,7 +354,6 @@ Mobile devices tend to be memory-constrained.
 Keeping the fully-rendered list of items in memory could consume more resources than available.
 That's why both iOS and Android provide APIs for optimized list UIs.
 These APIs know which part of the list is currently on-screen. To save memory, they clear out the non-visible list items, and recycle the item UI objects to conserve memory.
-
 By using explicit `<list>` and `<item>` elements in HXML, the Hyperview client knows to use these optimized list APIs to make your app more performant.
 
 It's also worth mentioning that HXML supports section lists.
@@ -655,7 +655,7 @@ This is a very common scenario in rich web applications, where users expect to f
 
 So with basic HTML, interactions (clicks and submits) are limited and tightly coupled to a single action (loading a new page).
 Of course, using JavaScript, we can extend HTML and add some new syntax to support our desired interactions.
-Htmx (and Intercooler before it) do exactly that with new attributes that can be added to any element:
+Htmx (and Intercooler before it) do exactly that with a new set of attributes:
 
 - Interactions can be added to any element, not just links and forms.
 - The interaction can be triggered via a click, submit, mouseover, or any other JavaScript event.
@@ -688,17 +688,17 @@ Let's break down what's happening in this example.
 First, we have a `<text>` element with the content "Press me!".
 We've shown `<text>` elements before in examples of HXML, so this is nothing new.
 But now, the `<text>` element contains a new child element, `<behavior>`.
-This `<behavior>` element represents an interaction on the parent `<text>` element.
+This `<behavior>` element defines an interaction on the parent `<text>` element.
 It contains two attributes that are required for any behavior:
 
-- `trigger`: defines the user action that triggers the action
-- `action`: defines what happens
+- `trigger`: defines the user action that triggers the behavior
+- `action`: defines what happens when triggered
 
 In this example, the `trigger` is set to `press`, meaning this interaction will happen when the user presses the `<text>` element.
 The `action` attribute is set to `push`.
-`push` is an action that will push a new screen onto the navigation stack, one of the most common types of interactions.
-Finally, we need to define what content to load on the newly pushed screen.
-This is what the `href` attribute is for.
+`push` is an action that will push a new screen onto the navigation stack.
+Finally, Hyperview needs to know what content to load on the newly pushed screen.
+This is where the `href` attribute comes in.
 Notice we don't need to define the full URL.
 Much like in HTML, the `href` can be an absolute or relative URL.
 
@@ -706,8 +706,8 @@ So that's a first example of behaviors in HXML.
 You may be thinking this syntax seems quite verbose.
 Indeed, pressing elements to navigate to a new screen is one of the most common interactions in a mobile app.
 It would be nice to have a simpler syntax for the common case.
-In fact, `trigger` and `action` attributes have default values of `press` and `push`, respectively.
-Therefore, they can be ommitted for simple navigation interactions:
+Luckily, `trigger` and `action` attributes have default values of `press` and `push`, respectively.
+Therefore, they can be ommitted to clean up the syntax:
 
 [source,xml]
 ----
@@ -1185,7 +1185,7 @@ In this admittedly contrived example, we want to hide 2 elements on the screen w
 The two elements are far apart in the HXML, and cannot be hidden by hiding a common parent element.
 But, we can trigger two behaviors at the same time, each one executing a "hide" action but targeting different elements.
 
-== Conclusion
+== Summary
 At the beginning of this chapter, I made a case for developing mobile apps using a Hypermedia architecture.
 I also explained why using HTML & web views is not the best approach to deliver a native-feeling mobile experience.
 Hyperview as a framework allow us to develop native mobile apps without giving up the Hypermedia architecture.

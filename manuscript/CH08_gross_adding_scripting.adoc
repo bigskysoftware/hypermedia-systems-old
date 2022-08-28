@@ -1050,4 +1050,23 @@ Bargaining:: Try to invent a new theory to accommodate the feature. It will be i
 Depression:: Fantasize about leaving the software industry. 
 Acceptance:: Implement the feature the way you always knew it should be. Leave a comment for any future developer who might be compulsed to "refactor" it.
 
+
 == Summary
+
+Use progressive enhancement.
+
+Maximize locality of behavior, sometimes at the expense of separation of concerns. Remember that "concerns" are not the same thing as filetypes.
+
+If you're mostly going to write reusable, generalized components: use vanilla JavaScript with Alpine.js.
+
+If you're mostly going to write one-off, specialized components: use Alpine.js or _hyperscript.
+
+If you need a common UI pattern that isn't built into HTML: use a library. If you're going to write such a library yourself, use vanilla JS with RSJS.
+
+Alpine lets things auto-update based on changes to state and lets you use the programming language known by the most people.
+
+_hyperscript offers a concise, readable syntax, especially for DOM operations, and makes async operations easy.
+
+Events are cool.
+
+Do not use scripts to directly modify system state. Reserve it for UI state.

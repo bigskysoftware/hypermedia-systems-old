@@ -824,20 +824,29 @@ Like htmx and AlpineJS, _hyperscript can be installed via a CDN or from npm (pac
 Like AlpineJS, in \_hyperscript you put attributes directly in your HTML.  Unlike AlpineJS, there is only one attribute
 for _hyperscript: the `_` (underscore) attribute footnote:[You can also use a `script` attribute, or `data-script` to please HTML validators.]. This is where all the code responsible for an element goes.
 
-****
-TODO: Counter in _hyperscript
-// <1> This is what _hyperscript looks like, believe it or not!
-****
+[source,html]
+----
+<div class="counter">
+  <output>0</output>
+  <button _="on click increment the textContent of the previous <output />">Increment</button> <1>
+</div>
+----
+<1> This is what _hyperscript looks like, believe it or not!
 
 Seasoned JavaScript programmers are often suspicious of _hyperscript: There have been many "natural language programming" projects that usually target non-programmers and beginner programmers, assuming that being able to read code will give you the ability to write it as well. (The authors' views on the usefulness of natural language for teaching programming are nuanced and out of scope for this book). It should be noted that _hyperscript is openly a programming language, in fact, its syntax is inspired in many places by the speech patterns of web developers. In addition, _hyperscript's readability is achieved not through complex heuristics or NLP, but common parsing tricks and a culture of readability.
 
 As you can see in the above example, _hyperscript does not shy away from using punctuation when appropriate. We'll come across quite a lot of new syntax we use as we go. To get our feet wet, here's an annotated version of the script above:
 
-****
-TODO: annotate counter example
-****
+----
+on click -- Event listener
+  increment -- This command (built into the language) increments things
+    the -- "the" is ignored
+    textContent of -- "b of a" and "a's b" are alternative forms of "a.b"
+    the previous -- "previous x" == element before me in the DOM that matches x
+    <output /> -- A CSS selector is wrapped between "<" and "/>"
+----
 
-OK, maybe it is a little more than a little insane.  But fun!
+The `previous` keyword (and the accompanying `next`) are an example of how _hyperscript makes DOM operations easier. As an exercise, you can try to implement a function `previous(selector: string): Node` that does the same.
 
 
 === _hyperscript in action: a keyboard shortcut

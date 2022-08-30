@@ -19,8 +19,6 @@ This chapter covers
 * An overview of the functionality of our sample hypermedia application, Contact.App
 * Implementing the basic CRUD (Create, Read, Update, Delete) operations and search for Contact.App
 
-== A Simple Contact Management Web Application
-
 To begin our journey into Hypermedia Driven Applications, we are going to create a simple contact management web
 application called Contacts.app.  We will start with a basic, "Web 1.0-style" multi-page application, in the grand
 CRUD (Create, Read, Update, Delete) tradition.  It will not be the best contact management application, but that's OK
@@ -285,6 +283,7 @@ other templating languages, and I hope you are able to follow along easily.
 
 Let's look at the first few lines of code in our `index.html` template:
 
+.Start of index.html
 [source, html]
 ----
 {% extends 'layout.html' %} <1>
@@ -351,7 +350,7 @@ Here is what the template code looks like:
 <1> We output some headers for our table
 <2> We iterate over the contacts that were passed in to the template
 <3> We output the values of the current contact, first name, last name, etc. in columns
-<4> An "operations" column that has links embedded in it to edit or view the contact details
+<4> An "operations" column, with links to edit or view the contact details
 
 Here we are into the core of the page: we construct a table with appropriate headers matching the data we are going
 to show for each contact.  We iterate over the contacts that were passed into the template by the handler method using
@@ -368,6 +367,7 @@ Finally, we have an additional cell that includes two links:
 
 Finally, we have a bit of end-matter: a link to add a new contact and a directive to close up the `content` block:
 
+.The Add Contact Link
 [source, html]
 ----
     <p>
@@ -506,6 +506,7 @@ errors that occurred in the HTML so the user can correct them.
 
 Here is our controller code:
 
+.The New Contact Controller Code
 [source, python]
 ----
 @app.route("/contacts/new", methods=['POST'])
@@ -520,8 +521,8 @@ def contacts_new():
 ----
 <1> We construct a new contact object with the values from the form
 <2> We try to save it
-<3> If it succeeds we "flash" a success message and redirect back to the `/contacts` page
-<4> If not, we rerender the form, showing any errors to the user
+<3> On success, "flash" a success message and redirect back to the `/contacts` page
+<4> On failure, rerender the form, showing any errors to the user
 
 
 The logic here is a bit more complex than other handler methods we have seen, but not by a whole lot.  The first thing
@@ -605,6 +606,7 @@ us a good place to show them.
 
 Again, I will omit the "chrome" and focus on the meat of the template:
 
+.The Contact Details Template
 [source, html]
 ----
 <h1>{{contact.first}} {{contact.last}}</h1>
@@ -635,6 +637,7 @@ handle a `POST` to `/contacts/<contact_id>/delete`.
 Let's look at the code to handle the `GET`, which, again, will return an HTML representation of an editing interface
 for the given resource:
 
+.The Edit Contact Controller Code
 [source, python]
 ----
 @app.route("/contacts/<contact_id>/edit", methods=["GET"])
@@ -654,6 +657,7 @@ any error messages (we will even reuse the same Post-Redirect-Get trick!)
 
 Here is the first bit of the form:
 
+.The Edit Contact Form Start
 [source, html]
 ----
     <form action="/contacts/{{ contact.id }}/edit" method="post"> <1>
@@ -665,8 +669,8 @@ Here is the first bit of the form:
                   <span class="error">{{ contact.errors['email'] }}</span>
               </p>
 ----
-<1> We issue a `POST` to the `/contacts/{{ contact.id }}/edit` path
-<2> As with the `new.html` page, we have an input tied to the contact's properties
+<1> Issue a `POST` to the `/contacts/{{ contact.id }}/edit` path
+<2> As with the `new.html` page, the input is tied to the contact's email
 
 This HTML is nearly identical to our `new.html` form, except that this form is going to submit a `POST` to a different
 path, based on the id of the contact that we want to update.  It's worth nothing here that, rather than `POST`, I would
@@ -675,6 +679,7 @@ prefer to use a `PUT` or `PATCH`, but those are not available in plain HTML.
 Following this we have the remainder of our form, again very similar to the `new.html` template, and our submit button
 to submit the form.
 
+.The Edit Contact Form Body
 [source, html]
 ----
               <p>
@@ -706,6 +711,7 @@ nice if we could issue a `DELETE` request to delete one, but unfortunately that 
 
 Finally, there is a simple hyperlink back to the list of contacts.
 
+.The Edit Contact Form Footer
 [source, html]
 ----
     <form action="/contacts/{{ contact.id }}/delete" method="post">
@@ -763,8 +769,8 @@ def contacts_edit_post(contact_id=0):
 <2> Look the contact up by id
 <3> update the contact with the new information from the form
 <4> Attempt to save it
-<5> If successful, flash a success message and redirect to the show page for the contact
-<6> If not successful, rerender the edit template, showing any errors.
+<5> On success, flash a success message and redirect to the contacts detail page
+<6> On failure, rerender the edit template, showing any errors
 
 The logic in this handler is very similar to the logic in the handler for adding a new contact.  The only real difference
 is that, rather than creating a new Contact, we look up a contact by id and then call the `update()` method on it with
@@ -780,6 +786,7 @@ to `/contacts/<contact_id>/delete` that we will need to handle and delete the co
 
 Here is what the controller looks like
 
+.The Delete Contact Controller Code
 [source, python]
 ----
 @app.route("/contacts/<contact_id>/delete", methods=["POST"]) <1>

@@ -383,7 +383,7 @@ It might look something like this:
     Fetch Contacts
 </button>
 ----
-<1> An htmx-powered button, issuing a request to `/contacts` and replacing the element with the id `contact-table`
+<1> issues a `GET` request to `/contacts`, replacing the `contact-table`
 
 As with the JavaScript example, we can see that this button has been annotated with some attributes.  However, in this case
 we do not have any imperative scripting going on.  Instead, we have _declarative_ attributes, much like the `href`

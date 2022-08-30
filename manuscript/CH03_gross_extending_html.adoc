@@ -19,8 +19,6 @@ This chapter covers
 * How to issue various HTTP requests with htmx
 * History and back button support in htmx
 
-== The Shortcomings of "Plain" HTML
-
 In the previous chapter we introduced a simple Web 1.0-style hypermedia application to manage contacts.  This application
 supported the normal CRUD operations for contacts, as well as a simple mechanism for searching contacts.  Our application
 was built using nothing but forms and anchor tags, the traditional tags used to interact with servers, and it exchanges
@@ -657,7 +655,7 @@ Let's take our original button for retrieving contacts and repurpose it for sear
 
 </div>
 ----
-<1> The form tag encloses the button, thereby including all values within it in the button request
+<1> With an enclosing form tag, all inputs will be submitted with the button's request
 <2> A new input that users will be able to enter search text into
 <3> Our button has been converted to an `hx-post`
 

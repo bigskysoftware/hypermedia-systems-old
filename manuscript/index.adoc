@@ -1,7 +1,7 @@
 
-include::CH01_gross_hypermedia.adoc[]
-include::CH02_gross_creating_a_web_app.adoc[]
-include::CH03_gross_extending_html.adoc[]
+include::CH01_gross_HypermediaInAction.adoc[]
+include::CH02_gross_HypermediaInAction.adoc[]
+include::CH03_gross_HypermediaInAction.adoc[]
 include::CH04_improving_our_hypermedia_application.adoc[]
 include::CH05_advanced_hypermedia_patterns.adoc[]
 include::CH06_hyperview_a_mobile_hypermedia.adoc[]

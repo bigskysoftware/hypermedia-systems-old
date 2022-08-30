@@ -840,10 +840,10 @@ of the web.  We will look at this approach later in the book, and you can see an
 
 == Summary
 
-* HTML presents a few opportunties for improvement as a hypermedia:
-** It doesn't give you access to non-`GET` or `POST` requests
-** It requires that you update the entire page
-** It only offers limited interactivity with the user, via links and forms
+* Although it has been wildly successful, HTML presents a few opportunities for improvement as a hypermedia
+* For example, plain HTML doesn't give you access to non-`GET` or `POST` HTTP requests
+* Additionally, it only offers a very limited set of hypermedia controls: links and forms
+* Perhaps most importantly, plain HTML updates the entire page on every HTTP request
 * htmx addresses each of these opportunities, increasing the expressiveness of HTML as a hypermedia
 * The `hx-get`, `hx-post`, etc. attributes can be used to issue requests with any element in the dom
 * The `hx-swap` attribute can be used to control exactly how HTML responses to htmx requests should be swapped

@@ -824,7 +824,7 @@ what page of contacts to return:
 def contacts():
     search = request.args.get("q")
     page = int(request.args.get("page", 1)) <1>
-    if search:
+    if search is not None:
         contacts_set = Contact.search(search)
     else:
         contacts_set = Contact.all(page) <2>

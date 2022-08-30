@@ -224,7 +224,7 @@ when we render the `index.html` template as well:
 @app.route("/contacts")
 def contacts():
     search = request.args.get("q")
-    if search:
+    if search is not None:
         contacts_set = Contact.search(search)
         if request.headers.get('HX-Trigger') == 'search':
             return render_template("rows.html", contacts=contacts_set)

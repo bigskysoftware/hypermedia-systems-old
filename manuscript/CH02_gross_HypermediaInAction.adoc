@@ -238,7 +238,7 @@ Here is the code:
 @app.route("/contacts")
 def contacts():
     search = request.args.get("q") <1>
-    if search:
+    if search is not None:
         contacts_set = Contact.search(search) <2>
     else:
         contacts_set = Contact.all() <3>

@@ -345,7 +345,7 @@ Let's add a `div` tag that encloses the button with the id `main`.  We will then
 </div>
 ----
 <1> A `div` element that wraps the button
-<2> A new `hx-target` attribute that specifies the `div` as the target of the response
+<2> The `hx-target` attribute that specifies the target of the response
 
 We have added `hx-target="#main"` to our button, where `#main` is a CSS selector that says "The thing with the ID 'main'".
 Note that by using CSS selectors, htmx is once again building on top of familiar and standard HTML concepts.  By doing
@@ -545,7 +545,7 @@ To fix the first issue, lets use a trigger filter:
 
 </div>
 ----
-<1> A trigger with an added filter, specifying that the control key and L must be pressed
+<1> `keyup` now has a filter, so the control key and L must be pressed
 
 The trigger filter in this case is `ctrlKey && key == 'l'`.  This can be read as "A key up event, where the ctrlKey property
 is true and the key property is equal to 'l'".  Note that the properties `ctrlKey` and `key` are resolved against the event
@@ -655,7 +655,7 @@ Let's take our original button for retrieving contacts and repurpose it for sear
 
 </div>
 ----
-<1> With an enclosing form tag, all inputs will be submitted with the button's request
+<1> With an enclosing form tag, all inputs values will be submitted
 <2> A new input that users will be able to enter search text into
 <3> Our button has been converted to an `hx-post`
 
@@ -693,7 +693,7 @@ Here is the above example reworked to include the input, dropping the form:
 
   <label for="search">Search Contacts:</label>
   <input id="search" name="q" type="search" placeholder="Search Contacts">
-  <button hx-post="/contacts" hx-target="#main" hx-include="#search"><1>
+  <button hx-post="/contacts" hx-target="#main" hx-include="#search"> <1>
     Search The Contacts
   </button>
 
@@ -794,7 +794,7 @@ attribute to the button, `hx-push-url`:
 .Our trusty button, now with history!
 [source,html]
 ----
-<button hx-get="/contacts" hx-target="#main" hx-push-url="true"><1>
+<button hx-get="/contacts" hx-target="#main" hx-push-url="true"> <1>
   Get The Contacts
 </button>
 ----

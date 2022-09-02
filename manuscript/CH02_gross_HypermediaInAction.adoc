@@ -298,7 +298,7 @@ Let's look at the first few lines of code in our `index.html` template:
 ----
 <1> Set the layout template for this template
 <2> Delimit the content to be inserted into the layout
-<3> Create a search form that will issue an HTTP `GET` to the `/contacts` page
+<3> Create a search form that will issue an HTTP `GET` to `/contacts`
 <4> Create an input that a query can be typed into to search contacts
 
 The first line of code references a base template, `layout.html`, with the `extends` directive.  This layout
@@ -347,9 +347,9 @@ Here is what the template code looks like:
         </tbody>
     </table>
 ----
-<1> We output some headers for our table
-<2> We iterate over the contacts that were passed in to the template
-<3> We output the values of the current contact, first name, last name, etc. in columns
+<1> Output some headers for our table
+<2> Iterate over the contacts that were passed in to the template
+<3> Output the values of the current contact, first name, last name, etc.
 <4> An "operations" column, with links to edit or view the contact details
 
 Here we are into the core of the page: we construct a table with appropriate headers matching the data we are going
@@ -376,7 +376,7 @@ Finally, we have a bit of end-matter: a link to add a new contact and a directiv
 
 {% endblock %} <2>
 ----
-<1>  A link to the page that allows you to create a new contact
+<1>  Link to the page that allows you to create a new contact
 <2>  The closing element of the `content` block
 
 And that's our template!  Using this server side template, in combination with our handler method, we can respond with
@@ -413,8 +413,8 @@ Here is our code:
 def contacts_new_get():
     return render_template("new.html", contact=Contact()) <2>
 ----
-<1> We declare a route, explicitly handling `GET` requests to this path
-<2> We render the `new.html` template, passing in a new contact object
+<1> Declare a route, explicitly handling `GET` requests to this path
+<2> Render the `new.html` template, passing in a new contact object
 
 Pretty simple! We just render a `new.html` template with, well, a new Contact, as you might expect!
 (Note that `Contact()` is the python syntax for creating a new instance of the `Contact` class.)
@@ -440,7 +440,7 @@ Here is what our HTML looks like:
             <span class="error">{{ contact.errors['email'] }}</span> <4>
         </p>
 ----
-<1> A form that will submit to the `/contacts/new` path, using an HTTP `POST` request
+<1> A form that submits to the `/contacts/new` path, using an HTTP `POST`
 <2> A label for the first form input
 <3> the first form input, of type email
 <4> Any error messages associated with this field
@@ -521,7 +521,7 @@ def contacts_new():
 ----
 <1> We construct a new contact object with the values from the form
 <2> We try to save it
-<3> On success, "flash" a success message and redirect back to the `/contacts` page
+<3> On success, "flash" a success message & redirect to the `/contacts` page
 <4> On failure, rerender the form, showing any errors to the user
 
 
@@ -769,7 +769,7 @@ def contacts_edit_post(contact_id=0):
 <2> Look the contact up by id
 <3> update the contact with the new information from the form
 <4> Attempt to save it
-<5> On success, flash a success message and redirect to the contacts detail page
+<5> On success, flash a success message & redirect to the detail page
 <6> On failure, rerender the edit template, showing any errors
 
 The logic in this handler is very similar to the logic in the handler for adding a new contact.  The only real difference

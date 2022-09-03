@@ -63,9 +63,11 @@ We can now switch gears to our Flask backend, and replace the HTML templates wit
 === A Searchable List of Contacts
 We will start building our Hyperview app with the entrypoint screen, the list of contacts.
 For the initial version of this screen, let's support the following features from the web app:
+
 - display a scrollable list of contacts
 - "infinite-scroll" to load more contacts as the user scrolls through
 - "search-as-you-type" field above the list
+
 Additionally, we will add a "pull-to-refresh" interaction on the list, since users expect this from list UIs in mobile apps.
 
 If you recall, all of the pages in the Contacts web app extended a common base template, `layout.html`.
@@ -93,8 +95,8 @@ Let's call it `layout.xml`.
   </screen>
 </doc>
 ----
-(1) The header section of the template, with a default title
-(2) The content section of the template, to be provided out by other templates.
+<1> The header section of the template, with a default title
+<2> The content section of the template, to be provided out by other templates.
 
 We covered the HXML tags and attributes in the previous chapter.
 This template sets up a basic screen layout using `<doc>`, `<screen>`, `<body>`, `<header>`, and `<view>` tags.
@@ -180,9 +182,10 @@ def contacts():
 
 This view supports fetching a set of contacts based on two query params, `q` and `page`.
 It also decides whether to render the full page (`index.html`) or just the contact rows (`rows.html`) based on the `HX-Trigger` header.
-This is where we have a minor problem.
+This presents a minor problem.
 The `HX-Trigger` header is set by the htmx library; there's no equivalent feature in Hyperview.
 Moreover, there are multiple scenarios in Hyperview that require us to respond with just the contact rows:
+
 - searching
 - pull-to-refresh
 - loading the next page of contacts

@@ -65,13 +65,13 @@ We will start building our Hyperview app with the entrypoint screen, the list of
 For the initial version of this screen, let's support the following features from the web app:
 
 - display a scrollable list of contacts
-- "infinite-scroll" to load more contacts as the user scrolls through
 - "search-as-you-type" field above the list
+- "infinite-scroll" to load more contacts as the user scrolls through
 
 Additionally, we will add a "pull-to-refresh" interaction on the list, since users expect this from list UIs in mobile apps.
 
 If you recall, all of the pages in the Contacts web app extended a common base template, `layout.html`.
-We need a similar base template called for the screens of the mobile app.
+We need a similar base template for the screens of the mobile app.
 This base template will contain the style rules or our UI, and a basic structure common to all screens.
 Let's call it `layout.xml`.
 
@@ -190,7 +190,8 @@ Moreover, there are multiple scenarios in Hyperview that require us to respond w
 - pull-to-refresh
 - loading the next page of contacts
 
-Since we can't depend on a header like `HX-Trigger`, we will instead introduce another query param, `rows_only`.
+Since we can't depend on a header like `HX-Trigger`, we need a different way to detect if the client needs the full screen or just the rows in the response.
+We can do this by introducing a new query param, `rows_only`.
 When this param has the value `true`, the view will respond to the request by rendering the `rows.xml` template.
 Otherwise, it will respond with the `index.xml` template:
 
@@ -214,9 +215,11 @@ def contacts():
 <2> Render the appropriate HXML template based on `rows_only`
 
 There's one more change we have to make.
-By default, Flask assumes the view will respond with HTML.
-So if defaults the `Content-Type` header to a value of `text/html`.
-The Hyperview client expects to receive XML content, so we need to set this explicitly in our Flask app.
+Flask assumes that most views will respond with HTML.
+So Flask defaults the `Content-Type` response header to a value of `text/html`.
+But the Hyperview client expects to receive XML content, indicated by a `Content-Type` response header with value `application/xml`.
+The client will reject responses with a different content type.
+To fix this, we need to explicitly set the `Content-Type` response header in our Flask views.
 We will do this by introducing a new helper function, `render_to_response()`:
 
 .`app.py`
@@ -234,9 +237,9 @@ def render_to_response(template_name, *args, **kwargs):
 
 As you can see, this helper function uses `render_template()` under the hood.
 `render_template()` returns a string.
-This helper uses that string to create an explicit `Response` object.
-We can then set headers on the response.
-Specifically, we can set `Content-Type` to `application/xml` so that the Hyperview client recognizes the content.
+This helper function uses that string to create an explicit `Response` object.
+The response object has a `headers` attribute, allowing us to set and change the response headers.
+Specifically, `render_to_response()` sets `Content-Type` to `application/xml` so that the Hyperview client recognizes the content.
 This helper is a drop-in replacement for `render_template` in our views.
 So all we need to do is update the last line of the `contacts()` function.
 
@@ -255,52 +258,183 @@ After restarting the backend and refreshing the screen in our mobile app, we can
 image::../images/screenshot_hyperview_list.png[]
 
 
-==== TODO: Searching
+==== Searching Contacts
 
-==== TODO: Pull-to-refresh
+So far, we have a mobile app that displays a screen with a list of contacts.
+But our UI doesn't support any interactions.
+Typing a query in the search field doesn't filter the list of contacts.
+Let's add a behavior to the search field to implement a search-as-you-type interaction.
+This requires expanding `<text-field>` to add a `<behavior>` element.
+
+.Snippet of `hv/index.xml`
+[source,xml]
+----
+<text-field name="q" value="" placeholder="Search..." style="search-field">
+  <behavior
+    trigger="change" <1>
+    action="replace-inner" <2>
+    target="contacts-list" <3>
+    href="/contacts?rows_only=true" <4>
+    verb="get" <5>
+  />
+</text-field>
+----
+<1> This behavior will trigger when the value of the text field changes
+<2> When the behavior triggers, the action will replace the content inside the target element.
+<3> The target of the action is the element with ID `contacts-list`.
+<4> The replacement content will be fetched from this URL path.
+<5> The replacement content will be fetched with the `GET` HTTP method.
+
+The first thing you'll notice is that we changed the text field from using a self-closing tag (`<text-field />`) to using opening and closing tags (`<text-field>...</text-field>`).
+This allows us to add a child `<behavior>` element to define an interaction.
+The `trigger="change"` attribute tells Hyperview that a change to the value of the text field will trigger an action.
+Any time the user edits the content of the text field by adding or deleting characters, an action will trigger.
+The remaining attributes on the `<behavior>` element define the action.
+`action="replace-inner"` means the action will update content on the screen, by replacing the HXML content of an element with new content.
+For `replace-inner` to do its thing, we need to know 2 things: the current element on the screen that will be targeted by the action, and the content that will used for the replacement.
+`target="contacts-list"` tells us the ID of the current element.
+Note that we set `id="contacts-list"` on the `<list>` element in `index.xml`.
+So when the user enters a search query into the text field, Hyperview will replace the content of `<list>` (a bunch of `<item>` elements) with new content (`<item>` elements that match the search query).
+relative href.
+(The domain is inferred from the domain used to fetch the screen).
+Note that `href` includes our `rows_only` query param; we want the response to only include the rows and not the entire screen.
+
+[#figure-7-2, reftext="Figure {chapter}.{counter:figure}"]
+.Searchings for Contacts
+image::../images/screenshot_hyperview_search.png[]
+
+That's all it takes to add search-as-you-type functionality to our mobile app!
+As the user types a search query, the client will make requests to the backend and replace the list with the search results.
+You may be wondering, how does the backend know the query to use?
+The `href` attribute in the behavior does not include the `q` param expected by our backend.
+But remember, in `index.xml`, we wrapped the `<text-field>` and `<list>` elements with a parent `<form>` element.
+The `<form>` element defines a group of inputs that will be serialized and included in any HTTP requests triggered by its child elements.
+In this case, the `<form>` element surrounds the search behavior and the text field.
+So the value of the `<text-field>` will be included in our HTTP request for the search results.
+Since we are making a `GET` request, the name and value of the text field will be serialized as a query param.
+Any existing query params on the `href` will be preserved.
+This means the actual HTTP request to our backend looks like `GET /contacts?rows_only=true&q=Car`.
+Our backend already supports the `q` param for searching, so the response will include rows that match the string "Car".
 
 ==== TODO: Infinite scroll
 
+==== Pull-to-refresh
+Pull-to-refresh is a common interaction in mobile apps, especially on screens featuring dynamic content.
+It works like this:
+At the top of a scrolling view, the user pulls the scrolling content downwards with a swipe-down gesture.
+This reveals a spinner "below" the content.
+Pulling the content down sufficiently far will trigger a refresh.
+While the content refreshes, the spinner remains visible on screen, indicating to the user that the action is still taking place.
+Once the content is refreshed, the content retracts back up to its default position, hiding the spinner and letting the user know that the interaction is done.
 
-=== Adding a New Contact
+[#figure-7-3, reftext="Figure {chapter}.{counter:figure}"]
+.Pull-to-refresh
+image::../images/screenshot_hyperview_refresh_cropped.png[]
 
+This pattern is so common and useful that it's built in to Hyperview via the `refresh` action.
+Let's add pull-to-refresh to our list of contacs to see it in action.
 
-=== Viewing The Details Of A Contact
-   * Show data and buttons to edit/delete
-   * Edit button: replace data with form
-      * On submit: show spinner, then go back
-   * Delete button: show spinner, then go back
-   * Problem: Contacts screen is not updated!
-      * Solution: add event dispatch, contacts screen listens to updates
+.Snippet of `hv/index.xml`
+[source,xml]
+----
+<list id="contacts-list"
+  trigger="refresh" <1>
+  action="replace-inner" <2>
+  target="contacts-list" <3>
+  href="/contacts?rows_only=true" <4>
+  verb="get" <5>
+>
+  {% include 'hv/rows.xml' %}
+</list>
+----
+<1> This behavior will trigger when the user does a "pull-to-refresh" gesture.
+<2> When the behavior triggers, this action will replace the content inside the target element.
+<3> The target of the action is the `<list>` element itself.
+<4> The replacement content will be fetched from this URL path.
+<5> The replacement content will be fetched with the `GET` HTTP method.
 
-=== Editing a Contact
+You'll notice something unusual in the snippet above: rather than adding a `<behavior>` element to the `<list>`, we added the behavior attributes directly to the `<list>` element.
+This is a shorthand notation that's sometimes useful for specifying single behaviors on an element.
+It is equivalent to adding a `<behavior>` element to the `<list>` with the same attributes.
+So why did I use the shorthand syntax here?
+It has to do with the action, `replace-inner`.
+Remember, this action replaces all child elements of the target with the new content.
+This includes `<behavior>` elements too!
+Let's say our `<list>` did contain a `<behavior>`.
+If the user did a search or pull-to-refresh, we would replace the content of `<list>` with the content from `rows.xml`.
+The `<behavior>` would no longer be defined on the `<list>`, and subsequent attempts to pull-to-refresh would not work.
+By defining the behavior as attributes of `<list>`, the behavior will persist even when replacing the items in the list.
+Generally, I prefer to use explicit `<behavior>` elements in my HXML, because it's easier to define multiple behaviors, or to move around the behavior to different elements.
+But the shorthand syntax is good to know and apply in situations like this.
 
+=== TODO: Viewing The Details Of A Contact
+- link each item to push a new screen
+- new template with header and back button
 
-=== Deleting a Contact
+=== TODO: Editing a Contact
+- Add edit button to reload
+- new template with editing functionality
+- form fields in a separate template
+- cancel: reload the show template
 
+- save: replace form to show validation errors
+- on success: reload show template on load
+- problem: contacts list is out of date
+- solution: need to communicate between screens
+- new concept: events. simple messages that can be emitted on one screen, and trigger behavior on another screen.
+- using two behavior concepts:
+  - action="dispatch-event" will dispatch an event
+  - trigger="on-event" will trigger the behavior action with the given name
+- Using events:
+  - dispatch event when successfully editing a contact
+  - update index.xml, replace list when event received.
+  - note that form is serialized so we don't lose the search state.
 
-== TODO: Extending the Client
-* Problem: how to show a toast confirming the action?
-   * Remember, no scripting to add functionality
-   * Need to extend Hyperview with a toast component
-   * Find a RN library, show how to wrap it as custom component.
-   * Why behavior? Not tied to a screen
+=== TODO: Deleting a Contact
+- Add a delete button to edit.xml
+- trigger a post to the delete backend
+- Add support for post to the Flask view
+- deleted view dispatches event to update the list
+- no more content to show, so navigate back
+- add a confirmation using alert
 
-* Problem: we want quick access to edit and delete actions.
-* This is present in the web app
-* Our mobile app has less screen real estate
-* Typically this is solv
+=== TODO: Adding a New Contact
 
-* Problem: we want to call/email our contacts.
-  * Remember, no scripting to add functionality
-  * Need to extend Hyperview with behaviors for sms, call, email
-  * Find a RN library, show how to wrap it as custom behaviors.
+- Add entrypoint to the header on index.xml
+- Create new.xml template
+- Reuse form_fields.xml
+- Utilize same functionality from editing.
 
-* With custom components and behaviors, we can do almost anything a native app can do.
-* Note how we cleanly extend the client:
-  * HXML remains pure XML, no scripts
-  * We've essentially added features to the Hyperview "browser" that we need
+== Extending the Client
 
+=== TODO: Toasts
+- Problem: how to show a toast confirming the action?
+- Remember, no scripting to add functionality
+- Need to extend Hyperview with a toast component
+- Hyperview client is built using React Native
+- Large open-source community, maybe we can find a library to use
+- Find a RN library, show how to wrap it as custom component.
+  - 
+- Why use a behavior and not an element? Toast exists between screens
+
+=== TODO: Swipe gesture on Contacts
+- Problem: we want quick access to edit and delete actions.
+- This is present in the web app
+- Our mobile app has less screen real estate
+- Typically this is solved by swiping on a row
+
+=== TODO: Communications
+- Problem: we want to call/email our contacts.
+- After all, we're on a mobile device
+- Remember, no scripting to add functionality
+- Need to extend Hyperview with behaviors for sms, call, email
+- Find a RN library, show how to wrap it as custom behaviors.
+
+=== TODO: Conclusion
+- With custom components and behaviors, we can do almost anything a native app can do.
+- Note how we cleanly extend the client:
+  - HXML remains pure XML, no scripts
+  - We've essentially added features to the Hyperview "browser" that we need
 
 == TODO: One Backend, Multiple Hypermedias
 * We turned out simple Contacts app into a native mobile app

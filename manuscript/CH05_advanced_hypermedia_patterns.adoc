@@ -19,6 +19,7 @@ This chapter covers
 * Implementing inline deletion of contacts from the list view
 * Implementing a bulk delete of contacts
 
+[partintro]
 == Active Search
 
 So far so good with Contact.app: we have a nice little web application with some significant improvements over a plain
@@ -28,8 +29,9 @@ to make any further progress with Contact.app?
 
 Nope, not yet!  We still have quite a few interesting and useful interactive UX patterns to add to our
 application, all of which can be done using good old hypermedia!  We _will_ eventually add some
-client-side scripting to our application: hypermedia may be powerful but it isn't _all powerful_ and sometimes scripting
-is the best way to achieve things.  But, for now, let's see what we can accomplish without it.
+client-side scripting to our application: hypermedia may be powerful, but it isn't _all powerful_ and sometimes scripting
+might be the best (or only) way to achieve a given user experience.  For now, however, let's see what we can accomplish
+with hypermedia.
 
 The first advanced feature we will create is known as the "Active Search" pattern.  Active Search is a feature when, as a
 user types text into a search box, the results of that search are dynamically updated.  This pattern was made popular
@@ -49,14 +51,14 @@ Let's recall what the current search field in our application currently looks li
     <input type="submit" value="Search"/>
 </form>
 ----
-<1> The `q` or "query" paramter our client side code uses to search
+<1> The `q` or "query" parameter our client side code uses to search
 
 You will remember that we have some server side code that looks for the `q` parameter and, if it is present, searches
 the contacts for that term.
 
 As it stands right now, the user must hit enter when the search input is focused, or click the "Search" button.  Both
 of these events will trigger a `submit` event on the form, causing it to issue an HTTP `GET` and re-rendering the whole
-page.  Currently, thanks to `hx-boost` the form will still use an AJAX request for this `GET`, but we don't
+page.  Currently, thanks to `hx-boost` the form will still use an AJAX request for this `GET`, but we currently don't
 get the nice search-as-you-type behavior we want.
 
 To add active search behavior, we will need to add a few htmx attributes to the search input.  We will leave the current
@@ -132,9 +134,11 @@ So we end up with a "double render" situation, where an entire document has been
 all the navigation, headers and footers and so forth re-rendered within that element.  Not good!  But, thankfully,
 pretty easy to fix.
 
-Now, we could use the same trick we reached for in the "Click To Load" and "Infinite Scroll" features: `hx-select`.  Recall
-that `hx-select` allows us to pick out the part of the response we are interested in using CSS selectors.  So we could
-add this to our input:
+Now, we could use the same trick we reached for in the "Click To Load" and "Infinite Scroll" features: the `hx-select`
+attribute.  Recall that the `hx-select` attribute allows us to pick out the part of the response we are interested in using
+a CSS selector.
+
+So we could add this to our input:
 
 .Using `hx-select` for Active Search
 [source, html]
@@ -147,17 +151,24 @@ add this to our input:
 ----
 <1> Adding an `hx-select` that picks out the table rows in the `tbody` of the response
 
+However, that isn't the only fix, and, in this case, isn't the most efficient one.  Instead, let's change the server-side
+of our Hypermedia Driven Application to serve _only the HTML content needed_
+
 === Server Side Tricks With htmx
 
-Let's look at another, more advanced technique for dealing with this situation. Currently, we are letting the server
-create a full HTML document in response and then, on the client side, filtering it down.  This is easy and might be
-necessary if we don't control the server side or can't easily modify responses.
+In this section, we'll look at another, more advanced technique for dealing with a situation where we only want a _partial
+bit_ of HTML, rather than a full document. Currently, we are letting the server create the full HTML document as response
+and then, on the client side, we filter the HTML down to the bits that we want.  This is easy to do, and, in fact, might
+be necessary if we don't control the server side or can't easily modify responses.
 
-In this situation, since we are doing "Full Stack" development, where we control both the front end _and_ the back end,
-we have another option: we can modify our server responses.  Let's take this opportunity to explore returning different
- HTML content based on the context information that htmx provides with requests.
+In our application, however, since we are doing "Full Stack" development (that is: we control both the front end _and_ the back end
+code, and can easily modify either) we have another option: we can modify our server responses to return only the content
+necessary, and remove the need to do client-side filtering.  This turns out to be more efficient, since we aren't returning
+all the content surrounding the bit we are interested in, saving bandwidth as well as CPU time on the server side.  So let's
+take this opportunity to explore returning different HTML content, based on the context information that htmx provides
+with the HTTP requests it makes.
 
-Let's take a look again at the current server side code for our search logic:
+Here's a look again at the current server side code for our search logic:
 
 .Server Side Search
 [source,python]

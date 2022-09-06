@@ -4,7 +4,7 @@
 :figure-caption: Figure {chapter}.
 :listing-caption: Listing {chapter}.
 :table-caption: Table {chapter}.
-:sectnumoffset: 2
+:sectnumoffset: 5
 // line above:  :sectnumoffset: 5  (chapter# minus 1)
 :leveloffset: 1
 :sourcedir: ../code/src
@@ -12,12 +12,12 @@
 
 = Hyperview: A Mobile Hypermedia
 
-In this chapter, we will:
+This chapter covers
 
-* Discuss shortcomings with the current state of mobile app development
-* Explain how a Hypermedia architecture can address those problems
-* Introduce Hyperview as a Hypermedia for mobile application development
-* Dive into HXML to show the power of its syntax
+* Shortcomings with the current state of mobile app development
+* Explaining how a Hypermedia architecture can address these problems
+* Introducing Hyperview as a Hypermedia for mobile application development
+* Diving into HXML to show the power of its syntax
 
 
 == State of mobile app development

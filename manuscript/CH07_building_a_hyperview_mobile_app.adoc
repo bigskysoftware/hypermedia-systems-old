@@ -316,7 +316,69 @@ Any existing query params on the `href` will be preserved.
 This means the actual HTTP request to our backend looks like `GET /contacts?rows_only=true&q=Car`.
 Our backend already supports the `q` param for searching, so the response will include rows that match the string "Car".
 
-==== TODO: Infinite scroll
+==== Infinite scroll
+If the user has hundreds or thousands of contacts, loading them all at once may result in poor app performance.
+That's why most mobile apps with long lists implement an interaction known as "infinite scroll".
+The app loads a fixed number of initial items in the list, let's say 100 items.
+If the user scrolls to the bottom of the list, they see a spinner indicating more content is loading.
+Once the content is available, the spinner is replaced with the next page of 100 items.
+These items are appended to the list, they don't replace the first set of items.
+So the list now contains 200 items.
+If the user scrolls to the bottom of the list again, they will see another spinner, and the app will load the next set of content.
+Infinite scroll improves app performance in two ways:
+
+- The initial request for 100 items will be processed quickly, with predictable latency.
+- Subsequent requests can also be fast and predictable.
+- If the user doesn't scroll to the bottom of the list, the app won't have to make subsequent requests.
+
+Our Flask backend already supports pagination on the `/contacts` endpoint via the `page` query param.
+We just need to modify our HXML templates to make use of this parameter.
+To do this, let's edit `rows.xml` to add a new `<item>` below the Jinja for-loop:
+
+.Snippet of `hv/rows.xml`
+[source,xml]
+----
+<items xmlns="https://hyperview.org/hyperview">
+  {% for contact in contacts %}
+    <item key="{{ contact.id }}" style="contact-item">
+      <!-- ommitted for brevity -->
+    </item>
+  {% endfor %}
+  {% if contacts|length %}
+    <item key="load-more" id="load-more" style="load-more-item"> <1>
+      <behavior
+        trigger="visible" <2>
+        action="replace" <3>
+        target="load-more" <4>
+        href="/contacts?rows_only=true&page={{ page + 1 }}" <5>
+        verb="get"
+      />
+      <spinner /> <6>
+    </item>
+  {% endif %}
+</items>
+----
+<1> Include an extra `<item>` in the list to show the spinner
+<2> The item behavior triggers when visible in the viewport
+<3> When triggered, the behavior will replace an element on the screen
+<4> The element to be replaced is the item itself (ID `load-more`)
+<5> Replace the item with the next page of content
+<6> The spinner element
+
+If the current list of contacts passed to the template is empty, we can assume there's no more contacts to fetch from the backend.
+So we use a Jinja conditional to only include this new `<item>` if the list of contacts is non-empty.
+This new `<item>` element gets an ID and a behavior.
+The behavior defines the infinite scroll interaction.
+Up until now, we've seen `trigger` values of `change` and `refresh`.
+But to implement infinite scroll, we need a way to trigger the action when the user scrolls to the botton of the list.
+The `visibile` trigger can be used for this exact purpose.
+It will trigger the action when the element with the behavior is visible in the device viewport.
+In this case, the new `<item>` element is the last item in the list, so the action will trigger when the user scrolls down far enough for the item to enter the viewport.
+As soon as the item is visible, the action will make an HTTP GET request, and replace the loading `<item>` element with the response content.
+Note that our href includes the `rows_only=true` query param, or our response will only include HXML for the contact items, and not the entire screen.
+Also, we're passing the `page` query param, incrementing the current page number to ensure we load the next page.
+
+TODO: summarize, talk about multiple pagination requests.
 
 ==== Pull-to-refresh
 Pull-to-refresh is a common interaction in mobile apps, especially on screens featuring dynamic content.

@@ -41,7 +41,6 @@ Thus, developers are naturally led into a SPA-like pattern for developing mobile
 - The frontend on the mobile device, runs code to create and update the UI
 - The backend is an API, called by the frontend
 
-TODO: think about list formatting?
 Just like with SPAs on the web, this architecture has a big downside: the app's logic gets spread across the frontend and backend.
 Sometimes, logic needs to be duplicated (like to validate form data).
 Other times, the frontend and backend each implement one part of the app's overall logic.
@@ -777,7 +776,7 @@ Thus, they require an `href` attribute so that Hyperview knows what content to r
 By default, it will use the URL of the screen when re-requesting the content for the screen.
 However, if you want to replace the screen with a different one, you can provide an `href` attribute with `reload` on the behavior element.
 
-Let's look at an example that uses several navigation actions on one screen:
+Let's look at an example "widgets" app that uses several navigation actions on one screen:
 
 .Navigation action examples
 [source,xml]
@@ -792,7 +791,7 @@ Let's look at an example that uses several navigation actions on one screen:
 
       <text>
         <behavior action="new" href="/widgets/new" /> <2>
-        New
+        New Widget
       </text>
     </header>
     <text>
@@ -812,7 +811,21 @@ Let's look at an example that uses several navigation actions on one screen:
 <3> Reloads the content of the screen, showing new widgets from the backend
 <4> Pushes a new screen with details for a specific widget
 
-TODO: wrap-up nav actions section to make a smoother transition
+Most screens in your app will need a way for the user to backtrack to the previous screen.
+This is usually done with a button in the header that uses either a "back" or "close" action, depending on how the screen was opened.
+In this example, we're assuming the widgets screen was pushed onto the navigation stack, so the "back" action is appropriate.
+The header contains a second button that allows the user to enter data for a new widget.
+Pressing this button will open a modal with a "New Widget" screen.
+Since this "New Widget" screen will open as a modal, it will need a corresponding "close" action to dismiss itself and show our "widgets" screen again.
+Finally, to see more details about a specific widget, each `<item>` element contains a behavior with a "push" action.
+This action will push a "Widget Detail" screen onto the current navigation stack.
+Like in the "Widgets" screen, "Widget Detail" will need a button in the header that uses the "back" action to let the user backtrack.
+
+On the web, the browser handles basic navigation needs such as going back/forward, reloading the current page, or jumping to a bookmark.
+iOS and Android don't provide this sort of universal navigation for native mobile apps.
+It's on the app developers to handle this themselves.
+Navigation actions in HXML provide an easy but powerful way for developers to build an architecture that makes sense for their app.
+
 
 ===== Update Actions
 
@@ -1182,7 +1195,7 @@ If the entered username is not unique, the response could include an error messa
 
 
 ==== Using Multiple Behaviors
-Most of the example shown above attach a single `<behavior>` to an element.
+Most of the examples shown above attach a single `<behavior>` to an element.
 But there's no such limitation in Hyperview; elements can define multiple behaviors.
 We already saw an example where a single element had different actions triggered on `press` and `longPress`.
 But we can also trigger multiple actions on the same trigger.
@@ -1199,8 +1212,8 @@ But, we can trigger two behaviors at the same time, each one executing a "hide" 
     <text id="area1">Area 1</text>
 
     <text>
-      <behavior action="hide" target="area1" /> <1>
-      <behavior action="hide" target="area2" /> <2>
+      <behavior trigger="press" action="hide" target="area1" /> <1>
+      <behavior trigger="press" action="hide" target="area2" /> <2>
       Hide
     </text>
 
@@ -1211,7 +1224,18 @@ But, we can trigger two behaviors at the same time, each one executing a "hide" 
 <1> Hide element with ID "area1" when pressed
 <2> Hide element with ID "area2" when pressed
 
-TODO: restate the solution shown above
+Hyperview processes behaviors in the order they appear in the markup.
+In this case, the element with ID "area1" will be hidden first, followed by the element with ID "area2".
+Since "hide" is an instantaneous action (ie, it doesn't make an HTTP request), both elements will appear to hide simultaneously.
+But what if we triggered two actions that depend on responses from HTTP requests (like "replace-inner")?
+In that case, each individual action get processed as soon as Hyperview receives the HTTP response.
+Depending on network latency, the two actions could take effect in any order, and they are not guaranteed to be applied simultaneously.
+
+We've seen elements with multiple behaviors and different triggers.
+And we've seen elements with multiple behaviors with the same trigger.
+These concepts can be mixed together too.
+It's not unusual for a production Hyperview app to contain several behaviors, some triggering together and others triggering on different interactions.
+Using multiple behaviors with custom actions keeps HXML declarative, without sacrificing functionality.
 
 
 == Summary

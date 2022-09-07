@@ -302,8 +302,9 @@ Let's look at the first few lines of code in our `index.html` template:
 <4> Create an input that a query can be typed into to search contacts
 
 The first line of code references a base template, `layout.html`, with the `extends` directive.  This layout
-template provides the layout for the page (again, sometimes called "the chrome"): it imports any necessary CSS and
-scripts, includes a `<head>` element, and so forth.
+template provides the layout for the page (again, sometimes called "the chrome"): it wraps the template content in an
+`<html>` tag, imports any necessary CSS and JavaScript in a `<head>` element, places a `<body>` tag around the main
+content and so forth.  All the common content that wrapped around the "normal" content is located in this file.
 
 The next line of code declares the `content` section of this template, which is the content that will be included
 within the "chrome" of the layout template.

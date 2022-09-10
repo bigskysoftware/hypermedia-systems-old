@@ -11,9 +11,9 @@
 :source-language:
 
 = Building a Contacts App With Hyperview
-* We will take our existing Contacts web app, and transform it to a mobile app just by tweaking the backend responses.
+* We will take our existing Contacts web app, and transform it to a mobile app by tweaking the backend and using the Hyperview client.
 * To enhance our app and make it more native, we will extend the Hyperview client with custom components and behaviors.
-* Finally, our Contacts app can serve both a web app and mobile app, just by tweaking the Hypermedia response!
+* Finally, we will make our Flask backend serve both the web app and mobile app using content negotation and other techniques.
 
 == TODO: Porting from Web
 
@@ -25,6 +25,7 @@
 
 === Installation
 Prerequisites
+
  * You already have the contacts app from earlier chapters running locally and listening on port 5000
  * You have an Android Emulator or iOS simulator running on your computer. For the installation instructions
 
@@ -41,6 +42,9 @@ We will use this demo client but point it to our contacts app backend as a start
 <1> Install dependencies for the demo app
 <2> Start the Expo server to run the mobile app in the iOS simulator.
 
+After running `yarn start`, you will be presented with a prompt asking you to open the mobile app using an Android emulator or iOS simulator.
+Select an option based on which developer SDK you have installed.
+(The screenshots in this chapter will be taken from the iOS simulator.)
 With any luck, you will see the Expo mobile app installed in the simulator.
 The mobile app will automatically launch and show a screen saying "Network request failed."
 That's because by default, this app is configured to make a request to `http://0.0.0.0:8085/index.xml`, but our backend is listening on port 5000.
@@ -55,9 +59,31 @@ export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/contacts'; <2>
 <2> Setting the URL to point to our contacts app
 
 We're not up and running yet.
-With our mobile app now pointing to the right endpoint, we see a different error screen with a "ParseError" message.
-That's because the backend is responding to requests with HTML content, but our Hyperview app expects an XML response (specifically, HXML).
-We can now switch gears to our Flask backend, and replace the HTML templates with HXML templates.
+With our Hyperview client now pointing to the right endpoint, we see a different error, a "ParseError".
+That's because the backend is responding to requests with HTML content, but the Hyperview client expects an XML response (specifically, HXML).
+So it's time to turn out attention to our Flask backend.
+We will go through the Flask views, and replace the HTML templates with HXML templates.
+Specifically, let's support the following features to our mobile app:
+
+- A searchable list of contacts
+- Viewing the details of a contact
+- Editing a contact
+- Deleting a contact
+- Adding a new contact
+
+
+.Almost-zero Configuration in Hypermedia Applications
+----
+For many mobile apps that use the Hyperview client, configuring this entrypoint URL is the only on-device code you need to write to deliver a full-featured app.
+Think of the entrypoint URL as the address you type into a web browser to open a web app.
+Except in Hyperview, there is no address bar, and the browser is hard-coded to only open one URL.
+This URL will load the first screen when a user launches the app.
+Every other action the user can take will be declared in the HXML of that first screen.
+This minimal configuration is one elegant aspect of the Hypermedia-driven architecture!
+
+Of course, you may want to write more on-device code to support more features in your mobile app.
+We will demonstrate how to do that later in this chapter, in the section called "Extending the Client".
+----
 
 
 === A Searchable List of Contacts
@@ -80,7 +106,7 @@ Let's call it `layout.xml`.
 ----
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
-    <styles><!-- ommitted for brevity --></styles>
+    <styles><!-- omitted for brevity --></styles>
     <body style="body" safe-area="true">
       <header style="header">
         {% block header %} <1>
@@ -341,7 +367,7 @@ To do this, let's edit `rows.xml` to add a new `<item>` below the Jinja for-loop
 <items xmlns="https://hyperview.org/hyperview">
   {% for contact in contacts %}
     <item key="{{ contact.id }}" style="contact-item">
-      <!-- ommitted for brevity -->
+      <!-- omitted for brevity -->
     </item>
   {% endfor %}
   {% if contacts|length %}
@@ -443,7 +469,7 @@ Let's update the template that renders the contact `<item>` elements, and add a 
     <item key="{{ contact.id }}" style="contact-item">
       <behavior trigger="press" action="push" href="/contacts/{{ contact.id }}" /> <1>
       <text style="contact-item-label">
-        <!-- ommitted for brevity -->
+        <!-- omitted for brevity -->
       </text>
     </item>
   {% endfor %}
@@ -526,25 +552,23 @@ In traditional mobile app development, adding screens can be a significant task.
 Developers need to create the new screen, insert it into the appropriate place of the navigation hierarchy, and write code to open the new screen from existing screens.
 In Hyperview, we just added a behavior with `action="push"`.
 
-=== TODO: Editing a Contact
+=== Editing a Contact
 So far, our app lets us browse a list of contacts, and view details of a specific contact.
 Wouldn't it be nice to update the name, phone number, or email of a contact?
 Let's add UI to edit contacts as our next enhancement.
 
 First we have to figure out how we want to display the editing UI.
 We could push a new editing screen onto the stack, the same way we pushed the contact details screen.
-But that wouldn't quite feel right from a user-experience perspective.
+But that's not the best design from a user-experience perspective.
 Pushing new screens makes sense when drilling down into data, like going from a list to a single item.
 But editing is not a "drill-down" interaction, it's a mode switch between viewing and editing.
-So instead of pushing a new screen, it would be better to replace the current screen with the editing UI.
+So instead of pushing a new screen, let's replace the current screen with the editing UI.
 That means we need to add a button and behavior that use the `reload` action.
-Let's add this to the header of the contact details screen.
+This button can be added to the header of the contact details screen.
 
-.`hv/show.xml`
+.Snippet of `hv/show.xml`
 [source,xml]
 ----
-{% extends 'hv/layout.xml' %}
-
 {% block header %}
   <text style="header-button">
     <behavior trigger="press" action="back" />
@@ -555,10 +579,6 @@ Let's add this to the header of the contact details screen.
     <behavior trigger="press" action="reload" href="/contacts/{{contact.id}}/edit" /> <2>
     Edit
   </text>
-{% endblock %}
-
-{% block content %}
-  <!-- ommitted for brevity -->
 {% endblock %}
 ----
 <1> The new "Edit" button
@@ -606,7 +626,7 @@ Instead, let's focus on the template for the edit screen.
 <4> Button to submit the form data and update the input fields container
 
 Since the edit screen needs to send data to the backend, we wrap the entire content section in a `<form>` element.
-This will ensure that data from user inputs will be included in any HTTP requests to our backend.
+This ensures the form field data will be included in the HTTP requests to our backend.
 Within the `<form>` element, our UI is divided into two sections: the form fields, and the Save button.
 The actual form fields are defined in a separate template (`form_fields.xml`) and added to the edit screen using a Jinja include tag.
 
@@ -631,7 +651,7 @@ The actual form fields are defined in a separate template (`form_fields.xml`) an
 <2> Text element that could display errors from the contact model
 <3> Another text field, this time for the contact's last name
 
-I ommitted the code for the contact's phone number and email address, because they follow the same pattern as the first and last name.
+I omitted the code for the contact's phone number and email address, because they follow the same pattern as the first and last name.
 Each contact field has its own `<text-field>`, and a `<text>` element below it to display possible errors.
 The `<text-field>` has two important attributes:
 
@@ -646,14 +666,14 @@ To understand that decision, we need to first discuss the "Save" button.
 When pressed, the Hyperview client will make an HTTP `POST` request to `contacts/<contact_id>/edit`, with form data serialized from the `<text-field>` inputs.
 The HXML response will replace the contents of form field container (ID `form-fields`).
 But what should that response be?
-That depends on how the validitiy of the form data:
+That depends on the validitiy of the form data:
 
 1. If the data is invalid (eg duplicate email address), our UI will remain in the editing mode and show error messages on the invalid fields.
 This allows the user to correct the errors and try saving again.
 2. If the data is valid, our backend will persist the edits, and our UI will switch back to a display mode (the contact details UI).
 
 So our backend needs to distinguish between a valid and invalid edits.
-Let's make some changes to the existing `contacts_edit_post()` view in the Flask app.
+To support these two scenarios, let's make some changes to the existing `contacts_edit_post()` view in the Flask app.
 
 .`app.py`
 [source,py]
@@ -670,7 +690,7 @@ def contacts_edit_post(contact_id=0):
 ----
 <1> Update the contact object from the request's form data.
 <2> Attempt to persist the updates. This returns `False` for invalid data.
-<3> On success, render the form fields template, but pass a `saved` flag to the template
+<3> On success, render the form fields template, and pass a `saved` flag to the template
 <4> On failure, render the form fields template. Error messages are present on the contact object.
 
 This view already contains conditional logic based on whether the contact model `save()` succeeds.
@@ -709,8 +729,8 @@ The Jinja template conditional ensures that our behavior only renders on success
 On success, the template includes a behavior that triggers immediately thanks to `trigger="load"`.
 The action reloads the current screen with the Contact Details screen (from the `/contacts/<contact_id>` route).
 The result?
-When the user hits "Save", our backend persists the new contact data, and the screen switches back to the read-only view.
-Since we fetch the Details screen from the backend, it shows the edits the user just made.
+When the user hits "Save", our backend persists the new contact data, and the screen switches back to the Details screen.
+Since the app will make a new HTTP request to get the contact details, it's guaranteed to show the freshly saved edits.
 
 
 .Why not use a redirect?
@@ -740,28 +760,164 @@ In the Edit mode, they can update the contact's data and save it to the backend.
 If the backend rejects the edits as invalid, the app stays in Edit mode and shows the validation errors.
 If the backend accepts and persists the edits, the app will switch back to the details mode, showing the updated contact data.
 
-There's one more enhancement we can make to this UI.
-You have
+Let's add one more enhancement to the Edit UI.
+It would be nice to let the user switch away from the Edit mode without needing to save the contact.
+This is typically done by providing a "Cancel" action.
+We can add this as a new button below the "Save" button.
 
-Finally, let's talk about "Cancel", the last button in the actions section of the edit screen.
-Cancel will switch the UI back to the view-only mode of the screen.
-This is done using another `reload` action, this time reloading the current screen with the contact details screen.
-(From the detail screen, the user could hit "Edit" to again switch modes by reloading the edit screen).
+.Snippet of `hv/edit.xml`
+[source,xml]
+----
+<view style="button">
+  <behavior trigger="press" action="replace-inner" target="form-fields" href="/contacts/{{contact.id}}/edit" verb="post" />
+  <text style="button-label">Save</text>
+</view>
+<view style="button"> <1>
+  <behavior
+    trigger="press"
+    action="reload" <2>
+    href="/contacts/{{contact.id}}" <3>
+  />
+  <text style="button-label">Cancel</text>
+</view>
+----
+<1> New Cancel button on the edit screen
+<3> When pressed, reload the entire screen
+<4> The screen will be reloaded with the contact details screen.
 
-
-
+This is the same technique we used to switch from the edit UI to the details UI upon successfully editing the contact.
+But pressing "Cancel" will update the UI faster than pressing "Save".
+On save, the app will first make a `POST` request to save the data, and then a `GET` request for the details screen.
+Cancelling skips the `POST`, and immediately make the `GET` request.
 
 ==== Updating the Contacts List
-- problem: contacts list is out of date
-- solution: need to communicate between screens
-- new concept: events. simple messages that can be emitted on one screen, and trigger behavior on another screen.
-- using two behavior concepts:
-  - action="dispatch-event" will dispatch an event
-  - trigger="on-event" will trigger the behavior action with the given name
-- Using events:
-  - dispatch event when successfully editing a contact
-  - update index.xml, replace list when event received.
-  - note that form is serialized so we don't lose the search state.
+At this point, we can claim to have fully implemented the Edit UI.
+But there's a problem.
+In fact, if we stopped here, users may even consider the app to be buggy!
+Why?
+It has to do with syncing the app state across multiple screens.
+Let's walk through this series of interactions:
+
+1. Launch the app to the Contacts List.
+2. Press on the contact "Joe Blow" to load his Contact Details.
+3. Press Edit to switch to the edit mode, and change the contact's first name to "Joseph".
+4. Press Save to switch back to viewing mode. The contact's name is now "Joseph Blow".
+5. Hit the back button to return to the Contacts List.
+
+Did you catch the issue?
+Our Contacts list is still showing the same list of names as when we launched the app.
+The contact we just renamed to "Joseph" is still showing up in the list as "Joe".
+This is a general problem in Hypermedia applications.
+The client does not have a notion of shared data across different parts of the UI.
+Updates in one part of the app will not automatically update other parts of the app.
+Luckily, there's a solution to this problem in Hyperview: events.
+Events are built into the behavior system, and allow lightweight communication between different parts of the UI.
+
+
+.Event Behaviors
+----
+Events are a client-side feature of Hyperview.
+You are probably familiar with events from working with HTML and the DOM.
+DOM Elements will dispatch events as a result of user interactions.
+Scripts can listen for these events, and respond to them by running arbitrary JavaScript code.
+Events in Hyperview are a good deal simpler, but they don't require any scripting and can be defined declaratively in the HXML.
+This is done through the behavior system.
+Events require adding a new behavior attribute, action type, and trigger type:
+
+- `event-name`: This attribute of `<behavior>` defines the name of the event that will either be dispatched or listened for.
+- `action="dispatch-event"`: When triggered, this behavior will dispatch an event with the name defined by the `event-name` attribute.
+This event is dispatched globally across the entire Hyperview app.
+- `trigger="on-event"`: This behavior will trigger if another behavior in the app dispatches an event matching the `event-name` attribute.
+
+If a `<behavior>` element uses `action="dispatch-event"` or `trigger="on-event"`, it must also define an `event-name`.
+Note that multiple behaviors can dispatch an event with the same name.
+Likewise, multiple behaviors can trigger on the same event name.
+
+Let's look at this simple behavior:
+
+`<behavior trigger="press" action="toggle" target="container" />`.
+
+Pressing an element containing this behavior will toggle the visibility of an element with the ID "container".
+But what if the element we want to toggle is on a different screen?
+The "toggle" action and target ID lookup only work on the current screen, so this solution wouldn't work.
+The solution is to create two behaviors, one on each screen, communicating via events:
+
+- Screen A: `<behavior trigger="press" action="dispatch-event" event-name="button-pressed" />`
+- Screen B: `<behavior trigger="on-event" event-name="button-pressed" action="toggle" target="container" />`
+
+Pressing an element containing the first behavior (on Screen A) will dispatch an event with the name "button-pressed".
+The second behavior (on Screen B) will trigger on an event with this name, and toggle the visibility of an element with ID "container".
+
+Events have plenty of uses, but the most common is to inform different screens about backend state changes that require the UI to be re-fetched.
+----
+
+We know enough about Hyperview's event system to solve the bug in our app.
+When the user saves a change to a contact, we need to dispatch an event from the Details screen.
+And the Contacts screen needs to listen to that event, and reload itself to reflect the edits.
+Since the `form_fields.xml` template already gets the `saved` flag when the backend successfully saves a contact, it's a good place to dispatch the event:
+
+.Snippet from `hv/form_fields.xml`
+[source,xml]
+----
+{% if saved %}
+  <behavior
+    trigger="load" <1>
+    action="dispatch-event" <2>
+    event-name="contact-updated" <3>
+  />
+  <behavior <4>
+    trigger="load"
+    action="reload"
+    href="/contacts/{{contact.id}}"
+  />
+{% endif %}
+----
+<1> Trigger the behavior immediately
+<2> The behavior will dispatch an event
+<3> The event name is "contact-updated"
+<4> The existing behavior to show the Details UI.
+
+Now, we just need the contacts list to listen for the `contact-updated` event, and reload itself:
+
+.Snippet from `hv/index.xml`
+[source,xml]
+----
+<form>
+  <behavior
+    trigger="on-event" <1>
+    event-name="contact-updated" <2>
+    action="replace-inner" <3>
+    target="contacts-list"
+    href="/contacts?rows_only=true"
+    verb="get"
+  />
+  <!-- text-field omitted -->
+  <list id="contacts-list">
+    {% include 'hv/rows.xml' %}
+  </list>
+</form>
+----
+<1> Trigger the behavior on event dispatch
+<2> Trigger the behavior for dispatched events with the name "contact-updated"
+<3> When triggered, replace the contents of the `<list>` element with rows from the backend
+
+Any time the user edits a contact, the Contacts List screen will update to reflect the edits.
+The addition of these two `<behavior>` elements fixes the bug: the Contacts List screen will correctly show "Joseph Blow" in the list.
+Note that we intentionally added the new behavior inside the `<form>` element.
+The ensures the triggered request will preserve any search query.
+To show what I mean, let's revisit the set of steps that demonstrated the buggy behavior.
+Assume that before pressing on "Joe Blow", the user had searched the contacts by typing "Joe" in the search field.
+When the user later updates the contact to "Joseph Blow", our template dispatches the "contact-updated" event, which triggers the `replace-inner` behavior on the contact list screen.
+Due to the parent `<form>` element, the search query "Joe" will be serialized with the request: `GET /contacts?rows_only=true&q=Joe`.
+Since the name "Joseph" doesn't match the query "Joe", the contact we edited will not appear in the list (until the user clears out the query).
+Our app's state remains consistent across our backend and all active screens.
+
+The nice thing about events is that it brings a level of abstraction to behaviors.
+So far, we've seen that editing a contact should cause the list of contacts to refresh.
+But we also want the list to refresh when we delete a contact, or add an entirely new contact.
+To support those types of changes, we don't need to make any more modifications to `index.xml`.
+We just need to make sure to dispatch a `contact-updated` event from the deletion and creation UIs.
+
 
 === TODO: Deleting a Contact
 - Add a delete button to edit.xml

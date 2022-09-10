@@ -499,7 +499,6 @@ We're also generating the response from a new HXML template, which we can create
   </view>
 </view>
 {% endblock %}
-
 ----
 <1> Extend the base layout template
 <2> Override the `header` block of the layout template to include a "Back" button
@@ -528,13 +527,231 @@ Developers need to create the new screen, insert it into the appropriate place o
 In Hyperview, we just added a behavior with `action="push"`.
 
 === TODO: Editing a Contact
-- Add edit button to reload
-- new template with editing functionality
-- form fields in a separate template
-- cancel: reload the show template
+So far, our app lets us browse a list of contacts, and view details of a specific contact.
+Wouldn't it be nice to update the name, phone number, or email of a contact?
+Let's add UI to edit contacts as our next enhancement.
 
-- save: replace form to show validation errors
-- on success: reload show template on load
+First we have to figure out how we want to display the editing UI.
+We could push a new editing screen onto the stack, the same way we pushed the contact details screen.
+But that wouldn't quite feel right from a user-experience perspective.
+Pushing new screens makes sense when drilling down into data, like going from a list to a single item.
+But editing is not a "drill-down" interaction, it's a mode switch between viewing and editing.
+So instead of pushing a new screen, it would be better to replace the current screen with the editing UI.
+That means we need to add a button and behavior that use the `reload` action.
+Let's add this to the header of the contact details screen.
+
+.`hv/show.xml`
+[source,xml]
+----
+{% extends 'hv/layout.xml' %}
+
+{% block header %}
+  <text style="header-button">
+    <behavior trigger="press" action="back" />
+    Back
+  </text>
+
+  <text style="header-button"> <1>
+    <behavior trigger="press" action="reload" href="/contacts/{{contact.id}}/edit" /> <2>
+    Edit
+  </text>
+{% endblock %}
+
+{% block content %}
+  <!-- ommitted for brevity -->
+{% endblock %}
+----
+<1> The new "Edit" button
+<2> Behavior to reload the current screen with the edit screen when pressed
+
+Once again, we're reusing an existing Flask route (`/contacts/<contact_id>/edit`) for the edit UI, and filling in the contact ID using data passed to the Jinja template.
+We also need to update the `contacts_edit_get()` view to return an XML response based on an HXML template (`hv/edit.xml`).
+I'll skip the code sample because the needed changes are identical to what we applied to `contacts_view()` in the previous section.
+Instead, let's focus on the template for the edit screen.
+
+.`hv/edit.xml`
+[source,xml]
+----
+{% extends 'hv/layout.xml' %}
+
+{% block header %}
+  <text style="header-button">
+    <behavior trigger="press" action="back" href="#" />
+    Back
+  </text>
+{% endblock %}
+
+{% block content %}
+<form> <1>
+  <view id="form-fields"> <2>
+    {% include 'hv/form_fields.xml' %} <3>
+  </view>
+
+  <view style="button"> <4>
+    <behavior
+      trigger="press"
+      action="replace-inner"
+      target="form-fields"
+      href="/contacts/{{contact.id}}/edit"
+      verb="post"
+    />
+    <text style="button-label">Save</text>
+  </view>
+</form>
+{% endblock %}
+----
+<1> Form wrapping the input fields and buttons
+<2> Container with ID, containing the input fields
+<3> Template include to render the input fields
+<4> Button to submit the form data and update the input fields container
+
+Since the edit screen needs to send data to the backend, we wrap the entire content section in a `<form>` element.
+This will ensure that data from user inputs will be included in any HTTP requests to our backend.
+Within the `<form>` element, our UI is divided into two sections: the form fields, and the Save button.
+The actual form fields are defined in a separate template (`form_fields.xml`) and added to the edit screen using a Jinja include tag.
+
+.`hv/form_fields.xml`
+[source,xml]
+----
+<view style="edit-group">
+  <view style="edit-field">
+    <text-field name="first_name" placeholder="First name" value="{{ contact.first }}" /> <1>
+    <text style="edit-field-error">{{ contact.errors.first }}</text> <2>
+  </view>
+
+  <view style="edit-field"> <3>
+    <text-field name="last_name" placeholder="Last name" value="{{ contact.last }}" />
+    <text style="edit-field-error">{{ contact.errors.last }}</text>
+  </view>
+
+  <!-- same markup for contact.email and contact.phone -->
+</view>
+----
+<1> Text input holding the current value for the contact's first name
+<2> Text element that could display errors from the contact model
+<3> Another text field, this time for the contact's last name
+
+I ommitted the code for the contact's phone number and email address, because they follow the same pattern as the first and last name.
+Each contact field has its own `<text-field>`, and a `<text>` element below it to display possible errors.
+The `<text-field>` has two important attributes:
+
+- `name` defines the name to use when serializing the text-field's value into form data for HTTP requests.
+We are using the same names as the web app from previous chapters (`first_name`, `last_name`, `phone`, `email`).
+That way, we don't need to make changes in our backend to parse the form data.
+- `value` defines the pre-filled data in the text field.
+Since we are editing an existing contact, it makes sense to pre-fill the text field with the current name, phone, or email.
+
+You might be wondering, why did I choose to define the form fields in a separate template (`form_fields.xml`)?
+To understand that decision, we need to first discuss the "Save" button.
+When pressed, the Hyperview client will make an HTTP `POST` request to `contacts/<contact_id>/edit`, with form data serialized from the `<text-field>` inputs.
+The HXML response will replace the contents of form field container (ID `form-fields`).
+But what should that response be?
+That depends on how the validitiy of the form data:
+
+1. If the data is invalid (eg duplicate email address), our UI will remain in the editing mode and show error messages on the invalid fields.
+This allows the user to correct the errors and try saving again.
+2. If the data is valid, our backend will persist the edits, and our UI will switch back to a display mode (the contact details UI).
+
+So our backend needs to distinguish between a valid and invalid edits.
+Let's make some changes to the existing `contacts_edit_post()` view in the Flask app.
+
+.`app.py`
+[source,py]
+----
+@app.route("/contacts/<contact_id>/edit", methods=["POST"])
+def contacts_edit_post(contact_id=0):
+    c = Contact.find(contact_id)
+    c.update(request.form['first_name'], request.form['last_name'], request.form['phone'], request.form['email']) <1>
+    if c.save(): <2>
+        flash("Updated Contact!")
+        return render_to_response("hv/form_fields.xml", contact=c, saved=True) <3>
+    else:
+        return render_to_response("hv/form_fields.xml", contact=c) <4>
+----
+<1> Update the contact object from the request's form data.
+<2> Attempt to persist the updates. This returns `False` for invalid data.
+<3> On success, render the form fields template, but pass a `saved` flag to the template
+<4> On failure, render the form fields template. Error messages are present on the contact object.
+
+This view already contains conditional logic based on whether the contact model `save()` succeeds.
+If `save()` fails, we render the `form_fields.xml` template.
+`contact.errors` will contain error messages for the invalid fields, which will be rendered into the `<text style="edit-field-error">` elements.
+If `save()` succeeds, we will also render the `form_fields.xml` template.
+But this time, the template will get a `saved` flag, indicating success.
+We will update the template to use this flag to implement our desired UI: switching the UI back to display mode.
+
+.`hv/form_fields.xml`
+[source,xml]
+----
+<view style="edit-group">
+  {% if saved %} <1>
+    <behavior
+      trigger="load" <2>
+      action="reload" <3>
+      href="/contacts/{{contact.id}}" <4>
+    />
+  {% endif %}
+
+  <view style="edit-field">
+    <text-field name="first_name" placeholder="First name" value="{{ contact.first }}" />
+    <text style="edit-field-error">{{ contact.errors.first }}</text>
+  </view>
+
+  <!-- same markup for the other fields -->
+</view>
+----
+<1> Only include this behavior after successfully saving a contact.
+<2> Trigger the behavior immediately
+<3> The behavior will reload the entire screen
+<4> The screen will be reloaded with the contact details screen.
+
+The Jinja template conditional ensures that our behavior only renders on successful saves, and not when the screen first opens (or the user submits invalid data).
+On success, the template includes a behavior that triggers immediately thanks to `trigger="load"`.
+The action reloads the current screen with the Contact Details screen (from the `/contacts/<contact_id>` route).
+The result?
+When the user hits "Save", our backend persists the new contact data, and the screen switches back to the read-only view.
+Since we fetch the Details screen from the backend, it shows the edits the user just made.
+
+
+.Why not use a redirect?
+----
+You may remember the web app version of this code behaved a little differently.
+On a successful save, the view returned `redirect("/contacts/" + str(contact_id))`.
+This HTTP redirect would tell the web browser to navigate to the contact details page.
+
+This approach is not supported in Hyperview.
+Why?
+A web app's navigation stack is simple: a linear sequence of pages, with only one active page at a time.
+Navigation in a mobile app is considerably more complex.
+Mobile apps use a nested hierarchy of navigation stacks, modals, and tabs.
+All screens in this hierarchy are active, and may be displayed instantly in response to user actions.
+In this world, how would the Hyperview client interpret an HTTP redirect?
+Should it reload the current screen, push a new one, or navigate to a screen in the stack with the same URL?
+Instead of making a choice that would be suboptimal for many scenarios, Hyperview takes a different approach.
+Server-controlled redirects are not possible, but the backend can render navigation behaviors into the HXML.
+This is what we do switch from the Edit UI to the Details UI in the code above.
+Think of these as client-side redirects, or better yet client-side navigations.
+----
+
+
+We now have a working Edit UI in our contacts app.
+Users can enter the Edit mode by pressing a button on the contact details screen.
+In the Edit mode, they can update the contact's data and save it to the backend.
+If the backend rejects the edits as invalid, the app stays in Edit mode and shows the validation errors.
+If the backend accepts and persists the edits, the app will switch back to the details mode, showing the updated contact data.
+
+There's one more enhancement we can make to this UI.
+You have
+
+Finally, let's talk about "Cancel", the last button in the actions section of the edit screen.
+Cancel will switch the UI back to the view-only mode of the screen.
+This is done using another `reload` action, this time reloading the current screen with the contact details screen.
+(From the detail screen, the user could hit "Edit" to again switch modes by reloading the edit screen).
+
+
+
+
+==== Updating the Contacts List
 - problem: contacts list is out of date
 - solution: need to communicate between screens
 - new concept: events. simple messages that can be emitted on one screen, and trigger behavior on another screen.
@@ -553,6 +770,46 @@ In Hyperview, we just added a behavior with `action="push"`.
 - deleted view dispatches event to update the list
 - no more content to show, so navigate back
 - add a confirmation using alert
+
+For destructive actions like deleting a contact, it's always a good idea to ask the user for confirmation.
+We can add a confirmation to the delete behavior by using the `alert` system action described in the previous chapter.
+As you recall, the `alert` action will show a system dialog box with buttons that can trigger other behaviors.
+All we have to do is wrap the delete `<behavior>` in a behavior that uses `action="alert"`.
+
+.Snippet of `hv/edit.xml`
+[source,xml]
+----
+<view style="button">
+  <behavior <1>
+    xmlns:alert="https://hyperview.org/hyperview-alert"
+    trigger="press"
+    action="alert"
+    alert:title="Confirm delete"
+    alert:message="Are you sure you want to delete {{ contact.first }}?"
+  >
+    <alert:option alert:label="Confirm"> <2>
+      <behavior <3>
+        trigger="press"
+        action="append"
+        target="form-fields"
+        href="/contacts/{{contact.id}}/delete"
+        verb="post"
+      />
+    </alert:option>
+    <alert:option alert:label="Cancel" /> <4>
+  </behavior>
+  <text style="button-label button-label-delete">Delete Contact</text>
+</view>
+----
+<1> Pressing "Delete" triggers an action to show the system dialog with the given title and message.
+<2> The first pressable option in the system dialog
+<3> Pressing the first option will trigger contact deletion
+<4> The second pressable option has no behavior, so it only closes the dialog.
+
+Unlike before, pressing the delete button will not have an immediate effect.
+Instead, the user will be presented with the dialog box and asked to confirm.
+Our core deletion behavior didn't change, we just chained it from another behavior.
+
 
 === TODO: Adding a New Contact
 

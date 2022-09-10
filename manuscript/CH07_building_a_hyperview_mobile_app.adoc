@@ -426,12 +426,106 @@ Let's say our `<list>` did contain a `<behavior>`.
 If the user did a search or pull-to-refresh, we would replace the content of `<list>` with the content from `rows.xml`.
 The `<behavior>` would no longer be defined on the `<list>`, and subsequent attempts to pull-to-refresh would not work.
 By defining the behavior as attributes of `<list>`, the behavior will persist even when replacing the items in the list.
-Generally, I prefer to use explicit `<behavior>` elements in my HXML, because it's easier to define multiple behaviors, or to move around the behavior to different elements.
-But the shorthand syntax is good to know and apply in situations like this.
+Generally, I prefer to use explicit `<behavior>` elements in my HXML.
+it makes it easier to define multiple behaviors, and to move the behavior around while refactoring.
+But the shorthand syntax is good to apply in situations like this.
 
-=== TODO: Viewing The Details Of A Contact
-- link each item to push a new screen
-- new template with header and back button
+=== Viewing The Details Of A Contact
+Now that our contacts list screen is in good shape, we can start adding other screens to our app.
+The natural next step is to create a details screen, which appears when the user taps an item in the contacts list.
+Let's update the template that renders the contact `<item>` elements, and add a behavior to show the details screen.
+
+.`hv/rows.xml`
+[source,xml]
+----
+<items xmlns="https://hyperview.org/hyperview">
+  {% for contact in contacts %}
+    <item key="{{ contact.id }}" style="contact-item">
+      <behavior trigger="press" action="push" href="/contacts/{{ contact.id }}" /> <1>
+      <text style="contact-item-label">
+        <!-- ommitted for brevity -->
+      </text>
+    </item>
+  {% endfor %}
+</items>
+----
+<1> Behavior to push the contact details screen onto the stack when pressed.
+
+Our Flask backend already has a route for serving the contact details at `/contacts/<contact_id>`.
+In our template, we use a Jinja variable to dynamically generate the URL path for the current contact in the for-loop.
+We also used the "push" action to show the details by pushing a new screen onto the stack.
+If you reload the app, you can now tap any contact in the list, and Hyperview will open the new screen.
+However, the new screen will show an error message.
+That's because our backend is still returning HTML in the response, and the Hyperview client expects HXML.
+Let's update the backend to respond with HXML and the proper headers.
+
+.`app.py`
+[source,py]
+----
+@app.route("/contacts/<contact_id>")
+def contacts_view(contact_id=0):
+    contact = Contact.find(contact_id)
+    return render_to_response("hv/show.xml", contact=contact) <1>
+----
+<1> Generate an XML response from a new template file.
+
+Just like with the `contacts()` view, `contacts_view()` uses `render_to_response()` to set the `Content-Type` header on the response.
+We're also generating the response from a new HXML template, which we can create now:
+
+.`hv/show.xml`
+[source,xml]
+----
+{% extends 'hv/layout.xml' %} <1>
+
+{% block header %} <2>
+  <text style="header-button">
+    <behavior trigger="press" action="back" /> <3>
+    Back
+  </text>
+{% endblock %}
+
+{% block content %} <4>
+<view style="details">
+  <text style="contact-name">{{ contact.first }} {{ contact.last }}</text>
+
+  <view style="contact-section">
+    <text style="contact-section-label">Phone</text>
+    <text style="contact-section-info">{{contact.phone}}</text>
+  </view>
+
+  <view style="contact-section">
+    <text style="contact-section-label">Email</text>
+    <text style="contact-section-info">{{contact.email}}</text>
+  </view>
+</view>
+{% endblock %}
+
+----
+<1> Extend the base layout template
+<2> Override the `header` block of the layout template to include a "Back" button
+<3> Behavior to navigate to the previous screen when pressed
+<4> Override the `content` block to show the full details of the selected contact.
+
+The contacts detail screen extends the base `layout.xml` template, just like we did in `index.xml`.
+This time, we're overriding content in both the `header` block and `content` block.
+Overriding the header block lets us add a "Back" button with a behavior.
+When pressed, the Hyperview client will unwind the navigation stack and return the user to the contacts list.
+Note that triggering this behavior is not the only way to navigate back.
+The Hyperview client respects navigation conventions on different platforms.
+On iOS, users can also navigate to the previous screen by swiping right from the left edge of the device.
+On Android, users can also navigate to the previous screen by pressing the hardware back button.
+We don't need to specify anything extra in the HXML to get these interactions!
+
+[#figure-7-4, reftext="Figure {chapter}.{counter:figure}"]
+.Contact Details Screen
+image::../images/screenshot_hyperview_detail.png[]
+
+With just a few simple changes, we've gone from a single-screen app to a multi-screen app.
+Note that we didn't need to change anything in the actual mobile app code to support our new screen.
+This is a big deal.
+In traditional mobile app development, adding screens can be a significant task.
+Developers need to create the new screen, insert it into the appropriate place of the navigation hierarchy, and write code to open the new screen from existing screens.
+In Hyperview, we just added a behavior with `action="push"`.
 
 === TODO: Editing a Contact
 - Add edit button to reload

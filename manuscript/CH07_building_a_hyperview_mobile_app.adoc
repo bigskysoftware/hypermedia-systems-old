@@ -790,6 +790,11 @@ But pressing "Cancel" will update the UI faster than pressing "Save".
 On save, the app will first make a `POST` request to save the data, and then a `GET` request for the details screen.
 Cancelling skips the `POST`, and immediately make the `GET` request.
 
+[#figure-7-5, reftext="Figure {chapter}.{counter:figure}"]
+.Contact Edit Screen
+image::../images/screenshot_hyperview_edit.png[]
+
+
 ==== Updating the Contacts List
 At this point, we can claim to have fully implemented the Edit UI.
 But there's a problem.
@@ -912,27 +917,84 @@ Due to the parent `<form>` element, the search query "Joe" will be serialized wi
 Since the name "Joseph" doesn't match the query "Joe", the contact we edited will not appear in the list (until the user clears out the query).
 Our app's state remains consistent across our backend and all active screens.
 
-The nice thing about events is that it brings a level of abstraction to behaviors.
-So far, we've seen that editing a contact should cause the list of contacts to refresh.
-But we also want the list to refresh when we delete a contact, or add an entirely new contact.
-To support those types of changes, we don't need to make any more modifications to `index.xml`.
-We just need to make sure to dispatch a `contact-updated` event from the deletion and creation UIs.
+Events introduce a level of abstraction to behaviors.
+So far, we've seen that editing a contact will cause the list of contacts to refresh.
+But the list of contacts should also refresh after other actions, such as deleting a contact or adding a new contact.
+As long as our HXML responses for deletion or creation include a behavior to dispatch a `contact-updated` event, then we will get the desired refresh behavior on the contacts list screen.
+The screen doesn't care what causes the `contact-updated` event to be dispatched.
+It just knows what it needs to do when it happens.
 
 
-=== TODO: Deleting a Contact
-- Add a delete button to edit.xml
-- trigger a post to the delete backend
-- Add support for post to the Flask view
-- deleted view dispatches event to update the list
-- no more content to show, so navigate back
-- add a confirmation using alert
+=== Deleting a Contact
+Speaking of deleting a contact, this is a good next feature to implement.
+We will let users delete a contact from the Edit UI.
+So let's add a new button to `edit.xml`.
 
+.Snippet of `hv/edit.xml`
+[source,xml]
+----
+<view style="button">
+  <behavior trigger="press" action="replace-inner" target="form-fields" href="/contacts/{{contact.id}}/edit" verb="post" />
+  <text style="button-label">Save</text>
+</view>
+<view style="button">
+  <behavior trigger="press" action="reload" href="/contacts/{{contact.id}}" />
+  <text style="button-label">Cancel</text>
+</view>
+<view style="button"> <1>
+  <behavior
+    trigger="press"
+    action="append" <2>
+    target="form-fields"
+    href="/contacts/{{contact.id}}/delete" <4>
+    verb="post"
+  /> 
+  <text style="button-label button-label-delete">Delete Contact</text>
+</view>
+----
+<1> New Delete Contact button on the edit screen
+<3> When pressed, append HXML to a container on the screen
+<4> The HXML will be fetched by making a `POST /contacts/<contact_id>/delete` request
+
+The HXML for the Delete button is pretty similar to the Save button, but there are a few subtle differences.
+Remember, pressing the Save button results in one of two expected outcomes: failing and showing validation errors on the form, or succeeding and switching to the contact details screen.
+To support the first outcome (failing and showing validation errors), the save behavior replaces the contents of the `<view id="form-fields">` container with a re-rendered version of `form_fields.xml`.
+Therefore, using the `replace-inner` action makes sense.
+
+Deletion does not involve a validation step, so there's only one expected outcome: successfully deleting the contact.
+When deletion succeeds, the contact no longer exists.
+It doesn't make sense to show the edit UI or contact details for a non-existent contact.
+Instead, our app will navigate back to the previous screen (the contacts list).
+Our response will only include behaviors that trigger immediately, there's no UI to change.
+Therefore, using the `append` action will preserve the current UI while Hyperview runs the actions.
+
+.Snippet of `hv/deleted.xml`
+[source,xml]
+----
+<view>
+  <behavior trigger="load" action="dispatch-event" event-name="contact-updated" /> <1>
+  <behavior trigger="load" action="back" /> <2>
+</view>
+----
+<1> On load, dispatch the `contact-updated` event to update the contact lists screen
+<2> Navigate back to the contacts list screen.
+
+Note that in addition to behavior to navigate back, this template also includes a behavior to dispatch the `contact-updated` event.
+In the previous chapter section, we added a behavior to `index.xml` to refresh the list when that event is dispatched.
+By dispatching the event after a deletion, we will make sure the deleted contact gets removed from the list.
+
+Once again, I'm going to skip over the changes to the Flask backend.
+Suffice it to say, we will need to update the `contacts_delete()` view to respond with the `hv/deleted.xml` template.
+And we need to update the route to support `POST` in addition to `DELETE`, since the Hyperview client only understands `GET` and `POST`.
+
+We now have a fully functioning deletion feature!
+But it's not the most user-friendly: it takes one accidental tap to permanently delete a contact.
 For destructive actions like deleting a contact, it's always a good idea to ask the user for confirmation.
 We can add a confirmation to the delete behavior by using the `alert` system action described in the previous chapter.
 As you recall, the `alert` action will show a system dialog box with buttons that can trigger other behaviors.
 All we have to do is wrap the delete `<behavior>` in a behavior that uses `action="alert"`.
 
-.Snippet of `hv/edit.xml`
+.Delete button in `hv/edit.xml`
 [source,xml]
 ----
 <view style="button">
@@ -963,16 +1025,50 @@ All we have to do is wrap the delete `<behavior>` in a behavior that uses `actio
 <4> The second pressable option has no behavior, so it only closes the dialog.
 
 Unlike before, pressing the delete button will not have an immediate effect.
-Instead, the user will be presented with the dialog box and asked to confirm.
+Instead, the user will be presented with the dialog box and asked to confirm or cancel.
 Our core deletion behavior didn't change, we just chained it from another behavior.
 
+[#figure-7-6, reftext="Figure {chapter}.{counter:figure}"]
+.Delete Contact confirmation
+image::../images/screenshot_hyperview_delete.png[]
 
-=== TODO: Adding a New Contact
 
-- Add entrypoint to the header on index.xml
-- Create new.xml template
-- Reuse form_fields.xml
-- Utilize same functionality from editing.
+=== Adding a New Contact
+Adding a new contact is the last feature we want to support in our mobile app.
+And luckily, it's also the easiest.
+We can reuse the concepts (and even some templates) from features we've already implemented.
+In particular, adding a new contact is very similar to editing an existing contact.
+Both features need to:
+
+- Show a form to collect information about the contact
+- Have a way to save the entered information
+- Show validation errors on the form
+- Persist the contact when there are no validation errors
+
+Since the functionality is so similar, I'm going to summarize the changes here without showing the code.
+Hopefully, you can follow along:
+
+1. Update `index.xml`.
+  - Override the `header` block to add a new "Add" button.
+  - Include a behavior in the button. When pressed, push a new screen as a modal by using `action="new"`, and request the screen content from `/contacts/new`.
+2. Create a template `hv/new.xml`.
+  - Override the header block to include a button that closes the modal, using `action="close"`.
+  - Include the `hv/form_fields.xml` template to render empty form fields
+  - Add a "Add Contact" button below the form fields.
+  - Include a behavior in the button. When pressed, make a `POST` request to `/contacts/new`, and use `action="replace-inner"` to update the form fields.
+3. Update the Flask view.
+  - Change `contacts_new_get()` to use `render_to_response()` with the `hv/new.xml` template.
+  - Change `contacts_new()` to usee `render_to_response()` with the `hv/form_fields.xml` template. Pass `saved=True` when rendering the template after successfully persisting the new contact.
+
+By reusing `form_fields.xml` for both editing and adding a contact, we get to reuse some code and ensure the two features have a consistent UI.
+Also, our "Add Contact" screen will benefit from the "saved" logic that's already a part of `form_fields.xml`.
+After succesfully adding a new contact, the screen will dispatch the `contact-updated` event, which will refresh the contacts list and show the newly added contact.
+The screen will reload itself to show the Contact Details.
+
+[#figure-7-7, reftext="Figure {chapter}.{counter:figure}"]
+.Add Contact modal
+image::../images/screenshot_hyperview_add.png[]
+
 
 == Extending the Client
 

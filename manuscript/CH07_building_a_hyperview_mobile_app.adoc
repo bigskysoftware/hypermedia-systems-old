@@ -543,7 +543,7 @@ We don't need to specify anything extra in the HXML to get these interactions!
 
 [#figure-7-4, reftext="Figure {chapter}.{counter:figure}"]
 .Contact Details Screen
-image::../images/screenshot_hyperview_detail.png[]
+image::../images/screenshot_hyperview_detail_cropped.png[]
 
 With just a few simple changes, we've gone from a single-screen app to a multi-screen app.
 Note that we didn't need to change anything in the actual mobile app code to support our new screen.
@@ -1030,7 +1030,7 @@ Our core deletion behavior didn't change, we just chained it from another behavi
 
 [#figure-7-6, reftext="Figure {chapter}.{counter:figure}"]
 .Delete Contact confirmation
-image::../images/screenshot_hyperview_delete.png[]
+image::../images/screenshot_hyperview_delete_cropped.png[]
 
 
 === Adding a New Contact

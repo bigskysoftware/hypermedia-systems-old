@@ -1071,8 +1071,127 @@ image::../images/screenshot_hyperview_add.png[]
 
 
 == Extending the Client
+We now have a fully-featured native mobile version of our Contacts app.
+Aside from customizing the entrypoint URL, we didn't need to touch any code that runs on the mobile device.
+We defined our mobile app's UI and logic completely in the backend code, using Flask and HXML templates.
+This is possible because the standard Hyperview client supports all of the basic features by mobile apps.
+But the standard Hyperview client can't do everything out of the box.
+App developers want their apps to have unique touches like custom UIs or deep integration with platform capabilities.
+To support these needs, the Hyperview client was designed to be extended with custom behavior actions and UI elements.
+In this section, we will enhance our mobile app with examples of both.
 
-=== TODO: Toasts
+Before diving in, a quick introduction on the tech stack we'll be using.
+The Hyperview client is written in React Native.
+If you're not familiar with React Native, it is a popular cross-platform framework for creating mobile apps.
+It uses the same component-based API as React.
+This means developers familiar with JavaScript and React can quickly pick up React Native.
+React Native has a healthy ecosystem of open-source libraries.
+We'll be leveraging these libraries to create our custom extensions to the Hyperview client.
+
+=== Adding Phone Calls and Email
+Let's start with the most obvious feature missing from our Contacts app: phone calls.
+Mobile device can make phone calls.
+The contacts in our app have phone numbers.
+Shouldn't our app support calling those phone numbers?
+And while we're at it, our app should also support e-mailing the contacts.
+
+On the web, calling phone numbers is supported with the `tel:` URI scheme, and e-mails are supported with the `mailto:` URI scheme:
+
+.`tel` and `mailto` schemes in HTML
+[source,html]
+----
+<a href="tel:555-555-5555">Call</a> <1>
+<a href="mailto:joe@example.com">Email</a> <2>
+----
+<1> When clicked, rompt the user to call the given phone number
+<2> When clicked, open an e-mail client with the given address populated in the `to:` field.
+
+The Hyperview client doesn't support the `tel:` and `mailto:` URI schemes.
+But we can add these capabilities to the client with custom behavior actions.
+Remember that behaviors are interactions are defined in HXML.
+Behaviors have triggers ("press", "refresh") and actions ("update, "share").
+The values of "action" are not limited to the set that comes in the Hyperview library.
+So let's define two new actions, "open-phone" and "open-email".
+
+.Phone and Email actions
+[source,xml]
+----
+<view xmlns:comms="https://manning.com/hyperview/communications"> <1>
+  <text>
+    <behavior action="open-phone" comms:phone-number="555-555-5555" /> <2>
+    Call
+  </text>
+  <text>
+    <behavior action="open-email" comms:email-address="joe@example.com" /> <3>
+    Email
+  </text>
+</view>
+----
+<1> Define an alias for an XML namespace used by our new attributes
+<1> When pressed, prompt the user to call the given phone number
+<2> When pressed, open an e-mail client with the given address populated in the `to:` field.
+
+Notice I defined the actual phone number and email address using separate attributes.
+In HTML, the scheme and data are crammed into the `href` attribute.
+HXML's `<behavior>` elements give more options for representing the data.
+I chose to use attributes, but I could've represented the phone number or email using child elements.
+I'm also using a namespace to avoid potential future conflicts with other client extensions.
+
+So far so good, but how does the Hyperview client know how to interpret `open-phone` and `open-email`, and how to reference the `phone-number` and `email-address` attributes?
+This is where we finally need to write some Javascript.
+
+First, I'm going to add a 3rd-party library (`react-native-communications`) to our demo app.
+This library provides a simple API that interacts with OS-level functionality for calls and emails.
+
+[source,bash]
+----
+> cd hyperview/demo
+> yarn add react-native-communications <1>
+> yarn start <2>
+----
+<1> Add dependency on `react-native-communications`
+<2> Re-start the Expo server to run the mobile app in the iOS simulator.
+
+Next, we'll create a new file, `phone.js`, that will implement the code associated with the `open-phone` action:
+
+.demo/src/phone.js
+[source,js]
+----
+import { phonecall } from 'react-native-communications'; <1>
+
+const namespace = "https://manning.com/hyperview/communications";
+
+export default {
+  action: "open-phone", <2>
+  callback: (behaviorElement) => { <3>
+    const number = behaviorElement.getAttributeNS(namespace, "phone-number"); <4>
+    if (number != null) {
+      phonecall(number, false); <5>
+    }
+  },
+};
+----
+<1> Import the function we need from the 3rd party library.
+<2> The name of the action
+<3> The callback that runs when the action triggers.
+<4> Get the phone number from the `<behavior>` element.
+<5> Pass the phone number to the function from the 3rd party library.
+
+Custom actions are defined as a JavaScript objects with two keys: `action` and `callback`.
+This is how the Hyperview client associates a custom action in the HXML with our custom code.
+The callback is a function that takes a single parameter, `behaviorElement`.
+This parameter is an XML DOM representation of the `<behavior>` element that triggered the action.
+That means we can call methods on it like `getAttribute`, or access attributes like `childNodes`.
+In this case, we use `getAttributeNS` to read the phone number from the `phone-number` attribute on the `<behavior>` element.
+
+TODO:
+
+- pass behavior to Hyperview component.
+- Email would be the same
+- Update our HXML template
+- Show screenshot
+
+=== Adding Toast Messages
 - Problem: how to show a toast confirming the action?
 - Remember, no scripting to add functionality
 - Need to extend Hyperview with a toast component
@@ -1088,12 +1207,7 @@ image::../images/screenshot_hyperview_add.png[]
 - Our mobile app has less screen real estate
 - Typically this is solved by swiping on a row
 
-=== TODO: Communications
-- Problem: we want to call/email our contacts.
-- After all, we're on a mobile device
-- Remember, no scripting to add functionality
-- Need to extend Hyperview with behaviors for sms, call, email
-- Find a RN library, show how to wrap it as custom behaviors.
+
 
 === TODO: Conclusion
 - With custom components and behaviors, we can do almost anything a native app can do.

@@ -33,9 +33,7 @@ This chapter covers
 
 Thus far we have avoided writing any JavaScript for Contact.app, mainly because the functionality we implemented so far does not need it. Contrary to popular belief, hypermedia is not just for "documents" (where a document is considered essentially different to an "app"), and it has many affordances for building interactive experiences. We want to show that it is possible to build sophisticated web applications using the original model of the web without the abstractions provided by JavaScript frameworks. On the other hand, htmx itself is written in JavaScript, and we don't want our message to be interpreted as "JavaScript bad", or, more generally, "Client-side scripting bad."
 
-image::htmx-loves-javascript.png[]
-
-So the question isn't "Should we be scripting for the web?" but rather "How should we be scripting for the web?"
+The question isn't "Should we be scripting for the web?" but rather "How should we be scripting for the web?"
 
 Scripting has been a massive multiplier of the Web's capabilities. Through its use, Web application authors are not only able to enhance their hypertext-based websites, but also create full-fledged client-side applications that can compete with native apps in how they work (although they don't always win when they do). In other terms, the Web became a distribution medium for non-REST apps in addition to being a RESTful system. When it's not used as a replacement for the RESTful architecture provided by the Web, however, scripting is extremely useful in Hypermedia Driven Applications.
 
@@ -44,17 +42,16 @@ You are scripting in a way compatible with HDAs if:
 * The main data format exchanged between server of client is hypermedia, the same as it would be in an application with no scripting.
 * Client-side state (other than the DOM) is minimized.
 
-This style of scripting requires us to different practices than what is usually recommended for JavaScript, as the most common advice often comes from SPA or server-side backgrounds. We will see these new practices in action in the upcoming chapter.
+This style of scripting requires us to adopt different practices than what is typically recommended for JavaScript, as the most common advice often comes, naturally, from SPA or server-side backgrounds. We will see these new practices in action in the upcoming chapter.
 
-However, listing "best practices" is rarely convincing or edifying (and often boring). So, we instead frame them around shiny tools that work well for scripting in a HDA. We will use each of these tools to add a feature to ContactApp:
+Simply listing "best practices", however, is rarely convincing or edifying (and, frankly, it is often boring). So, we instead will frame them around shiny tools that work well for scripting in a HDA. We will use each of these tools to add a feature to ContactApp:
 
 * An overflow menu to hold the _Edit_, _View_ and _Delete_ actions, to clean up visual clutter in our list of contacts
 * Reordering contacts by dragging and dropping
 * A dialog to confirm the deletion of contacts
 * A keyboard shortcut for focusing the search box
 
-The important idea in the implementation of each of these features is that they are entirely client-side and don't exchange information with the server using, for example, JSON. This is what will keep them all within the bounds of a proper Hypermedia Driven Application.
-
+The important idea in the implementation of each of these features is that they are implemented entirely client-side and yet they don't exchange information with the server using, for example, JSON. This constraint is what will keep the features within the bounds of a proper Hypermedia Driven Application.
 
 == Scripting tools for the Web
 
@@ -62,13 +59,13 @@ The primary scripting language for the web is, of course, JavaScript, which is u
 
 Today, we have a variety of _transcompilers_ (often shortened to _transpilers_) that convert another language to JavaScript, such as TypeScript, Dart, Kotlin, ClojureScript, F#. There is also the WebAssembly bytecode format, which is supported as a compilation target for C, Rust, and the WASM-first language AssemblyScript. However, most of these are not geared towards an HDA-compatible style of scripting --- compile-to-JS languages are often paired with SPA-oriented libraries (Dart and AngularDart, ClojureScript and Reagent, F# and Elmish), and WASM is currently mainly geared toward linking to C/C++ libraries from JavaScript.
 
-I bring this up because we are going to look at three different mechanisms for adding scripting to our Hypermedia Driven Application:
+We bring this up because we are going to look at three different mechanisms for adding scripting to our Hypermedia Driven Application:
 
 * Vanilla JS, that is, using JavaScript without depending on any framework.
 * Alpine.js, a JavaScript library for adding behavior directly in HTML.
 * _hyperscript, a non-JavaScript scripting language created alongside htmx.  Like AlpineJS, it is usually embedded in HTML.
 
-Let's take a quick look at each of these scripting options so we know what we are dealing with.  As with CSS, we are not going to deep dive into any of these options: we are going to show just enough to give you a flavor of each and, we hope, spark your interest in looking into each of them more extensively.
+Let's take a quick look at each of these scripting options, so we know what we are dealing with.  As with CSS, we are not going to deep dive into any of these options: we are going to show just enough to give you a flavor of each and, we hope, spark your interest in looking into each of them more extensively.
 
 
 == Vanilla JavaScript
@@ -76,36 +73,37 @@ Let's take a quick look at each of these scripting options so we know what we ar
 [quote, Merb]
 No code is faster than no code.
 
-Vanilla JavaScript is simply using JavaScript in your application without any intermediate layers. The term came into vogue as a play on the fact that there were so many ".js" frameworks out there to help you write JavaScript. As JavaScript matured as a scripting language, standardized across browsers and provided more and more functionality, the utility of many of these frameworks and libraries has diminished. (At the same time, however, SPAs became more popular, requiring better frameworks).
+Vanilla JavaScript is simply using JavaScript in your application without any intermediate layers. The term came into vogue as a play on the fact that there were so many ".js" frameworks out there to help you write JavaScript. As JavaScript matured as a scripting language, standardized across browsers and provided more and more functionality, the utility of many of these frameworks and libraries has diminished. (At the same time, however, SPAs have become more popular, requiring more elaborate JavaScript frameworks).
 
 A quote from the humorous website http://vanilla-js.com captures the situation well:
 
 [quote, http://vanilla-js.com]
 Vanilla JS is the lowest-overhead, most comprehensive framework I've ever used.
 
-The message of _VanillaJS_ here is that since the browser already has JavaScript baked into it, there isn't any need to download a framework for your application to function. This is true more often than we like to admit and especially so in HDAs as hypermedia obviates many features provided by frameworks:
+The message of _VanillaJS_ here is that since the browser already has JavaScript baked into it, there isn't any need to download a framework for your application to function. This is true more often than we might like to admit, and is especially the case in HDAs, since hypermedia obviates many features provided by JavaScript frameworks:
 
 * Client-side routing
 * An abstraction over DOM manipulation, i.e.: templates that automatically update when referenced variables change
 * Server side rendering (rendering here refers to HTML generation)
-  * Attaching dynamic behavior to server-rendered tags on load
+* Attaching dynamic behavior to server-rendered tags on load
 * Network requests
 
-Installation of VanillaJS couldn't be easier: you don't have to. You can just start writing JavaScript in your web application and it will simply work.
+Installation of VanillaJS couldn't be easier: you don't have to. You can just start writing JavaScript in your web application, and it will simply work.
 
-That's the good news. The bad news is that JavaScript has some limitations as a scripting language that often make it less than ideal as a stand-alone scripting technology for Hypermedia Driven Applications:
+That's the good news. The bad news is that, despite improvements over the last decade, JavaScript has some significant limitations as a scripting language that often make it less than ideal as a stand-alone scripting technology for Hypermedia Driven Applications:
 
 * It is a relatively complex language that has accreted a lot of features and warts.
-* Its model for asynchrony involves _colored functions_, a concept described in Robert Nystrom's oft-cited _What Color is Your Function?_
+* JavaScript's asynchrony model involves _colored functions_, a concept described in Robert Nystrom's oft-cited _What Color is Your Function?_
   footnote:[https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/]
-* It is surprisingly clunky to work with events in the language.
+* It is surprisingly clunky to work with events.
 * DOM APIs (a large portion of which were originally designed for Java) are verbose and do not make common functionality easy to use.
 
-None of these are deal breakers, of course, and many people prefer the "close to the metal" (for lack of a better term) nature of vanilla JavaScript to more elaborate client-side scripting approaches.
+None of these are deal-breakers, of course, and many people prefer the "close to the metal" (for lack of a better term) nature of vanilla JavaScript to more elaborate client-side scripting approaches.
 
-As our "hello world" example to showcase each of our scripting options, let's write a counter footnote:[The counter is a common example widget for UI development tools, a trend that seems to have been started by React. İt's unclear if the "counterexample" pun was intentional.]. It will have a number and a button that increments the number. Nothing too elaborate, but it will give you the flavor of each of the three scripting approaches we are going to use in this chapter.
+To dive into Vanilla JavaScript as a front end scripting option, let's write a simple counter footnote:[The counter is a common example widget for UI development tools, a trend that seems to have been started by React. İt's unclear if the "counterexample" pun was intentional.]. It will have a number and a button that increments the number. Nothing too elaborate, but it will give you the flavor of each of the three scripting approaches we are going to use in this chapter.
 
-We have a problem, however, as one of the things frameworks provide is still missing: a standardized code style. This is not an insurmountable problem, and in fact a great opportunity to take a small journey through various styles, starting with the simplest thing possible.
+A problem with tackling this problem in Vanilla JavaScript is that it lacks something most JavaScript frameworks
+provide: a standardized code style. This is not an insurmountable issue, and in fact, it presents a great opportunity to take a small journey through various styles.  For our counter, we will start with the simplest thing possible.
 
 .Counter in vanilla JavaScript, inline version
 [source,html]
@@ -125,9 +123,9 @@ We have a problem, however, as one of the things frameworks provide is still mis
 <3> Find the output
 <4> JavaScript lets us use the `++` operator on a string because it loves us
 
-So, not too bad. It's a little annoying that we needed to add an `id` to the span to make this work and `document.querySelector` is a bit verbose compared to, say, `$` but (but!) it works and it doesn't require any other JavaScript libraries.
+So, not too bad. It's a little annoying that we needed to add an `id` to the span to make this work and `document.querySelector` is a bit verbose compared to, say, `$` (if you are familiar with jQuery) but (but!) it works, and it doesn't require any other JavaScript libraries.
 
-A more "standard" way to write the above would be to put the above in a separate file, either linked via a `<script src>` or placed into an inline `<script>` by a build process:
+So that's the simple, inline approach.  A more standard way to write this code, however, would be to move it into a separate JavaScript file, either linked via a `<script src>` tag or placed into an inline `<script>` by a build process:
 
 .Counter in vanilla JavaScript, in multiple files
 --
@@ -154,25 +152,37 @@ incrementBtn.addEventListener("click", e => { <3>
 <4> The logic stays the same, only the structure around it changes
 --
 
-The main reason people do this is for the sake of _separation of concerns._
+The design principle motivating separating your JavaScript out to another file is known as _Separation of Concerns (SoC)._
+The idea is that the various "concerns" of a software project should be divided up so they don't "pollute" one another.
+Scripting isn't markup, so it should be _elsewhere_.  Styling, similarly, isn't markup, and so it belongs in a separate
+file as well (A CSS file, for example.)
 
-The purpose of separating concerns is that we will be able to modify one with confidence that we won't break any other. Is this really the case with HTML and JS?
+A goal of separating concerns is that we should be able to modify and evolve one concern independently, with confidence that we won't break any of the other concerns. But, on consideration, is this really the case with HTML and JavaScript?
 
-Notice that the HTML in the above example is not just the previous example with the onclick attribute removed. Can you spot the difference?
+Did you notice that the HTML in the SoC example is not simply the previous example with the onclick attribute removed? Can you spot the difference?
 
-We've had to add a class to the button so that we could find it in JS. In both the HTML and the JS, this class is a string literal not subject to name resolution (the process, in compilers and interpreters, of linking names to what they reference). The careless use of CSS selectors in JavaScript causes _jQuery soup_, where:
+It turns out that we've had to add a class to the button, so that we could look it up in JavaScript and add in an even
+handler. In both the HTML and the JavaScript, this class is a string literal and is not subject to name resolution (the process, in compilers and interpreters, of linking names to what they reference).
 
-* The JS that attaches behavior to a given element is unclear (though developer tools in browsers help with this).
-* Reuse is difficult.
-* The code is disorganized (if we have many components, how do we separate them into files (if at all?))
+Unfortunately, careless use of CSS selectors in JavaScript can end up causing _jQuery soup_, where:
 
-Furthermore, imagine that we want to change the number field from an `<output>` tag to an `<input type="number">`. This change to our HTML will break our JavaScript. The fix is trivial (change `.textContent` to `.value`), but it's not hard to see how the burden of synchronizing markup and code across files would increase in larger components or across a whole page.
+* The JavaScript that attaches a behavior to a given element is difficult to find.
+* Code reuse is difficult.
+* The code ends up disorganized (if we have many components, how do we separate them into files? Should we separate them at all?)
+
+The name "jQuery Soup" comes from the fact that early JavaScript-heavy applications were often built in jQuery and
+ended up with many of these event handlers scattered about in an unstructured and difficult to understand mess.
+
+But things get worse! Imagine that we want to change the number field from an `<output>` tag to an `<input type="number">`. This small change to our HTML will break our JavaScript!  This, despite the fact we have "separated" our concerns!
+
+The fix for this issue is trivial (change `.textContent` to `.value`), but it's not hard to see how the burden of synchronizing markup changes and code changes across multiple files might increase in larger components or across a whole page.
 
 image::../images/separation-of-concerns-expectation-v-reality.png[]
 
-The tight coupling between files in this simple example suggests that separation between HTML and JavaScript (and CSS) is often an illusory separation of concerns. Contact.app is is not _concerned_ with "structure", "styling" or "behavior", it's concerned with collecting contact info and presenting it.
+The tight coupling between files in this simple example suggests that separation between HTML and JavaScript (and CSS) is often an illusory separation of concerns. In Contact.app we are not _concerned_ with "structure", "styling" or "behavior", rather we are concerned with collecting contact info and presenting it to users.  We, personally, just don't see a big advantage to this design principle.
 
-Our suspicion is validated by developments in the JS framework world:
+And, it turns out that we are not alone in thinking that separation of concerns has been oversold.  Consider the
+following technologies:
 
 * JSX
 * LitHTML
@@ -180,21 +190,23 @@ Our suspicion is validated by developments in the JS framework world:
 * Single-File Components
 * Filesystem based routing
 
-All of these solutions colocate code in various languages that address a single feature (usually, a UI widget). In order to use them effectively, we need to understand the problem domain and identify business concerns in adition to implementation concerns.
+All of these technologies _colocate_ code in various languages that address a single _feature_ (usually, a UI widget). In order to use them effectively, we need to understand the problem domain and identify business concerns _in addition_ to implementation concerns.  Separating technical detail concerns isn't as much of a, ahem, concern.
 
 
 === Locality of Behavior
 
-Locality of Behavior (LoB) is a software design principle that we coined to describe the following characteristic of a piece of software:
+Locality of Behavior (LoB) is an alternative software design principle that we coined, in opposition to Separation of
+Concerns.  It describes the following characteristic of a piece of software:
 
 "The behaviour of a unit of code should be as obvious as possible by looking only at that unit of code."
 -- https://htmx.org/essays/locality-of-behaviour/
 
 In simple terms: you should be able to tell what a button does by simply looking at the code or markup that creates that button. This does not mean you need to inline the entire implementation, but that you shouldn't need to hunt for it or require prior knowledge of the codebase to find it.
 
-We will demonstrate Locality of Behavior in all of our examples, both the counter demos and the features we add to ContactApp. It is a design goal of both _hyperscript and Alpine.js (which we will cover later) as well as htmx. These tools achieve it through having you embed attributes and directly within your HTML, as opposed to having code pluck elements out of a document through CSS selectors and add event listeners onto them.
+We will demonstrate Locality of Behavior in all of our examples, both the counter demos and the features we add to ContactApp. Locality of behavior is an explicit design goal of both _hyperscript and Alpine.js (which we will cover later) as well as htmx. All of these tools achieve Locality of Behavior by having you embed attributes directly within your HTML, as opposed to having code look up elements in a document through CSS selectors in order to add event listeners onto them.
 
-The `addEventListener` method is, in a way, monkey-patching. Its functionality is the same for event listeners as ruby's `define_method`:
+The `addEventListener` method in JavaScript is, in a way, a sort of "monkey-patching". It functions in much same way
+for event listeners as the Ruby programming language's `define_method` functions for methods in that language:
 
 .`define_method` in Ruby
 [source,ruby]
@@ -216,9 +228,9 @@ button.addEventListener('click', () => { <1>
 <1> When a `click` event is received,
 <2> Do this
 
-(The Ruby code is deliberately unidiomatic to make it easier to understand for non-Rubyists).
+*Note that this ruby code is deliberately unidiomatic to make it easier to understand for non-Rubyists).
 
-Monkey-patching actually used to be the default way of adding methods in JavaScript. After classes were added in ES2015, however, modifying the `prototype` of a function (which, confusingly, is not the function's prototype but of objects the function returns) is increasingly discouraged. No such advancement has been made for event listeners, however, leaving us stuck with `addEventListener` and `onclick`.
+Interestingly, "monkey-patching" actually used to be the default way of adding methods to things in JavaScript, by modifying a functions `prototype`.  This is a long conversation and beyond the scope of this book, but after proper classes were added to JavaScript in ES2015, modifying the `prototype` of a function has been increasingly discouraged and "monkey patching" has become less and less common. No such advancement has been made for _event listeners_, however, leaving us stuck with `addEventListener`.
 
 [source,js]
 ----
@@ -231,8 +243,7 @@ Monkey-patching actually used to be the default way of adding methods in JavaScr
 ----
 <1> Feeling nostalgic yet?
 
-
-This is a shame, because in the case of front end scripting in a HDA, locality of behavior is often the more important principle over separation of concerns.
+This is a shame, because, particularly in the case of front end scripting in a Hypermedia Driven Application, Locality of Behavior is often far more important than Separation of Concerns.
 
 .2 > 1 > 2
 ****
@@ -241,7 +252,7 @@ Having two decoupled modules is better than having one big blob, but two tightly
 (Of course, having no code at all is the best, so 0 > 2 > 1 > 2.)
 ****
 
-So, should we go back to the `onclick` way of doing things? It certainly wins in the Locality of Behavior category. Unfortunately, JavaScript in `on*` attributes are not a great way to program:
+So, should we go back to the `onclick` attribute way of doing things? It certainly wins in Locality of Behavior, and is baked into HTML. Unfortunately, however, the `on*`  JavaScript attributes have some pretty severe drawbacks:
 
 * They don't support custom events.
 * There is no good mechanism for associating long-lasting variables with an element --- all variables are discarded when an event listener completes executing.
@@ -251,6 +262,9 @@ So, should we go back to the `onclick` way of doing things? It certainly wins in
 
 JavaScript and Locality of Behavior don't seem to mesh as well as we want them to, but the situation is not hopeless. it's important to be aware that LoB does not require behavior to be _defined_ at the use site, but merely invoked there. Keeping this in mind, it's possible to improve LoB while writing JS in a separate file, provided we have a reasonable system for structuring our JavaScript.
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! EDIT STARTING HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 === RSJS
 

@@ -1110,12 +1110,12 @@ On the web, calling phone numbers is supported with the `tel:` URI scheme, and e
 <a href="tel:555-555-5555">Call</a> <1>
 <a href="mailto:joe@example.com">Email</a> <2>
 ----
-<1> When clicked, rompt the user to call the given phone number
+<1> When clicked, prompt the user to call the given phone number
 <2> When clicked, open an e-mail client with the given address populated in the `to:` field.
 
 The Hyperview client doesn't support the `tel:` and `mailto:` URI schemes.
 But we can add these capabilities to the client with custom behavior actions.
-Remember that behaviors are interactions are defined in HXML.
+Remember that behaviors are interactions defined in HXML.
 Behaviors have triggers ("press", "refresh") and actions ("update, "share").
 The values of "action" are not limited to the set that comes in the Hyperview library.
 So let's define two new actions, "open-phone" and "open-email".
@@ -1157,7 +1157,7 @@ This library provides a simple API that interacts with OS-level functionality fo
 > yarn start <2>
 ----
 <1> Add dependency on `react-native-communications`
-<2> Re-start the Expo server to run the mobile app in the iOS simulator.
+<2> Re-start the mobile app
 
 Next, we'll create a new file, `phone.js`, that will implement the code associated with the `open-phone` action:
 
@@ -1197,7 +1197,8 @@ The Hyperview client is represented as a React Native component called `Hypervie
 This component takes a prop called `behaviors`, which is an array of custom action objects like our "open-phone" action.
 Let's pass our "open-phone" implementation to the `Hyperview` component in our demo app.
 
-.demo/src/HyperviewScreen.js`
+.demo/src/HyperviewScreen.js
+[source,js]
 ----
 import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
@@ -1265,9 +1266,9 @@ In fact, let's switch do that now by updating the `show.xml` template in our Fla
 <3> Set the attribute expected by the "open-phone" action.
 <4> Same idea, with a different action ("open-email")
 
-I took the liberty of implementing a second custom action, "open-email".
+I skipped over the implementation of the second custom action, "open-email".
 As you can guess, this action will open a system-level email composer to let the user send an email to their contact.
-I didn't include the code for this action, but if you understand how "open-phone" works, you can implement "open-email" too.
+If you understand how "open-phone" works, you can implement "open-email" too.
 In fact, the `react-native-communications` library exposes a function called `email()`, I think you can guess what it does.
 
 There we have a complete example of extending the client with some custom behavior actions!

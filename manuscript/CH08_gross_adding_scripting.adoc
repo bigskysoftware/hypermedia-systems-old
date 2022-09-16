@@ -387,13 +387,239 @@ ul.querySelector('li').forEach(li => {
 ****
 
 
-=== Vanilla JavaScript in action: A confirmation dialog
+=== Vanilla JS in action: an overflow menu
 
-Right now, clicking the `Delete` link on a contact instantly deletes it, making it prone to accidents. We'll write some JavaScript to add confirmation dialogs to elements and use it on the delete button.
+Let's sketch the markup we want for our overflow menu:
 
-We'll write the JavaScript first before adding anything to our markup.
+[source,html]
+----
+<div data-menu="closed"> <1>
+  <button data-menu-button>Options</button> <2>
+  <div data-menu-items hidden> <3>
+    <a data-menu-item href="/contacts/{{ contact.id }}/edit">Edit</a> <4>
+    <a data-menu-item href="/contacts/{{ contact.id }}">View</a>
+  </div>
+</div>
+----
+<1> Mark the root element of the menu. We'll reuse this attribute to store the open state of the menu.
+<2> We'll hook this button up to open and close our menu.
+<3> This is a container for our menu items. We add the `hidden` attribute to avoid the menu items flashing as JS loads.
+<4> We mark menu items such that we can implement moving between them with arrow keys.
 
-.Confirmation dialog with Vanilla JS & RSJS
+This is all of the HTML we'll write. The rest of our work will be in JS, making these elements act like a menu.
+
+We start by adding ARIA attributes:
+
+[source,js]
+----
+import nanoid from "https://unpkg.com/nanoid@4.0.0/non-secure/index.js";
+
+document.querySelectorAll("[data-menu]").forEach(menu => { <1>
+  const <2>
+  button = menu.querySelector("[data-menu-button]"),
+  body = menu.querySelector("[data-menu-items]"),
+  items = body.querySelectorAll("[data-menu-item]");
+
+  const isOpen = () => return menu.dataset.menu === "open";
+
+  const bodyId = body.id ?? (body.id = nanoid()); <3>
+
+  button.setAttribute("aria-haspopup", "menu");
+  button.setAttribute("aria-controls", "bodyId");
+
+  body.setAttribute("role", "menu");
+
+  items.forEach(item => {
+    item.setAttribute("role", "menuitem");
+    item.setAttribute("tabindex", "-1"); <4>
+  });
+})
+----
+<1> With RSJS, you'll write `querySelectorAll(...).forEach` quite a lot.
+<2> Get the descendants.
+<3> In order to use `aria-controls`, we need the menu body to have an ID. If it doesn't, we generate one randomly.
+<4> Make menu items non-tabbable, so we can manage their focus ourselves.
+
+This is based on the https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/[Menu Button] example from the cite:[ARIA Authoring Practices Guide]. We haven't made the menu work yet, so these attributes are wrong for now.
+
+.HTML ID Soup
+****
+Some features of HTML such as ARIA require you to assign unique IDs to elements. When pages are generated from templates dynamically, avoiding name conflicts in large apps can be difficult, as HTML IDs are not scoped the way identifiers in programming languages are.
+
+Randomized IDs with a tool like https://npmjs.com/nanoid[] can let you avoid the issue, but they also make templates more complex and .
+****
+
+Let's implement toggling the menu:
+
+[source,js]
+----
+// ...
+  items.forEach(item => item.setAttribute("role", "menuitem"));
+
+  function toggleMenu(open = !isOpen()) { <1>
+    if (open) {
+      menu.dataset.menu = "open"
+      body.hidden = false
+      button.setAttribute("aria-expanded", "true")
+      items[0].focus() <2>
+    } else {
+      menu.dataset.menu = "closed"
+      body.hidden = true
+      button.setAttribute("aria-expanded", "false")
+    }
+  }
+
+  toggleMenu(isOpen()) <3>
+  button.addEventListener("click", () => toggleMenu()) <4>
+})
+----
+<1> Optional parameter to specify desired state. This allows us to use one function to open, close, or toggle the menu.
+<2> Focus first item of menu when opened.
+<3> Call `toggleMenu` with current state, to initialize element attributes.
+<4> Toggle menu when button is clicked.
+
+Let's also make the menu close when we click outside it:
+
+[source,js]
+----
+// ...
+  button.addEventListener("click", () => toggleMenu())
+
+  window.addEventListener("click", function clickAway() {
+    if (!menu.isConnected) window.removeEventListener("click", clickAway); <1>
+    if (menu.contains(event.target)) return; <2>
+    toggleMenu(false); <3>
+  })
+})
+----
+<1> Clean up event listener if menu has been removed
+<2> If the click is inside the menu, do not do anything
+<3> Close the menu
+
+You should be able to open, close, and dismiss the menu now, and may be tempted to ship this code to production. Don't! We're not done yet because our menu fails many requirements for menu interactions:
+
+* You can't navigate between menu items using arrow keys
+* You can't activate a menu item with the Space key
+
+These factors make our menu annoying and possibly unusable for many people. Let's fix it with the guidance of the venerable cite:[ARIA Authoring Practices Guide]:
+
+[source,js]
+----
+// ...
+    toggleMenu(false); <3>
+  })
+
+  const currentIndex = () => { <1>
+    const idx = items.indexOf(document.activeElement);
+    if (idx === -1) return 0;
+    return idx;
+  }
+
+  menu.addEventListener("keydown", e => {
+    if (e.key === "ArrowUp") {
+      items[currentIndex() - 1]?.focus(); <2>
+
+    } else if (e.key === "ArrowDown") {
+      items[currentIndex() + 1]?.focus(); <3>
+
+    } else if (e.key === "Space") {
+      items[currentIndex()].click(); <4>
+
+    } else if (e.key === "Home") {
+      items[0].focus(); <5>
+
+    } else if (e.key === "End") {
+      items[items.length - 1].focus(); <5>
+    }
+  })
+})
+----
+<1> Helper: Get the index in the items array of the currently focused menu item (0 if none).
+<2> Move focus to the previous menu item when the up arrow key is pressed
+<3> Move focus to the next menu item when the down arrow key is pressed
+<4> Activate the currently focused element when the space key is pressed
+<5> Move focus to the first menu item when Home is pressed
+<6> Move focus to the last menu item when End is pressed
+
+I'm pretty sure that covers all our bases. That's a lot of code! But it's code that encodes a lot of behavior.
+
+Though, we still don't support submenus, or menu items being added or removed dynamically. If we need more features, it might make more sense to use an off-the-shelf library --- for instance, GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
+
+
+== Alpine.js
+
+Alpine.js (https://alpinejs.dev[]) is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
+
+Installing AlpineJS is a breeze, you can simply include it via a CDN:
+
+.Installing AlpineJS
+[source,html]
+----
+<script src="https://unpkg.com/alpinejs"></script>
+----
+
+You can also install it from npm, or vendor it from your own server.
+
+The main interface of Alpine is a set of HTML attributes, the main one of which is `x-data`. The content of `x-data` is a JavaScript expression which evaluates to an object, whose properties we can access in the element. For our counter, the only state is the current number, so let's create an object with one property:
+
+.Counter with Alpine, line 1
+[source,html]
+----
+<div class="counter" x-data="{ count: 0 }">
+----
+
+We've defined our state, let's actually use it:
+
+.Counter with Alpine, lines 1-2
+[source,html,highlight=2..2]
+----
+<div class="counter" x-data="{ count: 0 }">
+  <output x-text="count"></output> <1>
+----
+<1> The `x-text` attribute.
+
+This attribute sets the text content of an element to a given expression. Notice that we can access the data of a parent element.
+
+To attach event listeners, we use `x-on`:
+
+.Counter with Alpine, the full thing
+[source,html,highlight=4..4]
+----
+<div class="counter" x-data="{ count: 0 }">
+  <output x-text="count"></output>
+
+  <button x-on:click="count++">Increment</button> <1>
+</div>
+----
+<1> With `x-on`, we specify the attribute in the attribute _name_.
+
+Would you look at that, we're done already! (It's almost as though we wrote a trivial example). What we created is, incidentally, nearly identical to the second code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
+
+
+=== `x-on:click` vs. `onclick`
+
+The `x-on:click` attribute (or its shorthand `@click`) differs from the browser built-in `onclick` attribute in significant ways that make it much more useful:
+
+* You can listen for events from other elements. For example, the `.outside` modifier lets you listen to any click event that is **not** within the element.
+* You can use other modifiers to
+** throttle or debounce event listeners,
+** ignore events that are bubbled up from descendant elements, or
+** attach passive listeners.
+* You can listen to custom events, such as those dispatched by htmx.
+
+
+=== Reactivity and templating
+
+As you can see, this code is much tighter than the VanillaJS implementation.  It helps that AlpineJS supports a notion
+of variables, allowing you to bind the visibility of the `span` element to a variable that both it and the button
+can access.  Alpine allows for much more elaborate data bindings as well, it is an excellent general purpose client-side
+scripting library.
+
+
+=== Alpine.js in action: A confirmation dialog
+
+Right now, clicking the `Delete` link on a contact instantly deletes it, making it prone to accidents. We'll use Alpine.js on our Delete button to show a confirmation before proceeding.
+
 [source,js]
 ----
 document.querySelectorAll("[data-confirm]") <1>
@@ -493,206 +719,6 @@ No more errors, but this code no longer works. This is because by the time we ca
 
 There is no general solution to this problem.
 ****
-
-
-== Alpine.js
-
-Alpine.js (https://alpinejs.dev[]) is a relatively new JavaScript library that allows you to embed your code directly in HTML.  It bills itself as a modern replacement for jQuery, a widely used but quite old JavaScript library, and it lives up to that promise.
-
-Installing AlpineJS is a breeze, you can simply include it via a CDN:
-
-.Installing AlpineJS
-[source,html]
-----
-<script src="https://unpkg.com/alpinejs"></script>
-----
-
-You can also install it from npm, or vendor it from your own server.
-
-The main interface of Alpine is a set of HTML attributes, the main one of which is `x-data`. The content of `x-data` is a JavaScript expression which evaluates to an object, whose properties we can access in the element. For our counter, the only state is the current number, so let's create an object with one property:
-
-.Counter with Alpine, line 1
-[source,html]
-----
-<div class="counter" x-data="{ count: 0 }">
-----
-
-We've defined our state, let's actually use it:
-
-.Counter with Alpine, lines 1-2
-[source,html,highlight=2..2]
-----
-<div class="counter" x-data="{ count: 0 }">
-  <output x-text="count"></output> <1>
-----
-<1> The `x-text` attribute.
-
-This attribute sets the text content of an element to a given expression. Notice that we can access the data of a parent element.
-
-To attach event listeners, we use `x-on`:
-
-.Counter with Alpine, the full thing
-[source,html,highlight=4..4]
-----
-<div class="counter" x-data="{ count: 0 }">
-  <output x-text="count"></output>
-
-  <button x-on:click="count++">Increment</button> <1>
-</div>
-----
-<1> With `x-on`, we specify the attribute in the attribute _name_.
-
-Would you look at that, we're done already! (It's almost as though we wrote a trivial example). What we created is, incidentally, nearly identical to the second code example in Alpine's documentation --- available at https://alpinejs.dev/start-here[].
-
-
-=== `x-on:click` vs. `onclick`
-
-The `x-on:click` attribute (or its shorthand `@click`) differs from the browser built-in `onclick` attribute in significant ways that make it much more useful:
-
-* You can listen for events from other elements. For example, the `.outside` modifier lets you listen to any click event that is **not** within the element.
-* You can use other modifiers to
-** throttle or debounce event listeners,
-** ignore events that are bubbled up from descendant elements, or
-** attach passive listeners.
-* You can listen to custom events, such as those dispatched by htmx.
-
-
-=== Reactivity and templating
-
-As you can see, this code is much tighter than the VanillaJS implementation.  It helps that AlpineJS supports a notion
-of variables, allowing you to bind the visibility of the `span` element to a variable that both it and the button
-can access.  Alpine allows for much more elaborate data bindings as well, it is an excellent general purpose client-side
-scripting library.
-
-
-=== Alpine in action: an overflow menu
-
-An overflow menu only has one bit of state: whether it is open.
-
-[source,html]
-----
-<div x-data="{ open: false }"> <1>
-  <button>Options</button> <2>
-  <div>
-    <a href="/contacts/{{ contact.id }}/edit">Edit</a>
-    <a href="/contacts/{{ contact.id }}">View</a>
-  </div>
-</div>
-----
-<1> Define the initial state
-<2> We'll hook this button up to open and close our menu
-
-While we have only one bit of state, we have many parts that depend on it. This is where _reactivity_ shines:
-
-[source,html]
-----
-<div x-data="{ open: false }">
-  <button
-    aria-haspopup="menu" <1>
-    aria-controls="contents" <2>
-    x-bind:aria-expanded="open" <3>
-  >Options</button>
-  <template x-if="open"> <4>
-    <div id="contents"> <5>
-      <a href="/contacts/{{ contact.id }}/edit">Edit</a>
-      <a href="/contacts/{{ contact.id }}">View</a>
-    </div>
-  </template>
-</div>
-----
-<1> Declare that this button will cause a menu to open,
-<2> and that the menu that this button _controls_ is the one with ID `contents`
-<3> Indicate the current open state of the menu, using x-bind to reference our data
-<4> Only show the menu if it is open
-<5> Add an ID to the menu, so that we can reference it in the aria-controls attribute
-
-This is based on the https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/[Menu Button] example from the cite:[ARIA Authoring Practices Guide]. We haven't made the menu work yet, just the button that opens it.
-
-The use `x-bind` means that as we change the open state, the `aria-expanded` attribute will update to match. The same holds for the `x-show` on the div with the contents, and indeed for most of Alpine. In order to see this in action, let's actually change that state:
-
-.HTML ID Soup
-****
-Some features of HTML such as ARIA require you to assign unique IDs to elements. When pages are generated from templates dynamically, avoiding name conflicts in large apps can be difficult, as HTML IDs are not scoped the way identifiers in programming languages are.
-
-Some developers in the SPA world use randomized IDs with a tool like https://npmjs.com/nanoid[] to avoid the issue.
-****
-
-[source,html]
-----
-<div x-data="{ open: false }">
-  <button
-    aria-haspopup="menu"
-    aria-controls="contents"
-    x-bind:aria-expanded="open"
-    x-on:click="open = !open" <1>
-  >Options</button>
-  <template x-if="open">
-    <div id="contents" x-on:click.outside="open = false"> <2>
-      <a href="/contacts/{{ contact.id }}/edit">Edit</a>
-      <a href="/contacts/{{ contact.id }}">View</a>
-    </div>
-  </template>
-</div>
-----
-<1> Toggle the open state when the button is clicked
-<2> Dismiss the menu by clicking away
-
-You should be able to open the menu now, and may be tempted to ship this code to production. Don't! We're not done because our menu fails many requirements for menu interactions:
-
-* It does not have the `menu` or `menuitem` roles applied properly, which makes life harder for users of assistive software
-* You can't navigate between menu items using arrow keys
-* You can't activate a menu item with the Space key
-
-These factors make our menu annoying and even unusable for many people. Let's fix it with the guidance of the venerable cite:[ARIA Authoring Practices Guide]:
-
-[source,html]
-----
-<div x-data="{ open: false }">
-  <button
-    aria-haspopup="menu"
-    aria-controls="contents"
-    x-bind:aria-expanded="open"
-    x-on:click="open = !open"
-  >Options</button>
-  <div role="menu" <1>
-    id="contents" x-show="open"
-    x-on:click.outside="open = false"
-    x-on:keydown.up="document.activeElement.previousElementSibling?.focus()" <2>
-    x-on:keydown.down="document.activeElement.nextElementSibling?.focus()" <3>
-    x-on:keydown.space="document.activeElement.click()" <4>
-    x-effect="if (open) requestAnimationFrame(() => $el.firstElementChild.focus())" <5><6>
-    x-on:keydown="$event.key === 'Home'
-      ? $el.firstElementChild.focus()
-      : $event.key === 'End'
-      ? $el.lastElementChild.focus()
-      : null" <7>
-    >
-    <a role="menuitem" <8>
-      tabindex="-1" <9>
-      href="/contacts/{{ contact.id }}/edit">Edit</a>
-    <a role="menuitem" tabindex="-1" href="/contacts/{{ contact.id }}">View</a>
-  </div>
-</div>
-----
-<1> Put the `menu` role on the menu root
-<2> Move focus to the previous element when the up arrow key is pressed
-<3> Move focus to the next element when the down arrow key is pressed
-<4> Click the currently focused element when the space key is pressed
-<5> Access the div itself through the Alpine-supplied `$el` variable
-<6> Focus the first item when `show` changes
-<7> Handle the remaining cases that Alpine doesn't have modifiers for 
-<8> Put the `menuitem` role on the individual items
-<9> Make the menu items non-tabbable
-
-
-`x-effect` is a cool attribute that lets you perform side-effects when a piece of element state changes. It automatically detects which state is accessed in the effect. However, it can also complicate our code --- in this example, we need to use `requestAnimationFrame` because otherwise, the effect is executed before the `x-show` attribute reveals the element to focus.
-
-I'm pretty sure that covers all our bases. That's a lot of code! But it's code that encodes a lot of behavior. Not to mention that we still made some assumptions to make our code shorter:
-
-* All children are menu items with no wrappers, dividers, etc.
-* There are no submenus
-
-As we need more features, it might make more sense to use a library --- for instance, GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
 
 === Reusable behavior in Alpine
 

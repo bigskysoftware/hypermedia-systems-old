@@ -370,7 +370,7 @@ To do this, let's edit `rows.xml` to add a new `<item>` below the Jinja for-loop
       <!-- omitted for brevity -->
     </item>
   {% endfor %}
-  {% if contacts|length %}
+  {% if contacts|length > 0 %}
     <item key="load-more" id="load-more" style="load-more-item"> <1>
       <behavior
         trigger="visible" <2>
@@ -404,7 +404,14 @@ As soon as the item is visible, the action will make an HTTP GET request, and re
 Note that our href includes the `rows_only=true` query param, or our response will only include HXML for the contact items, and not the entire screen.
 Also, we're passing the `page` query param, incrementing the current page number to ensure we load the next page.
 
-TODO: summarize, talk about multiple pagination requests.
+What happens when there's more than one page of items?
+The initial screen will include the first 100 items, plus the "load-more" item at the bottom.
+When the user scrolls to the bottom of the screen, Hyperview will request the second page of items (`&page=2`), and replace the "load-more" item with the new items.
+But this second page of items will include a new "load-more" item.
+So once the user scrolls through all of the items from the second page, Hyperview will again request more items (`&page=3`).
+And once again, the "load-more" item will be replaced with the new items.
+This will continue until all of the items will be loaded on the screen.
+At that point, there will be no more contacts to return, the response will not include another "load-more" item, and our pagination is over.
 
 ==== Pull-to-refresh
 Pull-to-refresh is a common interaction in mobile apps, especially on screens featuring dynamic content.
@@ -1179,27 +1186,135 @@ export default {
 
 Custom actions are defined as a JavaScript objects with two keys: `action` and `callback`.
 This is how the Hyperview client associates a custom action in the HXML with our custom code.
-The callback is a function that takes a single parameter, `behaviorElement`.
+The callback value is a function that takes a single parameter, `behaviorElement`.
 This parameter is an XML DOM representation of the `<behavior>` element that triggered the action.
 That means we can call methods on it like `getAttribute`, or access attributes like `childNodes`.
 In this case, we use `getAttributeNS` to read the phone number from the `phone-number` attribute on the `<behavior>` element.
+If the phone number is defined on the element, we can call the `phonecall()` function provided by the `react-native-communications` library.
 
-TODO:
+There's one more thing we need to before we can use our custom action: register the action with the Hyperview client.
+The Hyperview client is represented as a React Native component called `Hyperview`.
+This component takes a prop called `behaviors`, which is an array of custom action objects like our "open-phone" action.
+Let's pass our "open-phone" implementation to the `Hyperview` component in our demo app.
 
-- pass behavior to Hyperview component.
-- Email would be the same
-- Update our HXML template
-- Show screenshot
+.demo/src/HyperviewScreen.js`
+----
+import React, { PureComponent } from 'react';
+import Hyperview from 'hyperview';
+import OpenPhone from './phone'; <1>
+
+export default class HyperviewScreen extends PureComponent {
+  // ... omitted for brevity
+
+  behaviors = [OpenPhone]; <2>
+
+  render() {
+    return (
+      <Hyperview
+        behaviors={this.behaviors} <3>
+        entrypointUrl={this.entrypointUrl}
+        fetch={this.fetchWrapper}
+        // more props...
+      />
+    );
+  }
+}
+----
+<1> Import the open-phone action
+<2> Create an array of custom actions
+<3> Pass the custom actions to the `Hyperview` component, as a prop called `behaviors`.
+
+Under the hood, the `Hyperview` component is responsible for taking HXML and turning it into mobile UI elements.
+It also handles triggering behavior actions based on user interactions.
+By passing the "open-phone" action to Hyperview, we can now use it as a value for the `action` attribute on `<behavior>` elements.
+In fact, let's switch do that now by updating the `show.xml` template in our Flask app:
+
+.Snippet of `hv/show.xml`
+[source,xml]
+----
+{% block content %}
+<view style="details">
+  <text style="contact-name">{{ contact.first }} {{ contact.last }}</text>
+
+  <view style="contact-section">
+    <behavior <1>
+      xmlns:comms="https://manning.com/hyperview/communications"
+      trigger="press"
+      action="open-phone" <2>
+      comms:phone-number="{{contact.phone}}" <3>
+    />
+    <text style="contact-section-label">Phone</text>
+    <text style="contact-section-info">{{contact.phone}}</text>
+  </view>
+
+  <view style="contact-section">
+    <behavior <4>
+      xmlns:comms="https://manning.com/hyperview/communications"
+      trigger="press"
+      action="open-email"
+      comms:email-address="{{contact.email}}"
+    />
+    <text style="contact-section-label">Email</text>
+    <text style="contact-section-info">{{contact.email}}</text>
+  </view>
+</view>
+{% endblock %}
+----
+<1> Add a behavior to the phone number section that triggers on "press".
+<2> Trigger the new "open-phone" action.
+<3> Set the attribute expected by the "open-phone" action.
+<4> Same idea, with a different action ("open-email")
+
+I took the liberty of implementing a second custom action, "open-email".
+As you can guess, this action will open a system-level email composer to let the user send an email to their contact.
+I didn't include the code for this action, but if you understand how "open-phone" works, you can implement "open-email" too.
+In fact, the `react-native-communications` library exposes a function called `email()`, I think you can guess what it does.
+
+There we have a complete example of extending the client with some custom behavior actions!
+We chose a new name for our actions ("open-phone" and "open-email"), and mapped those names to functions.
+The functions take `<behavior>` elements and can run any arbitrary React Native code.
+We wrapped an existing 3rd party library, and read attributes set on the `<behavior>` element to pass along data to the library.
+After re-starting our demo app, our client has new capabilities we can immediately utilize.
 
 === Adding Toast Messages
-- Problem: how to show a toast confirming the action?
-- Remember, no scripting to add functionality
-- Need to extend Hyperview with a toast component
-- Hyperview client is built using React Native
-- Large open-source community, maybe we can find a library to use
-- Find a RN library, show how to wrap it as custom component.
-  - 
-- Why use a behavior and not an element? Toast exists between screens
+The custom actions added in the previous section are what I call "system actions".
+System actions trigger some UI or capability provided by the device's OS.
+But custom actions are not limited to only interacting with system-level APIs.
+Remember, the functions that implement actions can run arbitrary code, including UI-displaying code.
+We're going to use that capability to trigger a new UI element: confirmation toasts.
+
+Our Contacts web app shows confirmation toasts to give the user feedback on successful actions, like deleting or creating a contact.
+We did not include this feature in the initial version of our mobile Contacts app, so let's add it now.
+Ideally, the confirmation toast fades in at the top of the device display, then fades out after a few seconds.
+This is another opportunity to use an open-source library, `react-native-root-toast`.
+To use this library, just run `yarn add react-native-root-toast` and restart the demo app with `yarn start`.
+
+.demo/src/toast.js`
+----
+import Toast from 'react-native-root-toast'; <1>
+
+const namespace = "https://manning.com/hyperview/toast";
+
+export default {
+  action: "show-toast", <2>
+  callback: (behaviorElement) => { <3>
+    const message = behaviorElement.getAttributeNS(namespace, "message");
+    if (message != null) {
+      Toast.show(message, {position: Toast.positions.TOP, opacity: 1}); <4>
+    }
+  },
+};
+----
+<1> Import the `Toast` API.
+<2> The name of the action
+<3> The callback that runs when the action triggers
+<4> Pass the message to the function that displays the message.
+
+This code looks very similar to the implementation of `open-phone`.
+Both callbacks follow a similar pattern: read namespaced attributes from the `<behavior>` element, and pass those values to a 3rd party library.
+
+TODO: finish toast section
+
 
 === TODO: Swipe gesture on Contacts
 - Problem: we want quick access to edit and delete actions.

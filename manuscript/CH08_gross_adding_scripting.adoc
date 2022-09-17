@@ -15,14 +15,12 @@
 This chapter covers
 
 * How scripting can be effectively added to a Hypermedia Driven Application
-* Adding a javascript-based confirmation dialog for deleting contacts
-// js
 * Adding a three-dot menu in our contacts table
+// vanilla
+* Adding a javascript-based confirmation dialog for deleting contacts
 // alpine
 * Adding a keyboard shortcut for focusing the search input
 // hyperscript
-* Adding support for re-ordering contacts via drag-and-drop
-// off the shelf
 
 
 [partintro]
@@ -618,35 +616,41 @@ scripting library.
 
 === Alpine.js in action: A confirmation dialog
 
-Right now, clicking the `Delete` link on a contact instantly deletes it, making it prone to accidents. We'll use Alpine.js on our Delete button to show a confirmation before proceeding.
+Right now, clicking the `Delete` link uses `hx-confirm` to show a confirmation dialog. `hx-confirm` is a pretty rudimentary solution, relying on the browser built-in `confirm()` function. We're going to replace it with SweetAlert2 (https://sweetalert2.github.io), which we'll hook up to our button with Alpine.
 
-[source,js]
-----
-document.querySelectorAll("[data-confirm]") <1>
-  .forEach(el => {
-    // ...
-  })
-----
-<1> Find relevant elements. Our attribute is `data-confirm`, so we'll write this code in a file named `confirm.js`.
+Here's the Delete button as we left it last time:
 
-We need to show a confirmation dialog. There are libraries that let us show styled, rich alert dialogs, but let's just use `confirm()` for now. Adding in a library later will be a good test of how maintainable our code is.
-
-[source,js,highlight=2..4]
+[source,html]
 ----
-document.querySelectorAll("[data-confirm]")
-  .forEach(el => {
-    el.addEventListener("...", e => { <1>
-      const didConfirm = confirm()
-      if (!didConfirm) {
-        event.stopImmediatePropagation(); <2>
-        event.stopPropagation(); <3>
+<a href="#" hx-delete="/contacts/{{ contact.id }}"
+    hx-swap="outerHTML swap:1s"
+    hx-confirm="Are you sure you want to delete this contact?" <1>
+    hx-target="closest tr">Delete</a>
+----
+<1> This is what we will replace.
+
+We need to import the library into our page.
+
+[source,html]
+----
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+----
+
+[source,html]
+----
+<a href="#" hx-delete="/contacts/{{ contact.id }}"
+    hx-swap="outerHTML swap:1s"
+    x-data="{ message: 'Are you sure you want to delete this contact?' }" <1>
+    @click="Swal.fire(message).then(result => { <2>
+      if (result.isConfirmed) { <3>
+        // ???
       }
-    })
-  })
+    })"
+    hx-target="closest tr">Delete</a>
 ----
-<1> **What event?**
-<2> Prevent listeners on this element from running 
-<3> Prevent listeners on parent elements from running
+<1> Define our message
+<2> When clicked, call into SweetAlert2
+<3> Check the status
 
 We need to decide what event we need to listen to:
 

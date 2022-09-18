@@ -23,8 +23,7 @@
 * Currently, our views render HTML templates for the response.
 * For Hyperview, we will create a set of XML templates to use instead.
 
-=== Installation
-Prerequisites
+=== TODO: Prerequisites
 
  * You already have the contacts app from earlier chapters running locally and listening on port 5000
  * You have an Android Emulator or iOS simulator running on your computer. For the installation instructions
@@ -72,7 +71,7 @@ Specifically, let's support the following features to our mobile app:
 - Adding a new contact
 
 
-.Almost-zero Configuration in Hypermedia Applications
+.Zero Client-Configuration in Hypermedia Applications
 ----
 For many mobile apps that use the Hyperview client, configuring this entrypoint URL is the only on-device code you need to write to deliver a full-featured app.
 Think of the entrypoint URL as the address you type into a web browser to open a web app.
@@ -1268,29 +1267,56 @@ In fact, let's switch do that now by updating the `show.xml` template in our Fla
 
 I skipped over the implementation of the second custom action, "open-email".
 As you can guess, this action will open a system-level email composer to let the user send an email to their contact.
-If you understand how "open-phone" works, you can implement "open-email" too.
-In fact, the `react-native-communications` library exposes a function called `email()`, I think you can guess what it does.
+The implementation of "open-email" is almost identical to "open-phone".
+The `react-native-communications` library exposes a function called `email()`, so we just wrap it and pass arguments to it in the same way.
 
 There we have a complete example of extending the client with some custom behavior actions!
 We chose a new name for our actions ("open-phone" and "open-email"), and mapped those names to functions.
 The functions take `<behavior>` elements and can run any arbitrary React Native code.
-We wrapped an existing 3rd party library, and read attributes set on the `<behavior>` element to pass along data to the library.
-After re-starting our demo app, our client has new capabilities we can immediately utilize.
+We wrapped an existing 3rd party library, and read attributes set on the `<behavior>` element to pass data to the library.
+After re-starting our demo app, our client has new capabilities we can immediately utilize by referencing the actions from our HXML templates.
 
 === Adding Toast Messages
-The custom actions added in the previous section are what I call "system actions".
+The phone and email actions added in the previous section are examples of "system actions".
 System actions trigger some UI or capability provided by the device's OS.
-But custom actions are not limited to only interacting with system-level APIs.
-Remember, the functions that implement actions can run arbitrary code, including UI-displaying code.
-We're going to use that capability to trigger a new UI element: confirmation toasts.
+But custom actions are not limited to only interacting with OS-level APIs.
+Remember, the callbacks that implement actions can run arbitrary code, including code that renders our own UI elements.
+This next custom action example will do just that: render a custom confirmation toast UI element.
 
-Our Contacts web app shows confirmation toasts to give the user feedback on successful actions, like deleting or creating a contact.
-We did not include this feature in the initial version of our mobile Contacts app, so let's add it now.
-Ideally, the confirmation toast fades in at the top of the device display, then fades out after a few seconds.
+If you recall, our Contacts web app shows messages upon successful actions, such as deleting or creating a contact.
+These messages are generated in the Flask backend using the `flash()` function, called from the views.
+Thenm the base `layout.html` template rendered the messages into the final web page.
+
+.Snippet templates/layout.html
+----
+{% for message in get_flashed_messages() %}
+  <div class="flash">{{ message }}</div>
+{% endfor %}
+----
+
+Our Flask app still includes the calls to `flash()`, but the Hyperview app is not accessing the flashed message to display to the user.
+Let's add that support now.
+We could just show the messages using a similar technique to the web app: loop through the messages and render some `<text>` elements in `layout.xml`.
+This approach has a major downside: the rendered messages would be tied to a specific screen.
+If that screen get hidden by a navigation action, the message would be hidden too.
+What we really want is for our toast UI to display "above" all of the screens in the navigation stack.
+That way, the toast would remain visible (fading away after a few seconds), even if the stack of screens changes below.
+To display some UI outside of the `<screen>` elements, we're going to need to extend the Hyperview client with a new custom action, `show-toast`.
 This is another opportunity to use an open-source library, `react-native-root-toast`.
-To use this library, just run `yarn add react-native-root-toast` and restart the demo app with `yarn start`.
+Let's add this library to our demo app.
 
-.demo/src/toast.js`
+[source,bash]
+----
+> cd hyperview/demo
+> yarn add react-native-root-toast <1>
+> yarn start <2>
+----
+<1> Add dependency on `react-native-root-toast`
+<2> Re-start the mobile app
+
+Now, we can write the code to implement the toast UI as a custom action.
+
+.demo/src/toast.js
 ----
 import Toast from 'react-native-root-toast'; <1>
 
@@ -1301,7 +1327,7 @@ export default {
   callback: (behaviorElement) => { <3>
     const message = behaviorElement.getAttributeNS(namespace, "message");
     if (message != null) {
-      Toast.show(message, {position: Toast.positions.TOP, opacity: 1}); <4>
+      Toast.show(message, {position: Toast.positions.TOP, duration: 2000}); <4>
     }
   },
 };
@@ -1309,12 +1335,108 @@ export default {
 <1> Import the `Toast` API.
 <2> The name of the action
 <3> The callback that runs when the action triggers
-<4> Pass the message to the function that displays the message.
+<4> Pass the message to the toast library
 
 This code looks very similar to the implementation of `open-phone`.
 Both callbacks follow a similar pattern: read namespaced attributes from the `<behavior>` element, and pass those values to a 3rd party library.
+For simplicity, I'm hard-coding options to show the toast at the top of the screen, fading out after 2 seconds.
+But `react-native-root-toast` exposes many options for positioning, timing of animations, colors, and more.
+We could specify these options using extra attributes on `behaviorElement` to make the action more configurable.
+For our purposes, we will just stick to a bare-bones implementation.
 
-TODO: finish toast section
+Now we just need to register our custom action with the `<Hyperview>` component, by passing it to the `behaviors` prop.
+
+.demo/src/HyperviewScreen.js
+[source,js]
+----
+import React, { PureComponent } from 'react';
+import Hyperview from 'hyperview';
+import OpenEmail from './email';
+import OpenPhone from './phone';
+import ShowToast from './toast'; <1>
+
+export default class HyperviewScreen extends PureComponent {
+  // ... omitted for brevity
+
+  behaviors = [OpenEmail, OpenPhone, ShowToast]; <2>
+
+  // ... omitted for brevity
+}
+----
+<1> Import the show-toast action
+<2> Pass the action to the `Hyperview` component, as a prop called `behaviors`.
+
+All that's left to do is trigger the `show-toast` action from our HXML.
+There are 3 user actions that result in showing a toast message:
+
+1. Creating a new contact
+2. Updating an existing contact
+3. Deleting a contact
+
+The first two actions are implemented in our app using the same HXML template, `form_fields.xml`.
+Upon successfully creating or updating a contact, this template will reload the screen and trigger an event, using behaviors that trigger on "load".
+The deletion action also uses behaviors that trigger on "load", defined in the `deleted.xml` template.
+So both `form_fields.xml` and `deleted.xml` need to be modified to also show toasts on load.
+Since the actual behaviors will be the same in both templates, let's created a shared template to reuse the HXML.
+
+.hv/templates/toasts.xml
+[source,xml]
+----
+{% for message in get_flashed_messages() %}
+  <behavior <1>
+    xmlns:toast="https://manning.com/hyperview/toast"
+    trigger="load" <2>
+    action="show-toast" <3>
+    toast:message="{{ message }}" <4>
+  />
+{% endfor %}
+----
+<1> Define a behavior for each message to display
+<2> Trigger this behavior as soon as the screen loads
+<3> Trigger the new "show-toast" action.
+<4> The "show-toast" action will display the flashed message in its UI.
+
+Like in `layout.html` of the web app, we loop through all of the flashed messages and render some markup for each message.
+However, in the web app, the message was directly rendered into the web page.
+In the Hyperview app, each message is displayed using a behavior that triggers our custom UI.
+Now we just need to include this template in `form_fields.xml`:
+
+.Snippet of hv/templates/form_fields.xml
+[source,xml]
+----
+<view xmlns="https://hyperview.org/hyperview" style="edit-group">
+  {% if saved %}
+    {% include "hv/toasts.xml" %} <1>
+    <behavior trigger="load" once="true" action="dispatch-event" event-name="contact-updated" />
+    <behavior trigger="load" once="true" action="reload" href="/contacts/{{contact.id}}" />
+  {% endif %}
+  <!-- omitted for brevity -->
+</view>
+----
+<1> Show the toasts as soon as the screen loads.
+
+And we can do the same thing in `deleted.xml`:
+
+.hv/templates/deleted.xml
+[source,xml]
+----
+<view xmlns="https://hyperview.org/hyperview">
+  {% include "hv/toasts.xml" %} <1>
+  <behavior trigger="load" action="dispatch-event" event-name="contact-updated" />
+  <behavior trigger="load" action="back" />
+</view>
+----
+<1> Show the toasts as soon as the screen loads.
+
+In both `form_fields.xml` and `deleted.xml`, multiple behaviors get triggered on "load".
+In `deleted.xml`, we immediately navigate back to the previous screen.
+In `form_fields.xml`, we immediately reload the current screen to show the Contact details.
+If we rendered our toast UI elements directly in the screen, the user would barely see them before the screen disappeared or reloaded.
+By using a custom action, the toast UI remains visible even while the screens change beneath them.
+
+[#figure-7-8, reftext="Figure {chapter}.{counter:figure}"]
+.Toast shown during back navigation
+image::../images/screenshot_hyperview_toast.png[]
 
 
 === TODO: Swipe gesture on Contacts

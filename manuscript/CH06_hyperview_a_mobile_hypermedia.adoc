@@ -29,12 +29,11 @@ Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly appli
 
 
 == The state of mobile app development
-Before we can discuss how to apply hypermedia to mobile platforms, we need to understand how native mobile apps are built today.
-Here, the word "native" refers to code written against an SDK provided by the phone's operating system (typically Android or iOS).
+Before we can discuss how to apply hypermedia to mobile platforms, we need to understand how native mobile apps are commonly built.
+I'm using the word "native" to refer to code written against an SDK provided by the phone's operating system (typically Android or iOS).
 This code is packaged into an executable binary, and uploaded & approved through app stores controlled by Google and Apple.
 When users install or update an app, they're downloading this executable and running the code directly on their device's OS.
 In this way, mobile apps have a lot in common with old-school desktop apps for Mac, Windows, or Linux.
-
 There is one important difference between PC desktop apps of yesteryear and today's mobile apps.
 These days, almost all mobile apps are "networked".
 By networked, I mean the app needs to read and write data over the Internet to deliver its core functionality.
@@ -658,7 +657,7 @@ Now that we have a namespace and prefix, we need to use it for our elements:
 
 That's it! If we introduced a custom charting library with "area" and "marker" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate `<map:area>` from `<chart:area>`.
 
-At this point you might be wondering, "how does the Hyperview client know to render a map when my doc includes `<map:area>`"?
+At this point you might be wondering, "how does the Hyperview client know to render a map when my doc includes `<map:area>` "?
 It's true, so far we only defined the custom element format, but we haven't implemented the element as a feature in our app.
 We will get into the details of implementing custom elements in the next chapter.
 

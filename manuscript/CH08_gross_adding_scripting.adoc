@@ -527,7 +527,11 @@ These factors make our menu annoying and possibly unusable for many people. Let'
       items[0].focus(); <5>
 
     } else if (e.key === "End") {
-      items[items.length - 1].focus(); <5>
+      items[items.length - 1].focus(); <6>
+
+    } else if (e.key === "Escape") {
+      toggleMenu(false); <7>
+      button.focus(); <8>
     }
   })
 })
@@ -538,6 +542,8 @@ These factors make our menu annoying and possibly unusable for many people. Let'
 <4> Activate the currently focused element when the space key is pressed
 <5> Move focus to the first menu item when Home is pressed
 <6> Move focus to the last menu item when End is pressed
+<7> Close menu when Escape is pressed
+<8> Return focus to menu button when closing menu
 
 I'm pretty sure that covers all our bases. That's a lot of code! But it's code that encodes a lot of behavior.
 
@@ -1064,7 +1070,6 @@ ____
 
 == Using off-the-shelf components
 
-=== Off-the-shelf components in action: drag to reorder
 
 
 == Events and the DOM

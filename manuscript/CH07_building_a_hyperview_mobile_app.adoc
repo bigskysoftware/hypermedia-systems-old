@@ -11,24 +11,52 @@
 :source-language:
 
 = Building a Contacts App With Hyperview
-* We will take our existing Contacts web app, and transform it to a mobile app by tweaking the backend and using the Hyperview client.
-* To enhance our app and make it more native, we will extend the Hyperview client with custom components and behaviors.
-* Finally, we will make our Flask backend serve both the web app and mobile app using content negotation and other techniques.
 
-== TODO: Porting from Web
+This chapter covers:
 
-* We can use the same backend code
-* We only care about supporting mobile right now. Later we will look at running both.
-* Modify the code as little as possible will make it easier to support both.
-* Currently, our views render HTML templates for the response.
-* For Hyperview, we will create a set of XML templates to use instead.
+* Transforming the existing Contacts web app into a native mobile app using Hyperview
+* Extending the mobile app with custom behavior actions
+* Extending the mobile app with custom components
+* Using the same backend to power both the web app and mobile app
 
-=== TODO: Prerequisites
+Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
+These benefits were demonstrated by building a robust Contacts web application.
+Then, Chapter 6 argued that hypermedia concepts can and should be applied to platforms other than the Web.
+We introduced Hyperview as an example of a hypermedia format and client specifically designed for building mobile apps.
+But you may still be wondering: what is it like to create a fully-featured, production-ready mobile app using Hyperview?
+Do I have to learn a whole new language and framework?
+In this chapter, we will show Hyperview in action by porting the Contacts web app to a native mobile app.
+You will see that almost many web development techniques (and indeed, much of the code) are completely identical when developing with Hyperview.
+How is that possible?
 
- * You already have the contacts app from earlier chapters running locally and listening on port 5000
- * You have an Android Emulator or iOS simulator running on your computer. For the installation instructions
+1. Our Contacts web app was built with the principle of HATEOAS (Hypermedia as the Engine of Application State).
+All of the app's features (retrieving, searching, editing, and creating contacts) are implemented in the backend (the `Contacts` Python class).
+Our mobile app, built with Hyperview, also leverages HATEOAS and relies on the backend for all of the app's logic.
+That means the `Contacts` Python class can power our mobile app the same way it powers the web app, without any changes required.
+2. The client-server communication in the web app happens using HTTP.
+The HTTP server for our web app is written using the Flask framework.
+Hyperview also uses HTTP for client-server communication.
+So we can re-use the Flask routes and views from the web app for the mobile app as well.
+3. The web app uses HTML for its hypermedia format, and Hyperview uses HXML.
+HTML and HXML are different formats, but the base syntax is similar (nested tags with attribues).
+This means we can use the same templating library (Jinja) for HTML and HXML.
+Additionally, many of the concepts of htmx are built into HXML.
+We can directly port web app features implemented with htmx (search, infinite loading) to HXML.
 
-Hyperview repository comes with a demo backend and a demo client built using Expo.
+Essentially, we can re-use almost everything from the web app backend, but we will need to replace the HTML templates with HXML templates.
+Most of the sections in this chapter will assume we have the web contacts app running locally and listening on port 5000.
+The focus will be on creating new HXML templates for our mobile app's UI.
+
+=== Creating a mobile app
+
+But before we dive into HXML, there's one pesky requirement: the Hyperview client.
+When developing web applications, you only need to worry about the server because the client (web browser) is universally available.
+There's no equivalent Hyperview client installed on every mobile device.
+Instead, we will create our own Hyperview client, customized to only talk to our server.
+This client can be packaged up into an Android or iOS mobile app, and distributed through the respective app stores.
+
+Luckily, we don't need to start from scratch to implement a Hyperview client.
+The Hyperview code repository comes with a demo backend and a demo client built using Expo.
 We will use this demo client but point it to our contacts app backend as a starting point.
 
 [source,bash]
@@ -1438,7 +1466,7 @@ By using a custom action, the toast UI remains visible even while the screens ch
 image::../images/screenshot_hyperview_toast.png[]
 
 
-=== TODO: Swipe gesture on Contacts
+=== Swipe gesture on Contacts
 To add communication capabilities and the toast UI, we extended the client with custom behavior actions.
 But the Hyperview client can also be extended with custom UI components that render on the screen.
 Custom components are implemented as React Native components.

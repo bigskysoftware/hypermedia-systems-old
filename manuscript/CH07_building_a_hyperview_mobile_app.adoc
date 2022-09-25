@@ -15,9 +15,9 @@
 This chapter covers:
 
 * Transforming the existing Contacts web app into a native mobile app using Hyperview
+* Using the same backend to power both the web app and mobile app
 * Extending the mobile app with custom behavior actions
 * Extending the mobile app with custom components
-* Using the same backend to power both the web app and mobile app
 
 Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
 These benefits were demonstrated by building a robust Contacts web application.
@@ -1103,8 +1103,89 @@ The screen will reload itself to show the Contact Details.
 .Add Contact modal
 image::../images/screenshot_hyperview_add.png[]
 
+=== Deploying the App
+With the completion of the contact creation UI, we have a fully implemented mobile app!
+It supports searching a list of contacts, viewing the details of a contact, editing & deleting a contact, and adding a new contact.
+But so far, we've been developing the app using a simulator on our desktop computer.
+How can we see it running on a mobile device?
+And how can we get it into the hands of our users?
+
+To see the app running on a physical device, let's take advantage of the Expo platform's app preview functionality.
+
+1. Download the Expo Go app on an Android or iOS device.
+2. Restart the Flask app, binding to an interface accessible on your network.
+This might look something like `flask run --host 192.168.7.229`, where the host is your computer's IP address on the network.
+3. Update the Hyperview client code so that `ENTRY_POINT_URL` (in `demo/src/constants.js`) points to the IP and port that the Flask server is bound to.
+4. After running `yarn start` in the Hyperview demo app, you will see a QR code printed in the console, with instructions on how to scan it on Android and iOS.
+
+Once you scan the QR code, the full app will run on the device!
+As you interact with the app, you will see HTTP requests made to the Flask server.
+You can even use the physical device during development.
+Any time you make a change in the HXML, just reload the screen to see the UI updates.
+
+So we have the app running on a physical device, but it's still not production ready.
+To get the app into the hands of our users, there's a few things we need to do:
+
+1. Deploy our backend in production.
+We need to use a production-grade web server like Gunicorn instead of the Flask development server.
+And we should run our app on a machine reachable on the Internet, most likely using a cloud provider like AWS or Heroku.
+2. Create standalone binary apps.
+By following the instructions from the Expo project, we can create a `.ipa` or `.apk` file, for the iOS and Android platforms.
+Remember to update `ENTRY_POINT_URL` in the Hyperview client to point to the production backend.
+3. Submit our binaries to the iOS App Store or Google Play Store, and wait for app approval.
+
+Once the app is approved, congratulations!
+Our mobile app can be downloaded by Android and iOS users.
+And here's the best part.
+Because our app uses the hypermedia architecture, we can add features to our app by simply updating the backend.
+The UI and interactions are completely specified with the HXML generated from server-side templates.
+Want to add a new section to a screen?
+Just update an existing HXML template.
+Want to add a new type of screen to the app?
+Create a new route, view, and HXML template.
+Then, add a behavior to and existing screen that will open the new screen.
+To push these changes to your users, you just need to re-deploy the backend.
+Our app knows how to interpret HXML, and that's enough for it to understand how to handle the new features.
+
+== One Backend, Multiple Hypermedia formats
+To create a mobile app using the hypermedia architecture, we started with the web-based contacts app and made a few changes, primarily replacing HTML templates with HXML templates.
+But in the process of porting the backend to serve our mobile app, we gave up the web app.
+Indeed, if you tried to visit `http://0.0.0.0:5000` in a web browser, you would most likely see a jumble of text and XML markup.
+That's because web browsers don't know how to render plain XML into a UI, and they certainly don't know how to interpret HXML's semantics for behaviors.
+It would be great if we could use the same backend to server both our web app and mobile app.
+After all, nearly all of the model logic and HTTP endpoints are identical.
+Is it possible?
+
+The answer is yes!
+We just need to know when the server should response with HTML or HXML, based on the Hypermedia format preferred by the client.
+Luckily, HTTP comes to our rescue with the `Accept` request header.
+The `Accept` header indicates the content types the client is able to handle.
+Web browsers will list `text/html` as the preferred content type in the `Accept` header.
+The Hyperview client lists `application/vnd.hyperview+xml` as the preferred content type.
+This different content type
+Our backend server can parse the `Accept` header and decide what type of response to send back (HTML or HXML) based on the content type desired by the client.
+
+There are two approaches for branching 
+
+=== TODO Approach 1: Template switching
+
+* Approach 1: share the same view, but select template based on header
+  * easiest approach, minor changes
+  * works well if the interactions on both platforms is the same
+  * may not be the best approach if the two platforms have different behaviors
+
+* Approach 2: share the same model logic, but create separate views
+  * some duplication required to parse requests
+  * the context can be uniquely crafted for the given platform
+
+
+=== TODO Approach 2: View switching
+
 
 == Extending the Client
+
+_Note to Editor: should we consider turning this section into a separate chapter? The concepts and techniques are distinct from the other sections (backend/HXML work vs using Javascript to add support for new components)._
+
 We now have a fully-featured native mobile version of our Contacts app.
 Aside from customizing the entrypoint URL, we didn't need to touch any code that runs on the mobile device.
 We defined our mobile app's UI and logic completely in the backend code, using Flask and HXML templates.
@@ -1821,25 +1902,3 @@ And importantly, this evolution preserver the Hypermedia, server-driven architec
 - Note how we cleanly extend the client:
   - HXML remains pure XML, no scripts
   - We've essentially added features to the Hyperview "browser" that we need
-
-== TODO: One Backend, Multiple Hypermedias
-* We turned out simple Contacts app into a native mobile app
-  * mostly, we changed templates from HTML to HXML
-* But the app doesn't work on the web anymore.
-* Can we use the same backend for both a rich web app and a native mobile app?
-* Yes! The same backend logic can be used for both, we just need to respond with HTML or HXML based on the client.
-* There are a couple of relevant approaches.
-* The important thing is to detect whether the client speaks HTML or HXML.
-  * Luckily, this is what the HTTP Accept header is for!
-  * HV client uses two headers: one for full docs, and one for fragments
-* Using the Accept header, we know if the client is a web browser of mobile app using Hyperview, and we can respond with HTML or HXML.
-* But what's the best way to organize our code? Two approaches to consider with different tradeoffs:
-
-* Approach 1: share the same view, but select template based on header
-  * easiest approach, minor changes
-  * works well if the interactions on both platforms is the same
-  * may not be the best approach if the two platforms have different behaviors
-
-* Approach 2: share the same model logic, but create separate views
-  * some duplication required to parse requests
-  * the context can be uniquely crafted for the given platform

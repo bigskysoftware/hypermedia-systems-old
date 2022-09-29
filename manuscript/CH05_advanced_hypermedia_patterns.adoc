@@ -40,6 +40,8 @@ when Google adopted it for search results, and many applications now implement i
 As you might suspect, we are going to use some of the same techniques we used for dynamically updating emails in the
 previous chapter, since we are once again going to want to issue requests on the `keyup` event.
 
+=== Our Current Search UI
+
 Let's recall what the current search field in our application currently looks like:
 
 .Our Search Form
@@ -60,6 +62,8 @@ As it stands right now, the user must hit enter when the search input is focused
 of these events will trigger a `submit` event on the form, causing it to issue an HTTP `GET` and re-rendering the whole
 page.  Currently, thanks to `hx-boost` the form will still use an AJAX request for this `GET`, but we currently don't
 get the nice search-as-you-type behavior we want.
+
+=== Adding Active Search
 
 To add active search behavior, we will need to add a few htmx attributes to the search input.  We will leave the current
 form as it is, with an `action` and `method`, so that, in case a user does not have JavaScript enabled, the normal
@@ -86,14 +90,17 @@ This is a good example of how common patterns come up again and again in htmx.
     <input type="submit" value="Search"/>
 </form>
 ----
-<1> We keep everything the same on the input, so it functions the way it always has if JavaScript isn't enabled
-<2> We issue a `GET` to the same URL as the form
-<3> We use a similar `hx-trigger` specification as we did for the email input validation example
+<1> Keep the original attributes, so search will work if JavaScript is not available
+<2> Issue a `GET` to the same URL as the form
+<3> Nearly the same `hx-trigger` specification as for the email input validation
 
 The small change that we made to the `hx-trigger` attribute is we switched out the `change` event for the `search` event.
 The `search` event is triggered when someone clears the search or hits the enter key.  It is a non-standard event, but
 doesn't hurt to include here.  The main functionality of the feature is provided by the second triggering event, the `keyup`
-which, as with the email example, is delayed to debounce the input requests and avoid issuing too many requests.
+which, as with the email example, is delayed with the `delay:200ms` modifier to "debounce" the input requests and
+avoid hammering our server with requests on every keyup.
+
+=== Targeting The Correct Element
 
 What we have is pretty close to what we want, but recall that the default target for an element is itself.  As things currently
 stand, an HTTP `GET` request will be issued to the `/contacts` path, which will, as of now, return an entire HTML document
@@ -122,6 +129,12 @@ Fortunately the `hx-target` attribute allows us to do exactly that!  Lets use it
            hx-target="tbody"/> <1>
     <input type="submit" value="Search"/>
 </form>
+<table>
+    ...
+    <tbody>
+       ...
+    </tbody>
+</table>
 ----
 <1> Target the `tbody` tag on the page
 
@@ -133,6 +146,8 @@ into the document within the `tbody`.  Unfortunately, the content that is coming
 So we end up with a "double render" situation, where an entire document has been inserted _inside_ another element, with
 all the navigation, headers and footers and so forth re-rendered within that element.  Not good!  But, thankfully,
 pretty easy to fix.
+
+=== Paring Down Our Content
 
 Now, we could use the same trick we reached for in the "Click To Load" and "Infinite Scroll" features: the `hx-select`
 attribute.  Recall that the `hx-select` attribute allows us to pick out the part of the response we are interested in using
@@ -151,10 +166,10 @@ So we could add this to our input:
 ----
 <1> Adding an `hx-select` that picks out the table rows in the `tbody` of the response
 
-However, that isn't the only fix, and, in this case, isn't the most efficient one.  Instead, let's change the server-side
-of our Hypermedia Driven Application to serve _only the HTML content needed_
+However, that isn't the only fix for this problem, and, in this case, isn't the most efficient one.  Instead, let's
+change the _server-side_ of our Hypermedia Driven Application to serve _only the HTML content needed_.
 
-=== Server Side Tricks With htmx
+=== HTTP Request Headers In htmx
 
 In this section, we'll look at another, more advanced technique for dealing with a situation where we only want a _partial
 bit_ of HTML, rather than a full document. Currently, we are letting the server create the full HTML document as response
@@ -197,9 +212,36 @@ made, in order to know exactly which content we want to render.
 
 It turns out that htmx helps us distinguish between these two cases by including a number of HTTP _Request Headers_ when
 it makes requests.  Request Headers are a feature of HTTP, allowing clients (e.g. web browsers) to include name/value pairs
-of metadata associated with requests to help the server understand what the client is requesting.
+of metadata associated with requests to help the server understand what the client is requesting.  Here is an example
+of (some of) the headers the FireFox browser issues when requesting `https://manning.com`:
 
-Here are the HTTP request headers that htmx includes in every request that it makes:
+.HTTP Headers
+[source,httprequest]
+----
+GET / HTTP/2
+Host: www.manning.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+DNT: 1
+Connection: keep-alive
+Cookie: ...
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: none
+Sec-Fetch-User: ?1
+Sec-GPC: 1
+TE: trailers
+----
+
+
+htmx takes advantage of this feature of HTTP to add additional headers and, therefore, additional _context_ to the
+HTTP requests that it makes, so that you can inspect those headers and make smarter decisions with respect to exactly
+what logic you want to execute, and what sort of response you want to send to the client.
+
+Here is a table of the HTTP headers that htmx includes in HTTP requests:
 
 [cols="1,1"]
 |===
@@ -341,9 +383,14 @@ from `rows.html` inserted:
 So far, so good: the `/contacts` page still rendering properly, just as it did before we split the rows out of the
 `index.html` template.
 
-OK, so the last step is to fix up our controller to take advantage of our new `rows.html` template when we are doing
-an Active Search.  Luckily, the update is simple: since `rows.html` is just another template, we only need to call
-the `render_template` function with it:
+=== Using Our New Template
+
+The last step in factoring our templates is to modify our web controller to take advantage of the new `rows.html` template
+when it responds to an active search request.
+
+Since `rows.html` is just another template, just like `index.html`, all we need to do is call the `render_template`
+function `rows.html` rather than `index.html`, and we will render _only_ the row content rather than the entire
+page:
 
 .Updating Our Server Side Search
 [source,python]
@@ -368,7 +415,20 @@ the index page, without any need for an `hx-select` or any other client side pro
 And, as a bonus, the old form-based search still works as well, thanks to the fact that we conditionally render the rows
 only when the `search` input issues the HTTP request.  Great!
 
-=== Updating The Navigation Bar
+.HTTP Headers & Caching
+****
+One subtle aspect of the approach we are taking here, using headers to determine the content of what we return, is
+a feature baked into HTTP: caching.  In our request handler, we are now returning different content depending on the
+value of the `HX-Trigger` header.  If we were to use HTTP Caching, we might get into a situation where someone makes
+a _non-htmx_ request (e.g. refreshing a page) and yet the _htmx_ content is returned from the HTTP cache, resulting
+in a partial page of content for the user.
+
+The solution to this problem is to use the HTTP Response `Vary` header and call out the htmx headers that you are using
+to determine what content you are returning.  A full treatment of HTTP Caching is beyond the scope of this book, but
+the MDN article on the topic is quite good: https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching
+****
+
+=== Updating The Navigation Bar With `hx-push-url`
 
 You may have noticed one shortcoming of our Active Search when compared with submitting the form: when you submit the form
 it will update the navigation bar of the browser to include the search term.  So, for example, if you search for "joe"
@@ -447,11 +507,13 @@ Let's add a spinner after our search input:
 We have added the spinner right after the input.  This visually co-locates the request indicator with the element
 making the request, and makes it easy for a user to see that something is in fact happening.
 
-Note that the indicator `img` tag has the `htmx-indicator` class on it.  This is a CSS class automatically injected
-by htmx that defaults the element to an `opacity` of 0.  When an htmx request is triggered that points to this indicator,
-another class, `htmx-request` is added to the indicator which transitions its opacity to 1.  So you can use just about
-anything as an indicator and it will be hidden by default, and will be shown when a request is in flight.  This is all
-done via standard CSS classes, allowing you to control the transitions and even the mechanism by which the indicator
+Note that the indicator `img` tag has the `htmx-indicator` class on it.  `htmx-indicator` is a CSS class that is
+automatically injected into the page by htmx.  This class sets the default `opacity` of an element to `0`, which hides
+the element from view, while at the same time not disrupting the layout of the page.
+
+When an htmx request is triggered that points to this indicator, another class, `htmx-request` is added to the indicator
+which transitions its opacity to 1.  So you can use just about anything as an indicator, and it will be hidden by default, and then,
+when a request is in flight, will be shown.  This is all done via standard CSS classes, allowing you to control the transitions and even the mechanism by which the indicator
 is show (e.g. you might use `display` rather than `opacity`).  htmx is flexible in this regard.
 
 .Use Request Indicators!
@@ -545,20 +607,16 @@ that load time, nor it is also not possible to cache the result.  This leaves us
 * Remove the feature
 * Come up with some other way to mitigate the performance issue
 
-After talking with your project manager about the various options you have, it becomes clear that removing the feature
-isn't an acceptable solution: a big customer demanded it as part of a huge enterprise deal and there is no going back now.
-We will need to take another approach to mitigating this performance issue.  The approach we decide to use is Lazy
-Loading, where we defer loading the contact count "until later".
-
-Let's look at exactly how we can accomplish this using htmx.
+Let's assume that we can't remove the feature, and therefore look at how we can mitigate this performance issue by
+using htmx instead.
 
 === Pulling The Expensive Code Out
 
-The first step in implmenting the Lazy Load pattern is to pull the expensive code, that is, the call to `Contacts.count()`.
+The first step in implementing the Lazy Load pattern is to pull the expensive code, that is, the call to `Contacts.count()`.
 out of request handler for the `/contacts` end point.
 
-Let's pull this call into a handler for a new end point that we will put at `/contacts/count` path instead.  Now, for this
-new end point, we won't need to render a template at all.  Its sole job is going to be to render that small bit of text
+Let's pull this function call into its own HTTP request handler as new HTTP end point that we will put at `/contacts/count`.
+For this new end point, we won't need to render a template at all: its sole job is going to be to render that small bit of text
 that is in the span, "(22 total Contacts)"
 
 Here is what the new code will look like:
@@ -592,10 +650,10 @@ def contacts_count():
 Great! So now we have moved the performance issue out of the `/contacts` handler code and created a new HTTP end point
 that will produce the expensive-to-create count for us.
 
-The next step is to hook up the span that displays the count to this new path.  As we said earlier, the default behavior
-of htmx is to place any content it receives for a given request into the `innerHTML` of an element, which is exactly what we want here:
-we want to retrieve this text and put it into the `span`.  So we can simply use an `hx-get` attribute pointing to this new path
-to do exactly that.
+Now we need to get the content from this new handler _into_ the span, somehow.  As we said earlier, the default behavior
+of htmx is to place any content it receives for a given request into the `innerHTML` of an element, and that turns out
+to be exactly what we want here: we want to retrieve this text and put it into the `span`.  So we can simply place an
+`hx-get` attribute on the span, pointing to this new path, and do exactly that.
 
 However, recall that the default _event_ that will trigger a request for a `span` element in htmx is the `click` event.
 Well, that's not what we want!  Instead, we want this request to trigger immediately, when the page loads.  To do this,
@@ -700,8 +758,8 @@ approach.
 
 We now have some pretty slick UX patterns in our application, but let's not rest on our laurels.  For our next
 hypermedia trick, we are going to implement "inline delete", where a contact can be deleted directly from the
-list view of all contacts, rather than requiring the user to drill in to the edit view of particular contact to access
-the "Delete Contact" button.
+list view of all contacts, rather than requiring the user to navigate all the way to the edit view of particular contact,
+in order to access the "Delete Contact" button.
 
 We already have "Edit" and "View" links for each row, in the `rows.html` template:
 
@@ -760,7 +818,7 @@ to update the URL of the browser.
 
 And... that's it!  We now have inline delete working, even with a confirmation dialog!
 
-. A Style Sidebar
+.A Style Sidebar
 ****
 One thing is really starting to bother me about our application: we now have quite a few actions stacking up in our
 contacts table, and it is starting to look very distracting:
@@ -829,16 +887,29 @@ change to the existing HTML:
 ----
 <1> An `id` attribute has been added to the button
 
-With this in place, we now have a mechanism for differentiating between the delete button in the `edit.html` template and
-the delete links in the `rows.html` template.  We can write code very similar to what we did for the active search pattern,
-using a conditional on the `HX-Trigger` header to determine what we want to do.  If that header has the value `delete-btn`,
-then we know the request came from the button on the edit page, and we can do what we are currently doing: delete the
-contact and redirect to `/contacts` page.
+By giving this button an id attribute, we now have a mechanism for differentiating between the delete button in the
+`edit.html` template and the delete links in the `rows.html` template.  When this button issues a request, it will now
+look something like this:
 
-If it does not have that value, then we can simple delete the contact and return an empty string.  This empty string
+[source, httprequest]
+----
+DELETE http://example.org/contacts/42 HTTP/1.1
+Accept: text/html,*/*
+Host: example.org
+...
+HX-Trigger: delete-btn
+...
+----
+
+You can see that the request now includes the `id` of the button. This allows us to write code very similar to what we did
+for the active search pattern, using a conditional on the `HX-Trigger` header to determine what we want to do.  If that
+header has the value `delete-btn`, then we know the request came from the button on the edit page, and we can do what we
+are currently doing: delete the contact and redirect to `/contacts` page.
+
+If it _does not_ have that value, then we can simply delete the contact and return an empty string.  This empty string
 will replace the target, in this case the row for the given contact, thereby removing the row from the UI.
 
-Let's make that change to our server side code:
+Let's refactor our server side code to do this:
 
 .Updating Our Server Code To Handle Two Different Delete Patterns
 [source, python]

@@ -10,26 +10,144 @@
 :sourcedir: ../code/src
 :source-language:
 
-= Data APIs & Hypermedia Driven Applications
+= JSON Data APIs & Hypermedia Driven Applications
 
 This chapter covers
 
-* Data APIs and how the contrast with hypermedia APIs
-* Adding a JSON-Based Data API to our application
+* Contrasting JSON-based Data APIs with hypermedia APIs
+* Adding a Data API to our application
 * Adding hypermedia controls to our JSON Data API
 
 [partintro]
-== Data APIs
+== JSON Data APIs
 
 In this book we have been focusing on using hypermedia to build Hypermedia Driven Applications.  In doing so we are
-following the original networking architecture of the web, building a RESTful system.
+following the original networking architecture of the web, and building a REST-ful system, in the original sense
+of that term.
 
-However, today, many web applications are not built using this approach.  Instead, they use a front end library such
-as React to interact with JSON API on the server.  This JSON API typically does not use hypermedia, but, rather is
-a _Data API_, that is, it simply returns structured domain data to the client, for the client itself to interpret.
+However, today, we should acknowledge that many web applications are _not_ built using this approach.  Instead, they use a
+Single Page Application front end library such as React to build their application, and they interact with the server
+via a JSON API.  This JSON API almost never uses any hypermedia concepts.  Rather JSON APIs tend to be a _Data API_, that
+is, an API that simply returns structured domain data to the client without any hypermedia control information.  The client
+itself must know how to interpret the JSON Data: what end points are associated with the data, how certain fiels should
+be displayed, and so on.
 
-Unfortunately, today, for historical reasons, these JSON APIs are often referred to REST APIs, despite the fact that
-they are, using the original definition of that term, not actually RESTful.
+Now, believe it or not, we _have_ been creating an API for our web application.  This may sound confusing to you!
+An API?  We have just been creating a web application, with paths that return HTML.  How is that an API?
+
+It turns out that our web application is, indeed, providing an API.  It just happens to be an API that a _hypermedia client_,
+that is, a browser, understands.  We are building an API for the browser to interact with over HTTP, and, thanks to the
+magic of HTML and hypermedia, the browser doesn't need to know anything about our hypermedia API beyond an entry point
+URL: all the actions and display information comes, self-contained, within the HTML responses!
+
+Building web applications like this is so natural and simple that you might not think of it as an API at all, but I
+assure you, it is!
+
+== Hypermedia APIs & JSON Data APIs
+
+OK, wo, we have a hypermedia API for Contact.app.  Should we include a Data API as well?
+
+Sure!  The existence of a hypermedia API _in no way means_ that you can't _also_ have a Data API.  In fact, this is a
+common situation in traditional web applications: there is the "web application" that is entered through that entry point
+URL, say `https://mywebapp.example.com/`.  And there is also a _separate_ JSON API that is accessible through another
+URL, perhaps `https://api.mywebapp.example.com/v1`.
+
+This is a perfectly reasonable way to split up the hypermedia interface to your application and the Data API you provide
+to other, non-hypermedia clients.
+
+Now, why would you want to include a Data API along with a hypermedia API?  Well, because non-hypermedia clients want to
+interact with your application as well, of course!  For example:
+
+* Perhaps you have a mobile application that isn't built using HyperView.  That application will need to interact with
+your server somehow, and using the existing HTML API would almost certainly be a poor fit!  You want programmatic
+access to your system via a Data API, and JSON is a natural choice for this.
+
+* Perhaps you have automated script that needs to interact with the system on a regular basis.  For example, maybe we
+  have a bulk-import job that runs nightly, and needs to import/sync thousands of contacts.  While it would be possible
+  to script this agains the HTML API, it would also be annoying: parsing HTML in scripts is error prone and tedious.  It
+  would be better to have a simple JSON API for this use case.
+
+* Perhaps there are 3rd party clients who wish to integrate with your system's data in some way.  Maybe a partner
+  wants to synchronize data nightly.  As with the bulk-import example, this isn't a great use case for an HTML-based API,
+  and it would make more sense to provide something more amenable to scripting.
+
+For all of these use cases, a JSON Data API makes sense: in each case the API is not being consumed by a hypermedia client,
+so presenting am HTML-based hypermedia API would be inefficient and complicated.  A simple JSON Data API fits the bill for what
+we want and, as always, we recommend using the right tool for the job.
+
+."What!?!  You Want Me To Parse HTML!?!"
+****
+A confusion we often run into in online discussions is that, when we advocate a hypermedia approach to building web
+applications, is that people think we mean that they should parse the HTML responses from the server, and then dump the
+data into their SPA framework or mobile applications.
+
+This is, of course, silly.
+
+What we mean, instead, is that you should consider using a hypermedia API _with a hypermedia
+client_, like the browser, interpreting the hypermedia response itself and presenting it to the user. A hypermedia API
+can't simply be welded on top of an existing SPA approach.  It requires a sophisticated hypermedia client such as
+the browser to be consumed effectively.
+
+If you are writing code to tease apart your hypermedia only to then treat as data to feed into a client-side model ,
+you are probably doing it wrong!
+****
+
+=== Differences Between Hypermedia APIs & Data APIs
+
+So, OK, let's accept for a moment that we _are_ going to have a Data API for our application, in addition to our
+hypermedia API.  At this point, some developers may be wondering: whyhave both?  Why not have a single API, the JSON Data API, and have multiple clients use this one API to communicate
+with it?  Isn't it redundant to have both types of APIs for our application?
+
+It's a reasonable point: we do advocate having multiple APIs to your web application if necessary and, yes, this may
+lead to some redundancy in code.  However, there are distinct advantages to both sorts of API and, even more so,
+distinct requirements for both sorts of APIs.  By supporting both of these types of APIs separately you can get the
+strengths of both, while keeping their varying styles of code and infrastructure needs cleanly split out.
+
+Let's contrast the needs of JSON APIs with Hypermedia APIs:
+
+[cols="a,a"]
+|===
+|JSON API Needs |Hypermedia API
+
+|
+* It must remain stable over time: you cannot change the API willy nilly or you risk breaking clients that use the API
+and expect certain end points to behave in certain ways
+* It must be versioned: related to the first point, when you do make a major change, you need to version the API so
+that clients that are using the old API continues to work
+* It should be rate limited: since data APIs are often used by other clients, not just your own internal web application,
+requests should be rate limited, often by user, in order to avoid a single client overloading the system
+* It should be a general API: since the API is for _all_ clients, not just for your web application, you should avoid
+specialized end points that are driven by your own application needs.  Instead, the API should be general and expressive
+enough to satisfy as many potential client needs as possible.
+* Authentication for these sorts of API is typically token based, which we will discuss in more detail later
+|
+* There is no need to remain stable over time: all URLs are discovered via HTML responses, so you can be much more aggressive
+in changing the shape of a hypermedia API
+* This means that versioning is not an issue, another strength of the hypermedia approach
+* Rate limiting probably isn't as important beyond the prevention of Distributed Denial of Service (DDoS) attacks
+* The API can be _very specific_ to your application needs: since it is designed only for your particular web application,
+and since the API is discovered through hypermedia, you can add and remove highly tuned end points for specific
+features or optimization needs in your application
+* Authentication is typically managed through a session cookie established by a login page
+
+|===
+
+These two different types of APIs have different strengths and needs, so it makes sense to use both. The hypermedia
+approach can be used for your web application, allowing you to specialize the API for the "shape"
+of your application.  The Data API approach can be used for other, non-hypermedia clients like mobile, integration
+partners, etc.
+
+Note in particular that, by splitting these two APIs apart from one another, you reduce the pressure that running your web
+application through your general Data API produces to be constantly changing the API to address application needs.  Rather
+than being thrashed around with every feature change, your Data API can focus on remaining stable and reliable.
+
+This is the core strength splitting your Data API from your Hypermedia API, in our opinion.
+
+.JSON Data APIs vs JSON "REST" APIs
+****
+Unfortunately, today, for historical reasons, what we are calling JSON Data APIs are often referred to
+"REST APIs" in the industry.  This is ironic, because, by any reasonable reading of Roy Fielding's work defining what REST
+means, the vast majority of JSON APIs are _not_ REST-ful.  Not even close!
 
 [quote, Roy Fielding, https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven]
 ____
@@ -41,100 +159,15 @@ words, if the engine of application state (and hence the API) is not being drive
 and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
 ____
 
-The story of how REST came to mean "JSON APIs" in the industry is a long and sordid long one, and beyond the
+The story of how "REST API" came to mean "JSON APIs" in the industry is a long and sordid long one, and beyond the
 scope of this book.  However, if you are interested, you can refer to an essay entitled "How Did REST Come To Mean The Opposite of
-REST?" on the htmx website.
+REST?" on the htmx website:
 
-In this book we will use the term "Data API" to describe these JSON APIs, while acknowledging that the industry will
-likely continue to call them "REST APIs" for the foreseeable future.
+https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/
 
-Now, believe it or not, we _have_ been creating a RESTful API for our web application.  This may sound confusing to you.
-API?  We have just been creating a web application, with paths that return HTML.  How is that a RESTful API?
-
-It turns out that our web application is, indeed, providing an API.  It just happens to be an API that a _hypermedia client_, that is, a
-browser, understands.  We are building an API for the browser to interact with over HTTP, and, thanks in no small part to
-HTML, the hypermedia we are using, we are building a RESTful API.  Building web applications like this is so natural and
-simple that you might not think of it as an API at all, but I assure you, it is!
-
-== Hypermedia APIs & Data APIs
-
-So, we have a hypermedia API for Contact.app.  Should we include a Data API as well?
-
-Sure!  The existence of a hypermedia API _in no way means_ that you can't also have a Data API.  In fact, this is a
-common situation in traditional web applications: there is a "web app" that is entered through one URL, say
-`https://mywebapp.example.com/`, and then a separate JSON API that is accessible through another URL, say
-`https://api.mywebapp.example.com/v1`.
-
-This is a perfectly reasonable way to split up the hypermedia interface to your application and the Data API you provide
-to other, non-hypermedia clients.
-
-Now, why would you want to include a Data API along with a hypermedia API?  Well, because non-hypermedia clients want to
-interact with your application as well, of course!  For example, perhaps you have a mobile application that isn't built
-using HyperView (it's ok, we forgive you).  Or maybe you have automated script that needs to interact with the system on
-a regular basis.  Or perhaps there are 3rd party clients who wish to integrate with your system's data in some way.
-
-For all of these use cases, a JSON Data API makes sense: these are not hypermedia clients so presenting them with
-a hypermedia API like we have would be inefficient and complicated.  A simple JSON Data API fits the bill for what
-we want and, as always, we recommend using the right tool for the job.
-
-."You Want Me To Parse HTML!?!"
+In this book we will use the term "Data API" to describe these JSON APIs, while acknowledging that many people
+in the industry will continue to call them "REST APIs" for the foreseeable future.
 ****
-A confusion we often run into in online discussions is that, when we advocate a hypermedia approach to building web
-applications, people think we mean that they should parse the HTML responses from the server to dump the data into their
-SPA framework or mobile applications.
-
-This is, of course, silly.  What we mean, instead, is that you should consider using a hypermedia API _with a hypermedia
-client_, like the browser, interpreting the hypermedia response itself and presenting it to the user.  If you are writing
-code to tease apart hypermedia, you are probably doing it wrong.
-
-A lot of confusion around this comes, again, from not understanding that an HTML response from a server _is_ and API
-response, just a very different one than most people think of when writing software.
-****
-
-=== Differences Between Hypermedia APIs & Data APIs
-
-So, OK, we _are_ going to have a Data API for our application.  At this point, some developers may be wondering: why
- have both?  Why not have a single API, the JSON Data API, and have multiple clients use this one API to communicate
-with it?  Isn't it redundant to have both types of APIs for our application?
-
-It's a reasonable point: we do advocate having multiple APIs to your web application if necessary and, yes, this may
-lead to some redundancy in code.  However, there are distinct advantages to both sorts of API and, even more so,
-distinct requirements for both sorts of APIs.  By supporting both of these types of APIs separately you can get the
-strengths of both, while keeping their varying styles of code and infrastructure needs cleanly split out.
-
-Let's consider some of the needs of a JSON Data API:
-
-* It must remain stable over time: you cannot change the API willy nilly or you risk breaking clients that use the API
-  and expect certain end points to behave in certain ways
-* It must be versioned: related to the first point, when you do make a major change, you need to version the API so
-  that clients that are using the old API continues to work
-* It should be rate limited: since data APIs are often used by other clients, not just your own internal web application,
-  requests should be rate limited, often by user, in order to avoid a single client overloading the system
-* It should be a general API: since the API is for _all_ clients, not just for your web application, you should avoid
-  specialized end points that are driven by your own application needs.  Instead, the API should be general and expressive
-  enough to satisfy as many potential client needs as possible.
-* Authentication for these sorts of API is typically token based, which we will discuss in more detail later
-
-Contrast these needs with that of a hypermedia API:
-
-* There is no need to remain stable over time: all URLs are discovered via HTML responses, so you can be much more aggressive
-  in changing the shape of a hypermedia API
-* This means that versioning is not an issue, another strength of the hypermedia approach
-* Rate limiting probably isn't as important beyond the prevention of Distributed Denial of Service (DDoS) attacks
-* The API can be _very specific_ to your application needs: since it is designed only for your particular web application,
-  and since the API is discovered through hypermedia, you can add and remove highly tuned end points for specific
-  features or optimization needs in your application
-* Authentication is typically managed through a session cookie established by a login page
-
-These two different types of APIs have different strengths and needs, so it makes sense to use both. The hypermedia
-approach can be used for your web application, allowing you to specialize the API for the "shape"
-of your application.  The Data API approach can be used for other, non-hypermedia clients like mobile, integration
-partners, etc.
-
-Note in particular that, by splitting these two APIs apart from one another, you reduce the pressure that running your web
-application through your general Data API produces to be constantly changing the API to address application needs.  Rather
-than being thrashed around with every feature change, your Data API can focus on remaining stable and reliable.  This is
-the core strength of this split API approach, in our opinion.
 
 == Adding a JSON Data API To Contact.app
 
@@ -163,9 +196,9 @@ Unfortunately, our experience with this pattern has not been great, for reasons 
 differences we outlined between Data and hypermedia APIs: they have different needs and often take on very different
 "shapes", and trying to pound them into the same set of URLs ends up creating a lot of tension in the application code.
 
-So, here, we advocate for applying the Separation of Concerns software design principle and breaking the JSON Data API
-out to its own set of URLs.  This will allow us to evolve the two APIs separately from one another, and give us room
-to improve each independently in a manner consistent with their own individual strengths.
+Given the different needs of the two APIs and our experience managing multiple APIs like this, we think separating the two
+ from one another, and, therefore, breaking the JSON Data API out to its own set of URLs is the right choice.  This will allow us to evolve the two APIs separately from one another, and give us room
+to improve each independently, in a manner consistent with their own individual strengths.
 
 === Picking a Root URL For Our API
 
@@ -194,7 +227,7 @@ a JSON list of all contacts in the system.  In some ways it will look quite a bi
 hypermedia route `/contacts`: we will load all the contacts from the contacts database and then render some text
 as a response.
 
-We are going to take advantage of a nice feature of Flask: if you simply return an object from a handler, it will
+We are also going to take advantage of a nice feature of Flask: if you simply return an object from a handler, it will
 serialized (that is, convert) that object into a JSON response.  This makes it very easy to build simple JSON APIs
 in flask!
 
@@ -205,20 +238,17 @@ Here is our code:
 ----
 @app.route("/api/v1/contacts", methods=["GET"]) <1>
 def json_contacts():
-    contacts_set = Contact.all() <2>
-    contacts_dicts = [c.__dict__ for c in contacts_set] <3>
-    return {"contacts": contacts_dicts} <4>
+    contacts_set = Contact.all()
+    contacts_dicts = [c.__dict__ for c in contacts_set] <2>
+    return {"contacts": contacts_dicts} <3>
 ----
-<1> We put our JSON Data API in its own path
-<2> We aren't going to support paging or filtering, so we can just load all the contacts here
-<3> We convert the contacts array into an array of simple dictionary (map) objects, so they can be serialized to JSON easily
-<4> We return a simple dictionary that contains the `contacts` property, pointing to this new array.  Flask will automatically
-    serialize this dictionary to JSON for us
+<1> JSON API gets its own path, starting with `/api`
+<2> Convert the contacts array into an array of simple dictionary (map) objects
+<3> Return a dictionary that contains a `contacts` property of all the contacts
 
-The second to last line might look a little funky if you are not a python developer, it is called a "list comprehension",
-but it's just a way to convert or map a list of values, in this case contacts, to a list of dictionaries or maps.  Don't
-worry about the details, we just want you to understand the general idea: load up all the contacts, do some conversions
-to make them JSON serializeable, and then return that data structure.
+This Python code might look a little foreign to you if you are not a Python developer, but all we are doing is converting
+our contacts into an array of simple name/value pairs and returning that array in an enclosing object as the `contacts`
+property.  This object will be serialized into a JSON response automatically by Flask.
 
 With this in place, if we make an HTTP `GET` request to `/api/v1/contacts`, we will see a response that looks something
 like this:
@@ -247,9 +277,16 @@ like this:
     ...
 ----
 
-So, you can see, a relatively simple JSON representation of our contacts.  Not perfect, but good enough for the purposes
-of this book.  This is certainly good enough to, for example, write an automated script against, if, for example, you wanted
-to move your contacts to another system on a nightly basis.
+So, you can see, we now have a way to get a relatively simple JSON representation of our contacts via an HTTP request.
+Not perfect, but good enough for the purposes of this book!  It's certainly good enough to write some basic automated
+scripts against.  For example:
+
+* You could move your contacts to another system on a nightly basis
+* You could back your contacts up to a local file
+* You could automate an email blast to your contacts
+
+Having this small JSON Data API opens up a lot of automation possibilities that would be messier to achieve with our existing
+hypermedia API.
 
 === Adding Contacts
 
@@ -373,7 +410,7 @@ def json_contacts_delete(contact_id=0):
 And, with that, we have our simple little JSON Data API to live alongside our regular web application, nicely separated
 out from the main web application, so it can evolve separately as needed.
 
-=== Differences Between Our Hypermedia And JSON APIs
+=== Additional Data API Considerations
 
 Now, we obviously have a lot more to do if we want to make this a production ready JSON API:
 
@@ -385,8 +422,8 @@ Now, we obviously have a lot more to do if we want to make this a production rea
 
 A full discussion around all of these topics is beyond the scope of this book, but I'd like to focus in on one in
 particular, authentication, in order to show the difference between our hypermedia and JSON API.  In order to secure
-our application we need to add authentication, some mechanism for determining who a request is coming from, and
-also authorization, determining if they have the right to perform the request.
+our application we need to add _authentication_, some mechanism for determining who a request is coming from, and
+also _authorization_, determining if they have the right to perform the request.
 
 We will set authorization aside for now and consider only authentication.
 
@@ -422,7 +459,7 @@ and then then token is part of every request.  However, in practice, the mechani
 These differing mechanics for establishing authentication are yet another good reason for splitting our JSON and hypermedia
 APIs up.
 
-==== The "Shape" of Our Two APIs
+=== The "Shape" of Our Two APIs
 
 When we were building out our API, we noted that in many cases the JSON API didn't require as many end points as our
 hypermedia API did: we didn't need a `/contacts/new` handler, for example, to provide a hypermedia representation for

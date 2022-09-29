@@ -17,7 +17,7 @@ This chapter covers
 * How scripting can be effectively added to a Hypermedia Driven Application
 * Adding a three-dot menu in our contacts table
 // vanilla
-* Adding a javascript-based confirmation dialog for deleting contacts
+* Adding a toolbar for bulk actions that appears when selecting contacts
 // alpine
 * Adding a keyboard shortcut for focusing the search input
 // hyperscript
@@ -260,9 +260,6 @@ So, should we go back to the `onclick` attribute way of doing things? It certain
 
 JavaScript and Locality of Behavior don't seem to mesh as well as we want them to, but the situation is not hopeless. it's important to be aware that LoB does not require behavior to be _defined_ at the use site, but merely invoked there. Keeping this in mind, it's possible to improve LoB while writing JS in a separate file, provided we have a reasonable system for structuring our JavaScript.
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! EDIT STARTING HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 === RSJS
 
@@ -620,226 +617,89 @@ can access.  Alpine allows for much more elaborate data bindings as well, it is 
 scripting library.
 
 
-=== Alpine.js in action: A confirmation dialog
+=== Alpine.js in action: A bulk action toolbar
 
-Right now, clicking the `Delete` link uses `hx-confirm` to show a confirmation dialog. `hx-confirm` is a pretty rudimentary solution, relying on the browser built-in `confirm()` function. We're going to replace it with SweetAlert2 (https://sweetalert2.github.io), which we'll hook up to our button with Alpine.
+Right now, Contact.app has a "Delete Selected Contacts" button at the very bottom of the page.
+This button has a long name, is not easy to find and the UI pattern is not conducive to adding more bulk actions as they would clutter the page.
+In this section, we'll replace this with a toolbar that only appears when the user starts selecting contacts.
+It will show how many contacts are selected and let you select all contacts in one go.
 
-Here's the Delete button as we left it last time:
-
-[source,html]
-----
-<a href="#" hx-delete="/contacts/{{ contact.id }}"
-    hx-swap="outerHTML swap:1s"
-    hx-confirm="Are you sure you want to delete this contact?" <1>
-    hx-target="closest tr">Delete</a>
-----
-<1> This is what we will replace.
-
-We need to import the library into our page.
+Let's lay down some markup:
 
 [source,html]
 ----
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<template
+  x-data="{ selected: [] }" <1>
+  x-if="selected.length > 0"> <2>
+  <div class="box info tool-bar">
+    <slot x-text="selected.length"></slot>
+    contacts selected
+    
+    <button type="button" class="bad bg color border">Delete</button>
+    <hr aria-orientation="vertical">
+    <button type="button">Cancel</button>
+  </div>
+</template>
 ----
+<1> Our data: the set of selected contacts.
+<2> Only show toolbar if at least one item is selected.
+
+We needed to wrap our component in a `<template>` to use the `x-if` attribute.
+There is an alternative that doesn't require this (`x-show`) which hides an element through styling rather than removing it from the DOM.
+
+Right now, there are no observable changes to the page, because the `selected` set is always empty.
+Let's write the code that adds to it:
 
 [source,html]
 ----
-<a href="#" hx-delete="/contacts/{{ contact.id }}"
-    hx-swap="outerHTML swap:1s"
-    x-data="{ message: 'Are you sure you want to delete this contact?' }" <1>
-    @click="Swal.fire(message).then(result => { <2>
-      if (result.isConfirmed) { <3>
-        // ???
-      }
-    })"
-    hx-target="closest tr">Delete</a>
+<td><input type="checkbox" name="selected_contact_ids" value="{{ contact.id }}"
+      x-model="selected"></td>
 ----
-<1> Define our message
-<2> When clicked, call into SweetAlert2
-<3> Check the status
 
-We need to decide what event we need to listen to:
+We used the `x-model` attribute to create a two-way binding between the `selected` array and the checkboxes.
+When a checkbox is checked or unchecked, the array will be updated,
+and mutations we make to the array will similarly be reflected in the checkboxes' state.
 
-* Hardcode `"click"`. It's simple and it covers most cases. However, there's not a clear escape hatch if you need a different event.
-* Try to sniff what event you need to listen to based on the element. Complex and fragile (but I repeat myself).
-* Let the author specify in the attribute. This is what we'll do.
-
-[source,js]
-----
-  el.addEventListener(
-    el.dataset.confirm || "click", <1>
-    e => {
-      // ...
-    }
-  )
-----
-<1> Specify a default for convenience.
-
-In 9 lines of code, we have a generic confirmation library that we can use for any element as follows. It's definitely overengineered as a result of the forced decoupling, just like the counter earlier, but it works well and was reasonably fun to write.
+Unfortunately, it doesn't work, and we're getting errors about `selected` not being defined.
+This is because the element on which we defined our data (the `<template>`) is not an ancestor of this checkbox.
+We need to lift that state up to a common ancestor:
 
 [source,html]
 ----
-<button type="submit" data-confirm>Delete</button>
-<input type="radio" name="volume" value="100" data-confirm="input">
+<form x-data="{ selected: [] }"> <1>
+    <template ...
 ----
+<1> This is the form that was wrapped around the contacts table.
 
-.Async ruins everything
-****
-In the confirmation dialog code we wrote, we use `confirm()`, which is convenient, but displays a barebones dialog that cannot contain rich text. Can we write a similar script using a fancy alert dialog library, like SweetAlert2?
+Now, you should see the toolbar appearing when you select a contact --- great! Let's implement the buttons:
 
-[source,js,highlight=4..5]
-----
-document.querySelectorAll("[data-confirm]")
-  .forEach(el => {
-    el.addEventListener("click", e => {
-      const result = await Swal.fire("Are you sure?", "", "question")
-      const didConfirm = result.isConfirmed
-      if (!didConfirm) {
-        event.stopImmediatePropagation();
-        event.stopPropagation();
-      }
-    })
-  })
-----
-
-[samp]
-----
-Uncaught SyntaxError: await is only valid in async functions, async generators and modules
-----
-
-Right. Let's fix that...
-
-
-[source,js,highlight=3]
-----
-document.querySelectorAll("[data-confirm]")
-  .forEach(el => {
-    el.addEventListener("click", async e => {
-      const result = await Swal.fire("Are you sure?", "", "question")
-      const didConfirm = result.isConfirmed
-      if (!didConfirm) {
-        event.stopImmediatePropagation();
-        event.stopPropagation();
-      }
-    })
-  })
-----
-
-No more errors, but this code no longer works. This is because by the time we call `stopPropagation` and `stopImmediatePropagation`, the event has already propagated. We can avoid this when using the built-in `confirm` function because it has the privilege of blocking the main thread.
-
-There is no general solution to this problem.
-****
-
-=== Reusable behavior in Alpine
-
-Our menu component has a lot of attributes that will currently be repeated in every item of the table. This is hard to maintain when manually writing HTML and increases payload sizes when generating it via a template. We can rectify this using an nifty feature of the `x-bind` attribute:
-
-[quote,"https://alpinejs.dev/directives/bind#bind-directives"]
-____
-x-bind allows you to bind an object of different directives and attributes to an element.
-
-The object keys can be anything you would normally write as an attribute name in Alpine. This includes Alpine directives and modifiers, but also plain HTML attributes. The object values are either plain strings, or in the case of dynamic Alpine directives, callbacks to be evaluated by Alpine.
-____
-
-It's far easier to understand what this means after seeing the attribute in use. To begin, we create a JavaScript function which will encapsulate all of our menu's behavior:
-
-[source,js]
-----
-function menu() {
-  return {
-    role: "menu",
-    "x-show"() { <1>
-      return this.open; <2>
-    },
-    "x-on:click.outside"() { this.open = false },
-    "x-on:keydown.up"() { document.activeElement.previousElementSibling?.focus() },
-    "x-on:keydown.down"() { document.activeElement.nextElementSibling?.focus() },
-    "x-on:keydown.space"() { document.activeElement.click() },
-    "x-effect"() { if (this.open) this.$el.firstElementChild.focus() },
-    "x-on:keydown"(event) { <3>
-      if (event.key === 'Home') $el.firstChild.focus()
-      else if (event.key === 'End') $el.lastChild.focus()
-    },
-  }
-}
-----
-<1> JavaScript allows any string literal to be the name of an object member. This even works with classes!
-<2> Values that would be globally accessible in an attribute are accessed through `this` in a function.
-<3> We can clean up longer functions.
-
-The return value is a map of attribute names to values, with Alpine attributes having functions as values instead of strings of code. We can then reference this function in HTML as follows:
+The delete button needs to interact with htmx to work:
 
 [source,html]
 ----
-<div id="contents" x-bind="menu()">
-  <a role="menuitem" tabindex="-1" href="/contacts/{{ contact.id }}/edit">Edit</a>
-  <a role="menuitem" tabindex="-1" href="/contacts/{{ contact.id }}">View</a>
-</div>
+<button type="button" class="bad bg color border"
+  @click="confirm(`Delete ${selected.length} contacts?`) && <1>
+    htmx.ajax('DELETE', '/contacts', { source: $root, target: document.body })" <2>
+>Delete</button>
 ----
+<1> We can use a dynamic confirmation message.
+<2> Use the htmx JS API to send a request and swap it into the body from Alpine.
 
-This requires the function `menu` to be global. We can avoid that with `Alpine.data`, which is a function to make any data accessible to Alpine expressions:
+Let's look closer at the call to `htmx.ajax`.
+`source` is the element from which htmx will collect data to include in the request. 
+We set this to $root, the element which has the x-data attribute --- the form containing all of our contacts.
+As the `DELETE /contacts` endpoint returns the contents of whole body, we tell htmx to swap it as such.
 
-[source,js]
-----
-Alpine.data("menu", () => {
-  return {
-    role: "menu",
-    "x-show"() { return this.open; },
-    // ...
-  }
-})
-----
-
-Another useful tool in factoring Alpine code is calling functions in `x-data` as follows:
-
-[source,js]
-----
-Alpine.data("toggleableMenu", () => ({ open: false }))
-----
+For the _Cancel_ button, our job is quite simple:
 
 [source,html]
 ----
-<div x-data="toggleableMenu()">
-  <button
-    aria-haspopup="menu"
-    ...>
+<button type="button" @click="selected = []">Cancel</button>
 ----
 
-You can combine the two techniques:
+We set `selected` to an empty array. Our use of x-model means this will be reflected in the actual checkboxes.
 
-[source,js]
-----
-Alpine.data("toggleableMenu", () => ({
-  open: false,
-  menuBehavior: { <1>
-    role: "menu",
-    "x-show"() { return this.open; },
-    // ...
-  },
-  buttonBehavior: { <2>
-    "aria-haspopup": "menu",
-    "aria-controls": "contents",
-    "x-bind:aria-expanded"() { return this.open },
-    "x-on:click"() { this.open = !this.open },
-  }
-}))
-----
-<1> The object that we bind to the menu has been moved into the data.
-<2> We can encapsulate the button's behavior in the same way.
-
-[source,html]
-----
-<div x-data="toggleableMenu()">
-  <button x-bind="buttonBehavior">Options</button> <1>
-  <div id="contents" x-bind="menuBehavior"> <2>
-    <!-- ... -->
-----
-<1> Access the button behavior object from the data.
-<2> Same for the menu... hey, does this look familiar?
-
-You may notice that the markup for the `x-bind` style quite resembles RSJS. Combined with Alpine's reactivity and concise syntax, it's quite a powerful style for writing localized as well as decoupled code.
-
-Factoring our behavior in this way reduces the locality in our code, as it requires us to locate the `menu` and `toggleableMenu` functions to understand what our code does. You can use named files similarly to RSJS to somewhat alleviate this issue, but it's a tradeoff that needs to be considered.
+With all of this in place, we have a much improved experience for performing bulk actions on contacts that can be extended with more options without creating bloat in the main interface of our app.
 
 
 == _hyperscript
@@ -1082,7 +942,7 @@ Another thing you might notice about the scripting examples is that they all mut
 or hiding elements, changing the text content of an element, or moving focus. In many cases this change in state isn't
 synchronized with the server, which may, at first, seem to discredit our aim of using hypermedia is the engine of application state.
 
-Both the use of events and the prevalence of DOM mutations point to the fact that the purpose of scripting in a HDA is to enhance UI interaction. Use of events reflects that we are mainly concerned with responding to the user's actions. DOM mutations make up a large portion of our code because we are concerned with UI as opposed to business logic when we write scripts. The state retained by client-side scripts should be an extension of state retained by the browser (e.g.: the value of an input element before it is submitted), ephemeral, not closely tied to the application domain, and _ephemeral_. Scripts may use tools like localStorage to keep some user-specific data, what they should not do is alter a canonical data store without going through a hypermedia channel. (As a *very rough* rule of thumb, this means that scripts should avoid making non-GET requests to your server).
+Both the use of events and the prevalence of DOM mutations point to the fact that the purpose of scripting in a HDA is to enhance UI interaction. Use of events reflects that we are mainly concerned with responding to the user's actions. DOM mutations make up a large portion of our code because we are concerned with UI as opposed to business logic when we write scripts. The state retained by client-side scripts should be an extension of state retained by the browser (e.g.: the value of an input element before it is submitted), not closely tied to the application domain, and _ephemeral_. Scripts may use tools like localStorage to keep some user-specific data; what they should not do is alter a canonical data store without going through a hypermedia channel. (As a *very rough* rule of thumb, this means that scripts should avoid making non-GET requests to your server).
 
 
 == Being pragmatic
@@ -1105,20 +965,17 @@ Acceptance:: Implement the feature the way you always knew it should be. Leave a
 
 == Summary
 
-Use progressive enhancement.
-
 Maximize locality of behavior, sometimes at the expense of separation of concerns. Remember that "concerns" are not the same thing as filetypes.
 
-If you're mostly going to write reusable, generalized components: use vanilla JavaScript with Alpine.js.
+Avoid using scripts to directly modify system state. Reserve it for UI state.
 
-If you're mostly going to write one-off, specialized components: use Alpine.js or _hyperscript.
+Use progressive enhancement.
+
+If you're mostly going to write reusable, generalized components: use vanilla JavaScript with RSJS.
+
+If you're mostly going to write one-off, specialized components: use Alpine.js or \_hyperscript. Alpine supports one- or two-way data binding and lets you use the programming language known by the highest number of people (though with some extensions). \_hyperscript offers a concise, readable syntax, especially for DOM operations, and makes async operations easy.
 
 If you need a common UI pattern that isn't built into HTML: use a library. If you're going to write such a library yourself, use vanilla JS with RSJS.
 
-Alpine lets things auto-update based on changes to state and lets you use the programming language known by the most people.
+Don't worry much about theoretical purity.
 
-_hyperscript offers a concise, readable syntax, especially for DOM operations, and makes async operations easy.
-
-Events are cool.
-
-Do not use scripts to directly modify system state. Reserve it for UI state.

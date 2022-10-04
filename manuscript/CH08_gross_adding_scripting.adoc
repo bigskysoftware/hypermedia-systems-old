@@ -389,7 +389,7 @@ Let's sketch the markup we want for our overflow menu:
 [source,html]
 ----
 <div data-menu="closed"> <1>
-  <button data-menu-button>Options</button> <2>
+  <button type="button" data-menu-button>Options</button> <2>
   <div data-menu-items hidden> <3>
     <a data-menu-item href="/contacts/{{ contact.id }}/edit">Edit</a> <4>
     <a data-menu-item href="/contacts/{{ contact.id }}">View</a>
@@ -413,9 +413,9 @@ document.querySelectorAll("[data-menu]").forEach(menu => { <1>
   const <2>
   button = menu.querySelector("[data-menu-button]"),
   body = menu.querySelector("[data-menu-items]"),
-  items = body.querySelectorAll("[data-menu-item]");
+  items = Array.from(body.querySelectorAll("[data-menu-item]"));
 
-  const isOpen = () => return menu.dataset.menu === "open";
+  const isOpen = () => menu.dataset.menu === "open";
 
   const bodyId = body.id ?? (body.id = nanoid()); <3>
 
@@ -449,7 +449,7 @@ Let's implement toggling the menu:
 [source,js]
 ----
 // ...
-  items.forEach(item => item.setAttribute("role", "menuitem"));
+  });
 
   function toggleMenu(open = !isOpen()) { <1>
     if (open) {
@@ -480,7 +480,7 @@ Let's also make the menu close when we click outside it:
 // ...
   button.addEventListener("click", () => toggleMenu())
 
-  window.addEventListener("click", function clickAway() {
+  window.addEventListener("click", function clickAway(event) {
     if (!menu.isConnected) window.removeEventListener("click", clickAway); <1>
     if (menu.contains(event.target)) return; <2>
     toggleMenu(false); <3>

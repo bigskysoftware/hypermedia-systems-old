@@ -667,7 +667,7 @@ We need to lift that state up to a common ancestor:
 [source,html]
 ----
 <form x-data="{ selected: [] }"> <1>
-    <template ...
+    <template ...>
 ----
 <1> This is the form that was wrapped around the contacts table.
 
@@ -930,6 +930,46 @@ ____
 
 == Using off-the-shelf components
 
+The use of libraries in client-side web programming poses unique constraints, as code is downloaded every time the application is loaded (with caching).
+
+Many JS frameworks have an entourage of wrappers for common libraries.
+These "react-foo-bar" libraries serve as adapters that resolve the mismatch between the framework's view of the DOM and that of the foo-bar library.
+The mismatch, in turn, occurs because modern frameworks rely on the assumption that they control the DOM, or at least a subtree of it.
+
+In a HDA, it is a lot easier for libraries to perform their DOM manipulations freely.
+However, the following invariants need to be maintained for best results:
+
+[.text-center]
+The app can be restored fully from an HTML snapshot of the DOM (i.e. it should be possible to set `document.body.innerHTML = document.body.innerHTML` and restore the app to a working state from there).
+
+
+=== Integration through custom events
+
+Libraries which use custom events over methods and callbacks are easier to integrate with HDA technologies, as these events can be dispatched or listened to without glue code.
+Compare the following two examples (using Alpine):
+
+[source,html]
+----
+<button @click="
+  FooDialog.confirm({
+    title: 'Delete this contact?',
+    onClose: (event) => {
+      if (event.yes) {
+        htmx.ajax('DELETE', '/contacts/34', '#delete-button')
+      }
+    }
+  })
+">
+----
+
+[source,html]
+----
+<button id="delete-button" hx-delete="/contacts/34" hx-trigger="foodialog:close[yes]"
+  @click="FooDialog.confirm($el, { title: 'Delete this contact?' })">
+----
+
+Unfortunately, many libraries expect you to pass a callback in the first style.
+In these cases, it can be useful to add a simple callback that just dispatches a custom event and move logic to the event listener.
 
 
 == Events and the DOM

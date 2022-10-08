@@ -1000,11 +1000,12 @@ with the server.  As the web was designed!
 
 == Summary
 
-* Hypermedia-Driven Applications (HDA) can be made more interactive by using the htmx library
-* A simple and quick way to improve the application was to use the `hx-boost` attribute, which "boosts"
-  all links and forms to use AJAX interactions
-* Deleting a contact could be updated to use the proper `DELETE` HTTP request, using the `hx-delete` attribute
-* Validating the email of a contact as the user entered it was achieved using a combination of `hx-get` and `hx-target`
+* Hypermedia-Driven Applications (HDA) can be made more interactive by using the htmx library.
+* A simple and quick way to improve the application is to use the `hx-boost` attribute, which "boosts"
+  all links and forms to use AJAX interactions.
+* Deleting a contact can be updated to use the proper `DELETE` HTTP request, using the `hx-delete` attribute.
+* Validating the email of a contact as the user entered it can be achieved using a combination of `hx-get` and `hx-target`
+  attributes.
 * AJAX-based paging, in addition to the "Click To Load" and "Infinite Scroll" patterns, can be implemented simply and cleanly
   using htmx.
 

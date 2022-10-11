@@ -80,7 +80,7 @@ To fix this, we can make a simple configuration change in the `demo/src/constant
 [source,js]
 ----
 //export const ENTRY_POINT_URL = 'http://0.0.0.0:8085/index.xml'; <1>
-export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/contacts'; <2>
+export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/'; <2>
 ----
 <1> The default entrypoint URL in the demo app
 <2> Setting the URL to point to our contacts app
@@ -1171,7 +1171,6 @@ In the REST architecture, the Google homepage is considered to be a single "reso
 However, that single resource can have multiple "representations".
 Representations are variations on how the content of the resource is presented to the client.
 The German and Japanese versions of the Google homepage are two representations of the same resource..
-
 To determine the best representation of a resource to return, HTTP clients and servers engage in a process called "content negotiation".
 It works like this:
 
@@ -1188,10 +1187,10 @@ More importantly for us, resources can be represented using different content ty
 Content negotiation over content type is done using the `Accept` request header and `Content-Type` response header.
 Web browsers set `text/html` as the preferred content type in the `Accept` header.
 The Hyperview client sets `application/vnd.hyperview+xml` as the preferred content type.
-This gives us our backend server a way to distinguish requests coming from a web browser or Hyperview client, and serve the appropriate content to each client.
-There are two 
+This gives us our backend a way to distinguish requests coming from a web browser or Hyperview client, and serve the appropriate content to each.
+There are two main approaches: fine-grained and global.
 
-=== Approach 1: Reusing views
+=== Approach 1: Template Switching
 When we ported the Contacts app from the web to mobile, we kept all of the Flask views but made some minor changes.
 Specifically, we introduced a new function `render_to_response()` and called it in the return statement of each view.
 Here's the function again to refresh your memory:
@@ -1208,7 +1207,7 @@ def render_to_response(template_name, *args, **kwargs):
 
 `render_to_response()` renders a template with the given context, and turns it into an Flask response object with the appropriate Hyperview `Content-Type` header.
 Obviously, the implementation is highly-specific to serving our Hyperview mobile app.
-But we can modify the function to do content-negotiation based on the requests's `Accept` header:
+But we can modify the function to do content negotiation based on the requests's `Accept` header:
 
 .`app.py`
 [source,py]
@@ -1217,7 +1216,7 @@ HTML_MIME = 'text/html'
 HXML_MIME = 'application/vnd.hyperview+xml'
 
 def render_to_response(html_template_name, hxml_template_name, *args, **kwargs): <1>
-    response_type = request.accept_mimetypes.best_match(HTML_MIME, HXML_MIME, default=HTML_MIME) <2>
+    response_type = request.accept_mimetypes.best_match([HTML_MIME, HXML_MIME], default=HTML_MIME) <2>
     template_name = hxml_template_name if response_type == HXML_MIME else html_template_name <3>
     content = render_template(template_name, *args, **kwargs)
     response = make_response(content)
@@ -1243,21 +1242,93 @@ def contacts_view(contact_id=0):
     contact = Contact.find(contact_id)
     return render_to_response("show.html", "hv/show.xml", contact=contact) <1>
 ----
-<1> Render either an HTML or HXML template, based on the client.
+<1> Template switching between an HTML and HXML template, based on the client.
 
 After updating all of the Flask views to support both templates, our backend will support both web browsers and our mobile app!
-This technique works well for our Contacts app because the screens in the mobile app map directly to pages of the web application.
-The Flask views could be as-is without major changes.
+This technique works well for the Contacts app because the screens in the mobile app map directly to pages of the web application.
+Each app has a dedicated page (or screen) for listing contacts, showing and editing details, and creating a new contact.
+This meant the Flask views could be as-is without major changes.
 But what if we wanted to re-imagine the Contacts app UI for our mobile app?
-Perhaps we wanted the app to use a single screen, with rows that expanded in-line to support viewing and editing the information?
-In situations where the UI diverges, we can use a different approach for sharing a backend between multiple platforms: redirection.
+Perhaps we want the mobile app to use a single screen, with rows that expanded in-line to support viewing and editing the information?
+In situations where the UI diverges between platforms, Template Switching becomes cumbersome or impossible.
+We need a different approach to have one backend serve both hypermedia formats.
 
-=== TODO: Approach 2: Redirection
-In Approach 1, every view does
+=== Approach 2: The Redirect Fork
+If you recall, the Contacts web app has an `index` view, routed from the root path `/`:
+
+.`app.py`
+[source,py]
+----
+@app.route("/")
+def index():
+    return redirect("/contacts") <1>
+----
+<1> Redirect requests from "/" to "/contacts"
+
+When someone requests to the root path of the web application, Flask redirects them to the `/contacts` path.
+This redirect also works in our Hyperview mobile app.
+The Hyperview client's `ENTRY_POINT_URL` points to `http://0.0.0.0:5000/`, and the server redirects it to `http://0.0.0.0:5000/contacts`.
+But there's no law that says we need to redirect to the same path in our web application and mobile app.
+What if we used the `Accept` header to redirect to decide on the redirect path?
+
+.`app.py`
+[source,py]
+----
+HTML_MIME = 'text/html'
+HXML_MIME = 'application/vnd.hyperview+xml'
+
+@app.route("/")
+def index():
+    response_type = request.accept_mimetypes.best_match([HTML_MIME, HXML_MIME], default=HTML_MIME) <1>
+    if response_type == HXML_MIME:
+      return redirect("/mobile/contacts") <2>
+    else:
+      return redirect("/web/contacts") <3>
+----
+<1> Determine whether the client wants HTML or HXML
+<2> If the client wants HXML, redirect them to `/mobile/contacts`
+<3> If the client wants HTML, redirect them to `/web/contacts`
+
+The entrypoint is a fork in the road: if the client wants HTML, we redirect them to one path.
+If the client wants HXML, we redirect them to a different path.
+These redirects would be handled by different Flask views:
+
+.`app.py`
+[source,py]
+----
+@app.route("/mobile/contacts")
+def mobile_contacts():
+  # Render an HXML response
+
+@app.route("/web/contacts")
+def web_contacts():
+  # Render an HTML response
+----
+
+The `mobile_contacts()` view would render an HXML template with a list of contacts.
+Tapping a contact item would open a screen requested from `/mobile/contacts/1`, handled by a view `mobile_contacts_view`.
+After the initial fork, all subsequent requests from our mobile app go to paths prefixed with `/mobile/`, and get handled by mobile-specific Flask views.
+Likewise, all subsequent requests from the web app go to paths prefixed with `/web/`, and get handled by web-specific Flask views.
+(Note that in practice, we would want to separate the web and mobile views into separate parts of our codebase: `web_app.py` and `mobile_app.py`. We may also choose not to prefix the web paths with `/web/`, if we want more elegant URLs displayed in the browser's address bar.)
+
+You may be thinking that the Redirect Fork leads to a lot of code duplication.
+After all, we need to write double the number of views: one set for the web application, and one set for the mobile app.
+That is true, which is why the Redirect Fork is only preferred if the two platforms require a disjoint set of view logic.
+If the apps are similar on both platforms, Template Switching will save a lot of time and keep the apps consistent.
+Even if we need to use the Redirect Fork, the bulk of the logic in our models can be shared by both sets of views.
+In practice, you may start out using Template Switching, but then realize you need to implement a fork for platform-specific features.
+In fact, we're already doing that in the Contacts app.
+When porting the app from web to mobile, we didn't bring over certain features like archiving functionality.
+The dynamic archive UI might is a power feature that wouldn't make sense on a mobile device.
+Since our HXML templates don't expose any entrypoints to the Archive functionality, we can treat it as "web-only" and not worry about supporting it in Hyperview.
 
 
-== TODO: Conclusion
-- With custom components and behaviors, we can do almost anything a native app can do.
-- Note how we cleanly extend the client:
-  - HXML remains pure XML, no scripts
-  - We've essentially added features to the Hyperview "browser" that we need
+== Summary
+
+- Creating a Hyperview-powered mobile app is as simple as cloning a Git repo and configuring a single entrypoint URL.
+- Flask is perfectly suited for serving a Hyperview mobile app. The Jinja templating system can generate dynamic HXML based on the context from a view.
+- Using elements like `<view>`, `<text>`, `<list>`, and `<item>`, we can create native-feeling screens in HXML.
+- Using behaviors, we can implement interactions on the contacts list such as infinite scroll, search-as-you-type, and pull-to-refresh.
+- Events are a client-side feature of Hyperview that allows triggering behaviors across screens. They are useful to keep state in sync throughout the app, such as after editing or deleting a contact.
+- A Hyperview-powered mobile app can be bundled and released through the iOS and Android app stores. New screens and features can be added to the app just by updating the backend!
+- The same Flask backend can support both web and mobile apps. Using HTTP content negotiation, a server can render either HTML or HXML responses from the same view. More complex apps may require the use of redirects and platform-specific views.

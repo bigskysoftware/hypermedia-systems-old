@@ -1179,7 +1179,7 @@ we would focus with these more general concerns:
 * Favoring using events, rather than hard-coded callbacks or method calls
 
 But even on these topics, sometimes a web developer has to do what a web developer has to do.  If the perfect widget
-for your applcation exists but, darn it, it uses a JSON data API, that's OK.  Just don't make it a habit!
+for your application exists but, darn it, it uses a JSON data API, that's OK.  Just don't make it a habit!
 
 == Summary
 

@@ -1,0 +1,103 @@
+== Outline
+
+
+. Section 1: A Reintroduction To Hypermedia
+[arabic]
+.. What Is Hypermedia
+... So, What Is Hypermedia?
+... Why Use Hypermedia?
+... REST
+... When Should You Use Hypermedia?
+... When Shouldn't You Use Hypermedia?
+... Summary
+.. A Review of Chapter of Roy Fielding's Dissertation On The Web
+.. A Brief, Mostly Wrong History Of The Web
+.. A Simple Web 1.0-style Application
+... A Simple Contact Management Web Application
+... A Brief Introduction to Flask & Our First Route
+... Contact.App Functionality
+... Summary
+. Section 2: Building A Hypermedia-Driven Application With htmx
+[arabic,start=5]
+.. Extending HTML As Hypermedia
+... The Shortcomings of "Plain" HTML
+... Extending HTML as a Hypermedia with htmx
+... Triggering HTTP Requests
+... Targeting Other Elements
+... Swap Styles
+... Using Other Events
+... Passing Request Parameters
+... History Support
+... Summary
+.. Putting htmx Into Action
+... Installing htmx
+... Adding AJAX Navigation
+... Deleting Contacts
+... Next Steps: Validating Emails
+... Another Improvement: Paging
+... Summary
+.. Advanced htmx Patterns
+... Active Search
+... Lazy Loading
+... Inline Delete
+... Bulk Delete
+... Summary
+.. Creating A Dynamic Download UI
+... A Dynamic Archive UI
+... Polling
+... Smoothing Things Out: More On The htmx Swap Model
+... Dismissing The Download UI
+... Auto-Download
+... Summary
+.. Developing With htmx
+... Getting Deeper Into htmx
+... htmx Attributes
+... Events
+... HTTP Requests & Responses
+... Updating Other Content
+... Debugging
+... Security Considerations
+... Configuring
+... Summary
+.. Client Side Scripting
+... Scripting in Hypermedia-Driven Applications
+... Scripting languages for the Web
+... Using off-the-shelf components
+... Events and the DOM
+... Adding a Keyboard Shortcut for Focusing the Search Input With VanillaJS
+... Adding Support for Re-Ordering Contacts (No Scripting Needed!)
+... Adding Support for a Drop-Down with AlpineJS
+... Adding a Nicer Confirmation for Deleting Contacts With _hyperscript
+... Being Pragmatic
+... Summary
+.. Data APIs & Hypermedia Driven Applications
+... Data APIs
+... Hypermedia APIs & Data APIs
+... Adding a JSON Data API To Contact.app
+... Summary
+. Section 3: Building A Mobile Hypermedia-Driven Application With HyperView
+[arabic,start=12]
+.. Hyperview: A Mobile Hypermedia
+... State of Mobile App Development
+... Hypermedia for Mobile Apps
+... Introduction to HXML
+... Summary
+.. Building a Contacts App with Hyperview
+... Creating a mobile app
+... A Searchable List of Contacts
+... Editing a Contact
+... Deleting a Contact
+... Adding a New Contact
+... One Backend, Multiple Hypermedia formats
+... Summary
+.. Extending The Hyperview Client
+... Adding Phone Calls and Email
+... Adding Toast Messages
+... Swipe gesture on Contacts
+... Conclusion
+. Section 4: Conclusion
+[arabic, start=15]
+.. Hypermedia: The New/Old Way
+... Hypermedia Reconsidered
+... Pausing, And Reflecting
+

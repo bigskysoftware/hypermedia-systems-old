@@ -415,141 +415,200 @@ Let's take a look at implementing a feature in Contact.App using the RSJS/vanill
 
 === Vanilla JS in action: an overflow menu
 
-// ---------------------- TODO ----------------------
-// Need a whole section on ARIA
-// Should put the aria attributes on the elements directly in the HTML, rather than adding directly
-// Should mention (or show) id on the body tag, but not do it dynamically, eliminate stuff on IDs
-// --------------------------------------------------
-
 Our homepage has "Edit", "View" and "Delete" links for every contact in our table.
 This uses a lot of space and creates visual clutter.
 We're going to place these actions inside a menu with a button to open it.
 
-Let's sketch the markup we want for our overflow menu.  First, we need an element, we'll use a `div`, to enclose the
-entire widget and mark it as a menu component.  Within this div, we will have a standard `button` that will function
-as the mechanism that shows and hides our menu items.  Finally, we'll have another `div` that holds the menu items
+Let's sketch the markup we want for our overflow menu.  First, we need an element, we'll use a `<div>`, to enclose the
+entire widget and mark it as a menu component.  Within this div, we will have a standard `<button>` that will function
+as the mechanism that shows and hides our menu items.  Finally, we'll have another `<div>` that holds the menu items
 that we are going to show.  These menu items will be simple anchor tags, as they are in the current contacts table.
 
 Here is what our updated, RSJS-structured HTML looks like:
 
 [source,html]
 ----
-<div data-menu="closed"> <1>
-  <button type="button" data-menu-button>Options</button> <2>
-  <div data-menu-items hidden> <3>
-    <a data-menu-item href="/contacts/{{ contact.id }}/edit">Edit</a> <4>
-    <a data-menu-item href="/contacts/{{ contact.id }}">View</a>
-    <!-- ... -->
-  </div>
+<div data-overflow-menu> <1>
+    <button type="button" aria-haspopup="menu"
+        aria-controls="contact-menu-{{ contact.id }}"
+        >Options</button> <2>
+    <div role="menu" hidden id="contact-menu-{{ contact.id }}"> <3>
+        <a role="menuitem" href="/contacts/{{ contact.id }}/edit">Edit</a> <4>
+        <a role="menuitem" href="/contacts/{{ contact.id }}">View</a>
+        <!-- ... -->
+    </div>
 </div>
 ----
 <1> Mark the root element of the menu component
 <2> This button will open and close our menu
 <3> A container for our menu items
-<4> Mark menu items so we can implement moving between them with arrow keys
+<4> Menu items
 
-With this HTML written, we can move on to creating
+The roles and ARIA attributes are based on the Menu and Menu Button patterns from the ARIA Authoring Practices Guide. 
+They're currently wrong.
+We'll fix that with JavaScript and RSJS.
 
-We start by adding ARIA attributes:
+.Intermission: WAI-ARIA
+****
+As we web developers create more interactive, app-like websites,
+HTML's repertoire of elements won't have all we need.
+Using CSS and JS, we can endow existing elements with the behavior and appearance of native controls.
+
+However, there is one thing web apps used to be unable to replicate.
+While these widgets were similar enough in appearance for abled users to operate,
+assistive technology (e.g. screen readers) could only report the underlying HTML elements.
+Even if you got all the keyboard interactions right, disabled users often only got mystery meat.
+
+ARIA was created by W3C's Web Accessibility Initiative (WAI) in 2008 to address this.
+At a surface level, it's a set of attributes you can add to HTML to make it meaningful to assistive software.
+It has two main parts that interact.
+
+The first is `role`. This attribute has a predefined set of values:
+`menu`, `dialog`, `radiogroup`...
+These attributes **do not add any behavior**.
+Rather, they are a promise you make to the user:
+_I will make this element work like a menu._
+If you add the role but don't uphold this promise, the experience will be worse than before.
+Hence the mantra:
+
+"No ARIA is better than Bad ARIA."
+-- WAI, "Read Me First | APG", https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/
+
+The second is a whole range of attributes all sharing a prefix:
+`aria-expanded`, `aria-controls`, `aria-label`...
+These attributes can specify the state of a widget, the relationships between components, or additional semantics.
+Once again, these are promises, not demands.
+
+Rather than learn all the roles and attributes and try to combine them into a usable widget,
+the best course of action for most developers is to rely on the ARIA Authoring Practices Guide (APG),
+a web resource with practical information aimed directly at web developers.
+
+If you're new to ARIA, check out the following links:
+
+ - Read this first: https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/
+ - UI patterns: https://www.w3.org/WAI/ARIA/apg/patterns/
+ - Good practices: https://www.w3.org/WAI/ARIA/apg/practices/
+
+And remember: *run accessibility tests*. You wouldn't ship a website you'd never looked at.
+****
+
+Let's begin with the RSJS boilerplate:
+query for all elements with some data attribute,
+iterate over them,
+get any relevant descendants.
+We've modified the RSJS boilerplate a bit to integrate with htmx.
 
 [source,js]
 ----
-import nanoid from "https://unpkg.com/nanoid@4.0.0/non-secure/index.js";
 
-document.querySelectorAll("[data-menu]").forEach(menu => { <1>
-  const button = menu.querySelector("[data-menu-button]"), <2>
-  body = menu.querySelector("[data-menu-items]"),
-  items = Array.from(body.querySelectorAll("[data-menu-item]"));
-
-  const isOpen = () => menu.dataset.menu === "open";
-
-  const bodyId = body.id ?? (body.id = nanoid()); <3>
-
-  button.setAttribute("aria-haspopup", "menu");
-  button.setAttribute("aria-controls", bodyId);
-
-  body.setAttribute("role", "menu");
-
-  items.forEach(item => {
-    item.setAttribute("role", "menuitem");
-    item.setAttribute("tabindex", "-1"); <4>
+function overflowMenu(subtree = document) {
+  document.querySelectorAll("[data-overflow-menu]").forEach(menuRoot => { <1>
+    const
+    button = menuRoot.querySelector("[aria-haspopup]"), <2>
+    menu = menuRoot.querySelector("[role=menu]"), <2>
+    items = [...menu.querySelectorAll("[role=menuitem]")]; <3>
   });
+}
 
-
-  // more code below...
-
-})
+addEventListener("htmx:load", e => overflowMenu(e.target)); <4>
 ----
-<1> With RSJS, you'll write `querySelectorAll(...).forEach` quite a lot.
-<2> Get the descendants.
-<3> In order to use `aria-controls`, we need the menu body to have an ID.
-If it doesn't, we generate one randomly.
-<4> Make menu items non-tabbable, so we can manage their focus ourselves.
+<1> With RSJS, you'll be writing `document.querySelectorAll(...).forEach` a lot.
+<2> To keep the HTML clean, we use ARIA attributes rather than custom data attributes here.
+Our outer container still has a data attribute, so this shouldn't be much of an issue.
+<3> We use the spread operator to convert the inconvenient `NodeList` returned by `querySelectorAll` into a normal `Array`.
+<4> Initialize all overflow menus when the page is loaded or content is inserted by htmx.
 
-This is based on the Menu Button example footnote:[https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/] from the cite:[ARIA Authoring Practices Guide].
-We haven't made the menu work yet, so these attributes are wrong for now.
+Conventionally, we'd keep track of whether the menu is open with a variable or a property in a state object.
+This approach is almost always the right thing in large, client-heavy apps.
+However, it has some drawbacks.
+We'll need to keep the DOM in sync with the state (harder without a framework),
+and lose the ability to serialize the HTML (as the open state won't be stored there).
 
-.HTML ID Soup
-****
-Some features of HTML such as ARIA require you to assign unique IDs to elements.
-When pages are generated from templates dynamically, avoiding name conflicts in large apps can be difficult, as HTML IDs are not scoped the way identifiers in programming languages are.
+Instead, we'll lean on the `hidden` attribute on the menu to tell us it's closed.
+If the HTML of the page is snapshotted and restored, the menu can be restored as well by re-running the JS.
 
-Randomized IDs with a tool like https://npmjs.com/nanoid[] can let you avoid the issue, but they also make templates more complex and resulting markup less readable.
-****
+[source,js,highlight=2]
+----
+  items = [...menu.querySelectorAll("[role=menuitem]")];
+
+  const isOpen = () => !menu.hidden; <1>
+
+});
+----
+<1> The `hidden` attribute is helpfully reflected as a `hidden` _property_, so we don't need to use `getAttribute`.
+
+We'll make the menu items non-tabbable. to manage their focus ourselves.
+
+[source,js,highlight=2]
+----
+  const isOpen = () => !menu.hidden; <1>
+
+  items.forEach(item => item.setAttribute("tabindex", "-1"));
+
+});
+----
 
 Let's implement toggling the menu:
 
-[source,js]
+[source,js,highlight=2..15]
 ----
+  items.forEach(item => item.setAttribute("tabindex", "-1"));
+
   function toggleMenu(open = !isOpen()) { <1>
     if (open) {
-      menu.dataset.menu = "open";
-      body.hidden = false;
+      menu.hidden = false;
       button.setAttribute("aria-expanded", "true");
       items[0].focus(); <2>
     } else {
-      menu.dataset.menu = "closed";
-      body.hidden = true;
+      menu.hidden = true;
       button.setAttribute("aria-expanded", "false");
     }
   }
 
-  toggleMenu(isOpen()) <3>
-
+  toggleMenu(isOpen()); <3>
   button.addEventListener("click", () => toggleMenu()); <4>
+  menuRoot.addEventListener("blur", e => console.log(e) || toggleMenu(false)); <5>
+
+})
 ----
 <1> Optional parameter to specify desired state.
 This allows us to use one function to open, close, or toggle the menu.
 <2> Focus first item of menu when opened.
 <3> Call `toggleMenu` with current state, to initialize element attributes.
 <4> Toggle menu when button is clicked.
+<5> Close menu when focus moves away.
 
-Let's also make the menu close when we click outside it:
+Let's also make the menu close when we click outside it.
+This will require an event listener on the whole window.
+Be careful with this kind of listener;
+you may find that listeners accumulate as components add listeners and not remove them when they are long gone, that is to say, you will get memory leaks.
 
-[source,js]
+Unfortunately, there's not an easy way to do stuff when an element is removed.
+The best option is `MutationObserver`, a very useful but heavy API.
+
+The pattern (well, _a_ pattern) to avoid this is to check if the attaching component is in the DOM as part of the listener,
+and remove the listener if so.
+It's form of _garbage collection_.
+As is (usually) the case with garbage collection, it removes listeners a nondeterministic amount of time after they are no longer needed.
+With a frequent event like "the user clicks anywhere in the page", it works well enough.
+
+[source,js,highlight=2..6]
 ----
   button.addEventListener("click", () => toggleMenu())
 
   window.addEventListener("click", function clickAway(event) {
-    if (!menu.isConnected) window.removeEventListener("click", clickAway); <1>
-    if (menu.contains(event.target)) return; <2>
-    toggleMenu(false); <3>
-  })
+    if (!menuRoot.isConnected) window.removeEventListener("click", clickAway);
+    if (!menuRoot.contains(event.target)) toggleMenu(false);
+  });
+});
 ----
 
-<1> Clean up event listener if menu has been removed
-<2> If the click is inside the menu, do not do anything
-<3> Close the menu
+<1> This line is the garbage collection
+<2> If the click is outside the menu, close the menu
 
-You should be able to open, close, and dismiss the menu now, and may be tempted to ship this code to production.
-Don't!
-We're not done yet because our menu fails many requirements for menu interactions:
-
-* You can't navigate between menu items using arrow keys
-* You can't activate a menu item with the Space key
-
-These factors make our menu annoying and possibly unusable for many people.
-Let's fix it with the guidance of the venerable cite:[ARIA Authoring Practices Guide]:
+Now, it's time for keyboard interactions.
+These are pretty similar to one another and not that intricate.
+Let's get them all done.
 
 [source,js]
 ----
@@ -596,8 +655,7 @@ But it's code that encodes a lot of behavior.
 
 Though, we still don't support submenus, or menu items being added or removed dynamically.
 If we need more features, it might make more sense to use an off-the-shelf library --- for instance, GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
-
-// ---------------------- END TODO ----------------------
+For our relatively simple use case, however, this library does a beautiful job.
 
 == Alpine.js
 

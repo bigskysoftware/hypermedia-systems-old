@@ -26,7 +26,7 @@ video, text and, crucially, hyperlinks: references to other data.
 Hypertext is a subset of hypermedia that consists of _text_ that supports _hypermedia controls_ being embedded in it.
 
 The most common hypertext today is the HyperText Markup Language (HTML), and the most common hypermedia controls are
-anchor tags and form tags.
+anchor tags and form tags in HTML.
 
 === Hyperlinks
 
@@ -70,8 +70,10 @@ The first line specifies that this is an HTTP `GET` request.  It then specifies 
 requested.  Finally, it contains the HTTP version for this request.
 
 After that are a set of HTTP _Request Headers_, individual lines of name/value pairs, separated by a colon, which provide
-_metadata_ that can be used by the server to determine exactly how to respond to the client request.  In this case, the
-client is saying it would prefer HTML as a response format, but will accept anything.
+_metadata_ that can be used by the server to determine exactly how to respond to the client request.  In this case,
+vai the `Accept` header, the client is saying it would prefer HTML as a response format, but will accept anything.  It
+also has a `Host` header, which is useful information for a web server that might be hosting multiple domains on the
+same server.
 
 An HTTP response to this request might look something like this:
 
@@ -111,8 +113,7 @@ address bar to reflect the new URL.
 === Forms
 
 HTML also supports the form tag hypermedia control.  Forms allow a user to interact with servers in a richer manner than
-anchors do.  Form tags can submit either `GET` requests or `POST` HTTP requests.  We will discuss these two actions
-in more detail in a bit.
+anchors do.  Form tags can submit either `GET` requests or `POST` HTTP requests.
 
 A simple form tag looks like this:
 
@@ -126,7 +127,7 @@ A simple form tag looks like this:
 
 This form will be rendered as simple text input, with a button next to it.  If a user enters the value `example@example.org`
 in the email input and then submits the form (either by clicking on the button or by hitting the enter key while the text
-input is focused). the form will issue a `POST` request that looks something like this:
+input is focused), the form will issue a `POST` request that looks something like this:
 
 [source]
 ----
@@ -137,10 +138,11 @@ Host: example.org
 email=example%40example.org
 ----
 
-The first line specifies that this is an HTTP `POST` request.  It then specifies the path of the resource being posted to,
+The first line specifies that this is an HTTP `POST` request.  It then specifies the path of the resource being `POST`-ed to,
 and finally it is followed by the HTTP version for this request.
 
-As with the hyperlink example, we see some HTTP request headers.
+As with the hyperlink example, we see HTTP request headers, the `Accept` and `Host` headers we saw in the anchor
+example.
 
 After these headers, we see something new: a request _body_.  This body carries the information that is being posted to
 the server, using form-url encoding.  (That's why there is a funny `%40`, taking the place of
@@ -166,7 +168,7 @@ Content-Type: text/html
 ----
 
 This response uses the `301` HTTP Response code, which tells the browser "This page is not the final URL for the
-response to this request, rather issue a `GET` to `https://www.example.org/thank-you`, which will give you the final
+response to this request, issue a new request, a `GET` to `https://www.example.org/thank-you`, which will give you the final
 content."
 
 The browser will then issue a `GET` request to this new URL and load the content returned by it into the browser window,
@@ -231,38 +233,36 @@ HTML specification yet!.
 
 == REpresentational State Transfer (REST)
 
-So, brief refresher on hypermedia, HTML & HTTP out of the way, we are ready to take a close
+So, with that brief refresher on hypermedia, HTML & HTTP out of the way, we are ready to take a close
 look at the concept of REST.  The term REST comes from Chapter 5 of Roy Fielding's PhD dissertation on the architecture
 of the web.  Fielding wrote his dissertation at U.C. Irvine, after having helped build much of the infrastructure of the early
-web, including the apache web server.  Roy was attempting to formalize and describe the novel distributed computing system
-he had just helped to build.
+web, including the Apache web server.  Roy was attempting to formalize and describe the novel distributed computing system
+that he had helped to build.
 
-We are going to focus in on what I feel is the most important section, from a web development perspective: section 5.1.
-This section contains the core concepts (Fielding calls them _constraints_) of Representational State Transfer, or REST.
+We are going to focus in on what I feel is the most important section of Fielding's dissertation, from a web development
+perspective: Section 5.1. This section contains the core concepts (Fielding calls them _constraints_) of Representational
+State Transfer, or REST.
 
 Before we get into the details, however, it is important to understand that Fielding considers REST a _network architecture_,
-that is an entirely different way of architecting a distributed system, that should be contrasted with earlier distributed
-systems.
+that is an entirely different way of architecting a distributed system.  And a novel one that should be _contrasted_ with
+earlier distributed systems.
 
-REST was and is not simply a checklist of TODOs for an API end point within a broader application.  It is, rather, a
-unique network architecture for an entire system.  It needs to be understood _conceptually_, rather than as a rote list
-of things to tick off as you develop a particular system HTTP end point.
+It is also important to emphasize that, at the time Fielding wrote his dissertation, JSON APIs and AJAX _did not exist_.
+He was _describing_ the early web, with HTML being transferred over HTTP by early browsers, as a hypermedia system.
 
-It is also important to emphasize that, at the time Fielding wrote his dissertation, JSON APIs and AJAX _did not exist_.  He was
-_describing_ the early web, HTML being transferred over HTTP, as a hypermedia system.
+Today the term "REST" is mainly associated with JSON APIs.  This term is typically used erroneously when discussing
+JSON APIs, which are usually much better described as _data APIs_.  We will clarify the difference between these JSON
+data APIs and a truly REST-ful system in the coming sections.
 
-Today the term "REST" is mainly associated with JSON APIs.  We feel this term is typically used erroneously when discussing
-these APIs, which are much better described as _Data APIs_.  We will discuss the difference between these Data APIs and a
-truly REST-ful system in depth below.
-
-Again: REST describes _the pre-JSON API web_, and letting go of the current common usage of the term "REST" is necessary
-to develop a proper understanding of it conceptually.
+To re-emphasise: REST describes _the pre-JSON API web_, and letting go of the current common usage of the term "REST
+" is necessary to develop a proper understanding of what it means, conceptually.
 
 === The "Constraints" of REST
 
-Fielding uses various "constraints" to describe how a REST-ful system must behave.  This approach is a little round-about
-and academic, but once you spend some time thinking about these constraints, it should become easy to understand
-if a system actually satisfies these architectural requirements of REST or not.
+Fielding uses various "constraints" to describe how a REST-ful system must behave.  To be frank, this approach can seem
+a little round-about and academic, which is appropriate for an academic dissertation.  However, once you spend some time
+thinking about the constraints he outlines, it should become easy to understand if a given system actually satisfies these
+architectural requirements of REST or not.
 
 Here are the constraints of REST, from Section 5.1 of his dissertation:
 
@@ -275,7 +275,7 @@ Here are the constraints of REST, from Section 5.1 of his dissertation:
 
 Let's go through each of these constrains in turn and discuss them in detail.
 
-=== Client-Server
+=== Client-Server (Section 5.1.2)
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_2 for the Client-Server constraint.
 
@@ -286,7 +286,7 @@ notably thick-client networking models such as the Common Object Request Broker 
 
 It should be obvious that any web application, regardless of how it is designed, is going to satisfy this requirement.
 
-=== Statelessness
+=== Statelessness (Section 5.1.3)
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_3 for the Stateless constraint.
 
@@ -306,7 +306,7 @@ and, for the most part, does not appear to have had a significant impact on the 
 It should be noted, however, that it does cause additional complexity headaches when deploying hypermedia servers, which
 now may need to have shared access to the session state information, for example.
 
-=== Caching
+=== Caching (Section 5.1.4)
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_4 for the Cache constraint.
 
@@ -317,7 +317,7 @@ HTTP has an extensive caching mechanism that is often under-utilized for web app
 HTTP Headers you can ask browsers to keep a response for a given URL in a local cache and, when that URL is requested,
 reuse that locally cached content.
 
-=== The Uniform Interface Constraint
+=== The Uniform Interface Constraint (Section 5.1.5)
 
 Now we come to the most interesting and, in our opinion, innovative constraint in REST: the _uniform interface_.  This
 constraint is the source of much of the _flexibility_ and _simplicity_ of a hypermedia system, so we are going to
@@ -345,7 +345,7 @@ common, but at the time of Fielding's writing they were still relatively new and
 
 What might be more interesting today is the notion of a _resource_, thus being identified: in a REST-ful system, _any_ sort of
 data that can be referenced, that is, the target of a hypermedia reference, is considered a resource.  URLs, though common
-enough today, end up solving the very complex problem of uniquely identifying any resource on the internet!
+enough today, end up solving the very complex problem of uniquely identifying any resource on the internet.
 
 ==== Manipulation of Resources Through Representations
 
@@ -358,7 +358,7 @@ We saw this latter aspect of the uniform interface in the `Accept` header in the
 
 ==== Self-Descriptive Messages
 
-This constraint, along with the next one, form what we consider to be the crux of the Uniform Interface, of REST and why,
+This constraint, along with the next one, form what we consider to be the core of the Uniform Interface, of REST and why,
 in our opinion, hypermedia is such a powerful network architecture: in a REST-ful system, messages must be
 _self-describing_.
 
@@ -367,8 +367,8 @@ What does that mean?
 It means that messages must contain _all information_ necessary to both display _and also operate_ on the data being
 represented.
 
-This might sound a little abstract, so perhaps an example will help to clarify.  Consider two implementations of an endpoint,
-`/contacts/42` both of which return a representation of a Contact.
+This might sound a little abstract, so perhaps an example will help clarify.  Consider two implementations of an HTTP
+endpoint, `/contacts/42` both of which return a representation of a Contact.
 
 The first implementation returns an HTML representation:
 
@@ -402,7 +402,7 @@ The second implementation returns a JSON representation:
 
 What can we say about the differences between these two responses?
 
-Well, one thing that probably jumps out at you is that the JSON representation is much less verbose than the HTML
+Well, one thing that probably jumps out at you is that the JSON representation is less wordy than the HTML
 representation.  Fielding notes exactly this tradeoff in hypermedia-based systems in his dissertation:
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
@@ -411,11 +411,11 @@ The trade-off, though, is that a uniform interface degrades efficiency, since in
 standardized form rather than one which is specific to an application's needs.
 ____
 
-So the hypermedia trades off representational efficiency for other goals, and you will often see this leveled as a
-complaint about HTML: it's just so _verbose_ compared to the JSON equivalent.
+So hypermedia trades off representational efficiency for other goals, and you will sometimes see criticism this leveled
+at HTML: it's just so _verbose_ compared to the JSON equivalent.
 
-This is a valid criticism, although we would note that the difference between the two responses is almost certainly a
-round-off error when compared with network latency, connecting to a server-side data store, and so forth.
+This is a valid criticism, although we would note that the difference between the size of two responses is almost certainly
+very small when compared with network latency, connecting to a server-side data store, and so forth.
 
 But let us grant that the JSON response is better in this regard.  In what way is the HTML response better?
 

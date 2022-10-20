@@ -1,0 +1,21 @@
+= Building Hypermedia Systems
+Adam Stepinski; Carson Gross; Deniz Akşimşek
+:doctype: book
+:toc:
+:toclevels: 3
+
+include::CH01_ReintroducingHypermedia.adoc[]
+include::CH02_RestHATEOASAndAllThat.adoc[]
+include::CH03_BuildingASimpleWebApplication.adoc[]
+include::CH04_ExtendingHTMLAsHypermedia.adoc[]
+include::CH05_htmxInAction.adoc[]
+include::CH06_MorehtmxPatterns.adoc[]
+include::CH07_ADynamicArchiveUIWithhtmx.adoc[]
+include::CH08_Deephtmx.adoc[]
+include::CH09_HyperviewAMobileHypermedia.adoc[]
+include::CH10_BuildingAContactsAppWithHyperview.adoc[]
+include::CH11_ExtendingTheHyperviewClient.adoc[]
+include::CH12_ScriptingInAHypermediaApplication.adoc[]
+include::CH13_JSONDataAPIs.adoc[]
+include::CH14_OtherHypermediaOrientedLibraries.adoc[]
+include::CH15_Conclusion.adoc[]

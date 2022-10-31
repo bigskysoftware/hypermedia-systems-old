@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="author" content="Adam Stepinski, Carson Gross, Deniz Akşimşek">
+<title>Building Hypermedia Systems</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_building_a_simple_web_1_0_application" class="book">
+<div id="header">
+<h1>Building Hypermedia Systems</h1>
+<div class="details">
+<span id="author" class="author">Adam Stepinski, Carson Gross, Deniz Akşimşek</span><br>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a></span></p><ul class="sectlevel0">
+<li><a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a>
+<ul class="sectlevel1">
+<li><a href="_reintroducing_hypermedia.html">1. Reintroducing Hypermedia</a>
+</li>
+<li><a href="_rest_hateoas_and_all_that.html">2. REST, HATEOAS and All That</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html"><span class="toc-current">3. Building A Simple Web 1.0 Application</span></a>
+<ul class="sectlevel2">
+<li><a href="_building_a_simple_web_1_0_application.html#_picking_a_web_stack_to_use">3.1. Picking A "Web Stack" To Use</a>
+<ul class="sectlevel3">
+<li><a href="_building_a_simple_web_1_0_application.html#_the_howl_hypermedia_on_whatever_youd_like_stack">3.1.1. The HOWL (Hypermedia On Whatever you&#8217;d Like) Stack</a>
+</li>
+</ul>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_python">3.2. Python</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_introducing_flask_our_first_route">3.3. Introducing Flask: Our First Route</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_contact_app_functionality">3.4. Contact.App Functionality</a>
+<ul class="sectlevel3">
+<li><a href="_building_a_simple_web_1_0_application.html#_showing_a_searchable_list_of_contacts">3.4.1. Showing A Searchable List Of Contacts</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_adding_a_new_contact">3.4.2. Adding A New Contact</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_viewing_the_details_of_a_contact">3.4.3. Viewing The Details Of A Contact</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_viewing_the_details_of_a_contact_2">3.4.4. Viewing The Details Of A Contact</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_editing_and_deleting_a_contact">3.4.5. Editing And Deleting A Contact</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_deleting_a_contact">3.4.6. Deleting A Contact</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_contact_app_implemented">3.4.7. Contact.App&#8230;&#8203; Implemented!</a>
+</li>
+</ul>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html#_summary_2">3.5. Summary</a>
+</li>
+</ul>
+</li>
+<li><a href="_extending_html_as_hypermedia.html">4. Extending HTML As Hypermedia</a>
+</li>
+<li><a href="_htmx_in_action.html">5. htmx In Action</a>
+</li>
+<li><a href="_building_hypermedia_systems_2.html">6. Building Hypermedia Systems</a>
+</li>
+<li><a href="_more_htmx_patterns.html">7. More htmx Patterns</a>
+</li>
+<li><a href="_building_hypermedia_systems_3.html">8. Building Hypermedia Systems</a>
+</li>
+<li><a href="_a_dynamic_archive_ui_with_htmx.html">9. A Dynamic Archive UI With htmx</a>
+</li>
+<li><a href="_building_hypermedia_systems_4.html">10. Building Hypermedia Systems</a>
+</li>
+<li><a href="_deep_htmx.html">11. Deep htmx</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html">12. Hyperview: A Mobile Hypermedia</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html">13. Building a Contacts App With Hyperview</a>
+</li>
+<li><a href="_extending_the_hyperview_client.html">14. Extending the Hyperview Client</a>
+</li>
+<li><a href="_client_side_scripting.html">15. Client Side Scripting</a>
+</li>
+<li><a href="_building_hypermedia_systems_5.html">16. Building Hypermedia Systems</a>
+</li>
+<li><a href="_json_data_apis_hypermedia_driven_applications.html">17. JSON Data APIs &amp; Hypermedia Driven Applications</a>
+</li>
+<li><a href="_other_hypermedia_libraries_technologies.html">18. Other Hypermedia Libraries &amp; Technologies</a>
+</li>
+<li><a href="_conclusion_3.html">19. Conclusion</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_building_a_simple_web_1_0_application">3. Building A Simple Web 1.0 Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter covers</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Picking a "web stack" to build our sample hypermedia application in</p>
+</li>
+<li>
+<p>A brief introduction to Flask &amp; Jinja2 for Server Side Rendering (SSR)</p>
+</li>
+<li>
+<p>An overview of the functionality of our sample hypermedia application, Contact.App</p>
+</li>
+<li>
+<p>Implementing the basic CRUD (Create, Read, Update, Delete) operations and search for Contact.App</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To begin our journey into Hypermedia Driven Applications, we are going to create a simple contact management web
+application called Contacts.app.  We will start with a basic, "Web 1.0-style" multi-page application, in the grand
+CRUD (Create, Read, Update, Delete) tradition.  It will not be the best contact management application, but that&#8217;s OK
+because it will be simple (a great virtue of web 1.0 applications!)  It will also be easy to incrementally improve the
+application by taking advantage of hypermedia-oriented technologies like htmx.</p>
+</div>
+<div class="paragraph">
+<p>By the time we are finished building the application, over the coming chapters, it will have some very slick features
+that most developers today would assume requires the use of sophisticated client-side infrastructure.  We will, instead,
+implement these features entirely using the hypermedia approach, but enhanced with htmx and other libraries that stay
+within that paradigm.</p>
+</div>
+<div class="sect2">
+<h3 id="_picking_a_web_stack_to_use">3.1. Picking A "Web Stack" To Use</h3>
+<div class="paragraph">
+<p>In order to demonstrate how a hypermedia application works, we need to pick a server-side language and library for
+handling HTTP requests.  Colloquially, this is called our "Server Side" or "Web" stack, and there are literally hundreds
+of options to choose from, all with passionate followers.  You probably have a web framework that you prefer and, while I wish
+we could write this book for every possible stack out there, in the interest of berevity we can only pick one.</p>
+</div>
+<div class="paragraph">
+<p>For this book we are going to use the following stack:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We will use Python as our programming language (<a href="https://www.python.org/" class="bare">https://www.python.org/</a>)</p>
+</li>
+<li>
+<p>We will use Flask as our web framework, allowing us to connect HTTP requests to python logic (<a href="https://palletsprojects.com/p/flask/" class="bare">https://palletsprojects.com/p/flask/</a>)</p>
+</li>
+<li>
+<p>We will use Jinja2 for our server-side templating language, allowing us to render HTML responses using a familiar
+and intuitive syntax (<a href="https://palletsprojects.com/p/jinja/" class="bare">https://palletsprojects.com/p/jinja/</a>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Why pick this particular stack?  I am not a day-to-day Python programmer, so it&#8217;s not an obvious choice for me!
+But this particular stack has a number of advantages.</p>
+</div>
+<div class="paragraph">
+<p>First off, python is the most popular programming language as of this writing, according to the TIOBE index
+(<a href="https://www.tiobe.com/tiobe-index/" class="bare">https://www.tiobe.com/tiobe-index/</a>), a popular measure of programming language popularity.
+More importantly, even if you don&#8217;t know or like Python, it is very easy to read.  As a veteran of the programming language wars of the 90&#8217;s and
+early aughts, I understand how passionate people are around programming languages, and I hope python is a "least worst"
+choice for readers who are not pythonistas.</p>
+</div>
+<div class="paragraph">
+<p>I picked flask as the web framework because it is very lightweight and does not impose a lot of structure on top of the
+basics of HTTP routing. This bare-bones approach isn&#8217;t for everyone: in the python community, for example, many people
+prefer the "Batteries Included" nature of Django, where lots of functionality is available out of the box.</p>
+</div>
+<div class="paragraph">
+<p>I understand that perspective, but, for teaching purposes, I feel that an un-opinionated and light-weight library will
+make it easier for non-Python developers to follow along by minimizing the amount of code required on the server side.
+Anyone who prefers django or some other Python web framework, or some other language entirely for that matter, should be
+able to easily convert the Flask examples into their native framework.</p>
+</div>
+<div class="paragraph">
+<p>Jinja2 templates were picked because they are the default templating language for Flask.  They are simple enough and
+standard enough that most people who understand any server side (or client side) templating library will be able to
+understand them reasonably quickly and easily.</p>
+</div>
+<div class="paragraph">
+<p>With Jinja2, we will be rendering our HTML <em>on the server side</em>.  This is the traditional approach to building web
+applications, but, with the rise of SPAs, is not as widely known a technique as it once was.  Today, as people are
+rediscovering this approach to building web applications, the term "Server Side Rendering" or SSR is emerging as
+the way that people talk about this style of templating, in contrast with "Client Side Rendering", that is, rendering
+templates in the browser, as is common in SPA libraries.</p>
+</div>
+<div class="paragraph">
+<p>In general, in Contact.app, we will intentionally keep things as simple as possible (sometimes sacrificing other
+design principles to do so!) to maximize the teaching value of our code: it won&#8217;t be perfectly factored code, and it
+certainly won&#8217;t be the most beautiful web application, but it will be easy enough to follow for readers, and easy to
+translate into your preferred language and web stack.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_howl_hypermedia_on_whatever_youd_like_stack">3.1.1. The HOWL (Hypermedia On Whatever you&#8217;d Like) Stack</h4>
+<div class="paragraph">
+<p>We picked Python and Flask for this book, but we could have picked anything.  One of the wonderful things about
+building a hypermedia-based application is that your backend can be&#8230;&#8203; whatever you&#8217;d like!  You just need to be able
+to produce HTML with it.</p>
+</div>
+<div class="paragraph">
+<p>Consider if we were instead building a web application with a large JavaScript-based SPA front end.  We would almost certainly
+feel pressure to adopt JavaScript on the back end. We already would have a ton of code written in JavaScript.
+Why maintain two separate code bases?  Why not reuse domain logic on the  client-side as well as the server-side?  There are now that
+very good server side options for writing JavaScript code like node and deno.  Why not just a single language for everything?</p>
+</div>
+<div class="paragraph">
+<p>So, as you may have felt yourself, if you choose a JavaScript heavy front end there are many forces pushing you to adopt
+JavaScript on the back end.</p>
+</div>
+<div class="paragraph">
+<p>In contrast, by using a hypermedia-based front end you have a lot more freedom in picking the back end technology appropriate
+to the problem domain you are addressing.  You certainly aren&#8217;t writing your server side logic in HTML!  And every
+major programming language has at least one good templating library that can produce HTML cleanly, often more.</p>
+</div>
+<div class="paragraph">
+<p>If we are doing something in big data, perhaps you&#8217;d like to use Python, which has tremendous support for that domain.
+If we are doing AI, perhaps you&#8217;d like to use Lisp, leaning on a language with a long history in that area of research.
+Maybe you are a functional programming enthusiast and want to use OCaml or Haskell.  Maybe you just really like Julia or
+Nim.  All perfectly valid reasons for choosing a particular server side technology! By using hypermedia as your <em>front end</em>
+technology, you are freed up to adopt any of these choices. There simply isn&#8217;t a large JavaScript front end code base
+pressuring you to adopt JavaScript on the back end.</p>
+</div>
+<div class="paragraph">
+<p>In the htmx community, we call this the HOWL stack: Hypermedia On Whatever you&#8217;d Like.  We <em>like</em> the idea of a multi-language,
+multi-framework future in web development.  To be frank, a future of total JavaScript dominance (with maybe some TypeScript
+throw in) sounds pretty boring to us.  We&#8217;d prefer to see many different language and web framework communities, each
+with their own strengths and cultures, participating in the web development world, all through the power of hypermedia.</p>
+</div>
+<div class="paragraph">
+<p>That sounds like a better world to us, and that&#8217;s HOWL, hypermedia on whatever you&#8217;d like!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_python">3.2. Python</h3>
+<div class="paragraph">
+<p>Since this book is intended to teach how hypermedia can be used effectively, we aren&#8217;t going to do deep dives into
+the various technologies we use <em>around</em> that hypermedia.  This has some obvious drawbacks: if you aren&#8217;t comfortable
+with python, for example, some of the example python code in the book may seem confusing or mysterious.</p>
+</div>
+<div class="paragraph">
+<p>If you feel like you need a quick introduction to the language, we heartily recommend "The Quick Python Book" by
+Manning Publishing.  It gives you a clear and brisk introduction to the language, and will put you in a good position
+to understand the relatively simple python code used in this book.</p>
+</div>
+<div class="paragraph">
+<p>That being said, I think most web developers, even developers who are unfamiliar with python, should be able to follow
+along in the code.  Remember, I hadn&#8217;t written very much python before writing this book, and I got the hang of it pretty
+quick!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_introducing_flask_our_first_route">3.3. Introducing Flask: Our First Route</h3>
+<div class="paragraph">
+<p>Flask is a very simple but flexible web framework for Python.  Just like this book isn&#8217;t a Python book, it isn&#8217;t a Flask book
+either, so we will not go into too much detail about it.  However, unlike Python, which is similar in many ways to other
+programming languages, Flask might be a bit different than the web frameworks you are familiar with, so it is necessary
+to do a bit more of an introduction to prepare you for the coming chapters.  Thankfully, Flask is simple enough that most
+web developers shouldn&#8217;t have a problem following along.  Let&#8217;s go over the basics.</p>
+</div>
+<div class="paragraph">
+<p>A Flask application consists of a series of <em>routes</em> tied to functions that execute when an HTTP request to a given path is
+made.  I will use the term "handler" to refer to the functions associated with a route.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at the first "route" definition in our application.  It will be a simple redirect, such that when a user goes to the
+root of our web application, <code>/</code>, they will be redirected to the <code>/contacts</code> path instead.  Redirection is an HTTP feature where, when
+a user requests one URL, they are sent to another on, and is a basic piece of web functionality that is well supported
+in most web frameworks.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s create our first route definition, a simple "Hello World" route.  In the following python code you will see the
+<code>@app</code> symbol.  This refers to the flask application object.  Don&#8217;t worry too much about how it has been set up, just
+understand that it is an object that encapsulates the mapping of requests to some <em>path</em> to a python
+function (i.e. handler) to be executed by the server when a request to that path is made.</p>
+</div>
+<div class="paragraph">
+<p>Here is the code:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 6. A Simple "Hello World" Route</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/") <b class="conum">(1)</b>
+def index(): <b class="conum">(2)</b>
+    return "Hello World!" <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Establishes we are mapping the <code>/</code> path as a route</p>
+</li>
+<li>
+<p>The next method is the handler for that route</p>
+</li>
+<li>
+<p>Returns the string "Hello World!" to the client</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The Flask pattern for doing this is to use the <code>route()</code> method on the Flask application object, and pass in the path
+you wish the route to handle.  In this case we pass in the root or <code>/</code> path, as a string, to the <code>@app.route()</code> method.
+This establishes a path that Flask will handle.</p>
+</div>
+<div class="paragraph">
+<p>This route declaration is then followed by a simple function definition, <code>index()</code>.  In flask, the function immediately
+following a route definition is the "handler" for that route, and will be executed when an HTTP request to the
+given path is made.  (Note that the name of the function doesn&#8217;t matter, we can call it whatever
+we&#8217;d like.  In this case I chose <code>index()</code> because that fits with the route we are handling: the root "index" of the web
+applications.)  So we have the <code>index()</code> function immediately following
+our route definition for the root, and this will become the handler for the root URL in our web application.</p>
+</div>
+<div class="paragraph">
+<p>The handler in this case is dead simple, it just returns a string, "Hello World!", to the client.  This isn&#8217;t even
+hypermedia yet, but, nonetheless, the browser renders it fine:</p>
+</div>
+<div id="figure-1-1" class="imageblock">
+<div class="content">
+<img src="../images/figure_2-1_hello_world.png" alt="figure 2 1 hello world">
+</div>
+<div class="title">Figure 1. 3. Hello Flask!</div>
+</div>
+<div class="paragraph">
+<p>For Contact.app, rather than rendering "Hello World!" at the root path, we are going to do something a little fancy:
+we are going to redirect to another path, the <code>/contacts</code> path.  Redirects are a feature of HTTP that allow you to,
+well, redirect a client to another location in an HTTP response.  Redirecting to the <code>/contacts</code> path is a bit more
+consistent with notion of resources with REST.  It&#8217;s a judgement call on our part, but we are going to go with it.</p>
+</div>
+<div class="paragraph">
+<p>To change our "Hello World" route to a redirect, we only need to change one line of code:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 7. Changing "Hello World" to a Redirect</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/")
+def index():
+    return redirect("/contacts") <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Update to a call to <code>redirect()</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now the <code>index()</code> function simply returns the result of calling a <code>redirect()</code> function with the path we with to
+redirect to, in this case <code>/contacts</code>, passed in as a string.  This simple handler implementation will trigger an
+HTTP Redirect to that path, achieving what we desire for this route.</p>
+</div>
+<div class="paragraph">
+<p>So, in summary, given the functionality above, when someone navigates to the root directory of our web application, Flask
+will redirect them to the <code>/contacts</code> path.  Pretty simple, and I hope nothing too surprising for you, regardless of what
+web framework or language you are used to!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_contact_app_functionality">3.4. Contact.App Functionality</h3>
+<div class="paragraph">
+<p>OK, with that brief introduction to Flask out of the way, let&#8217;s get down to specifying and implementing our application.
+What will Contact.app do?</p>
+</div>
+<div class="paragraph">
+<p>Initially, it will provide the following functionality:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Provide a list of contacts, including first name, last name, phone and email address</p>
+</li>
+<li>
+<p>Provide the ability to search the list of contacts</p>
+</li>
+<li>
+<p>Provide the ability to add a new contact to the list</p>
+</li>
+<li>
+<p>Provide the ability to view the details of a contact on the list</p>
+</li>
+<li>
+<p>Provide the ability to edit the details of a contact on the list</p>
+</li>
+<li>
+<p>Provide the ability to delete a contact from the list</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So, as you can see, this is a pretty basic CRUD application, the sort of thing that is perfect for an old-school
+web 1.0 application.  The source code of the application is available at <a href="https://github.com/bigskysoftware/contact-app" class="bare">https://github.com/bigskysoftware/contact-app</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_showing_a_searchable_list_of_contacts">3.4.1. Showing A Searchable List Of Contacts</h4>
+<div class="paragraph">
+<p>Let&#8217;s look at our first "real" bit of functionality: the ability show all the contacts in our system in a list (really,
+in a table).</p>
+</div>
+<div class="paragraph">
+<p>This functionality is going to be found at the <code>/contacts</code> path, which is the path our previous route is redirecting to.</p>
+</div>
+<div class="paragraph">
+<p>We will use the <code>@app</code> flask instance to route the <code>/contacts</code> path and then define a handler function, <code>contacts()</code>.
+This function is going to do one of two things:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If there is a search term, it filter all contacts matching that term</p>
+</li>
+<li>
+<p>If not, it will simply return all contacts in our database.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here is the code:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 8. Server Side Search</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q") <b class="conum">(1)</b>
+    if search is not None:
+        contacts_set = Contact.search(search) <b class="conum">(2)</b>
+    else:
+        contacts_set = Contact.all() <b class="conum">(3)</b>
+    return render_template("index.html", contacts=contacts_set) <b class="conum">(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Look for the query parameter named <code>q</code>, which stands for "query"</p>
+</li>
+<li>
+<p>If the parameter exists, call the <code>Contact.search()</code> function with it</p>
+</li>
+<li>
+<p>If not, call the <code>Contact.all()</code> function</p>
+</li>
+<li>
+<p>pass the result to the <code>index.html</code> template to render to the client</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We see the usual routing code we saw in our first example, but then we see some more elaborate code in the handler
+function.  First, we check to see if a search query parameter named <code>q</code> is part of the request.  The "query string" is
+part of the URL specification and you are probably familiar with it.  Here is an example URL with a query string in it:
+<code><a href="https://example.com/contacts?q=joe" class="bare">https://example.com/contacts?q=joe</a></code>.  The query string is everything after the <code>?</code> and is a name-value pair format.  In
+this case, the query parameter <code>q</code> is set to the string value <code>joe</code>.</p>
+</div>
+<div class="paragraph">
+<p>To get back to the code, if a query parameter is found, we call out to the <code>search()</code> method on the <code>Contact</code> model to do
+the actual search and return all matching contacts. If the query parameter is <em>not</em> found, we simply get all contacts by
+invoking the <code>all()</code> method on the <code>Contact</code> object.</p>
+</div>
+<div class="paragraph">
+<p>Finally, we then render a template, <code>index.html</code> that displays the given contacts, passing in the results of whichever function
+we ended up calling.</p>
+</div>
+<div class="paragraph">
+<p>Note that we are not going to dig into the code in the <code>Contact</code> class.  The implementation of the <code>Contact</code> class
+is not relevant to hypermedia, we will ask you to simply accept that it is a "normal" domain model class, and the methods
+on it act in the "normal" manner.  We will treat <code>Contact</code> as a <em>resource</em> and will provide hypermedia representations
+of that resource to clients, in the form of HTML generated via server side templates.</p>
+</div>
+<div class="sect4">
+<h5 id="_the_list_search_template">The List &amp; Search Template</h5>
+<div class="paragraph">
+<p>Now we need to take a look at the template that we are going to render in our response to the client.  In this
+HTML response we want to have a few things:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A list of any matching or all contacts</p>
+</li>
+<li>
+<p>A search box that a user may type a value into and submit for searches</p>
+</li>
+<li>
+<p>A bit of surrounding "chrome": a header and footer for the website that will be the same regardless of the page you
+are on</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Recall we are using the Jinja2 templating language here.  In Jinja2 templates, we use <code>{{}}</code> to embed expression
+values and we use <code>{% %}</code> for directives, like iteration or including other content.  Jinja2 is very similar to
+other templating languages, and I hope you are able to follow along easily.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at the first few lines of code in our <code>index.html</code> template:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 9. Start of index.html</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">{% extends 'layout.html' %} <b class="conum">(1)</b>
+
+{% block content %} <b class="conum">(2)</b>
+
+    &lt;form action="/contacts" method="get" class="tool-bar"&gt;  <b class="conum">(3)</b>
+            &lt;label for="search"&gt;Search Term&lt;/label&gt;
+            &lt;input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"/&gt; <b class="conum">(4)</b>
+            &lt;input type="submit" value="Search"/&gt;
+     &lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Set the layout template for this template</p>
+</li>
+<li>
+<p>Delimit the content to be inserted into the layout</p>
+</li>
+<li>
+<p>Create a search form that will issue an HTTP <code>GET</code> to <code>/contacts</code></p>
+</li>
+<li>
+<p>Create an input that a query can be typed into to search contacts</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The first line of code references a base template, <code>layout.html</code>, with the <code>extends</code> directive.  This layout
+template provides the layout for the page (again, sometimes called "the chrome"): it wraps the template content in an
+<code>&lt;html&gt;</code> tag, imports any necessary CSS and JavaScript in a <code>&lt;head&gt;</code> element, places a <code>&lt;body&gt;</code> tag around the main
+content and so forth.  All the common content that wrapped around the "normal" content is located in this file.</p>
+</div>
+<div class="paragraph">
+<p>The next line of code declares the <code>content</code> section of this template, which is the content that will be included
+within the "chrome" of the layout template.</p>
+</div>
+<div class="paragraph">
+<p>Next we have our first bit of actual HTML, rather than just Jinja directives.  We have a simple HTML form that allows
+you to search contacts by issuing a <code>GET</code> request to the <code>/contacts</code> path.  The form itself contains a lable and
+an input with the name "q".  This input&#8217;s value will be submitted with the <code>GET</code> request to the <code>/contacts</code> path.</p>
+</div>
+<div class="paragraph">
+<p>Note that the value of this input is set to the Jinja expression <code>{{ request.args.get('q') or '' }}</code>.  This expression
+is evaluated by Jinja and will insert the request value of "q" as the input&#8217;s value, if it exists.  This will "preserve"
+the search value when a user does a search, so the text box contains the value that they typed in initially, and makes
+for a slightly nicer user experience.</p>
+</div>
+<div class="paragraph">
+<p>Finally, we have a submit-type input, which, when clicked on, will trigger the form to issue an HTTP request.</p>
+</div>
+<div class="paragraph">
+<p>This search UI forms the top of our contact page, and it is followed a table of all the contacts that are are stored on
+the server.  (Or, if there is a search term, the contacts that match that search term.  More on that in a bit.)</p>
+</div>
+<div class="paragraph">
+<p>Here is what the template code looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 10. The Contacts Table</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;table&gt;
+        &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;First&lt;/th&gt; &lt;th&gt;Last&lt;/th&gt; &lt;th&gt;Phone&lt;/th&gt; &lt;th&gt;Email&lt;/th&gt; &lt;th&gt;&lt;/th&gt;<b class="conum">(1)</b>
+        &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+        {% for contact in contacts %} <b class="conum">(2)</b>
+            &lt;tr&gt;
+                &lt;td&gt;{{ contact.first }}&lt;/td&gt;
+                &lt;td&gt;{{ contact.last }}&lt;/td&gt;
+                &lt;td&gt;{{ contact.phone }}&lt;/td&gt;
+                &lt;td&gt;{{ contact.email }}&lt;/td&gt; <b class="conum">(3)</b>
+                &lt;td&gt;&lt;a href="/contacts/{{ contact.id }}/edit"&gt;Edit&lt;/a&gt;
+                    &lt;a href="/contacts/{{ contact.id }}"&gt;View&lt;/a&gt;&lt;/td&gt; <b class="conum">(4)</b>
+            &lt;/tr&gt;
+        {% endfor %}
+        &lt;/tbody&gt;
+    &lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Output some headers for our table</p>
+</li>
+<li>
+<p>Iterate over the contacts that were passed in to the template</p>
+</li>
+<li>
+<p>Output the values of the current contact, first name, last name, etc.</p>
+</li>
+<li>
+<p>An "operations" column, with links to edit or view the contact details</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Here we are into the core of the page: we construct a table with appropriate headers matching the data we are going
+to show for each contact.  We iterate over the contacts that were passed into the template by the handler method using
+the <code>for</code> loop directive in Jinja2.  We then construct a series of rows, one for each contact, where we render the
+first and last name, phone and email of the contact as table cells in the row.</p>
+</div>
+<div class="paragraph">
+<p>Finally, we have an additional cell that includes two links:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A link to the "Edit" page for the contact, located at <code>/contacts/{{ contact.id }}/edit</code> (e.g. For the contact with
+id 42, the edit link will point to <code>/contacts/42/edit</code>)</p>
+</li>
+<li>
+<p>A link to the "View" page for the contact <code>/contacts/{{ contact.id }}</code> (using our previous contact example, the show
+page would be at <code>/contacts/42</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Finally, we have a bit of end-matter: a link to add a new contact and a directive to close up the <code>content</code> block:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 11. The Add Contact Link</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;p&gt;
+        &lt;a href="/contacts/new"&gt;Add Contact&lt;/a&gt; <b class="conum">(1)</b>
+    &lt;/p&gt;
+
+{% endblock %} <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Link to the page that allows you to create a new contact</p>
+</li>
+<li>
+<p>The closing element of the <code>content</code> block</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>And that&#8217;s our template!  Using this server side template, in combination with our handler method, we can respond with
+an HTML <em>representation</em> of all the contacts requested.  So far, so hypermedia!</p>
+</div>
+<div class="paragraph">
+<p>Here is what the template looks like, rendered with a bit of contact data:</p>
+</div>
+<div id="figure-1-1" class="imageblock">
+<div class="content">
+<img src="../images/figure_2-2_table_etc.png" alt="figure 2 2 table etc">
+</div>
+<div class="title">Figure 1. 4. Contact.App</div>
+</div>
+<div class="paragraph">
+<p>It won&#8217;t win any design awards at this poitn, but notice that our template, when rendered,
+provides all the functionality necessary to see all the contacts and search them, and also provides links to edit them,
+view details of them or even create a new one.  And it does all this without the browser knowing a thing about Contacts!
+The browser just knows how to issue HTTP requests and render HTML.</p>
+</div>
+<div class="paragraph">
+<p>As simple as it is, this is a very REST-ful application!</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_a_new_contact">3.4.2. Adding A New Contact</h4>
+<div class="paragraph">
+<p>The next bit of functionality that we will add to our application is the ability to add new contacts.  To do so, we
+are going to need to handle that <code>/contacts/new</code> URL referenced in the "Add Contact" link above.  Note that when a user
+clicks on that link, the browser will issue a <code>GET</code> request to the <code>/contacts/new</code> URL.  The other routes we have been
+looking at were using <code>GET</code> as well, but we are actually going to use two different HTTP methods for this bit of functionality:
+an HTTP <code>GET</code> and an HTTP <code>POST</code>, so we are going to be explicit when we declare this route.</p>
+</div>
+<div class="paragraph">
+<p>Here is our code:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 12. The New Contact GET Route</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/new", methods=['GET']) <b class="conum">(1)</b>
+def contacts_new_get():
+    return render_template("new.html", contact=Contact()) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Declare a route, explicitly handling <code>GET</code> requests to this path</p>
+</li>
+<li>
+<p>Render the <code>new.html</code> template, passing in a new contact object</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Pretty simple! We just render a <code>new.html</code> template with, well, a new Contact, as you might expect!
+(Note that <code>Contact()</code> is the python syntax for creating a new instance of the <code>Contact</code> class.)</p>
+</div>
+<div class="paragraph">
+<p>So the handler code for this route is very simple.  The <code>new.html</code> Jinja2 template, in fact, is more complex.  For the
+remaining templates I am not going to include the starting layout directive or the content block declaration, but you
+can assume they are the same unless I say otherwise.  This will let us focus on the "meat" of the template.</p>
+</div>
+<div class="paragraph">
+<p>If you are familiar with HTML you are probably expecting a form element here, and you will not be disappointed.  We are
+going to use the standard form element for collecting contact information and submitting it to the server.</p>
+</div>
+<div class="paragraph">
+<p>Here is what our HTML looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 13. A New Contact Form</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;form action="/contacts/new" method="post"&gt; <b class="conum">(1)</b>
+    &lt;fieldset&gt;
+        &lt;legend&gt;Contact Values&lt;/legend&gt;
+        &lt;p&gt;
+            &lt;label for="email"&gt;Email&lt;/label&gt; <b class="conum">(2)</b>
+            &lt;input name="email" id="email" type="email" placeholder="Email" value="{{ contact.email or '' }}"&gt; <b class="conum">(3)</b>
+            &lt;span class="error"&gt;{{ contact.errors['email'] }}&lt;/span&gt; <b class="conum">(4)</b>
+        &lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>A form that submits to the <code>/contacts/new</code> path, using an HTTP <code>POST</code></p>
+</li>
+<li>
+<p>A label for the first form input</p>
+</li>
+<li>
+<p>the first form input, of type email</p>
+</li>
+<li>
+<p>Any error messages associated with this field</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the first line of code we create a form that will submit back <em>to the same path</em> that we are handling: <code>/contacts/new</code>.
+Rather than issuing an HTTP <code>GET</code> to this path, however, we will issue an HTTP <code>POST</code> to it.  This is the standard way
+of signalling via HTTP that you wish to create a new resource, rather than simply get a representation of it.</p>
+</div>
+<div class="paragraph">
+<p>We then have a label and input (always a good practice) that capture the email of the new contact in question.  The
+"name" of the input is "email" and, when this form is submitted, the value of this input will be submitted in the <code>POST</code>
+request, associated with the "email" key.</p>
+</div>
+<div class="paragraph">
+<p>Next we have inputs for the other fields for contacts:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 14. Inputs And Labels For The New Contact Form</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">        &lt;p&gt;
+            &lt;label for="first_name"&gt;First Name&lt;/label&gt;
+            &lt;input name="first_name" id="first_name" type="text" placeholder="First Name" value="{{ contact.first or '' }}"&gt;
+            &lt;span class="error"&gt;{{ contact.errors['first'] }}&lt;/span&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+            &lt;label for="last_name"&gt;Last Name&lt;/label&gt;
+            &lt;input name="last_name" id="last_name" type="text" placeholder="Last Name" value="{{ contact.last or '' }}"&gt;
+            &lt;span class="error"&gt;{{ contact.errors['last'] }}&lt;/span&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+            &lt;label for="phone"&gt;Phone&lt;/label&gt;
+            &lt;input name="phone" id="phone" type="text" placeholder="Phone" value="{{ contact.phone or '' }}"&gt;
+            &lt;span class="error"&gt;{{ contact.errors['phone'] }}&lt;/span&gt;
+        &lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, we have a button that will submit the form, the end of the form tag, and a link back to the main contacts table:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 15. The Submit Button For The New Contact Form</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">        &lt;button&gt;Save&lt;/button&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;
+
+&lt;p&gt;
+    &lt;a href="/contacts"&gt;Back&lt;/a&gt;
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is worth pointing out something that is easy to miss: here we are again seeing the flexibility of hypermedia!  If we
+add a new field, remove a field, or change the logic around how fields are validated or work with one another, this new
+state of affairs is simply reflected in the hypermedia representation given to users.  A user will see the updated
+new content and be able to work with it, no software update required!</p>
+</div>
+<div class="sect4">
+<h5 id="_handling_the_post_to_contactsnew">Handling The Post to <code>/contacts/new</code></h5>
+<div class="paragraph">
+<p>The next step in our application is to handle the <code>POST</code> that this form makes to <code>/contacts/new</code> to create a new
+Contact.</p>
+</div>
+<div class="paragraph">
+<p>To do so, we need to add another route that uses the same path but handles the <code>POST</code> method instead of the <code>GET</code>.  We
+will take the submitted form values and attempt to create a Contact.  If it works, we will redirect to the list of
+contacts and show a success message.  If it doesn&#8217;t then we will show the new contact form again, rendering any
+errors that occurred in the HTML so the user can correct them.</p>
+</div>
+<div class="paragraph">
+<p>Here is our controller code:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 16. The New Contact Controller Code</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/new", methods=['POST'])
+def contacts_new():
+    c = Contact(None, request.form['first_name'], request.form['last_name'], request.form['phone'],
+                request.form['email']) <b class="conum">(1)</b>
+    if c.save(): <b class="conum">(2)</b>
+        flash("Created New Contact!")
+        return redirect("/contacts") <b class="conum">(3)</b>
+    else:
+        return render_template("new.html", contact=c) <b class="conum">(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>We construct a new contact object with the values from the form</p>
+</li>
+<li>
+<p>We try to save it</p>
+</li>
+<li>
+<p>On success, "flash" a success message &amp; redirect to the <code>/contacts</code> page</p>
+</li>
+<li>
+<p>On failure, rerender the form, showing any errors to the user</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The logic here is a bit more complex than other handler methods we have seen, but not by a whole lot.  The first thing
+we do is create a new Contact, again using the <code>Contact()</code> syntax in python to construct the object.  We pass in the values
+submitted by the user in the form by using the <code>request.form</code> object, provided by flash Flask.  This object allows us to
+access form values in a convenient and easy to read syntax.  Note that we pick out each value based on the <code>name</code> associated
+with each input in the form.</p>
+</div>
+<div class="paragraph">
+<p>We also pass in <code>None</code> as the first value to the <code>Contact</code> constructor.  This is the "id" parameter, and by passing in
+<code>None</code> we are signaling that it is a new contact, and needs to have an ID generated for it.</p>
+</div>
+<div class="paragraph">
+<p>Next, we call the <code>save()</code> method on the Contact object.  This returns <code>true</code> if the save is successful, and <code>false</code> if
+the save is unsuccessful, for example if one of the fields has a bad value in it.  (Again, we are not going to dig into
+the details of how this model object is implemented, our only concern is using it to generate hypermedia responses.)</p>
+</div>
+<div class="paragraph">
+<p>If we are able to save the contact (that is, there were no validation errors), we create a <em>flash</em> message indicating
+success and redirect the browser back to the list page.  A flash is a common feature in web frameworks that allows
+you to store a message that will be available on the <em>next</em> request, typically in a cookie or in a session store.</p>
+</div>
+<div class="paragraph">
+<p>Finally, if we are unable to save the contact, we rerender the <code>new.html</code> template with the contact.  This will show the
+same template as above, but the inputs will be filled in with the submitted values, and any errors associated with the
+fields will be rendered to feedback to the user as to what validation failed.</p>
+</div>
+<div class="paragraph">
+<p>Note that, in the case of a successful creation of a contact, we have implemented the Post/Redirect/Get pattern we
+discussed earlier.</p>
+</div>
+<div class="paragraph">
+<p>Believe it or not, this is about as complicated as our handler logic will get, even when we look at adding more advanced
+htmx-based behavior.  Simplicity is a great selling point of the hypermedia approach!</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_viewing_the_details_of_a_contact">3.4.3. Viewing The Details Of A Contact</h4>
+<div class="paragraph">
+<p>The next piece of functionality we will implement is the details page for a Contact.  The user will navigate to this
+page by clicking the "View" link in one of the rows in the list of contacts.  This will take them to the path
+<code>/contact/&lt;contact id&gt;</code> (e.g. <code>/contacts/42</code>).  Note that this is a common pattern in web development: Contacts are being
+treated as resources and the URLs around these resources are organized in a coherent manner:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you wish to view all contacts, you issue a <code>GET</code> to <code>/contacts</code></p>
+</li>
+<li>
+<p>If you wish to get a hypermedia representation allowing you to create a new contact, you issue a <code>GET</code> to <code>/contacts/new</code></p>
+</li>
+<li>
+<p>If you wish to view a specific contacts (with, say, and id of <code>42), you issue a `GET</code> to <code>/contacts/42</code></p>
+</li>
+</ul>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Path Design In Your HDA</div>
+<div class="paragraph">
+<p>It is easy to quibble about what particular path scheme you should use ("Should we <code>POST</code> to <code>/contacts/new</code> or to <code>/contacts</code>?")
+and we have seen <em>lots</em> of arguments about one approach versus another.  I feel it is more important to understand
+the overarching idea of resources and the hypermedia representations of them, rather than hairsplitting about path
+layouts: just pick a reasonable schema you like and stay consistent.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Our handler logic for this route is going to be <em>very</em> simple: we just look the Contact up by id, embedded in the path
+of the URL for the route.  To extract this ID we are going to need to introduce a final bit of Flack functionality: the
+ability to call out pieces of a path and have them automatically extracted and then passed in to a handler function.</p>
+</div>
+<div class="paragraph">
+<p>Here is what the code looks like, just a few lines of simple Python:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/&lt;contact_id&gt;") <b class="conum">(1)</b>
+def contacts_view(contact_id=0): <b class="conum">(2)</b>
+    contact = Contact.find(contact_id) <b class="conum">(3)</b>
+    return render_template("show.html", contact=contact) <b class="conum">(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Map the path, with a path variable named <code>contact_id</code></p>
+</li>
+<li>
+<p>The handler takes the value of this path parameters</p>
+</li>
+<li>
+<p>Look up the corresponding contact</p>
+</li>
+<li>
+<p>Render the <code>show.html</code> template</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You can see the syntax for extracting values from the path in the first line of code, you enclose the part of the
+path you wish to extract in <code>&lt;&gt;</code> and give it a name.  This component of the path will be extracted and then passed
+into the handler function, via the parameter with the same name.  So, if you were to navigate to the path <code>/contacts/42</code>
+then the value <code>42</code> would be passed into the <code>contacts_view()</code> function for the value of <code>contact_id</code>.</p>
+</div>
+<div class="paragraph">
+<p>Once we have the id of the contact we want to look up, we load it up using the <code>find</code> method on the <code>Contact</code> object.  We
+then pass this contact into the <code>show.html</code> template and render a response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_viewing_the_details_of_a_contact_2">3.4.4. Viewing The Details Of A Contact</h4>
+<div class="paragraph">
+<p>Our <code>show.html</code> template is relatively simple, just showing the same information as the table but in a slightly different
+format (perhaps for printing.)  If we add functionality like "notes" to the application later on, however, this will give
+us a good place to show them.</p>
+</div>
+<div class="paragraph">
+<p>Again, I will omit the "chrome" and focus on the meat of the template:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 17. The Contact Details Template</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;h1&gt;{{contact.first}} {{contact.last}}&lt;/h1&gt;
+
+&lt;div&gt;
+  &lt;div&gt;Phone: {{contact.phone}}&lt;/div&gt;
+  &lt;div&gt;Email: {{contact.email}}&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+&lt;a href="/contacts/{{contact.id}}/edit"&gt;Edit&lt;/a&gt;
+&lt;a href="/contacts"&gt;Back&lt;/a&gt;
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We simply render a nice First Name abd Last Name header with the additional contact information as well as a link to
+edit it or to navigate back to the list of contacts.  Simple but effective hypermedia!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_editing_and_deleting_a_contact">3.4.5. Editing And Deleting A Contact</h4>
+<div class="paragraph">
+<p>Editing a contact is going to look very similar to creating a new contact.  As with adding a new contact, we are going
+to need two routes that handle the same path, but using different HTTP methods: a <code>GET</code> to <code>/contacts/&lt;contact_id&gt;/edit</code>
+will return a form allowing you to edit the contact with that ID and the <code>POST</code> will update it.</p>
+</div>
+<div class="paragraph">
+<p>We will also piggyback the ability to delete a contact along with this editing functionality.  To do this we will need to
+handle a <code>POST</code> to <code>/contacts/&lt;contact_id&gt;/delete</code>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at the code to handle the <code>GET</code>, which, again, will return an HTML representation of an editing interface
+for the given resource:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 18. The Edit Contact Controller Code</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/&lt;contact_id&gt;/edit", methods=["GET"])
+def contacts_edit_get(contact_id=0):
+    contact = Contact.find(contact_id)
+    return render_template("edit.html", contact=contact)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see this looks an awful lot like our "Show Contact" functionality.  In fact, it is nearly identical except
+for the template that we render: here we render <code>edit.html</code> rather than <code>show.html</code>!  There&#8217;s that simplicity we
+talked about again!</p>
+</div>
+<div class="paragraph">
+<p>While our handler code looked similar to the "Show Contact" functionality, our template is going to look very similar to
+the template for the "New Contact" functionality: we are going to have a form that submits values to the same URL
+used to <code>GET</code> the form (see what I did there?) and that presents all the fields of a contact as inputs, along with
+any error messages (we will even reuse the same Post-Redirect-Get trick!)</p>
+</div>
+<div class="paragraph">
+<p>Here is the first bit of the form:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 19. The Edit Contact Form Start</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;form action="/contacts/{{ contact.id }}/edit" method="post"&gt; <b class="conum">(1)</b>
+        &lt;fieldset&gt;
+            &lt;legend&gt;Contact Values&lt;/legend&gt;
+              &lt;p&gt;
+                  &lt;label for="email"&gt;Email&lt;/label&gt;
+                  &lt;input name="email" id="email" type="text" placeholder="Email" value="{{ contact.email }}"&gt; <b class="conum">(2)</b>
+                  &lt;span class="error"&gt;{{ contact.errors['email'] }}&lt;/span&gt;
+              &lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Issue a <code>POST</code> to the <code>/contacts/{{ contact.id }}/edit</code> path</p>
+</li>
+<li>
+<p>As with the <code>new.html</code> page, the input is tied to the contact&#8217;s email</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This HTML is nearly identical to our <code>new.html</code> form, except that this form is going to submit a <code>POST</code> to a different
+path, based on the id of the contact that we want to update.  It&#8217;s worth nothing here that, rather than <code>POST</code>, I would
+prefer to use a <code>PUT</code> or <code>PATCH</code>, but those are not available in plain HTML.</p>
+</div>
+<div class="paragraph">
+<p>Following this we have the remainder of our form, again very similar to the <code>new.html</code> template, and our submit button
+to submit the form.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 20. The Edit Contact Form Body</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">              &lt;p&gt;
+                  &lt;label for="first_name"&gt;First Name&lt;/label&gt;
+                  &lt;input name="first_name" id="first_name" type="text" placeholder="First Name"
+                         value="{{ contact.first }}"&gt;
+                  &lt;span class="error"&gt;{{ contact.errors['first'] }}&lt;/span&gt;
+              &lt;/p&gt;
+              &lt;p&gt;
+                  &lt;label for="last_name"&gt;Last Name&lt;/label&gt;
+                  &lt;input name="last_name" id="last_name" type="text" placeholder="Last Name"
+                         value="{{ contact.last }}"&gt;
+                  &lt;span class="error"&gt;{{ contact.errors['last'] }}&lt;/span&gt;
+              &lt;/p&gt;
+              &lt;p&gt;
+                  &lt;label for="phone"&gt;Phone&lt;/label&gt;
+                  &lt;input name="phone" id="phone" type="text" placeholder="Phone" value="{{ contact.phone }}"&gt;
+                  &lt;span class="error"&gt;{{ contact.errors['phone'] }}&lt;/span&gt;
+              &lt;/p&gt;
+            &lt;button&gt;Save&lt;/button&gt;
+        &lt;/fieldset&gt;
+    &lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the final part of our template we have a small difference between the <code>new.html</code> and <code>edit.html</code>.  Below the main
+editing form, we include a second form that allows you to delete a contact.  It does this by issuing a <code>POST</code>
+to the <code>/contacts/&lt;contact id&gt;/delete</code> path.  As with being able to use a <code>PUT</code> to update a contact, it sure would be
+nice if we could issue a <code>DELETE</code> request to delete one, but unfortunately that also isn&#8217;t possible in plain HTML!</p>
+</div>
+<div class="paragraph">
+<p>Finally, there is a simple hyperlink back to the list of contacts.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 21. The Edit Contact Form Footer</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;form action="/contacts/{{ contact.id }}/delete" method="post"&gt;
+        &lt;button&gt;Delete Contact&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;p&gt;
+        &lt;a href="/contacts/"&gt;Back&lt;/a&gt;
+    &lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Given all the similarities between the <code>new.html</code> and <code>edit.html</code> templates, you may be wondering why we are not
+<em>refactoring</em> these two templates to share logic between them.  That&#8217;s a great observation and, in a production system,
+we would probably do just that.  For our purposes, however, since our application is small and simple, we will leave the
+templates separate.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Factoring Your Applications</div>
+<div class="paragraph">
+<p>One thing that often trips people up who are coming to hypermedia applications from a JavaScript background is the
+notion of "components".  In JavaScript-oriented applications it is common to break your app up into small
+client-side components that are then composed together.  These components are often developed and tested in isolation and
+provide a nice abstraction for developers to create testable code.</p>
+</div>
+<div class="paragraph">
+<p>With Hypermedia Driven Applications, in contrast, you factor your application on the server side.  As we said, the above form could be
+refactored into a shared template between the edit and create templates, allowing you to achieve a reusable and DRY (Don&#8217;t
+Repeat Yourself) implementation.</p>
+</div>
+<div class="paragraph">
+<p>Note that factoring on the server side tends to be coarser-grained than on the client side: you tend to split out common
+<em>sections</em> rather than create lots of individual components.  This has both benefits (it tends to be simple) as well as
+drawbacks (it is not nearly as isolated as client-side components) .</p>
+</div>
+<div class="paragraph">
+<p>Overall, however, a properly factored server-side hypermedia application can be extremely DRY!</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_handling_the_post_to_contactscontact_id">Handling The Post to <code>/contacts/&lt;contact_id&gt;</code></h5>
+<div class="paragraph">
+<p>Next we need to handle the HTTP <code>POST</code> request that the form in our <code>edit.html</code> template submits.  We will declare
+another route that handles the path as the <code>GET</code> above.</p>
+</div>
+<div class="paragraph">
+<p>Here is our Python code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/&lt;contact_id&gt;/edit", methods=["POST"]) <b class="conum">(1)</b>
+def contacts_edit_post(contact_id=0):
+    c = Contact.find(contact_id) <b class="conum">(2)</b>
+    c.update(request.form['first_name'], request.form['last_name'], request.form['phone'], request.form['email']) <b class="conum">(3)</b>
+    if c.save(): <b class="conum">(4)</b>
+        flash("Updated Contact!")
+        return redirect("/contacts/" + str(contact_id)) <b class="conum">(5)</b>
+    else:
+        return render_template("edit.html", contact=c) <b class="conum">(6)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Handle a <code>POST</code> to <code>/contacts/&lt;contact_id&gt;/edit</code></p>
+</li>
+<li>
+<p>Look the contact up by id</p>
+</li>
+<li>
+<p>update the contact with the new information from the form</p>
+</li>
+<li>
+<p>Attempt to save it</p>
+</li>
+<li>
+<p>On success, flash a success message &amp; redirect to the detail page</p>
+</li>
+<li>
+<p>On failure, rerender the edit template, showing any errors</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The logic in this handler is very similar to the logic in the handler for adding a new contact.  The only real difference
+is that, rather than creating a new Contact, we look up a contact by id and then call the <code>update()</code> method on it with
+the values that were entered in the form.</p>
+</div>
+<div class="paragraph">
+<p>Once again, this consistency between our CRUD operations is one of the nice, simplifying aspects of traditional CRUD web
+applications!</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deleting_a_contact">3.4.6. Deleting A Contact</h4>
+<div class="paragraph">
+<p>We piggybacked delete functionality into the same template used to edit a contact.  That form will issue an HTTP <code>POST</code>
+to <code>/contacts/&lt;contact_id&gt;/delete</code> that we will need to handle and delete the contact in question.</p>
+</div>
+<div class="paragraph">
+<p>Here is what the controller looks like</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. 22. The Delete Contact Controller Code</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/&lt;contact_id&gt;/delete", methods=["POST"]) <b class="conum">(1)</b>
+def contacts_delete(contact_id=0):
+    contact = Contact.find(contact_id)
+    contact.delete() <b class="conum">(2)</b>
+    flash("Deleted Contact!")
+    return redirect("/contacts") <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Handle a <code>POST</code> the <code>/contacts/&lt;contact_id&gt;/delete</code> path</p>
+</li>
+<li>
+<p>Look up and then invoke the <code>delete()</code> method on the contact</p>
+</li>
+<li>
+<p>Flash a success message and redirect to the main list of contacts</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The handler code is very simple since we don&#8217;t need to do any validation or conditional logic: we simply look up the
+contact the same way we have been doing in our other handlers and invoke the <code>delete()</code> method on it, then redirect
+back to the list of contacts with a success flash message.</p>
+</div>
+<div class="paragraph">
+<p>No need for a template in this case!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_contact_app_implemented">3.4.7. Contact.App&#8230;&#8203; Implemented!</h4>
+<div class="paragraph">
+<p>Believe it or not, that&#8217;s our entire contact application!  Hopefully the Flask and Jinja2 code is simple enough that
+you were able to follow along easily, even if Python isn&#8217;t your preferred language or Flask isn&#8217;t your preferred web
+application framework.  Again, I don&#8217;t expect you to be a Python or Flask expert (I&#8217;m certainly
+not!) and you shouldn&#8217;t need more than a basic understanding of how they work for the remainder of the book.</p>
+</div>
+<div class="paragraph">
+<p>Now, admittedly, this isn&#8217;t a large or sophisticated application, but it does demonstrate many of the aspects of
+traditional, web 1.0 applications: CRUD, the Post/Redirect/Get pattern, working
+with domain logic in a controller, organizing our URLs in a coherent, resource-oriented manner.</p>
+</div>
+<div class="paragraph">
+<p>And, furthermore, this is a deeply <em>hypermedia-based</em> web application.  Without even thinking about it (or maybe even understanding
+it!) we have been using REST, HATEOAS and all the other hypermedia concepts.  I would bet that this simple little app
+we have built is more REST-ful than 99% of all JSON APIs ever built, and it was all effortless: just by virtue of using
+a <em>hypermedia</em>, HTML, we naturally fall into the REST-ful network architecture.</p>
+</div>
+<div class="paragraph">
+<p>So that&#8217;s great.  But what&#8217;s the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style
+applications people used to build?</p>
+</div>
+<div class="paragraph">
+<p>Well, at some level, nothing is wrong with it.  Particularly for an application that is as simple as this one it, the older
+way of building web apps may be a fine approach!</p>
+</div>
+<div class="paragraph">
+<p>However, the application does suffer from that "clunkiness" that we mentioned earlier when discussing web 1.0 applications:
+every request replaces the entire screen, introducing a noticeable flicker when navigating between pages.  You lose your
+scroll state.  You have to click around a bit more than you might in a more sophisticated web application.  Contact.App,
+at this point, just doesn&#8217;t feel like a "modern" web application, does it?</p>
+</div>
+<div class="paragraph">
+<p>Well.  Are we going to have to adopt JavaScript after all?  Should we pitch this hypermedia approach in the bin, install
+NPM and start pulling down thousands of JavaScript dependencies, and rebuild the application using a "modern" JavaScript
+library like React?</p>
+</div>
+<div class="paragraph">
+<p>Well, I wouldn&#8217;t be writing this book if that were the case, now would I?!</p>
+</div>
+<div class="paragraph">
+<p>No, I wouldn&#8217;t.  It turns out that we can improve the user experience of this application <em>without</em> abandoning the
+hypermedia architecture. One way this can be accomplished is to introduce htmx, a small JavaScript library that
+eXtends HTML (hence, htmx), to our application.  In the next few chapters we will take a look at this library and how
+it can be used to build surprisingly interactive user experiences, all within the original hypermedia architecture of
+the web.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_summary_2">3.5. Summary</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>A Hypermedia Driven Application is an application that primarily relies on exchanging hypermedia with a server
+for achieving interactivity</p>
+</li>
+<li>
+<p>Remember that Web 1.0 applications are, by definition, Hypermedia Driven Applications!</p>
+</li>
+<li>
+<p>Flask is a simple Python library for connecting routes to server-side logic, or handlers, and provides a
+good foundation for building simple Hypermedia Driven Applications</p>
+</li>
+<li>
+<p>Jinja2 is the default templating library used for Server Side Rendering in Flask, it is a fairly standard
+templating library</p>
+</li>
+<li>
+<p>Combining Flask and Jinja templates allowed us to implement a basic CRUD-style Web 1.0 application for managing
+contacts in a basic web 1.0-style application with relatively little effort</p>
+</li>
+<li>
+<p>This web 1.0-style application works fine, but it feels a bit clunky and old fashioned.  We&#8217;ll look into how to
+  fix that problem, while still using hypermedia, next!
+= Building Hypermedia Systems
+:chapter: 3
+:sectnums:
+:figure-caption: Figure 1.
+:listing-caption: Listing 1.
+:table-caption: Table 1.
+:sectnumoffset: 2
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_rest_hateoas_and_all_that.html">REST, HATEOAS and All That</a> | ↑ Up: <a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a> | ⌂ Home: <a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a> | Next: <a href="_extending_html_as_hypermedia.html">Extending HTML As Hypermedia</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-10-20 12:44:43 -0600
+</div>
+</div>
+</body>
+</html>

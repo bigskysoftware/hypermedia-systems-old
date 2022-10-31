@@ -1,0 +1,2367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="author" content="Adam Stepinski, Carson Gross, Deniz Akşimşek">
+<title>Building Hypermedia Systems</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_hyperview_a_mobile_hypermedia" class="book">
+<div id="header">
+<h1>Building Hypermedia Systems</h1>
+<div class="details">
+<span id="author" class="author">Adam Stepinski, Carson Gross, Deniz Akşimşek</span><br>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a></span></p><ul class="sectlevel0">
+<li><a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a>
+<ul class="sectlevel1">
+<li><a href="_reintroducing_hypermedia.html">1. Reintroducing Hypermedia</a>
+</li>
+<li><a href="_rest_hateoas_and_all_that.html">2. REST, HATEOAS and All That</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html">3. Building A Simple Web 1.0 Application</a>
+</li>
+<li><a href="_extending_html_as_hypermedia.html">4. Extending HTML As Hypermedia</a>
+</li>
+<li><a href="_htmx_in_action.html">5. htmx In Action</a>
+</li>
+<li><a href="_building_hypermedia_systems_2.html">6. Building Hypermedia Systems</a>
+</li>
+<li><a href="_more_htmx_patterns.html">7. More htmx Patterns</a>
+</li>
+<li><a href="_building_hypermedia_systems_3.html">8. Building Hypermedia Systems</a>
+</li>
+<li><a href="_a_dynamic_archive_ui_with_htmx.html">9. A Dynamic Archive UI With htmx</a>
+</li>
+<li><a href="_building_hypermedia_systems_4.html">10. Building Hypermedia Systems</a>
+</li>
+<li><a href="_deep_htmx.html">11. Deep htmx</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html"><span class="toc-current">12. Hyperview: A Mobile Hypermedia</span></a>
+<ul class="sectlevel2">
+<li><a href="_hyperview_a_mobile_hypermedia.html#_the_state_of_mobile_app_development">12.1. The state of mobile app development</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_hypermedia_for_mobile_apps">12.2. Hypermedia for Mobile Apps</a>
+<ul class="sectlevel3">
+<li><a href="_hyperview_a_mobile_hypermedia.html#_web_views">12.2.1. Web views</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_hyperview">12.2.2. Hyperview</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_which_hypermedia_architecture_should_i_use">12.2.3. Which Hypermedia architecture should I use?</a>
+</li>
+</ul>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_introduction_to_hxml">12.3. Introduction to HXML</a>
+<ul class="sectlevel3">
+<li><a href="_hyperview_a_mobile_hypermedia.html#_hello_world">12.3.1. Hello World!</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_ui_elements">12.3.2. UI Elements</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_inputs">12.3.3. Inputs</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_styling">12.3.4. Styling</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_custom_elements">12.3.5. Custom elements</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_behaviors">12.3.6. Behaviors</a>
+</li>
+</ul>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html#_summary_8">12.4. Summary</a>
+</li>
+</ul>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html">13. Building a Contacts App With Hyperview</a>
+</li>
+<li><a href="_extending_the_hyperview_client.html">14. Extending the Hyperview Client</a>
+</li>
+<li><a href="_client_side_scripting.html">15. Client Side Scripting</a>
+</li>
+<li><a href="_building_hypermedia_systems_5.html">16. Building Hypermedia Systems</a>
+</li>
+<li><a href="_json_data_apis_hypermedia_driven_applications.html">17. JSON Data APIs &amp; Hypermedia Driven Applications</a>
+</li>
+<li><a href="_other_hypermedia_libraries_technologies.html">18. Other Hypermedia Libraries &amp; Technologies</a>
+</li>
+<li><a href="_conclusion_3.html">19. Conclusion</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_hyperview_a_mobile_hypermedia">12. Hyperview: A Mobile Hypermedia</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter covers</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Shortcomings with the current state of mobile app development</p>
+</li>
+<li>
+<p>How a hypermedia architecture can address these problems</p>
+</li>
+<li>
+<p>Hyperview as a mobile app framework that uses the hypermedia architecture</p>
+</li>
+<li>
+<p>An overview of HXML, the hypermedia format used by Hyperview</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You may be forgiven for thinking the hypermedia architecture is synonymous with the Web, web browsers, and HTML.
+No doubt, the Web is the largest hypermedia system, and web browsers are the most popular hypermedia client.
+The dominance of the Web in discussions about hypermedia make it easy to forget that hypermedia is a general concept, and can be applied to all types of platforms and applications.
+In this chapter, we will see the hypermedia architecture applied to a non-web platform: native mobile applications.
+Mobile as a platform has different constraints than the Web.
+It requires different tradeoffs and design decisions.
+Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly applied to build delightul mobile applications!</p>
+</div>
+<div class="sect2">
+<h3 id="_the_state_of_mobile_app_development">12.1. The state of mobile app development</h3>
+<div class="paragraph">
+<p>Before we can discuss how to apply hypermedia to mobile platforms, we need to understand how native mobile apps are commonly built.
+I&#8217;m using the word "native" to refer to code written against an SDK provided by the phone&#8217;s operating system (typically Android or iOS).
+This code is packaged into an executable binary, and uploaded &amp; approved through app stores controlled by Google and Apple.
+When users install or update an app, they&#8217;re downloading this executable and running the code directly on their device&#8217;s OS.
+In this way, mobile apps have a lot in common with old-school desktop apps for Mac, Windows, or Linux.
+There is one important difference between PC desktop apps of yesteryear and today&#8217;s mobile apps.
+These days, almost all mobile apps are "networked".
+By networked, I mean the app needs to read and write data over the Internet to deliver its core functionality.
+In other words, a networked mobile app needs to to implement the client-server architecture.</p>
+</div>
+<div class="paragraph">
+<p>When implementing the client-server architecture, the developer needs to make a decision: Should the app be designed as a thin client or thick client?
+The current mobile ecoystems strongly push developers towards a thick-client approach.
+Why?
+Remember, Android and iOS require that a native mobile app be packaged and distributed as an executable binary.
+There&#8217;s no way around it.
+Since the developer needs to write code to package into an executable, it seems logical to implement some of the app&#8217;s logic in that code.
+The code may as well initiate HTTP calls to the server to retrieve data, and then render that data using the platform&#8217;s UI libraries.
+Thus, developers are naturally led into a thick-client pattern that looks something like this:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client contains code to make API requests to the server, and code to translate those responses to UI updates</p>
+</li>
+<li>
+<p>The server implements an HTTP API that speaks JSON, and knows little about the state of the client</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Just like with SPAs on the web, this architecture has a big downside: the app&#8217;s logic gets spread across the client and server.
+Sometimes, this means that logic gets duplicated (like to validate form data).
+Other times, the client and server each implement disjoint parts of the app&#8217;s overall logic.
+To understand what the app does, a developer needs to trace interactions between two very different codebases.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s another downside that affects mobile apps more than SPAs: API churn.
+Remember, the app stores control how your app gets distributed and updated.
+Users can even control if and when they get updated versions of your app.
+As a mobile developer, you can&#8217;t assume that every user will be on the latest version of your app.
+Your frontend code gets fragmented across many versions, and now your backend needs to support all of them.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hypermedia_for_mobile_apps">12.2. Hypermedia for Mobile Apps</h3>
+<div class="paragraph">
+<p>We’ve seen that the hypermedia architecture can address the shortcomings of SPAs on the web.
+But can hypermedia work for mobile apps as well?
+The answer is yes!</p>
+</div>
+<div class="paragraph">
+<p>Just like on the web, we can use Hypermedia formats on mobile and let it serve as the engine of application state.
+All of the logic is controlled from the backend, rather than being spread between two codebases.
+Hypermedia architecture also solves the annoying problem of API churn on mobile apps.
+Since the backend serves a Hypermedia response containing both data and actions, there&#8217;s no way for the data and UI to get out of sync.
+No more worries about backwards compatibility or maintaining multiple API versions.</p>
+</div>
+<div class="paragraph">
+<p>So how can you use Hypermedia for your mobile app?
+There are two approaches employing hypermedia to build &amp; ship native mobile apps today:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Web views, which wraps the trusty web platform in a mobile app shell</p>
+</li>
+<li>
+<p>Hyperview, a new hypermedia format I designed specifically for mobile apps</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_web_views">12.2.1. Web views</h4>
+<div class="paragraph">
+<p>The simplest way to use hypermedia architecture on mobile is by leveraging web technologies.
+Both Android and iOS SDKs provide "web views": chromeless web browsers tbat can be embedded in native apps.
+Tools like Apache Cordova make it easy to take the URL of a website, and spit out native iOS and Android apps based on web views.
+If you already have a responsive web app, you can get a "native" Hypermedia apps for free.
+Sounds too good to be true, right?</p>
+</div>
+<div class="paragraph">
+<p>Of course, there is a fundamental limitation with this approach.
+The web and mobile are different platforms, with different capabilities and UX conventions.
+HTML doesn&#8217;t natively support common UI patterns of mobile apps.
+One of the biggest differences is around how each platform handles navigation.
+On the web, navigation is page-based, with one page replacing another and the browser providing back/forward buttons to navigate the page history.
+On mobile, navigation is more complex, and tuned for the physicality of gesture-based interactions.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To drill down, screens slide on top of each other, forming stacks of screens.</p>
+</li>
+<li>
+<p>A nav bar at the bottom of the app allows switching between various stacks of screens.</p>
+</li>
+<li>
+<p>Modals slide up from the bottom of the app, covering the other stacks and the nav bar.</p>
+</li>
+<li>
+<p>Unlike with web pages, all of these screens are still present in memory, rendered and updating based on app state.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The navigation architecture is a major difference between how mobile and web apps function.
+But it&#8217;s not the only one.
+Many other UX patterns are present in mobile apps, but are not natively supported on the web:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>pull-to-refresh to refresh content in a screen</p>
+</li>
+<li>
+<p>horizontal swipe on UI elements to reveal actions</p>
+</li>
+<li>
+<p>sectioned lists with sticky headers</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>While these interactions are not natively supported by web browsers, they can be simulated with JS libraries.
+Of course, these libraries will never have the same feel and performance as native gestures.
+And using these libraries usually requires embracing a JS-heavy SPA architecture.
+This puts us back at square 1!
+To avoid using the typical thick-client architecture of native mobile apps, we turned to a Web view.
+The web view allows us to use good-old hypermedia-based HTML.
+But to get the desired look &amp; feel of a mobile app, we end up building a SPA in JS, losing the benefits of Hypermedia in the process.</p>
+</div>
+<div class="paragraph">
+<p>To build a hypermedia-based mobile app that feels and acts native, HTML isn&#8217;t going to cut it.
+We need a format designed to represent the interactions and patterns of native mobile apps.
+That&#8217;s exactly what Hyperview does.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_hyperview">12.2.2. Hyperview</h4>
+<div class="paragraph">
+<p>Hyperview is an open-source framework that provides:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A pre-defined hypermedia format for defining mobile apps called HXML</p>
+</li>
+<li>
+<p>A hypermedia client for HXML that can be embedded in an app binary on iOS and Android</p>
+</li>
+<li>
+<p>Extension points in HXML and the client to customize the framework for a given app</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_the_format">The Format</h5>
+<div class="paragraph">
+<p>HXML was designed to feel familiar to web developers, used to working with HTML.
+Thus the choice of XML for the base format.
+In addition to familiar ergonomics, XML is compatible with server-side rendering libraries.
+For example, Jinja2 is perfectly suited as a templating library to render HXML.
+The familiarity of XML and the ease of integration on the backend make it simple to adopt in both new and existing codebases.
+Take a look at a "Hello World" app written in HXML.
+The syntax should be familiar to anyone who&#8217;s worked with HTML:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 130. Hello World</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;doc xmlns="https://hyperview.org/hyperview"&gt;
+  &lt;screen&gt;
+    &lt;styles /&gt;
+    &lt;body&gt;
+      &lt;header&gt;
+        &lt;text&gt;My first app&lt;/text&gt;
+      &lt;/header&gt;
+      &lt;view&gt;
+        &lt;text&gt;Hello World!&lt;/text&gt;
+      &lt;/view&gt;
+    &lt;/body&gt;
+  &lt;/screen&gt;
+&lt;/doc&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But HXML is not just a straight port of HTML with differently named tags.
+In previous chapters, we&#8217;ve seen how htmx enhances HTML with a handful of new attributes.
+These additions maintain the declaritive nature of HTML, while giving developers the power to create rich web apps.
+In HXML, the concepts of htmx (and IntercoolerJS before it) are built into the spec.
+Specifically, HXML is not limited to "click to navigate" and "press to submit" interactions like basic HTML.
+It supports a range of triggers and actions for modifying the content on a screen.
+These interactions are bundled together in a powerful concept of "behaviors".
+Developers can even define new behavior actions to add new capabilities to their app, without the need for scripting.
+We will learn more about behaviors later in this chapter.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_the_client">The client</h5>
+<div class="paragraph">
+<p>Web developers are lucky.
+They can assume their users have access to a web browser capable of rendering any web app.
+In Hypermedia terms, the Hypermedia (HTML) client is already built and distributed to users.
+Half the work is done!
+The developer has to only build the backend to serve Hypermedia responses.</p>
+</div>
+<div id="figure-6-1" class="imageblock">
+<div class="content">
+<img src="../images/figure_6_1.png" alt="figure 6 1">
+</div>
+<div class="title">Figure 12. 11. One HTML server, multiple HTML clients</div>
+</div>
+<div class="paragraph">
+<p>This is possible because the web is an open ecosystem built on standards.
+Any developer can build and host a web app, and any user can access it directly.</p>
+</div>
+<div class="paragraph">
+<p>As we know, that&#8217;s not the case with mobile platforms.
+There is no open standard for building and distributing native mobile apps.
+And there&#8217;s definitely no widely distributed "HXML browser".
+So how can a developer deliver a Hypermedia mobile app using HXML?
+Well, unlike on the web, the mobile developer must provide both the backend to serve HXML, and a mobile client app to render those HXML responses.</p>
+</div>
+<div id="figure-6-1" class="imageblock">
+<div class="content">
+<img src="../images/figure_6_1.png" alt="figure 6 1">
+</div>
+<div class="title">Figure 12. 12. One HXML server, one HXML client</div>
+</div>
+<div class="paragraph">
+<p>It would be a lot to ask from developers to write their own HXML client.
+That&#8217;s why Hyperview provides an open-source client library, written in React Native.
+This library can be used to bootstrap a new mobile app, or it can be embedded in an existing app.
+In either case, developers get a full "HXML browser" without needing to write it from scratch.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 131. The Benefits of Using Your Own Client</div>
+<div class="content">
+<pre class="highlight"><code class="language-" data-lang="">At first, it might seem like the Hyperview approach requires extra work to write and maintain the mobile app client.
+But there is a benefit to controlling both parts of the client-server architecture.
+Did you ever wish you could fix a web browser bug?
+Or maybe add a new HTML element or features to the browser itself?
+The open nature of the Web means that progress happens slowly.
+New features go through a lengthly standardization process.
+Browser vendors may prioritize bugs and features that don't match your individual priorities.
+As a Web developer, you may need to wait years until browsers support the feature you need.
+Or, you can try to work around it with some kludgy JS.
+
+Well, with Hyperview, there is no standards body or lengthly process for new features.
+As a Hyperview developer, you control your backend and mobile app client.
+Do you want to add a new element to HXML?
+Go right ahead!
+In fact, the Hyperview client library was built with extensibility in mind.
+There are extension points for custom UI elements and custom behavior actions.
+
+By extending the format and client itself, there's no need for Hyperview to include a scripting layer in HTMX.
+Features that require client-side logic get "built-in" to the client browser.
+HTMX responses remain pure, with UI and interactions represented in declarative XML.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_which_hypermedia_architecture_should_i_use">12.2.3. Which Hypermedia architecture should I use?</h4>
+<div class="paragraph">
+<p>We&#8217;ve discussed two approaches for creating mobile apps using Hypermedia architecture:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>create a backend that returns HTML, and serve it in a mobile app through a web view</p>
+</li>
+<li>
+<p>create a backend that returns HXML, and serve it in a mobile app with the Hyperview client</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I purposefully described the two approaches in a way to highlight their similarities.
+After all, they are both using the Hypermedia architecture, just with different formats and clients.
+Both approaches solve the fundamental issues with traditional, SPA-like mobile app development:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The backend controls the full state of the app.</p>
+</li>
+<li>
+<p>Our app&#8217;s logic is all in one place.</p>
+</li>
+<li>
+<p>The app always runs the latest version, there&#8217;s no API churn to worry about</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So which approach should you use for a Hypermedia-driven mobile app?
+Based on my experience building both types of apps, I strongly believe the Hyperview results in a better user experience.
+The web-view will always feel out-of-place on iOS and Android; there&#8217;s just no good way to replicate the patterns of navigation and interaction that mobile users expect.
+Hyperview was created specifically to address the limitations of thick-client and web view approaches.
+After the initial investment to learn Hyperview, you&#8217;ll get all of the benefits of the Hypermedia architecture, without the downsides of a degraded user experience.</p>
+</div>
+<div class="paragraph">
+<p>Of course, if you already have a simple, mobile-friendly web app, then using a web-view approach is sensible.
+You will certainly save time from not having to serve your app as HXML in addition to HTML.
+But as I will show at the end of this chapter, it doesn&#8217;t take a lot of work to convert an existing Hypermedia-driven web app into a Hyperview mobile app.
+But before we get there, we need to introduce the concepts of elements and behaviors in Hyperview.
+Then, we&#8217;ll re-build our contacts app in Hyperview.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_introduction_to_hxml">12.3. Introduction to HXML</h3>
+<div class="sect3">
+<h4 id="_hello_world">12.3.1. Hello World!</h4>
+<div class="paragraph">
+<p>HXML was designed to feel natural to web developers coming from HTML.
+Let&#8217;s take a closer look at the "Hello World" app defined in HXML:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 132. Hello World, revisited</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;doc xmlns="https://hyperview.org/hyperview"&gt; <b class="conum">(1)</b>
+  &lt;screen&gt; <b class="conum">(2)</b>
+    &lt;styles /&gt;
+    &lt;body&gt; <b class="conum">(3)</b>
+      &lt;header&gt; <b class="conum">(4)</b>
+        &lt;text&gt;My first app&lt;/text&gt;
+      &lt;/header&gt;
+      &lt;view&gt; <b class="conum">(5)</b>
+        &lt;text&gt;Hello World!&lt;/text&gt; <b class="conum">(6)</b>
+      &lt;/view&gt;
+    &lt;/body&gt;
+  &lt;/screen&gt;
+&lt;/doc&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The root element of the HXML app</p>
+</li>
+<li>
+<p>The element representing a screen of the app</p>
+</li>
+<li>
+<p>The element representing the UI of the screem</p>
+</li>
+<li>
+<p>The element representing the top header of the screen</p>
+</li>
+<li>
+<p>A wrapper element around the content shown on the screen</p>
+</li>
+<li>
+<p>The text content shown on the screen</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Nothing too strange here, right?
+Just like HTML, the syntax defines a tree of elements using start tags (<code>&lt;screen&gt;</code>) and end tags (<code>&lt;/screen&gt;</code>).
+Elements can contain other elements (<code>&lt;view&gt;</code>) or text (<code>Hello World!</code>).
+Elements can also be empty, represented with an empty tag (<code>&lt;styles /&gt;</code>).
+However, you&#8217;ll notice that the names of the HXML element are different from those in HTML.
+Let&#8217;s take a closer look at each of those elements to understand what they do.</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;doc&gt;</code> is the root of the HXML app.
+Think of it as equivalent to the <code>&lt;html&gt;</code> element in HTML.
+Note that the <code>&lt;doc&gt;</code> element contains an attribute <code>xmlns="https://hyperview.org/hyperview"</code>.
+This defines the default namespace for the doc.
+Namespaces are a feature of XML that allow one doc to contain elements defined by different developers.
+To prevent conflicts when two developers use the same name for their element, each developer defines a unique namespace.
+We will talk more about namespaces when we discuss custom elements &amp; behaviors later in this chapter.
+For now, it&#8217;s enough to know that elements in an HXML doc without an explicit namespace are considered to be part of the <code><a href="https://hyperview.org/hyperview" class="bare">https://hyperview.org/hyperview</a></code> namespace.</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;screen&gt;</code> represents the UI that gets rendered on a single screen of a mobile app.
+It&#8217;s possible for one <code>&lt;doc&gt;</code> to contain multiple <code>&lt;screen&gt;</code> elements, but we won&#8217;t get into that now.
+Typically, a <code>&lt;screen&gt;</code> element will contain elements that define the content and styling of the screen.</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;styles&gt;</code> defines the styles of the UI on the screen.
+We won&#8217;t get too much into styling in Hyperview in this chapter.
+Suffice it to say, unlike HTML, Hyperview does not use a separate language (CSS) to define styles.
+Instead, styling rules such as colors, spacing, layout, and fonts are defined in HXML.
+These rules are then explicitly referenced by UI elements, much like using classes in CSS.</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;body&gt;</code> defines the actual UI of the screen.
+The body includes all text, images, buttons, forms, etc that will be shown to the user.
+This is equivalent to the <code>&lt;body&gt;</code> element in HTML.</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;header&gt;</code> defines the header of the screen.
+Typically in mobile apps, the header includes some navigation (like a back button), and the title of the screen.
+It&#8217;s useful to define the header separately from the rest of the body.
+Some mobile OSes will use a different transition for the header than the rest of the screen content.</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;view&gt;</code> is the basic building block for layouts and structure within the screen&#8217;s body.
+Think of it like a <code>&lt;div&gt;</code> in HTML.
+Note that unlike in HTML, a <code>&lt;div&gt;</code> cannot directly contain text.</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;text&gt;</code> elements are the only way to render text in the UI.
+In this example, "Hello World" is contained within a  <code>&lt;text&gt;</code> element.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s all there is to define a basic "Hello World" app in HXML.
+Of course, this isn&#8217;t very exciting.
+Let&#8217;s cover some other built-in display elements.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ui_elements">12.3.2. UI Elements</h4>
+<div class="sect4">
+<h5 id="_lists">Lists</h5>
+<div class="paragraph">
+<p>A very common pattern in mobile apps is to scroll through a list of items.
+The physical properties of a phone screen (long &amp; vertical) and the intuitive gesture of swiping a thumb up &amp; down makes this a good choice for many screens.</p>
+</div>
+<div class="paragraph">
+<p>HXML has dedicated elements for representing lists and items.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 133. List element</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;list&gt; <b class="conum">(1)</b>
+  &lt;item key="item1"&gt; <b class="conum">(2)</b>
+    &lt;text&gt;My first item&lt;/text&gt; <b class="conum">(3)</b>
+  &lt;/item&gt;`
+  &lt;item key="item2"&gt;
+    &lt;text&gt;My second item&lt;/text&gt;
+  &lt;/item&gt;
+&lt;/list&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Element representing a list</p>
+</li>
+<li>
+<p>Element representing an item in the list, with a unique key</p>
+</li>
+<li>
+<p>The content of the item in the list.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Lists are represented with two new elements.
+The <code>&lt;list&gt;</code> wraps all of items in the list.
+It can be styled like a generic <code>&lt;view&gt;</code> (width, height, etc).
+A <code>&lt;list&gt;</code> element only contains <code>&lt;item&gt;</code> elements.
+Of course, these represent each unique item in the list.
+Note that <code>&lt;item&gt;</code> is required to have a <code>key</code> attribute, which is unique among all items in the list.</p>
+</div>
+<div class="paragraph">
+<p>You might be asking, "Why do we need a custom syntax for lists of items?
+Can&#8217;t we just use a bunch of <code>&lt;view&gt;</code> elements?".
+Yes, for lists with a small number of items, using nested <code>&lt;views&gt;</code> will work quite well.
+However, often the number of items in a list can be long enough to require optimizations to support smooth scrolling interactions.
+Consider browsing a feed of posts in a social media app.
+As you keep scrolling through the feed, it&#8217;s not unusual for the app to show hundreds if not thousands of posts.
+At any time, you can flick your finger to scroll to almost any part of the feed.
+Mobile devices tend to be memory-constrained.
+Keeping the fully-rendered list of items in memory could consume more resources than available.
+That&#8217;s why both iOS and Android provide APIs for optimized list UIs.
+These APIs know which part of the list is currently on-screen. To save memory, they clear out the non-visible list items, and recycle the item UI objects to conserve memory.
+By using explicit <code>&lt;list&gt;</code> and <code>&lt;item&gt;</code> elements in HXML, the Hyperview client knows to use these optimized list APIs to make your app more performant.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also worth mentioning that HXML supports section lists.
+Section lists are useful for building list-based UIs, where the items in the list can be grouped for the user&#8217;s convenience.
+For example, a UI showing a restaurant menu could group the offerings by dish type:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 134. Section list element</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;section-list&gt; <b class="conum">(1)</b>
+  &lt;section&gt; <b class="conum">(2)</b>
+    &lt;section-title&gt; <b class="conum">(3)</b>
+      &lt;text&gt;Appetizers&lt;/text&gt;
+    &lt;/section-title&gt;
+    &lt;item key="1"&gt; <b class="conum">(4)</b>
+      &lt;text&gt;French Fries&lt;/text&gt;
+    &lt;/item&gt;
+    &lt;item key="2"&gt;
+      &lt;text&gt;Onion Rings&lt;/text&gt;
+    &lt;/item&gt;
+  &lt;/section&gt;
+
+  &lt;section&gt; <b class="conum">(5)</b>
+    &lt;section-title&gt;
+      &lt;text&gt;Entrees&lt;/text&gt;
+    &lt;/section-title&gt;
+    &lt;item key="3"&gt;
+      &lt;text&gt;Burger&lt;/text&gt;
+    &lt;/item&gt;
+  &lt;/section&gt;
+&lt;/section-list&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Element representing a list with sections</p>
+</li>
+<li>
+<p>The first section of appetizer offerings</p>
+</li>
+<li>
+<p>Element for the title of the section, rendering the text "Appetizers"</p>
+</li>
+<li>
+<p>An item representing an appetizer</p>
+</li>
+<li>
+<p>A section for entree offerings</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll notice a couple of differences between <code>&lt;list&gt;</code> and <code>&lt;section-list&gt;</code>.
+The section list element only contains <code>&lt;section&gt;</code> elements, representing a group of items.
+A section can contain a <code>&lt;section-title&gt;</code> element. This is used to render some UI that acts as the header of the section.
+This header is "sticky", meaning it stays on screen while scrolling through items that belong to the corresponding section.
+Finally, <code>&lt;item&gt;</code> elements act the same as in the regular list, but can only appear within a <code>&lt;section&gt;</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_images">Images</h5>
+<div class="paragraph">
+<p>Showing images in Hyperview is pretty similar to HTML, but there are a few differences.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 135. Image element</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;image source="/profiles/1.jpg" style="avatar" /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>source</code> attribute specifies how to load the image.
+Like in HTML, the source can be an absolute or relative URL.
+Additionally, the source can be an encoded data URI, for example <code>data:image/png;base64,iVBORw</code>.
+However, the source can also be a "local" URL, refering to an image that is bundled as an asset in the mobile app.
+The local URL is prefixed with <code>./</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 136. Image element, pointing to local source</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;image source="./logo.png" style="logo" /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using Local URLs is an optimization.
+Since the images are on the mobile device, they don&#8217;t require a network request and will appear quickly.
+However, bundling the image with the mobile app binary increases the binary size.
+Using local images is a good tradeoff for images that are frequently accessed but rarely change.
+Good examples include the app logo, or common button icons.</p>
+</div>
+<div class="paragraph">
+<p>The other thing to note is the presence of the <code>style</code> attribute on the <code>&lt;image&gt;</code> element.
+In HXML, images are required to have a style that has rules for the image&#8217;s <code>width</code> and <code>height</code>.
+This is different from HTML, where <code>&lt;img&gt;</code> elements do not need to explicitly set a width and height.
+Web browsers will re-flow the content of a web page once the image is fetched and the dimensions are known.
+While re-flowing content is a reasonable behavior for web-based documents, users do not expect mobile apps to re-flow as content loads.
+To maintain a static layout, HXML requires the dimensions to be known before the image loads.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_inputs">12.3.3. Inputs</h4>
+<div class="paragraph">
+<p>There&#8217;s a lot to cover about inputs in Hyperview.
+Since this is meant to be an introduction and not an exhaustive resource, I&#8217;ll highlight just a few types of inputs.
+Let&#8217;s start with an example of the simplest type of input, a text field.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 137. Text field element</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;text-field
+  name="first_name" <b class="conum">(1)</b>
+  style="input" <b class="conum">(2)</b>
+  value="Adam" <b class="conum">(3)</b>
+  placeholder="First name" <b class="conum">(4)</b>
+/&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The name used when serializing data from this input</p>
+</li>
+<li>
+<p>The style class applied to the UI element</p>
+</li>
+<li>
+<p>The currently value set in the field</p>
+</li>
+<li>
+<p>A placeholder to display when the value is empty</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This element should feel familiar to anyone who&#8217;s created a text field in HTML.
+One difference is that most inputs in HTML use the <code>&lt;input&gt;</code> element with a <code>type</code> attribute, eg <code>&lt;input type="text"&gt;</code>.
+In Hyperview, each input has a unique name, in this case <code>&lt;text-field&gt;</code>.
+By using different names, we can use more expressive XML to represent the input.</p>
+</div>
+<div class="paragraph">
+<p>For example, let&#8217;s consider a case where we want to render a UI that lets the user select one among several options.
+In HTML, we would use a radio button input, something like <code>&lt;input type="radio" name="choice" value="option1" /&gt;</code>.
+Each choice is represented as a unique input element.
+This never struck me as ideal.
+Most of the time, radio buttons are grouped together to affect the same name.
+The HTML approach leads to a lot of boilerplate (duplication of <code>type="radio"</code> and <code>name="choice"</code> for each choice).
+Also, unlike radio buttons on desktop, mobile OSes don&#8217;t provide a strong standard UI for selecting one option.
+Most mobile apps use richer, custom UIs for these interactions.
+So in HXML, we implement this UI using an element called <code>&lt;select-single&gt;</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 138. Select-single element</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;select-single name="choice"&gt; <b class="conum">(1)</b>
+  &lt;option value="option1"&gt; <b class="conum">(2)</b>
+    &lt;text&gt;Option 1&lt;/text&gt; <b class="conum">(3)</b>
+  &lt;/option&gt;
+  &lt;option value="option2"&gt;
+    &lt;text&gt;Option 2&lt;/text&gt;
+  &lt;/option&gt;
+&lt;/select-single&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Element representing an input where a single choice is selected. The name of the selection is defined once here.</p>
+</li>
+<li>
+<p>Element representing one of the choices. The choice value is defined here.</p>
+</li>
+<li>
+<p>The UI of the selection. In this example, we use text, but we can use any UI elements.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The <code>&lt;select-single&gt;</code> element is the parent of the input for selecting one choice out of many.
+This element contains the <code>name</code> attribute used when serializing the selected choice.
+<code>&lt;option&gt;</code> elements within <code>&lt;select-single&gt;</code> represent the available choices.
+Note that each <code>&lt;option&gt;</code> element has a <code>value</code> attribute.
+When pressed, this will be the selected value of the input.
+The <code>&lt;option&gt;</code> element can contain any other UI elements within it.
+This means that we&#8217;re not hampered by rendering the input as a list of radio buttons with labels.
+We can render the options as radios, tags, images, or anything else that would be intuitive for our interface.
+HXML styling supports modifiers for pressed and selected states, letting us customize the UI to highlight the selected option.</p>
+</div>
+<div class="paragraph">
+<p>Like I mentioned, describing all features of inputs in HXML would take an entire chapter.
+Instead, I&#8217;ll summarize a few other input elements and their features.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;select-multiple&gt;</code> works like <code>&lt;select-single&gt;</code>, but it supports toggling multiple options on &amp; off. This replaces checkbox inputs in HTML.</p>
+</li>
+<li>
+<p>The <code>&lt;switch&gt;</code> element renders a on/off switch that is common in mobile UIs</p>
+</li>
+<li>
+<p>The <code>&lt;date-field&gt;</code> element supports entering in specific dates, and comes with a wide range of customizations for formatting, settings ranges, etc.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Two more things to mention about inputs.
+First is the <code>&lt;form&gt;</code> element.
+The <code>&lt;form&gt;</code> element is used to group together inputs for serialization.
+When a user takes an action that triggers a backend request, the Hyperview client will serialize all inputs in the surrounding <code>&lt;form&gt;</code> and include them in the request.
+This is true for both <code>GET</code> and <code>POST</code> requests.
+We will cover this in more detail when talking about behaviors later in this chatper.
+Also later in this chapter, I&#8217;ll talk about support for custom elements in HXML.
+With custom elements, you can also create your own input elements.
+Custom input elements allow you to build incredible powerful interactions with simple XML syntax that integrates well with the rest of HXML.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_styling">12.3.4. Styling</h4>
+<div class="paragraph">
+<p>So far, we haven&#8217;t mentioned how to apply styling to all of the HXML elements.
+We&#8217;ve seen from the Hello World app that each <code>&lt;screen&gt;</code> can contain a <code>&lt;styles&gt;</code> element.
+Let&#8217;s re-visit the Hello World app and fill out the <code>&lt;styles&gt;</code> element.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 139. UI styling example</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;doc xmlns="https://hyperview.org/hyperview"&gt;
+  &lt;screen&gt;
+    &lt;styles&gt; <b class="conum">(1)</b>
+      &lt;style class="body" flex="1" flexDirection="column" /&gt; <b class="conum">(2)</b>
+      &lt;style class="header" borderBottomWidth="1" borderBottomColor="#ccc" /&gt;
+      &lt;style class="main" margin="24" /&gt;
+      &lt;style class="h1" fontSize="32" /&gt;
+      &lt;style class="info" color="blue" /&gt;
+    &lt;/styles&gt;
+
+    &lt;body style="body"&gt; <b class="conum">(3)</b>
+      &lt;header style="header"&gt;
+        &lt;text style="info"&gt;My first app&lt;/text&gt;
+      &lt;/header&gt;
+      &lt;view style="main"&gt;
+        &lt;text style="h1 info"&gt;Hello World!&lt;/text&gt; <b class="conum">(4)</b>
+      &lt;/view&gt;
+    &lt;/body&gt;
+  &lt;/screen&gt;
+&lt;/doc&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Element encapsulating all of the styling for the screen</p>
+</li>
+<li>
+<p>Example of a definition of a style class for "body"</p>
+</li>
+<li>
+<p>Applying the "body" style class to a UI element</p>
+</li>
+<li>
+<p>Example of applying multiple style classes (h1 and info) to an element</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll note that in HXML, styling is part of the XML format, rather than using a separate language like CSS.
+However, we can draw some parallels between CSS rules and the <code>&lt;style&gt;</code> element.
+A CSS rule consists of a selector and declarations.
+In the current version of HXML, the only available selector is a class name, indicated by the <code>class</code> attribute.
+The rest of the attributes on the <code>&lt;style&gt;</code> element are declarations, consisting of properties and property values.</p>
+</div>
+<div class="paragraph">
+<p>UI elements within the <code>&lt;screen&gt;</code> can reference the <code>&lt;style&gt;</code> rules by adding the class names to their <code>&lt;style&gt;</code> property.
+Note the <code>&lt;text&gt;</code> element around "Hello World!" references two style classes: <code>h1</code> and <code>info</code>. The styles from the corresponding classes are merged together in the order they appear on the element.
+It&#8217;s worth noting that styling properties are similar to those in CSS (color, margins/padding, borders, etc).
+Currently, the only available layout engine is based on flexbox.</p>
+</div>
+<div class="paragraph">
+<p>Styles rules can get quite verbose.
+For the sake of brevity, I won&#8217;t include the <code>&lt;styles&gt;</code> element in the rest of the examples in this chapter unless necessary.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_elements">12.3.5. Custom elements</h4>
+<div class="paragraph">
+<p>The core UI elements that ship with Hyperview are quite basic.
+Most mobile apps require richer elements to deliver a great user experience.
+Luckily, HXML can easily accomodate custom elements in its syntax.
+This is because HXML is really just XML, aka "Extensible Markup Language".
+Extensibility is already built into the format!
+Developers are free to define new elements and attributes to represent custom elements.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s see this in action with a concrete example.
+Assume that we want to add a map element to our Hello World app.
+We want the map to display a defined area, and one or more markers at specific coordinates in that area.
+Let&#8217;s translate these requirements into XML:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An <code>&lt;area&gt;</code> element will represent the area displayed by the map. To specify the area, the element will include attributes for <code>latitude</code> and <code>longitude</code> for the center of the area, and a <code>latitude-delta</code> and <code>longitude-delta</code> indicating the +/- display area around the center.</p>
+</li>
+<li>
+<p>A <code>&lt;marker&gt;</code> element will represent a marker in the area. The coordinates of the marker will be defined by <code>latitude</code> and <code>longitude</code> attributes on the marker.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Using these custom XML elements, an instance of the map in our app might look like this:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 140. Custom elements in HXML</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;doc xmlns="https://hyperview.org/hyperview"&gt;
+  &lt;screen&gt;
+    &lt;body&gt;
+      &lt;view&gt;
+        &lt;text&gt;Hello World!&lt;/text&gt;
+        &lt;area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1"&gt; <b class="conum">(1)</b>
+          &lt;marker latitude="37.8118" longitude="-122.4177" /&gt; <b class="conum">(2)</b>
+        &lt;/area&gt;
+      &lt;/view&gt;
+    &lt;/body&gt;
+  &lt;/screen&gt;
+&lt;/doc&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Custom element representing the area rendered by the map</p>
+</li>
+<li>
+<p>Custom element representing a marker rendered at specific coordinates on the map</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The syntax feels right at home among the core HXML elements.
+However, there&#8217;s a potential problem.
+"area" and "marker" are pretty generic names.
+I could see <code>&lt;area&gt;</code> and <code>&lt;marker&gt;</code> elements being used by a customization to render charts &amp; graphs.
+If our app renders both maps and charts, the HXML markup would be ambiguous.
+What should the client render when it sees <code>&lt;area&gt;</code> or <code>&lt;marker&gt;</code>?</p>
+</div>
+<div class="paragraph">
+<p>This is where XML namespaces come in. XML namespaces eliminate ambiguity and collisions between elements and attributes used to represent different things.
+Remember that the <code>&lt;doc&gt;</code> element declares that <code><a href="https://hyperview.org/hyperview" class="bare">https://hyperview.org/hyperview</a></code> is the default namespace for the entire document.
+Since no other elements define namespaces, every element in the example above is part of the <code><a href="https://hyperview.org/hyperview" class="bare">https://hyperview.org/hyperview</a></code> namespace.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s define a new namespace for our map elements. Since this namespace will not be the default for the document, we also need to assign the namespace to a prefix we will add to our elements:</p>
+</div>
+<div class="paragraph">
+<p><code>&lt;doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map"&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>This new attribute declares that the <code>map:</code> prefix is associated with the namespace "https://mycompany.com/hyperview-map".
+This namespace could be anything, but remember the goal is to use something unique that won&#8217;t have collisions.
+Using your company/app domain is a good way to guarantee uniqueness.
+Now that we have a namespace and prefix, we need to use it for our elements:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 141. Namespacing the custom elements</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;doc xmlns="https://hyperview.org/hyperview" xmlns:map="https://mycompany.com/hyperview-map"&gt; <b class="conum">(1)</b>
+  &lt;screen&gt;
+    &lt;body&gt;
+      &lt;view&gt;
+        &lt;text&gt;Hello World!&lt;/text&gt;
+        &lt;map:area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1"&gt; <b class="conum">(2)</b>
+          &lt;map:marker latitude="37.8118" longitude="-122.4177" /&gt; <b class="conum">(3)</b>
+        &lt;/map:area&gt; <b class="conum">(4)</b>
+      &lt;/view&gt;
+    &lt;/body&gt;
+  &lt;/screen&gt;
+&lt;/doc&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Definition of namespace aliased to "map"</p>
+</li>
+<li>
+<p>Adding the namespace to the "area" start tag</p>
+</li>
+<li>
+<p>Adding the namespace to the "marker" self-closing tag</p>
+</li>
+<li>
+<p>Adding the nemsapce to the "area" end tag</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>That&#8217;s it! If we introduced a custom charting library with "area" and "marker" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate <code>&lt;map:area&gt;</code> from <code>&lt;chart:area&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>At this point you might be wondering, "how does the Hyperview client know to render a map when my doc includes <code>&lt;map:area&gt;</code> "?
+It&#8217;s true, so far we only defined the custom element format, but we haven&#8217;t implemented the element as a feature in our app.
+We will get into the details of implementing custom elements in the next chapter.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_behaviors">12.3.6. Behaviors</h4>
+<div class="paragraph">
+<p>As discussed in earlier chapters, HTML supports two basic types of interactions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Clicking a hyperlink: the client will make a GET request and render the response as a new web page.</p>
+</li>
+<li>
+<p>Submitting a form: the client will make a (typically) POST request with the serialized content of the form, and render the response as a new web page.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Clicking hyperlinks and submitting forms is enough to build simple web applications.
+But relying on just these two interactions limits our ability to build richer UIs.
+What if we want something to happen when the user mouses over a certain element, or perhaps when they scroll some content into the viewport?
+We can&#8217;t do that with basic HTML.
+Additionally, both clicks and form submits result in loading a full new web page.
+What if we only want to update a small part of the current page?
+This is a very common scenario in rich web applications, where users expect to fetch and update content without navigating to a new page.</p>
+</div>
+<div class="paragraph">
+<p>So with basic HTML, interactions (clicks and submits) are limited and tightly coupled to a single action (loading a new page).
+Of course, using JavaScript, we can extend HTML and add some new syntax to support our desired interactions.
+Htmx (and Intercooler before it) do exactly that with a new set of attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Interactions can be added to any element, not just links and forms.</p>
+</li>
+<li>
+<p>The interaction can be triggered via a click, submit, mouseover, or any other JavaScript event.</p>
+</li>
+<li>
+<p>The actions resulting from the trigger can modify the current page, not just request a new page.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By decoupling elements, triggers, and actions, htmx allows us to build rich Hypermedia-driven applications in a way that feels very compatible with HTML syntax and server-side web development.</p>
+</div>
+<div class="paragraph">
+<p>HXML takes the idea of defining interactions via triggers &amp; actions and builds them into the spec.
+We call these interactions "behaviors".
+We use a special <code>&lt;behavior&gt;</code> element to define then.
+Here&#8217;s an example of a simple behavior that pushes a new mobile screen onto the navigation stack:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 142. Basic behavior</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;text&gt;
+  &lt;behavior <b class="conum">(1)</b>
+    trigger="press" <b class="conum">(2)</b>
+    action="push" <b class="conum">(3)</b>
+    href="/next-screen" <b class="conum">(4)</b>
+  /&gt;
+  Press me!
+&lt;/text&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The element encapsulating an interaction on the parent <code>&lt;text&gt;</code> element.</p>
+</li>
+<li>
+<p>The trigger that will execute the interaction, in this case pressing the <code>&lt;text&gt;</code> element.</p>
+</li>
+<li>
+<p>The action that will execute when triggered, in this case pushing a new screen onto the current stack.</p>
+</li>
+<li>
+<p>The href to load on the new screen.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s break down what&#8217;s happening in this example.
+First, we have a <code>&lt;text&gt;</code> element with the content "Press me!".
+We&#8217;ve shown <code>&lt;text&gt;</code> elements before in examples of HXML, so this is nothing new.
+But now, the <code>&lt;text&gt;</code> element contains a new child element, <code>&lt;behavior&gt;</code>.
+This <code>&lt;behavior&gt;</code> element defines an interaction on the parent <code>&lt;text&gt;</code> element.
+It contains two attributes that are required for any behavior:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>trigger</code>: defines the user action that triggers the behavior</p>
+</li>
+<li>
+<p><code>action</code>: defines what happens when triggered</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In this example, the <code>trigger</code> is set to <code>press</code>, meaning this interaction will happen when the user presses the <code>&lt;text&gt;</code> element.
+The <code>action</code> attribute is set to <code>push</code>.
+<code>push</code> is an action that will push a new screen onto the navigation stack.
+Finally, Hyperview needs to know what content to load on the newly pushed screen.
+This is where the <code>href</code> attribute comes in.
+Notice we don&#8217;t need to define the full URL.
+Much like in HTML, the <code>href</code> can be an absolute or relative URL.</p>
+</div>
+<div class="paragraph">
+<p>So that&#8217;s a first example of behaviors in HXML.
+You may be thinking this syntax seems quite verbose.
+Indeed, pressing elements to navigate to a new screen is one of the most common interactions in a mobile app.
+It would be nice to have a simpler syntax for the common case.
+Luckily, <code>trigger</code> and <code>action</code> attributes have default values of <code>press</code> and <code>push</code>, respectively.
+Therefore, they can be ommitted to clean up the syntax:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 143. Basic behavior with defaults</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;text&gt;
+  &lt;behavior href="/next-screen" /&gt; <b class="conum">(1)</b>
+  Press me!
+&lt;/text&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>When pressed, this behavior will open a new screen with the given URL.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This markup for the <code>&lt;behavior&gt;</code> will produce the same interaction as the earlier example.
+With the default attributes, the <code>&lt;behavior&gt;</code> element looks similar to an anchor <code>&lt;a&gt;</code> in HTML.
+But the full syntax achieves our goals of decoupling elements, triggers, and actions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Behaviors can be added to any element, they are not limited to links and forms.</p>
+</li>
+<li>
+<p>Behaviors can specify an explicit <code>trigger</code>, not just clicks or form submits.</p>
+</li>
+<li>
+<p>Behaviors can specify an explicit <code>action</code>, not just a request for a new page.</p>
+</li>
+<li>
+<p>Extra attributes like <code>href</code> provide more context for the action.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Additionally, using a dedicated <code>&lt;behavior&gt;</code> element means a single element can define multiple behaviors.
+This let us execute several actions from the same trigger.
+Or, we can execute different actions for different triggers on the same element.
+We will show examples of the power of multiple behaviors at the end of this chapter.
+First we need to show the variety of supported actions and triggers.</p>
+</div>
+<div class="sect4">
+<h5 id="_actions">Actions</h5>
+<div class="paragraph">
+<p>Behavior actions in Hyperview fall into 3 general categories:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigation actions, which load new screens and move between them</p>
+</li>
+<li>
+<p>Update actions, which modify the HXML of the current screen</p>
+</li>
+<li>
+<p>System actions, which interact with with OS-level capabilities.</p>
+</li>
+<li>
+<p>Custom actions, which can execute any code you add to the client.</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="_navigation_actions">Navigation Actions</h6>
+<div class="paragraph">
+<p>We&#8217;ve already seen the simplest type of action, <code>push</code>.
+We classify <code>push</code> as a "navigation action", since it&#8217;s related to navigating screens in the mobile app.
+Pushing a screen onto the navigation stack is just one of several navigation actions supported in Hyperview.
+Users also need to be able to go back to previous screens, open and close modals, switch between tabs, or jump to arbitrary screens.
+Each of these types of navigations is supported through a different value for the <code>action</code> attribute:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>push</code>: Push a new screen into the current navigation stack. This looks like a screen sliding in from the right, on top of the current screen.</p>
+</li>
+<li>
+<p><code>new</code>: Open a new navigation stack as a modal. This looks like a screen sliding in from the bottom, on top of the current screen.</p>
+</li>
+<li>
+<p><code>back</code>: This is a complement to the <code>push</code> action. It pops the current screen off of the navigation stack (sliding it to the right).</p>
+</li>
+<li>
+<p><code>close</code>: This is a complement to the <code>new</code> action. It closes the current navigation stack (sliding it down).</p>
+</li>
+<li>
+<p><code>reload</code>: Similar to a browser&#8217;s "refresh" button, this will re-request the content of the current screen.</p>
+</li>
+<li>
+<p><code>navigate</code>: This action will attempt to find a screen with the given <code>href</code> already loaded in the app. If the screen exists, the app will jump to that screen. If it doesn&#8217;t exist, it will act the same as <code>push</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>push</code>, <code>new</code>, and <code>navigate</code> all load a new screen.
+Thus, they require an <code>href</code> attribute so that Hyperview knows what content to request for the new screen.
+<code>back</code>, <code>close</code> do not load new screens, and thus do not require the <code>href</code> attribute.
+<code>reload</code> is an interesting case.
+By default, it will use the URL of the screen when re-requesting the content for the screen.
+However, if you want to replace the screen with a different one, you can provide an <code>href</code> attribute with <code>reload</code> on the behavior element.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at an example "widgets" app that uses several navigation actions on one screen:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 144. Navigation action examples</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;screen&gt;
+  &lt;body&gt;
+    &lt;header&gt;
+      &lt;text&gt;
+        &lt;behavior action="back" /&gt; <b class="conum">(1)</b>
+        Back
+      &lt;/text&gt;
+
+      &lt;text&gt;
+        &lt;behavior action="new" href="/widgets/new" /&gt; <b class="conum">(2)</b>
+        New Widget
+      &lt;/text&gt;
+    &lt;/header&gt;
+    &lt;text&gt;
+      &lt;behavior action="reload" /&gt; <b class="conum">(3)</b>
+      Check for new widgets
+    &lt;/text&gt;
+    &lt;list&gt;
+      &lt;item key="widget1"&gt;
+        &lt;behavior action="push" href="/widgets/1" /&gt; <b class="conum">(4)</b>
+      &lt;/item&gt;
+    &lt;/list&gt;
+  &lt;/body&gt;
+&lt;/screen&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Takes the user to the previous screen</p>
+</li>
+<li>
+<p>Opens a new modal to add a widget</p>
+</li>
+<li>
+<p>Reloads the content of the screen, showing new widgets from the backend</p>
+</li>
+<li>
+<p>Pushes a new screen with details for a specific widget</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Most screens in your app will need a way for the user to backtrack to the previous screen.
+This is usually done with a button in the header that uses either a "back" or "close" action, depending on how the screen was opened.
+In this example, we&#8217;re assuming the widgets screen was pushed onto the navigation stack, so the "back" action is appropriate.
+The header contains a second button that allows the user to enter data for a new widget.
+Pressing this button will open a modal with a "New Widget" screen.
+Since this "New Widget" screen will open as a modal, it will need a corresponding "close" action to dismiss itself and show our "widgets" screen again.
+Finally, to see more details about a specific widget, each <code>&lt;item&gt;</code> element contains a behavior with a "push" action.
+This action will push a "Widget Detail" screen onto the current navigation stack.
+Like in the "Widgets" screen, "Widget Detail" will need a button in the header that uses the "back" action to let the user backtrack.</p>
+</div>
+<div class="paragraph">
+<p>On the web, the browser handles basic navigation needs such as going back/forward, reloading the current page, or jumping to a bookmark.
+iOS and Android don&#8217;t provide this sort of universal navigation for native mobile apps.
+It&#8217;s on the app developers to handle this themselves.
+Navigation actions in HXML provide an easy but powerful way for developers to build an architecture that makes sense for their app.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_update_actions">Update Actions</h6>
+<div class="paragraph">
+<p>Behavior actions are not just limited to navigating between screens.
+They can also be used to change the content on the current screen.
+We call these "update actions".
+Much like navigation actions, update actions make a request to the backend.
+However, the response is not an entire HXML document, but a fragment of HXML.
+This fragment is added to the HXML of the current screen, resulting in an update to the UI.
+The <code>action</code> attribute of the <code>&lt;behavior&gt;</code> determines how the fragment gets incorporated into the HXML.
+We also need to introduce a new <code>target</code> attribute on <code>&lt;behavior&gt;</code> to define where the fragment gets incorporated in the existing doc.
+The <code>target</code> attribute is an ID reference to an existing element on the screen.</p>
+</div>
+<div class="paragraph">
+<p>Hyperview supports the current update actions, representing different ways to incorporate the fragment into the screen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>replace</code>: replaces the entire target element with the fragment</p>
+</li>
+<li>
+<p><code>replace-inner</code>: replaces the children of the target element with the fragment</p>
+</li>
+<li>
+<p><code>append</code>: adds the fragment after the last child of the target element</p>
+</li>
+<li>
+<p><code>prepend</code>: adds the fragment before the first child of the target element.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at some examples to make this more concrete.
+For these examples, let&#8217;s assume our backend accepts <code>GET</code> requests to <code>/fragment</code>, and the response is a fragment of HXML that looks like <code>&lt;text&gt;My fragment&lt;/text&gt;</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 145. Update action examples</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;screen&gt;
+  &lt;body&gt;
+    &lt;text&gt;
+      &lt;behavior action="replace" href="/fragment" target="area1" /&gt; <b class="conum">(1)</b>
+      Replace
+    &lt;/text&gt;
+    &lt;view id="area1"&gt;
+      &lt;text&gt;Existing content&lt;/text&gt;
+    &lt;/view&gt;
+
+    &lt;text&gt;
+      &lt;behavior action="replace-inner" href="/fragment" target="area2" /&gt; <b class="conum">(2)</b>
+      Replace-inner
+    &lt;/text&gt;
+    &lt;view id="area2"&gt;
+      &lt;text&gt;Existing content&lt;/text&gt;
+    &lt;/view&gt;
+
+    &lt;text&gt;
+      &lt;behavior action="append" href="/fragment" target="area3" /&gt; <b class="conum">(3)</b>
+      Append
+    &lt;/text&gt;
+    &lt;view id="area3"&gt;
+      &lt;text&gt;Existing content&lt;/text&gt;
+    &lt;/view&gt;
+
+    &lt;text&gt;
+      &lt;behavior action="prepend" href="/fragment" target="area4" /&gt; <b class="conum">(4)</b>
+      Prepend
+    &lt;/text&gt;
+    &lt;view id="area4"&gt;
+      &lt;text&gt;Existing content&lt;/text&gt;
+    &lt;/view&gt;
+
+  &lt;/body&gt;
+&lt;/screen&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Replaces the area1 element with fetched fragment</p>
+</li>
+<li>
+<p>Replaces the child elements of area2 with fetched fragment</p>
+</li>
+<li>
+<p>Appends the fetched fragment to area3</p>
+</li>
+<li>
+<p>Prepends the fetched fragment to area4</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In this example, we have a screen with four buttons corresponding to the four update actions: <code>replace</code>, <code>replace-inner</code>, <code>append</code>, <code>prepend</code>.
+Below each button, there&#8217;s a corresponding <code>&lt;view&gt;</code> containing some text.
+Note that the <code>id</code> of each view matches the <code>target</code> on the behaviors of the corresponding button.</p>
+</div>
+<div class="paragraph">
+<p>When the user presses the first button, the Hyperview makes a request for <code>/fragment</code>.
+Next, it looks for the target, ie the element with id "area1".
+Finally, it replaces the <code>&lt;view id="area1"&gt;</code> element with the fetched fragment, <code>&lt;text&gt;My fragment&lt;/text&gt;</code>.
+The existing view and text contained in that view will be replaced.
+To the user, it will look like "Existing content" was changed to "My fragment".
+In the HXML, the element <code>&lt;view id="area1"&gt;</code> will also be gone.</p>
+</div>
+<div class="paragraph">
+<p>The second button behaves in a similar way to the first one.
+However, the <code>replace-inner</code> action does not remove the target element from the screen, it only replaces the children.
+This means the resulting markup will look like <code>&lt;view id="area2"&gt;&lt;text&gt;My fragment&lt;/text&gt;&lt;/view&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>The third and fourth buttons do not remove any content from the screen.
+Instead, the fragment will be added either after (in the case of <code>append</code>) or before (<code>prepend</code>) the children of the target element.</p>
+</div>
+<div class="paragraph">
+<p>For completeness, let&#8217;s look at the state of the screen after a user presses all four buttons:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 146. Update actions, after pressing buttons</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;screen&gt;
+  &lt;body&gt;
+    &lt;text&gt;
+      &lt;behavior action="replace" href="/fragment" target="area1" /&gt;
+      Replace
+    &lt;/text&gt;
+    &lt;text&gt;My fragment&lt;/text&gt; <b class="conum">(1)</b>
+
+    &lt;text&gt;
+      &lt;behavior action="replace-inner" href="/fragment" target="area2" /&gt;
+      Replace-inner
+    &lt;/text&gt;
+    &lt;view id="area2"&gt;
+      &lt;text&gt;My fragment&lt;/text&gt; <b class="conum">(2)</b>
+    &lt;/view&gt;
+
+    &lt;text&gt;
+      &lt;behavior action="append" href="/fragment" target="area3" /&gt;
+      Append
+    &lt;/text&gt;
+    &lt;view id="area3"&gt;
+      &lt;text&gt;Existing content&lt;/text&gt;
+      &lt;text&gt;My fragment&lt;/text&gt; <b class="conum">(3)</b>
+    &lt;/view&gt;
+
+    &lt;text&gt;
+      &lt;behavior action="prepend" href="/fragment" target="area4" /&gt;
+      Prepend
+    &lt;/text&gt;
+    &lt;view id="area4"&gt;
+      &lt;text&gt;My fragment&lt;/text&gt; <b class="conum">(4)</b>
+      &lt;text&gt;Existing content&lt;/text&gt;
+    &lt;/view&gt;
+
+  &lt;/body&gt;
+&lt;/screen&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Fragment completely replaced the target using <code>replace</code> action</p>
+</li>
+<li>
+<p>Fragment replaced the children of the target using <code>replace-inner</code> action</p>
+</li>
+<li>
+<p>Fragment added as last child of the target using <code>append</code> action</p>
+</li>
+<li>
+<p>fragment added as the first child of the target using <code>prepend</code> action</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The examples above show actions making <code>GET</code> requests to the backend.
+But these actions can also make <code>POST</code> requests by setting <code>verb="post"</code> on the <code>&lt;behavior&gt;</code> element.
+For both <code>GET</code> and <code>POST</code> requests, the data from the parent <code>&lt;form&gt;</code> element will be serialized and included in the request.
+For <code>GET</code> requests, the content will be URL-encoded and added as query params.
+For <code>POST</code> requests, the content will be form-URL encoded and set on the request body.
+Since they support <code>POST</code> and form data, update actions are often used to send data to the backend.</p>
+</div>
+<div class="paragraph">
+<p>So far, our example of update actions require getting new content from the backend and adding it to the screen.
+But sometimes we just want to change the state of existing elements.
+The most common state to change for an element is its visibility.
+Hyperview has <code>hide</code>, <code>show</code>, and <code>toggle</code> actions that do just that.
+Like the other update actions, <code>hide</code>, <code>show</code>, and <code>toggle</code> use the <code>target</code> attribute to apply the action to an element on the current screen.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 147. Show, hide, and toggle actions</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;screen&gt;
+  &lt;body&gt;
+    &lt;text&gt;
+      &lt;behavior action="hide" target="area" /&gt; <b class="conum">(1)</b>
+      Hide
+    &lt;/text&gt;
+
+    &lt;text&gt;
+      &lt;behavior action="show" target="area" /&gt; <b class="conum">(2)</b>
+      Show
+    &lt;/text&gt;
+
+    &lt;text&gt;
+      &lt;behavior action="toggle" target="area" /&gt; <b class="conum">(3)</b>
+      Toggle
+    &lt;/text&gt;
+
+    &lt;view id="area"&gt; <b class="conum">(4)</b>
+      &lt;text&gt;My fragment&lt;/text&gt;
+    &lt;/view&gt;
+  &lt;/body&gt;
+&lt;/screen&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Hides the element with id "area".</p>
+</li>
+<li>
+<p>Shows the element with id "area".</p>
+</li>
+<li>
+<p>Toggles the visibility of the element with id "area".</p>
+</li>
+<li>
+<p>The element targeted by the actions.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In this example, the three buttons labeled "Hide", "Show", and "Toggle" will modify the display state of the <code>&lt;view&gt;</code> with ID "area".
+Pressing "Hide" multiple times will have no affect once the view is hidden.
+Likewise, pressing "Show" multiple times will have no affect once the view is showing.
+Pressing "Toggle" will keep flipping the visibility status of the element between showing and hidden.</p>
+</div>
+<div class="paragraph">
+<p>Hyperview comes with other actions that modify the existing HXML.
+We won&#8217;t cover them in detail, but I&#8217;ll mention them breifly here:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>set-value</code>: this action can set the value of an input element such as <code>&lt;text-field&gt;</code>, <code>&lt;switch&gt;</code>, <code>&lt;select-single&gt;</code>, etc.</p>
+</li>
+<li>
+<p><code>select-all</code> and <code>unselect-all</code> work with the <code>&lt;select-multiple&gt;</code> element to select/deselect all options.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_system_actions">System Actions</h6>
+<div class="paragraph">
+<p>Some standard Hyperview actions don&#8217;t interact with the HXML at all.
+Instead, they expose functionality provided by the mobile OS.
+For example, both Android and iOS support a system-level "Share" UI.
+This UI allows sharing URLs and messages from one app to another app.
+Hyperview has a <code>share</code> action to support this interaction.
+It involves a custom namespace, and share-specific attributes.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 148. System Share action</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;behavior
+  xmlns:share="https://instawork.com/hyperview-share" <b class="conum">(1)</b>
+  trigger="press"
+  action="share" <b class="conum">(2)</b>
+  share:url="https://www.instawork.com" <b class="conum">(3)</b>
+  share:message="Check out this website!" <b class="conum">(4)</b>
+/&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Defines the namespace for the share action.</p>
+</li>
+<li>
+<p>The action of this behavior will bring up the share sheet.</p>
+</li>
+<li>
+<p>URL to be shared</p>
+</li>
+<li>
+<p>Message to be shared</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve seen XML namespaces when talking about custom elements.
+Here, we are using a namespace for the <code>url</code> and <code>message</code> attributes on the <code>&lt;behavior&gt;</code>.
+These attribute names are generic and likely used by other components and behaviors, so the namespace ensures there will be no ambiguity.
+When pressed, the "share" action will trigger.
+The values of the <code>url</code> and <code>message</code> attributes will be passed to the system Share UI.
+From there, the user will be able to share the URL &amp; message via SMS, email, or other communication apps.</p>
+</div>
+<div class="paragraph">
+<p>The <code>share</code> action shows how a behavior action can use custom attributes to pass along extra data needed for the interactions.
+But some actions require even more structured data.
+This can be provided via child elements on the <code>&lt;behavior&gt;</code>.
+Hyperview uses this to implement the <code>alert</code> action.
+The <code>alert</code> action shows a customized system-level dialog box.
+This dialog needs configuration for a title and message, but also for customized buttons.
+Each button needs to then trigger another behavior when pressed.
+This level of configuration cannot be done with just attributes, so we use custom child elements to represent the behavior of each button.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 149. System alert action</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;behavior
+  xmlns:alert="https://hyperview.org/hyperview-alert" <b class="conum">(1)</b>
+  trigger="press"
+  action="alert" <b class="conum">(2)</b>
+  alert:title="Continue to next screen?" <b class="conum">(3)</b>
+  alert:message="Are you sure you want to navigate to the next screen?" <b class="conum">(4)</b>
+&gt;
+  &lt;alert:option alert:label="Continue"&gt; <b class="conum">(5)</b>
+    &lt;behavior action="push" href="/next" /&gt; <b class="conum">(6)</b>
+  &lt;/alert:option&gt;
+  &lt;alert:option alert:label="Cancel" /&gt; <b class="conum">(7)</b>
+&lt;/behavior&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Defines the namespace for the alert action.</p>
+</li>
+<li>
+<p>The action of this behavior will bring up a system dialog box.</p>
+</li>
+<li>
+<p>Title of the dialog box.</p>
+</li>
+<li>
+<p>A "continue" option in the dialog box</p>
+</li>
+<li>
+<p>When "continue" is pressed, push a new screen onto the navigation stack.</p>
+</li>
+<li>
+<p>A "cancel" option that dismisses the dialog box.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Like the <code>share</code> behavior, <code>alert</code> uses a namespace to define some attributes and elements.
+The <code>&lt;behavior&gt;</code> element itself contains the <code>title</code> and <code>message</code> attributes for the dialog box.
+The button options for the dialog are defined using a new <code>&lt;option&gt;</code> element nested in the <code>&lt;behavior&gt;</code>.
+Notice that each <code>&lt;option&gt;</code> element has a label, and then optionally contains a <code>&lt;behavior&gt;</code> itself!
+This structure of the HXML allows the system dialog to trigger any interaction that can be defined as a <code>&lt;behavior&gt;</code>.
+In the example above, pressing the "Continue" button will open a new screen.
+But we could just as easily trigger an update action to change the current screen.
+We could even open a share sheet, or a second dialog box.
+But please don&#8217;t do that in a real app!
+With great power comes great responsibility.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_custom_actions">Custom Actions</h6>
+<div class="paragraph">
+<p>You can build a lot of mobile UIs with Hyperview&#8217;s standard navigation, update, and system actions.
+But the standard set may not cover all interactions you will need for your mobile app.
+Luckily, the action system is extensible.
+In the same way you can add custom elements to Hyperview, you can also add custom behavior actions.
+Custom actions have a similar syntax to the <code>share</code> and <code>alert</code> actions, using namespaces for attributes that pass along extra data.
+Custom actions also have full access to the HXML of the current screen, so they can modify the state or add/remove elements from the current screen.
+In the next chapter, we will create a custom behavior action to enhance our mobile contacts app.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_triggers">Triggers</h5>
+<div class="paragraph">
+<p>We&#8217;ve already seen the simplest type of trigger, a <code>press</code> on an element. Hyperview supports many other common triggers used in mobile apps.</p>
+</div>
+<div class="sect5">
+<h6 id="_longpress">longPress</h6>
+<div class="paragraph">
+<p>Closely related to a press is a long-press.
+A behavior with <code>trigger="longPress"</code> will trigger when the user presses and holds on the element.
+"Long-press" interactions are often used for shortcuts and power features.
+Sometimes, elements will support different actions for both a <code>press</code> and <code>longPress</code>.
+This is done using multiple <code>&lt;behavior&gt;</code> elements on the same UI element.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 150. Long-press trigger example</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;text&gt;
+  &lt;behavior trigger="press" action="push" href="/next-screen" /&gt; <b class="conum">(1)</b>
+  &lt;behavior trigger="longPress" action="push" href="/secret-screen" /&gt; <b class="conum">(2)</b>
+  Press (or long-press) me!
+&lt;/text&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Normal press will open the next screen</p>
+</li>
+<li>
+<p>Long press will open a different screen</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In this example, a normal press will open a new screen and request content from <code>/next-screen</code>.
+However, a long press will open a new screen with content from <code>/secret-screen</code>.
+This is a contrived example for the sake of brevity.
+A better UX would be for the long-press to bring up a contextual menu of shortcuts and advanced options.
+This could be achieved by using <code>action="alert"</code> and opening a system dialog box with the shortcuts.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_load">load</h6>
+<div class="paragraph">
+<p>Sometimes we want an action to trigger as soon as the screen loads.
+<code>trigger="load"</code> does exactly this.
+One use case is to quickly load a shell of the screen, and then fill in the main content on the screen with a second update action.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 151. Load trigger example</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;body&gt;
+  &lt;view&gt;
+    &lt;text&gt;My app&lt;/text&gt;
+    &lt;view id="container"&gt; <b class="conum">(1)</b>
+      &lt;behavior trigger="load" action="replace" href="/content" target="container"&gt; <b class="conum">(2)</b>
+      &lt;text&gt;Loading...&lt;/text&gt; <b class="conum">(3)</b>
+    &lt;/view&gt;
+  &lt;/view&gt;
+&lt;/body&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Container element without the actual content</p>
+</li>
+<li>
+<p>Behavior that immediately fires off a request for /content to replace the container</p>
+</li>
+<li>
+<p>Loading UI that appears until the content is fetched and replaced.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In this example, We load a screen with a heading ("My app") but no content.
+Instead, we show a <code>&lt;view&gt;</code> with ID "container" and some "Loading&#8230;&#8203;" text.
+As soon as this screen loads, the behavior with <code>trigger="load"</code> fires off the <code>replace</code> action.
+It requests content from the <code>/content</code> path and replaces the container view with the response.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_visible">visible</h6>
+<div class="paragraph">
+<p>Unlike <code>load</code>, the <code>visible</code> trigger will only execute the behavior when the element with the behavior is scrolled into the viewport on the mobile device.
+This allows us to
+The <code>visible</code> action is commonly used to implement an infinite-scroll interaction on a <code>&lt;list&gt;</code> of <code>&lt;item&gt;</code> elements.
+The last item in the list includes a behavior with <code>trigger="visible"</code>.
+The <code>append</code> action will fetch the next page of items and append them to the list.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_refresh">refresh</h6>
+<div class="paragraph">
+<p>This trigger captures a "pull to refresh" action on <code>&lt;list&gt;</code> and <code>&lt;view&gt;</code> items.
+This interaction is associated with fetching up-to-date content from the backend.
+Thus, it&#8217;s typically paired with an update or reload action to show the latest data on the screen.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 152. Pull-to-refresh trigger example</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;body&gt;
+  &lt;view scroll="true"&gt;
+    &lt;behavior trigger="refresh" action="reload" /&gt; <b class="conum">(1)</b>
+    &lt;text&gt;No items yet&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/body&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>When the view is pulled down to refresh, reload the screen</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Note that adding a behavior with <code>trigger="refresh"</code> to a <code>&lt;view&gt;</code> or <code>&lt;list&gt;</code> will add the pull-to-refresh interaction to the element, including showing a spinner as the element is pulled down.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_focus_blur_and_change"><code>focus</code>, <code>blur</code>, and <code>change</code></h6>
+<div class="paragraph">
+<p>These triggers are related to interactions with input elements.
+Thus, they will only trigger behaviors attached to elements like <code>&lt;text-field&gt;</code>.
+<code>focus</code> and <code>blur</code> will trigger when the user focuses and blurs the input element, respectively.
+<code>change</code> will trigger when the value of the input element changes, like when the user types a letter in a text field.
+These triggers are often used with behaviors that need to perform some server-side validation on the form fields.
+For example, when the user types in a username and then blurs the field, a behavior could trigger on <code>blur</code> to make a request to the backend and check for uniqueness of the username.
+If the entered username is not unique, the response could include an error message letting the user know they need to pick a different username.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_using_multiple_behaviors">Using Multiple Behaviors</h5>
+<div class="paragraph">
+<p>Most of the examples shown above attach a single <code>&lt;behavior&gt;</code> to an element.
+But there&#8217;s no such limitation in Hyperview; elements can define multiple behaviors.
+We already saw an example where a single element had different actions triggered on <code>press</code> and <code>longPress</code>.
+But we can also trigger multiple actions on the same trigger.</p>
+</div>
+<div class="paragraph">
+<p>In this admittedly contrived example, we want to hide 2 elements on the screen when pressing the "Hide" button.
+The two elements are far apart in the HXML, and cannot be hidden by hiding a common parent element.
+But, we can trigger two behaviors at the same time, each one executing a "hide" action but targeting different elements.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 153. Multiple behaviors triggering on press</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;screen&gt;
+  &lt;body&gt;
+    &lt;text id="area1"&gt;Area 1&lt;/text&gt;
+
+    &lt;text&gt;
+      &lt;behavior trigger="press" action="hide" target="area1" /&gt; <b class="conum">(1)</b>
+      &lt;behavior trigger="press" action="hide" target="area2" /&gt; <b class="conum">(2)</b>
+      Hide
+    &lt;/text&gt;
+
+    &lt;text id="area2"&gt;Area 2&lt;/text&gt;
+  &lt;/body&gt;
+&lt;/screen&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Hide element with ID "area1" when pressed</p>
+</li>
+<li>
+<p>Hide element with ID "area2" when pressed</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Hyperview processes behaviors in the order they appear in the markup.
+In this case, the element with ID "area1" will be hidden first, followed by the element with ID "area2".
+Since "hide" is an instantaneous action (ie, it doesn&#8217;t make an HTTP request), both elements will appear to hide simultaneously.
+But what if we triggered two actions that depend on responses from HTTP requests (like "replace-inner")?
+In that case, each individual action get processed as soon as Hyperview receives the HTTP response.
+Depending on network latency, the two actions could take effect in any order, and they are not guaranteed to be applied simultaneously.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve seen elements with multiple behaviors and different triggers.
+And we&#8217;ve seen elements with multiple behaviors with the same trigger.
+These concepts can be mixed together too.
+It&#8217;s not unusual for a production Hyperview app to contain several behaviors, some triggering together and others triggering on different interactions.
+Using multiple behaviors with custom actions keeps HXML declarative, without sacrificing functionality.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_summary_8">12.4. Summary</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web.</p>
+</li>
+<li>
+<p>Using the hypermedia architecture for mobile apps solves the problems with thick-client apps.</p>
+</li>
+<li>
+<p>HTML web views are one way to implement the hypermedia architecture for mobile apps. But HTML is not designed for mobile UIs, so this approach does not deliver a great user experience.</p>
+</li>
+<li>
+<p>Hyperview is an alternative approach to build mobile apps using the hypermedia architecture. Hyperview introduces a new format called HXML. It also provides an open-source mobile thin-client to render HXML.</p>
+</li>
+<li>
+<p>HXML looks similar to HTML, but it uses elements that correspond to mobile UIs, like <code>&lt;screen&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;list&gt;</code> and more.</p>
+</li>
+<li>
+<p>HXML also includes input elements that implement common patterns in mobile apps, such as <code>&lt;switch&gt;</code>, <code>&lt;select-single&gt;</code>, and <code>&lt;select-multiple&gt;</code>.</p>
+</li>
+<li>
+<p>New UI components can be added to HXML using namespaced elements. The Hyperview client can be easily extended to render these new elements.</p>
+</li>
+<li>
+<p>Interactions in HXML are defined using <code>&lt;behavior&gt;</code> elements. Inspired by htmx, <code>&lt;behavior&gt;</code> elements decouple user interactions (triggers) from the resulting actions.</p>
+</li>
+<li>
+<p>Navigation between screens in Hyperview is done using behaviors with navigation actions, like <code>push</code>, <code>back</code>, <code>new</code>, and <code>close</code>.</p>
+</li>
+<li>
+<p>Updates to screens in Hyperview are defined using behaviors with update actions, such as <code>replace</code> and <code>append</code>.</p>
+</li>
+<li>
+<p>System interactions in Hyperview are defined using behaviors with system actions, such as <code>alert</code> and <code>share</code>.</p>
+</li>
+<li>
+<p>New actions can be added to HXML using namespaced attributes. The Hyperview client can be easily extended to interpret the new actions.</p>
+</li>
+<li>
+<p>The extensibility of HXML and the Hyperview client make it easy for developers to define custom element and behaviors. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture.
+= Building Hypermedia Systems
+:chapter: 7
+:sectnums:
+:figure-caption: Figure 12.
+:listing-caption: Listing 12.
+:table-caption: Table 12.
+:sectnumoffset: 6
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_deep_htmx.html">Deep htmx</a> | ↑ Up: <a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a> | ⌂ Home: <a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a> | Next: <a href="_building_a_contacts_app_with_hyperview.html">Building a Contacts App With Hyperview</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-10-20 12:44:43 -0600
+</div>
+</div>
+</body>
+</html>

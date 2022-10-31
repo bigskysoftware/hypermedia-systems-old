@@ -1,0 +1,2470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="author" content="Adam Stepinski, Carson Gross, Deniz Akşimşek">
+<title>Building Hypermedia Systems</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_building_a_contacts_app_with_hyperview" class="book">
+<div id="header">
+<h1>Building Hypermedia Systems</h1>
+<div class="details">
+<span id="author" class="author">Adam Stepinski, Carson Gross, Deniz Akşimşek</span><br>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a></span></p><ul class="sectlevel0">
+<li><a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a>
+<ul class="sectlevel1">
+<li><a href="_reintroducing_hypermedia.html">1. Reintroducing Hypermedia</a>
+</li>
+<li><a href="_rest_hateoas_and_all_that.html">2. REST, HATEOAS and All That</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html">3. Building A Simple Web 1.0 Application</a>
+</li>
+<li><a href="_extending_html_as_hypermedia.html">4. Extending HTML As Hypermedia</a>
+</li>
+<li><a href="_htmx_in_action.html">5. htmx In Action</a>
+</li>
+<li><a href="_building_hypermedia_systems_2.html">6. Building Hypermedia Systems</a>
+</li>
+<li><a href="_more_htmx_patterns.html">7. More htmx Patterns</a>
+</li>
+<li><a href="_building_hypermedia_systems_3.html">8. Building Hypermedia Systems</a>
+</li>
+<li><a href="_a_dynamic_archive_ui_with_htmx.html">9. A Dynamic Archive UI With htmx</a>
+</li>
+<li><a href="_building_hypermedia_systems_4.html">10. Building Hypermedia Systems</a>
+</li>
+<li><a href="_deep_htmx.html">11. Deep htmx</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html">12. Hyperview: A Mobile Hypermedia</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html"><span class="toc-current">13. Building a Contacts App With Hyperview</span></a>
+<ul class="sectlevel2">
+<li><a href="_building_a_contacts_app_with_hyperview.html#_creating_a_mobile_app">13.1. Creating a mobile app</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_a_searchable_list_of_contacts">13.2. A Searchable List of Contacts</a>
+<ul class="sectlevel3">
+<li><a href="_building_a_contacts_app_with_hyperview.html#_searching_contacts">13.2.1. Searching Contacts</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_infinite_scroll_2">13.2.2. Infinite scroll</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_pull_to_refresh">13.2.3. Pull-to-refresh</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_viewing_the_details_of_a_contact_3">13.2.4. Viewing The Details Of A Contact</a>
+</li>
+</ul>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_editing_a_contact">13.3. Editing a Contact</a>
+<ul class="sectlevel3">
+<li><a href="_building_a_contacts_app_with_hyperview.html#_updating_the_contacts_list">13.3.1. Updating the Contacts List</a>
+</li>
+</ul>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_deleting_a_contact_2">13.4. Deleting a Contact</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_adding_a_new_contact_2">13.5. Adding a New Contact</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_deploying_the_app">13.6. Deploying the App</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_one_backend_multiple_hypermedia_formats">13.7. One Backend, Multiple Hypermedia formats</a>
+<ul class="sectlevel3">
+<li><a href="_building_a_contacts_app_with_hyperview.html#_what_is_content_negotiation">13.7.1. What is Content Negotiation?</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_approach_1_template_switching">13.7.2. Approach 1: Template Switching</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_approach_2_the_redirect_fork">13.7.3. Approach 2: The Redirect Fork</a>
+</li>
+</ul>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html#_summary_9">13.8. Summary</a>
+</li>
+</ul>
+</li>
+<li><a href="_extending_the_hyperview_client.html">14. Extending the Hyperview Client</a>
+</li>
+<li><a href="_client_side_scripting.html">15. Client Side Scripting</a>
+</li>
+<li><a href="_building_hypermedia_systems_5.html">16. Building Hypermedia Systems</a>
+</li>
+<li><a href="_json_data_apis_hypermedia_driven_applications.html">17. JSON Data APIs &amp; Hypermedia Driven Applications</a>
+</li>
+<li><a href="_other_hypermedia_libraries_technologies.html">18. Other Hypermedia Libraries &amp; Technologies</a>
+</li>
+<li><a href="_conclusion_3.html">19. Conclusion</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_building_a_contacts_app_with_hyperview">13. Building a Contacts App With Hyperview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter covers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Transforming the existing Contacts web app into a native mobile app using Hyperview</p>
+</li>
+<li>
+<p>Using Hyperview behaviors to navigate between screens using stacks and modals</p>
+</li>
+<li>
+<p>Communicating between screens using the Events system</p>
+</li>
+<li>
+<p>Using the same backend to power both the web app and mobile app</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
+These benefits were demonstrated by building a robust Contacts web application.
+Then, Chapter 6 argued that hypermedia concepts can and should be applied to platforms other than the Web.
+We introduced Hyperview as an example of a hypermedia format and client specifically designed for building mobile apps.
+But you may still be wondering: what is it like to create a fully-featured, production-ready mobile app using Hyperview?
+Do I have to learn a whole new language and framework?
+In this chapter, we will show Hyperview in action by porting the Contacts web app to a native mobile app.
+You will see that almost many web development techniques (and indeed, much of the code) are completely identical when developing with Hyperview.
+How is that possible?</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Our Contacts web app was built with the principle of HATEOAS (Hypermedia as the Engine of Application State).
+All of the app&#8217;s features (retrieving, searching, editing, and creating contacts) are implemented in the backend (the <code>Contacts</code> Python class).
+Our mobile app, built with Hyperview, also leverages HATEOAS and relies on the backend for all of the app&#8217;s logic.
+That means the <code>Contacts</code> Python class can power our mobile app the same way it powers the web app, without any changes required.</p>
+</li>
+<li>
+<p>The client-server communication in the web app happens using HTTP.
+The HTTP server for our web app is written using the Flask framework.
+Hyperview also uses HTTP for client-server communication.
+So we can re-use the Flask routes and views from the web app for the mobile app as well.</p>
+</li>
+<li>
+<p>The web app uses HTML for its hypermedia format, and Hyperview uses HXML.
+HTML and HXML are different formats, but the base syntax is similar (nested tags with attribues).
+This means we can use the same templating library (Jinja) for HTML and HXML.
+Additionally, many of the concepts of htmx are built into HXML.
+We can directly port web app features implemented with htmx (search, infinite loading) to HXML.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Essentially, we can re-use almost everything from the web app backend, but we will need to replace the HTML templates with HXML templates.
+Most of the sections in this chapter will assume we have the web contacts app running locally and listening on port 5000.
+The focus will be on creating new HXML templates for our mobile app&#8217;s UI.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_mobile_app">13.1. Creating a mobile app</h3>
+<div class="paragraph">
+<p>But before we dive into HXML, there&#8217;s one pesky requirement: the Hyperview client.
+When developing web applications, you only need to worry about the server because the client (web browser) is universally available.
+There&#8217;s no equivalent Hyperview client installed on every mobile device.
+Instead, we will create our own Hyperview client, customized to only talk to our server.
+This client can be packaged up into an Android or iOS mobile app, and distributed through the respective app stores.</p>
+</div>
+<div class="paragraph">
+<p>Luckily, we don&#8217;t need to start from scratch to implement a Hyperview client.
+The Hyperview code repository comes with a demo backend and a demo client built using Expo.
+We will use this demo client but point it to our contacts app backend as a starting point.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">&gt; git clone git@github.com:Instawork/hyperview.git
+&gt; cd hyperview/demo
+&gt; yarn <b class="conum">(1)</b>
+&gt; yarn start <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Install dependencies for the demo app</p>
+</li>
+<li>
+<p>Start the Expo server to run the mobile app in the iOS simulator.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After running <code>yarn start</code>, you will be presented with a prompt asking you to open the mobile app using an Android emulator or iOS simulator.
+Select an option based on which developer SDK you have installed.
+(The screenshots in this chapter will be taken from the iOS simulator.)
+With any luck, you will see the Expo mobile app installed in the simulator.
+The mobile app will automatically launch and show a screen saying "Network request failed."
+That&#8217;s because by default, this app is configured to make a request to <code><a href="http://0.0.0.0:8085/index.xml" class="bare">http://0.0.0.0:8085/index.xml</a></code>, but our backend is listening on port 5000.
+To fix this, we can make a simple configuration change in the <code>demo/src/constants.js</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">//export const ENTRY_POINT_URL = 'http://0.0.0.0:8085/index.xml'; <b class="conum">(1)</b>
+export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/'; <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The default entrypoint URL in the demo app</p>
+</li>
+<li>
+<p>Setting the URL to point to our contacts app</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We&#8217;re not up and running yet.
+With our Hyperview client now pointing to the right endpoint, we see a different error, a "ParseError".
+That&#8217;s because the backend is responding to requests with HTML content, but the Hyperview client expects an XML response (specifically, HXML).
+So it&#8217;s time to turn out attention to our Flask backend.
+We will go through the Flask views, and replace the HTML templates with HXML templates.
+Specifically, let&#8217;s support the following features to our mobile app:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A searchable list of contacts</p>
+</li>
+<li>
+<p>Viewing the details of a contact</p>
+</li>
+<li>
+<p>Editing a contact</p>
+</li>
+<li>
+<p>Deleting a contact</p>
+</li>
+<li>
+<p>Adding a new contact</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 154. Zero Client-Configuration in Hypermedia Applications</div>
+<div class="content">
+<pre class="highlight"><code class="language-" data-lang="">For many mobile apps that use the Hyperview client, configuring this entrypoint URL is the only on-device code you need to write to deliver a full-featured app.
+Think of the entrypoint URL as the address you type into a web browser to open a web app.
+Except in Hyperview, there is no address bar, and the browser is hard-coded to only open one URL.
+This URL will load the first screen when a user launches the app.
+Every other action the user can take will be declared in the HXML of that first screen.
+This minimal configuration is one elegant aspect of the Hypermedia-driven architecture!
+
+Of course, you may want to write more on-device code to support more features in your mobile app.
+We will demonstrate how to do that later in this chapter, in the section called "Extending the Client".</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_searchable_list_of_contacts">13.2. A Searchable List of Contacts</h3>
+<div class="paragraph">
+<p>We will start building our Hyperview app with the entrypoint screen, the list of contacts.
+For the initial version of this screen, let&#8217;s support the following features from the web app:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>display a scrollable list of contacts</p>
+</li>
+<li>
+<p>"search-as-you-type" field above the list</p>
+</li>
+<li>
+<p>"infinite-scroll" to load more contacts as the user scrolls through</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Additionally, we will add a "pull-to-refresh" interaction on the list, since users expect this from list UIs in mobile apps.</p>
+</div>
+<div class="paragraph">
+<p>If you recall, all of the pages in the Contacts web app extended a common base template, <code>layout.html</code>.
+We need a similar base template for the screens of the mobile app.
+This base template will contain the style rules or our UI, and a basic structure common to all screens.
+Let&#8217;s call it <code>layout.xml</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 155. Base template <code>hv/layout.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;doc xmlns="https://hyperview.org/hyperview"&gt;
+  &lt;screen&gt;
+    &lt;styles&gt;&lt;!-- omitted for brevity --&gt;&lt;/styles&gt;
+    &lt;body style="body" safe-area="true"&gt;
+      &lt;header style="header"&gt;
+        {% block header %} <b class="conum">(1)</b>
+          &lt;text style="header-title"&gt;Contacts.app&lt;/text&gt;
+        {% endblock %}
+      &lt;/header&gt;
+
+      &lt;view style="main"&gt;
+        {% block content %}{% endblock %} <b class="conum">(2)</b>
+      &lt;/view&gt;
+    &lt;/body&gt;
+  &lt;/screen&gt;
+&lt;/doc&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The header section of the template, with a default title</p>
+</li>
+<li>
+<p>The content section of the template, to be provided out by other templates.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We covered the HXML tags and attributes in the previous chapter.
+This template sets up a basic screen layout using <code>&lt;doc&gt;</code>, <code>&lt;screen&gt;</code>, <code>&lt;body&gt;</code>, <code>&lt;header&gt;</code>, and <code>&lt;view&gt;</code> tags.
+Note that the HXML syntax plays well with the Jinja templating library.
+Here, we&#8217;re using Jinja&#8217;s blocks to define two sections (<code>header</code> and <code>content</code>) that will hold the unique content of a screen.
+With our base template completed, we can create a template specifically for the contacts list screen.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 156. Start of <code>hv/index.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">{% extends 'hv/layout.xml' %} <b class="conum">(1)</b>
+
+{% block content %} <b class="conum">(2)</b>
+  &lt;form&gt; <b class="conum">(3)</b>
+    &lt;text-field name="q" value="" placeholder="Search..." style="search-field" /&gt;
+    &lt;list id="contacts-list"&gt; <b class="conum">(4)</b>
+      {% include 'hv/rows.xml' %}
+    &lt;/list&gt;
+  &lt;/form&gt;
+{% endblock %}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Extend the base layout template</p>
+</li>
+<li>
+<p>Override the <code>content</code> block of the layout template</p>
+</li>
+<li>
+<p>Create a search form that will issue an HTTP <code>GET</code> to <code>/contacts</code></p>
+</li>
+<li>
+<p>The list of contacts, using a Jinja <code>include</code> tag.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This template extends the base <code>layout.xml</code>, and overrides the <code>content</code> block with a <code>&lt;form&gt;</code>.
+At first, it might seem strange that the form wraps both the <code>&lt;text-field&gt;</code> and the <code>&lt;list&gt;</code> elements.
+But remember: in Hyperview, the form data gets included in any request originating from a child element.
+We will soon add interactions to the list (pull to refresh) that will require the form data.
+Note the use of a Jinja <code>include</code> tag to render the HXML for the rows of contacts in the list (<code>hv/rows.xml</code>).
+Just like in the HTML templates, we can use the <code>include</code> to break up our HXML into smaller pieces.
+It also allows the server to respond with just the <code>rows.xml</code> template for interactions like searching, infinite scroll, and pull-to-refresh.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 157. <code>hv/rows.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;items xmlns="https://hyperview.org/hyperview"&gt; <b class="conum">(1)</b>
+  {% for contact in contacts %} <b class="conum">(2)</b>
+    &lt;item key="{{ contact.id }}" style="contact-item"&gt; <b class="conum">(3)</b>
+      &lt;text style="contact-item-label"&gt;
+        {% if contact.first %}
+          {{ contact.first }} {{ contact.last }}
+        {% elif contact.phone %}
+          {{ contact.phone }}
+        {% elif contact.email %}
+          {{ contact.email }}
+        {% endif %}
+      &lt;/text&gt;
+    &lt;/item&gt;
+  {% endfor %}
+&lt;/items&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>An HXML element that groups a set of <code>&lt;item&gt;</code> elements in a common parent</p>
+</li>
+<li>
+<p>Iterate over the contacts that were passed in to the template</p>
+</li>
+<li>
+<p>Render an <code>&lt;item&gt;</code> for each contact, showing the name, phone number, or email.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the web app, each row in the list showed the contact&#8217;s name, phone number, and email address.
+But in a mobile app, we have less real-estate.
+It would be hard to cram all this information into one line.
+Instead, the row just shows the contact&#8217;s first and last name, and falls back to email or phone if the name is not set.
+To render the row, we again make use of Jinja template syntax to render dynamic text with data passed to the template.</p>
+</div>
+<div class="paragraph">
+<p>We now have templates for the base layout, the contacts screen, and the contact rows.
+But we still have to update the Flask views to use these templates.
+Let&#8217;s take a look at the <code>contacts()</code> view in its current form, written for the web app:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 158. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    page = int(request.args.get("page", 1))
+    if search:
+        contacts_set = Contact.search(search)
+        if request.headers.get('HX-Trigger') == 'search':
+            return render_template("rows.html", contacts=contacts_set, page=page)
+    else:
+        contacts_set = Contact.all(page)
+    return render_template("index.html", contacts=contacts_set, page=page)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This view supports fetching a set of contacts based on two query params, <code>q</code> and <code>page</code>.
+It also decides whether to render the full page (<code>index.html</code>) or just the contact rows (<code>rows.html</code>) based on the <code>HX-Trigger</code> header.
+This presents a minor problem.
+The <code>HX-Trigger</code> header is set by the htmx library; there&#8217;s no equivalent feature in Hyperview.
+Moreover, there are multiple scenarios in Hyperview that require us to respond with just the contact rows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>searching</p>
+</li>
+<li>
+<p>pull-to-refresh</p>
+</li>
+<li>
+<p>loading the next page of contacts</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Since we can&#8217;t depend on a header like <code>HX-Trigger</code>, we need a different way to detect if the client needs the full screen or just the rows in the response.
+We can do this by introducing a new query param, <code>rows_only</code>.
+When this param has the value <code>true</code>, the view will respond to the request by rendering the <code>rows.xml</code> template.
+Otherwise, it will respond with the <code>index.xml</code> template:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 159. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    page = int(request.args.get("page", 1))
+    rows_only = request.args.get("rows_only") == "true" <b class="conum">(1)</b>
+    if search:
+        contacts_set = Contact.search(search)
+    else:
+        contacts_set = Contact.all(page)
+
+    template_name = "hv/rows.xml" if rows_only else "hv/index.xml" <b class="conum">(2)</b>
+    return render_template(template_name, contacts=contacts_set, page=page)</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Check for a new <code>rows_only</code> query param</p>
+</li>
+<li>
+<p>Render the appropriate HXML template based on <code>rows_only</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>There&#8217;s one more change we have to make.
+Flask assumes that most views will respond with HTML.
+So Flask defaults the <code>Content-Type</code> response header to a value of <code>text/html</code>.
+But the Hyperview client expects to receive HXML content, indicated by a <code>Content-Type</code> response header with value <code>application/vnd.hyperview+xml</code>.
+The client will reject responses with a different content type.
+To fix this, we need to explicitly set the <code>Content-Type</code> response header in our Flask views.
+We will do this by introducing a new helper function, <code>render_to_response()</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 160. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">def render_to_response(template_name, *args, **kwargs):
+    content = render_template(template_name, *args, **kwargs) <b class="conum">(1)</b>
+    response = make_response(content) <b class="conum">(2)</b>
+    response.headers['Content-Type'] = 'application/vnd.hyperview+xml' <b class="conum">(3)</b>
+    return response</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Renders the given template with the supplied arguments and keyword arguments.</p>
+</li>
+<li>
+<p>Create an explicit response object with the rendered template</p>
+</li>
+<li>
+<p>Sets the response <code>Content-Type</code> header to XML.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>As you can see, this helper function uses <code>render_template()</code> under the hood.
+<code>render_template()</code> returns a string.
+This helper function uses that string to create an explicit <code>Response</code> object.
+The response object has a <code>headers</code> attribute, allowing us to set and change the response headers.
+Specifically, <code>render_to_response()</code> sets <code>Content-Type</code> to <code>application/xml</code> so that the Hyperview client recognizes the content.
+This helper is a drop-in replacement for <code>render_template</code> in our views.
+So all we need to do is update the last line of the <code>contacts()</code> function.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 161. <code>contacts() function</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">return render_to_response(template_name, contacts=contacts_set, page=page) <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Render the HXML template to an XML response.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>With these changes to the <code>contacts()</code> view, we can finally see the fruits of our labor.
+After restarting the backend and refreshing the screen in our mobile app, we can see the contacts screen!</p>
+</div>
+<div id="figure-7-1" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_hyperview_list.png" alt="screenshot hyperview list">
+</div>
+<div class="title">Figure 12. 13. Contacts Screen</div>
+</div>
+<div class="sect3">
+<h4 id="_searching_contacts">13.2.1. Searching Contacts</h4>
+<div class="paragraph">
+<p>So far, we have a mobile app that displays a screen with a list of contacts.
+But our UI doesn&#8217;t support any interactions.
+Typing a query in the search field doesn&#8217;t filter the list of contacts.
+Let&#8217;s add a behavior to the search field to implement a search-as-you-type interaction.
+This requires expanding <code>&lt;text-field&gt;</code> to add a <code>&lt;behavior&gt;</code> element.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 162. Snippet of <code>hv/index.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;text-field name="q" value="" placeholder="Search..." style="search-field"&gt;
+  &lt;behavior
+    trigger="change" <b class="conum">(1)</b>
+    action="replace-inner" <b class="conum">(2)</b>
+    target="contacts-list" <b class="conum">(3)</b>
+    href="/contacts?rows_only=true" <b class="conum">(4)</b>
+    verb="get" <b class="conum">(5)</b>
+  /&gt;
+&lt;/text-field&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>This behavior will trigger when the value of the text field changes</p>
+</li>
+<li>
+<p>When the behavior triggers, the action will replace the content inside the target element.</p>
+</li>
+<li>
+<p>The target of the action is the element with ID <code>contacts-list</code>.</p>
+</li>
+<li>
+<p>The replacement content will be fetched from this URL path.</p>
+</li>
+<li>
+<p>The replacement content will be fetched with the <code>GET</code> HTTP method.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The first thing you&#8217;ll notice is that we changed the text field from using a self-closing tag (<code>&lt;text-field /&gt;</code>) to using opening and closing tags (<code>&lt;text-field&gt;&#8230;&#8203;&lt;/text-field&gt;</code>).
+This allows us to add a child <code>&lt;behavior&gt;</code> element to define an interaction.
+The <code>trigger="change"</code> attribute tells Hyperview that a change to the value of the text field will trigger an action.
+Any time the user edits the content of the text field by adding or deleting characters, an action will trigger.
+The remaining attributes on the <code>&lt;behavior&gt;</code> element define the action.
+<code>action="replace-inner"</code> means the action will update content on the screen, by replacing the HXML content of an element with new content.
+For <code>replace-inner</code> to do its thing, we need to know 2 things: the current element on the screen that will be targeted by the action, and the content that will used for the replacement.
+<code>target="contacts-list"</code> tells us the ID of the current element.
+Note that we set <code>id="contacts-list"</code> on the <code>&lt;list&gt;</code> element in <code>index.xml</code>.
+So when the user enters a search query into the text field, Hyperview will replace the content of <code>&lt;list&gt;</code> (a bunch of <code>&lt;item&gt;</code> elements) with new content (<code>&lt;item&gt;</code> elements that match the search query).
+relative href.
+(The domain is inferred from the domain used to fetch the screen).
+Note that <code>href</code> includes our <code>rows_only</code> query param; we want the response to only include the rows and not the entire screen.</p>
+</div>
+<div id="figure-7-2" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_hyperview_search.png" alt="screenshot hyperview search">
+</div>
+<div class="title">Figure 12. 14. Searchings for Contacts</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s all it takes to add search-as-you-type functionality to our mobile app!
+As the user types a search query, the client will make requests to the backend and replace the list with the search results.
+You may be wondering, how does the backend know the query to use?
+The <code>href</code> attribute in the behavior does not include the <code>q</code> param expected by our backend.
+But remember, in <code>index.xml</code>, we wrapped the <code>&lt;text-field&gt;</code> and <code>&lt;list&gt;</code> elements with a parent <code>&lt;form&gt;</code> element.
+The <code>&lt;form&gt;</code> element defines a group of inputs that will be serialized and included in any HTTP requests triggered by its child elements.
+In this case, the <code>&lt;form&gt;</code> element surrounds the search behavior and the text field.
+So the value of the <code>&lt;text-field&gt;</code> will be included in our HTTP request for the search results.
+Since we are making a <code>GET</code> request, the name and value of the text field will be serialized as a query param.
+Any existing query params on the <code>href</code> will be preserved.
+This means the actual HTTP request to our backend looks like <code>GET /contacts?rows_only=true&amp;q=Car</code>.
+Our backend already supports the <code>q</code> param for searching, so the response will include rows that match the string "Car".</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_infinite_scroll_2">13.2.2. Infinite scroll</h4>
+<div class="paragraph">
+<p>If the user has hundreds or thousands of contacts, loading them all at once may result in poor app performance.
+That&#8217;s why most mobile apps with long lists implement an interaction known as "infinite scroll".
+The app loads a fixed number of initial items in the list, let&#8217;s say 100 items.
+If the user scrolls to the bottom of the list, they see a spinner indicating more content is loading.
+Once the content is available, the spinner is replaced with the next page of 100 items.
+These items are appended to the list, they don&#8217;t replace the first set of items.
+So the list now contains 200 items.
+If the user scrolls to the bottom of the list again, they will see another spinner, and the app will load the next set of content.
+Infinite scroll improves app performance in two ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The initial request for 100 items will be processed quickly, with predictable latency.</p>
+</li>
+<li>
+<p>Subsequent requests can also be fast and predictable.</p>
+</li>
+<li>
+<p>If the user doesn&#8217;t scroll to the bottom of the list, the app won&#8217;t have to make subsequent requests.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Our Flask backend already supports pagination on the <code>/contacts</code> endpoint via the <code>page</code> query param.
+We just need to modify our HXML templates to make use of this parameter.
+To do this, let&#8217;s edit <code>rows.xml</code> to add a new <code>&lt;item&gt;</code> below the Jinja for-loop:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 163. Snippet of <code>hv/rows.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;items xmlns="https://hyperview.org/hyperview"&gt;
+  {% for contact in contacts %}
+    &lt;item key="{{ contact.id }}" style="contact-item"&gt;
+      &lt;!-- omitted for brevity --&gt;
+    &lt;/item&gt;
+  {% endfor %}
+  {% if contacts|length &gt; 0 %}
+    &lt;item key="load-more" id="load-more" style="load-more-item"&gt; <b class="conum">(1)</b>
+      &lt;behavior
+        trigger="visible" <b class="conum">(2)</b>
+        action="replace" <b class="conum">(3)</b>
+        target="load-more" <b class="conum">(4)</b>
+        href="/contacts?rows_only=true&amp;page={{ page + 1 }}" <b class="conum">(5)</b>
+        verb="get"
+      /&gt;
+      &lt;spinner /&gt; <b class="conum">(6)</b>
+    &lt;/item&gt;
+  {% endif %}
+&lt;/items&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Include an extra <code>&lt;item&gt;</code> in the list to show the spinner</p>
+</li>
+<li>
+<p>The item behavior triggers when visible in the viewport</p>
+</li>
+<li>
+<p>When triggered, the behavior will replace an element on the screen</p>
+</li>
+<li>
+<p>The element to be replaced is the item itself (ID <code>load-more</code>)</p>
+</li>
+<li>
+<p>Replace the item with the next page of content</p>
+</li>
+<li>
+<p>The spinner element</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If the current list of contacts passed to the template is empty, we can assume there&#8217;s no more contacts to fetch from the backend.
+So we use a Jinja conditional to only include this new <code>&lt;item&gt;</code> if the list of contacts is non-empty.
+This new <code>&lt;item&gt;</code> element gets an ID and a behavior.
+The behavior defines the infinite scroll interaction.
+Up until now, we&#8217;ve seen <code>trigger</code> values of <code>change</code> and <code>refresh</code>.
+But to implement infinite scroll, we need a way to trigger the action when the user scrolls to the botton of the list.
+The <code>visibile</code> trigger can be used for this exact purpose.
+It will trigger the action when the element with the behavior is visible in the device viewport.
+In this case, the new <code>&lt;item&gt;</code> element is the last item in the list, so the action will trigger when the user scrolls down far enough for the item to enter the viewport.
+As soon as the item is visible, the action will make an HTTP GET request, and replace the loading <code>&lt;item&gt;</code> element with the response content.
+Note that our href includes the <code>rows_only=true</code> query param, or our response will only include HXML for the contact items, and not the entire screen.
+Also, we&#8217;re passing the <code>page</code> query param, incrementing the current page number to ensure we load the next page.</p>
+</div>
+<div class="paragraph">
+<p>What happens when there&#8217;s more than one page of items?
+The initial screen will include the first 100 items, plus the "load-more" item at the bottom.
+When the user scrolls to the bottom of the screen, Hyperview will request the second page of items (<code>&amp;page=2</code>), and replace the "load-more" item with the new items.
+But this second page of items will include a new "load-more" item.
+So once the user scrolls through all of the items from the second page, Hyperview will again request more items (<code>&amp;page=3</code>).
+And once again, the "load-more" item will be replaced with the new items.
+This will continue until all of the items will be loaded on the screen.
+At that point, there will be no more contacts to return, the response will not include another "load-more" item, and our pagination is over.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pull_to_refresh">13.2.3. Pull-to-refresh</h4>
+<div class="paragraph">
+<p>Pull-to-refresh is a common interaction in mobile apps, especially on screens featuring dynamic content.
+It works like this:
+At the top of a scrolling view, the user pulls the scrolling content downwards with a swipe-down gesture.
+This reveals a spinner "below" the content.
+Pulling the content down sufficiently far will trigger a refresh.
+While the content refreshes, the spinner remains visible on screen, indicating to the user that the action is still taking place.
+Once the content is refreshed, the content retracts back up to its default position, hiding the spinner and letting the user know that the interaction is done.</p>
+</div>
+<div id="figure-7-3" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_hyperview_refresh_cropped.png" alt="screenshot hyperview refresh cropped">
+</div>
+<div class="title">Figure 12. 15. Pull-to-refresh</div>
+</div>
+<div class="paragraph">
+<p>This pattern is so common and useful that it&#8217;s built in to Hyperview via the <code>refresh</code> action.
+Let&#8217;s add pull-to-refresh to our list of contacs to see it in action.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 164. Snippet of <code>hv/index.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;list id="contacts-list"
+  trigger="refresh" <b class="conum">(1)</b>
+  action="replace-inner" <b class="conum">(2)</b>
+  target="contacts-list" <b class="conum">(3)</b>
+  href="/contacts?rows_only=true" <b class="conum">(4)</b>
+  verb="get" <b class="conum">(5)</b>
+&gt;
+  {% include 'hv/rows.xml' %}
+&lt;/list&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>This behavior will trigger when the user does a "pull-to-refresh" gesture.</p>
+</li>
+<li>
+<p>When the behavior triggers, this action will replace the content inside the target element.</p>
+</li>
+<li>
+<p>The target of the action is the <code>&lt;list&gt;</code> element itself.</p>
+</li>
+<li>
+<p>The replacement content will be fetched from this URL path.</p>
+</li>
+<li>
+<p>The replacement content will be fetched with the <code>GET</code> HTTP method.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll notice something unusual in the snippet above: rather than adding a <code>&lt;behavior&gt;</code> element to the <code>&lt;list&gt;</code>, we added the behavior attributes directly to the <code>&lt;list&gt;</code> element.
+This is a shorthand notation that&#8217;s sometimes useful for specifying single behaviors on an element.
+It is equivalent to adding a <code>&lt;behavior&gt;</code> element to the <code>&lt;list&gt;</code> with the same attributes.
+So why did I use the shorthand syntax here?
+It has to do with the action, <code>replace-inner</code>.
+Remember, this action replaces all child elements of the target with the new content.
+This includes <code>&lt;behavior&gt;</code> elements too!
+Let&#8217;s say our <code>&lt;list&gt;</code> did contain a <code>&lt;behavior&gt;</code>.
+If the user did a search or pull-to-refresh, we would replace the content of <code>&lt;list&gt;</code> with the content from <code>rows.xml</code>.
+The <code>&lt;behavior&gt;</code> would no longer be defined on the <code>&lt;list&gt;</code>, and subsequent attempts to pull-to-refresh would not work.
+By defining the behavior as attributes of <code>&lt;list&gt;</code>, the behavior will persist even when replacing the items in the list.
+Generally, I prefer to use explicit <code>&lt;behavior&gt;</code> elements in my HXML.
+it makes it easier to define multiple behaviors, and to move the behavior around while refactoring.
+But the shorthand syntax is good to apply in situations like this.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_viewing_the_details_of_a_contact_3">13.2.4. Viewing The Details Of A Contact</h4>
+<div class="paragraph">
+<p>Now that our contacts list screen is in good shape, we can start adding other screens to our app.
+The natural next step is to create a details screen, which appears when the user taps an item in the contacts list.
+Let&#8217;s update the template that renders the contact <code>&lt;item&gt;</code> elements, and add a behavior to show the details screen.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 165. <code>hv/rows.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;items xmlns="https://hyperview.org/hyperview"&gt;
+  {% for contact in contacts %}
+    &lt;item key="{{ contact.id }}" style="contact-item"&gt;
+      &lt;behavior trigger="press" action="push" href="/contacts/{{ contact.id }}" /&gt; <b class="conum">(1)</b>
+      &lt;text style="contact-item-label"&gt;
+        &lt;!-- omitted for brevity --&gt;
+      &lt;/text&gt;
+    &lt;/item&gt;
+  {% endfor %}
+&lt;/items&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Behavior to push the contact details screen onto the stack when pressed.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Our Flask backend already has a route for serving the contact details at <code>/contacts/&lt;contact_id&gt;</code>.
+In our template, we use a Jinja variable to dynamically generate the URL path for the current contact in the for-loop.
+We also used the "push" action to show the details by pushing a new screen onto the stack.
+If you reload the app, you can now tap any contact in the list, and Hyperview will open the new screen.
+However, the new screen will show an error message.
+That&#8217;s because our backend is still returning HTML in the response, and the Hyperview client expects HXML.
+Let&#8217;s update the backend to respond with HXML and the proper headers.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 166. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">@app.route("/contacts/&lt;contact_id&gt;")
+def contacts_view(contact_id=0):
+    contact = Contact.find(contact_id)
+    return render_to_response("hv/show.xml", contact=contact) <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Generate an XML response from a new template file.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Just like with the <code>contacts()</code> view, <code>contacts_view()</code> uses <code>render_to_response()</code> to set the <code>Content-Type</code> header on the response.
+We&#8217;re also generating the response from a new HXML template, which we can create now:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 167. <code>hv/show.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">{% extends 'hv/layout.xml' %} <b class="conum">(1)</b>
+
+{% block header %} <b class="conum">(2)</b>
+  &lt;text style="header-button"&gt;
+    &lt;behavior trigger="press" action="back" /&gt; <b class="conum">(3)</b>
+    Back
+  &lt;/text&gt;
+{% endblock %}
+
+{% block content %} <b class="conum">(4)</b>
+&lt;view style="details"&gt;
+  &lt;text style="contact-name"&gt;{{ contact.first }} {{ contact.last }}&lt;/text&gt;
+
+  &lt;view style="contact-section"&gt;
+    &lt;text style="contact-section-label"&gt;Phone&lt;/text&gt;
+    &lt;text style="contact-section-info"&gt;{{contact.phone}}&lt;/text&gt;
+  &lt;/view&gt;
+
+  &lt;view style="contact-section"&gt;
+    &lt;text style="contact-section-label"&gt;Email&lt;/text&gt;
+    &lt;text style="contact-section-info"&gt;{{contact.email}}&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/view&gt;
+{% endblock %}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Extend the base layout template</p>
+</li>
+<li>
+<p>Override the <code>header</code> block of the layout template to include a "Back" button</p>
+</li>
+<li>
+<p>Behavior to navigate to the previous screen when pressed</p>
+</li>
+<li>
+<p>Override the <code>content</code> block to show the full details of the selected contact.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The contacts detail screen extends the base <code>layout.xml</code> template, just like we did in <code>index.xml</code>.
+This time, we&#8217;re overriding content in both the <code>header</code> block and <code>content</code> block.
+Overriding the header block lets us add a "Back" button with a behavior.
+When pressed, the Hyperview client will unwind the navigation stack and return the user to the contacts list.
+Note that triggering this behavior is not the only way to navigate back.
+The Hyperview client respects navigation conventions on different platforms.
+On iOS, users can also navigate to the previous screen by swiping right from the left edge of the device.
+On Android, users can also navigate to the previous screen by pressing the hardware back button.
+We don&#8217;t need to specify anything extra in the HXML to get these interactions!</p>
+</div>
+<div id="figure-7-4" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_hyperview_detail_cropped.png" alt="screenshot hyperview detail cropped">
+</div>
+<div class="title">Figure 12. 16. Contact Details Screen</div>
+</div>
+<div class="paragraph">
+<p>With just a few simple changes, we&#8217;ve gone from a single-screen app to a multi-screen app.
+Note that we didn&#8217;t need to change anything in the actual mobile app code to support our new screen.
+This is a big deal.
+In traditional mobile app development, adding screens can be a significant task.
+Developers need to create the new screen, insert it into the appropriate place of the navigation hierarchy, and write code to open the new screen from existing screens.
+In Hyperview, we just added a behavior with <code>action="push"</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editing_a_contact">13.3. Editing a Contact</h3>
+<div class="paragraph">
+<p>So far, our app lets us browse a list of contacts, and view details of a specific contact.
+Wouldn&#8217;t it be nice to update the name, phone number, or email of a contact?
+Let&#8217;s add UI to edit contacts as our next enhancement.</p>
+</div>
+<div class="paragraph">
+<p>First we have to figure out how we want to display the editing UI.
+We could push a new editing screen onto the stack, the same way we pushed the contact details screen.
+But that&#8217;s not the best design from a user-experience perspective.
+Pushing new screens makes sense when drilling down into data, like going from a list to a single item.
+But editing is not a "drill-down" interaction, it&#8217;s a mode switch between viewing and editing.
+So instead of pushing a new screen, let&#8217;s replace the current screen with the editing UI.
+That means we need to add a button and behavior that use the <code>reload</code> action.
+This button can be added to the header of the contact details screen.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 168. Snippet of <code>hv/show.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">{% block header %}
+  &lt;text style="header-button"&gt;
+    &lt;behavior trigger="press" action="back" /&gt;
+    Back
+  &lt;/text&gt;
+
+  &lt;text style="header-button"&gt; <b class="conum">(1)</b>
+    &lt;behavior trigger="press" action="reload" href="/contacts/{{contact.id}}/edit" /&gt; <b class="conum">(2)</b>
+    Edit
+  &lt;/text&gt;
+{% endblock %}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The new "Edit" button</p>
+</li>
+<li>
+<p>Behavior to reload the current screen with the edit screen when pressed</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once again, we&#8217;re reusing an existing Flask route (<code>/contacts/&lt;contact_id&gt;/edit</code>) for the edit UI, and filling in the contact ID using data passed to the Jinja template.
+We also need to update the <code>contacts_edit_get()</code> view to return an XML response based on an HXML template (<code>hv/edit.xml</code>).
+I&#8217;ll skip the code sample because the needed changes are identical to what we applied to <code>contacts_view()</code> in the previous section.
+Instead, let&#8217;s focus on the template for the edit screen.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 169. <code>hv/edit.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">{% extends 'hv/layout.xml' %}
+
+{% block header %}
+  &lt;text style="header-button"&gt;
+    &lt;behavior trigger="press" action="back" href="#" /&gt;
+    Back
+  &lt;/text&gt;
+{% endblock %}
+
+{% block content %}
+&lt;form&gt; <b class="conum">(1)</b>
+  &lt;view id="form-fields"&gt; <b class="conum">(2)</b>
+    {% include 'hv/form_fields.xml' %} <b class="conum">(3)</b>
+  &lt;/view&gt;
+
+  &lt;view style="button"&gt; <b class="conum">(4)</b>
+    &lt;behavior
+      trigger="press"
+      action="replace-inner"
+      target="form-fields"
+      href="/contacts/{{contact.id}}/edit"
+      verb="post"
+    /&gt;
+    &lt;text style="button-label"&gt;Save&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/form&gt;
+{% endblock %}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Form wrapping the input fields and buttons</p>
+</li>
+<li>
+<p>Container with ID, containing the input fields</p>
+</li>
+<li>
+<p>Template include to render the input fields</p>
+</li>
+<li>
+<p>Button to submit the form data and update the input fields container</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Since the edit screen needs to send data to the backend, we wrap the entire content section in a <code>&lt;form&gt;</code> element.
+This ensures the form field data will be included in the HTTP requests to our backend.
+Within the <code>&lt;form&gt;</code> element, our UI is divided into two sections: the form fields, and the Save button.
+The actual form fields are defined in a separate template (<code>form_fields.xml</code>) and added to the edit screen using a Jinja include tag.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 170. <code>hv/form_fields.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;view style="edit-group"&gt;
+  &lt;view style="edit-field"&gt;
+    &lt;text-field name="first_name" placeholder="First name" value="{{ contact.first }}" /&gt; <b class="conum">(1)</b>
+    &lt;text style="edit-field-error"&gt;{{ contact.errors.first }}&lt;/text&gt; <b class="conum">(2)</b>
+  &lt;/view&gt;
+
+  &lt;view style="edit-field"&gt; <b class="conum">(3)</b>
+    &lt;text-field name="last_name" placeholder="Last name" value="{{ contact.last }}" /&gt;
+    &lt;text style="edit-field-error"&gt;{{ contact.errors.last }}&lt;/text&gt;
+  &lt;/view&gt;
+
+  &lt;!-- same markup for contact.email and contact.phone --&gt;
+&lt;/view&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Text input holding the current value for the contact&#8217;s first name</p>
+</li>
+<li>
+<p>Text element that could display errors from the contact model</p>
+</li>
+<li>
+<p>Another text field, this time for the contact&#8217;s last name</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>I omitted the code for the contact&#8217;s phone number and email address, because they follow the same pattern as the first and last name.
+Each contact field has its own <code>&lt;text-field&gt;</code>, and a <code>&lt;text&gt;</code> element below it to display possible errors.
+The <code>&lt;text-field&gt;</code> has two important attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> defines the name to use when serializing the text-field&#8217;s value into form data for HTTP requests.
+We are using the same names as the web app from previous chapters (<code>first_name</code>, <code>last_name</code>, <code>phone</code>, <code>email</code>).
+That way, we don&#8217;t need to make changes in our backend to parse the form data.</p>
+</li>
+<li>
+<p><code>value</code> defines the pre-filled data in the text field.
+Since we are editing an existing contact, it makes sense to pre-fill the text field with the current name, phone, or email.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You might be wondering, why did I choose to define the form fields in a separate template (<code>form_fields.xml</code>)?
+To understand that decision, we need to first discuss the "Save" button.
+When pressed, the Hyperview client will make an HTTP <code>POST</code> request to <code>contacts/&lt;contact_id&gt;/edit</code>, with form data serialized from the <code>&lt;text-field&gt;</code> inputs.
+The HXML response will replace the contents of form field container (ID <code>form-fields</code>).
+But what should that response be?
+That depends on the validitiy of the form data:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If the data is invalid (eg duplicate email address), our UI will remain in the editing mode and show error messages on the invalid fields.
+This allows the user to correct the errors and try saving again.</p>
+</li>
+<li>
+<p>If the data is valid, our backend will persist the edits, and our UI will switch back to a display mode (the contact details UI).</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>So our backend needs to distinguish between a valid and invalid edits.
+To support these two scenarios, let&#8217;s make some changes to the existing <code>contacts_edit_post()</code> view in the Flask app.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 171. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">@app.route("/contacts/&lt;contact_id&gt;/edit", methods=["POST"])
+def contacts_edit_post(contact_id=0):
+    c = Contact.find(contact_id)
+    c.update(request.form['first_name'], request.form['last_name'], request.form['phone'], request.form['email']) <b class="conum">(1)</b>
+    if c.save(): <b class="conum">(2)</b>
+        flash("Updated Contact!")
+        return render_to_response("hv/form_fields.xml", contact=c, saved=True) <b class="conum">(3)</b>
+    else:
+        return render_to_response("hv/form_fields.xml", contact=c) <b class="conum">(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Update the contact object from the request&#8217;s form data.</p>
+</li>
+<li>
+<p>Attempt to persist the updates. This returns <code>False</code> for invalid data.</p>
+</li>
+<li>
+<p>On success, render the form fields template, and pass a <code>saved</code> flag to the template</p>
+</li>
+<li>
+<p>On failure, render the form fields template. Error messages are present on the contact object.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This view already contains conditional logic based on whether the contact model <code>save()</code> succeeds.
+If <code>save()</code> fails, we render the <code>form_fields.xml</code> template.
+<code>contact.errors</code> will contain error messages for the invalid fields, which will be rendered into the <code>&lt;text style="edit-field-error"&gt;</code> elements.
+If <code>save()</code> succeeds, we will also render the <code>form_fields.xml</code> template.
+But this time, the template will get a <code>saved</code> flag, indicating success.
+We will update the template to use this flag to implement our desired UI: switching the UI back to display mode.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 172. <code>hv/form_fields.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;view style="edit-group"&gt;
+  {% if saved %} <b class="conum">(1)</b>
+    &lt;behavior
+      trigger="load" <b class="conum">(2)</b>
+      action="reload" <b class="conum">(3)</b>
+      href="/contacts/{{contact.id}}" <b class="conum">(4)</b>
+    /&gt;
+  {% endif %}
+
+  &lt;view style="edit-field"&gt;
+    &lt;text-field name="first_name" placeholder="First name" value="{{ contact.first }}" /&gt;
+    &lt;text style="edit-field-error"&gt;{{ contact.errors.first }}&lt;/text&gt;
+  &lt;/view&gt;
+
+  &lt;!-- same markup for the other fields --&gt;
+&lt;/view&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Only include this behavior after successfully saving a contact.</p>
+</li>
+<li>
+<p>Trigger the behavior immediately</p>
+</li>
+<li>
+<p>The behavior will reload the entire screen</p>
+</li>
+<li>
+<p>The screen will be reloaded with the contact details screen.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The Jinja template conditional ensures that our behavior only renders on successful saves, and not when the screen first opens (or the user submits invalid data).
+On success, the template includes a behavior that triggers immediately thanks to <code>trigger="load"</code>.
+The action reloads the current screen with the Contact Details screen (from the <code>/contacts/&lt;contact_id&gt;</code> route).
+The result?
+When the user hits "Save", our backend persists the new contact data, and the screen switches back to the Details screen.
+Since the app will make a new HTTP request to get the contact details, it&#8217;s guaranteed to show the freshly saved edits.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 173. Why not use a redirect?</div>
+<div class="content">
+<pre class="highlight"><code class="language-" data-lang="">You may remember the web app version of this code behaved a little differently.
+On a successful save, the view returned `redirect("/contacts/" + str(contact_id))`.
+This HTTP redirect would tell the web browser to navigate to the contact details page.
+
+This approach is not supported in Hyperview.
+Why?
+A web app's navigation stack is simple: a linear sequence of pages, with only one active page at a time.
+Navigation in a mobile app is considerably more complex.
+Mobile apps use a nested hierarchy of navigation stacks, modals, and tabs.
+All screens in this hierarchy are active, and may be displayed instantly in response to user actions.
+In this world, how would the Hyperview client interpret an HTTP redirect?
+Should it reload the current screen, push a new one, or navigate to a screen in the stack with the same URL?
+Instead of making a choice that would be suboptimal for many scenarios, Hyperview takes a different approach.
+Server-controlled redirects are not possible, but the backend can render navigation behaviors into the HXML.
+This is what we do switch from the Edit UI to the Details UI in the code above.
+Think of these as client-side redirects, or better yet client-side navigations.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now have a working Edit UI in our contacts app.
+Users can enter the Edit mode by pressing a button on the contact details screen.
+In the Edit mode, they can update the contact&#8217;s data and save it to the backend.
+If the backend rejects the edits as invalid, the app stays in Edit mode and shows the validation errors.
+If the backend accepts and persists the edits, the app will switch back to the details mode, showing the updated contact data.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add one more enhancement to the Edit UI.
+It would be nice to let the user switch away from the Edit mode without needing to save the contact.
+This is typically done by providing a "Cancel" action.
+We can add this as a new button below the "Save" button.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 174. Snippet of <code>hv/edit.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;view style="button"&gt;
+  &lt;behavior trigger="press" action="replace-inner" target="form-fields" href="/contacts/{{contact.id}}/edit" verb="post" /&gt;
+  &lt;text style="button-label"&gt;Save&lt;/text&gt;
+&lt;/view&gt;
+&lt;view style="button"&gt; <b class="conum">(1)</b>
+  &lt;behavior
+    trigger="press"
+    action="reload" <b class="conum">(2)</b>
+    href="/contacts/{{contact.id}}" <b class="conum">(3)</b>
+  /&gt;
+  &lt;text style="button-label"&gt;Cancel&lt;/text&gt;
+&lt;/view&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>New Cancel button on the edit screen</p>
+</li>
+<li>
+<p>When pressed, reload the entire screen</p>
+</li>
+<li>
+<p>The screen will be reloaded with the contact details screen.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This is the same technique we used to switch from the edit UI to the details UI upon successfully editing the contact.
+But pressing "Cancel" will update the UI faster than pressing "Save".
+On save, the app will first make a <code>POST</code> request to save the data, and then a <code>GET</code> request for the details screen.
+Cancelling skips the <code>POST</code>, and immediately make the <code>GET</code> request.</p>
+</div>
+<div id="figure-7-5" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_hyperview_edit.png" alt="screenshot hyperview edit">
+</div>
+<div class="title">Figure 12. 17. Contact Edit Screen</div>
+</div>
+<div class="sect3">
+<h4 id="_updating_the_contacts_list">13.3.1. Updating the Contacts List</h4>
+<div class="paragraph">
+<p>At this point, we can claim to have fully implemented the Edit UI.
+But there&#8217;s a problem.
+In fact, if we stopped here, users may even consider the app to be buggy!
+Why?
+It has to do with syncing the app state across multiple screens.
+Let&#8217;s walk through this series of interactions:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Launch the app to the Contacts List.</p>
+</li>
+<li>
+<p>Press on the contact "Joe Blow" to load his Contact Details.</p>
+</li>
+<li>
+<p>Press Edit to switch to the edit mode, and change the contact&#8217;s first name to "Joseph".</p>
+</li>
+<li>
+<p>Press Save to switch back to viewing mode. The contact&#8217;s name is now "Joseph Blow".</p>
+</li>
+<li>
+<p>Hit the back button to return to the Contacts List.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Did you catch the issue?
+Our Contacts list is still showing the same list of names as when we launched the app.
+The contact we just renamed to "Joseph" is still showing up in the list as "Joe".
+This is a general problem in Hypermedia applications.
+The client does not have a notion of shared data across different parts of the UI.
+Updates in one part of the app will not automatically update other parts of the app.
+Luckily, there&#8217;s a solution to this problem in Hyperview: events.
+Events are built into the behavior system, and allow lightweight communication between different parts of the UI.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 175. Event Behaviors</div>
+<div class="content">
+<pre class="highlight"><code class="language-" data-lang="">Events are a client-side feature of Hyperview.
+You are probably familiar with events from working with HTML and the DOM.
+DOM Elements will dispatch events as a result of user interactions.
+Scripts can listen for these events, and respond to them by running arbitrary JavaScript code.
+Events in Hyperview are a good deal simpler, but they don't require any scripting and can be defined declaratively in the HXML.
+This is done through the behavior system.
+Events require adding a new behavior attribute, action type, and trigger type:
+
+- `event-name`: This attribute of `&lt;behavior&gt;` defines the name of the event that will either be dispatched or listened for.
+- `action="dispatch-event"`: When triggered, this behavior will dispatch an event with the name defined by the `event-name` attribute.
+This event is dispatched globally across the entire Hyperview app.
+- `trigger="on-event"`: This behavior will trigger if another behavior in the app dispatches an event matching the `event-name` attribute.
+
+If a `&lt;behavior&gt;` element uses `action="dispatch-event"` or `trigger="on-event"`, it must also define an `event-name`.
+Note that multiple behaviors can dispatch an event with the same name.
+Likewise, multiple behaviors can trigger on the same event name.
+
+Let's look at this simple behavior:
+
+`&lt;behavior trigger="press" action="toggle" target="container" /&gt;`.
+
+Pressing an element containing this behavior will toggle the visibility of an element with the ID "container".
+But what if the element we want to toggle is on a different screen?
+The "toggle" action and target ID lookup only work on the current screen, so this solution wouldn't work.
+The solution is to create two behaviors, one on each screen, communicating via events:
+
+- Screen A: `&lt;behavior trigger="press" action="dispatch-event" event-name="button-pressed" /&gt;`
+- Screen B: `&lt;behavior trigger="on-event" event-name="button-pressed" action="toggle" target="container" /&gt;`
+
+Pressing an element containing the first behavior (on Screen A) will dispatch an event with the name "button-pressed".
+The second behavior (on Screen B) will trigger on an event with this name, and toggle the visibility of an element with ID "container".
+
+Events have plenty of uses, but the most common is to inform different screens about backend state changes that require the UI to be re-fetched.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We know enough about Hyperview&#8217;s event system to solve the bug in our app.
+When the user saves a change to a contact, we need to dispatch an event from the Details screen.
+And the Contacts screen needs to listen to that event, and reload itself to reflect the edits.
+Since the <code>form_fields.xml</code> template already gets the <code>saved</code> flag when the backend successfully saves a contact, it&#8217;s a good place to dispatch the event:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 176. Snippet from <code>hv/form_fields.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">{% if saved %}
+  &lt;behavior
+    trigger="load" <b class="conum">(1)</b>
+    action="dispatch-event" <b class="conum">(2)</b>
+    event-name="contact-updated" <b class="conum">(3)</b>
+  /&gt;
+  &lt;behavior <b class="conum">(4)</b>
+    trigger="load"
+    action="reload"
+    href="/contacts/{{contact.id}}"
+  /&gt;
+{% endif %}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Trigger the behavior immediately</p>
+</li>
+<li>
+<p>The behavior will dispatch an event</p>
+</li>
+<li>
+<p>The event name is "contact-updated"</p>
+</li>
+<li>
+<p>The existing behavior to show the Details UI.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now, we just need the contacts list to listen for the <code>contact-updated</code> event, and reload itself:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 177. Snippet from <code>hv/index.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;form&gt;
+  &lt;behavior
+    trigger="on-event" <b class="conum">(1)</b>
+    event-name="contact-updated" <b class="conum">(2)</b>
+    action="replace-inner" <b class="conum">(3)</b>
+    target="contacts-list"
+    href="/contacts?rows_only=true"
+    verb="get"
+  /&gt;
+  &lt;!-- text-field omitted --&gt;
+  &lt;list id="contacts-list"&gt;
+    {% include 'hv/rows.xml' %}
+  &lt;/list&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Trigger the behavior on event dispatch</p>
+</li>
+<li>
+<p>Trigger the behavior for dispatched events with the name "contact-updated"</p>
+</li>
+<li>
+<p>When triggered, replace the contents of the <code>&lt;list&gt;</code> element with rows from the backend</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Any time the user edits a contact, the Contacts List screen will update to reflect the edits.
+The addition of these two <code>&lt;behavior&gt;</code> elements fixes the bug: the Contacts List screen will correctly show "Joseph Blow" in the list.
+Note that we intentionally added the new behavior inside the <code>&lt;form&gt;</code> element.
+The ensures the triggered request will preserve any search query.
+To show what I mean, let&#8217;s revisit the set of steps that demonstrated the buggy behavior.
+Assume that before pressing on "Joe Blow", the user had searched the contacts by typing "Joe" in the search field.
+When the user later updates the contact to "Joseph Blow", our template dispatches the "contact-updated" event, which triggers the <code>replace-inner</code> behavior on the contact list screen.
+Due to the parent <code>&lt;form&gt;</code> element, the search query "Joe" will be serialized with the request: <code>GET /contacts?rows_only=true&amp;q=Joe</code>.
+Since the name "Joseph" doesn&#8217;t match the query "Joe", the contact we edited will not appear in the list (until the user clears out the query).
+Our app&#8217;s state remains consistent across our backend and all active screens.</p>
+</div>
+<div class="paragraph">
+<p>Events introduce a level of abstraction to behaviors.
+So far, we&#8217;ve seen that editing a contact will cause the list of contacts to refresh.
+But the list of contacts should also refresh after other actions, such as deleting a contact or adding a new contact.
+As long as our HXML responses for deletion or creation include a behavior to dispatch a <code>contact-updated</code> event, then we will get the desired refresh behavior on the contacts list screen.
+The screen doesn&#8217;t care what causes the <code>contact-updated</code> event to be dispatched.
+It just knows what it needs to do when it happens.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deleting_a_contact_2">13.4. Deleting a Contact</h3>
+<div class="paragraph">
+<p>Speaking of deleting a contact, this is a good next feature to implement.
+We will let users delete a contact from the Edit UI.
+So let&#8217;s add a new button to <code>edit.xml</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 178. Snippet of <code>hv/edit.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;view style="button"&gt;
+  &lt;behavior trigger="press" action="replace-inner" target="form-fields" href="/contacts/{{contact.id}}/edit" verb="post" /&gt;
+  &lt;text style="button-label"&gt;Save&lt;/text&gt;
+&lt;/view&gt;
+&lt;view style="button"&gt;
+  &lt;behavior trigger="press" action="reload" href="/contacts/{{contact.id}}" /&gt;
+  &lt;text style="button-label"&gt;Cancel&lt;/text&gt;
+&lt;/view&gt;
+&lt;view style="button"&gt; <b class="conum">(1)</b>
+  &lt;behavior
+    trigger="press"
+    action="append" <b class="conum">(2)</b>
+    target="form-fields"
+    href="/contacts/{{contact.id}}/delete" <b class="conum">(4)</b>
+    verb="post"
+  /&gt;
+  &lt;text style="button-label button-label-delete"&gt;Delete Contact&lt;/text&gt;
+&lt;/view&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>New Delete Contact button on the edit screen</p>
+</li>
+<li>
+<p>When pressed, append HXML to a container on the screen</p>
+</li>
+<li>
+<p>The HXML will be fetched by making a <code>POST /contacts/&lt;contact_id&gt;/delete</code> request</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The HXML for the Delete button is pretty similar to the Save button, but there are a few subtle differences.
+Remember, pressing the Save button results in one of two expected outcomes: failing and showing validation errors on the form, or succeeding and switching to the contact details screen.
+To support the first outcome (failing and showing validation errors), the save behavior replaces the contents of the <code>&lt;view id="form-fields"&gt;</code> container with a re-rendered version of <code>form_fields.xml</code>.
+Therefore, using the <code>replace-inner</code> action makes sense.</p>
+</div>
+<div class="paragraph">
+<p>Deletion does not involve a validation step, so there&#8217;s only one expected outcome: successfully deleting the contact.
+When deletion succeeds, the contact no longer exists.
+It doesn&#8217;t make sense to show the edit UI or contact details for a non-existent contact.
+Instead, our app will navigate back to the previous screen (the contacts list).
+Our response will only include behaviors that trigger immediately, there&#8217;s no UI to change.
+Therefore, using the <code>append</code> action will preserve the current UI while Hyperview runs the actions.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 179. Snippet of <code>hv/deleted.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;view&gt;
+  &lt;behavior trigger="load" action="dispatch-event" event-name="contact-updated" /&gt; <b class="conum">(1)</b>
+  &lt;behavior trigger="load" action="back" /&gt; <b class="conum">(2)</b>
+&lt;/view&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>On load, dispatch the <code>contact-updated</code> event to update the contact lists screen</p>
+</li>
+<li>
+<p>Navigate back to the contacts list screen.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Note that in addition to behavior to navigate back, this template also includes a behavior to dispatch the <code>contact-updated</code> event.
+In the previous chapter section, we added a behavior to <code>index.xml</code> to refresh the list when that event is dispatched.
+By dispatching the event after a deletion, we will make sure the deleted contact gets removed from the list.</p>
+</div>
+<div class="paragraph">
+<p>Once again, I&#8217;m going to skip over the changes to the Flask backend.
+Suffice it to say, we will need to update the <code>contacts_delete()</code> view to respond with the <code>hv/deleted.xml</code> template.
+And we need to update the route to support <code>POST</code> in addition to <code>DELETE</code>, since the Hyperview client only understands <code>GET</code> and <code>POST</code>.</p>
+</div>
+<div class="paragraph">
+<p>We now have a fully functioning deletion feature!
+But it&#8217;s not the most user-friendly: it takes one accidental tap to permanently delete a contact.
+For destructive actions like deleting a contact, it&#8217;s always a good idea to ask the user for confirmation.
+We can add a confirmation to the delete behavior by using the <code>alert</code> system action described in the previous chapter.
+As you recall, the <code>alert</code> action will show a system dialog box with buttons that can trigger other behaviors.
+All we have to do is wrap the delete <code>&lt;behavior&gt;</code> in a behavior that uses <code>action="alert"</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 180. Delete button in <code>hv/edit.xml</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;view style="button"&gt;
+  &lt;behavior <b class="conum">(1)</b>
+    xmlns:alert="https://hyperview.org/hyperview-alert"
+    trigger="press"
+    action="alert"
+    alert:title="Confirm delete"
+    alert:message="Are you sure you want to delete {{ contact.first }}?"
+  &gt;
+    &lt;alert:option alert:label="Confirm"&gt; <b class="conum">(2)</b>
+      &lt;behavior <b class="conum">(3)</b>
+        trigger="press"
+        action="append"
+        target="form-fields"
+        href="/contacts/{{contact.id}}/delete"
+        verb="post"
+      /&gt;
+    &lt;/alert:option&gt;
+    &lt;alert:option alert:label="Cancel" /&gt; <b class="conum">(4)</b>
+  &lt;/behavior&gt;
+  &lt;text style="button-label button-label-delete"&gt;Delete Contact&lt;/text&gt;
+&lt;/view&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Pressing "Delete" triggers an action to show the system dialog with the given title and message.</p>
+</li>
+<li>
+<p>The first pressable option in the system dialog</p>
+</li>
+<li>
+<p>Pressing the first option will trigger contact deletion</p>
+</li>
+<li>
+<p>The second pressable option has no behavior, so it only closes the dialog.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Unlike before, pressing the delete button will not have an immediate effect.
+Instead, the user will be presented with the dialog box and asked to confirm or cancel.
+Our core deletion behavior didn&#8217;t change, we just chained it from another behavior.</p>
+</div>
+<div id="figure-7-6" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_hyperview_delete_cropped.png" alt="screenshot hyperview delete cropped">
+</div>
+<div class="title">Figure 12. 18. Delete Contact confirmation</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_a_new_contact_2">13.5. Adding a New Contact</h3>
+<div class="paragraph">
+<p>Adding a new contact is the last feature we want to support in our mobile app.
+And luckily, it&#8217;s also the easiest.
+We can reuse the concepts (and even some templates) from features we&#8217;ve already implemented.
+In particular, adding a new contact is very similar to editing an existing contact.
+Both features need to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Show a form to collect information about the contact</p>
+</li>
+<li>
+<p>Have a way to save the entered information</p>
+</li>
+<li>
+<p>Show validation errors on the form</p>
+</li>
+<li>
+<p>Persist the contact when there are no validation errors</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Since the functionality is so similar, I&#8217;m going to summarize the changes here without showing the code.
+Hopefully, you can follow along:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Update <code>index.xml</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Override the <code>header</code> block to add a new "Add" button.</p>
+</li>
+<li>
+<p>Include a behavior in the button. When pressed, push a new screen as a modal by using <code>action="new"</code>, and request the screen content from <code>/contacts/new</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Create a template <code>hv/new.xml</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Override the header block to include a button that closes the modal, using <code>action="close"</code>.</p>
+</li>
+<li>
+<p>Include the <code>hv/form_fields.xml</code> template to render empty form fields</p>
+</li>
+<li>
+<p>Add a "Add Contact" button below the form fields.</p>
+</li>
+<li>
+<p>Include a behavior in the button. When pressed, make a <code>POST</code> request to <code>/contacts/new</code>, and use <code>action="replace-inner"</code> to update the form fields.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Update the Flask view.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Change <code>contacts_new_get()</code> to use <code>render_to_response()</code> with the <code>hv/new.xml</code> template.</p>
+</li>
+<li>
+<p>Change <code>contacts_new()</code> to usee <code>render_to_response()</code> with the <code>hv/form_fields.xml</code> template. Pass <code>saved=True</code> when rendering the template after successfully persisting the new contact.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>By reusing <code>form_fields.xml</code> for both editing and adding a contact, we get to reuse some code and ensure the two features have a consistent UI.
+Also, our "Add Contact" screen will benefit from the "saved" logic that&#8217;s already a part of <code>form_fields.xml</code>.
+After succesfully adding a new contact, the screen will dispatch the <code>contact-updated</code> event, which will refresh the contacts list and show the newly added contact.
+The screen will reload itself to show the Contact Details.</p>
+</div>
+<div id="figure-7-7" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_hyperview_add.png" alt="screenshot hyperview add">
+</div>
+<div class="title">Figure 12. 19. Add Contact modal</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_the_app">13.6. Deploying the App</h3>
+<div class="paragraph">
+<p>With the completion of the contact creation UI, we have a fully implemented mobile app!
+It supports searching a list of contacts, viewing the details of a contact, editing &amp; deleting a contact, and adding a new contact.
+But so far, we&#8217;ve been developing the app using a simulator on our desktop computer.
+How can we see it running on a mobile device?
+And how can we get it into the hands of our users?</p>
+</div>
+<div class="paragraph">
+<p>To see the app running on a physical device, let&#8217;s take advantage of the Expo platform&#8217;s app preview functionality.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the Expo Go app on an Android or iOS device.</p>
+</li>
+<li>
+<p>Restart the Flask app, binding to an interface accessible on your network.
+This might look something like <code>flask run --host 192.168.7.229</code>, where the host is your computer&#8217;s IP address on the network.</p>
+</li>
+<li>
+<p>Update the Hyperview client code so that <code>ENTRY_POINT_URL</code> (in <code>demo/src/constants.js</code>) points to the IP and port that the Flask server is bound to.</p>
+</li>
+<li>
+<p>After running <code>yarn start</code> in the Hyperview demo app, you will see a QR code printed in the console, with instructions on how to scan it on Android and iOS.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once you scan the QR code, the full app will run on the device!
+As you interact with the app, you will see HTTP requests made to the Flask server.
+You can even use the physical device during development.
+Any time you make a change in the HXML, just reload the screen to see the UI updates.</p>
+</div>
+<div class="paragraph">
+<p>So we have the app running on a physical device, but it&#8217;s still not production ready.
+To get the app into the hands of our users, there&#8217;s a few things we need to do:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deploy our backend in production.
+We need to use a production-grade web server like Gunicorn instead of the Flask development server.
+And we should run our app on a machine reachable on the Internet, most likely using a cloud provider like AWS or Heroku.</p>
+</li>
+<li>
+<p>Create standalone binary apps.
+By following the instructions from the Expo project, we can create a <code>.ipa</code> or <code>.apk</code> file, for the iOS and Android platforms.
+Remember to update <code>ENTRY_POINT_URL</code> in the Hyperview client to point to the production backend.</p>
+</li>
+<li>
+<p>Submit our binaries to the iOS App Store or Google Play Store, and wait for app approval.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once the app is approved, congratulations!
+Our mobile app can be downloaded by Android and iOS users.
+And here&#8217;s the best part.
+Because our app uses the hypermedia architecture, we can add features to our app by simply updating the backend.
+The UI and interactions are completely specified with the HXML generated from server-side templates.
+Want to add a new section to a screen?
+Just update an existing HXML template.
+Want to add a new type of screen to the app?
+Create a new route, view, and HXML template.
+Then, add a behavior to and existing screen that will open the new screen.
+To push these changes to your users, you just need to re-deploy the backend.
+Our app knows how to interpret HXML, and that&#8217;s enough for it to understand how to handle the new features.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_one_backend_multiple_hypermedia_formats">13.7. One Backend, Multiple Hypermedia formats</h3>
+<div class="paragraph">
+<p>To create a mobile app using the hypermedia architecture, we started with the web-based contacts app and made a few changes, primarily replacing HTML templates with HXML templates.
+But in the process of porting the backend to serve our mobile app, we lost the web application functionality.
+Indeed, if you tried to visit <code><a href="http://0.0.0.0:5000" class="bare">http://0.0.0.0:5000</a></code> in a web browser, you would see a jumble of text and XML markup.
+That&#8217;s because web browsers don&#8217;t know how to render plain XML, and they certainly don&#8217;t know how to interpret the tags and attributes of HXML to render an app.
+It&#8217;s a shame, because the Flask code for the web application and mobile app are nearly identical.
+The database and model logic are shared, and most of the views are unchanged as well.</p>
+</div>
+<div class="paragraph">
+<p>At this point you&#8217;re surely wondering: is it possible to use the same backend to serve both a web application and mobile app?
+The answer is yes!
+In fact, this is one of the benefits of using a hypermedia architecture across multiple platforms.
+We don&#8217;t need to port any client-side logic from one platform to another, we just need to respond to requests with the appropriate Hypermedia format.
+To do this, we will utilize content negotiation built into HTTP.</p>
+</div>
+<div class="sect3">
+<h4 id="_what_is_content_negotiation">13.7.1. What is Content Negotiation?</h4>
+<div class="paragraph">
+<p>Imagine a German speaker and Japanese speaker both visit <code><a href="https://google.com" class="bare">https://google.com</a></code> in their web browser.
+They will see the Google home page localized in German and Japanese, respectively.
+How does Google know to return a different version of the homepage based on the user&#8217;s preferred language?
+The answer lies in the REST architecture, and how it separates the concepts of resources and representations.</p>
+</div>
+<div class="paragraph">
+<p>In the REST architecture, the Google homepage is considered to be a single "resource", represented by a unique URL.
+However, that single resource can have multiple "representations".
+Representations are variations on how the content of the resource is presented to the client.
+The German and Japanese versions of the Google homepage are two representations of the same resource..
+To determine the best representation of a resource to return, HTTP clients and servers engage in a process called "content negotiation".
+It works like this:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Clients specify the preferred representation through <code>Accept-*</code> request headers.</p>
+</li>
+<li>
+<p>The server tries to match the preferred representation as best it can, and communicates back the chosen representation using <code>Content-*</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the Google homepage example, the German speaker uses a browser that is set to prefer content localized for German.
+Every HTTP request made by the web browser will include a header <code>Accept-Language: de-DE</code>.
+The server sees the request heade, and it will return a response localized for German (if it can).
+The HTTP response will include a <code>Content-Language: de-DE</code> header to inform the client of the language of the response content.</p>
+</div>
+<div class="paragraph">
+<p>Language is just one factor for resource representation.
+More importantly for us, resources can be represented using different content types, such as HTML or HXML.
+Content negotiation over content type is done using the <code>Accept</code> request header and <code>Content-Type</code> response header.
+Web browsers set <code>text/html</code> as the preferred content type in the <code>Accept</code> header.
+The Hyperview client sets <code>application/vnd.hyperview+xml</code> as the preferred content type.
+This gives us our backend a way to distinguish requests coming from a web browser or Hyperview client, and serve the appropriate content to each.
+There are two main approaches: fine-grained and global.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_approach_1_template_switching">13.7.2. Approach 1: Template Switching</h4>
+<div class="paragraph">
+<p>When we ported the Contacts app from the web to mobile, we kept all of the Flask views but made some minor changes.
+Specifically, we introduced a new function <code>render_to_response()</code> and called it in the return statement of each view.
+Here&#8217;s the function again to refresh your memory:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 181. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">def render_to_response(template_name, *args, **kwargs):
+    content = render_template(template_name, *args, **kwargs)
+    response = make_response(content)
+    response.headers['Content-Type'] = 'application/vnd.hyperview+xml'
+    return response</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>render_to_response()</code> renders a template with the given context, and turns it into an Flask response object with the appropriate Hyperview <code>Content-Type</code> header.
+Obviously, the implementation is highly-specific to serving our Hyperview mobile app.
+But we can modify the function to do content negotiation based on the requests&#8217;s <code>Accept</code> header:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 182. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">HTML_MIME = 'text/html'
+HXML_MIME = 'application/vnd.hyperview+xml'
+
+def render_to_response(html_template_name, hxml_template_name, *args, **kwargs): <b class="conum">(1)</b>
+    response_type = request.accept_mimetypes.best_match([HTML_MIME, HXML_MIME], default=HTML_MIME) <b class="conum">(2)</b>
+    template_name = hxml_template_name if response_type == HXML_MIME else html_template_name <b class="conum">(3)</b>
+    content = render_template(template_name, *args, **kwargs)
+    response = make_response(content)
+    response.headers['Content-Type'] = response_type <b class="conum">(4)</b>
+    return response</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Function signature takes two templates, one for HTML and one for HXML</p>
+</li>
+<li>
+<p>Determine whether the client wants HTML or HXML</p>
+</li>
+<li>
+<p>Select the template based on the best match for the client</p>
+</li>
+<li>
+<p>Set the <code>Content-Type</code> header based on the best match for the client</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Flask&#8217;s request object exposes an <code>accept_mimetypes</code> property to help with content negotiation.
+We pass our two content MIME types to <code>request.accept_mimetypes.best_match()</code> and get back the MIME type that works for our client.
+Based on the best matching MIME type, we choose to either render an HTML template or HXML template.
+We also make sure to set the <code>Content-Type</code> header to the appropriate MIME type.
+The only difference in our Flask views is that we need to provide both an HTML and HXML template:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 183. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">@app.route("/contacts/&lt;contact_id&gt;")
+def contacts_view(contact_id=0):
+    contact = Contact.find(contact_id)
+    return render_to_response("show.html", "hv/show.xml", contact=contact) <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Template switching between an HTML and HXML template, based on the client.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After updating all of the Flask views to support both templates, our backend will support both web browsers and our mobile app!
+This technique works well for the Contacts app because the screens in the mobile app map directly to pages of the web application.
+Each app has a dedicated page (or screen) for listing contacts, showing and editing details, and creating a new contact.
+This meant the Flask views could be as-is without major changes.
+But what if we wanted to re-imagine the Contacts app UI for our mobile app?
+Perhaps we want the mobile app to use a single screen, with rows that expanded in-line to support viewing and editing the information?
+In situations where the UI diverges between platforms, Template Switching becomes cumbersome or impossible.
+We need a different approach to have one backend serve both hypermedia formats.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_approach_2_the_redirect_fork">13.7.3. Approach 2: The Redirect Fork</h4>
+<div class="paragraph">
+<p>If you recall, the Contacts web app has an <code>index</code> view, routed from the root path <code>/</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 184. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">@app.route("/")
+def index():
+    return redirect("/contacts") <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Redirect requests from "/" to "/contacts"</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When someone requests to the root path of the web application, Flask redirects them to the <code>/contacts</code> path.
+This redirect also works in our Hyperview mobile app.
+The Hyperview client&#8217;s <code>ENTRY_POINT_URL</code> points to <code><a href="http://0.0.0.0:5000/" class="bare">http://0.0.0.0:5000/</a></code>, and the server redirects it to <code><a href="http://0.0.0.0:5000/contacts" class="bare">http://0.0.0.0:5000/contacts</a></code>.
+But there&#8217;s no law that says we need to redirect to the same path in our web application and mobile app.
+What if we used the <code>Accept</code> header to redirect to decide on the redirect path?</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 185. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">HTML_MIME = 'text/html'
+HXML_MIME = 'application/vnd.hyperview+xml'
+
+@app.route("/")
+def index():
+    response_type = request.accept_mimetypes.best_match([HTML_MIME, HXML_MIME], default=HTML_MIME) <b class="conum">(1)</b>
+    if response_type == HXML_MIME:
+      return redirect("/mobile/contacts") <b class="conum">(2)</b>
+    else:
+      return redirect("/web/contacts") <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Determine whether the client wants HTML or HXML</p>
+</li>
+<li>
+<p>If the client wants HXML, redirect them to <code>/mobile/contacts</code></p>
+</li>
+<li>
+<p>If the client wants HTML, redirect them to <code>/web/contacts</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The entrypoint is a fork in the road: if the client wants HTML, we redirect them to one path.
+If the client wants HXML, we redirect them to a different path.
+These redirects would be handled by different Flask views:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. 186. <code>app.py</code></div>
+<div class="content">
+<pre class="highlight"><code class="language-py" data-lang="py">@app.route("/mobile/contacts")
+def mobile_contacts():
+  # Render an HXML response
+
+@app.route("/web/contacts")
+def web_contacts():
+  # Render an HTML response</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>mobile_contacts()</code> view would render an HXML template with a list of contacts.
+Tapping a contact item would open a screen requested from <code>/mobile/contacts/1</code>, handled by a view <code>mobile_contacts_view</code>.
+After the initial fork, all subsequent requests from our mobile app go to paths prefixed with <code>/mobile/</code>, and get handled by mobile-specific Flask views.
+Likewise, all subsequent requests from the web app go to paths prefixed with <code>/web/</code>, and get handled by web-specific Flask views.
+(Note that in practice, we would want to separate the web and mobile views into separate parts of our codebase: <code>web_app.py</code> and <code>mobile_app.py</code>. We may also choose not to prefix the web paths with <code>/web/</code>, if we want more elegant URLs displayed in the browser&#8217;s address bar.)</p>
+</div>
+<div class="paragraph">
+<p>You may be thinking that the Redirect Fork leads to a lot of code duplication.
+After all, we need to write double the number of views: one set for the web application, and one set for the mobile app.
+That is true, which is why the Redirect Fork is only preferred if the two platforms require a disjoint set of view logic.
+If the apps are similar on both platforms, Template Switching will save a lot of time and keep the apps consistent.
+Even if we need to use the Redirect Fork, the bulk of the logic in our models can be shared by both sets of views.
+In practice, you may start out using Template Switching, but then realize you need to implement a fork for platform-specific features.
+In fact, we&#8217;re already doing that in the Contacts app.
+When porting the app from web to mobile, we didn&#8217;t bring over certain features like archiving functionality.
+The dynamic archive UI might is a power feature that wouldn&#8217;t make sense on a mobile device.
+Since our HXML templates don&#8217;t expose any entrypoints to the Archive functionality, we can treat it as "web-only" and not worry about supporting it in Hyperview.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_summary_9">13.8. Summary</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Creating a Hyperview-powered mobile app is as simple as cloning a Git repo and configuring a single entrypoint URL.</p>
+</li>
+<li>
+<p>Flask is perfectly suited for serving a Hyperview mobile app. The Jinja templating system can generate dynamic HXML based on the context from a view.</p>
+</li>
+<li>
+<p>Using elements like <code>&lt;view&gt;</code>, <code>&lt;text&gt;</code>, <code>&lt;list&gt;</code>, and <code>&lt;item&gt;</code>, we can create native-feeling screens in HXML.</p>
+</li>
+<li>
+<p>Using behaviors, we can implement interactions on the contacts list such as infinite scroll, search-as-you-type, and pull-to-refresh.</p>
+</li>
+<li>
+<p>Events are a client-side feature of Hyperview that allows triggering behaviors across screens. They are useful to keep state in sync throughout the app, such as after editing or deleting a contact.</p>
+</li>
+<li>
+<p>A Hyperview-powered mobile app can be bundled and released through the iOS and Android app stores. New screens and features can be added to the app just by updating the backend!</p>
+</li>
+<li>
+<p>The same Flask backend can support both web and mobile apps. Using HTTP content negotiation, a server can render either HTML or HXML responses from the same view. More complex apps may require the use of redirects and platform-specific views.
+= Building Hypermedia Systems
+:chapter: 8
+:sectnums:
+:figure-caption: Figure 12.
+:listing-caption: Listing 12.
+:table-caption: Table 12.
+:sectnumoffset: 7
+:leveloffset: 1
+:sourcedir: ../code/src
+:source-language:</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_hyperview_a_mobile_hypermedia.html">Hyperview: A Mobile Hypermedia</a> | ↑ Up: <a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a> | ⌂ Home: <a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a> | Next: <a href="_extending_the_hyperview_client.html">Extending the Hyperview Client</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-10-20 12:44:43 -0600
+</div>
+</div>
+</body>
+</html>

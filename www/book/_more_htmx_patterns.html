@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="author" content="Adam Stepinski, Carson Gross, Deniz Akşimşek">
+<title>Building Hypermedia Systems</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_more_htmx_patterns" class="book">
+<div id="header">
+<h1>Building Hypermedia Systems</h1>
+<div class="details">
+<span id="author" class="author">Adam Stepinski, Carson Gross, Deniz Akşimşek</span><br>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a></span></p><ul class="sectlevel0">
+<li><a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a>
+<ul class="sectlevel1">
+<li><a href="_reintroducing_hypermedia.html">1. Reintroducing Hypermedia</a>
+</li>
+<li><a href="_rest_hateoas_and_all_that.html">2. REST, HATEOAS and All That</a>
+</li>
+<li><a href="_building_a_simple_web_1_0_application.html">3. Building A Simple Web 1.0 Application</a>
+</li>
+<li><a href="_extending_html_as_hypermedia.html">4. Extending HTML As Hypermedia</a>
+</li>
+<li><a href="_htmx_in_action.html">5. htmx In Action</a>
+</li>
+<li><a href="_building_hypermedia_systems_2.html">6. Building Hypermedia Systems</a>
+</li>
+<li><a href="_more_htmx_patterns.html"><span class="toc-current">7. More htmx Patterns</span></a>
+<ul class="sectlevel2">
+<li><a href="_more_htmx_patterns.html#_active_search">Active Search</a>
+<ul class="sectlevel3">
+<li><a href="_more_htmx_patterns.html#_our_current_search_ui">Our Current Search UI</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_adding_active_search">Adding Active Search</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_targeting_the_correct_element">Targeting The Correct Element</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_paring_down_our_content">Paring Down Our Content</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_http_request_headers_in_htmx">HTTP Request Headers In htmx</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_factoring_your_templates">Factoring Your Templates</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_using_our_new_template">Using Our New Template</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_updating_the_navigation_bar_with_hx_push_url">Updating The Navigation Bar With <code>hx-push-url</code></a>
+</li>
+<li><a href="_more_htmx_patterns.html#_adding_a_request_indicator">Adding A Request Indicator</a>
+</li>
+</ul>
+</li>
+<li><a href="_more_htmx_patterns.html#_lazy_loading">7.1. Lazy Loading</a>
+<ul class="sectlevel3">
+<li><a href="_more_htmx_patterns.html#_pulling_the_expensive_code_out">7.1.1. Pulling The Expensive Code Out</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_adding_an_indicator">7.1.2. Adding An Indicator</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_but_thats_not_lazy">7.1.3. But That&#8217;s Not Lazy!</a>
+</li>
+</ul>
+</li>
+<li><a href="_more_htmx_patterns.html#_inline_delete">7.2. Inline Delete</a>
+<ul class="sectlevel3">
+<li><a href="_more_htmx_patterns.html#_getting_fancy">7.2.1. Getting Fancy</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_updating_the_server_side_2">7.2.2. Updating The Server Side</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_getting_super_fancy_with_the_htmx_swapping_model">7.2.3. Getting <em>Super</em> Fancy With The htmx Swapping Model</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_taking_advantage_of_htmx_swapping">7.2.4. Taking Advantage of <code>htmx-swapping</code></a>
+</li>
+</ul>
+</li>
+<li><a href="_more_htmx_patterns.html#_bulk_delete">7.3. Bulk Delete</a>
+<ul class="sectlevel3">
+<li><a href="_more_htmx_patterns.html#_the_delete_selected_contacts_button">7.3.1. The "Delete Selected Contacts" button</a>
+</li>
+<li><a href="_more_htmx_patterns.html#_the_server_side_for_delete_selected_contacts">7.3.2. The Server Side for Delete Selected Contacts</a>
+</li>
+</ul>
+</li>
+<li><a href="_more_htmx_patterns.html#_summary_5">7.4. Summary</a>
+</li>
+</ul>
+</li>
+<li><a href="_building_hypermedia_systems_3.html">8. Building Hypermedia Systems</a>
+</li>
+<li><a href="_a_dynamic_archive_ui_with_htmx.html">9. A Dynamic Archive UI With htmx</a>
+</li>
+<li><a href="_building_hypermedia_systems_4.html">10. Building Hypermedia Systems</a>
+</li>
+<li><a href="_deep_htmx.html">11. Deep htmx</a>
+</li>
+<li><a href="_hyperview_a_mobile_hypermedia.html">12. Hyperview: A Mobile Hypermedia</a>
+</li>
+<li><a href="_building_a_contacts_app_with_hyperview.html">13. Building a Contacts App With Hyperview</a>
+</li>
+<li><a href="_extending_the_hyperview_client.html">14. Extending the Hyperview Client</a>
+</li>
+<li><a href="_client_side_scripting.html">15. Client Side Scripting</a>
+</li>
+<li><a href="_building_hypermedia_systems_5.html">16. Building Hypermedia Systems</a>
+</li>
+<li><a href="_json_data_apis_hypermedia_driven_applications.html">17. JSON Data APIs &amp; Hypermedia Driven Applications</a>
+</li>
+<li><a href="_other_hypermedia_libraries_technologies.html">18. Other Hypermedia Libraries &amp; Technologies</a>
+</li>
+<li><a href="_conclusion_3.html">19. Conclusion</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_more_htmx_patterns">7. More htmx Patterns</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter covers</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Adding the "Active Search" pattern to our application</p>
+</li>
+<li>
+<p>Adding the "Lazy Load" pattern to our application</p>
+</li>
+<li>
+<p>Implementing inline deletion of contacts from the list view</p>
+</li>
+<li>
+<p>Implementing a bulk delete of contacts</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_active_search">Active Search</h3>
+<div class="paragraph">
+<p>So far so good with Contact.app: we have a nice little web application with some significant improvements over a plain
+HTML-based application.  You might be thinking that we&#8217;ve gotten about as much interactivity as the hypermedia
+approach will allow for without using JavaScript.  Is it time wave the white flag and bring out the scripting tools
+to make any further progress with Contact.app?</p>
+</div>
+<div class="paragraph">
+<p>Nope, not yet!  We still have quite a few interesting and useful interactive UX patterns to add to our
+application, all of which can be done using good old hypermedia!  We <em>will</em> eventually add some
+client-side scripting to our application: hypermedia may be powerful, but it isn&#8217;t <em>all powerful</em> and sometimes scripting
+might be the best (or only) way to achieve a given user experience.  For now, however, let&#8217;s see what we can accomplish
+with hypermedia.</p>
+</div>
+<div class="paragraph">
+<p>The first advanced feature we will create is known as the "Active Search" pattern.  Active Search is a feature when, as a
+user types text into a search box, the results of that search are dynamically updated.  This pattern was made popular
+when Google adopted it for search results, and many applications now implement it.</p>
+</div>
+<div class="paragraph">
+<p>As you might suspect, we are going to use some of the same techniques we used for dynamically updating emails in the
+previous chapter, since we are once again going to want to issue requests on the <code>keyup</code> event.</p>
+</div>
+<div class="sect3">
+<h4 id="_our_current_search_ui">Our Current Search UI</h4>
+<div class="paragraph">
+<p>Let&#8217;s recall what the current search field in our application currently looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 65. Our Search Form</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;form action="/contacts" method="get" class="tool-bar"&gt;
+    &lt;label for="search"&gt;Search Term&lt;/label&gt;
+    &lt;input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"/&gt; <b class="conum">(1)</b>
+    &lt;input type="submit" value="Search"/&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The <code>q</code> or "query" parameter our client side code uses to search</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You will remember that we have some server side code that looks for the <code>q</code> parameter and, if it is present, searches
+the contacts for that term.</p>
+</div>
+<div class="paragraph">
+<p>As it stands right now, the user must hit enter when the search input is focused, or click the "Search" button.  Both
+of these events will trigger a <code>submit</code> event on the form, causing it to issue an HTTP <code>GET</code> and re-rendering the whole
+page.  Currently, thanks to <code>hx-boost</code> the form will still use an AJAX request for this <code>GET</code>, but we currently don&#8217;t
+get the nice search-as-you-type behavior we want.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_active_search">Adding Active Search</h4>
+<div class="paragraph">
+<p>To add active search behavior, we will need to add a few htmx attributes to the search input.  We will leave the current
+form as it is, with an <code>action</code> and <code>method</code>, so that, in case a user does not have JavaScript enabled, the normal
+search behavior continues to work.  This will make our improvement a nice "progressive enhancement".</p>
+</div>
+<div class="paragraph">
+<p>Now, in addition to the regular form behavior, we <em>also</em> want to issue an HTTP <code>GET</code> request when a key up occurs.  We want
+to issue this request to the same URL as the normal form submission.  Finally, we only want to do this after a small
+pause in typing has occurred.  Where have we seen that pattern before?</p>
+</div>
+<div class="paragraph">
+<p>Well, it turns out that this is very similar to the functionality that we needed for email validation isn&#8217;t it?
+Indeed it is!  We can, in fact, take the <code>hx-trigger</code> attribute directly from our email validation example, with
+its small, 200 millisecond delay to allow a user to stop typing before a request is triggered.</p>
+</div>
+<div class="paragraph">
+<p>This is a good example of how common patterns come up again and again in htmx.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 66. Adding Active Search Behavior</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;form action="/contacts" method="get" class="tool-bar"&gt;
+    &lt;label for="search"&gt;Search Term&lt;/label&gt;
+    &lt;input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}" <b class="conum">(1)</b>
+           hx-get="/contacts" <b class="conum">(2)</b>
+           hx-trigger="search, keyup delay:200ms changed"/&gt; <b class="conum">(3)</b>
+    &lt;input type="submit" value="Search"/&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Keep the original attributes, so search will work if JavaScript is not available</p>
+</li>
+<li>
+<p>Issue a <code>GET</code> to the same URL as the form</p>
+</li>
+<li>
+<p>Nearly the same <code>hx-trigger</code> specification as for the email input validation</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The small change that we made to the <code>hx-trigger</code> attribute is we switched out the <code>change</code> event for the <code>search</code> event.
+The <code>search</code> event is triggered when someone clears the search or hits the enter key.  It is a non-standard event, but
+doesn&#8217;t hurt to include here.  The main functionality of the feature is provided by the second triggering event, the <code>keyup</code>
+which, as with the email example, is delayed with the <code>delay:200ms</code> modifier to "debounce" the input requests and
+avoid hammering our server with requests on every keyup.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_targeting_the_correct_element">Targeting The Correct Element</h4>
+<div class="paragraph">
+<p>What we have is pretty close to what we want, but recall that the default target for an element is itself.  As things currently
+stand, an HTTP <code>GET</code> request will be issued to the <code>/contacts</code> path, which will, as of now, return an entire HTML document
+of search results!  This whole document will then be inserted into the <em>inner</em> HTML of an input!</p>
+</div>
+<div class="paragraph">
+<p>Well, that&#8217;s pretty meaningless: <code>input</code> elements aren&#8217;t allowed to have any HTML inside of them. The browser will,
+sensibly, just ignore the htmx request to do this.  So, at this point, when a user types anything into our input, a
+request will be issued (you can see it in your browser development console) but, unfortunately, it will appear to the
+user as if nothing has happened at all.</p>
+</div>
+<div class="paragraph">
+<p>OK, so to fix this issue, what do we want to target with the update instead?  Ideally we&#8217;d like to just target the actual
+results: there is no reason to update the header or search input, and that could cause an annoying flash as focus jumps
+around.</p>
+</div>
+<div class="paragraph">
+<p>Fortunately the <code>hx-target</code> attribute allows us to do exactly that!  Lets use it to target the results body, the
+<code>tbody</code> element in the table of contacts:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 67. Adding Active Search Behavior</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;form action="/contacts" method="get" class="tool-bar"&gt;
+    &lt;label for="search"&gt;Search Term&lt;/label&gt;
+    &lt;input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+           hx-get="/contacts"
+           hx-trigger="change, keyup delay:200ms changed"
+           hx-target="tbody"/&gt; <b class="conum">(1)</b>
+    &lt;input type="submit" value="Search"/&gt;
+&lt;/form&gt;
+&lt;table&gt;
+    ...
+    &lt;tbody&gt;
+       ...
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Target the <code>tbody</code> tag on the page</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Because there is only one <code>tbody</code> on the page, we can use the CSS selector <code>tbody</code> and htmx will target the first element
+matching that selector.</p>
+</div>
+<div class="paragraph">
+<p>Now if you try typing something into the search box, we&#8217;ll see some results: a request is made and the results are inserted
+into the document within the <code>tbody</code>.  Unfortunately, the content that is coming back is still the entire document.
+So we end up with a "double render" situation, where an entire document has been inserted <em>inside</em> another element, with
+all the navigation, headers and footers and so forth re-rendered within that element.  Not good!  But, thankfully,
+pretty easy to fix.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_paring_down_our_content">Paring Down Our Content</h4>
+<div class="paragraph">
+<p>Now, we could use the same trick we reached for in the "Click To Load" and "Infinite Scroll" features: the <code>hx-select</code>
+attribute.  Recall that the <code>hx-select</code> attribute allows us to pick out the part of the response we are interested in using
+a CSS selector.</p>
+</div>
+<div class="paragraph">
+<p>So we could add this to our input:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 68. Using <code>hx-select</code> for Active Search</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+       hx-get="/contacts"
+       hx-trigger="change, keyup delay:200ms changed"
+       hx-target="tbody"
+       hx-select="tbody tr"/&gt; <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Adding an <code>hx-select</code> that picks out the table rows in the <code>tbody</code> of the response</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>However, that isn&#8217;t the only fix for this problem, and, in this case, isn&#8217;t the most efficient one.  Instead, let&#8217;s
+change the <em>server-side</em> of our Hypermedia Driven Application to serve <em>only the HTML content needed</em>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_request_headers_in_htmx">HTTP Request Headers In htmx</h4>
+<div class="paragraph">
+<p>In this section, we&#8217;ll look at another, more advanced technique for dealing with a situation where we only want a <em>partial
+bit</em> of HTML, rather than a full document. Currently, we are letting the server create the full HTML document as response
+and then, on the client side, we filter the HTML down to the bits that we want.  This is easy to do, and, in fact, might
+be necessary if we don&#8217;t control the server side or can&#8217;t easily modify responses.</p>
+</div>
+<div class="paragraph">
+<p>In our application, however, since we are doing "Full Stack" development (that is: we control both the front end <em>and</em> the back end
+code, and can easily modify either) we have another option: we can modify our server responses to return only the content
+necessary, and remove the need to do client-side filtering.  This turns out to be more efficient, since we aren&#8217;t returning
+all the content surrounding the bit we are interested in, saving bandwidth as well as CPU time on the server side.  So let&#8217;s
+take this opportunity to explore returning different HTML content, based on the context information that htmx provides
+with the HTTP requests it makes.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a look again at the current server side code for our search logic:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 69. Server Side Search</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    if search is not None:
+        contacts_set = Contact.search(search) <b class="conum">(1)</b>
+    else:
+        contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>This is where the search logic happens</p>
+</li>
+<li>
+<p>We simply rerender the <code>index.html</code> template every time, no matter what</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>So how do we want to change this?  Well, we want to render two different bits of HTML content <em>conditionally</em>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If this is a "normal" request for the entire page, we want to render the <code>index.html</code> template in the current
+manner.  In fact, we don&#8217;t want anything to change if this is a "normal" request.</p>
+</li>
+<li>
+<p>However, if this is an "Active Search" request, we only want to render just the content that is within the <code>tbody</code>,
+that is, just the table rows of the page.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So we need some way to determine exactly which of these two different types of requests to the <code>/contact</code> URL is being
+made, in order to know exactly which content we want to render.</p>
+</div>
+<div class="paragraph">
+<p>It turns out that htmx helps us distinguish between these two cases by including a number of HTTP <em>Request Headers</em> when
+it makes requests.  Request Headers are a feature of HTTP, allowing clients (e.g. web browsers) to include name/value pairs
+of metadata associated with requests to help the server understand what the client is requesting.  Here is an example
+of (some of) the headers the FireFox browser issues when requesting <code><a href="https://manning.com" class="bare">https://manning.com</a></code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 70. HTTP Headers</div>
+<div class="content">
+<pre class="highlight"><code class="language-httprequest" data-lang="httprequest">GET / HTTP/2
+Host: www.manning.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+DNT: 1
+Connection: keep-alive
+Cookie: ...
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: none
+Sec-Fetch-User: ?1
+Sec-GPC: 1
+TE: trailers</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>htmx takes advantage of this feature of HTTP to add additional headers and, therefore, additional <em>context</em> to the
+HTTP requests that it makes, so that you can inspect those headers and make smarter decisions with respect to exactly
+what logic you want to execute, and what sort of response you want to send to the client.</p>
+</div>
+<div class="paragraph">
+<p>Here is a table of the HTTP headers that htmx includes in HTTP requests:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Header</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-Boosted</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This will be the string "true" if the request is made via an element using hx-boost</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-Current-URL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This will be the current URL of the browser</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-History-Restore-Request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This will be the string "true" if the request is for history restoration after a miss in the local history cache</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-Prompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This will contain the user response to an hx-prompt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-Request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This value is always "true" for htmx-based requests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-Target</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This value will be the id of the target element if it exists</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-Trigger-Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This value will be the name of the triggered element if it exists</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HX-Trigger</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This value will be the id of the triggered element if it exists</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Looking through this list of headers, the last one stands out: we have an id, <code>search</code> on our search input.  So the
+value of the <code>HX-Trigger</code> header should be set to <code>search</code> when the request is coming from the search input, which
+has the id <code>search</code>.  Perfect!</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add some conditional logic to our controller to look for that header and, if the value is <code>search</code>, we render
+only the rows rather than the whole <code>index.html</code> template:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 71. Updating Our Server Side Search</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    if search is not None:
+        contacts_set = Contact.search(search)
+        if request.headers.get('HX-Trigger') == 'search': <b class="conum">(1)</b>
+          # TODO: render only the rows here <b class="conum">(2)</b>
+    else:
+        contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>If the request header <code>HX-Trigger</code> is equal to "search", we want to do something different</p>
+</li>
+<li>
+<p>We need to learn how to render just the table rows</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Next, let&#8217;s look at how we can render only those rows.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_factoring_your_templates">Factoring Your Templates</h4>
+<div class="paragraph">
+<p>Here we come to a common pattern in htmx: we want to <em>factor</em> our server side templates.  This means that we want to
+break them up a bit so they can be called from multiple contexts.  In this situation, we want to break the rows of
+the results table out to a separate template.  We will call this new template <code>rows.html</code> and we will include it from
+the main <code>index.html</code> template, as well as render it directly in the controller when we want to respond with only the
+rows to Active Search requests.</p>
+</div>
+<div class="paragraph">
+<p>Recall what the table in our <code>index.html</code> file currently looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 72. The Contacts Table</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;table&gt;
+        &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;First&lt;/th&gt; &lt;th&gt;Last&lt;/th&gt; &lt;th&gt;Phone&lt;/th&gt; &lt;th&gt;Email&lt;/th&gt; &lt;th&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+        {% for contact in contacts %}
+            &lt;tr&gt;
+                &lt;td&gt;{{ contact.first }}&lt;/td&gt;
+                &lt;td&gt;{{ contact.last }}&lt;/td&gt;
+                &lt;td&gt;{{ contact.phone }}&lt;/td&gt;
+                &lt;td&gt;{{ contact.email }}&lt;/td&gt;
+                &lt;td&gt;&lt;a href="/contacts/{{ contact.id }}/edit"&gt;Edit&lt;/a&gt;
+                    &lt;a href="/contacts/{{ contact.id }}"&gt;View&lt;/a&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+        {% endfor %}
+        &lt;/tbody&gt;
+    &lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, it is the <code>for</code> loop in this template that produces all the rows in the final content generated by <code>index.html</code>.
+So, what we want to do is to move the <code>for</code> loop and, therefore, the rows it creates out to a <em>separate template</em> so that
+only that little bit of HTML can be rendered independently from <code>index.html</code>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s call this new template <code>rows.html</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 73. Our New <code>rows.html</code> file</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">{% for contact in contacts %} <b class="conum">(2)</b>
+    &lt;tr&gt;
+        &lt;td&gt;{{ contact.first }}&lt;/td&gt;
+        &lt;td&gt;{{ contact.last }}&lt;/td&gt;
+        &lt;td&gt;{{ contact.phone }}&lt;/td&gt;
+        &lt;td&gt;{{ contact.email }}&lt;/td&gt;
+        &lt;td&gt;&lt;a href="/contacts/{{ contact.id }}/edit"&gt;Edit&lt;/a&gt;
+            &lt;a href="/contacts/{{ contact.id }}"&gt;View&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+{% endfor %}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using this template we can render only the <code>tr</code> elements for a given collection of contacts.</p>
+</div>
+<div class="paragraph">
+<p>Now, of course, we still want to include this content in the <code>index.html</code> template: we are <em>sometimes</em> going to be
+rendering the entire page, and sometimes only rendering the rows.  In order to keep <code>index.html</code> rendering property,
+we can include the <code>rows.html</code> template by using the Jinja2 <code>include</code> directive at the position we want the content
+from <code>rows.html</code> inserted:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 74. Including The New File</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;table&gt;
+        &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;First&lt;/th&gt;
+            &lt;th&gt;Last&lt;/th&gt;
+            &lt;th&gt;Phone&lt;/th&gt;
+            &lt;th&gt;Email&lt;/th&gt;
+            &lt;th&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+        {% include 'rows.html' %} <b class="conum">(1)</b>
+        &lt;/tbody&gt;
+    &lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>This directive "includes" the <code>rows.html</code> file, inserting its content into the current template</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>So far, so good: the <code>/contacts</code> page still rendering properly, just as it did before we split the rows out of the
+<code>index.html</code> template.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_our_new_template">Using Our New Template</h4>
+<div class="paragraph">
+<p>The last step in factoring our templates is to modify our web controller to take advantage of the new <code>rows.html</code> template
+when it responds to an active search request.</p>
+</div>
+<div class="paragraph">
+<p>Since <code>rows.html</code> is just another template, just like <code>index.html</code>, all we need to do is call the <code>render_template</code>
+function <code>rows.html</code> rather than <code>index.html</code>, and we will render <em>only</em> the row content rather than the entire
+page:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 75. Updating Our Server Side Search</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    if search is not None:
+        contacts_set = Contact.search(search)
+        if request.headers.get('HX-Trigger') == 'search':
+          return render_template("rows.html", contacts=contacts_set) <b class="conum">(1)</b>
+    else:
+        contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set)</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Render the new template in the case of an active search</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now, when an Active Search request is made, rather than getting an entire HTML document back, we only get a partial
+bit of HTML, the table rows for the contacts that match the search.  These rows are then inserted into the <code>tbody</code> on
+the index page, without any need for an <code>hx-select</code> or any other client side processing.</p>
+</div>
+<div class="paragraph">
+<p>And, as a bonus, the old form-based search still works as well, thanks to the fact that we conditionally render the rows
+only when the <code>search</code> input issues the HTTP request.  Great!</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">HTTP Headers &amp; Caching</div>
+<div class="paragraph">
+<p>One subtle aspect of the approach we are taking here, using headers to determine the content of what we return, is
+a feature baked into HTTP: caching.  In our request handler, we are now returning different content depending on the
+value of the <code>HX-Trigger</code> header.  If we were to use HTTP Caching, we might get into a situation where someone makes
+a <em>non-htmx</em> request (e.g. refreshing a page) and yet the <em>htmx</em> content is returned from the HTTP cache, resulting
+in a partial page of content for the user.</p>
+</div>
+<div class="paragraph">
+<p>The solution to this problem is to use the HTTP Response <code>Vary</code> header and call out the htmx headers that you are using
+to determine what content you are returning.  A full treatment of HTTP Caching is beyond the scope of this book, but
+the MDN article on the topic is quite good: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" class="bare">https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updating_the_navigation_bar_with_hx_push_url">Updating The Navigation Bar With <code>hx-push-url</code></h4>
+<div class="paragraph">
+<p>You may have noticed one shortcoming of our Active Search when compared with submitting the form: when you submit the form
+it will update the navigation bar of the browser to include the search term.  So, for example, if you search for "joe"
+in the search box, you will end up with a url that looks like this in your browser&#8217;s nav bar:</p>
+</div>
+<div class="paragraph">
+<p><code><a href="https://example.com/contacts?q=joe" class="bare">https://example.com/contacts?q=joe</a></code></p>
+</div>
+<div class="paragraph">
+<p>This is a nice feature of browsers: it allows you to bookmark the search or to copy the URL and send it to someone else.
+All they have to do is to click on the link, and they will repeat the exact same search.  This is also tied in with
+the browser&#8217;s notion of history: if you click the back button it will take you to the previous URL that you came
+from.  If you submit two searches and want to go back to the first one, you can simply hit back and the browser
+will "return" to that search.  (It may use a cached version of the search rather than issuing another request, but
+that&#8217;s a longer story.)</p>
+</div>
+<div class="paragraph">
+<p>As it stands right now, during Active Search, we are not updating the browser&#8217;s navigation bar, so you aren&#8217;t getting
+nice copy-and-pasteable links and you arne&#8217;t getting history entries, so no back button support.  Fortunately, htmx
+provides a way for doing this, the <code>hx-push-url</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>The <code>hx-push-url</code> attribute lets you tell htmx "Please push the URL of this request into the browser&#8217;s navigation bar".
+Push might seem like an odd verb to use here, but that&#8217;s the term that the underlying browser history API uses, which
+stems from the fact that it models browser history as a "stack" of locations: when you go to a new location, that
+location is "pushed" onto the stack of history elements, and when you click "back", that location is "popped" off
+the history stack.</p>
+</div>
+<div class="paragraph">
+<p>So, to get proper history support for our Active Search, all we need to do is to set the <code>hx-push-url</code> attribute to
+<code>true</code>.  Let&#8217;s update our search input:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 76. Updating The URL During Active Search</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+       hx-get="/contacts"
+       hx-trigger="change, keyup delay:200ms changed"
+       hx-target="tbody"
+       hx-push-url="true"/&gt; <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>By adding the <code>hx-push-url</code> attribute with the value <code>true</code>, htmx will update the URL when it makes a request</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>That&#8217;s all it takes and now, as Active Search requests are sent, the URL in the browser&#8217;s navigation bar is updated to
+have the proper query in it, just like when the form is submitted!</p>
+</div>
+<div class="paragraph">
+<p>Now, you might not <em>want</em> this behavior.  You might feel it would be confusing to users to see the navigation bar updated
+and have history entries for every Active Search made, for example.  That&#8217;s fine!  You can simply omit the <code>hx-push-url</code>
+attribute and it will go back ot the behavior you want.  htmx tries to be flexible enough that you can achieve the UX
+you want, while staying within the declarative HTML model.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_a_request_indicator">Adding A Request Indicator</h4>
+<div class="paragraph">
+<p>A final touch for our Active Search pattern is to add a request indicator to let the user know that a search is in
+progress.  As it stands the user has to know that the active search functionality is doing a request implicitly and,
+if the search takes a bit, may end up thinking that the feature isn&#8217;t working.  By adding a request indicator we let
+the user know that the hypermedia application is busy and they can wait (hopefully not too long!) for the request to
+complete.</p>
+</div>
+<div class="paragraph">
+<p>htmx provides support for request indicators via the <code>hx-indicator</code> attribute.  This attribute takes, you guessed it,
+a CSS selector that points to the indicator for a given element.  The indicator can be anything, but it is typically
+some sort of animated image, such as a gif or svg file, that spins or otherwise communicates visually that "something
+is happening".</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add a spinner after our search input:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 77. Updating The URL During Active Search</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
+       hx-get="/contacts"
+       hx-trigger="change, keyup delay:200ms changed"
+       hx-target="tbody"
+       hx-push-url="true"
+       hx-indicator="#spinner"/&gt; <b class="conum">(1)</b>
+&lt;img id="spinner" class="htmx-indicator" src="/static/img/spinning-circles.svg" alt="Request In Flight..."/&gt; <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The <code>hx-indicator</code> attribute points to the indicator image after the input</p>
+</li>
+<li>
+<p>The indicator is a spinning circle svg file, and has the <code>htmx-indicator</code> class on it</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We have added the spinner right after the input.  This visually co-locates the request indicator with the element
+making the request, and makes it easy for a user to see that something is in fact happening.</p>
+</div>
+<div class="paragraph">
+<p>Note that the indicator <code>img</code> tag has the <code>htmx-indicator</code> class on it.  <code>htmx-indicator</code> is a CSS class that is
+automatically injected into the page by htmx.  This class sets the default <code>opacity</code> of an element to <code>0</code>, which hides
+the element from view, while at the same time not disrupting the layout of the page.</p>
+</div>
+<div class="paragraph">
+<p>When an htmx request is triggered that points to this indicator, another class, <code>htmx-request</code> is added to the indicator
+which transitions its opacity to 1.  So you can use just about anything as an indicator, and it will be hidden by default, and then,
+when a request is in flight, will be shown.  This is all done via standard CSS classes, allowing you to control the transitions and even the mechanism by which the indicator
+is show (e.g. you might use <code>display</code> rather than <code>opacity</code>).  htmx is flexible in this regard.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Use Request Indicators!</div>
+<div class="paragraph">
+<p>Request indicators are an important UX aspect of any distributed application.  It is unfortunate that browsers have
+de-emphasized their native request indicators over time, and it is doubly unfortunate that request indicators are not
+part of the JavaScript ajax APIs.</p>
+</div>
+<div class="paragraph">
+<p>Be sure not to neglect this significant aspect of your application!  Even though requests might seem instant when you are
+working on your application locally, in the real world they can take quite a bit longer due to network latency.  It&#8217;s
+often a good idea to take advantage of browser developer tools that allow you to throttle your local browsers response
+times.  This will give you a better idea of what real world users are seeing, and show you where indicators might help
+users understand exactly what is going on.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>So there we go: we now have a pretty darned sophisticated user experience built out when compared with plain HTML, but
+we&#8217;ve built it all as a hypermedia-driven feature, no JSON or JavaScript to be seen!  This particular implementation also
+has the benefit of being a progressive enhancement, so this aspect of our application will continue to work for clients
+that don&#8217;t have JavaScript enabled.  Pretty slick!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lazy_loading">7.1. Lazy Loading</h3>
+<div class="paragraph">
+<p>With Active Search behind us, let&#8217;s move on to a very different sort of problem, that of lazy loading.  Lazy loading is
+when the loading of something is deferred until later, when needed.  This is commonly used as a performance enhancement:
+you avoid the processing resources necessary to produce some data until that data is actually needed.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add a count of the total number of contacts below the bottom of our contacts table.  This will give us a potentially
+expensive operation that we can use to demonstrate how easy it is to add lazy loading to our application using htmx.</p>
+</div>
+<div class="paragraph">
+<p>First let&#8217;s update our server code in the <code>/contacts</code> request handler to get a count of the total number of contacts.
+We will pass that count through to the template to render some new HTML.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 78. Adding A Count To The UI</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    page = int(request.args.get("page", 1))
+    count = Contact.count() <b class="conum">(1)</b>
+    if search is not None:
+        contacts_set = Contact.search(search)
+        if request.headers.get('HX-Trigger') == 'search':
+            return render_template("rows.html", contacts=contacts_set, page=page, count=count)
+    else:
+        contacts_set = Contact.all(page)
+    return render_template("index.html", contacts=contacts_set, page=page, count=count) <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Get the total count of contacts from the Contact model</p>
+</li>
+<li>
+<p>Pass the count out to the <code>index.html</code> template to use when rendering</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>As with the rest of the application, in the interest of staying focused on the <em>hypermedia</em> part of Contact.app, we are
+not going to look into the details of how <code>Contact.count()</code> works.  We just need to know that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It returns the total count of contacts in the contact database</p>
+</li>
+<li>
+<p>It may potentially be slow</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next lets add some HTML to our <code>index.html</code> that takes advantage of this new bit of data, showing a message next
+to the "Add Contact" link with the total count of users.  Here is what our HTML looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 79. Adding A Contact Count Element To The Application</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;p&gt;
+    &lt;a href="/contacts/new"&gt;Add Contact&lt;/a&gt; &lt;span&gt;({{ count }} total Contacts)&lt;/span&gt;<b class="conum">(1)</b>
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>A simple span with some text showing the total number of contacts.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Well that was easy, wasn&#8217;t it?  Now our users will see the total number of contacts next to the link to add new
+contacts, to give them a sense of how large the contact database is.  This sort of rapid development is one of the
+joys of developing web applications the old way.</p>
+</div>
+<div class="paragraph">
+<p>Here is what the feature looks like in our application:</p>
+</div>
+<div id="figure-5-1" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_total_contacts.png" alt="screenshot total contacts">
+</div>
+<div class="title">Figure 5. 7. Total Contact Count Display</div>
+</div>
+<div class="paragraph">
+<p>Beautiful.</p>
+</div>
+<div class="paragraph">
+<p>Of course, as you probably suspected, all it not perfect.  Unfortunately, upon shipping this feature to production, we
+start getting some complaints from the users that the application "feels slow".  So, like all good developers faced with
+a performance issues, rather than guessing what the issue might be, we try to get a performance profile of the application
+to see what exactly is causing the problem.</p>
+</div>
+<div class="paragraph">
+<p>It turns out, surprisingly, that the problem is that innocent looking <code>Contacts.count()</code> call, which is taking up to
+a second and a half to complete.  Unfortunately, for reasons beyond the scope of this book, it is not possible to improve
+that load time, nor it is also not possible to cache the result.  This leaves us with two choices:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Remove the feature</p>
+</li>
+<li>
+<p>Come up with some other way to mitigate the performance issue</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume that we can&#8217;t remove the feature, and therefore look at how we can mitigate this performance issue by
+using htmx instead.</p>
+</div>
+<div class="sect3">
+<h4 id="_pulling_the_expensive_code_out">7.1.1. Pulling The Expensive Code Out</h4>
+<div class="paragraph">
+<p>The first step in implementing the Lazy Load pattern is to pull the expensive code, that is, the call to <code>Contacts.count()</code>.
+out of request handler for the <code>/contacts</code> end point.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s pull this function call into its own HTTP request handler as new HTTP end point that we will put at <code>/contacts/count</code>.
+For this new end point, we won&#8217;t need to render a template at all: its sole job is going to be to render that small bit of text
+that is in the span, "(22 total Contacts)"</p>
+</div>
+<div class="paragraph">
+<p>Here is what the new code will look like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 80. Pulling The Expensive Code Out</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts")
+def contacts():
+    search = request.args.get("q")
+    page = int(request.args.get("page", 1)) <b class="conum">(1)</b>
+    if search is not None:
+        contacts_set = Contact.search(search)
+        if request.headers.get('HX-Trigger') == 'search':
+            return render_template("rows.html", contacts=contacts_set, page=page)
+    else:
+        contacts_set = Contact.all(page)
+    return render_template("index.html", contacts=contacts_set, page=page) <b class="conum">(2)</b>
+
+@app.route("/contacts/count")
+def contacts_count():
+    count = Contact.count() <b class="conum">(3)</b>
+    return "(" + str(count) + " total Contacts)" <b class="conum">(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>We no longer call <code>Contacts.count()</code> in this handler</p>
+</li>
+<li>
+<p><code>count</code> is no longer passed out to the template to render in the <code>/contacts</code> handler</p>
+</li>
+<li>
+<p>We create a new handler at the <code>/contacts/count</code> path that does the expensive calculation</p>
+</li>
+<li>
+<p>Return the string with the total number of contacts in it</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Great! So now we have moved the performance issue out of the <code>/contacts</code> handler code and created a new HTTP end point
+that will produce the expensive-to-create count for us.</p>
+</div>
+<div class="paragraph">
+<p>Now we need to get the content from this new handler <em>into</em> the span, somehow.  As we said earlier, the default behavior
+of htmx is to place any content it receives for a given request into the <code>innerHTML</code> of an element, and that turns out
+to be exactly what we want here: we want to retrieve this text and put it into the <code>span</code>.  So we can simply place an
+<code>hx-get</code> attribute on the span, pointing to this new path, and do exactly that.</p>
+</div>
+<div class="paragraph">
+<p>However, recall that the default <em>event</em> that will trigger a request for a <code>span</code> element in htmx is the <code>click</code> event.
+Well, that&#8217;s not what we want!  Instead, we want this request to trigger immediately, when the page loads.  To do this,
+we can add the <code>hx-trigger</code> attribute to update the trigger of the requests for the element, and use the <code>load</code> event.</p>
+</div>
+<div class="paragraph">
+<p>The <code>load</code> event is a special event that htmx triggers on all content when it is loaded into the DOM.  By setting <code>hx-trigger</code>
+to <code>load</code>, we will cause htmx to issue the <code>GET</code> request when the <code>span</code> element is loaded into the page.</p>
+</div>
+<div class="paragraph">
+<p>Here is our updated template code:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 81. Adding A Contact Count Element To The Application</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;p&gt;
+    &lt;a href="/contacts/new"&gt;Add Contact&lt;/a&gt; &lt;span hx-get="/contacts/count" hx-trigger="load"&lt;/span&gt;<b class="conum">(1)</b>
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Issue a <code>GET</code> to <code>/contacts/count</code> when the <code>load</code> event occurs</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Note that the <code>span</code> starts empty: we have removed the content from it, and we are allowing the request to <code>/contacts/count</code>
+to populate it instead.</p>
+</div>
+<div class="paragraph">
+<p>And, check it out, our <code>/contacts</code> page is fast again!  When you navigate to the page it feels very snappy and
+profiling shows that yes, indeed, the page is loading much more quickly.  Why is that?  Well, we&#8217;ve deferred the
+expensive calculation to a secondary request, allowing the initial request to finish loading much more quickly.</p>
+</div>
+<div class="paragraph">
+<p>You might say "OK, great, but it&#8217;s still taking a second or two to get the total count on the page."  That&#8217;s true, but
+often the user may not be particularly interested in the total count.  They may just want to come to the page and
+search for an existing user, or perhaps they may want to edit or add a user.  The total count
+is often just a "nice to have" bit of information in these cases.  By deferring the calculation of the count in this manner
+we let users get on with their use of the application while we perform the expensive calculation.</p>
+</div>
+<div class="paragraph">
+<p>Yes, the total time to get all the information on the screen takes just as long.  (It actually might be a bit longer since
+we now have two requests that need to get all the information.)  But the <em>perceived performance</em> for the end user will
+be much better: they can do what they want nearly immediately, even if some information isn&#8217;t available instantaneously.
+Lazy Loading is a great tool to have in your tool belt when optimizing your web application performance!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_an_indicator">7.1.2. Adding An Indicator</h4>
+<div class="paragraph">
+<p>Unfortunately there is one somewhat disconcerting aspect to our current implementation: the count is lazily loaded,
+but there is no way for a user to know that this computation is being done.  As it stands, the count just sort of
+bursts onto the scene whenever the request to <code>/contacts/count</code> completes.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s not ideal.  What we want is an indicator, like we added to our active search example.  And, in fact, we can
+simply reuse the same spinner image here!</p>
+</div>
+<div class="paragraph">
+<p>Now, in this case, we have a one-time request and, once the request is over, we are not going to need the spinner anymore.
+So it doesn&#8217;t make sense to use the exact same approach we did with the active search example.  Recall that in that
+case we placed a spinner <em>after</em> the span and using the <code>hx-indicator</code> attribute to point to it.</p>
+</div>
+<div class="paragraph">
+<p>In this case, since the spinner is only used once, we can put it <em>inside</em> the content of the span.  When the request
+completes the content in the response will be placed inside the span, replacing the spinner with the computed contact
+count.  It turns out that htmx allows you to place indicators with the <code>htmx-indicator</code> class on them inside of elements
+that issue htmx-powered requests.  In the absence of an <code>hx-indicator</code> attribute, these internal indicators will be shown
+when a request is in flight.</p>
+</div>
+<div class="paragraph">
+<p>So let&#8217;s add that spinner from the active search example as the initial content in our span:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 82. Adding An Indicator To Our Lazily Loaded Content</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;span hx-get="/contacts/count" hx-trigger="load"&gt;
+  &lt;img id="spinner" class="htmx-indicator" src="/static/img/spinning-circles.svg"/&gt;<b class="conum">(1)</b>
+&lt;/span&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Yep, that&#8217;s it</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Great!  Now when the user loads the page, rather than having the total contact count sprung on them like a surprise,
+there is a nice spinner indicating that something is coming.  Much better!</p>
+</div>
+<div class="paragraph">
+<p>Note that all we had to do was copy and paste our indicator from the active search example into the <code>span</code>!  This is
+a great demonstration of how htmx provides flexible, composable features and building blocks to work with: implementing
+a new feature is often just a copy-and-paste, with maybe a tweak or two, and you are done.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_but_thats_not_lazy">7.1.3. But That&#8217;s Not Lazy!</h4>
+<div class="paragraph">
+<p>You might say "OK, but that&#8217;s not really lazy.  We are still loading the count immediately when the page is loaded,
+we are just doing it in a second request.  You aren&#8217;t really waiting until the value is actually needed."</p>
+</div>
+<div class="paragraph">
+<p>Fine.  Let&#8217;s make it <em>lazy</em> lazy: we&#8217;ll only issue the request when the <code>span</code> scrolls into view.</p>
+</div>
+<div class="paragraph">
+<p>To do that, lets recall how we set up the infinite scroll example: we used the <code>revealed</code> event for our trigger.  That&#8217;s
+all we want here, right?  When the element is revealed we issue the request?</p>
+</div>
+<div class="paragraph">
+<p>Yep, that&#8217;s it!  Once again, we can mix and match concepts across various UX patterns to come up with solutions to
+new problems in htmx.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 83. Making It Lazy Lazy</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;span hx-get="/contacts/count" hx-trigger="revealed"&gt; <b class="conum">(1)</b>
+  &lt;img id="spinner" class="htmx-indicator" src="/static/img/spinning-circles.svg"/&gt;
+&lt;/span&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Change the <code>hx-trigger</code> to <code>revealed</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now we have a truly lazy implementation, deferring the expensive computation until we are absolutely sure we need it. A
+pretty cool trick, and, again, a simple one-attribute change demonstrates the flexibility of both htmx the hypermedia
+approach.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inline_delete">7.2. Inline Delete</h3>
+<div class="paragraph">
+<p>We now have some pretty slick UX patterns in our application, but let&#8217;s not rest on our laurels.  For our next
+hypermedia trick, we are going to implement "inline delete", where a contact can be deleted directly from the
+list view of all contacts, rather than requiring the user to navigate all the way to the edit view of particular contact,
+in order to access the "Delete Contact" button.</p>
+</div>
+<div class="paragraph">
+<p>We already have "Edit" and "View" links for each row, in the <code>rows.html</code> template:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 84. The Existing Row Actions</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;td&gt;
+    &lt;a href="/contacts/{{ contact.id }}/edit"&gt;Edit&lt;/a&gt;
+    &lt;a href="/contacts/{{ contact.id }}"&gt;View&lt;/a&gt;
+&lt;/td&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We want to add a "Delete" link as well.  And we want that link to act an awful lot like the "Delete Contact" from
+<code>edit.html</code>, don&#8217;t we?  We&#8217;d like to issue an HTTP <code>DELETE</code> to the URL for the given contact, we want a confirmation
+dialog to ensure the user doesn&#8217;t accidentally delete a contact.  Here is the "Delete Contact" html:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 85. The Existing Row Actions</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;button hx-delete="/contacts/{{ contact.id }}"
+        hx-push-url="true"
+        hx-confirm="Are you sure you want to delete this contact?"
+        hx-target="body"&gt;
+    Delete Contact
+&lt;/button&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Is this going to be another copy-and-paste job with a bit of tweaking?</p>
+</div>
+<div class="paragraph">
+<p>It sure is!</p>
+</div>
+<div class="paragraph">
+<p>One thing to note is that, in the case of the "Delete Contact" button, we want to rerender the whole screen and update
+the URL, since we are going to be returning from the edit view for the contact to the list view of all contacts.  In
+the case of this link, however, we are already on the list of contacts, so there is no need to update the URL, and
+we can omit the <code>hx-push-url</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>Here is our updated code:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 86. The Existing Row Actions</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;td&gt;
+    &lt;a href="/contacts/{{ contact.id }}/edit"&gt;Edit&lt;/a&gt;
+    &lt;a href="/contacts/{{ contact.id }}"&gt;View&lt;/a&gt;
+    &lt;a href="#" hx-delete="/contacts/{{ contact.id }}"
+        hx-confirm="Are you sure you want to delete this contact?"
+        hx-target="body"&gt;Delete&lt;/a&gt; <b class="conum">(1)</b>
+&lt;/td&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Almost a straight copy of the "Delete Contact" button</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>As you can see, we have added a new anchor tag and given it a blank target (the <code>#</code> value in its <code>href</code> attribute) to
+retain the correct mouse-over styling behavior of the link.  We&#8217;ve also copied the <code>hx-delete</code>, <code>hx-confirm</code> and
+<code>hx-target</code> attributes from the "Delete Contact" button, but omitted the <code>hx-push-url</code> attributes since we don&#8217;t want
+to update the URL of the browser.</p>
+</div>
+<div class="paragraph">
+<p>And&#8230;&#8203; that&#8217;s it!  We now have inline delete working, even with a confirmation dialog!</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">A Style Sidebar</div>
+<div class="paragraph">
+<p>One thing is really starting to bother me about our application: we now have quite a few actions stacking up in our
+contacts table, and it is starting to look very distracting:</p>
+</div>
+<div id="figure-5-1" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_stacked_actions.png" alt="screenshot stacked actions">
+</div>
+<div class="title">Figure 5. 8. That&#8217;s a Lot of Actions</div>
+</div>
+<div class="paragraph">
+<p>It would be nice if we didn&#8217;t show the actions all in a row, and it would be nice if we only showed the actions when
+the user indicated interest in a given row.  We will return to this problem after we look at the relationship between
+scripting and a Hypermedia Driven Application in a later chapter.</p>
+</div>
+<div class="paragraph">
+<p>For now, let&#8217;s just tolerate this less-than-ideal user interface, knowing that we will return to it later.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_getting_fancy">7.2.1. Getting Fancy</h4>
+<div class="paragraph">
+<p>We can get even fancier here, however.  What if, rather than re-rendering the whole page, we just removed the row
+for the contact?  The user is looking at the row anyway, so is there really a need to re-render the whole page?</p>
+</div>
+<div class="paragraph">
+<p>To do this, we&#8217;ll need to do a couple of things:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We&#8217;ll need to update this link to target the row that it is in</p>
+</li>
+<li>
+<p>We&#8217;ll need to change the swap to <code>outerHTML</code>, since we want to replace (really, remove) the entire row</p>
+</li>
+<li>
+<p>We&#8217;ll need to update the server side to render empty content when the <code>DELETE</code> is issued from a row rather
+than from the "Delete Contact" button on the contact edit page</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>First things first, update the target of our "Delete" link to be the row that the link is in, rather than the entire
+body.  We can once again take advantage of the relative positional <code>closest</code> feature to target the closest <code>tr</code>, like
+we did in our "Click To Load" and "Infinite Scroll" features:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 87. The Existing Row Actions</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;td&gt;
+    &lt;a href="/contacts/{{ contact.id }}/edit"&gt;Edit&lt;/a&gt;
+    &lt;a href="/contacts/{{ contact.id }}"&gt;View&lt;/a&gt;
+    &lt;a href="#" hx-delete="/contacts/{{ contact.id }}"
+        hx-swap="outerHTML"
+        hx-confirm="Are you sure you want to delete this contact?"
+        hx-target="closest tr"&gt;Delete&lt;/a&gt; <b class="conum">(1)</b>
+&lt;/td&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Updated to target the closest enclosing <code>tr</code> (table row) of the link</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updating_the_server_side_2">7.2.2. Updating The Server Side</h4>
+<div class="paragraph">
+<p>Now we need to update the server side as well.  We want to keep the "Delete Contact" button working as well, and in
+that case the current logic is correct.  So we&#8217;ll need some way to differentiate between <code>DELETE</code> requests that are
+triggered by the button and <code>DELETE</code> requests that come from this anchor.</p>
+</div>
+<div class="paragraph">
+<p>The cleanest way to do this is to add an <code>id</code> attribute to the "Delete Contact" button, so that we can inspect the
+<code>HX-Trigger</code> HTTP Request header to determine if the delete button was the cause of the request.  This is a simple
+change to the existing HTML:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 88. Adding an <code>id</code> to the "Delete Contact" button</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;button id="delete-btn" <b class="conum">(1)</b>
+            hx-delete="/contacts/{{ contact.id }}"
+            hx-push-url="true"
+            hx-confirm="Are you sure you want to delete this contact?"
+            hx-target="body"&gt;
+        Delete Contact
+    &lt;/button&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>An <code>id</code> attribute has been added to the button</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>By giving this button an id attribute, we now have a mechanism for differentiating between the delete button in the
+<code>edit.html</code> template and the delete links in the <code>rows.html</code> template.  When this button issues a request, it will now
+look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-httprequest" data-lang="httprequest">DELETE http://example.org/contacts/42 HTTP/1.1
+Accept: text/html,*/*
+Host: example.org
+...
+HX-Trigger: delete-btn
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see that the request now includes the <code>id</code> of the button. This allows us to write code very similar to what we did
+for the active search pattern, using a conditional on the <code>HX-Trigger</code> header to determine what we want to do.  If that
+header has the value <code>delete-btn</code>, then we know the request came from the button on the edit page, and we can do what we
+are currently doing: delete the contact and redirect to <code>/contacts</code> page.</p>
+</div>
+<div class="paragraph">
+<p>If it <em>does not</em> have that value, then we can simply delete the contact and return an empty string.  This empty string
+will replace the target, in this case the row for the given contact, thereby removing the row from the UI.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s refactor our server side code to do this:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 89. Updating Our Server Code To Handle Two Different Delete Patterns</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/&lt;contact_id&gt;", methods=["DELETE"])
+def contacts_delete(contact_id=0):
+    contact = Contact.find(contact_id)
+    contact.delete()
+    if request.headers.get('HX-Trigger') == 'delete-btn': <b class="conum">(1)</b>
+        flash("Deleted Contact!")
+        return redirect("/contacts", 303)
+    else:
+        return "" <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>If the delete button on the edit page submitted this request, then continue to do the logic we had previous</p>
+</li>
+<li>
+<p>If not, simply return an empty string, which will delete the row</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Believe it or not, we are now done:  when a user clicks "Delete" on a contact row and confirms the delete, the row will
+disappear from the UI.  Poof!  Once again, we have a situation where just changing a few lines of simple code gives us a
+dramatically different behavior.  Hypermedia is very powerful!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_getting_super_fancy_with_the_htmx_swapping_model">7.2.3. Getting <em>Super</em> Fancy With The htmx Swapping Model</h4>
+<div class="paragraph">
+<p>This is pretty cool, but there is another improvement we can make if we take some time to understand the htmx content
+swapping model: it sure would be exciting if, rather than just instantly deleting the row, we faded it out before we removed
+it.  That easement makes it more obvious that the row is being removed, giving the user some nice visual feedback on the
+deletion.</p>
+</div>
+<div class="paragraph">
+<p>It turns out we can do this pretty easily with htmx, but to do so we&#8217;ll need to dig in to exactly how htmx swaps content.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">The htmx Swapping Model</div>
+<div class="paragraph">
+<p>You might think that htmx simply puts the new content into the DOM, but that&#8217;s not in fact how it works.  Instead, content
+goes through a series of steps as it is added to the DOM:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When content is received and about to be swapped into the DOM, the <code>htmx-swapping</code> CSS class is added to the target
+element</p>
+</li>
+<li>
+<p>A small delay then occurs (we will discuss why this delay exists in a moment)</p>
+</li>
+<li>
+<p>Next, the <code>htmx-swapping</code> class is removed from the target and the <code>htmx-settling</code> class is added</p>
+</li>
+<li>
+<p>The new content is swapped into the DOM</p>
+</li>
+<li>
+<p>Another small delay occurs</p>
+</li>
+<li>
+<p>Finally, the <code>htmx-settling</code> class is removed from the target</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There is more to the swap mechanic (settling, for example, is a more advanced topic that we will discuss in a later chapter)
+but for now this is all you need to know about it.</p>
+</div>
+<div class="paragraph">
+<p>Now, there are small delays in the process here, typically on the order of a few milliseconds.  Why so?  It turns out
+that these small delays allow <em>CSS transitions</em> to occur.</p>
+</div>
+<div class="paragraph">
+<p>CSS transitions are a technology that allow you to animate a transition from one style to another.  So, for example, if
+you changed the height of something from 10 pixels to 20 pixels, by using a CSS transition you can make the element
+smoothly animate to the new height.  These sorts of animations are fun, often increase application usability, and are
+a great mechanism to add polish and fit-and-finish to your web application.</p>
+</div>
+<div class="paragraph">
+<p>Unfortunately, CSS transitions are not available in plain HTML: you have to use JavaScript and add or remove classes
+to get them to trigger.  This is why the htmx swap model is more complicated than you might initially think: by swapping
+in classes and adding small delays, you can access CSS transitions purely within HTML, without needing to write any
+JavaScript!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_taking_advantage_of_htmx_swapping">7.2.4. Taking Advantage of <code>htmx-swapping</code></h4>
+<div class="paragraph">
+<p>OK, so, let&#8217;s go back and look at our inline delete mechanic:  we click an htmx enhanced link which deletes the contact
+and then swaps some empty content in for the row.  We know that, before the <code>tr</code> element is removed, it will have the
+<code>htmx-swapping</code> class added to it.  We can take advantage of that to write a CSS transition that fades the opacity of
+the row to 0.  Here is what that CSS looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 90. Adding A Fade Out Transition</div>
+<div class="content">
+<pre class="highlight"><code class="language-css" data-lang="css">tr.htmx-swapping { <b class="conum">(1)</b>
+  opacity: 0; <b class="conum">(2)</b>
+  transition: opacity 1s ease-out; <b class="conum">(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>We want this style to apply to <code>tr</code> elements with the <code>htmx-swapping</code> class on them</p>
+</li>
+<li>
+<p>The <code>opacity</code> will be 0, making it invisible</p>
+</li>
+<li>
+<p>The <code>opacity</code> will transition to 0 over a 1 second time period, using the <code>ease-out</code> function</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Again, this is not a CSS book and I am not going to go deeply into the details of CSS transitions, but hopefully the
+above makes sense to you, even if this is the first time you&#8217;ve seen CSS transitions.</p>
+</div>
+<div class="paragraph">
+<p>So, think about what this means from the htmx swapping model:  when htmx gets content back to swap into the row it will
+put the <code>htmx-swapping</code> class on the row and wait a bit.  This will allow the transition to a zero opacity to occur,
+fading the row out.  Then the new (empty) content will be swapped in, which will effectively removing the row.</p>
+</div>
+<div class="paragraph">
+<p>Sounds good, and we are nearly there.  There is one more thing we need to do: the default "swap delay" for htmx is very
+short, a few milliseconds.  That makes sense in most cases: you don&#8217;t want to have much of a delay before you put the
+new content into the DOM.  But, in this case, we want to give the CSS animation time to complete before we do the swap,
+we want to give it a second, in fact.</p>
+</div>
+<div class="paragraph">
+<p>Fortunately htmx has an option for the <code>hx-swap</code> annotation that allows you to set the swap delay: following the swap
+type you can add <code>swap:</code> followed by a timing value to tell htmx to wait a specific amount of time before it swaps.  Let&#8217;s
+update our HTML to allow a one second delay before the swap is done for the delete action:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 91. The Existing Row Actions</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;td&gt;
+    &lt;a href="/contacts/{{ contact.id }}/edit"&gt;Edit&lt;/a&gt;
+    &lt;a href="/contacts/{{ contact.id }}"&gt;View&lt;/a&gt;
+    &lt;a href="#" hx-delete="/contacts/{{ contact.id }}"
+        hx-swap="outerHTML swap:1s" <b class="conum">(1)</b>
+        hx-confirm="Are you sure you want to delete this contact?"
+        hx-target="closest tr"&gt;Delete&lt;/a&gt;
+&lt;/td&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>A swap delay changes how long htmx waits before it swaps in new content</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>With this modification, the existing row will stay in the DOM for an additional second, with the <code>htmx-swapping</code> class
+on it.  This will give the row time to transition to an opacity of zero, giving the fade out effect we want.</p>
+</div>
+<div class="paragraph">
+<p>Now, when a user clicks on a "Delete" link and confirms the delete, the row will slowly fade out and then, once it has
+faded to a 0 opacity, it will be removed.  Fancy!  And all done in a declarative, hypermedia oriented manner, no
+JavaScript required!  (Well, obviously htmx is written in JavaScript, but you know what I mean: we didn&#8217;t have to write
+any JavaScript to implement the feature!)</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bulk_delete">7.3. Bulk Delete</h3>
+<div class="paragraph">
+<p>Our final feature in this chapter is going to be a "Bulk Delete" feature.  The current mechanism for deleting users
+is nice, but it would be annoying if a user wanted to delete five or ten contacts at a time, wouldn&#8217;t it?  For the bulk
+delete feature, we&#8217;ll add the ability to select rows via a checkbox input and delete them all in a single go by clicking
+a "Delete Selected Contacts" button.</p>
+</div>
+<div class="paragraph">
+<p>To get started with this feature, we&#8217;ll need to add a checkbox input to each row in the <code>rows.html</code> template.  This input
+will have the name <code>contacts</code> and its value will be the <code>id</code> of the contact for the current row.  Here is what the
+updated code for <code>rows.html</code> looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 92. Adding A Checkbox To Each Row</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">{% for contact in contacts %}
+&lt;tr&gt;
+  &lt;td&gt;&lt;input type="checkbox" name="selected_contact_ids" value="{{ contact.id }}"&gt;&lt;/td&gt; <b class="conum">(1)</b>
+  &lt;td&gt;{{ contact.first }}&lt;/td&gt;
+  ... omitted
+&lt;/tr&gt;
+{% endfor %}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>A new cell with the checkbox input whose value is set to the current contact&#8217;s id</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll also need to add an empty column in the header for the table to accommodate the checkbox column.  With that
+done we now get a series of check boxes, one for each row, a pattern no doubt familiar to you from the web:</p>
+</div>
+<div id="figure-5-2" class="imageblock">
+<div class="content">
+<img src="../images/screenshot_checkboxes.png" alt="screenshot checkboxes">
+</div>
+<div class="title">Figure 5. 9. Checkboxes For Our Contact Rows</div>
+</div>
+<div class="paragraph">
+<p>If you are not familiar with or have forgotten the way checkboxes work in HTML: a checkbox will submit its value associated
+with the name of the input if and only if it is checked.  So if, for example, you checked the contacts with the ids 3,
+7 and 9, then those three values would all be submitted to the server.  Since all the checkboxes in this case have
+the same name, <code>contacts</code>, all three values would be submitted with the name <code>contacts</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_delete_selected_contacts_button">7.3.1. The "Delete Selected Contacts" button</h4>
+<div class="paragraph">
+<p>The next step is to add a button below the table that will delete all the selected contacts.  We want this button, like
+our delete links in each row, to issue an HTTP <code>DELETE</code>, but rather than issuing it to the URL for a given contact, like
+we do with the inline delete links and with the delete button on the edit page, here we want to issue the delete to
+the <code>/contacts</code> URL.  As with the other delete elements, we want to confirm that the user wishes to delete the contacts,
+and, for this case, we are going to target the body of page, since we are going to rerender the whole table.</p>
+</div>
+<div class="paragraph">
+<p>Here is what the template code looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 93. The Delete Selected Contacts Button.</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;button hx-delete="/contacts" <b class="conum">(1)</b>
+        hx-confirm="Are you sure you want to delete these contacts?" <b class="conum">(2)</b>
+        hx-target="body"&gt; <b class="conum">(3)</b>
+    Delete Selected Contacts
+&lt;/button&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Issue a <code>DELETE</code> to <code>/contacts</code></p>
+</li>
+<li>
+<p>Confirm that the user wants to delete the selected contacts</p>
+</li>
+<li>
+<p>Target the body</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Great, pretty easy.  One question though: how are we going to include the values of all the selected checkboxes in the
+request?  As it stands right now, this is just a stand-alone button, and it doesn&#8217;t have any information indicating that
+it should include any other information.  Fortunately, htmx has a few different ways to include values of inputs
+with a request.</p>
+</div>
+<div class="paragraph">
+<p>One way would be to use the <code>hx-include</code> attribute, which allows you to use a CSS selector to specify the elements
+you want to include in the request.  That would work fine here, but we are going to use another approach that is a bit
+simpler in this case.  By default, if an element is a child of a <code>form</code> element, htmx will include all the values of
+inputs within that form.  In situations like this, where there is a bulk operation for a table, it is common to enclose
+the whole table in a form tag, so that it is easy to add buttons that operate on the selected items.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add that form tag around the form, and be sure to enclose the button in it as well:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 94. The Delete Selected Contacts Button.</div>
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">    &lt;form&gt; <b class="conum">(1)</b>
+        &lt;table&gt;
+          ... omitted
+        &lt;/table&gt;
+        &lt;button hx-delete="/contacts"
+                hx-confirm="Are you sure you want to delete these contacts?"
+                hx-target="body"&gt;
+            Delete Selected Contacts
+        &lt;/button&gt;
+    &lt;/form&gt; <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The form tag encloses the entire table</p>
+</li>
+<li>
+<p>And also encloses the button</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now, when the button issues a <code>DELETE</code>, it will include all the contact ids that have been selected as the
+<code>selected_contact_ids</code> request variable.  Great!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_server_side_for_delete_selected_contacts">7.3.2. The Server Side for Delete Selected Contacts</h4>
+<div class="paragraph">
+<p>The server side implementation is going to look an awful lot like our original server side code for deleting a contact.
+In fact, once again, we can just copy and paste, and fix a bit of stuff up:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We want to change the URL to <code>/contacts</code></p>
+</li>
+<li>
+<p>We want the handler to get <em>all</em> the ids submitted as <code>selected_contact_ids</code> and iterate over each one, deleting the
+given contact</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Those are really the only changes we need to make!  Here is what the server side code looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. 95. The Delete Selected Contacts Button.</div>
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">@app.route("/contacts/", methods=["DELETE"]) <b class="conum">(1)</b>
+def contacts_delete_all():
+    contact_ids = list(map(int, request.form.getlist("selected_contact_ids"))) <b class="conum">(2)</b>
+    for contact_id in contact_ids: <b class="conum">(3)</b>
+        contact = Contact.find(contact_id)
+        contact.delete() <b class="conum">(4)</b>
+    flash("Deleted Contacts!") <b class="conum">(5)</b>
+    contacts_set = Contact.all()
+    return render_template("index.html", contacts=contacts_set)</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>We handle a <code>DELETE</code> request to the <code>/contacts/</code> path</p>
+</li>
+<li>
+<p>We convert the <code>selected_contact_ids</code> values submitted to the server from a list of strings to a list integers</p>
+</li>
+<li>
+<p>We iterate over all of the ids</p>
+</li>
+<li>
+<p>And delete the given contact with each id</p>
+</li>
+<li>
+<p>Beyond that, it&#8217;s the same code as our original delete handler: flash a message and render the <code>index.html</code> template</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>So, as you can see, we just took the original delete logic and slightly modified it to deal with an array of ids, rather
+than a single id.  Readers with sharp eyes might notice one other small change: we did away with the redirect that was
+in the original delete code.  We did so because we are already on the page we want to rerender, so there is no reason
+to redirect and have the URL update to something new.  We can just rerender the page, and the new list of contacts (sans the
+contacts that were deleted) will be re-rendered.</p>
+</div>
+<div class="paragraph">
+<p>And there we go, we now have a bulk delete feature for our application.  Once again, not a huge amount of code, and we
+are implementing these features entirely by exchanging hypermedia with a server in the traditional, RESTful manner of
+the web.  Cool!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_summary_5">7.4. Summary</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>In this chapter dove into some more advanced user interface features using htmx and hypermedia</p>
+</li>
+<li>
+<p>We implemented a nifty "Active Search" feature, allowing users to type and immediately filter down the contacts list</p>
+</li>
+<li>
+<p>We then introduced and fixed a performance issue by using the "Lazy Loading" pattern, which defers a calculation until
+after the initial request for better perceived performance</p>
+</li>
+<li>
+<p>Next we implemented an "Inline Delete" feature that allows users to delete contacts directly from the list view, complete
+with a nice fade out effect</p>
+</li>
+<li>
+<p>Finally, we implemented a "Bulk Delete" feature that allows users to select multiple contacts and delete them all with
+a single click</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_building_hypermedia_systems_2.html">Building Hypermedia Systems</a> | ↑ Up: <a href="_building_hypermedia_systems.html">Building Hypermedia Systems</a> | ⌂ Home: <a href="BuildingHypermediaSystems.html">Building Hypermedia Systems</a> | Next: <a href="_building_hypermedia_systems_3.html">Building Hypermedia Systems</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-10-20 12:44:43 -0600
+</div>
+</div>
+</body>
+</html>

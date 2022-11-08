@@ -4,6 +4,8 @@ Adam Stepinski, Carson Gross, Deniz Akşimşek
 :toc:
 :toclevels: 3
 
+[introduction]
+include::INTRO_HypermediaSystems.adoc[]
 include::CH01_ReintroducingHypermedia.adoc[]
 include::CH02_RestHATEOASAndAllThat.adoc[]
 include::CH03_BuildingASimpleWebApplication.adoc[]

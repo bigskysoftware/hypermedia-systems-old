@@ -73,13 +73,12 @@ And we hope that, for many applications, the answer to that question will be "Ye
 The book is broken into three parts:
 
 * An introduction (or re-introduction) to hypermedia, with an in-depth look at HTML and HTTP.  We will finish up this
-  review of core hypermedia concepts by creating a simple Web 1.0-style Hypermedia-Driven Application for managing
-  contacts.
+  review of core hypermedia concepts by creating a simple Web 1.0-style application, Contact.app, for managing contacts.
 
-* Next we will look at how we can use htmx, a hypermedia-oriented JavaScript library, to improve our Hypermedia-Driven
-  Application.  By using htmx, we will be able to achieve a level of interactivity in our application that many developers
+* Next we will look at how we can use https://htmx.org[htmx], a hypermedia-oriented JavaScript library, to improve
+  Contact.app.  By using htmx, we will be able to achieve a level of interactivity in our application that many developers
   would expect requires a large, sophisticated front end library, such as React.  Thanks to htmx, we will be able to do
-  this _without_ abandoning the hypermedia system architecture!
+  this _without_ abandoning hypermedia as a system architecture!
 
 * Finally, we will look at a completely different hypermedia system, HyperView.  HyperView is a _mobile_ hypermedia, related
   to, but distinct from, HTML.  It supports _mobile specific_ features by providing not only a hypermedia, but also a

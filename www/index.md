@@ -1,5 +1,6 @@
 ---
 layout: layout.njk
+url: /
 ---
 
 <header style="min-height: 40vh; display: grid; place-items: center">

@@ -1,10 +1,9 @@
 import lume from "lume/mod.ts";
 import liquid from "lume/plugins/liquid.ts";
-import asciidoc from "./_plugins/asciidoc.ts";
-import postprocessAsciidoc from "./_plugins/postprocess-asciidoc.ts";
+import asciidoc from "./www/_plugins/asciidoc.ts";
+import postprocessAsciidoc from "./www/_plugins/postprocess-asciidoc.ts";
 
 const site = lume({
-    src: "..",
     includes: "www/_includes",
 });
 

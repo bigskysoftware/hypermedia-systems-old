@@ -1,7 +1,6 @@
 import { Site, Engine, Data } from "lume/core.ts";
 import textLoader from "lume/core/loaders/text.ts";
 import Asciidoctor from "npm:@asciidoctor/core";
-import site from "../_config.ts";
 
 // @ts-ignore incorrect typings of asciidoctor
 const asciidoctor: typeof Asciidoctor.Asciidoctor = Asciidoctor;
@@ -10,12 +9,16 @@ const ilog = <T>(...args: [..._: unknown[], last: T]): T => (console.log(...args
 
 export default () => {
     return (site: Site) => {
-        site.loadPages([".adoc"], textLoader, new AsciidocEngine());
+        site.loadPages([".adoc"], textLoader, new AsciidocEngine(site));
     }
 }
 
 class AsciidocEngine implements Engine {
     asciidoc = new asciidoctor();
+
+    constructor(
+        public site: Site,
+    ) {}
 
     deleteCache(): void {}
 
@@ -24,7 +27,7 @@ class AsciidocEngine implements Engine {
         const ast = this.asciidoc.load(content, {
             standalone: false,
             parse: true,
-            base_dir: site.src(),
+            base_dir: this.site.src(),
             safe: "UNSAFE",
             attributes: {
                 docfile: filename,

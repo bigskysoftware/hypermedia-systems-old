@@ -14,4 +14,4 @@ It covers:
 
 You can purchase a PDF of the book here (TBD)
 
-Or you can view the entire book online for free [here](/book/_building_hypermedia_systems.html).
+Or you can view the entire book online for free [here](/manuscript/BuildingHypermediaSystems).

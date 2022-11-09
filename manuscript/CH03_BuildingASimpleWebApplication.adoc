@@ -1,14 +1,3 @@
-= Building Hypermedia Systems
-:chapter: 2
-:sectnums:
-:figure-caption: Figure {chapter}.
-:listing-caption: Listing {chapter}.
-:table-caption: Table {chapter}.
-:sectnumoffset: 1
-// line above:  :sectnumoffset: 5  (chapter# minus 1)
-:leveloffset: 1
-:sourcedir: ../code/src
-:source-language:
 
 = Building A Simple Web 1.0 Application
 
@@ -173,7 +162,7 @@ hypermedia yet, but, nonetheless, the browser renders it fine:
 
 [#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .Hello Flask!
-image::../images/figure_2-1_hello_world.png[]
+image::figure_2-1_hello_world.png[]
 
 For Contact.app, rather than rendering "Hello World!" at the root path, we are going to do something a little fancy:
 we are going to redirect to another path, the `/contacts` path.  Redirects are a feature of HTTP that allow you to,
@@ -387,7 +376,7 @@ Here is what the template looks like, rendered with a bit of contact data:
 
 [#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .Contact.App
-image::../images/figure_2-2_table_etc.png[]
+image::figure_2-2_table_etc.png[]
 
 
 It won't win any design awards at this poitn, but notice that our template, when rendered,

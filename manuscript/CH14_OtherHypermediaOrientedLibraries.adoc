@@ -1,14 +1,3 @@
-= Building Hypermedia Systems
-:chapter: 13
-:sectnums:
-:figure-caption: Figure {chapter}.
-:listing-caption: Listing {chapter}.
-:table-caption: Table {chapter}.
-:sectnumoffset: 12
-// line above:  :sectnumoffset: 5  (chapter# minus 1)
-:leveloffset: 1
-:sourcedir: ../code/src
-:source-language:
 
 = Other Hypermedia Libraries & Technologies
 
@@ -75,7 +64,7 @@ to the normal "root" layer, where content will replace the current window.
 As an example, here is a screenshot from the Unpoly demo application, available at https://demo.unpoly.com
 
 .An Unpoly Modal
-image::../images/figure_11-1_unpoly.png[]
+image::figure_11-1_unpoly.png[]
 
 This modal was launched by clicking on a normal anchor tag link that had been annotated to indicate that the result should be
 placed in a new modal layer.  Unpoly provided the infrastructure to show the response from the server within a

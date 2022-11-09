@@ -1,15 +1,3 @@
-= Building Hypermedia Systems
-:chapter: 4
-:sectnums:
-:figure-caption: Figure {chapter}.
-:listing-caption: Listing {chapter}.
-:table-caption: Table {chapter}.
-:sectnumoffset: 3
-// line above:  :sectnumoffset: 5  (chapter# minus 1)
-:leveloffset: 1
-:sourcedir: ../code/src
-:source-language:
-
 
 = htmx In Action
 
@@ -579,7 +567,7 @@ The error message shown when a user attempts to save a contact with a duplicate 
 
 [#figure-4-1, reftext="Figure {chapter}.{counter:figure}"]
 .Email Validation Error
-image::../images/screenshot_validation_error.png[]
+image::screenshot_validation_error.png[]
 
 All of this is done using plain HTML and using Web 1.0 techniques, and it works well.
 
@@ -897,7 +885,7 @@ is the common "click to load more" UX pattern:
 
 [#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .A Click To Load UI
-image::../images/screenshot_click_to_load.png[]
+image::screenshot_click_to_load.png[]
 
 Here, you have a button that you can click, and it will load the next set of contacts directly into the page, rather
 than "paging" to the next page.  This allows you to keep the current contacts "in context" visually on the page, but

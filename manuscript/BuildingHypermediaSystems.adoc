@@ -9,6 +9,9 @@ Adam Stepinski, Carson Gross, Deniz Akşimşek
 :toclevels: 3
 :toc-title:
 :imagesdir: /images
+:sectnums:
+:sectnumlevels: 2
+:showtitle:
 
 .Contents
 [%collapsible]

@@ -13,6 +13,7 @@ site.use(asciidoc());
 site.use(postprocessAsciidoc());
 
 site.copy("images");
+site.copy("fonts");
 
 site.ignore("dist", "bin");
 

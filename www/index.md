@@ -1,7 +1,19 @@
 ---
 layout: layout.njk
 ---
-# Building Hypermedia Systems
+
+<header style="min-height: 40vh; display: grid; place-items: center">
+<div>
+
+# Hypermedia Systems {.italic .allcaps .text-align:center style="font-size: calc(.142 * var(--eff-line-length)); line-height: 1em"}
+
+ - Carson&nbsp;Gross
+ - Adam&nbsp;Stepinski
+ - Deniz&nbsp;Akşimşek
+{role=list .f-row .flex-wrap:wrap .justify-content:center .italic}
+
+</div>
+</header>
 
 This is a book about building systems with hypermedia, or, as we like to call them, Hypermedia Driven Applications (HDAs).
 
@@ -12,6 +24,7 @@ It covers:
 * Using HyperView to build mobile HDAs
 * Using non-Hypermedia technology effectively within HDAs
 
-You can purchase a PDF of the book here (TBD)
-
-Or you can view the entire book online for free [here](/manuscript/BuildingHypermediaSystems).
+<p class="f-row flex-wrap:wrap justify-content:center" style="column-gap: calc(.5 * var(--gap))">
+<strong><a href="/manuscript/BuildingHypermediaSystems" class="<button>">Read online for free</a></strong>
+<strong><a href="#" class="<button>">Get PDF</a></strong>
+</p>

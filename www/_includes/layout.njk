@@ -9,7 +9,7 @@
         --main-font: "Palatino", serif;
         --secondary-font: "Source Sans Pro", "Source Sans 3", sans-serif;
         --display-font: "ChicagoFLF", "Impact", sans-serif;
-        --mono-font: "Berkeley Mono", "Input Mono", "Iosevka", "Victor Mono", "Consolas", monospace, monospace;
+        --mono-font: "Berkeley Mono", "Input Mono", "Iosevka", "Liberation Mono", "Victor Mono", "Consolas", monospace, monospace;
 
         font-size: calc((18 / 16) * 100%);
     }
@@ -17,6 +17,26 @@
     h1, h2, h3, h4, h5, h6 {
         font-weight: normal;
         font-family: var(--display-font);
+    }
+
+    p, li, figcaption {
+        text-align: justify;
+    }
+
+    .colist {
+        counter-reset: colist;
+    }
+
+    .colist li {
+        counter-increment: colist;
+        margin-inline-start: 1.2ch;
+    }
+
+    .colist li::marker {
+        content: "(" counter(colist) ") ";
+        font-family: var(--mono-font);
+        font-size: .9em;
+        font-weight: bold;
     }
     </style>
 </head>

@@ -45,6 +45,10 @@ export default () => {
             document.querySelectorAll(".sect1, .sect2, .sect3, .sect4, .sect5, .sect6").forEach(el => {
                 el.tagName = "section";
             })
+
+            document.querySelectorAll("img").forEach(el => {
+                el.setAttribute("loading", "lazy");
+            })
         })
     }
 }

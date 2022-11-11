@@ -1,4 +1,4 @@
 {
     "deno.enable": true,
-    "deno.config": "www/deno.json"
+    "deno.config": "deno.json"
 }

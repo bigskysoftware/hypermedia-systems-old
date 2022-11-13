@@ -318,58 +318,18 @@ def contacts_delete(contact_id=0):
 We are going to have to do two things: first we need to update the route for our handler to the new location and method
 we are using to delete contacts.  This will be relatively straight forward.
 
-Secondly, and this is a bit more subtle, we are going to need to change the HTTP Response Code that the flask handler
-sends back to the client for this redirect.  Let's take a quick sidebar on what HTTP response codes are, and why they are
-important to understand in this case.
+Unfortunately, there is a problem with our current delete handler: by default, in Flask the `redirect()` method responds with
+a `302` HTTP Response Code.
 
-==== HTTP Response Codes
-
-HTTP Response Codes are numeric values that are embedded in an HTTP response that let the client know what the result
-of a request was.  The most familiar response code for most web developers is `404`, which stands for "Not Found" and
-is the response code that is returned by web servers when a resource that does not exist is requested.
-
-HTTP breaks response codes up into various categories:
-
-[cols="1,4"]
-|===
-|`100`-`199`
-| Informational responses that provide information about how the server is processing the response
-
-|`200`-`299`
-| Successful responses indicating that the request succeeded
-
-|`300`-`399`
-| Redirection responses indicating that the request should be sent to some other URL
-
-|`400`-`499`
-| Client error responses indicating that the client made some sort of bad request (e.g. asking for something that didn't
-  exist in the case of `404` errors)
-
-|`500`-`599`
-| Server error responses indicating that the server encountered an error internally as it attempted to respond to the request
-|===
-
-Within each of these categories there are multiple response codes for specific situations.  A good example is the `404 Not Found`
-response code that we already mentioned, which indicates that the requested resource was not fount.  This is in contrast
-with the `403 Forbidden` response code, which is still a "Client Error" response code, but which indicates that the current user
-is not allowed to view the given resource.
-
-Different response codes will often trigger different browser behaviors, so it is important to understand exactly which
-one you are returning, especially as you get deeper into creating a Hypermedia Driven Application.
-
-==== Returning To Our Handler
-
-OK, now we are armed with a more in-depth understanding of what HTTP response codes are.  A problem with our current
-delete handler is that, by default, in Flask the `redirect()` method responds with a `302` response code.  According to the
-Mozilla Developer Network (MDN) web docs, this means that the HTTP method and body of the requests _will be unchanged_
-when the redirected request is issued.
+Now, according to the Mozilla Developer Network (MDN) web docs, this means that the HTTP _method_ of the
+request _will be unchanged_ when the redirected request is issued.
 
 We are issuing a `DELETE` request with htmx and then being redirected to the `/contacts` path by flask.  According to this
 logic, that would mean that the redirected request would still be a `DELETE` method, so we would issue a `DELETE` request
 to `/contacts`!  Yikes!  That looks like a request to delete all the contacts in our system, doesn't it?
 
-It wouldn't do that, of course, since we haven't implemented that behavior, but it is still definitely not what we want:
-we'd like it to simply issue a `GET`, slightly modifying the Post/Redirect/Get behavior we discussed earlier to be a
+It wouldn't do that, of course, since we haven't implemented that behavior, but still, this is definitely not what we want:
+we'd like the redirect to simply issue a `GET`, slightly modifying the Post/Redirect/Get behavior we discussed earlier to be a
 Delete/Redirect/Get.
 
 Fortunately for us, there is a response code, `303 See Other`, that does the right thing: when you respond with a 303

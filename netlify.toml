@@ -1,0 +1,8 @@
+[build]
+base=""
+publish="_site"
+command="""
+set -e
+curl -fsSL https://deno.land/x/install/install.sh | sh
+/opt/buildhome/.deno/bin/deno task build
+"""

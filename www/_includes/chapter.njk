@@ -12,8 +12,8 @@ layout: layout.njk
         {{ title | safe }}
     </h1>
 
-    {% set prev = search.previousPage(url, "chapter chapter>-1", "chapter") %}
-    {% set next = search.nextPage(url, "chapter chapter>-1", "chapter") %}
+    {% set prev = search.previousPage(url, "chapter>-1", "chapter") %}
+    {% set next = search.nextPage(url, "chapter>-1", "chapter") %}
 
     {% macro nav() %}
     <nav class="f-row flex-wrap:wrap justify-content:space-between">

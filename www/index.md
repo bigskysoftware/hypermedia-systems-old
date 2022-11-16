@@ -12,7 +12,7 @@ templateEngine: njk,md
  - Carson&nbsp;Gross
  - Adam&nbsp;Stepinski
  - Deniz&nbsp;Akşimşek
-{role=list .f-row .flex-wrap:wrap .justify-content:center .italic}
+{role=list .f-row .flex-wrap:wrap .justify-content:center .airy}
 
 </div>
 </header>
@@ -29,7 +29,7 @@ It covers:
 * Using non-Hypermedia technology effectively within HDAs
 
 <p class="f-row flex-wrap:wrap justify-content:center" style="column-gap: calc(.5 * var(--gap))">
-<strong><a href="{{ search.pages('chapter>-1', 'chapter')[0].data.url }}" class="<button>">Read online for free</a></strong>
+<strong><a href="{{ search.pages('chapter!=undefined', 'chapter')[0].data.url }}" class="<button>">Read online for free</a></strong>
 <strong><a href="#" class="<button>">Get PDF</a></strong>
 </p>
 

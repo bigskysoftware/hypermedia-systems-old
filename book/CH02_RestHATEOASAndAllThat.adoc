@@ -1,6 +1,7 @@
 
 = Hypermedia Systems: An Overview
 :chapter: 02
+:url: ./hypermedia-systems-an-overview/
 
 A _hypermedia system_ consists of a number of facets that come together to make the entire distributed system work,
 including:

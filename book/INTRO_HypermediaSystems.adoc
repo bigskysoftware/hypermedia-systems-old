@@ -1,6 +1,7 @@
 
 = Introduction
-:chapter: 0
+:chapter: 00
+:url: ./introduction/
 
 This is a book about building hypermedia systems.  This might seem like a strange topic: hypermedia _systems_?  Isn't
 hypermedia just a way to link documents together?  The canonical example being, of course, HTML on the World Wide Web?

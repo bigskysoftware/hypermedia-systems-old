@@ -2,4 +2,51 @@
 layout: layout.njk
 ---
 
-{{ content | safe }}
+<header>
+    <h1>
+        {% if chapter > 0 %}
+        <sub-title>
+            Chapter {{ chapter }}
+        </sub-title>
+        {% endif %}
+        {{ title | safe }}
+    </h1>
+
+    {% set prev = search.previousPage(url, "chapter chapter>-1", "chapter") %}
+    {% set next = search.nextPage(url, "chapter chapter>-1", "chapter") %}
+
+    {% macro nav() %}
+    <nav class="f-row flex-wrap:wrap justify-content:space-between">
+        {% if prev %}
+        <p>
+            Previous: <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+        {% endif %}
+        {% if next %}
+        <p>
+            Next: <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+        {% endif %}
+    </nav>
+    {% endmacro %}
+
+    {{ nav() }}
+
+    <details>
+        <summary>Contents</summary>
+
+        {% macro toc(block) %}
+        <ul>
+            {% for sect in block.getSections() %}
+            <li>
+                <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
+                {{ toc(sect) if sect.getSections().length > 0 }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endmacro %}
+        {{ toc(asciidoc) }}
+    </details>
+</header>
+
+<main>{{ content | safe }}</main>
+
+<footer>{{ nav() }}</footer>

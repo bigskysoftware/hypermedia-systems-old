@@ -53,12 +53,14 @@
         font-size: .9em;
         font-weight: bold;
     }
+
+    sub-title {
+        color: var(--faded-fg);
+    }
     </style>
 </head>
 <body>
-<main>
-    {{ content | safe }}
-</main>
+{{ content | safe }}
 </body>
 </html>
 

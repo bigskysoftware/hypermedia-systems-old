@@ -1,6 +1,7 @@
 ---
 layout: layout.njk
 url: /
+templateEngine: njk,md
 ---
 
 <header style="min-height: 40vh; display: grid; place-items: center">
@@ -16,6 +17,8 @@ url: /
 </div>
 </header>
 
+<main>
+
 This is a book about building systems with hypermedia, or, as we like to call them, Hypermedia Driven Applications (HDAs).
 
 It covers:
@@ -26,6 +29,8 @@ It covers:
 * Using non-Hypermedia technology effectively within HDAs
 
 <p class="f-row flex-wrap:wrap justify-content:center" style="column-gap: calc(.5 * var(--gap))">
-<strong><a href="/manuscript/BuildingHypermediaSystems" class="<button>">Read online for free</a></strong>
+<strong><a href="{{ search.pages('chapter!=undefined', 'chapter')[0].data.url }}" class="<button>">Read online for free</a></strong>
 <strong><a href="#" class="<button>">Get PDF</a></strong>
 </p>
+
+</main>

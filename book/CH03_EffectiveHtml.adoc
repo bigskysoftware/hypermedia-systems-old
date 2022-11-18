@@ -1,0 +1,68 @@
+
+= Effective HTML
+:chapter: 04
+:url: ./effective-html/
+
+[partintro]
+== Why relearn HTML?
+
+The way most of us write HTML is iterative: we write something, _Alt-Tab_ to the browser to see if it works, and go back to edit. The fact that we can do this is one of the best things about web development --- being able to immediately see the system as end users will makes development faster, increases developer happiness and encourages a focus on UX.
+
+This workflow has one unfortunate side effect: Our development becomes driven by our own usage, and any other use of a website becomes an afterthought:
+
+ - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times. footnote:[https://almanac.httparchive.org/en/2020/markup[]. Other than `<div>` being the most common element, the HTTP Archive cite:[Web Almanac] found that 0.06% of pages surveyed in 2020 contained the nonexistent `<h7>` element. 0.0015% for `<h8>`.]
+ - Websites, including websites containing public data or results of publicly-funded research, are impossible to scrape programmatically.
+ - So-called MVPs (minimum viable product) are released in open beta while being completely unusable by vast swathes of people -- UX not just buggy, but nonexistent footnote:[https://adrianroselli.com/2022/11/accessibility-gaps-in-mvps.html]. Is an inaccessible product "viable"?
+ - Search engines have a harder time extracting useful information from a page, and rank that page lower as a result. 
+
+
+If you care about machine readability, or human readability, or page weight, what you should do is test. Did you think I was going to talk about semantic HTML? Keep reading for that, but alas, there is no substitute for testing. Test manually. Test automatically. Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI). Read the markup -- the markup being sent to browsers, not the templates and code you write. Know exactiy what any type of hypermedia client is doing in any circumstance.
+
+So where does HTML and the s-word come in?
+
+Writing good, spec-compliant HTML lets browsers do a bunch of work for you. When they don't, it makes it easier to write scripts that do. As a result, fewer issues will be found during this testing and you can release faster. When issues do come up, you can often fix them more easily by rewritlng semantic HTML as opposed to heaping JavaScript and ARIA attributes on top of everything.
+
+Good HTML will not absolve you from doing your job, but it will make it easier.
+
+
+== A note on the S-word
+
+Semantics is standardization.
+
+In human language, a word can only mean something if some group of people know it to mean that thing. You could define your own words and use them (mathematicians really like to) but it's difficult. Not only will you need to provide a definition each time you use it, but you also need an audience interested enough to read and remember that definition.
+
+Any hypermedia format which lets documents define their own elements is an infinite universe of "fetch"-es that it needs to make happen. We renounce the schematamania that plagues many hypermedia discussions. Instead, when we talk about semantics, we talk about the simple act of using elements in accordance with their specified meaning.
+
+Instead of being extensible through schemasi or namespaces, or whatever DTDs are, HTML is extended in two ways:
+
+ - Ad-hoc extensibility. HTML is a fault-tolerant language, choosing to ignore things it doesn't recognize instead of throwing errors. This means you can use unspecified attributes. htmx relies on this heavily. If extensions see common acceptance, they might even be incorporated into specifications! (We can dream.)
+ - Extension slots. Things like classes, `<meta>` tags and `data-` attributes are made for custom data. They can be used to build meta-languages embedded in HTML.
+
+This might seem like a downgrade, and an anxiety-inducing one at that. Think of the name collisions! While it has some significant drawbacks, it also correctly acknowledges that defining custom semantics without prior agreement between all parties is a fiction. A flexible format --- not an infinity of namespaces with URLs pointing to nothing --- is how you do "software design on the scale of decades".
+
+Let's be real, after all --- out of all the sites using "Open Graph" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
+
+
+## Writing quality HTML
+
+// TODO basically i need to identify some common pitfalls and also give snippets for common cases. maybe i could imitate _The Elements of Typographic Style_ in terms of structure for this section
+
+
+## Extending HTML
+
+### Data attributes
+
+// TODO to mark elements,to store state
+
+
+### Microformats
+
+<https://microformats.org/>
+
+
+### Custom elements?
+
+// TODO get on a soapbox about custom elements, why they're good and disappointing
+
+
+

@@ -9,6 +9,7 @@ Adam Stepinski, Carson Gross, Deniz Akşimşek
 :sectnums:
 :sectnumlevels: 2
 :showtitle:
+:url: ./hypermedia-systems/
 
 .Contents
 [%collapsible]
@@ -17,19 +18,19 @@ toc::[]
 ====
 
 [introduction]
-include::manuscript/INTRO_HypermediaSystems.adoc[leveloffset=1]
-include::manuscript/CH01_ReintroducingHypermedia.adoc[leveloffset=1]
-include::manuscript/CH02_RestHATEOASAndAllThat.adoc[leveloffset=1]
-include::manuscript/CH03_BuildingASimpleWebApplication.adoc[leveloffset=1]
-include::manuscript/CH04_ExtendingHTMLAsHypermedia.adoc[leveloffset=1]
-include::manuscript/CH05_htmxInAction.adoc[leveloffset=1]
-include::manuscript/CH06_MorehtmxPatterns.adoc[leveloffset=1]
-include::manuscript/CH07_ADynamicArchiveUIWithhtmx.adoc[leveloffset=1]
-include::manuscript/CH08_Deephtmx.adoc[leveloffset=1]
-include::manuscript/CH09_HyperviewAMobileHypermedia.adoc[leveloffset=1]
-include::manuscript/CH10_BuildingAContactsAppWithHyperview.adoc[leveloffset=1]
-include::manuscript/CH11_ExtendingTheHyperviewClient.adoc[leveloffset=1]
-include::manuscript/CH12_ScriptingInAHypermediaApplication.adoc[leveloffset=1]
-include::manuscript/CH13_JSONDataAPIs.adoc[leveloffset=1]
-include::manuscript/CH14_OtherHypermediaOrientedLibraries.adoc[leveloffset=1]
-include::manuscript/CH15_Conclusion.adoc[leveloffset=1]
+include::book/INTRO_HypermediaSystems.adoc[leveloffset=1]
+include::book/CH01_ReintroducingHypermedia.adoc[leveloffset=1]
+include::book/CH02_RestHATEOASAndAllThat.adoc[leveloffset=1]
+include::book/CH03_BuildingASimpleWebApplication.adoc[leveloffset=1]
+include::book/CH04_ExtendingHTMLAsHypermedia.adoc[leveloffset=1]
+include::book/CH05_htmxInAction.adoc[leveloffset=1]
+include::book/CH06_MorehtmxPatterns.adoc[leveloffset=1]
+include::book/CH07_ADynamicArchiveUIWithhtmx.adoc[leveloffset=1]
+include::book/CH08_Deephtmx.adoc[leveloffset=1]
+include::book/CH09_HyperviewAMobileHypermedia.adoc[leveloffset=1]
+include::book/CH10_BuildingAContactsAppWithHyperview.adoc[leveloffset=1]
+include::book/CH11_ExtendingTheHyperviewClient.adoc[leveloffset=1]
+include::book/CH12_ScriptingInAHypermediaApplication.adoc[leveloffset=1]
+include::book/CH13_JSONDataAPIs.adoc[leveloffset=1]
+include::book/CH14_OtherHypermediaOrientedLibraries.adoc[leveloffset=1]
+include::book/CH15_Conclusion.adoc[leveloffset=1]

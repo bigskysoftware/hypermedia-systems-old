@@ -1,0 +1,55 @@
+---
+layout: layout.njk
+url: /book/contents/
+renderOrder: 1
+---
+
+<header>
+    <h1>HYPERMEDIA SYSTEMS <sub-title>Contents</sub-title></h1>
+
+    <div class="f-row flex-wrap:wrap">
+        <button
+            onclick="
+            if (this.getAttribute(`aria-pressed`) === `true`) {
+                this.setAttribute(`aria-pressed`, false);
+                document.querySelector(`[data-chapters]`).classList.add(`textcolumns`);
+                document.querySelectorAll(`[data-toc]`).forEach(toc => toc.hidden = true);
+                this.textContent = this.textContent.replace(`Hide`, `Show`);
+            } else {
+                this.setAttribute(`aria-pressed`, true);
+                document.querySelector(`[data-chapters]`).classList.remove(`textcolumns`);
+                document.querySelectorAll(`[data-toc]`).forEach(toc => toc.hidden = false);
+                this.textContent = this.textContent.replace(`Show`, `Hide`);
+            }            
+            "
+        >Show full table of contents</button>
+    </div>
+</header>
+
+<main>
+    <div data-chapters class="textcolumns flow-gap text-align:start" style="--col-width: 20ch">
+        {% for chapter in search.pages("chapter!=undefined", "chapter") | data %}
+        <article class="f-row hoverable" style="break-inside: avoid-column; font-family: var(--secondary-font);">
+            {% if chapter.chapter != 0 %}
+            <data>{{ chapter.chapter }}</data>
+            {% else %}
+            <span>☛&#xFE0E;</span>
+            {% endif %}
+
+            <div class="f-col packed align-items:start list-of-links">
+                <a class="bold" href="{{ chapter.url }}">{{ chapter.title | safe }}</a>
+
+                {% from "chapter.njk" import toc with context %}
+                <div hidden data-toc class="dense">
+                    {{ toc(chapter.asciidoc) }}
+                </dialog>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <a href="/book/hypermedia-systems">Entire book in one page</a>
+</main>
+
+<footer>
+</footer>

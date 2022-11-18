@@ -1,4 +1,4 @@
-import { Site, Engine, Data } from "lume/core.ts";
+import { Site } from "lume/core.ts";
 
 export default () => {
     return (site: Site) => {

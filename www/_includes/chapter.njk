@@ -43,7 +43,7 @@ layout: layout.njk
             {% endfor %}
         </ul>
         {% endmacro %}
-        {{ toc(asciidoc) }}
+        {{ asciidoc and toc(asciidoc) }}
     </details>
 </header>
 

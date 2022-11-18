@@ -25,6 +25,7 @@
     h1, h2, h3, h4, h5, h6 {
         font-weight: normal;
         font-family: var(--display-font);
+        text-align: start;
     }
 
     :is(h1, h2, h3, h4, h5, h6) code {
@@ -34,8 +35,9 @@
     pre { font-size: 1em }
     code { font-size: .9em }
 
-    p, li, figcaption {
+    :root {
         text-align: justify;
+        hyphens: auto;
     }
 
     .colist {
@@ -57,6 +59,10 @@
     sub-title {
         color: var(--faded-fg);
     }
+
+    .text-align\:start { text-align: start; }
+
+    .hoverable:not(:hover):not(:focus):not(:focus-within) .show-on-hover { visibility: hidden; }
     </style>
 </head>
 <body>

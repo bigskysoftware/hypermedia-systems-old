@@ -1,3 +1,4 @@
+import { Document, Element } from "lume/deps/dom.ts";
 import { Site } from "lume/core.ts";
 
 export default () => {
@@ -6,30 +7,36 @@ export default () => {
             const document = page.document;
             if (!document) return;
 
-            document.querySelectorAll(".listingblock, .imageblock, .sidebarblock").forEach((el) => {
+            $$(document, ".listingblock, .imageblock, .sidebarblock").forEach((el) => {
                 el.tagName = "figure";
                 const title = el.querySelector(".title");
                 if (title) title.tagName = "figcaption";
             })
 
-            document.querySelectorAll(".sidebarblock").forEach(el => {
+            $$(document, ".sidebarblock").forEach(el => {
                 el.querySelector(".title")?.classList.add("titlebar");
             })
 
-            document.querySelectorAll(".attribution").forEach(el => {
+            $$(document, ".attribution").forEach(el => {
                 el.classList.add("margin-inline-start");
+                const em = el.querySelector("em")
+                if (em) em.tagName = "cite";
+                const br = el.querySelector("br")
+                if (br) br.remove();
             })
 
-            document.querySelectorAll(".colist").forEach(el => {
+            $$(document, ".colist").forEach(el => {
                 previousElementSibling(el)?.append(el);
             })
 
-            document.querySelectorAll(".admonitionblock").forEach(el => {
+            $$(document, ".admonitionblock").forEach(el => {
                 const type =
                     el.classList.contains("important") ? "info" : "plain";
 
                 const content = el.querySelector(".content");
+                if (!content) return;
                 const title = content.querySelector(".title");
+                if (!title) return;
 
                 title.classList.add("titlebar");
 
@@ -42,18 +49,22 @@ export default () => {
                 el._replaceWith(rv);
             })
 
-            document.querySelectorAll(".sect1, .sect2, .sect3, .sect4, .sect5, .sect6").forEach(el => {
+            $$(document, ".sect1, .sect2, .sect3, .sect4, .sect5, .sect6").forEach(el => {
                 el.tagName = "section";
             })
 
-            document.querySelectorAll("img").forEach(el => {
+            $$(document, "img").forEach(el => {
                 el.setAttribute("loading", "lazy");
             })
         })
     }
 }
 
-function previousElementSibling(el) {
-    do { el = el.previousSibling } while (el && el.nodeType !== el.ELEMENT_NODE);
+function previousElementSibling(el: Element): Element | null {
+    do { el = el.previousSibling as Element } while (el && !(el instanceof Element));
     return el;
+}
+
+function $$(element: Element | Document, selector: string) {
+    return element.querySelectorAll(selector) as unknown as Element[];
 }

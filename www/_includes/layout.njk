@@ -62,7 +62,9 @@
 
     .text-align\:start { text-align: start; }
 
-    .hoverable:not(:hover):not(:focus):not(:focus-within) .show-on-hover { visibility: hidden; }
+    .flow-gap > :not(:last-child) {
+        margin-bottom: var(--gap);
+    }
     </style>
 </head>
 <body>

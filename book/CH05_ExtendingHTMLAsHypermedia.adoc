@@ -1,6 +1,8 @@
 
 = Extending HTML As Hypermedia
 :chapter: 05
+:part: Hypermedia-Driven Web Applications with htmx
+:part_url: ./part/htmx
 :url: ./extending-html-as-hypermedia/
 This chapter covers
 

@@ -1,0 +1,41 @@
+---
+layout: layout.njk
+---
+
+{# See ./parts.tmpl.ts #}
+<main>
+    <h1>
+        <sub-title>Part {{ partNumber }}</sub-title>
+        {{ part }}
+    </h1>
+
+    <ul class="flow-gap list-of-links padding-block">
+        {% for chapter in chapters %}
+        <li style="list-style: {{ "'☛ '" if loop.first else "none" }}">
+            <a class="bold" href="{{ chapter.data.url }}">{{ chapter.data.title | safe }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <div style="font-family: var(--secondary-font);">
+        {% if nextPart %}
+        <p>
+            Next part:
+            <a  class="bold" href="/book/part/{{ nextPart.partNumber }}">{{ nextPart.part }}</a>
+        </p>
+        {% endif %}
+        {% if previousPart %}
+        <p>
+            Previous part:
+            <a  class="bold" href="/book/part/{{ previousPart.partNumber }}">{{ previousPart.part }}</a>
+        </p>
+        {% set previousChapter = previousPart.chapters | last %}
+        <p>
+            Previous chapter:
+            <a  class="bold" href="{{ previousChapter.data.url }}">{{ previousChapter.data.title | safe }}</a>
+        </p>
+        {% endif %}
+    </div>
+</main>

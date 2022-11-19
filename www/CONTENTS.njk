@@ -5,7 +5,7 @@ renderOrder: 1
 ---
 
 <header>
-    <h1>HYPERMEDIA SYSTEMS <sub-title>Contents</sub-title></h1>
+    <h1>HYPERMEDIA SYSTEMS <v-h>&mdash;</v-h> <sub-title>Contents</sub-title></h1>
 
     <div class="f-row flex-wrap:wrap">
         <button
@@ -27,16 +27,22 @@ renderOrder: 1
 </header>
 
 <main>
-    <div data-chapters class="textcolumns flow-gap text-align:start" style="--col-width: 20ch">
+    <div data-chapters class="textcolumns flow-gap list-of-links text-align:start" style="--col-width: 20ch">
+        {% set partnumber = 0 %}
         {% for chapter in search.pages("chapter!=undefined", "chapter") | data %}
+            {% if chapter.part %}
+            <h2 class="<h4> italic" style="margin-block:var(--gap)">
+                <a href="/book/{{ chapter.part_url }}">{{ chapter.part }}</a>
+            </h2>
+            {% endif %}
         <article class="f-row hoverable" style="break-inside: avoid-column; font-family: var(--secondary-font);">
             {% if chapter.chapter != 0 %}
-            <data>{{ chapter.chapter }}</data>
+            <data style="min-width:2.2ch">{{ chapter.chapter }}</data>
             {% else %}
-            <span>☛&#xFE0E;</span>
+            <data style="min-width:2.2ch">☛&#xFE0E;</data>
             {% endif %}
 
-            <div class="f-col packed align-items:start list-of-links">
+            <div class="f-col packed align-items:start">
                 <a class="bold" href="{{ chapter.url }}">{{ chapter.title | safe }}</a>
 
                 {% from "chapter.njk" import toc with context %}

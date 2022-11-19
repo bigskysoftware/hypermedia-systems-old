@@ -17,9 +17,14 @@ layout: layout.njk
 
     {% macro nav() %}
     <nav class="f-row flex-wrap:wrap justify-content:space-between">
-        {% if prev %}
+        {% if prev or part %}
         <p>
-            Previous: <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+            Previous:
+            {% if part %}
+            <a class="italic" href="/book/{{ part_url }}">{{ part }}</a>
+            {% else %}
+            <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+            {% endif %}
         {% endif %}
         {% if next %}
         <p>

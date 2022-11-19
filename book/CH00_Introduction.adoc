@@ -1,6 +1,8 @@
 
 = Introduction
 :chapter: 00
+:part: Hypermedia Concepts
+:part_url: ./part/hypermedia-concepts/
 :url: ./introduction/
 
 This is a book about building hypermedia systems.  This might seem like a strange topic: hypermedia _systems_?  Isn't

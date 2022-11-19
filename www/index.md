@@ -38,7 +38,7 @@ This is a book about building software systems using hypermedia, or, as we call 
 
 The book covers the following topics:
 
-* An introduction (or re-introduction) to hypermedia: what it is, what makes it special & terminology surrounding hypermedia (e.g. REST)
+* An introduction (or re-introduction) to hypermedia: what it is, what makes it special & terminology surrounding it (e.g. REST)
 * How to build a simple "web 1.0" style web application using [flask](https://flask.palletsprojects.com/)
 * How to make that simple web 1.0 application more interactive without abandoning Hypermedia, using [htmx](https://htmx.org)
 * How to use non-Hypermedia technology (e.g. scripting) effectively within an Hypermedia-Driven Application

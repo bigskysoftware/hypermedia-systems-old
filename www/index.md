@@ -4,6 +4,21 @@ url: /
 templateEngine: njk,md
 ---
 
+<style>
+.coverimage {
+    margin: auto;
+    image-rendering: pixelated;
+    inline-size: 100vw;
+    height: 25vw;
+    max-inline-size: none;
+    min-inline-size: 100%;
+    margin-block: -10vw;
+    object-fit: cover;
+}
+</style>
+
+![](/images/radialbugpattern-spine-black-realsize.png){.coverimage}
+
 <header style="min-height: 40vh; display: grid; place-items: center">
 <div>
 

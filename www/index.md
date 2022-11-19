@@ -34,14 +34,15 @@ templateEngine: njk,md
 
 <main>
 
-This is a book about building systems with hypermedia, or, as we like to call them, Hypermedia Driven Applications (HDAs).
+This is a book about building software systems using hypermedia, or, as we call them, Hypermedia-Driven Applications (HDAs).
 
-It covers:
+The book covers the following topics:
 
-* What Hypermedia Is
-* Using htmx to build web-based HDAs
-* Using HyperView to build mobile HDAs
-* Using non-Hypermedia technology effectively within HDAs
+* An introduction (or re-introduction) to hypermedia: what it is, what makes it special & terminology surrounding hypermedia (e.g. REST)
+* How to build a simple "web 1.0" style web application using [flask](https://flask.palletsprojects.com/)
+* How to make that simple web 1.0 application more interactive without abandoning Hypermedia, using [htmx](https://htmx.org)
+* How to use non-Hypermedia technology (e.g. scripting) effectively within an Hypermedia-Driven Application
+* How to use HyperView to build mobile Hypermedia-Driven Applications
 
 <p class="f-row flex-wrap:wrap justify-content:center" style="column-gap: calc(.5 * var(--gap))">
 <strong><a href="/book/contents" class="<button>">Read online for free</a></strong>

@@ -1,0 +1,47 @@
+
+= Hypermedia Systems: Practical Applications of Hypermedia
+Adam Stepinski, Carson Gross, Deniz Akşimşek
+:doctype: book
+:toc: macro
+:toclevels: 3
+:toc-title:
+:imagesdir: /images
+:sectnums:
+:sectnumlevels: 2
+:showtitle:
+:url: ./hypermedia-systems/
+
+.Contents
+[%collapsible]
+====
+toc::[]
+====
+
+= Hypermedia Concepts
+
+[introduction]
+include::CH00_Introduction.adoc[leveloffset=1]
+include::CH01_HypermediaAReintroduction.adoc[leveloffset=1]
+include::CH02_ComponentsOfAHypermediaSystem.adoc[leveloffset=1]
+include::CH03_EffectiveHtml.adoc[leveloffset=1]
+include::CH04_BuildingASimpleWebApplication.adoc[leveloffset=1]
+
+= Hypermedia-Driven Web Applications With htmx
+
+include::CH05_ExtendingHTMLAsHypermedia.adoc[leveloffset=1]
+include::CH06_htmxInAction.adoc[leveloffset=1]
+include::CH07_MorehtmxPatterns.adoc[leveloffset=1]
+include::CH08_ADynamicArchiveUIWithhtmx.adoc[leveloffset=1]
+include::CH09_Deephtmx.adoc[leveloffset=1]
+include::CH10_ScriptingInAHypermediaApplication.adoc[leveloffset=1]
+include::CH11_JSONDataAPIs.adoc[leveloffset=1]
+
+= Bringing Hypermedia To Mobile
+
+include::CH12_HyperviewAMobileHypermedia.adoc[leveloffset=1]
+include::CH13_BuildingAContactsAppWithHyperview.adoc[leveloffset=1]
+include::CH14_ExtendingTheHyperviewClient.adoc[leveloffset=1]
+
+= Conclusion
+
+include::CH15_Conclusion.adoc[leveloffset=1]

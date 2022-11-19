@@ -1,0 +1,111 @@
+
+= Introduction
+:chapter: 00
+:url: ./introduction/
+
+This is a book about building hypermedia systems.  This might seem like a strange topic: hypermedia _systems_?  Isn't
+hypermedia just a way to link documents together?  The canonical example being, of course, HTML on the World Wide Web?
+What do you mean hypermedia _systems_?
+
+Well, yes, HTML is _a_ hypermedia, that's true.  But there is _also_ HTTP, the Hyper Text Transfer Protocol, and all
+the details associated with it: caching, various headers, response codes, and so forth.  And then there is the
+_server_, which is absolutely crucial in a hypermedia system: it is, after all, serving the hypermedia representations
+of various resources to the browser.
+
+So there is more to hypermedia than just the _hypermedia_ being used.  Today, for example, it is very popular to use
+HTML to _boostrap_ a Single Page Application (SPA), an application that is written primarily in JavaScript and that
+communicates with a server via JSON API calls.  HTML, in these applications, becomes a (somewhat awkward) graphical
+interface language that must be used because, well, because that's what's there, in the browser.  These applications
+are typically not hypermedia systems, but are, instead, more akin to the old client-server applications popular in the
+1980s and 1990s.
+
+So it makes sense to talk about _hypermedia systems_ and not just a _hypermedia_: the network, server and, indeed, effective
+ use of the hypermedia _client_ (e.g. the browser) are all crucial aspects of building an effective piece of software that
+uses hypermedia, and it is the entire _hypermedia system_ that comes together to make hypermedia so powerful.
+
+== What is a Hypermedia System?
+
+To understand what a hypermedia system is, we need to dig into the history of the canonical hypermedia system, the
+World Wide Web.  Roy Fielding, an engineer who help create specifications and build implementations of early web
+software, gave us the term REpresentational State Transfer, or REST, in his dissertation on the World Wide Web.  In
+his dissertation, he described REST as a _network architecture_ and contrasted it with earlier approaches to building
+distributed software.
+
+We define a _hypermedia system_ as one that adheres to the REST network architecture, in Fielding's original sense of
+that term. Unfortunately, today, if you are familiar with the term REST, you probably associate it with JSON APIs.  This,
+despite the fact that Fielding _explicitly states_ that a REST-ful system _must_ be based on hypermedia.  Fielding was,
+after all, describing The World Wide Web, which was just HTML at the time, when he wrote is dissertation!  JSON APIs were
+years away from becoming common.
+
+JSON API developer may have co-opted the term REST (a long story, for later in this book) but the fact of the matter is
+that, if you have ever built a website using nothing but HTML and a web server, you have built a REST-ful, _hypermedia
+system_.
+
+== Hypermedia-Driven Applications
+
+In this book we are going to take a look at hypermedia as a _system architecture_, and then explore some practical,
+_modern_ approaches to building applications using it.  We will call applications built using this architecture
+_Hypermedia-Driven Applications_, or HDAs, and contrast them with a popular model in use today, the Single Page Application.
+
+A Hypermedia-Driven Application is simply one built on top of (and respecting the architecture of) a _hypermedia system_.
+
+== Goals
+
+The goal of this book is to give you a strong sense of how the REST-ful, hypermedia system architecture _differs_ from
+other client-server systems, and what the strengths (and weaknesses) of the hypermedia approach are.  Further, we hope
+to convince you that the hypermedia architecture is _relevant_ to developers building modern applications.
+
+We aim to give you the tools to evaluate a given applications requirements and answer the question: "Could I build this as a
+Hypermedia-Driven Application?"
+
+And we hope that, for many applications, the answer to that question will be "Yes!"
+
+== Book Layout
+
+The book is broken into three parts:
+
+* An introduction (or re-introduction) to hypermedia, with an in-depth look at HTML and HTTP.  We will finish up this
+  review of core hypermedia concepts by creating a simple Web 1.0-style application, Contact.app, for managing contacts.
+
+* Next we will look at how we can use https://htmx.org[htmx], a hypermedia-oriented JavaScript library, to improve
+  Contact.app.  By using htmx, we will be able to achieve a level of interactivity in our application that many developers
+  would expect requires a large, sophisticated front end library, such as React.  Thanks to htmx, we will be able to do
+  this _without_ abandoning hypermedia as a system architecture!
+
+* Finally, we will look at a completely different hypermedia system, HyperView.  HyperView is a _mobile_ hypermedia, related
+  to, but distinct from, HTML.  It supports _mobile specific_ features by providing not only a hypermedia, but also a
+  hypermedia client, a network protocol and so on.  It provides a full _mobile hypermedia system_ for you to build
+  your mobile application with, and, in doing so, makes it possible to build mobile Hypermedia-Driven Applications.
+
+Note that each section is _somewhat_ independent of one another.  If you already know hypermedia in-depth and how basic Web
+1.0 applications function, you may want to skip ahead to the second section on htmx and how to build modern web applications
+using hypermedia.  Similarly, if you are well versed in hypermedia and want to dive into a novel _mobile_ hypermedia,
+you can skip ahead to the HyperView section.
+
+That being said, the book is designed to be read in order and both the htmx and HyperView sections build on the Web 1.0
+application described at the end of the first section.  Furthermore, even if you _are_ well versed in all the concepts
+of hypermedia and details of HTML & HTTP, it is probably worth it to at least skim through the first few chapters for
+a refresher.
+
+== Hypermedia: A New Generation
+
+Tragically, hypermedia isn't seriously discussed very often these days.  Even many web-veterans who grew up with the web
+in the late 1990s and early 2000s haven't seriously thought about these ideas in over a decade.  To say nothing of
+young web developers who have grown up knowing nothing but React-talking-to-Node-via-JSON.
+
+So, even if you know hypermedia well, it is worth it to read the first part of this book to _redevelop_ your knowledge
+of hypermedia.  Hypermedia was a great idea!  It still is!
+
+By the end of this book, you will have the tools and the _language_ to put this great idea to work in your own
+applications.  And, if you'll join us, we would love your help in bringing the ideas and concepts of hypermedia systems
+to the broader development community.
+
+Hypermedia can compete, hypermedia _can win_, hypermedia _has won_ as an architectural choice against the SPA/JSON
+juggernaut, but _only_ if smart people (like you :) learn about it, build with it and then tell the world about it.
+
+Let's go.
+
+[quote, Kyle Reese, Terminator 2: Judgement Day]
+____
+Remember the message? “The future is not set. There is no fate but what we make for ourselves.”
+____

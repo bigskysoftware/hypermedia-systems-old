@@ -1,7 +1,7 @@
 
-= Reintroducing Hypermedia
+= Hypermedia: A Reintroduction
 :chapter: 01
-:url: ./reintroducing-hypermedia/
+:url: ./hypermedia-reintroduction/
 
 Hypermedia is a universal technology today, nearly as common as electricity.  Billions of people use a hypermedia-based
 systems every day, mainly by interacting with the _HyperText Markup Language (HTML)_  being exchanged via the _HyperText Transfer

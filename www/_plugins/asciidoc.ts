@@ -12,6 +12,7 @@ export default ({ asciidoc: asciidocOpts }: { asciidoc?: Record<string, unknown>
                 standalone: false,
                 parse: true,
                 base_dir: site.src(),
+                attributes: ["imagesdir=/images/"],
                 safe: "UNSAFE",
                 ...asciidocOpts,
             });

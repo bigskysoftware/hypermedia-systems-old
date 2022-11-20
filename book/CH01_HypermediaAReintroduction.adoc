@@ -27,7 +27,7 @@ tremendously innovative, simple and _flexible_ way to build robust distributed s
 
 We hope that by the end of this book you will feel, as we do, that the hypermedia approach deserves a seat at the table
 when you, a web developer, are considering the architecture of your next application.  Creating a _Hypermedia-Driven
-Application_ on top of a more general _hypermedia system_ is a plausible and, indeed, often excellent choice for
+Application_ on top of a more general _hypermedia system_ is a viable and, indeed, often excellent choice for
 _modern_ web applications.
 
 And, as the section on HyperView will show, not just web applications!
@@ -65,12 +65,12 @@ like HTTP, other media types such as images, videos, hypermedia servers (i.e. se
 sophisticated hypermedia clients (e.g. web browsers), and so on.
 
 Because of this, we prefer the broader term _hypermedia systems_ when discussing the properties of applications built
-using hypertext, to emphasize the system architecture over the particular hypermedia being used.  It is this system
-architecture that we feel is underappreciated in the industry.
+using hypertext, to emphasize the system architecture over the particular hypermedia being used.  It is the entire
+hypermedia system architecture that we feel is underappreciated in our industry.
 
 == A Brief History of Hypermedia
 
-From where did the idea of hypermedia come?
+Where did the idea of hypermedia come from?
 
 While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
 to the article _"As We May Think"_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
@@ -446,7 +446,7 @@ plain HTML) that drove the web development community over to the JavaScript-base
 This is unfortunate, and it didn't have to be this way.  There is nothing _intrinsic_ to the idea of hypermedia that
 prevents it from having a richer, more expressive interactivity model than vanilla HTML provides.  Rather than abandoning
 the hypermedia architecture, the industry could have demanded more and more interactivity _within_ that original model
-of the web.  But the industry didn't.  Instead of pushing hypermedia systems forward, the industry, on the whole, chose
+of the web.  But the industry didn't.  Instead of pushing hypermedia forward, the industry, on the whole, chose
 to retreat to the comfort and familiarity of Client-Server style applications.
 
 Of course, not everyone abandoned hypermedia. There have been heroic efforts to continue to advance hypermedia outside of
@@ -479,9 +479,10 @@ These _hypermedia-oriented_ libraries re-center hypermedia as a viable choice fo
 
 In the web development world today there is a debate going on between the SPA approach and what are now being called
 "Multi-Page Applications" or MPAs.  MPAs are usually just the old, web 1.0 way of building web applications with
-links and forms across multiple web pages.  These applications and are thus, by their nature, hypermedia systems.
-They tend to be clunky, but, despite this clunkiness, they work reasonably well, and many web developers have decided to
-just accept the limitations of plain HTML, in the interest of simplicity and reliability.
+links and forms across multiple web pages.  These applications and are thus, by their nature, Hypermedia-Driven Applications.
+
+They tend to be clunky, but, despite this, they work reasonably well.  Many web developers and teams have decided to
+just accept the limitations of plain HTML, in the interest of their simplicity and reliability.
 
 Rich Harris, creator of svelte.js, a popular SPA library, and a thought-leader on the SPA side of the debate, propose a mix
 of this older MPA style and the SPA style.  Harris calls this approach to building web applications "transitional", in that
@@ -490,7 +491,7 @@ similar to the "transitional" trend in architecture, which blends traditional an
 "Transitional" a good term for these mixed-style applications and offers a reasonable compromise between the two, using
 either approach where it makes the most sense on an ad hoc basis.
 
-But it still feels a bit unsatisfactory.  Why have two very different architectural models _by default_?  Recall that the
+But this compromise still feels a bit unsatisfactory.  Why have two very different architectural models _by default_?  Recall that the
 crux of the tradeoffs between SPAs and MPAs is the _user experience_ or interactivity of the application.
 This is typically the driving decision when choosing one approach versus the other for an application or, in the case
 of a "transitional" application, for a particular feature.

@@ -48,6 +48,115 @@ Let's be real, after all --- out of all the sites using "Open Graph" tags, how m
 // TODO basically i need to identify some common pitfalls and also give snippets for common cases. maybe i could imitate _The Elements of Typographic Style_ in terms of structure for this section
 
 
+### Revisit the "HTML5 elements"
+
+
+### You don't need to guess what tags mean
+
+Go to https://html.spec.whatwg.org/multipage and click on "4 The elements of HTML". This chapter of the HTML specification is geared towards developers
+
+
+### Hide stuff the right way
+
+`hidden` attribute
+
+- fully hidden from everyone
+- might need to be normalized with CSS
+
+* * *
+
+`display: none` makes stuff disappear
+
+."Visually hidden" utility
+[source,css]
+----
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
+----
+
+- seen by AT
+- shows up in copy-paste
+
+
+### Label your inputs, one way or another
+
+All <input> elements should be labelled.
+
+However, they don't necessarily need a visible `<label>` element. There are other ways to label:
+
+// asciidoc why can't you be normal
+
+- *Use a label, but hide it visually with CSS:* Use the visually hidden utility for this.
+
+- *Use `aria-label`:*
++
+.Search form using aria-label
+[source,html]
+----
+<form>
+  <input type="search" aria-label="Search for...">
+  <button>Search</button>
+</form>
+----
+
+- **Use `aria-labelledby`:**
+This can be a good option for inputs where a nearby element provides context.
++
+.Search form using aria-labelledby
+[source,html]
+----
+<form>
+  <input type="search" aria-labelledby="search-button">
+  <button id="search-button">Search</button>
+</form>
+----
+
+
+### Don't use <figcaption> for alt-text
+
+Use the `alt` attribute instead! Figure captions shouldn't regurgitate the information in an image. Instead, it should be used to give context or provide metadata such as source or date. The `alt` attribute, on the other hand, should be a substitute for the image, describing the relevant aspects footnote:[Writing alt text is a discussion too expansive do do justice to here --- TODO link resources on alt text].
+
+Captions might be misused for alt text when the author wants the alt text to be visible. For this, Twitter uses an "ALT" button that opens the alt text in a popup window --- a simpler approach would be CSS:
+
+.Showing alt text visually
+[source,css]
+----
+.show-alt-text::after { <1>
+    content: "alt: " attr(alt); <2>
+    content: "alt: " attr(alt) / ""; <3>
+    display: block;
+}
+----
+<1> We create a pseudo-element to show the text.
+<2> The `attr()` function in CSS gets an attribute value as a string. Unfortunately, it can only be used in the `content` property.
+<3> Screenreaders are unreliable with pseudo-elements: many but not all announce them. To avoid the alt text being announced twice, we specify alt text for the pseudo-element itself as empty (see after the slash). We have a fallback since the slash syntax isn't well-supported yet.
+
+
+### Write useful link text
+
+DON'T: "For the user guide, [click here]"
+DO: "[User guide]"
+DO: "For the user guide, click: [User guide]"
+
+
+### ARIA is easy --- as long as you stick to the basics
+
+Stick to the patterns
+
+Don't compromise UX just to avoid JS
+
+Consider using off the shelf components
+
+WAI has a very friendly webpage
+
+
 ## Extending HTML
 
 ### Data attributes

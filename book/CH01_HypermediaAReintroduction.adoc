@@ -670,7 +670,9 @@ applications, in some ways _more modern_ than the prevailing Single Page Applica
 of this book we will reintroduce you to the core, practical concepts of hypermedia and then demonstrate exactly how
 you can take advantage of this system architecture in your own software.
 
-We hope that, by the end of the book, not only will you have a firm understanding of all the benefits and techniques
-enabled by this approach, but that you will also be as passionate about it as we are.  At some level, this book is
-a plea that we "let The Web be The Web", that we take the original architecture of this amazing distributed system we
-all use every day seriously, that we give _hypermedia systems_ a fair hearing.
+In the coming chapter you develop a firm understanding of all the benefits and techniques enabled by this approach.  We
+hope that, in addition, you will also become as passionate about it as we are.
+
+This book is, in part, a plea that we "let The Web be The Web", that we take the original architecture of The Web
+seriously, and that we consider the entire _hypermedia system_ it makes available to us when we build applications
+with it.

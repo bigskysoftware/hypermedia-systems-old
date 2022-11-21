@@ -3,7 +3,7 @@
 :chapter: 02
 :url: ./hypermedia-components/
 
-A _hypermedia system_ consists of a number of facets that come together to make the entire distributed system work,
+A _hypermedia system_ consists of a number of components that come together to make the entire distributed system work,
 including:
 
 * A hypermedia, such as HTML
@@ -11,23 +11,29 @@ including:
 * A server that presents a hypermedia API, that is, that responds to network requests with hypermedia responses
 * A client that properly interprets those responses
 
-In this chapter we will take an in-depth look at each of these aspects and explore their specifics in the context
-of The Web.
+In this chapter we will take a look at each of these components and their implementation in the context of The Web.
 
-We have already mentioned Roy Fielding's dissertation, "Architectural Styles and the Design of Network-based Software
-Architectures", and part of this chapter will be a review of this dissertation, in particular Chapter 5 of the
-dissertation.  Chapter 5 is what gave us the terms REST, REST-ful and, indirectly, HATEOAS.
+Once we have reviewed the major components of The Web as a hypermedia system, we will take a look at Chapter 5 of Roy
+Fielding's dissertation, "Architectural Styles and the Design of Network-based Software Architectures".  This is where the
+terms REpresenation State Transfer (REST), REST-ful and Hypermedia As The Engine Of Application State (HATEOAS) come from,
+and we will analyze these terms in the context of The Web.
 
-Hypermedia systems will typically naturally implement the REST architecture style, particularly if they are built on
-top of The Web, which is the distributed system that Roy Fielding was describing.  But before we show how a hypermedia
-system implements REST, and why that is important, let's go over the components that make one up.
+This should give you a stronger understanding of the theoretical basis of The Web as a a hypermedia system, how it is
+supposed to fit together, and why Hypermedia-Driven Applications are REST-ful, whereas JSON APIs, despite how the
+term REST is currently used in the industry, are not.
 
-== Hypermedia
+== Components Of A Hypermedia System
+
+=== The Hypermedia
 
 The fundamental technology of a hypermedia system is a particular hypermedia or multiple hypermedia that allow a
-client and server to communicate with one another in a dynamic, non-linear fashion.  We have already mentioned the
-two primary hypermedia controls in HTML, anchors and forms, which allow a browser to present a series of links and
-operations to a user through a browser.
+client and server to communicate with one another in a dynamic, non-linear fashion.  Again, what makes a hypermedia
+a hypermedia is the presences of _hypermedia controls_, that is, elements in the hypermedia that allow users to select
+non-linear actions within the hypermedia.  That is to say, the user can _interact_ with the media in a manner beyond
+simply reading it from start to end.
+
+We have already mentioned the two primary hypermedia controls in HTML, anchors and forms, which allow a browser to
+present links and operations to a user through a browser.
 
 In the case of HTML, these links and forms typically specify the target of their operations using Universal Resource
 Locators (URLs):
@@ -69,18 +75,18 @@ for example:
 .A Simple Link
 [source, html]
 ----
-<a href="/table-of-contents">Table Of Contents</a>
+<a href="/book/contents/">Table Of Contents</a>
 ----
 
 Here we have a _relative_ hypermedia reference, where the protocol and host are _implied_ to be that of the "current
 document", that is, the same as whatever the protocol and server were to retrieve the current HTML page.  So, if this
 link was found in an HTML document retrieved from `https://hypermedia.systems/`, then the implied URL for this anchor
-would be `https://hypermedia.systems/table-of-contents`.
+would be `https://hypermedia.systems/book/contents/`.
 
-== Hypermedia Protocols
+=== Hypermedia Protocols
 
-The anchor tag above tells a browser: "When a user clicks on this link, issue request to
-https://hypermedia.systems/table-of-contents using the HyperText Transfer Protocol", or HTTP.
+The hypermedia control (link) above tells a browser: "When a user clicks on this text, issue request to
+https://hypermedia.systems/book/contents/ using the HyperText Transfer Protocol", or HTTP.
 
 HTTP is the _protocol_ used to transfer HTML (hypermedia) between browsers (hypermedia clients) and servers (hypermedia
 servers) and, as such, is the key network technology that binds the distributed hypermedia system of The Web together.
@@ -91,7 +97,7 @@ by default:
 
 [source, httprequest]
 ----
-GET /table-of-contents HTTP/1.1
+GET /book/contents/ HTTP/1.1
 Accept: text/html,*/*
 Host: hypermedia.systems
 ----
@@ -102,8 +108,10 @@ requested.  Finally, it contains the HTTP version for this request.
 After that are a series of HTTP _Request Headers_, individual lines of name/value pairs, separated by a colon, which provide
 _metadata_ that can be used by the server to determine exactly how to respond to the client request.  In this case,
 with the `Accept` header, the browser is saying it would prefer HTML as a response format, but will accept anything that
-the server responds with.  Next, it has a `Host` header, which specifies the server that the request has been sent to.
-This is useful when multiple domains are hosted on the same host.
+the server responds with.
+
+Next, it has a `Host` header, which specifies the server that the request has been sent to. This is useful when multiple
+domains are hosted on the same host.
 
 An HTTP response from a server to this request might look something like this:
 
@@ -117,9 +125,9 @@ Date: Sat, 23 Apr 2022 18:27:55 GMT
 
 <html lang="en">
 <body>
-<h1>Table Of Contents</h1>
-<ul>
-  <li><a href="/chapter-1">Chapter 1</a></li>
+<body>
+<header>
+    <h1>HYPERMEDIA SYSTEMS</h1>
   ...
 </body>
 </html>
@@ -137,7 +145,7 @@ Finally, we see some new HTML content.  This content is the HTML _representation
 case a table of contents of a book.  The browser will use this HTML to replace the entire content in its display window,
 showing the user this new page, and updating the address bar to reflect the new URL.
 
-=== HTTP Methods
+==== HTTP Methods
 
 The anchor tag above issued an HTTP `GET`, where `GET is the _method_ of the request.  The particular method
 being used in an HTTP request is perhaps the most important piece of information about it, after the actual resource that
@@ -163,21 +171,43 @@ There are many methods available in HTTP; the ones of most practical importance 
 | A DELETE request deletes the specified resource. This results in a mutation of state on the server.
 |===
 
-These methods roughly line up with the "Create/Read/Update/Delete" or CRUD pattern found in many applications:
+These methods very roughly line up with the "Create/Read/Update/Delete" or CRUD pattern found in many applications:
 
 * `POST` corresponds with Creating a resource
 * `GET` corresponds with Reading a resource
 * `PUT` and `PATCH` correspond with Updating a resource
 * `DELETE` corresponds, well, with Deleting a resource
 
-In a properly structured HTML-based hypermedia system you should use the appropriate HTTP method for the operation a
-given hypermedia control performs: If a hypermedia control such as a button _deletes_ a resource, for example, ideally
+Note that this HTTP Action/CRUD correspondence is a rough rule of thumb for application development, the underlying RFCs
+that specify them make no such connection and are often somewhat obscure.  Here, for example, is the documentation
+on the distinction between a `POST` and a `PUT` from https://www.rfc-editor.org/rfc/rfc2616[RCF-2616]:
+
+[quote, RCF-2616, https://www.rfc-editor.org/rfc/rfc2616#section-9.6]
+____
+The fundamental difference between the POST and PUT methods is highlighted by the different intent for the enclosed
+representation. The target resource in a POST request is intended to handle the enclosed representation according to the
+resource's own semantics, whereas the enclosed representation in a PUT request is defined as replacing the state of the
+target resource.  Hence, the intent of PUT is idempotent and visible to intermediaries, even though the exact
+effect is only known by the origin server.
+____
+
+So, in plain terms, a `POST` can be handled by a server pretty much however it likes, whereas a `PUT` should be handled
+as a "replacement" of the resource, although the language, once again allows the server to do pretty much whatever it
+would like within the constraint of being idempotent.
+
+This sort of academic language (and arguments around it) can be alienating to many web developers.  While we feel it is
+good to learn these concepts (e.g. idempotency) in depth, we also feel that requiring a PhD to build effective hypermedia
+systems is unreasonable.  Frankly, the academic and pedantic language around things like HTTP actions is one reason why
+hypermedia has fallen on hard times.
+
+In any event, in a properly structured HTML-based hypermedia system you should use an appropriate HTTP method for the operation a
+particular hypermedia control performs: If a hypermedia control such as a button _deletes_ a resource, for example, ideally
 it should an HTTP `DELETE` request to do so.
 
 .HTML & HTTP Methods
 ****
 A strange thing about HTML is that, despite being the world's most popular hypermedia and despite being designed alongside
-HTTP (which is the Hypertext Transfer Protocol, after all), the native hypermedia controls in HTML can only issue
+HTTP (which is the HyperText Transfer Protocol, after all!), the native hypermedia controls in HTML can only issue
 HTTP `GET` and `POST` requests:
 
 Anchor tags always issue a `GET` request.
@@ -185,10 +215,12 @@ Anchor tags always issue a `GET` request.
 Forms can issue either a `GET` or `POST` using the `method` attribute.
 
 Forms and anchor tags _can't_ issue `PUT`, `PATCH` or `DELETE` requests!  If you wish to issue these last three types
-of requests, you currently have to resort to JavaScript to do so.
+of requests, you currently _have_ to resort to JavaScript to do so.  Since a `POST` can do damned near anything, it
+ends up being used for any mutation on the server, and `PUT`, `PATCH` and `DELETE` are left aside in plain HTML-based
+applications.
 
 This is an obvious shortcoming of HTML as a hypermedia, and it is hard to understand why this hasn't been fixed in the
-HTML specification yet, but here we are.
+HTML specification yet!
 ****
 
 ==== HTTP Response Codes
@@ -257,71 +289,120 @@ Here are some of the more common or interesting ones:
 
 |===
 
-There are some fairly subtle differences (and, to be honest, some ambiguities) when it comes to HTTP response codes.  The
-difference between a `302` redirect and a `303` redirect, for example, is that the former will issue the request to the
+There are some fairly subtle differences between HTTP response codes.  (And, to be honest, some ambiguities between them.)
+The difference between a `302` redirect and a `303` redirect, for example, is that the former will issue the request to the
 new URL using the same HTTP method, were the latter will always use a `GET`.  A small, but often crucial difference,
 as we will see later in the book.
 
 Nonetheless, a well crafted hypermedia system will take advantage of both HTTP methods and HTTP response codes to create a sensible
 hypermedia API.  You do not want to build a hypermedia system that uses a `POST` method for all requests and responds
-with `200 OK` for every response.  Some JSON APIs, which are often built on top of HTTP, do exactly this!
+with `200 OK` for every response.  Some JSON Data APIs built on top of HTTP do exactly this!
 
 When building a Hypermedia-Driven Application, you want, instead, to go "with the grain" of The Web and use HTTP methods
 and response codes as they were designed to be used.
 
-== Hypermedia Servers
+==== Caching HTTP Responses
+
+A constraint of REST (and, therefore, a feature of HTTP) is the notion of Caching responses: a server can indicate to
+a client (as well as intermediary HTTP servers) that a given response can be cached for future requests to the same
+URL.
+
+The cache behavior of an HTTP response from a server can be indicated with the `Cache-Control` response header.  This
+header can have a number of different values indicating the cacheability of a given response.  If, for example, the header
+contains the value `max-age=60`, this indicates that a client may cache this response for 60 seconds, and need not issue
+another HTTP request for that resource until that time limit has expired.
+
+Another important caching-related response header is `Vary`.  This response header can be used to indicate exactly what
+headers in an HTTP Request form the unique identifier for a cached result.  This becomes important to allow the browser
+to correctly cache content in situations where a particular header affects the form of the server response.  A common
+pattern in htmx-powered applications is to use a custom header set by htmx, `HX-Request`, to differentiate between
+"normal" web requests and requests submitted by htmx.  To properly cache the response to these requests, the `HX-Request`
+request header must be indicated by the `Vary` response header.
+
+A full discussion of caching HTTP responses is beyond the scope of this chapter, but please see
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[The MDN Article on HTTP Caching] for a more in-depth discussion.
+
+=== Hypermedia Servers
 
 Hypermedia servers are any server that can respond to an HTTP request with an HTTP response.  Because HTTP is so simple,
-this means that nearly any programming language can be used to build a hypermedia server.  And so we find it: there are
+this means that nearly any programming language can be used to build a hypermedia server.  There are a vast number of
 libraries available for building HTTP-based hypermedia servers in nearly every programming language imaginable.
 
-=== Hypermedia On Whatever you'd Like (HOWL)
+This is one best aspects of adopting hypermedia as your primary technology for building a web application: it removes
+the pressure of adopting JavaScript as a back-end technology.  In contrast, if you decide to adopt a JavaScript-heavy
+Single Page Application-based front end, and you use JSON Data APIs, you will feel significant pressure to adopt
+JavaScript on the back end.
 
-This is one very nice aspect of adopting hypermedia as your primary technology for building a web application: it takes
-a tremendous amount of pressure off adopting a particular back-end technology.  When you decide to adopt a JavaScript-based
-SPA front end, using JSON Data APIs, you will feel pressure to adopt JavaScript on the back end.
+In this latter situation, you already have a ton of code written in JavaScript.  Why maintain two separate code bases in
+two different languages? Why not create reusable domain logic on the client-side as well as the server-side?  Now that
+JavaScript has excellent server side technologies available like node and deno, why not just a single language for
+everything?
 
-You already have a ton of code written in JavaScript, so why maintain two separate code bases in two different languages?
-Why not create reusable domain logic on the client-side as well as the server-side?  Now that JavaScript has excellent
-server side technologies available like node and deno, why not just a single language for everything?
+In contrast, using a hypermedia-based front end gives you a lot more freedom in picking the back end technology you want
+to use.  Your decision can be based on the domain of your application, what languages and server software you are familiar
+with or are passionate about, or just what you feel like trying out.
 
-In contrast, by using a hypermedia-based front end you have a lot more freedom in picking the back end technology appropriate
-to the problem domain you are addressing.  You certainly aren't writing your server side logic in HTML.  And nearly every
- programming language has at least one good web framework and templating library that can produce HTML cleanly.
+You certainly aren't writing your server side logic in HTML!  And every major programming language has at least one good
+web framework and templating library that can be used to handle HTTP requests cleanly.
 
-If you are doing something in big data, perhaps you'd like to use Python, which has tremendous support for that domain.
+Perhaps if you are doing something in big data, perhaps you'd like to use Python, which has tremendous support for that
+domain.
 
-If you are doing AI work, perhaps you'd like to use Lisp, leaning on a language with a long history in that area of research.
+Perhaps if you are doing AI work, perhaps you'd like to use Lisp, leaning on a language with a long history in that
+area of research.
 
 Maybe you are a functional programming enthusiast and want to use OCaml or Haskell.  Perhaps you just really like Julia or
-Nim.  These are all perfectly valid reasons for choosing a particular server side technology!
+Nim.
+
+These are all perfectly valid reasons for choosing a particular server side technology!
 
 By using hypermedia as your system architecture, you are freed up to adopt any of these choices. There simply isn't a
 large JavaScript code base on the front end pressuring you to adopt JavaScript on the back end.
 
-In the htmx community, as a joke, this is called the HOWL stack: Hypermedia On Whatever you'd Like.  The htmx community
+.Hypermedia On Whatever you'd Like (HOWL)
+****
+In the htmx community we call this (with tongue in cheek) the HOWL stack: Hypermedia On Whatever you'd Like.  The htmx community
 is multi-language and multi-framework, there are rubyists as well as pythonistas, lispers as well as haskellers.  There
-are even JavaScript enthusiasts!  All these languages and frameworks are able to adopt hypermedia, and to share and
-support one another.
+are even JavaScript enthusiasts!  All these languages and frameworks are able to adopt hypermedia, and are able to still
+share techniques and offer support to one another because they share a common underlying architecture: they are all using
+The Web as a hypermedia system.
 
 Hypermedia, in this sense, provides a "universal language" for The Web that we can all use.
+****
 
-== Hypermedia Clients
+=== Hypermedia Clients
 
-Hypermedia _clients_ are software that understand how to interpret a particular hypermedia properly.  The canonical
+We now come to the final major component in a hypermedia system: the hypermedia client.  Hypermedia _clients_ are software
+that understand how to interpret a particular hypermedia, and the hypermedia controls within it, properly.  The canonical
 example, of course, is the web browser, which understand HTML and can present it to a user to interact with. Web browsers
-are incredibly sophisticated pieces of software, so sophisticated, in fact, that they are often re-purposed away from
-being a hypermedia client, to being a sort of cross-platform virtual machine for launching Single Page Applications.
+are incredibly sophisticated pieces of software.  (So sophisticated, in fact, that they are often re-purposed away from
+being a hypermedia client, to being a sort of cross-platform virtual machine for launching Single Page Applications.)
 
 Browsers aren't the only hypermedia clients out there, however.  In the last section of this book we will look at
 HyperView, a mobile-oriented hypermedia.  One of the outstanding features of HyperView is that it doesn't simply provide
-a hypermedia, HXML, but also provides a _hypermedia client_ for that hypermedia.  This makes building a proper hypermedia
-system with HyperView much, much easier and, in our estimation, demonstrates that a good hypermedia _client_ is as crucial
-to the technical success of a particular hypermedia as the design of the hypermedia itself.
+a hypermedia, HXML, but also provides a _ working hypermedia client_ for that hypermedia.  This makes building a proper
+Hypermedia-Driven Application with HyperView extremely easy.
 
-A crucial feature of hypermedia is _the uniform interface_, discussed in the next section on REST, and the HyperView
-client implements this crux concept.  See Chapter TODO:reference for more details if you are interested in this important
-aspect of hypermedia.
+A crucial feature of a hypermedia system is what is known as _the uniform interface_.  We discuss this concept in depth
+in the next section on REST.  What is often ignored in discussions about hypermedia is how important the hypermedia
+client is in taking advantage of this uniform interface.  A hypermedia client must know how to properly interpret and
+present hypermedia controls found in a hypermedia response from a hypermedia server for the whole hypermedia system
+to hang together.  Without a sophisticated client that can do this, hypermedia controls and a hypermedia-based API are
+much less useful.
+
+This is one reason why JSON APIs have rarely adopted hypermedia controls successfully: JSON APIs are typically consumed
+by code that is expecting a fixed-format and isn't designed to be a hypermedia client.  For clients like this, the
+power of hypermedia controls embedded within an API response is irrelevant and often simply annoying:
+
+[quote, Freddie Karlbom,https://techblog.commercetools.com/graphql-and-rest-level-3-hateoas-70904ff1f9cf]
+____
+The short answer to this question is that HATEOAS isn’t a good fit for most modern use cases for APIs. That is why
+after almost 20 years, HATEOAS still hasn’t gained wide adoption among developers. GraphQL on the other hand is spreading
+like wildfire because it solves real-world problems.
+____
+
+HATEOAS will be described in more detail below, but the take away here is that a good hypermedia client is a necessary
+component within a larger hypermedia system.
 
 == REST
 
@@ -335,7 +416,7 @@ We are going to focus in on what we feel is the most important section of Fieldi
 perspective: Section 5.1. This section contains the core concepts (Fielding calls them _constraints_) of Representational
 State Transfer, or REST.
 
-Before we get into the muck, however, it is important to understand that Fielding considers REST a _network architecture_,
+Before we get into the muck, however, it is important to understand that Fielding discusses REST as a _network architecture_,
 that is an entirely different way of architecting a distributed system.  And a novel one that should be _contrasted_ with
 earlier distributed systems.
 
@@ -344,7 +425,7 @@ He was describing the early web, with HTML being transferred over HTTP by early 
 
 Today, in a strange turn of events, the term "REST" is mainly associated with JSON Data APIs, rather than with HTML
 and hypermedia.  This becomes extremely humorous once you realize that the vast majority of JSON Data APIs aren't
-REST-ful, and, in fact _can't_ be REST-ful, since they aren't using a hypermedia format.
+REST-ful, and, in fact _can't_ be REST-ful, since they aren't using a natural hypermedia format.
 
 To re-emphasise: REST, as coined by Fielding, describes _the pre-JSON API web_, and letting go of the current, common
 usage of the term as "JSON API" is necessary to develop a proper understanding of it.
@@ -365,56 +446,62 @@ Here are the constraints of REST, which are outlined in Section 5.1 of his disse
 * It is a layered system (section 5.1.6)
 * Optionally, can allow for Code-On-Demand (section 5.1.7), that is, scripting.
 
-Let's go through each of these constrains in turn and discuss them in detail.
+Let's go through each of these constrains in turn and discuss them in detail, looking at how (and to what extent) The Web
+satisfies each of them.
 
 === The Client-Server Constraint
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_2[Section 5.1.2] for the
 Client-Server constraint.
 
-Obviously, the REST model Fielding was describing involved both _clients_ (that is, Web Browsers) and _servers_ (such
+Obviously, the REST model Fielding was describing involved both _clients_ (browsers, in the case of the web) and _servers_ (such
 as the Apache Web Server he had been working on) communicating via a network connection.  This was the context of his
-work: he was describing the *network architecture* of the World Wide Web, and contrasting it with earlier architectures,
+work: he was describing the network architecture of the World Wide Web, and contrasting it with earlier architectures,
 notably thick-client networking models such as the Common Object Request Broker Architecture (CORBA).
 
-It should be obvious that any web application, regardless of how it is designed, is going to satisfy this requirement.
+It should be obvious that any web application, regardless of how it is designed, will satisfy this requirement.
 
 === The Statelessness Constraint
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_3[Section 5.1.3] for the Stateless constraint.
 
 As described by Fielding, a REST-ful system is stateless: every request should encapsulate all information necessary to
-respond to that request, with no side state or context stored on the server.
+respond to that request, with no side state or context stored on either the client or the server.
 
 In practice, for many web applications today, we actually violate this constraint: it is common to establish a
 _session cookie_ that acts as a unique identifier for a given user and that is sent along with every request.  While this
 session cookie is, by itself, not stateful (it is sent with every request), it is typically
-used as a key to look up information stored on the server side, in what is usually termed "the session".  This session
-information is typically stored in some sort of shared storage across multiple web servers, holding things like the
-current users email or id, their roles, partially created domain objects, caches, and so forth.
+used as a key to look up information stored on the server side, in what is usually termed "the session".
 
-This violation of the Statelessness REST architectural constraints has proven to be useful for building web applications
-and, for the most part, does not appear to have had a significant impact on the overall flexibility of the approach.
+This session information is typically stored in some sort of shared storage across multiple web servers, holding things
+like the current users email or id, their roles, partially created domain objects, caches, and so forth.
+
+This violation of the Statelessness REST architectural constraint has proven to be useful for building web applications
+and, for the most part, does not appear to have had a significant impact on the overall flexibility of the approach.  But
+it is worth bearing in mind that even Web 1.0 applications often violate the purity of REST in the interest of pragmatic
+tradeoffs.
 
 It should be noted, however, that sessions do cause additional operational complexity headaches when deploying hypermedia
-servers, which now may need to have shared access to the session state information stored across an entire cluster.
+servers, which now may need to have shared access to the session state information stored across an entire cluster.  So
+Fielding was correct in pointing out that an ideal REST-ful system, one that did not violate this constraint, would,
+indeed, be simpler and therefore more robust.
 
 === The Caching Constraint
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_4[Section 5.1.4] for the Caching constraint.
 
 This constraint states that a RESTful system should support the notion of caching, with explicit information on the
-cacheability of requests for future requests of the same resource.  This allows both clients as well as intermediary
-servers between a given client and server to cache the results of a given request.
+cache-ability of responses for future requests of the same resource.  This allows both clients as well as intermediary
+servers between a given client and final server to cache the results of a given request.
 
 As we discussed above, HTTP has a sophisticated caching mechanism via Response headers that is often overlooked or
 underutilized when building hypermedia applications.  Given the existence of this functionality, however, it is
-easy to see how this constraint is satisfied by HTTP in the web.
+easy to see how this constraint is satisfied by The Web.
 
 === The Uniform Interface Constraint
 
-Now we come to the most interesting and, in our opinion, innovative constraint in REST: the _uniform interface_.  This
-constraint is the source of much of the _flexibility_ and _simplicity_ of a hypermedia system, so we are going to
+Now we come to the most interesting and, in our opinion, innovative constraint in REST: that of the _uniform interface_.
+This constraint is the source of much of the _flexibility_ and _simplicity_ of a hypermedia system, so we are going to
 spend a lot of time on it.
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_5[Section 5.1.5] for the Uniform Interface
@@ -453,17 +540,20 @@ We saw this latter aspect of the uniform interface in the `Accept` header in the
 
 ==== Self-Descriptive Messages
 
-This constraint, along with the next one, form what we consider to be the core of the Uniform Interface, of REST and why,
-in our opinion, hypermedia is such a powerful network architecture: in a REST-ful system, messages must be
-_self-describing_.
+The Self-Descriptive Messages constraint, combined with the next one, HATEOAS, form what we consider to be the core of
+the Uniform Interface, of REST and why hypermedia provides such a powerful system architecture.
+
+The Self-Descriptive Messages constraint requires that, in a REST-ful system, messages must be _self-describing_.
 
 This means that _all information_ necessary to both display _and also operate_ on the data being represented must be
 present in the response.  In a properly REST-ful system, there can be no additional "side" information necessary for
-client to transform a response from a server into a useful user interface.  Everything must "be in" the message itself.
+client to transform a response from a server into a useful user interface.  Everything must "be in" the message itself,
+in the form of hypermedia controls.
 
-This might sound a little abstract, so perhaps an example will help clarify.
+This might sound a little abstract, lets look at a concrete example.
 
-Let's consider two different potential responses from of an HTTP server for the URL  `https://example.com/contacts/42`.
+Consider two different potential responses from of an HTTP server for the URL  `https://example.com/contacts/42`.
+
 Both responses will return information about a contact, but they will take very different forms.
 
 The first implementation returns an HTML representation:
@@ -499,8 +589,7 @@ The second implementation returns a JSON representation:
 What can we say about the differences between these two responses?
 
 One thing that may initially jump out at you is that the JSON representation is smaller than the HTML
-representation.  This is certainly true, and Fielding notes exactly this tradeoff when using a REST-ful architecture
-in his dissertation:
+representation.  Fielding notes exactly this tradeoff when using a REST-ful architecture in his dissertation:
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
 ____
@@ -524,7 +613,7 @@ The source of all this information might be API documentation, word of mouth or,
 and the client, internal knowledge.  But it is _outside_ the message.
 
 The hypermedia (or HTML) client, on the other hand, needs only to know how to render the given HTML.  It doesn't need to understand
-what actions are available for this contact: they are simply encoded _within_ the HTML itself.  It doesn't need to
+what actions are available for this contact: they are simply encoded _within_ the HTML itself as hypermedia controls.  It doesn't need to
 understand what the status field means or, in fact, what a contact even is!
 
 The browser, our hypermedia client, simply renders the HTML and allows the user, who presumably understands the concept
@@ -536,7 +625,7 @@ represented.
 
 Browsers only (only! As if it is easy!) need to understand how to parse and display hypermedia, in this case HTML.  This
 gives hypermedia-based systems unprecedented flexibility in dealing with changes to both the backing representations and
-to the system itself.  This will become more apparent as we further explore this idea below.
+to the system itself.
 
 ==== Hypermedia As The Engine of Application State (HATEOAS)
 
@@ -609,11 +698,11 @@ a client, it is incredibly flexible with respect to the representations it recei
 
 ==== HATEOAS & API Churn
 
-Because this last concept is so important to understand in order to appreciate the flexibility of hypermedia, let's look
-at a practical example of it in action: consider a situation where a new feature has added the web applications offering
-these two end points.  This feature allows you to send a message to a given Contact.
+Because this last point is so important to understand in order to appreciate the flexibility of hypermedia, let's look
+at a practical example of it in action: consider a situation where a new feature has added the web application of these
+two end points.  This feature allows you to send a message to a given Contact.
 
-How would this change the two responses from the server?
+How would this change each of the two responses from the server?
 
 The HTML representation might now look like this:
 
@@ -635,7 +724,7 @@ The HTML representation might now look like this:
 </html>
 ----
 
-The JSON representation might look like this:
+The JSON representation, on the other hand, might look like this:
 
 [source,json]
 ----
@@ -647,7 +736,7 @@ The JSON representation might look like this:
 ----
 
 Note that, once again, the JSON representation is unchanged.  There is no indication of this new functionality.  Instead,
-a client must *know* about the change, presumably via some shared documentation between the client and the server.
+a client must *know* about this change, presumably via some shared documentation between the client and the server.
 
 Contrast this with the HTML response.  Because of the uniform interface of the REST-ful model and, in particular,
 because we are using Hypermedia As The Engine of Application State, no such exchange of documentation is necessary!  Instead,
@@ -662,7 +751,7 @@ was removed?  Or what if the URLs or HTTP actions for these operations changed i
 
 In this case, the JSON client may be broken in a much more serious manner.
 
-The HTML response, however, would be simply updated to exclude the removed options or to update the URLs used for them.  Clients
+The HTML response, however, would simply be updated to exclude the removed options or to update the URLs used for them.  Clients
 would see the new HTML, display it properly, and allow users to select whatever the new set of operations happens to be.  Once
 again, the uniform interface of REST has proven to be extremely flexible: despite a potentially radically new layout
 for our hypermedia API, clients continue to keep working.
@@ -670,22 +759,21 @@ for our hypermedia API, clients continue to keep working.
 An important fact falls out of this:  because of this flexibility, hypermedia APIs *do not have the versioning headaches
 that JSON Data APIs do*.
 
-Once a Hypermedia Driven Application has been "entered" (that is, navigated to through some entry point URL), all functionality
+Once a Hypermedia-Driven Application has been "entered into" (that is, loaded through some entry point URL), all functionality
 and resources are surfaced through self-describing messages.  Therefore, there is no need to exchange documentation with
-clients: the clients simply render the hypermedia (in this case HTML) and everything works out.  When a change occurs,
-there is no need to create a new version of the API: clients simply retrieve updated hypermedia, which encodes the new
+the client: the client simply renders the hypermedia (in this case HTML) and everything works out.  When a change occurs,
+there is no need to create a new version of the API: clients simply retrieves updated hypermedia, which encodes the new
 operations and resources in it, and display it to users to work with.
-
-This is one of the
 
 === Layered System
 
-The Layered System constraint can be found in
-https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_6[Section 5.1.6]
+The final "required" constraint on a REST-ful system that we will consider is The Layered System constraint.  This constraint can be found in
+https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_6[Section 5.1.6] of Fielding's dissertation.
 
-After the excitement of the uniform interface constraint, the "layered system" constraint is a bit boring, although
-still very useful: the REST-ful architecture is layered, allowing for multiple servers to act as intermediaries between
-the client and the eventual "source of truth" server.
+To be frank, after the excitement of the uniform interface constraint, the "layered system" constraint is a bit of a
+let down.  But it is still worth understanding and it is actually utilized effectively by The web.  The constraint
+requires that a REST-ful architecture be "layered", allowing for multiple servers to act as intermediaries between
+a client and the eventual "source of truth" server.
 
 These intermediary servers can act as proxies, transform intermediate requests and responses and so forth.
 
@@ -695,10 +783,15 @@ closely located to the client making a request.
 
 This allows content to be delivered more quickly to the end user and reduces load on the origin server.
 
+Nothing nearly as exciting for web application developers as the uniform interface, at least in our opinion, but useful
+nonetheless.
+
 === An Optional Constraint: Code-On-Demand
 
-The final constraint imposed on a REST-ful system is, somewhat awkwardly, described as an "optional constraint", and
-can be found here: https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7
+We called The Layered System constraint the final "required" constraint on a REST-ful system.  We used this langauge because
+there is one additional constraint mentioned in the dissertation.  This constraint is called The Code On Demand constraint
+and is, somewhat awkwardly, described as an"optional constraint".  The constraint can be found in
+https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7[Section 5.1.7] of the dissertation.
 
 In this section, Fielding says:
 
@@ -710,24 +803,23 @@ after deployment improves system extensibility. However, it also reduces visibil
 within REST.
 ____
 
-So, scripting _was_ and _is_ a native aspect of the original REST-ful model of the web, and, thus something that
-should of course be allowed in a Hypermedia Driven Application.
+So, scripting was and is a native aspect of the original REST-ful model of the web, and, thus something that
+should of course be allowed in a Hypermedia-Driven Application.
 
-However, in a Hypermedia Driven Application the presence of scripting should _not_ change the fundamental networking
-model: hypermedia should still be the engine of application state and server communication should still consist of
-hypermedia exchanges rather than, for example, JSON data exchanges.
+However, in a Hypermedia-Driven Application the presence of scripting should _not_ change the fundamental networking
+model: hypermedia should still be the engine of application state, server communication should still consist of
+hypermedia exchanges rather than, for example, JSON data exchanges, and so on.
 
 Today, unfortunately, the scripting layer of the web, JavaScript, is quite often used to _replace_, rather than augment
-the hypermedia model.  It is against this trend that this book is written.  This does not mean that scripting
-should not be allowed in a hypermedia application, but rather that it should be done in a certain manner consistent
-with the REST-ful approach.
+the hypermedia model.  We will elaborate in a later chapter what scripting that does not replace the underlying hypermedia
+system of the web looks like.
 
 == Conclusion
 
-After this deep dive into Chapter 5 of Roy Fielding's dissertation, I hope you have much better understanding of REST,
-and in particular, the uniform interface and HATEOAS. And I hope you can see _why_ these characteristics make hypermedia
+After this deep dive into Chapter 5 of Roy Fielding's dissertation, we hope you have much better understanding of REST,
+and in particular, of the uniform interface and HATEOAS. We hope you can see _why_ these characteristics make hypermedia
 systems so flexible.
 
-If you didn't really appreciate what REST and HATEOAS meant before now, don't feel bad: it took me over a decade of
+If you didn't really appreciate what REST and HATEOAS meant before now, don't feel bad: it took some of us over a decade of
 working in web development, and building a hypermedia-oriented library to boot, to realize just how
-special HTML, hypermedia and The Web is.
+special HTML, hypermedia and The Web is!

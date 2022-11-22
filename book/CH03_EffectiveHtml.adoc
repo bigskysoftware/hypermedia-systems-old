@@ -45,21 +45,43 @@ Let's be real, after all --- out of all the sites using "Open Graph" tags, how m
 
 ## Writing quality HTML
 
-// TODO basically i need to identify some common pitfalls and also give snippets for common cases. maybe i could imitate _The Elements of Typographic Style_ in terms of structure for this section
+// TODO introduce the chapter
 
 
-### Revisit the "HTML5 elements"
+### HTML is for humans first
+
+People who write HTML are referred to in Web platform specifications as "authors". This sells our lot short by quite a lot, however; from day to day, the average web developer might take on the role of typesetter, copy editor, graphic designer, and of course, programmer.
+
+Many people focus on the machines when working on non-visual usage. Work on accessibility. Assistive tools are not who you're trying to please, the (human) users are. They just use a few more pieces of technology to do so.
 
 
 ### You don't need to guess what tags mean
 
-Go to https://html.spec.whatwg.org/multipage and click on "4 The elements of HTML". This chapter of the HTML specification is geared towards developers
+Go to https://html.spec.whatwg.org/multipage and click on "4 The elements of HTML". This chapter of the HTML specification is geared towards authors (that's you!). Many learning resources focus on __, and many are outdated, so there's value in getting your information straight from the source. footnote:[Though, I would skip the algorithms myself.]
+
+It's full of useful tidbits, and some interesting historical trivia. If you're still not convinced, some important information has been summarized in the following subsections.
+
+
+### Revisit the "HTML5 elements"
+
+A set of elements introduced with HTML5 have become a sort of shorthand symbol for semantic markup:
+
+ - section
+ - article
+ - nav
+ - header
+ - footer
+ - TODO were there more
+
+You can find websites that were clearly built with the mindset: "The more of these elements there are, the more semantic it is".
+
+
+### Don't limit yourself to Markdown
 
 
 ### Hide stuff the right way
 
-`hidden` attribute
-
+`hidden` attributex
 - fully hidden from everyone
 - might need to be normalized with CSS
 
@@ -121,22 +143,18 @@ This can be a good option for inputs where a nearby element provides context.
 
 ### Don't use <figcaption> for alt-text
 
-Use the `alt` attribute instead! Figure captions shouldn't regurgitate the information in an image. Instead, it should be used to give context or provide metadata such as source or date. The `alt` attribute, on the other hand, should be a substitute for the image, describing the relevant aspects footnote:[Writing alt text is a discussion too expansive do do justice to here --- TODO link resources on alt text].
+Use the `alt` attribute instead! Figure captions shouldn't regurgitate the information in an image. Instead, it should be used to give context or provide metadata such as source or date. The `alt` attribute, on the other hand, should be a substitute for the image, describing the relevant aspects of what is depicted for the benefit of people who can't view it.
 
-Captions might be misused for alt text when the author wants the alt text to be visible. For this, Twitter uses an "ALT" button that opens the alt text in a popup window --- a simpler approach would be CSS:
+Captions might be misused for alt text when the author wants the alt text to be visible as text. To achieve this, some social media platforms use an "ALT" button that opens the alt text in a popup window. The main drawback of this approach is that you need to implement a popup window. You could instead use a `<p>` after the image with `aria-hidden` on it.
 
-.Showing alt text visually
-[source,css]
-----
-.show-alt-text::after { <1>
-    content: "alt: " attr(alt); <2>
-    content: "alt: " attr(alt) / ""; <3>
-    display: block;
-}
-----
-<1> We create a pseudo-element to show the text.
-<2> The `attr()` function in CSS gets an attribute value as a string. Unfortunately, it can only be used in the `content` property.
-<3> Screenreaders are unreliable with pseudo-elements: many but not all announce them. To avoid the alt text being announced twice, we specify alt text for the pseudo-element itself as empty (see after the slash). We have a fallback since the slash syntax isn't well-supported yet.
+.The `alt` attribute
+****
+They say a picture is worth a thousand words. How am I supposed to produce an acceptable substitute in just a few sentences?
+
+When writing alt text, you should only provide the information that is relevant. This means that the alt text should not be stored with the image (as is unfortunately the case with many CMSs) but in the document --- because different aspects of an image are relevant in different contexts.
+
+TODO link resources on alt text.
+****
 
 
 ### Write useful link text

@@ -52,7 +52,7 @@ Let's be real, after all --- out of all the sites using "Open Graph" tags, how m
 
 People who write HTML are referred to in Web platform specifications as "authors". This sells our lot short by quite a lot, however; from day to day, the average web developer might take on the role of typesetter, copy editor, graphic designer, and of course, programmer.
 
-Many people focus on the machines when working on non-visual usage. Work on accessibility. Assistive tools are not who you're trying to please, the (human) users are. They just use a few more pieces of technology to do so.
+Many people focus on the machines when working on non-visual accessibility. This is unfortunate. Assistive tools are not who you're trying to please, the (human) users are. They just use a few more pieces of technology to do so.
 
 
 ### You don't need to guess what tags mean
@@ -73,45 +73,58 @@ A set of elements introduced with HTML5 have become a sort of shorthand symbol f
  - footer
  - TODO were there more
 
-You can find websites that were clearly built with the mindset: "The more of these elements there are, the more semantic it is".
+You can find websites that were clearly built with the mindset: "The more of these elements there are, the more semantic it is." An example from the wonderful https://www.htmhell.dev/[HTMHell]:
+
+.HTMHell, [.cite]##10 <section> is no replacement for <div>#, https://www.htmhell.dev/10-section-is-no-replacement-for-div/
+[source,html]
+----
+<section id="page-top">
+  <section data-section-id="page-top" style="display: none;"></section>
+</section>
+<main>
+  <section id="main-content">
+    <header id="main-header">
+      <h1>...</h1>
+      <section class="container-fluid">
+        <section class="row">
+          <article class="content col-sm-12">
+            <section class="content-inner">
+              <div class="content__body">
+                <article class="slider">
+                  <section class="slide"> … </section>
+                </article>
+              </div>
+            </section>
+          </article>
+        </section>
+      </section>
+    </header>
+  </section>
+</main>
+----
 
 
 ### Don't limit yourself to Markdown
 
 
+////
 ### Hide stuff the right way
 
 `hidden` attributex
 - fully hidden from everyone
 - might need to be normalized with CSS
 
-* * *
-
 `display: none` makes stuff disappear
 
-."Visually hidden" utility
-[source,css]
-----
-.visually-hidden:not(:focus):not(:active) {
-  clip: rect(0 0 0 0); 
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap; 
-  width: 1px;
-}
-----
-
+"Visually hidden" utility
 - seen by AT
 - shows up in copy-paste
+////
 
 
 ### Label your inputs, one way or another
 
-All <input> elements should be labelled.
-
-However, they don't necessarily need a visible `<label>` element. There are other ways to label:
+`<input>` elements always need to be labelled. However, they don't necessarily need a visible `<label>` element. There are other ways to label:
 
 // asciidoc why can't you be normal
 
@@ -143,7 +156,7 @@ This can be a good option for inputs where a nearby element provides context.
 
 ### Don't use <figcaption> for alt-text
 
-Use the `alt` attribute instead! Figure captions shouldn't regurgitate the information in an image. Instead, it should be used to give context or provide metadata such as source or date. The `alt` attribute, on the other hand, should be a substitute for the image, describing the relevant aspects of what is depicted for the benefit of people who can't view it.
+Use the `alt` attribute instead! Figure captions shouldn't regurgitate the information in an image. Instead, they should be used to give context or provide metadata such as source or date. The `alt` attribute, on the other hand, should be a substitute for the image, describing the relevant aspects of what is depicted for the benefit of people who can't view it.
 
 Captions might be misused for alt text when the author wants the alt text to be visible as text. To achieve this, some social media platforms use an "ALT" button that opens the alt text in a popup window. The main drawback of this approach is that you need to implement a popup window. You could instead use a `<p>` after the image with `aria-hidden` on it.
 
@@ -159,9 +172,14 @@ TODO link resources on alt text.
 
 ### Write useful link text
 
-DON'T: "For the user guide, [click here]"
-DO: "[User guide]"
-DO: "For the user guide, click: [User guide]"
+Wherever possible, the text of a link should describe what the link points to without much context needed. Of course, you might need to alter it to fit a sentence structure, but you should avoid links that don't give information other than "this is a link".
+
+|===
+| Do | Don't
+
+| For user records, [click here]
+| [User records]
+|===
 
 
 ### ARIA is easy --- as long as you stick to the basics

@@ -56,6 +56,12 @@ export default () => {
             $$(document, "img").forEach(el => {
                 el.setAttribute("loading", "lazy");
             })
+
+            $$(document, ".cite").forEach(el => {
+                const cite = document.createElement("cite");
+                cite.append(...el.childNodes);
+                el.append(cite);
+            })
         })
     }
 }

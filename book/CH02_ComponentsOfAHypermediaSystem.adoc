@@ -28,7 +28,7 @@ term REST is currently used in the industry, are not.
 
 The fundamental technology of a hypermedia system is a particular hypermedia or multiple hypermedia that allow a
 client and server to communicate with one another in a dynamic, non-linear fashion.  Again, what makes a hypermedia
-a hypermedia is the presences of _hypermedia controls_, that is, elements in the hypermedia that allow users to select
+a hypermedia is the presence of _hypermedia controls_, that is, elements in the hypermedia that allow users to select
 non-linear actions within the hypermedia.  That is to say, the user can _interact_ with the media in a manner beyond
 simply reading it from start to end.
 

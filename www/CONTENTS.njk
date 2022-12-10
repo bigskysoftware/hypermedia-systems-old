@@ -4,6 +4,13 @@ url: /book/contents/
 renderOrder: 1
 ---
 
+<style>
+    .Chapter-Num {
+        font-variant-numeric: tabular-nums;
+        min-width: 2ch;
+    }
+</style>
+
 <header>
     <h1>HYPERMEDIA SYSTEMS <v-h>&mdash;</v-h> <sub-title>Contents</sub-title></h1>
 
@@ -37,9 +44,9 @@ renderOrder: 1
             {% endif %}
         <article class="f-row hoverable" style="break-inside: avoid-column; font-family: var(--secondary-font);">
             {% if chapter.chapter != 0 %}
-            <data style="min-width:2.2ch">{{ chapter.chapter }}</data>
+            <data class="Chapter-Num">{{ chapter.chapter }}</data>
             {% else %}
-            <data style="min-width:2.2ch">☛&#xFE0E;</data>
+            <data class="Chapter-Num">☛&#xFE0E;</data>
             {% endif %}
 
             <div class="f-col packed align-items:start">

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Building Hypermedia Systems</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=andada-pro:400,400i,700,700i" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=merriweather:400,400i,700,700i|merriweather-sans:400,400i,700,700i" rel="stylesheet" />
     <link rel="stylesheet" href="https://the.missing.style/v1.0.3/missing.min.css">
     <style>
     @font-face {
@@ -14,10 +14,12 @@
     }
 
     :root {
-        --main-font: "Andada Pro", serif;
-        --secondary-font: "Source Sans Pro", "Source Sans 3", sans-serif;
-        --display-font: "Chicago FLF", "Impact", sans-serif;
+        --main-font: "Merriweather", serif;
+        --secondary-font: "Merriweather Sans", sans-serif;
+        --display-font: "Chicago FLF", "Impact", "Oswald", sans-serif;
         --mono-font: "Berkeley Mono", "Input Mono", "Iosevka", "Liberation Mono", "Victor Mono", "Consolas", monospace, monospace;
+
+        --rhythm: 1.6rem;
 
         font-size: calc((18 / 16) * 100%);
     }
@@ -33,7 +35,6 @@
     }
 
     pre { font-size: 1em }
-    code { font-size: .9em }
 
     :root {
         text-align: justify;

@@ -980,7 +980,7 @@ it is `"KeyS"`) of the event to achieve this.
 So far our hyperscript looks like this:
 
 .A Start On Our Keyboard Shortcut
-[source,applescript]
+[source, hyperscript]
 ----
   on keydown[shiftKey and code is 'KeyS'] ...
 ----
@@ -996,7 +996,7 @@ We need to attach the listener to the whole window instead.
 No problem:
 
 .Listening Globally
-[source,applescript]
+[source, hyperscript]
 ----
   on keydown[shiftKey and code is 'KeyS'] from window ...
 ----

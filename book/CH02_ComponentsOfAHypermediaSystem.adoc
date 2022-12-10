@@ -95,7 +95,7 @@ HTTP version 1.1 is a relatively simple network protocol, so lets take a look at
 tag would look like.  This is the request that would be sent to the server found at `hypermedia.systems`, on port `80`
 by default:
 
-[source, httprequest]
+[source, http]
 ----
 GET /book/contents/ HTTP/1.1
 Accept: text/html,*/*
@@ -115,7 +115,7 @@ domains are hosted on the same host.
 
 An HTTP response from a server to this request might look something like this:
 
-[source, httprequest]
+[source, http]
 ----
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=utf-8

@@ -172,7 +172,7 @@ So, if the client wanted a JSON representation of all contacts, they might issue
 
 [, reftext={chapter}.{counter:listing}]
 .A Request for a JSON Representation of All Contacts
-[source, http request]
+[source, http]
 ----
 Accept: application/json
 

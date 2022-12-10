@@ -207,7 +207,7 @@ of metadata associated with requests to help the server understand what the clie
 of (some of) the headers the FireFox browser issues when requesting `https://manning.com`:
 
 .HTTP Headers
-[source,httprequest]
+[source,http]
 ----
 GET / HTTP/2
 Host: www.manning.com
@@ -882,7 +882,7 @@ By giving this button an id attribute, we now have a mechanism for differentiati
 `edit.html` template and the delete links in the `rows.html` template.  When this button issues a request, it will now
 look something like this:
 
-[source, httprequest]
+[source, http]
 ----
 DELETE http://example.org/contacts/42 HTTP/1.1
 Accept: text/html,*/*

@@ -7,9 +7,10 @@ import type { Site } from 'lume/core.ts';
  * Highlight code, including _hyperscript, with Prism.
  */
 export default () => {
-	prismHyperscript(Prism);
-
 	return (site: Site) => {
-		site.use(prismHighlight());
+		site.use(prismHighlight({
+			languages: ["http", "html", "js", "python", "md", "css", "json", "xml", "bash", "sh"]
+		}));
+		prismHyperscript(Prism);
 	};
 };

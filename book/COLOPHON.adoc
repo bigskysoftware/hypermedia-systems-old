@@ -1,0 +1,23 @@
+:layout: layout.njk
+:url: /colophon/
+
+++++
+<main>
+++++
+
+= Colophon =
+
+Text:: Authored in https://asciidoc.org[AsciiDoc (markup language)].
+
+Website:: Generated with https://lume.land[Lume (static site generator)],
+styled with https://missing.style[Missing.css (stylesheet)].
+    
+Fonts:: Headings in https://fontlibrary.org/en/font/chicagoflf[ChicagoFLF],
+body text in link:#[TODO],
+secondary text and interactive elements in link:#[TODO],
+code in https://berkeleygraphics.com/typefaces/berkeley-mono/[Berkeley Mono].
+
+
+++++
+</main>
+++++

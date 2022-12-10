@@ -1,0 +1,84 @@
+---
+layout: layout.njk
+url: /
+templateEngine: njk
+---
+
+<style>
+.Cover-Image {
+    image-rendering: pixelated;
+    inline-size: 100vw;
+    height: 25vw;
+    max-inline-size: none;
+    min-inline-size: 100%;
+    margin-block: -10% 0;
+    object-fit: cover;
+}
+
+.Book-Title {
+    font-size: calc(.13 * var(--eff-line-length));
+    line-height: 1em;
+    letter-spacing: 0;
+}
+
+.aestheticbreak {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: calc(.5 * var(--gap));
+}
+
+.secondary-font { font-family: var(--secondary-font) }
+
+.header {
+    padding-top: 10em;
+    margin-top: 0;
+    --bgw: 475px;
+    --bgh: 110px;
+    background-image: url(/images/radialbugpattern-spine-black-realsize.png);
+    background-position: center calc(var(--bgh) - 28em);
+    background-size: calc(var(--bgw) * 6);
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
+</style>
+
+<header class="header">
+    <h1 class="Book-Title italic allcaps text-align:center fullbleed"
+        >Hypermedia Systems</h1>
+
+    <p class="allcaps text-align:center">
+        Carson&nbsp;Gross&emsp;
+        Adam&nbsp;Stepinski&emsp;
+        <span lang="tr">Deniz&nbsp;Akşimşek</span>
+    </p>
+</header>
+
+<main class="">
+
+    <div class="grid">
+        <ul id="blurb" role=list data-cols="1 3" data-cols@s="1" data-rows="1 3"
+            class="big italic text-align:start margin-inline-end flow-gap">
+        <li>The revolutionary ideas that empowered the Web</li>
+        <li>A simpler approach to building applications on the Web and beyond with <i>htmx</i> and <i>HyperView</i></li>
+        <li>Enhancing applications with JavaScript without using SPA frameworks</li>
+        <li></li>
+        </ul>
+
+        <ul data-cols="4 5" data-cols@s="1" role=list class="f-row flex-wrap:wrap crowded" style=text-align:start>
+        <li><strong><a href="/book/contents" class="big <button>">Read online for free</a></strong>
+        <li><strong><a href="#" class="big <button>">Get PDF</a></strong>
+        </ul>
+
+        <p data-cols="4 5" data-cols@s="1" class="text-align:start <small> secondary-font">
+            For web developers frustrated with the complexity of modern practice,<span class="aestheticbreak"></span>
+            those looking to brush up on web fundamentals,<span class="aestheticbreak"></span>
+            web development shops looking to bring their apps to mobile,<span class="aestheticbreak"></span>
+            and any workaday programmer looking for an introduction to hypermedia and REST.
+        </p>
+    </div>
+
+    <ul role="list" class="list-of-links flow-gap">
+        <li><a href="/colophon">Colophon</a></li>
+    </ul>
+</main>

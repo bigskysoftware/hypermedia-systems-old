@@ -7,6 +7,8 @@ const site = lume({
     includes: "www/_includes",
 });
 
+site.loadPages([".html"])
+
 site.use(liquid());
 site.use(asciidoc());
 site.use(postprocessAsciidoc());

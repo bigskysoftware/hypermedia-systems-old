@@ -6,7 +6,8 @@
     <title>Building Hypermedia Systems</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=merriweather:400,400i,700,700i|merriweather-sans:400,400i,700,700i" rel="stylesheet" />
-    <link rel="stylesheet" href="https://the.missing.style/v1.0.3/missing.min.css">
+    <!-- <link rel="stylesheet" href="https://the.missing.style/v1.0.3/missing.min.css"> -->
+    <link rel="stylesheet" href="http://the.missing.style/v1.0.4/missing.css">
     <style>
     @font-face {
         font-family: "Chicago FLF";
@@ -31,13 +32,12 @@
     }
 
     :is(h1, h2, h3, h4, h5, h6) code {
-        font-weight: 900;
+        font-family: inherit;
     }
 
     pre { font-size: 1em }
 
     :root {
-        text-align: justify;
         hyphens: auto;
     }
 
@@ -60,14 +60,6 @@
     sub-title, .sub-title {
         color: var(--faded-fg);
     }
-
-    .text-align\:start { text-align: start; hyphens: none; }
-
-    .flow-gap > :not(:last-child) {
-        margin-bottom: var(--gap);
-    }
-
-    .\<small\> { font-size: .9em }
     </style>
 </head>
 <body>

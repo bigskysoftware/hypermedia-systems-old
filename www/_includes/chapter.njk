@@ -15,7 +15,7 @@ layout: layout.njk
     {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
     {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
 
-    {% macro nav() %}
+    {% macro nav(show_toc=false) %}
     <nav aria-label="Chapters navigation">
         <div class="f-row flex-wrap:wrap justify-content:space-between">
             {% if prev or part %}
@@ -33,25 +33,27 @@ layout: layout.njk
             {% endif %}
         </div>
 
-        <details>
-            <summary>Contents</summary>
+        {% if show_toc %}
+            <details>
+                <summary>Contents</summary>
 
-            {% macro toc(block) %}
-            <ul>
-                {% for sect in block.getSections() %}
-                <li>
-                    <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
-                    {{ toc(sect) if sect.getSections().length > 0 }}
-                </li>
-                {% endfor %}
-            </ul>
-            {% endmacro %}
-            {{ asciidoc and toc(asciidoc) }}
-        </details>
+                {% macro toc(block) %}
+                <ul>
+                    {% for sect in block.getSections() %}
+                    <li>
+                        <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
+                        {{ toc(sect) if sect.getSections().length > 0 }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endmacro %}
+                {{ asciidoc and toc(asciidoc) }}
+            </details>
+        {% endif %}
     </nav>
     {% endmacro %}
 
-    {{ nav() }}
+    {{ nav(show_toc=true) }}
 
 </header>
 

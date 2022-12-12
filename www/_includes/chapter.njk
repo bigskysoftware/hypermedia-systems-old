@@ -16,40 +16,43 @@ layout: layout.njk
     {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
 
     {% macro nav() %}
-    <nav class="f-row flex-wrap:wrap justify-content:space-between">
-        {% if prev or part %}
-        <p>
-            Previous:
-            {% if part %}
-            <a class="italic" href="/book/{{ part_url }}">{{ part }}</a>
-            {% else %}
-            <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+    <nav aria-label="Chapters navigation">
+        <div class="f-row flex-wrap:wrap justify-content:space-between">
+            {% if prev or part %}
+            <p>
+                Previous:
+                {% if part %}
+                <a class="italic" href="/book/{{ part_url }}">{{ part }}</a>
+                {% else %}
+                <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+                {% endif %}
             {% endif %}
-        {% endif %}
-        {% if next %}
-        <p>
-            Next: <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
-        {% endif %}
+            {% if next %}
+            <p>
+                Next: <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+            {% endif %}
+        </div>
+
+        <details>
+            <summary>Contents</summary>
+
+            {% macro toc(block) %}
+            <ul>
+                {% for sect in block.getSections() %}
+                <li>
+                    <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
+                    {{ toc(sect) if sect.getSections().length > 0 }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endmacro %}
+            {{ asciidoc and toc(asciidoc) }}
+        </details>
     </nav>
     {% endmacro %}
 
     {{ nav() }}
 
-    <details>
-        <summary>Contents</summary>
-
-        {% macro toc(block) %}
-        <ul>
-            {% for sect in block.getSections() %}
-            <li>
-                <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
-                {{ toc(sect) if sect.getSections().length > 0 }}
-            </li>
-            {% endfor %}
-        </ul>
-        {% endmacro %}
-        {{ asciidoc and toc(asciidoc) }}
-    </details>
 </header>
 
 <main>{{ content | safe }}</main>

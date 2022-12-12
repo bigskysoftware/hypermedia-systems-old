@@ -24,12 +24,12 @@
         --rhythm: 1.6rem;
 
         font-size: calc((18 / 16) * 100%);
+        hyphens: auto;
     }
 
     h1, h2, h3, h4, h5, h6 {
         font-weight: normal;
         font-family: var(--display-font);
-        text-align: start;
     }
 
     :is(h1, h2, h3, h4, h5, h6) code {
@@ -38,10 +38,17 @@
 
     pre { font-size: 1em }
 
-    :root {
-        hyphens: auto;
+    sub-title, .sub-title {
+        color: var(--faded-fg);
     }
 
+    .smallcaps {
+        font-variant-caps: all-small-caps;
+        letter-spacing: .05em;
+    }
+
+    /* #region Asciidoc */
+    
     .colist {
         counter-reset: colist;
     }
@@ -57,10 +64,7 @@
         font-size: .9em;
         font-weight: bold;
     }
-
-    sub-title, .sub-title {
-        color: var(--faded-fg);
-    }
+    /* #endregion */
     </style>
 </head>
 <body>

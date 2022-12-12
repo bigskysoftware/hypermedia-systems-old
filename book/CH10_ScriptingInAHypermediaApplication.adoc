@@ -3,88 +3,121 @@
 :chapter: 10
 :url: ./client-side-scripting/
 
-This chapter covers
-
-* How scripting can be effectively added to a Hypermedia Driven Application
-* Adding a three-dot menu in our contacts table
-// vanilla
-* Adding a toolbar for bulk actions that appears when selecting contacts
-// alpine
-* Adding a keyboard shortcut for focusing the search input
-// hyperscript
-
-
-[partintro]
-== Scripting in Hypermedia-Driven Applications
-
 "REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts.
 This simplifies clients by reducing the number of features required to be pre-implemented."
 -- Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures
 
-Thus far we have avoided writing any JavaScript in Contact.app, mainly because the functionality we implemented so far has not required it.
-We have shown that, contrary to what some people content, hypermedia is not simply for "documents", but is also an excellent
-technology for building "applications", with many affordances for building compelling interactive experiences.
+Thus far we have avoided writing any JavaScript in Contact.app, mainly because the functionality we implemented has not required it.
+A common criticism of the web is that it's being misused.
+There is a narrative that WWW was created as a delivery system for "documents",
+and only came to be used for "applications" by way of an accident or bizarre circumstances.
+However, the concept of hypermedia challenges the split of document and application,
+the distinction of code and data, of operator and operand.
+Hypermedia systems like HyperCard, which preceded the web,
+featured rich capabilities for active and interactive experiences, including scripting. 
+It is true in many ways that HTML, as specified and implemented,
+lacks affordances needed to build the kinds of applications
+that were implemented within those older systems.
+None of this means, however, that hypermedia's _purpose_ is "documents" over "applications".
+Rather, while the theoretical foundation is there, the implementation is underdeveloped.
+With JavaScript being the only extension point and hypermedia controls not being well integrated to JavaScript (why can't I actuate a link without halting my program?),
+many developers were not enticed to internalize hypermedia
+and instead used the Web as a dumb pipe for apps that imitate "native" ones.
+
 A goal of this book is to show that it is possible to build sophisticated web applications using the original technology of the web,
 hypermedia, without the application developer needing to reach for the abstractions provided by JavaScript frameworks.
 
-On the other hand, htmx _itself_ is written in JavaScript, and we don't want the message of this book to be interpreted
-as "JavaScript bad", or, more generally, "Client-side scripting bad."
+htmx itself is of course, written in JavaScript, and one of its advantages is that
+hypermedia interactions that go through htmx expose a rich interface to JavaScript code
+with configuration, events, and htmx's extension support.
 
-The question isn't "Should we be scripting for the web?" but, rather, "How should we be using scripting for the web?"
+Because htmx also massively extends what those hypermedia interchanges can be,
+it obviates the need for scripting in many situations.
+This makes it attractive to people who don't want to write JavaScript.
+However, dunking on a programming language is not the aim of our project.
 
-Scripting has been a massive force multiplier of the power of the web.
-Using scripting, web application developers are not only able to enhance their hypertext-based websites, but are able to create
-fully-fledged client-side applications that can often compete with native, thick client applications.  However, with this
-power, the browser has often become a distribution mechanism for what are effectively cross-platform thick clients, with
+The goal is not less JavaScript, but less code.
+
+Scripting has been a massive force multiplier for the web.
+Using scripting, web application developers are not only able to enhance their hypertextual websites,
+but also create fully-fledged client-side applications that
+can often compete with native, thick client applications.
+However, with this power, the browser has often become a distribution mechanism for what are effectively cross-platform thick clients, with
 the original, REST-ful web architecture being discarded in favor of a more JavaScript-centric and data-oriented approach.
 
-Note, again, we do not claim this is a bad thing!  It is a testament to the power of the web and, in particular, of
-modern browsers, that developers are able to build such sophisticated JavaScript-centric applications.
+This is not a bad thing!
+It is a testament to the power of the web and, in particular, of modern browsers,
+that developers are able to build such sophisticated applications with JavaScript.
 
-However, we want to show that, in addition to this more JavaScript-centric style, scripting _can also_ be done in a manner
-compatible and consistent with Hypermedia-Driven Applications.
+In addition to this more JavaScript-centric style,
+we want to develop a style more compatible and consistent with Hypermedia-Driven Applications.
 
-We feel that you are scripting in an HDA-compatible manner if the following two constraints are adhered to:
+You are scripting in an HDA-compatible manner if the following two constraints are adhered to:
 
-* First, the main data format exchanged between server and client must be hypermedia, the same as it would be with no scripting.
-* Second, client-side state, outside the DOM itself, is kept to a minimum.
+* The main data format exchanged between server and client must be hypermedia, the same as it would be with no scripting.
+* Client-side state, outside the DOM itself, is kept to a minimum.
 
-Satisfying these constraints requires us to adopt different practices and patterns than what is typically recommended for
-JavaScript, since the most common advice often comes, naturally, from JavaScript-centric applications.
+The goal of these constraints is to confine scripting to where it shines best
+and where nothing else comes close: _interaction design_.
+Business logic and presentation logic are the responsibility of the server,
+where we can pick whichever languages or tools are appropriate for our business domain.
+We're not constrained by the browser to use JavaScript or WebAssembly.
+We can still do that, though, if we want. 
 
-Simply listing "best practices" is rarely convincing or edifying (and, lets be frank, it is boring).
+NOTE: Business logic and presentation logic being "on the server"
+does not mean they are mixed or coupled. We can modularize them.
+We _should_ modularize them, along with all the concerns of our application.
+Note also that, especially in web development parlance,
+the humble "server" can be a whole fleet of racks, virtual machines, containers and more.
+Even a worldwide network of datacenters is reduced to "the server".
+
+Satisfying these constraints sometimes requires us to diverge from what is
+typically considered best practice for JavaScript.
+Keep in mind that the cultural wisdom of JavaScript was largely developed in JavaScript-centric applications.
+The Hypermedia-driven Application cannot as comfortably fall back on this tradition.
+This book is our contribution to the development of a new style
+and a new best practice for the Hypermedia-Driven Application.
+
+Unfortunately, simply listing "best practices" is rarely convincing or edifying.
+To be honest, it's boring.
 Instead, we will demonstrate them by implementing client-side features in Contact.app:
 
 * We will add an overflow menu to hold the _Edit_, _View_ and _Delete_ actions, to clean up visual clutter in our list of contacts
 * We will add an improved interface for bulk deletion
 * We will add a keyboard shortcut for focusing the search box
 
-The important concept in the implementation of each of these features is that, while they are implemented entirely
-client-side using scripting, they don't exchange information with the server using, for example, JSON, and they don't
-store a significant amount of state outside the DOM itself.
+The important concept in the implementation of each of these features is that
+while they are implemented entirely in the client-side using scripting,
+they don't exchange information with the server that is not hypermedia,
+and they don't store a significant amount of state in memory outside the DOM itself.
 
-By satisfying these two constraints with our scripting, we will keep these features within the bounds of the Hypermedia
-Driven Application approach.
 
 == Scripting tools for the Web
 
-The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today.
-A bit of interesting internet lore, however, is that JavaScript was not always the only built-in option.
-As the quote from Roy Fielding at the start of this chapter indicates, "applets" written in other languages such as Java
-were considered part of the scripting infrastructure of the web.
-In addition, there was a brief period when Internet Explorer supported VBScript, a scripting language based on Visual Basic.
+The primary scripting language for the web is, of course, JavaScript,
+which is ubiquitous in web development today.
+A bit of interesting internet lore, however, is that
+JavaScript was not always the only built-in option.
+As the quote from Roy Fielding at the start of this chapter hints,
+"applets" written in other languages such as Java were considered to be
+part of the scripting infrastructure of the web.
+In addition, there was a time period when Internet Explorer supported VBScript,
+a scripting language based on Visual Basic.
 
-Today, we have a variety of _transcompilers_ (often shortened to _transpilers_) that convert many languages to JavaScript,
-such as TypeScript, Dart, Kotlin, ClojureScript, F#.
-There is also the WebAssembly (WASM) bytecode format, which is supported as a compilation target for C, Rust, and the
-WASM-first language AssemblyScript.
+Today, we have a variety of _transcompilers_ (often shortened to _transpilers_)
+that convert many languages to JavaScript,
+such as TypeScript, Dart, Kotlin, ClojureScript, F# and more.
+There is also the WebAssembly (WASM) bytecode format,
+which is supported as a compilation target for C, Rust,
+and the WASM-first language AssemblyScript.
 
-However, most of these options are not geared towards an HDA-compatible style of scripting.  Compile-to-JS languages are
-often paired with SPA-oriented libraries (Dart and AngularDart, ClojureScript and Reagent, F# and Elmish), and WASM is
-currently mainly geared toward linking to existing C/C++ libraries from JavaScript.
+However, most of these options are not geared towards an HDA-compatible style of scripting.
+Compile-to-JS languages are often paired with SPA-oriented libraries
+(Dart and AngularDart, ClojureScript and Reagent, F# and Elmish),
+and WASM is currently mainly geared toward linking to C/C++ libraries from JavaScript.
 
-Because of this, we are going to focus on three client-side scripting technologies that _are_ geared, or at least
-highly-compatible with, the Hypermedia Driven Application approach:
+We will instead focus on three client-side scripting technologies that
+are highly-compatible with the Hypermedia-Driven Application approach:
 
 * Vanilla JS, that is, using JavaScript without depending on any framework.
 * Alpine.js, a JavaScript library for adding behavior directly in HTML.
@@ -93,9 +126,9 @@ Like AlpineJS, it is usually embedded in HTML.
 
 Let's take a quick look at each of these scripting options, so we know what we are dealing with.
 
-Note that, as with CSS, we are not going to take a deep dive into any of these technologies.  Insteat, we are going to
-show just enough to give you a flavor of how they work and, we hope, spark your interest in looking into each of them
-more extensively.
+Note that, as with CSS, we are not going to take a deep dive into any of these. 
+Instead, we are going to show just enough to give you a flavor of how they work and
+(hopefully) spark your interest in looking into any of them more extensively.
 
 == Vanilla JavaScript
 
@@ -103,62 +136,71 @@ more extensively.
 No code is faster than no code.
 
 Vanilla JavaScript is simply using JavaScript in your application without any intermediate layers.
-The term "Vanilla" came into vogue as a play on the fact that there are so many ".js" frameworks out there to help you write JavaScript.
-As JavaScript matured as a scripting language, standardized across browsers and provided more and more functionality, the utility
-of many of these frameworks and libraries has diminished.
+The term "Vanilla" entered frontend web dev parlance as it became assumed that
+any sufficiently "advanced" web app would use some library with a name ending in ".js". As JavaScript matured as a scripting language, standardized across browsers and
+provided more and more functionality, these frameworks and libraries have become less crucial.
 
-(Ironically, at  the same time, SPAs have become more popular, which require even more elaborate JavaScript frameworks!)
+However, at the same time, SPAs have become more popular,
+require even more elaborate JavaScript frameworks.
 
-A quote from the website http://vanilla-js.com captures the situation well:
+A quote from the website http://vanilla-js.com
+(well worth visiting even though it's slightly outdated)
+captures the situation well:
 
 [quote,http://vanilla-js.com]
 VanillaJS is the lowest-overhead, most comprehensive framework I've ever used.
 
-The message of _VanillaJS_ here is: "The browser already has JavaScript baked into it, there isn't any need to download
-a framework for your application to function!"
-
-With JavaScript having  matured as a scripting language, this is certainly the case for many applications.  It is especially
-true the case in HDAs, since, by using hypermedia, your application doesn't need many features typically provided by
-JavaScript frameworks:
+With JavaScript having  matured as a scripting language,
+this is certainly the case for many applications.
+It is especially true in the case of HDAs, since, by using hypermedia,
+your application will not need many of the features
+typically provided by JavaScript frameworks:
 
 * Client-side routing
 * An abstraction over DOM manipulation, i.e.: templates that automatically update when referenced variables change
-* Server side rendering (rendering here refers to HTML generation)
-* Attaching dynamic behavior to server-rendered tags on load
+* Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server side rendering is not needed in a HDA because generating HTML on the server is the default.]
+* Attaching dynamic behavior to server-rendered tags on load, i.e. "hydration"
 * Network requests
 
-Without all this complexity being handled in JavaScript, your framework needs are dramatically reduced.
+Without all this complexity being handled in JavaScript,
+your framework needs are dramatically reduced.
 
-One of the best things about VanillaJS is how you install it: you don't have to! You can just start writing JavaScript
-in your web application, and it will simply work.  Amazing!
+One of the best things about VanillaJS is how you install it: you don't have to!
+You can just start writing JavaScript in your web application, and it will simply work.
+Amazing!
 
-That's the good news. The bad news is that, despite improvements over the last decade, JavaScript has some significant
-limitations as a scripting language that can make it a less than ideal as a stand-alone scripting technology for
-Hypermedia Driven Applications:
+That's the good news. The bad news is that, despite improvements over the last decade,
+JavaScript has some significant limitations as a scripting language that
+can make it a less than ideal as a stand-alone scripting technology for Hypermedia Driven Applications:
 
-* It is a relatively complex language that has accreted a lot of features and warts.
-* JavaScript has a complicated and confusing set of features for working with asynchronous code, that is, code that
-  requires waiting for an asynchronous operation (such as an AJAX request) to complete
-* Working with events in JavaScript is surprisingly difficult
-* DOM APIs (a large portion of which were originally designed for Java) are verbose and frequently do not make common
-  functionality easy to use.
+* Being as established as it is, it has accreted a lot of features and warts.
+* It has a complicated and confusing set of features for working with asynchronous code.
+* Working with events is surprisingly difficult.
+* DOM APIs (a large portion of which were originally designed for Java---fun fact!)
+  are verbose and don't have a habit of make common functionality easy to use.
 
-None of these limitations are deal-breakers, of course, and many people prefer the "close to the browser"
-nature of vanilla JavaScript over more elaborate client-side scripting approaches.
+None of these limitations are deal-breakers, of course.
+Many of them are gradually being fixed
+and many people prefer the "close to the metal" nature of vanilla JavaScript
+over more elaborate client-side scripting approaches.
 
 == A Simple Counter
 
-To dive into vanilla JavaScript as a front end scripting option, let's create a simple counter widget.  Counter widgets
-are a common "Hello World" example demonstrated by JavaScript frameworks, so looking at how it can be done in vanilla
-JavaScript will be instructive.
+To dive into vanilla JavaScript as a front end scripting option,
+let's create a simple counter widget.
+Counter widgets are a common "Hello World" example for JavaScript frameworks,
+so looking at how it can be done in vanilla JavaScript will be instructive.
 
-Our counter widget will be very simple: it will have a number, shown as text, and a button that increments the number.
+Our counter widget will be very simple: it will have a number, shown as text,
+and a button that increments the number.
 
-Now, one problem with tackling this problem in vanilla JavaScript is that it lacks one thing most JavaScript frameworks
-provide: a default code and architectural style.  With vanilla JavaScript, there are no rules!
+One problem with tackling this problem in vanilla JavaScript is that
+it lacks one thing most JavaScript frameworks provide:
+a default code and architectural style.
+With vanilla JavaScript, there are no rules!
 
-This lack of structure, however, isn't all bad: it presents a great opportunity to take a small journey through
-various styles that people have developed for writing their JavaScript.
+This isn't all bad. It presents a great opportunity to
+take a small journey through various styles that people have developed for writing their JavaScript.
 
 === An Inline Implementation
 
@@ -186,23 +228,30 @@ contained within it.
 
 Not too bad!
 
-The code is a little gronky, if you aren't used to the DOM APIs.  It's a little annoying that we needed to add an `id` to
-the `output` element to make things work.  Tje `document.querySelector()` function is a bit verbose compared with, say,
-the `$` function (a common function used in jQuery, an older, popular JavaScript librar.)
+It's not the most beautiful code, and can be irritating especially if
+you aren't used to the DOM APIs.
+It's a little annoying that we needed to add an `id` to the `output` element.
+The `document.querySelector()` function is a bit verbose compared with, say,
+the `$` function à la jQuery.
 
-But (but!) it works, it's easy enough to understand, and, crucially, it doesn't require any other JavaScript libraries.
+But it works! It's also easy enough to understand and (crucially) it doesn't require any other JavaScript libraries.
 
 So that's the simple, inline approach.
 
+
 === Separating Our Scripting Out
 
-While the inline implementation is simple, a more standard way to write this code would be to move the code into a separate
-JavaScript file.  This JavaScript file would then either be linked to via a `<script src>` tag or placed into an inline
-`<script>` element by a build process.
+While the inline implementation is simple in some sense,
+a more standard way to write this code would be to
+move the code into a separate JavaScript file.
+This JavaScript file would then either be linked to via a `<script src>` tag or
+placed into an inline `<script>` tag by a build process.
 
-Here we see the HTML and JavaScript _separated out_ from one another, in different files.  The HTML is now "cleaner"
-in that there is no JavaScript in it.  The JavaScript is a bit more complex than in our inline version: we need to look
-up the button using a query selector and add an _event listener_ to handle the click event and increment the counter.
+Here we see the HTML and JavaScript _separated out_ from one another,
+in different files. The HTML is now "cleaner" in that there is no JavaScript in it.
+The JavaScript is a bit more complex than in our inline version:
+we need to look up the button using a query selector and add an _event listener_ to
+handle the click event and increment the counter.
 
 .Counter HTML
 [source,html]
@@ -356,7 +405,7 @@ To follow the RSJS guidelines, let's restructure our current HTML and JavaScript
 that is, HTML attributes that begin with `data-`, a standard feature of HTML, to indicate that our HTML is a counter
 component.  We will then update our JavaScript to use an attribute selector that looks for the `data-counter` attribute
 as the root element in our counter component and wires in the appropriate event handlers and logic.  Additionally, let's
-rework the code to use `querySelector()` and add the counter functionality to _all_ counter components found on the
+rework the code to use `querySelectorAll()` and add the counter functionality to _all_ counter components found on the
 page.  (You never know how many counter's you might want!)
 
 Here is what our code looks like now:

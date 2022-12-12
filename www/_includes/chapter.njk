@@ -15,41 +15,46 @@ layout: layout.njk
     {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
     {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
 
-    {% macro nav() %}
-    <nav class="f-row flex-wrap:wrap justify-content:space-between">
-        {% if prev or part %}
-        <p>
-            Previous:
-            {% if part %}
-            <a class="italic" href="/book/{{ part_url }}">{{ part }}</a>
-            {% else %}
-            <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+    {% macro nav(show_toc=false) %}
+    <nav aria-label="Chapters navigation">
+        <div class="f-row flex-wrap:wrap justify-content:space-between">
+            {% if prev or part %}
+            <p>
+                Previous:
+                {% if part %}
+                <a class="italic" href="/book/{{ part_url }}">{{ part }}</a>
+                {% else %}
+                <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+                {% endif %}
             {% endif %}
-        {% endif %}
-        {% if next %}
-        <p>
-            Next: <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+            {% if next %}
+            <p>
+                Next: <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+            {% endif %}
+        </div>
+
+        {% if show_toc %}
+            <details>
+                <summary>Contents</summary>
+
+                {% macro toc(block) %}
+                <ul>
+                    {% for sect in block.getSections() %}
+                    <li>
+                        <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
+                        {{ toc(sect) if sect.getSections().length > 0 }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endmacro %}
+                {{ asciidoc and toc(asciidoc) }}
+            </details>
         {% endif %}
     </nav>
     {% endmacro %}
 
-    {{ nav() }}
+    {{ nav(show_toc=true) }}
 
-    <details>
-        <summary>Contents</summary>
-
-        {% macro toc(block) %}
-        <ul>
-            {% for sect in block.getSections() %}
-            <li>
-                <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
-                {{ toc(sect) if sect.getSections().length > 0 }}
-            </li>
-            {% endfor %}
-        </ul>
-        {% endmacro %}
-        {{ asciidoc and toc(asciidoc) }}
-    </details>
 </header>
 
 <main>{{ content | safe }}</main>
@@ -57,6 +62,6 @@ layout: layout.njk
 <footer>
     {{ nav() }}
     <p>
-        <span class="<small> allcaps">Hypermedia Systems</span>
+    {% include "global-footer.njk" %}
     </p>
 </footer>

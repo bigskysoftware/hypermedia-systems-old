@@ -1,22 +1,15 @@
-:layout: layout.njk
+:layout: frontmatter.njk
 :url: /colophon/
 
-++++
-<main>
-++++
+=   Colophon   =
 
-= Colophon =
+    Text:: Authored in https://asciidoc.org[AsciiDoc (markup language)].
 
-Text:: Authored in https://asciidoc.org[AsciiDoc (markup language)].
-
-Website:: Generated with https://lume.land[Lume (static site generator)],
-styled with https://missing.style[Missing.css (stylesheet)].
-    
-Fonts:: Headings in https://fontlibrary.org/en/font/chicagoflf[ChicagoFLF],
-body text in https://fonts.adobe.com/fonts/source-serif-pro[Source Serif Pro],
-secondary text and interactive elements in link:https://fonts.adobe.com/fonts/source-sans-3[Source Sans 3],
-code in https://berkeleygraphics.com/typefaces/berkeley-mono/[Berkeley Mono].
-
-++++
-</main>
-++++
+    Website:: Generated with https://lume.land[Lume (static site generator)],
+    styled with https://missing.style[Missing.css (stylesheet)].
+        
+    Fonts:: Headings in https://fontlibrary.org/en/font/chicagoflf[ChicagoFLF],
+    body text in https://fonts.adobe.com/fonts/source-serif-pro[Source Serif Pro],
+    secondary text and interactive elements in
+    link:https://fonts.adobe.com/fonts/source-sans-3[Source Sans 3],
+    code in https://berkeleygraphics.com/typefaces/berkeley-mono/[Berkeley Mono].

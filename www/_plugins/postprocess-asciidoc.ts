@@ -22,7 +22,7 @@ export default () => {
                 const em = el.querySelector("em")
                 if (em) em.tagName = "cite";
                 const br = el.querySelector("br")
-                if (br) br.remove();
+                if (br) br.replaceWith(", ");
             })
 
             $$(document, ".colist").forEach(el => {
@@ -36,14 +36,15 @@ export default () => {
                 const content = el.querySelector(".content");
                 if (!content) return;
                 const title = content.querySelector(".title");
-                if (!title) return;
-
-                title.classList.add("titlebar");
-
+                
+                
                 const rv = document.createElement("div");
                 rv.classList.add("box");
                 rv.classList.add(type);
-                rv.appendChild(title);
+                if (title) {
+                    title.classList.add("titlebar");
+                    rv.appendChild(title);
+                }
                 rv.appendChild(content);
 
                 el._replaceWith(rv);

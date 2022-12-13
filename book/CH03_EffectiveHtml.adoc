@@ -50,16 +50,41 @@ Let's be real, after all --- out of all the sites using "Open Graph" tags, how m
 
 ### HTML is for humans first
 
-People who write HTML are referred to in Web platform specifications as "authors". This sells our lot short by quite a lot, however; from day to day, the average web developer might take on the role of typesetter, copy editor, graphic designer, and of course, programmer.
+People who write HTML are referred to in Web platform specifications as "authors".
+This sells our lot short by quite a lot, however;
+from day to day, the average web developer might take on the role of
+typesetter, copy editor, graphic designer, and of course, programmer.
 
-Many people focus on the machines when working on non-visual accessibility. This is unfortunate. Assistive tools are not who you're trying to please, the (human) users are. They just use a few more pieces of technology to do so.
+... [TODO]
+
+This is also important for non-visual usage.
+Don't orient yourself solely towards following ARIA specifications or herding screen readers.
+Those are the means, but usability is the goal.
 
 
 ### You don't need to guess what tags mean
 
-Go to https://html.spec.whatwg.org/multipage and click on "4 The elements of HTML". This chapter of the HTML specification is geared towards authors (that's you!). Many learning resources focus on __, and many are outdated, so there's value in getting your information straight from the source. footnote:[Though, I would skip the algorithms myself.]
+"The beginning of wisdom is to call things by their right names."
+-- Confucius
 
-It's full of useful tidbits, and some interesting historical trivia. If you're still not convinced, some important information has been summarized in the following subsections.
+If you have ever made the mistake of publishing code online,
+you might have had someone send you links to the HTML specification.
+It was probably some section of chapter 4, "The elements of HTML".
+(You might even have received it from this author).
+
+While the big spec document with all the algorithms is probably better for smugly correcting people in chatrooms,
+there is actually a developer-friendly version at https://html.spec.whatwg.org/dev/.
+For a sufficiently patient reader, it's practically a textbook.
+
+For a less patient reader, section 4 features a list of all tags in HTML.
+It includes what tags mean, where they can occur, and what they are allowed to contain.
+It even tells you when you're allowed to leave out closing tags!
+
+[source,html]
+----
+<!doctype html>
+This is a valid HTML document.
+----
 
 
 ### Revisit the "HTML5 elements"

@@ -7,13 +7,14 @@ export default () => {
             const document = page.document;
             if (!document) return;
 
-            $$(document, ".listingblock, .imageblock, .sidebarblock").forEach((el) => {
+            $$(document, ".listingblock, .imageblock").forEach((el) => {
                 el.tagName = "figure";
                 const title = el.querySelector(".title");
                 if (title) title.tagName = "figcaption";
             })
 
             $$(document, ".sidebarblock").forEach(el => {
+                el.tagName = "aside";
                 el.querySelector(".title")?.classList.add("titlebar");
             })
 

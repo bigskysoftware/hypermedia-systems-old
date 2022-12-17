@@ -2,8 +2,9 @@
 = Hypermedia Systems: Practical Applications of Hypermedia
 Adam Stepinski, Carson Gross, Deniz Akşimşek
 :doctype: book
+:title-page:
 :toc-title:
-:imagesdir: /images
+:imagesdir: images
 :sectnums:
 :sectnumlevels: 2
 :showtitle:

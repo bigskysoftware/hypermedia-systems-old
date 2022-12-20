@@ -10,11 +10,24 @@ templateEngine: njk
     margin-top: 0;
     --bgw: 475px;
     --bgh: 110px;
-    background-image: url(/images/radialbugpattern-spine-black-realsize.png);
-    background-position: center calc(var(--bgh) - 28em);
-    background-size: calc(var(--bgw) * 6);
-    background-repeat: no-repeat;
-    image-rendering: pixelated;
+    position: relative;
+}
+
+.Cover-Header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url(/images/radialbugpattern-spine-black-realsize.png);
+  background-position: center calc(var(--bgh) - 28em);
+  background-size: calc(var(--bgw) * 6);
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+@media (prefers-color-scheme: dark) {
+    .Cover-Header::before {
+        filter: invert();
+    }
 }
 </style>
 

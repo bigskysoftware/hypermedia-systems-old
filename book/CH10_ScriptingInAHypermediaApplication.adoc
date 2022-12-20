@@ -64,12 +64,16 @@ where we can pick whichever languages or tools are appropriate for our business 
 We're not constrained by the browser to use JavaScript or WebAssembly.
 We can still do that, though, if we want. 
 
-NOTE: Business logic and presentation logic being "on the server"
+.The server
+[note]
+****
+Business logic and presentation logic both being "on the server"
 does not mean they are mixed or coupled. We can modularize them.
 We _should_ modularize them, along with all the concerns of our application.
 Note also that, especially in web development parlance,
 the humble "server" can be a whole fleet of racks, virtual machines, containers and more.
 Even a worldwide network of datacenters is reduced to "the server".
+****
 
 Satisfying these constraints sometimes requires us to diverge from what is
 typically considered best practice for JavaScript.

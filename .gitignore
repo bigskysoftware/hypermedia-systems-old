@@ -1,3 +1,6 @@
 /.idea
 /_site/
 www/_site/
+
+# :(
+deno.lock

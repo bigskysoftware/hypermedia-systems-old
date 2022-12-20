@@ -190,7 +190,7 @@ Here is what a user interaction with an anchor tag/hyperlink looks like in visua
 
 // TODO REDO IMAGE
 .An HTTP GET In Action
-image::figure_1-1_http_mental_model_get.png[]
+image::figure_1-1_http_mental_model_get.txt.svg[]
 
 You can see that when the link is clicked, the browser (or, as we sometimes call it, the _hypermedia client_) initiates an
 HTTP `GET` request to the given URL, encoded in the link.

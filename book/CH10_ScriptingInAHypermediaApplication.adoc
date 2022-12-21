@@ -7,204 +7,191 @@
 This simplifies clients by reducing the number of features required to be pre-implemented."
 -- Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures
 
-Thus far we have avoided writing any JavaScript in Contact.app, mainly because the functionality we implemented has not required it.
-A common criticism of the web is that it's being misused.
-There is a narrative that WWW was created as a delivery system for "documents",
-and only came to be used for "applications" by way of an accident or bizarre circumstances.
-However, the concept of hypermedia challenges the split of document and application,
-the distinction of code and data, of operator and operand.
-Hypermedia systems like HyperCard, which preceded the web,
-featured rich capabilities for active and interactive experiences, including scripting. 
-It is true in many ways that HTML, as specified and implemented,
-lacks affordances needed to build the kinds of applications
-that were implemented within those older systems.
-None of this means, however, that hypermedia's _purpose_ is "documents" over "applications".
-Rather, while the theoretical foundation is there, the implementation is underdeveloped.
-With JavaScript being the only extension point and hypermedia controls not being well integrated to JavaScript
-(why can't I actuate a link without halting my program?),
-developers did not internalize hypermedia and instead used the Web as a dumb pipe for apps that imitate "native" ones.
+Thus far we have (mostly) avoided writing any JavaScript (or hyperscript) in Contact.app, mainly because the functionality
+we implemented has not required it.  In this chapter we are going to look at scripting and, in particular, hypermedia-friendly
+scripting within the context of a Hypermedia-Driven Application.
 
-A goal of this book is to show that it is possible to build sophisticated web applications using the original technology of the web,
-hypermedia, without the application developer needing to reach for the abstractions provided by JavaScript frameworks.
+== Is Scripting Allowed?
 
-htmx itself is of course, written in JavaScript, and one of its advantages is that
-hypermedia interactions that go through htmx expose a rich interface to JavaScript code
-with configuration, events, and htmx's extension support.
+A common criticism of the web is that it's being misused.  There is a narrative that WWW was created as a delivery system
+for "documents", and only came to be used for "applications" by way of an accident or bizarre circumstances.
 
-Because htmx also massively extends what those hypermedia interchanges can be,
-it obviates the need for scripting in many situations.
-This makes it attractive to people who don't want to write JavaScript.
-However, dunking on a programming language is not the aim of our project.
+However, the concept of hypermedia challenges the split of document and application, the distinction of code and data, of
+operator and operand. Hypermedia systems like HyperCard, which preceded the web, featured rich capabilities for active
+and interactive experiences, including scripting.
 
-The goal is not less JavaScript, but less code.
+It is true in many ways that HTML, as specified and implemented, lacks affordances needed to build the kinds of applications
+that were implemented within those older systems. None of this means, however, that hypermedia's _purpose_ is "documents"
+over "applications".
 
-Scripting has been a massive force multiplier for the web.
-Using scripting, web application developers are not only able to enhance their hypertextual websites,
-but also create fully-fledged client-side applications that
-can often compete with native, thick client applications.
-However, with this power, the browser has often become a distribution mechanism for what are effectively cross-platform thick clients, with
-the original, REST-ful web architecture being discarded in favor of a more JavaScript-centric and data-oriented approach.
+Rather, while the theoretical foundation is there, but the implementation is underdeveloped. With JavaScript being the
+only extension point and hypermedia controls not being well integrated to JavaScript  (why can't I click a link without
+halting my program?), developers have not internalized hypermedia and have instead used the Web as a dumb pipe for apps
+that imitate "native" ones.
 
-This is not a bad thing!
-It is a testament to the power of the web and, in particular, of modern browsers,
-that developers are able to build such sophisticated applications with JavaScript.
+A goal of this book is to show that it is possible to build sophisticated web applications using the original technology
+of the web, hypermedia, without the application developer needing to reach for the abstractions provided by the large,
+popular JavaScript frameworks.
 
-In addition to this more JavaScript-centric style,
-we want to develop a style more compatible and consistent with Hypermedia-Driven Applications.
+htmx itself is, of course, written in JavaScript, and one of its advantages is that hypermedia interactions that go
+through htmx expose a rich interface to JavaScript code with configuration, events, and htmx's own extension support.
 
-You are scripting in an HDA-compatible manner if the following two constraints are adhered to:
+Because htmx expands the expressiveness of HTML so much it removes the need for scripting in many situations.
+This makes htmx attractive to people who don't want to write JavaScript, and there are many of those sorts of developers,
+sick to death of the complexity of Single Page Application frameworks.
 
-* The main data format exchanged between server and client must be hypermedia, the same as it would be with no scripting.
+However, dunking on JavaScript is not the aim of the htmx project.
+
+The goal of htmx is not less JavaScript, per se, but rather less code.
+
+Scripting has been a massive force multiplier for the web. Using scripting, web application developers are not only able
+to enhance their HTML websites, but also create fully-fledged client-side applications that can often compete with
+native, thick client applications.
+
+This JavaScript-centric approach to building web applications is a testament to the power of the web and to the sophistication
+of web browsers in partiular.  It has its place in web development: there are situations where the hypermedia approach
+simply can't provide the level of interaction that an SPA can.
+
+However, in addition to this more JavaScript-centric style, we want to develop a style of scripting more compatible and
+consistent with Hypermedia-Driven Applications.
+
+Borrowing from Roy Fielding's notion of "constraints" defining REST, we offer two constraints of hypermedia-friendly
+scripting.  You are scripting in an HDA-compatible manner if the following two constraints are adhered to:
+
+* The main data format exchanged between server and client must be hypermedia, the same as it would be without scripting.
 * Client-side state, outside the DOM itself, is kept to a minimum.
 
-The goal of these constraints is to confine scripting to where it shines best
-and where nothing else comes close: _interaction design_.
-Business logic and presentation logic are the responsibility of the server,
-where we can pick whichever languages or tools are appropriate for our business domain.
-We're not constrained by the browser to use JavaScript or WebAssembly.
-We can still do that, though, if we want. 
+The goal of these constraints is to confine scripting to where it shines best and where nothing else comes close:
+_interaction design_.  Business logic and presentation logic are the responsibility of the server, where we can pick
+whichever languages or tools are appropriate for our business domain.
 
-.The server
+.The Server
 [note]
 ****
-Business logic and presentation logic both being "on the server"
-does not mean they are mixed or coupled. We can modularize them.
-We _should_ modularize them, along with all the concerns of our application.
-Note also that, especially in web development parlance,
-the humble "server" can be a whole fleet of racks, virtual machines, containers and more.
-Even a worldwide network of datacenters is reduced to "the server".
+Keeping business logic and presentation logic both being "on the server"does not mean these two "concerns" are mixed or
+coupled. They can be modularized on the server. In fact, they _should_ be modularized on the server, along with all the
+other concerns of our application.
+
+Note also that, especially in web development parlance, the humble "server" is usually a whole fleet of racks, virtual
+machines, containers and more. Even a worldwide network of datacenters is reduced to "the server" when discussing
+the client-side of a Hypermedia Driven-Application.
 ****
 
-Satisfying these constraints sometimes requires us to diverge from what is
-typically considered best practice for JavaScript.
-Keep in mind that the cultural wisdom of JavaScript was largely developed in JavaScript-centric applications.
-The Hypermedia-driven Application cannot as comfortably fall back on this tradition.
-This book is our contribution to the development of a new style
-and a new best practice for the Hypermedia-Driven Application.
+Satisfying these two constraints sometimes requires us to diverge from what is typically considered best practice for
+JavaScript. Keep in mind that the cultural wisdom of JavaScript was largely developed in JavaScript-centric SPA applications.
 
-Unfortunately, simply listing "best practices" is rarely convincing or edifying.
-To be honest, it's boring.
-Instead, we will demonstrate them by implementing client-side features in Contact.app:
+The Hypermedia-driven Application cannot as comfortably fall back on this tradition. This chapter is our contribution to the
+development of a new style and best practices for what we are calling Hypermedia-Driven Applications.
+
+Unfortunately, simply listing "best practices" is rarely convincing or edifying. To be honest, it's boring.
+
+Instead, we will demonstrate these best practices by implementing client-side features in Contact.app.  We will
+implement three different features, each showing different aspects of hypermedia-friendly scripting:
 
 * We will add an overflow menu to hold the _Edit_, _View_ and _Delete_ actions, to clean up visual clutter in our list of contacts
 * We will add an improved interface for bulk deletion
 * We will add a keyboard shortcut for focusing the search box
 
-The important concept in the implementation of each of these features is that
-while they are implemented entirely in the client-side using scripting,
-they don't exchange information with the server that is not hypermedia,
-and they don't store a significant amount of state in memory outside the DOM itself.
-
+The important takeaway in the implementation of each of these features is that, while they are implemented entirely in
+the client-side using scripting, they _don't exchange information with the server_ via a non-hypermedia format, such
+as JSON, and that they don't store a significant amount of state outside of the DOM itself.
 
 == Scripting tools for the Web
 
-The primary scripting language for the web is, of course, JavaScript,
-which is ubiquitous in web development today.
-A bit of interesting internet lore, however, is that
-JavaScript was not always the only built-in option.
-As the quote from Roy Fielding at the start of this chapter hints,
-"applets" written in other languages such as Java were considered to be
-part of the scripting infrastructure of the web.
-In addition, there was a time period when Internet Explorer supported VBScript,
+The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today.
+
+A bit of interesting internet lore, however, is that JavaScript was not always the only built-in option.
+As the quote from Roy Fielding at the start of this chapter hints, "applets" written in other languages such as Java were considered to be
+part of the scripting infrastructure of the web. In addition, there was a time period when Internet Explorer supported VBScript,
 a scripting language based on Visual Basic.
 
-Today, we have a variety of _transcompilers_ (often shortened to _transpilers_)
-that convert many languages to JavaScript,
-such as TypeScript, Dart, Kotlin, ClojureScript, F# and more.
-There is also the WebAssembly (WASM) bytecode format,
-which is supported as a compilation target for C, Rust,
-and the WASM-first language AssemblyScript.
+Today, we have a variety of _transcompilers_ (often shortened to _transpilers_)that convert many languages to JavaScript,
+such as TypeScript, Dart, Kotlin, ClojureScript, F# and more. There is also the WebAssembly (WASM) bytecode format, which
+is supported as a compilation target for C, Rust, and the WASM-first language AssemblyScript.
 
-However, most of these options are not geared towards an HDA-compatible style of scripting.
-Compile-to-JS languages are often paired with SPA-oriented libraries
-(Dart and AngularDart, ClojureScript and Reagent, F# and Elmish),
-and WASM is currently mainly geared toward linking to C/C++ libraries from JavaScript.
+However, most of these options are not geared towards a hypermedia-friendly style of scripting. Compile-to-JS languages
+are often paired with SPA-oriented libraries (Dart and AngularDart, ClojureScript and Reagent, F# and Elm), and WASM is
+currently mainly geared toward linking to C/C++ libraries from JavaScript.
 
-We will instead focus on three client-side scripting technologies that
-are highly-compatible with the Hypermedia-Driven Application approach:
+We will instead focus on three client-side scripting technologies that _are_ hypermedia-friendly:
 
-* Vanilla JS, that is, using JavaScript without depending on any framework.
+* VanillaJS, that is, using JavaScript without depending on any framework.
+
 * Alpine.js, a JavaScript library for adding behavior directly in HTML.
-* _hyperscript, a non-JavaScript scripting language created alongside htmx.
-Like AlpineJS, it is usually embedded in HTML.
+
+* hyperscript, a non-JavaScript scripting language created alongside htmx. Like AlpineJS, hyperscript is usually embedded in HTML.
 
 Let's take a quick look at each of these scripting options, so we know what we are dealing with.
 
-Note that, as with CSS, we are not going to take a deep dive into any of these. 
-Instead, we are going to show just enough to give you a flavor of how they work and
-(hopefully) spark your interest in looking into any of them more extensively.
+Note that, as with CSS, we are not going to do a deep dive into any of these options.  Instead, we are going to show you
+just enough to give you a flavor of how they work and, we hope, spark your interest in looking into any of them more extensively.
 
 == Vanilla JavaScript
 
 [quote,Merb]
 No code is faster than no code.
 
-Vanilla JavaScript is simply using JavaScript in your application without any intermediate layers.
-The term "Vanilla" entered frontend web dev parlance as it became assumed that
-any sufficiently "advanced" web app would use some library with a name ending in ".js". As JavaScript matured as a scripting language, standardized across browsers and
-provided more and more functionality, these frameworks and libraries have become less crucial.
+Vanilla JavaScript is simply using plain JavaScript in your application, without any intermediate layers.
+The term "Vanilla" entered frontend web dev parlance as it became assumed that any sufficiently "advanced" web app would
+use some library with a name ending in ".js". As JavaScript matured as a scripting language, standardized across browsers and
+provided more and more functionality, these frameworks and libraries have become less important.
 
-However, at the same time, SPAs have become more popular,
-require even more elaborate JavaScript frameworks.
+However, somewhat ironically, as JavaScript became more powerful and removed the need for the first generation of
+JavaScript libraries such as jQuery, it also enabled people to build complext SPA libraries.  These SPA libraries are often
+even more elaborate than the original first generation of JavaScript libraries.
 
-A quote from the website http://vanilla-js.com
-(well worth visiting even though it's slightly outdated)
+A quote from the website http://vanilla-js.com, which is well worth visiting even though it's slightly out of date,
 captures the situation well:
 
 [quote,http://vanilla-js.com]
 VanillaJS is the lowest-overhead, most comprehensive framework I've ever used.
 
-With JavaScript having  matured as a scripting language,
-this is certainly the case for many applications.
-It is especially true in the case of HDAs, since, by using hypermedia,
-your application will not need many of the features
-typically provided by JavaScript frameworks:
+With JavaScript having  matured as a scripting language, this is certainly the case for many applications. It is
+especially true in the case of HDAs, since, by using hypermedia, your application will not need many of the features
+typically provided by more elaborate Single Page Application JavaScript frameworks:
 
 * Client-side routing
 * An abstraction over DOM manipulation, i.e.: templates that automatically update when referenced variables change
-* Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server side rendering is not needed in a HDA because generating HTML on the server is the default.]
+* Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server side rendering
+  is not needed in a HDA because generating HTML on the server is the default.]
 * Attaching dynamic behavior to server-rendered tags on load, i.e. "hydration"
 * Network requests
 
-Without all this complexity being handled in JavaScript,
-your framework needs are dramatically reduced.
+Without all this complexity being handled in JavaScript, your framework needs are dramatically reduced.
 
 One of the best things about VanillaJS is how you install it: you don't have to!
-You can just start writing JavaScript in your web application, and it will simply work.
-Amazing!
 
-That's the good news. The bad news is that, despite improvements over the last decade,
-JavaScript has some significant limitations as a scripting language that
-can make it a less than ideal as a stand-alone scripting technology for Hypermedia Driven Applications:
+You can just start writing JavaScript in your web application, and it will simply work.
+
+That's the good news. The bad news is that, despite improvements over the last decade, JavaScript has some significant
+limitations as a scripting language that can make it a less than ideal as a stand-alone scripting technology for
+Hypermedia Driven Applications:
 
 * Being as established as it is, it has accreted a lot of features and warts.
 * It has a complicated and confusing set of features for working with asynchronous code.
 * Working with events is surprisingly difficult.
-* DOM APIs (a large portion of which were originally designed for Java---fun fact!)
+* DOM APIs (a large portion of which were originally designed for Java, yes _Java_)
   are verbose and don't have a habit of make common functionality easy to use.
 
-None of these limitations are deal-breakers, of course.
-Many of them are gradually being fixed
-and many people prefer the "close to the metal" nature of vanilla JavaScript
-over more elaborate client-side scripting approaches.
+None of these limitations are deal-breakers, of course. Many of them are gradually being fixed and many people prefer
+the "close to the metal" nature of vanilla JavaScript over more elaborate client-side scripting approaches.
 
 == A Simple Counter
 
-To dive into vanilla JavaScript as a front end scripting option,
-let's create a simple counter widget.
-Counter widgets are a common "Hello World" example for JavaScript frameworks,
-so looking at how it can be done in vanilla JavaScript will be instructive.
+To dive into vanilla JavaScript as a front end scripting option, let's create a simple counter widget.
 
-Our counter widget will be very simple: it will have a number, shown as text,
-and a button that increments the number.
+Counter widgets are a common "Hello World" example for JavaScript frameworks, so looking at how it can be done in
+vanilla JavaScript (as well as the other options we are going to look at) will be instructive.
 
-One problem with tackling this problem in vanilla JavaScript is that
-it lacks one thing most JavaScript frameworks provide:
-a default code and architectural style.
+Our counter widget will be very simple: it will have a number, shown as text, and a button that increments the number.
+
+One problem with tackling this problem in vanilla JavaScript is that it lacks one thing that most JavaScript frameworks
+provide: a default code and architectural style.
+
 With vanilla JavaScript, there are no rules!
 
-This isn't all bad. It presents a great opportunity to
-take a small journey through various styles that people have developed for writing their JavaScript.
+This isn't all bad. It presents a great opportunity to take a small journey through various styles that people have
+developed for writing their JavaScript.
 
 === An Inline Implementation
 
@@ -230,32 +217,28 @@ contained within it.
 <3> Find the output via a querySelector() call
 <4> JavaScript allows us use the `++` operator on strings
 
-Not too bad!
+Not too bad.
 
-It's not the most beautiful code, and can be irritating especially if
-you aren't used to the DOM APIs.
-It's a little annoying that we needed to add an `id` to the `output` element.
-The `document.querySelector()` function is a bit verbose compared with, say,
-the `$` function à la jQuery.
+It's not the most beautiful code, and can be irritating especially if you aren't used to the DOM APIs.
 
-But it works! It's also easy enough to understand and (crucially) it doesn't require any other JavaScript libraries.
+It's a little annoying that we needed to add an `id` to the `output` element. The `document.querySelector()` function
+is a bit verbose compared with, say, the `$` function, as provided by jQuery.
 
-So that's the simple, inline approach.
+But it works. It's also easy enough to understand, and crucially it doesn't require any other JavaScript libraries.
 
+So that's the simple, inline approach with VanillaJS.
 
 === Separating Our Scripting Out
 
-While the inline implementation is simple in some sense,
-a more standard way to write this code would be to
-move the code into a separate JavaScript file.
-This JavaScript file would then either be linked to via a `<script src>` tag or
+While the inline implementation is simple in some sense, a more standard way to write this code would be to move the code
+into a separate JavaScript file. This JavaScript file would then either be linked to via a `<script src>` tag or
 placed into an inline `<script>` tag by a build process.
 
-Here we see the HTML and JavaScript _separated out_ from one another,
-in different files. The HTML is now "cleaner" in that there is no JavaScript in it.
-The JavaScript is a bit more complex than in our inline version:
-we need to look up the button using a query selector and add an _event listener_ to
-handle the click event and increment the counter.
+Here we see the HTML and JavaScript _separated out_ from one another, in different files. The HTML is now "cleaner" in
+that there is no JavaScript in it.
+
+The JavaScript is a bit more complex than in our inline version: we need to look up the button using a query selector
+and add an _event listener_ to handle the click event and increment the counter.
 
 .Counter HTML
 [source,html]
@@ -282,20 +265,23 @@ incrementBtn.addEventListener("click", e => { <3>
 <4> The logic stays the same, only the structure around it changes
 
 In moving the JavaScript out to another file, we are following a software design principle known as _Separation of Concerns (SoC)._
+
 Separation of Concerns posits that the various "concerns" (or aspects) of a software project should be divided up into
 multiple files, so that they don't "pollute" one another. JavaScript isn't markup, so it shouldn't be in your HTML,
 it should be _elsewhere_.  Styling information, similarly, isn't markup, and so it belongs in a separate file as well
-(A CSS file, for example.)  For quite some time, this Separation of Concerns was considered the "orthodox" way to build
-web applications.
+(A CSS file, for example.)
+
+For quite some time, this Separation of Concerns was considered the "orthodox" way to build web applications.
 
 A stated goal of Separation of Concerns is that we should be able to modify and evolve each concern independently, with
 confidence that we won't break any of the other concerns.
 
 However, let's look at exactly how this principle has worked out in our simple counter example.  If you look closely
-at the new HTML, it turns out that we've had to add a class to the button.  We addedc this class so that we could look the button
-up in JavaScript and add in an event handler for the "click" event. Now, in both the HTML and the JavaScript, this class
-name is just a string and there isn't any process to _verify_ that the button has the right classes on it or its parents
-to ensure that the event handler is actually added to the right element.
+at the new HTML, it turns out that we've had to add a class to the button.  We added this class so that we could look the button
+up in JavaScript and add in an event handler for the "click" event.
+
+Now, in both the HTML and the JavaScript, this class name is just a string and there isn't any process to _verify_ that
+the button has the right classes on it or its parents to ensure that the event handler is actually added to the right element.
 
 Unfortunately, it has turned out that the careless use of CSS selectors in JavaScript can cause what is known as
 _jQuery soup_.  jQuery soup is a situation where:
@@ -308,17 +294,17 @@ The name "jQuery Soup" comes from the fact that early JavaScript-heavy applicati
 which, perhaps inadvertently, tended to encourage this style of JavaScript.
 
 So, you can see that the notion of "Separation of Concerns" doesn't always work out as well as promised: our concerns
-end up intertwined pretty deeply, even when we separate them into different files.
+end up intertwined or coupled pretty deeply, even when we separate them into different files.
 
 To show that it isn't just naming between concerns that can get you into trouble, consider another small change to our HTML
-that demonstrates the problems with our separation of concerns.  Imagine that we decide to change the number field from
+that demonstrates the problems with our separation of concerns: imagine that we decide to change the number field from
 an `<output>` tag to an `<input type="number">`.
 
-This small change to our HTML will break our JavaScript, despite the fact we have "separated" our concerns!
+This small change to our HTML will break our JavaScript, despite the fact we have "separated" our concerns.
 
 The fix for this issue is simple enough (we would need to change the `.textContent` property to `.value` property), but
 this demonstrates the burden of synchronizing markup changes and code changes across multiple files.  Keeping everything
-in sync can become increasingly difficult as your application size increases .
+in sync can become increasingly difficult as your application size increases.
 
 image::separation-of-concerns-expectation-v-reality.png[]
 
@@ -332,8 +318,8 @@ architectural guideline, but rather a stylistic choice that, as we can see, can 
 
 === Locality
 
-It turns out that there is a burgeoning reaction _agains_ Separation of Concerns.  Consider the following web technologies
-and techniques:
+It turns out that there is a burgeoning reaction _against_ the Separation of Concerns design principle.  Consider the
+following web technologies and techniques:
 
 * JSX
 * LitHTML
@@ -364,7 +350,8 @@ All of these tools achieve Locality of Behavior by having you embed attributes d
 having code look up elements in a document through CSS selectors in order to add event listeners onto them.
 ****
 
-In a Hypermedia Driven Application, we feel that Locality of Behavior is often more important than Separation of Concerns.
+In a Hypermedia Driven Application, we feel that the Locality of Behavior design principle is often more important than 
+the more traditional Separation of Concerns design principle.
 
 === What To Do With Our Counter?
 
@@ -383,9 +370,10 @@ Consider this common situation: you have a popup, and you want it to be dismisse
 listener will need to be on the body element in this situation, far away from the actual popup markup. This means that
 the body element would need to have listeners attached to it that deal with many unrelated components.  Some of these
 components may not even be on the page when it was first rendered, if they are added dynamically after the initial
-HTML page is rendered!
+HTML page is rendered.
 
-So vanilla javaScript and Locality of Behavior don't seem to mesh _quite_ as well as we would like them to.
+So vanilla JavaScript and Locality of Behavior don't seem to mesh _quite_ as well as we would like them to.
+
 The situation is not hopeless, however: it's important to understand that LoB does not require behavior to be _implemented_
 at a use site, but merely _invoked_ there.  That is, we don't need to write all our code on a given element, we just
 need to make it clear that a given element is _invoking_ some code, which can be located elsewhere.
@@ -444,7 +432,7 @@ document.querySelectorAll("[data-counter]") <2>
 <4> Register event handlers
 --
 
-Using RSJS solves, or at least alleviates, many of the problems we pointed out with our first, unstructured example of vanilla JS being
+Using RSJS solves, or at least alleviates, many of the problems we pointed out with our first, unstructured example of VanillaJS being
 split out to a separate file:
 
 * The JS that attaches behavior to a given element is *clear* (though only through naming conventions).
@@ -455,18 +443,19 @@ All in all, RSJS is a good way to structure your vanilla JavaScript in a Hyperme
 JavaScript isn't communicating with a server via a plain data JSON API, or holding a bunch of internal state outside of
 the DOM, this is perfectly compatible with the HDA approach.
 
-Let's take a look at implementing a feature in Contact.App using the RSJS/vanilla JavaScript approach.
+Let's next take a look at implementing a feature in Contact.App using the RSJS/vanilla JavaScript approach.
 
-=== Vanilla JS in action: an overflow menu
+=== VanillaJS in action: an overflow menu
 
-Our homepage has "Edit", "View" and "Delete" links for every contact in our table.
-This uses a lot of space and creates visual clutter.
-We're going to place these actions inside a menu with a button to open it.
+Our homepage has "Edit", "View" and "Delete" links for every contact in our table. This uses a lot of space and creates
+visual clutter.  Let's fix that by placing these actions inside a drop-down menu with a button to open it.
 
-Let's sketch the markup we want for our overflow menu.  First, we need an element, we'll use a `<div>`, to enclose the
+Let's begin by sketching the markup we want for our dropdown menu.  First, we need an element, we'll use a `<div>`, to enclose the
 entire widget and mark it as a menu component.  Within this div, we will have a standard `<button>` that will function
 as the mechanism that shows and hides our menu items.  Finally, we'll have another `<div>` that holds the menu items
-that we are going to show.  These menu items will be simple anchor tags, as they are in the current contacts table.
+that we are going to show.
+
+These menu items will be simple anchor tags, as they are in the current contacts table.
 
 Here is what our updated, RSJS-structured HTML looks like:
 
@@ -488,40 +477,54 @@ Here is what our updated, RSJS-structured HTML looks like:
 <3> A container for our menu items
 <4> Menu items
 
-The roles and ARIA attributes are based on the Menu and Menu Button patterns from the ARIA Authoring Practices Guide. 
-They're currently wrong.
-We'll fix that with JavaScript and RSJS.
+The roles and ARIA attributes are based on the Menu and Menu Button patterns from the ARIA Authoring Practices Guide.
 
-.Intermission: WAI-ARIA
+.What is ARIA?
 ****
-As we web developers create more interactive, app-like websites,
-HTML's repertoire of elements won't have all we need.
-Using CSS and JS, we can endow existing elements with the behavior and appearance of native controls.
+As we web developers create more interactive, app-like websites, HTML's repertoire of elements won't have all we need.
+As we have seen, using CSS and JavaScript, we can endow existing elements with extended behavior and appearances, rivaling
+those of native controls.
 
-However, there is one thing web apps used to be unable to replicate.
-While these widgets were similar enough in appearance for abled users to operate,
-assistive technology (e.g. screen readers) could only report the underlying HTML elements.
-Even if you got all the keyboard interactions right, disabled users often only got mystery meat.
+However, there is one thing web apps used to be unable to replicate. While these widgets are similar enough in appearance
+for most users to operate, assistive technology (e.g. screen readers) can only report the underlying HTML elements.
 
-ARIA was created by W3C's Web Accessibility Initiative (WAI) in 2008 to address this.
-At a surface level, it's a set of attributes you can add to HTML to make it meaningful to assistive software.
-It has two main parts that interact.
+Even if you take the time to get all the keyboard interactions right, some users often are unable to work with these custom
+elements easily.
 
-The first is `role`. This attribute has a predefined set of values:
-`menu`, `dialog`, `radiogroup`...
-These attributes **do not add any behavior**.
-Rather, they are a promise you make to the user:
-_I will make this element work like a menu._
-If you add the role but don't uphold this promise, the experience will be worse than before.
-Hence the mantra:
+ARIA was created by W3C's Web Accessibility Initiative (WAI) in 2008 to address this problem.  At a surface level, it is
+a set of attributes you can add to HTML to make it meaningful to assistive software such as a screen reader.
+
+ARIA has two main components that interact with one another:
+
+The first is the `role` attribute. This attribute has a predefined set of possible values:
+
+* `menu`
+* `dialog`
+* `radiogroup`
+* etc.
+
+The `role` attribute **does not add any behavior** to HTML elements. Rather, it is a promise you make to the user.  When
+you annotate an element as `role='menu'`, you are saying: _I will make this element work like a menu._
+
+Because this is a promise you are making, if you add the `role` attribute to an element but you _don't_ uphold
+the promise, the experience for many users will be _worse_ than if the element had no `role` annotation on it at all.
+
+Because of this, it is written:
 
 "No ARIA is better than Bad ARIA."
 -- WAI, "Read Me First | APG", https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/
 
-The second is a whole range of attributes all sharing a prefix:
-`aria-expanded`, `aria-controls`, `aria-label`...
-These attributes can specify the state of a widget, the relationships between components, or additional semantics.
-Once again, these are promises, not demands.
+The second component of ARIA is a whole range of attributes, all sharing the `aria-` prefix:
+
+* `aria-expanded`
+* `aria-controls`
+* `aria-label`
+* etc.
+
+These attributes can specify various things such as the state of a widget, the relationships between components, or
+additional semantics.
+
+Once again, these attributes are _promises_, not implementations.
 
 Rather than learn all the roles and attributes and try to combine them into a usable widget,
 the best course of action for most developers is to rely on the ARIA Authoring Practices Guide (APG),
@@ -529,18 +532,19 @@ a web resource with practical information aimed directly at web developers.
 
 If you're new to ARIA, check out the following links:
 
- - Read this first: https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/
- - UI patterns: https://www.w3.org/WAI/ARIA/apg/patterns/
- - Good practices: https://www.w3.org/WAI/ARIA/apg/practices/
+ - https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/[ARIA Read Me First]
+ - https://www.w3.org/WAI/ARIA/apg/patterns/[ARIA UI patterns]
+ - https://www.w3.org/WAI/ARIA/apg/practices/[ARIA Good Practices]
 
-And remember: *run accessibility tests*. You wouldn't ship a website you'd never looked at.
+Always remember to test your website for accessibility to ensure a maximum number of users can interact with it
+easily and effectively.
 ****
 
-Let's begin with the RSJS boilerplate:
-query for all elements with some data attribute,
-iterate over them,
-get any relevant descendants.
-We've modified the RSJS boilerplate a bit to integrate with htmx.
+With this ARIA introduction out the way, let's return to our VanillaJS drop down menu.  We'll begin with the RSJS
+boilerplate: query for all elements with some data attribute, iterate over them, get any relevant descendants.
+
+Note that, below, we've modified the RSJS boilerplate a bit to integrate with htmx, in particular we load the apply the
+overflow menu when htmx loads new content.
 
 [source,js]
 ----
@@ -558,18 +562,20 @@ addEventListener("htmx:load", e => overflowMenu(e.target)); <4>
 ----
 <1> With RSJS, you'll be writing `document.querySelectorAll(...).forEach` a lot.
 <2> To keep the HTML clean, we use ARIA attributes rather than custom data attributes here.
-Our outer container still has a data attribute, so this shouldn't be much of an issue.
-<3> We use the spread operator to convert the inconvenient `NodeList` returned by `querySelectorAll` into a normal `Array`.
+<3> Use the spread operator to convert a `NodeList` into a normal `Array`.
 <4> Initialize all overflow menus when the page is loaded or content is inserted by htmx.
 
-Conventionally, we'd keep track of whether the menu is open with a variable or a property in a state object.
-This approach is almost always the right thing in large, client-heavy apps.
-However, it has some drawbacks.
-We'll need to keep the DOM in sync with the state (harder without a framework),
-and lose the ability to serialize the HTML (as the open state won't be stored there).
+Conventionally, we would keep track of whether the menu is open using a JavaScript variable or a property in a JavaScript
+state object.  This approach is common in large, JavaScript-heavy web applications.
 
-Instead, we'll lean on the `hidden` attribute on the menu to tell us it's closed.
-If the HTML of the page is snapshotted and restored, the menu can be restored as well by re-running the JS.
+However, this approach has some drawback:
+
+* We would need to keep the DOM in sync with the state (harder without a framework)
+* We would lose the ability to serialize the HTML (as this open state isn't stored in the DOM, but rather in JavaScript).
+
+Instead of taking this approach, we will use the DOM to store our state.  We'll lean on the `hidden` attribute on the
+menu element to tell us it's closed. If the HTML of the page is snapshotted and restored, the menu can be restored as
+well by simply re-running the JS.
 
 [source,js,highlight=2]
 ----
@@ -581,7 +587,7 @@ If the HTML of the page is snapshotted and restored, the menu can be restored as
 ----
 <1> The `hidden` attribute is helpfully reflected as a `hidden` _property_, so we don't need to use `getAttribute`.
 
-We'll make the menu items non-tabbable. to manage their focus ourselves.
+We'll also make the menu items non-tabbable, so we can manage their focus ourselves.
 
 [source,js,highlight=2]
 ----
@@ -592,7 +598,7 @@ We'll make the menu items non-tabbable. to manage their focus ourselves.
 });
 ----
 
-Let's implement toggling the menu:
+Now let's implement toggling the menu in JavaScript:
 
 [source,js,highlight=2..15]
 ----
@@ -615,44 +621,47 @@ Let's implement toggling the menu:
 
 })
 ----
-<1> Optional parameter to specify desired state.
-This allows us to use one function to open, close, or toggle the menu.
+<1> Optional parameter to specify desired state. This allows us to use one function to open, close, or toggle the menu.
 <2> Focus first item of menu when opened.
 <3> Call `toggleMenu` with current state, to initialize element attributes.
 <4> Toggle menu when button is clicked.
 <5> Close menu when focus moves away.
 
-Let's also make the menu close when we click outside it.
-This will require an event listener on the whole window.
-Be careful with this kind of listener;
-you may find that listeners accumulate as components add listeners and not remove them when they are long gone, that is to say, you will get memory leaks.
+Let's also make the menu close when we click outside it, a nice behavior that mimics how native drop-down menus work. This
+will require an event listener on the whole window.
 
-Unfortunately, there's not an easy way to do stuff when an element is removed.
-The best option is `MutationObserver`, a very useful but heavy API.
+Note that we need to be careful with this kind of listener: you may find that listeners accumulate as components add
+listeners and fail to remove them when the component is removed from the DOM.  This, unfortunately, leads to difficult
+to track down memory leaks.
 
-The pattern (well, _a_ pattern) to avoid this is to check if the attaching component is in the DOM as part of the listener,
-and remove the listener if so.
-It's form of _garbage collection_.
-As is (usually) the case with garbage collection, it removes listeners a nondeterministic amount of time after they are no longer needed.
-With a frequent event like "the user clicks anywhere in the page", it works well enough.
+There is not an easy way in JavaScript to execute logic when an element is removed.  The best option is what is known
+as the `MutationObserver` API.  A `MutationObserver` is very useful, but the API is quite heavy and a bit arcane, so we
+won't be using it for our example.
+
+Instead, we will use a simple pattern to avoid leaking event listeners: when our event listener runs, we will check if the
+attaching component is still in the DOM, and, if the element is no longer in the DOM, we will remove the listener and
+exit.
+
+This is a somewhat hacky, manual form of _garbage collection_.  As is (usually) the case with other garbage collection
+algorithms, our strategy removes listeners in a nondeterministic amount of time after they are no longer needed. Fortunately
+for us, With a frequent event like "the user clicks anywhere in the page" driving the collection, it should work well
+enough for our system.
 
 [source,js,highlight=2..6]
 ----
   button.addEventListener("click", () => toggleMenu())
 
   window.addEventListener("click", function clickAway(event) {
-    if (!menuRoot.isConnected) window.removeEventListener("click", clickAway);
-    if (!menuRoot.contains(event.target)) toggleMenu(false);
+    if (!menuRoot.isConnected) window.removeEventListener("click", clickAway); <1>
+    if (!menuRoot.contains(event.target)) toggleMenu(false); <2>
   });
 });
 ----
-
 <1> This line is the garbage collection
 <2> If the click is outside the menu, close the menu
 
-Now, it's time for keyboard interactions.
-These are pretty similar to one another and not that intricate.
-Let's get them all done.
+Now, let's move on to the keyboard interactions for our dropdown menu. The keyboard handlers turn out to all be pretty
+similar to one another and not particularly intricate, so let's knock them all out in one go:
 
 [source,js]
 ----
@@ -693,21 +702,28 @@ Let's get them all done.
 <7> Close menu when Escape is pressed
 <8> Return focus to menu button when closing menu
 
-I'm pretty sure that covers all our bases.
-That's a lot of code!
-But it's code that encodes a lot of behavior.
+That should cover all our bases, and we'll admit that that's a lot of code. But, in fairness, it's code that encodes a
+lot of behavior.
 
-Though, we still don't support submenus, or menu items being added or removed dynamically.
-If we need more features, it might make more sense to use an off-the-shelf library --- for instance, GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
-For our relatively simple use case, however, this library does a beautiful job.
+Now, our drop-down menu isn't perfect, and it doesn't handle a lot of things.  For example, we don't support submenus,
+or menu items being added or removed dynamically to the menu.  If we needed more menu features like this, it might make
+more sense to use an off-the-shelf library such as, GitHub's https://github.com/github/details-menu-element[`details-menu-element`].
+
+But, for our relatively simple use case, this library does a fine job, and we got to explore ARIA and RSJS while
+implementing it.
 
 == Alpine.js
 
-OK, so that's an in-depth look at how to structure plain "vanilla" JavaScript.  Now let's turn our attention to a JavaScript
-framework that enables a different approach for adding dynamic behavior to your application, Alpine.js (https://alpinejs.dev[]).
-Alpine is a relatively new JavaScript library which allows you to embed your code directly in HTML, akin to the `on*`
-attributes available in plain HTML and JavaScript, but takes this concept much further. Alpine bills itself as a modern
-replacement for jQuery, a widely used, older JavaScript library, and, as you will see, it lives up to that promise.
+OK, so that's an in-depth look at how to structure plain VanillaJS-style JavaScript.  Let's turn our attention to an
+actual JavaScript framework that enables a different approach for adding dynamic behavior to your application,
+https://alpinejs.dev[Alpine.js].
+
+Alpine is a relatively new JavaScript library which allows developers to embed JavaScript code directly in HTML, akin to
+the `on*` attributes available in plain HTML and JavaScript.  However, Alpine takes this concept of embedded scripting
+much further than `on*` attributes.
+
+Alpine bills itself as a modern replacement for jQuery, the widely used, older JavaScript library.  As you will see, it
+definitely lives up to this promise.
 
 Installing Alpine is very easy: it is a single file and is dependency-free, so you can simply include it via a CDN:
 
@@ -723,9 +739,10 @@ Alpine provides a set of HTML attributes, all of which begin with the `x-` prefi
 The content of `x-data` is a JavaScript expression which evaluates to an object.  The properties of this object can, then,
 be access within the element that the `x-data` attribute is located on.
 
-Let's look at our counter example, and how to implement it using Alpine.  For the counter, the only state we need to
-keep track of is the current number, so let's declare a JavaScript object with one property, `count`, in an `x-data`
-attribute on the div for our counter:
+To get a flavor of what AlpineJS looks like, let's look at how to implement our counter example using it.
+
+For the counter, the only state we need to keep track of is the current number, so let's declare a JavaScript object
+with one property, `count`, in an `x-data` attribute on the div for our counter:
 
 .Counter with Alpine, line 1
 [source,html]
@@ -735,7 +752,9 @@ attribute on the div for our counter:
 
 This defines our state, that is, the data we are going to be using to drive dynamic updates to the DOM.  With the state
 declared like this, we can now use it _within_ the div element it is declared on.  Let's add an `output` element with
-an `x-text` attribute.  We will _bind_ the `x-text` attribute to the `count` attribute we declared in the `x-data` attribute
+an `x-text` attribute.
+
+Next, we will _bind_ the `x-text` attribute to the `count` attribute we declared in the `x-data` attribute
 on the parent `div` element.  This will have the effect of setting the text of the `output` element to whatever the
 value of `count` is: if `count` is updates, so will the text of the `output`.  This is "reactive" programming, in that
 the DOM will "react" to changes to the backing data.
@@ -749,11 +768,12 @@ the DOM will "react" to changes to the backing data.
 <1> The `x-text` attribute.
 
 Next, we need to update the count, using a button.  Alpine allows you to attach event listeners with the `x-on` attribute.
+
 To specify the event to listen for, you add a colon and then the event name after the `x-on` attribute name.  Then, the
 value of the attribute is the JavaScript you wish to execute.  This is similar to the plain `on*` attributes we discussed
 earlier, but it turns out to be much more flexible.
 
-We want to listen for a `click` event, and we want to increment `count` when a click occurs, so here is what our Alpine
+We want to listen for a `click` event, and we want to increment `count` when a click occurs, so here is what the Alpine
 code will look like:
 
 .Counter with Alpine, the full thing
@@ -768,8 +788,7 @@ code will look like:
 
 <1> With `x-on`, we specify the attribute in the attribute _name_.
 
-And, would you look at that, we're done already! A simple component, like a counter, should be simple, and Alpine sure
-delivers on that!
+And that's all it takes.  A simple component like a counter should be simple, and Alpine delivers.
 
 === `x-on:click` vs. `onclick`
 
@@ -863,8 +882,9 @@ Now, when a checkbox is checked or unchecked, the `selected` array will be updat
 Furthermore, mutations we make to the `selected` array will similarly be reflected in the checkboxes' state.  This is
 known as a _two-way_ binding.
 
-With this code written, we can make the toolbar appear and disappear, based on whether contact checkboxes are selected!
-Awesome.
+With this code written, we can make the toolbar appear and disappear, based on whether contact checkboxes are selected.
+
+Very slick.
 
 ==== Implementing Actions
 
@@ -884,7 +904,7 @@ For the _Cancel_ button, our job is quite simple:
 ----
 <1> Just reset the `selected` array
 
-Pretty easy!
+Once again, AlpineJS makes this very easy.
 
 The "Delete" button, however, will be a bit more complicated.  It will need to do two things: first it will confirm
 if the user indeed intends to delete the contacts selected, and, if the user confirms the action, it will use the
@@ -903,8 +923,10 @@ htmx JavaScript API to issue a `DELETE` request.
 Note that we are using the short-circuiting behavior of the `&&` operator in JavaScript to avoid the call to
 `htmx.ajax()` if the `confirm()` call returns false.
 
-The `htmx.ajax()` function is just a way to directly access the normal, HTML-driven hypermedia exchange that htmx's
-attributes give you from JavaScript.  We pass in that we want ot issue a `DELETE` to `/contacts`.  We then pass in
+The `htmx.ajax()` function is just a way to access the normal, HTML-driven hypermedia exchange that htmx's
+HTML attributes give you directly from JavaScript.
+
+Looking at how we call `htmx.ajax`, we first pass in that we want to issue a `DELETE` to `/contacts`.  We then pass in
 two additional pieces of information: `source` and `target`. The `source` properly is the element from which htmx will
 collect data to include in the request. We set this to `$root`, which is a special symbol in Alpine that will be
 the element that has the `x-data` attribute declared on it.  In this case, it will be  the form containing all of our
@@ -913,29 +935,32 @@ contacts. The `target`, or where the response HTML will be placed, is just the e
 
 Note that we are using Alpine here in a Hypermedia Driven Application compatible manner.  We _could_ have issued an
 AJAX request directly from Alpine and perhaps updated an `x-data` property depending on the results of that request.
-But, instead, we delegated to htmx's JavaScript API, which made a _hypermedia exchange_ with the server.  This is the
-key to scripting in a Hypermedia Driven Application.
+But, instead, we delegated to htmx's JavaScript API, which made a _hypermedia exchange_ with the server.
+
+This is the key to scripting in a hypermedia-friendly manner within a Hypermedia-Driven Application.
 
 So, with all of this in place, we now have a much improved experience for performing bulk actions on contacts:  less
 visual clutter and the toolbar can be extended with more options without creating bloat in the main interface of our app.
 
 == _hyperscript
 
-The next scripting technology we are going to look at is a bit further afield: _hyperscript (https://hyperscript.org[])
-While previous two examples are JavaScript-oriented, _hyperscript is an entire new scripting language for front-end development.
-_hyperscript has a completely different syntax than JavaScript, and is based on an older language called HyperTalk.  HyperTalk
-was the scripting language for a technology called HyperCard, an old hypermedia system available on early Macintosh Computers.
+The final scripting technology we are going to look at is a bit further afield: _hyperscript (https://hyperscript.org[])
+
+While previous two examples are JavaScript-oriented, _hyperscript is an _entire new_ scripting language for front-end
+development. _hyperscript has a completely different syntax than JavaScript, based on an older language called HyperTalk.
+HyperTalk was the scripting language for a technology called HyperCard, an old hypermedia system available on early
+Macintosh Computers.
 
 The most noticeable thing about \_hyperscript is that it resembles English prose more than it resembles other programming
-languages. \_hyperscript was initially created as a sibling project to htmx, because it was felt that JavaScript wasn't
-event-oriented enough and made adding small script enhancements to htmx applications too cumbersom.  Like Alpine,
-\_hyperscript, is positioned as a modern jQuery replacement and, further, as alternative to JavaScript.
+languages. \_hyperscript was initially created as a sibling project to htmx, because we felt that JavaScript wasn't
+event-oriented enough, which made adding small scripting enhancements to htmx applications cumbersome.  Like Alpine,
+\_hyperscript, is a modern jQuery replacement.
 
 Also like Alpine, _hyperscript allows you to write your scripting inline, in HTML.
 
-Unline Alpine, \_hyprescript is _not_ reactive.  It instead focuses on making DOM manipulations in response to events
-easy and clear. It has built-in language constructs for many DOM operations, preventing you from needing to navigate
-the sometimes-verbose JavaScript DOM APIs.
+Unline Alpine, however, \_hyprescript is _not_ reactive.  It instead focuses on making DOM manipulations in response to events
+easy to write and easy to read. It has built-in language constructs for many DOM operations, preventing you from needing
+to navigate the sometimes-verbose JavaScript DOM APIs.
 
 We will not be doing a deep dive on the language, but again just want to give you a flavor of what scripting in
 _hyperscript is like, so you can pursue the language in more depth later if you find it interesting.
@@ -955,7 +980,7 @@ Let's look at how to implement the simple counter component we have been looking
  an `output` element and a `button` inside of a `div`.  To implement the counter, we will need to add a small bit of
 \_hyperscript to the button.  On a click, the button should increment the text of the previous `output` tag.
 
-Well, it turns out that that last sentence is almost valid \_hyperscript!
+It turns out that that last sentence is nearly valid \_hyperscript!
 
 Here is our code:
 
@@ -966,14 +991,14 @@ Here is our code:
   <button _="on click increment the textContent of the previous <output/>">Increment</button> <1>
 </div>
 ----
-<1> This is what _hyperscript looks like, believe it or not!
+<1> This is what _hyperscript looks like, believe it or not
 
-Let's go through each component of the _hyperscript:
+Let's go through each component of this script:
 
 * `on click` This is an event listener, telling the button to listen for a `click` event and then executing
   the remaining code
 
-* `increment` This is a "command"  in \_hypsercipt that, well, increments things, similar to the `++` operator in JavaScript
+* `increment` This is a "command"  in \_hyperscript that "increments" things, similar to the `++` operator in JavaScript
 * `the` "the" doesn't have any semantic meaning \_hyperscript, but can used to make scripts more readable
 * `textContent of` -  This one form of _property access_ in \_hyperscript.  You are probably familiar with the JavaScript
    syntax `a.b`, meaning "Get the property `b` on object `a`\".  \_hyperscript supports this syntax, but _also_ supports
@@ -981,8 +1006,8 @@ Let's go through each component of the _hyperscript:
 *  `the previous` The `previous` expression in hyperscript finds the previous element in the DOM that matches some condition
 *  `<output />` This is a _query literal_, which is a CSS selector is wrapped between "<" and "/>"
 
-In this code, the `previous` keyword (and the accompanying `next`) is an example of how _hyperscript makes DOM operations
-easier: there is no such native functionality to be found in the standard DOM API, and implementing it is actually trickier
+In this code, the `previous` keyword (and the accompanying `next` keyword) is an example of how _hyperscript makes DOM operations
+easier: there is no such native functionality to be found in the standard DOM API, and implementing this in VanillaJS is trickier
 than you might think!
 
 So, you can see, \_hyperscript is very expressive, particularly when it comes to DOM manipulations.  This makes it
@@ -1045,9 +1070,6 @@ we want!  We want to have this key work _globally_, no matter which element has 
 Not a problem!  We can listen for the `keyDown` event elsewhere by using a `from` clause in our event handler.  In this
 case we want to listen for the `keyDown` from the window, and our code ends up looking, naturally, like this:
 
-We need to attach the listener to the whole window instead.
-No problem:
-
 .Listening Globally
 [source, hyperscript]
 ----
@@ -1055,7 +1077,7 @@ No problem:
 ----
 
 Using the `from` clause, we can attach the listener to the window while, at the same time, keeping the code on the
-element it logically relates to.  Very nice!
+element it logically relates to.
 
 Now that we've picked out the event we want to use to focus the search box, let's implement the actual focusing by
 calling the standard `.focus()` method.
@@ -1100,11 +1122,13 @@ native support for responding to and sending events, as well as for common event
 or rate limiting events.  Hyperscript also provides declarative mechanisms for synchronizing events within a given element
 and across multiple elements.
 
-Again we wish to stress that, in this example, we are not stepping outside the line of a Hypermedia Driven
+Again we wish to stress that, in this example, we are not stepping outside the lines of a Hypermedia-Driven
 Application: we are only adding front-end, client-side functionality with our scripting.  We are not creating and
 managing a large amount of state outside of the DOM itself, or communicating with the server in a non-hypermedia
-exchange.  Additionally, since \_hyperscript embeds so well in HTML, it keeps the focus _on the hypermedia_, rather than
-on the scripting logic.
+exchange.
+
+Additionally, since \_hyperscript embeds so well in HTML, it keeps the focus _on the hypermedia_, rather than on the
+scripting logic.
 
 Taken all together, given a certain style of scripting and certain scripting needs, \_hyperscript can provide an
 excellent scripting experience for your Hypermedia Driven Application.  Of course, it is small and obscure programming
@@ -1184,7 +1208,7 @@ And now, when this button is clicked, we get a nice looking dialog in our web ap
 
 image::screenshot_sweet_alert.png[]
 
-Much nicer than the system confirmation dialog!  Still, this feels a little wrong.  This is a lot of code to write
+Much nicer than the system confirmation dialog.  Still, this feels a little wrong.  This is a lot of code to write
 just to trigger a slightly nicer `confirm()`, isn't it?  And the htmx JavaScript code we are using here feels a little
 awkward.  It would be more natural to move the htmx out to attributes on the button, as we have been doing, and then
 trigger the request via events.
@@ -1224,9 +1248,9 @@ the exact configuration we want for our dialog.
 If the user confirms the action, a `confirmed` event will be triggered on the button.  This means that we can go back
 to using our trusty htmx attributes!  Namely, we can move `DELETE` to an `hx-delete` attribute, and we can we can use
 `hx-target` to target the body.  And then, and here is the crucial step, we can use the `confirmed` event that is
-triggered in the `sweetConfirm()` function, to trigger the request, but adding an `hx-trigger` for it!
+triggered in the `sweetConfirm()` function, to trigger the request, but adding an `hx-trigger` for it.
 
-Here is
+Here is what our code looks like:
 
 .An Event-based Confirmation Dialog
 [source,html]
@@ -1242,10 +1266,11 @@ Here is
 <2> We pass the button in to the function, so an event can be triggered on it
 <3> We pass through the SweetAlert2 configuration information
 
-Now, as you can see, this event-based code is much cleaner and certainly more "HTML-ish".  The key to this cleaner
-implementation is that our new `sweetConfirm()` function an event that htmx is able to listen for.  This is why a rich
-event model is important to look for when choosing a library to work with, both with htmx and with Hypermedia Driven
-Applications in general.
+As you can see, this event-based code is much cleaner and certainly more "HTML-ish".  The key to this cleaner
+implementation is that our new `sweetConfirm()` function fires an event that htmx is able to listen for.
+
+This is why a rich event model is important to look for when choosing a library to work with, both with htmx and with
+Hypermedia-Driven Applications in general.
 
 Unfortunately, due to the prevalence and dominance of the JavaScript-first mindset today, many libraries are like
 SweetAlert2: they expect you to pass a callback in the first style.  In these cases you can use the technique we
@@ -1260,15 +1285,17 @@ In case of conflict, consider users over authors over implementors over specifie
 ____
 
 We have shown you quite a few tools and techniques for scripting in a Hypermedia Driven Application.  How should you
-pick between them?  The sad truth is that there will never be a single, always correct answer to this question.  Are
-you committed to vanilla JavaScript-only, perhaps due to company policy?  Well, you can use vanilla JavaScript effectively
-to script your Hypermedia Driven Application.  Do you have more leeway and like the look of Alpine.js?  That's a great
-way to add more structured, localized JavaScript to your application, and offers some nice reactive features as well.
+pick between them?  The sad truth is that there will never be a single, always correct answer to this question.
 
-Are you perhaps a bit more wild in your technical choices?  Maybe \_hypercript would be worth taking a look at.  (We
-think so!)
+Are you committed to vanilla JavaScript-only, perhaps due to company policy?  Well, you can use vanilla JavaScript effectively
+to script your Hypermedia-Driven Application.
 
-Sometimes you might even consider picking two (or more!) of these approaches within an application.  Each has its own
+Do you have more leeway and like the look of Alpine.js?  That's a great way to add more structured, localized JavaScript
+to your application, and offers some nice reactive features as well.
+
+Are you a bit more bold in your technical choices?  Maybe \_hypercript would be worth taking a look at.  (We certainly think so.)
+
+Sometimes you might even consider picking two (or more) of these approaches within an application.  Each has its own
 strengths and weaknesses, and all of them are relatively small and self-contained, so picking the right tool for the job
 at hand might be the best approach.
 
@@ -1281,17 +1308,6 @@ we would focus with these more general concerns:
 * Favoring using events, rather than hard-coded callbacks or method calls
 
 But even on these topics, sometimes a web developer has to do what a web developer has to do.  If the perfect widget
-for your application exists but, darn it, it uses a JSON data API, that's OK.  Just don't make it a habit!
+for your application exists but, darn it, it uses a JSON data API, that's OK.
 
-== Summary
-
-* Maximize locality of behavior, sometimes at the expense of separation of concerns.
-* Avoid maintaining large amounts of state outside of the DOM.
-* Avoid communicating with the server using JSON data APIs.
-* Use progressive enhancement.
-* If you're mostly going to write reusable, generalized components: use vanilla JavaScript with RSJS.
-* If you're mostly going to write one-off, specialized components: use Alpine.js or \_hyperscript.
-* If you need a common UI pattern that isn't built into HTML: use a library.
-* If you're going to write such a library yourself, use vanilla JS with RSJS.
-* Don't worry too much about theoretical purity.
-
+Just don't make it a habit.

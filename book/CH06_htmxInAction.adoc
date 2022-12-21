@@ -940,7 +940,7 @@ This is the common "click to load" UX pattern, found in more advanced web applic
 
 [#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .A Click To Load UI
-image::screenshot_click_to_load.png[]
+image::screenshot_click_to_load.txt.svg[]
 
 Here, you have a button that you can click, and it will load the next set of contacts directly into the page, rather
 than "paging" to the next page.  This allows you to keep the current contacts "in context" visually on the page, but

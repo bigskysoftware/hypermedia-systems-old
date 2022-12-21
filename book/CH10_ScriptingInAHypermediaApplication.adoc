@@ -20,9 +20,9 @@ lacks affordances needed to build the kinds of applications
 that were implemented within those older systems.
 None of this means, however, that hypermedia's _purpose_ is "documents" over "applications".
 Rather, while the theoretical foundation is there, the implementation is underdeveloped.
-With JavaScript being the only extension point and hypermedia controls not being well integrated to JavaScript (why can't I actuate a link without halting my program?),
-many developers were not enticed to internalize hypermedia
-and instead used the Web as a dumb pipe for apps that imitate "native" ones.
+With JavaScript being the only extension point and hypermedia controls not being well integrated to JavaScript
+(why can't I actuate a link without halting my program?),
+developers did not internalize hypermedia and instead used the Web as a dumb pipe for apps that imitate "native" ones.
 
 A goal of this book is to show that it is possible to build sophisticated web applications using the original technology of the web,
 hypermedia, without the application developer needing to reach for the abstractions provided by JavaScript frameworks.

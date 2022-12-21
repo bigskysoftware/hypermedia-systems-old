@@ -8,7 +8,7 @@
 [partintro]
 == Hypermedia Reconsidered
 
-I hope that in this book we have managed to convince you that hypermedia, rather than being a "legacy" technology
+We hope that in this book we have managed to convince you that hypermedia, rather than being a "legacy" technology
 or a technology only appropriate for "documents" of links, text and pictures, is, in fact, a powerful technology for
 building _applications_.  In the books have seen how to build sophisticated user interfaces for both the web, with htmx,
 and for a mobile application, using HyperView, using hypermedia as a core underlying application technology.
@@ -67,4 +67,4 @@ put the endless swirl of the "new new" aside, look back on where the web came fr
 
 Perhaps it's time to give hypermedia a chance.
 
-I hope you will.
+We hope you will.

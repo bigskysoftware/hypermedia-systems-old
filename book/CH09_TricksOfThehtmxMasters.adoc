@@ -3,25 +3,18 @@
 :chapter: 09
 :url: ./deep-htmx/
 
-This chapter covers
-
-* The details of htmx attributes
-* Events & htmx
-* HTTP Requests & htmx
-* Updating Other Content
-* Debugging htmx Applications
-* Security Considerations
-* Configuring htmx
 
 [partintro]
-== Getting Deeper Into htmx
+== Advanced htmx
 
 In this chapter we are going to look more deeply into htmx.  We've accomplished quite a bit with what we've learned
-so far, but, when you are developing Hypermedia Driven Applications, there are likely to be situations that arise
-that require additional functionality to address cleanly.  We will go over some less commonly used attributes in htmx,
-as well as expand on the details of some attributes we have already used.
+so far, but, when you are developing Hypermedia-Driven Applications, there are likely to be situations that arise
+that require additional functionality to address cleanly.
 
-Additionally, we will look at the functionality that htmx offers beyond simple HTML attributes:  how htmx extends
+We will go over some the more advanced attributes in htmx, as well as expand on the advanced details of some attributes we
+have already used.
+
+Additionally, we will look at functionality that htmx offers beyond simple HTML attributes:  how htmx extends
 standard HTTP request and responses, how htmx works with (and produces) events, and how to approach situations where
 there isn't a simple, single target on the page to be updated.
 
@@ -29,9 +22,13 @@ Finally, we will take a look at practical considerations when doing htmx develop
 effectively, security considerations you will need to take into account when working with htmx, and how to configure
 the behavior of htmx.
 
+By understanding all the features and techniques in this chapter, you should will be able to pull off extremely
+sophisticated user interfaces using only htmx and perhaps a small bit of hypermedia-friendly client-side scripting.
+
 == htmx Attributes
 
-Thus far we have, we've used about fifteen different attributes from htmx in our application.  The most important ones have been:
+Thus far we have, we've used about fifteen different attributes from htmx in our application.  The most important ones
+have been:
 
 |===
 |Attribute |Use
@@ -59,7 +56,7 @@ cases, the default behavior, `innerHTML`, which swaps the inner HTML of the elem
 cases where we wanted to override this behavior and use `outerHTML`, for example.  And, in chapter 3, we discussed some
 other swap options beyond these two, `beforebegin`, `afterend`, etc.
 
-In chapter 5, we also looked at the `swap` delay modifier for `hx-swap`, which allowed us to fade some content out before
+In chapter 6, we also looked at the `swap` delay modifier for `hx-swap`, which allowed us to fade some content out before
 it was removed from the DOM.
 
 In addition to these, `hx-swap` also supports the following modifiers:
@@ -98,7 +95,7 @@ when the request had completed, we would write the following HTML:
 ----
 <1> This tells htmx to show the top of the body after the swap occurs
 
-More details and examples can be found online at the documentation page for `hx-swap`: https://htmx.org/attributes/hx-swap/
+More details and examples can be found online at the https://htmx.org/attributes/hx-swap/[documentation page] for `hx-swap`.
 
 === `hx-trigger`
 
@@ -175,7 +172,7 @@ Here are the other modifiers available on `hx-trigger`:
 
 ==== Filters
 
-The `hx-trigger` attribute allows you to specify a _filter_ to events by using square brackets enclosing a JavaScript
+The `hx-trigger` attribute allows you to specify a _filter_ for events by using square brackets enclosing a JavaScript
 expression after the event name.
 
 Let's say you have a complex situation where contacts should only be retrievable in certain situations, and you have
@@ -188,6 +185,7 @@ an event filter in htmx, you would write the following HTML:
 ----
 <script>
   function contactRetrievalEnabled() {
+      // code to test if contact retrieval is enabled
       ...
   }
 </script>
@@ -195,7 +193,7 @@ an event filter in htmx, you would write the following HTML:
   Get Contacts
 </button>
 ----
-<1> the event filter, calling `contactRetrievalEnabled()`
+<1> A request is issued on click only when `contactRetrievalEnabled()` returns `true`
 
 The button will not issue a request if `contactRetrievalEnabled()` returns false, allowing you to dynamically control
 when the request will be made.  Common situations that call for an event trigger are:
@@ -224,6 +222,7 @@ documentation page: https://htmx.org/attributes/hx-trigger/
 === Other Attributes
 
 htmx offers many other less commonly used attributes for fine-tuning the behavior of your Hypermedia Driven Application.
+
 Here are some of the most useful ones:
 
 |====
@@ -295,20 +294,26 @@ buttons within the `div` will not issue requests until that has finished.
 
 The `hx-sync` attribute supports a few different strategies that allow you to, for example, replace an existing request
 in flight, or queue requests with a particular queuing strategy.  You can find complete documentation, as well as
-examples, at the documentation page for `hx-sync`: https://htmx.org/attributes/hx-sync/
+examples, at the https://htmx.org/attributes/hx-sync/[documentation page] for `hx-sync`.
 
 As you can see, htmx offers a lot of attribute-driven functionality for more advanced Hypermedia Driven Applications.
-A complete reference for all htmx attributes can be found at https://htmx.org/reference/#attributes
+A complete reference for all htmx attributes can be found https://htmx.org/reference/#attributes[on the htmx website].
 
 == Events
 
-We have been working with events in htmx primary via the `hx-trigger` attribute.  This has proven to be a powerful
-mechanism for driving our application using declarative, HTML-friendly syntax.  However, there is more to events
-and htmx than just `hx-trigger`.
+We have been working with JavaScript events in htmx primarily via the `hx-trigger` attribute.  This simple (well, not
+so simple) attribute has proven to be a powerful mechanism for driving our application using a declarative, HTML-friendly
+syntax.
+
+Events turn out to be a crucial component of both the extension of HTML as a hypermedia, as well as a crucial component
+of hypermedia-friendly scripting.  Events are the "glue" that brings the DOM, HTML, htmx and scripting together, with the
+DOM acting as a sophisticated "event bus" for our application.  We really can't stress how important Events are for
+building an advanced Hypermedia-Driven Application, and we encourage you to learn them
+https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events[in depth].
 
 === htmx-generated Events
 
-It turns out that, in addition to making it easy to _respond_ to events, htmx also _emits_ many useful events.  You
+In addition to making it easy to _respond_ to events, htmx also _emits_ many useful events.  You
 can use these events to add more functionality to your application, either via htmx itself, or by way of scripting.
 
 Here are some of the most commonly used events in htmx:
@@ -329,9 +334,6 @@ Here are some of the most commonly used events in htmx:
 |A custom event that can be sent to an htmx-powered element to abort an open request
 
 |===
-
-We have already seen how to use the `htmx:load` event, using the `htmx.onLoad()` API in the sortable.js example, which
-is probably one of the most common uses of events.
 
 === Using The `htmx:configRequest` Event
 
@@ -359,12 +361,17 @@ the `headers` property is read by htmx and used to construct the headers for an 
 JavaScript code, we have added a new custom header to every AJAX request that htmx makes.  Slick!
 
 You can also update the `parameters` property to change the parameters submitted by the request, change the target
-of the request, and so on.  Full documentation for the `htmx:configRequest` event can be found here: https://htmx.org/events/#htmx:configRequest
+of the request, and so on.
+
+Full documentation for the `htmx:configRequest` event can be found
+https://htmx.org/events/#htmx:configRequest[on the htmx website].
 
 === Canceling a Request using `htmx:abort`
 
-So we can listen for many useful events from htmx, and we can respond to events using `hx-trigger`.  What else can
-we do with events?  It turns out that htmx itself listens for one special event, `htmx:abort`.  When htmx receives this
+We can listen for any of the many useful events from htmx, and we can respond to those events using `hx-trigger`.  What
+else can we do with events?
+
+It turns out that htmx itself listens for one special event, `htmx:abort`.  When htmx receives this
 event on an element that has a request in flight, it will abort the request.
 
 Consider a situation where we have a potentially long-running request to `/contacts`, and we want to offer a way for
@@ -388,8 +395,9 @@ Here is what the code might look like:
 
 So now, if a user clicks on the "Get Contacts" button and the request takes a while, they can click on the "Cancel"
 button and end the request.  Of course, in a more sophisticated user interface, you may want to disable the "Cancel"
-button unless an HTTP request is in flight, but that would be a pain to implement in pure JavaScript.  Thankfully
-it isn't too bad to implement in hyperscript, so let's take a look at what that would look like:
+button unless an HTTP request is in flight, but that would be a pain to implement in pure JavaScript.
+
+Thankfully it isn't too bad to implement in hyperscript, so let's take a look at what that would look like:
 
 .A hyperscript-Powered Button With An Abort
 [source, html]
@@ -416,8 +424,8 @@ have discussed before how HTTP requests and responses support _headers_, name-va
 a given request or response.  We took advantage of the `HX-Trigger` request header, which includes the id of the element
 that triggered a given request.
 
-It turns out that there is a _response_ header, also named `HX-Trigger` in that htmx supports.  This response header
-allows you to trigger an event on the element that submitted an AJAX request.  This turns out to be a powerful way
+In addition to this _request header_, htmx also supports a _response_ header also named `HX-Trigger`.  This response header
+allows you to _trigger an event_ on the element that submitted an AJAX request.  This turns out to be a powerful way
 to coordinate elements in the DOM in a decoupled manner.
 
 To see how this might work, lets consider the following situation: we have a button that grabs new contacts from some
@@ -431,7 +439,7 @@ the table.
 How could we implement this using the `HX-Trigger` response header?  Well, we could conditionally add an `HX-Trigger`
 response header with the value `contacts-updated`, which would trigger the `contacts-updated` event on the button that
 made the AJAX request to `/integrations/1`.  And we can then take advantage of the `from:` modifier of the `hx-trigger`
-attribute to listen for that event!  Now we can effectively trigger htmx request from the server side!
+attribute to listen for that event.  Now we can effectively trigger htmx request from the server side.
 
 Here is what the client-side code might look like:
 
@@ -455,9 +463,9 @@ The table listens for the `contacts-updated` event, and it does so on the `body`
 element since the event will bubble up from the button, and this allows us to not couple the button and table together:
 we can move the button and table around as we like and, via events, the behavior we want will continue to work fine.
 Additionally, we may want _other_ elements or requests to trigger the `contacts-updated` event, so this provides a
-general mechanism for refreshing the contacts table in our application.  Very nice!
+general mechanism for refreshing the contacts table in our application.
 
-Now, we are omitting the server side implementation of this feature in the interest of simplicity, but this gives you
+We are omitting the server side implementation of this feature in the interest of simplicity, but this gives you
 and idea of how the `HX-Trigger` response header can be used to coordinate sophisticated interactions in the DOM.
 
 == HTTP Requests & Responses
@@ -484,7 +492,7 @@ HTTP responses:
 
 |===
 
-You can find a reference for all requests and response headers here: https://htmx.org/reference/#headers
+You can find a reference for all requests and response headers https://htmx.org/reference/#headers[here].
 
 === HTTP Response Codes
 
@@ -518,7 +526,7 @@ document.body.addEventListener('htmx:beforeSwap', function(evt) { <1>
 
 You can also use the `htmx:beforeSwap` event to configure if the response should be swapped into the DOM and what element
 the response should target.  This gives you quite a bit of flexibility in choosing how you want to use HTTP Response
-codes in your application.  Full documentation on the `htmx:beforeSwap` event can be found here: https://htmx.org/events/#htmx:beforeSwap
+codes in your application.  Full documentation on the `htmx:beforeSwap` event can be found https://htmx.org/events/#htmx:beforeSwap[here].
 
 == Updating Other Content
 
@@ -571,10 +579,10 @@ In this case, instead of using an event, let's take advantage of the `hx-swap-oo
 Now let's look at a potential response to the `POST` to `/integrations/1`. This response will include the "regular"
 content that needs to be swapped into the button, per the usual htmx mechanism.  But it will also include a new version,
 updated version of the contacts table, which will be marked as `hx-swap-oob="true"`.  This content will be removed from
-the response so it is not inserted into the button, but will be instead swapped into the DOM in place of the existing
+the response, so it is not inserted into the button but will be instead swapped into the DOM in place of the existing
 table since it has the same id value.
 
-.A Response With Out of Band Content
+.A Response With Out-of-Band Content
 [source]
 ----
 HTTP/1.1 200 OK
@@ -591,7 +599,7 @@ Pull Contacts From Integration <1>
 <2> this content will be removed from the response and swapped by id
 
 Using this technique, you are able to piggyback content updates of other elements on top of requests by other elements.
-The `hx-swap-oob` attribute supports other additional features, all of which are documented here: https://htmx.org/attributes/hx-swap-oob/
+The `hx-swap-oob` attribute supports other additional features, all of which are documented https://htmx.org/attributes/hx-swap-oob/[here].
 
 Depending on how exactly your server side templating technology works, and what level of interactivity your application
 requires, out of band swapping can be a powerful mechanism for more flexible content updates.
@@ -603,7 +611,7 @@ events to update elements.  This approach can be very clean, but also requires a
 and events, and a commitment to the event-driven approach.  While we like this style of development, it isn't for everyone
 and we typically recommend this only if the htmx philosophy of event-driven hypermedia really speaks to you.
 
-If it _does_ speak to you, however, we say: go for it!  We've created some very complex and flexible user interfaces using
+If it _does_ speak to you, however, we say: go for it.  We've created some very complex and flexible user interfaces using
 this approach, and we are quite fond of it.
 
 === Being Pragmatic
@@ -688,9 +696,13 @@ htmx:beforeSwap
 <body hx-ext="class-tools, preload">
 ----
 
-Yikes!  Not exactly easy on the eyes, is it?  But, if you take a deep breath and squint, you can see that it isn't
+Not exactly easy on the eyes, is it?
+
+But, if you take a deep breath and squint, you can see that it isn't
 _that_ bad: a series of htmx events, some of which we have seen before (there's `htmx:configRequest`!), get logged
-to the console, along with the element they are triggered on.  After a bit of reading and filtering, you will be
+to the console, along with the element they are triggered on.
+
+After a bit of reading and filtering, you will be
 able to make sense of the event stream, and it can help you debug htmx-related issues.
 
 === Monitoring Events in Chrome
@@ -701,7 +713,9 @@ somewhere.
 
 In cases like this you will need recourse to a tool available in the browser itself.  Fortunately, the Chrome browser
 by Google provides a very useful function, `monitorEvents()`, that allows you to monitor _all_ events that are triggered
-on an element.  This feature is available _only_ in the console, so you can't use it in code on your page.  But, if
+on an element.
+
+This feature is available _only_ in the console, so you can't use it in code on your page.  But, if
 you are working with htmx in Chrome, and are curious why an event isn't triggering on an element, you can open the
 developers console and type the following:
 
@@ -715,7 +729,7 @@ This will then print _all_ the events that are triggered on the element with the
 can be very useful for understanding exactly which events you want to respond to with htmx, or troubleshooting why an
 expected event isn't occurring.
 
-Using these two techniques will help you as you (infrequently, we hope!) troubleshoot event-related issues when developing
+Using these two techniques will help you as you (infrequently, we hope) troubleshoot event-related issues when developing
 with htmx.
 
 == Security Considerations
@@ -738,7 +752,7 @@ on an element, all htmx attributes within that element will be ignored.
 
 A Content Security Policy (CSP) is a browser technology that allows you to detect and prevent certain types of
 content injection-based attacks.  A full discussion of CSPs is beyond the scope of this book, but we refer you to
-the Mozilla Developer Network article on them for more information: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+the https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP[Mozilla Developer Network article] on them for more information.
 
 A common feature to disable using a CSP is the `eval()` feature of JavaScript, which allows you to evaluate arbitrary
 javascript code from a string.  This has proven to be a security issue and many teams have decided that it is not worth
@@ -756,7 +770,7 @@ There are a large number of configuration options available for htmx.  Some exam
 * The default swap delay
 * The default timeout of AJAX requests
 
-A full list of configuration options can be found in the config section of the main htmx documentation: https://htmx.org/docs/#config
+A full list of configuration options can be found in the config section of the https://htmx.org/docs/#config[main htmx documentation].
 
 htmx is typically configured via a `meta` tag, found in the header of a page.  The name of the meta tag should be
 `htmx-config`, and the content attribute should contain the configuration overrides, formatted as JSON.  Here is
@@ -771,12 +785,3 @@ an example:
 In this case, we are overriding the default swap style from the usual `innerHTML` to `outerHTML`.  This might be useful
 if you find yourself using `outerHTML` more frequently than `innerHTML` and want to avoid having to explicitly set that
 swap value throughout your application.
-
-== Summary
-
-* In this chapter we looked at some details and tricks of htmx development
-* We looked in detail at the options available for `hx-swap` and `hx-trigger`, including filters and scrolling
-* We took a look at the events that htmx triggers and responds to
-* We explored HTTP response headers and HTTP response codes in htmx, and how to modify how htmx handles them
-* We looked at various techniques for updating content beyond the target of a request, including out of band swaps
-* We saw how htmx applications can be debugged, secured and configured

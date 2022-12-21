@@ -1,5 +1,5 @@
 
-= htmx In Action
+= htmx Patterns
 :chapter: 06
 :url: ./htmx-in-action/
 
@@ -266,7 +266,7 @@ override practicality, and so it is included as a feature in the library.
 
 == A Second Step: Deleting Contacts With an HTTP DELETE
 
-For our next step with htmx, recall that our contact application has a small form on the edit page of a contact that is
+For our next step with htmx, recall that Contact.app has a small form on the edit page of a contact that is
 used to delete the contact:
 
 [source, html]
@@ -853,7 +853,7 @@ A great demonstration of the power of the hypermedia architecture.
 Let's move on from the contact editing page for a bit and improve the root page of the application, found
 at the `/contacts` path and rendering the `index.html` template.
 
-Currently, our contacts application does not support paging: if there are 10,000 contacts in the database we will show
+Currently, Contact.app does not support paging: if there are 10,000 contacts in the database we will show
 all 10,000 contacts on the root page.  Showing so much data can bog a browser (and a server) down, so most web applications
 adopt a concept of "paging" to deal with data sets this large, where only one "page" of a smaller number of items is
 shown, with the ability to navigate around the pages in the data set.

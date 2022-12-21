@@ -11,34 +11,36 @@ Isn't hypermedia just a way to link documents together?  Like with HTML, on the 
 What do you mean hypermedia _systems_?
 
 Well, yes, HTML is _a_ hypermedia format.  But there is more to the way The Web works than just that:  HTTP, the Hyper Text
-Transfer Protocol is what transfers HTML from servers to clients, and there are a lot of details and features associated with it:
+Transfer Protocol, is what transfers HTML from servers to clients, and there are a lot of details and features associated with it:
 caching, various headers, response codes, and so forth.  And then, of course, there is the _hypermedia server_, which
 presents a _hypermedia API_ to clients.
 
-And then there is the all-important _hypermedia client_, the software client that understands how to render a _hypermedia
+And then there is the all-important _hypermedia client_, a software client that understands how to render a _hypermedia
 response_ intelligibly to a human, so that a human can interact with the remote system.  The most widely known and used
 hypermedia clients are, of course, web browsers.  Web browsers are perhaps the most sophisticated pieces of software we
-use, not only understanding HTML, CSS and many other file formats, but also providing an entire JavaScript runtime
-built in to themselves that is so powerful, people can create whole applications with it.
+use.  They not only understand HTML, CSS and many other file formats, but they also provide a JavaScript runtime
+that is so powerful that web developers can create applications nearly as sophisticated as _thick clients_, that is,
+native applications.
 
-So powerful, indeed, that, today, developers often toss aside the _hypermedia_ features of the browser, in favor of
-building their web application entirely in JavaScript.  An application built in this manner has come to be called
-a Single Page Application (SPA): rather than navigating between pages, the application uses JavaScript that
-communicates with a server using JSON API calls over AJAX, and updating the user interface dynamically, completely
-outside the "normal" hypermedia flow of The Web.
+This JavaScript runtime is so powerful, in fact, that today many developers set aside the _hypermedia_ features of the
+browser in favor of building their web applications entirely in JavaScript.  Applications built in this manner have come
+to be called a Single Page Applications (SPAs).  Rather than navigating between pages using hyperlinks and forms, these
+applications use JavaScript for updating the user interface.  When they communicate with a server, these applications
+typically use JSON API calls over AJAX, often updating the user interface using "reactive" style front-end JavaScript
+libraries.
 
-HTML, in these applications, becomes a (somewhat awkward) graphical interface description language that must be used
-because, for historical reasons, that's what happens there, in the browser.
+HTML, in these applications, becomes a (somewhat awkward) graphical interface description language that is used
+because for historical reasons that's what happens there, in the browser.
 
-Applications built in this style are not Hypermedia-Driven Applications, and they do not take advantage of the hypermedia
+Applications built in this style are not _hypermedia driven_: they do not take advantage of the hypermedia
 system that The Web was designed to be.
 
-So, to explain what a Hypermedia-Driven application is, and to contrast it with the popular SPA approach of today,
-we need to talk about the entire _hypermedia system_ of The Web and not just HTML.  We need to look at the network
-architecture, how a server delivers a hypermedia API, effective use of hypermedia features available in the
-hypermedia _client_ (e.g. the browser).
+So, to explain what a hypermedia driven application looks like, and to contrast it with the popular SPA approach of today,
+we need to first talk about the entire _hypermedia system_ of The Web, not just HTML.  We need to look at the network
+architecture, including how a server delivers a hypermedia API, as well as effective use
+of hypermedia features available in the hypermedia _client_ (e.g. the browser).
 
-These are all important aspects of building an effective piece of software that uses hypermedia, and it is the entire
+Each of these are important aspects of building an effective hypermedia driven application, and it is the entire
 _hypermedia system_ that comes together to make hypermedia such a powerful approach to building distributed software.
 
 == What is a Hypermedia System?
@@ -51,25 +53,26 @@ distributed software.
 
 We define a _hypermedia system_ as a system that adheres to the REST-ful network architecture in Fielding's original sense of
 this term. Unfortunately, today, you probably associate the term REST with non-hypermedia JSON APIs, since that is where
-the term is typically used.  A cursory reading of Fielding's dissertation will show that a system _must_ use a _hypermedia_
-like HTML to be REST-ful, a topic that Fielding has commented on repeatedly (and exasperatedly.)
+the term is typically used in industry.  A cursory reading of Fielding's dissertation will show that a system _must_ use
+a _hypermedia_ like HTML to be REST-ful, a topic that Fielding has commented on repeatedly (and exasperatedly.)
 
 In his dissertation, Fielding was describing The World Wide Web, as it existed in the late 1990s, as being REST-ful.  The
 Web, at that point, was simply web browsers exchanging hypermedia.  *That* system, with its simple links and form, was what
-Fielding was calling REST-ful.   JSON APIs were a decade away from becoming common in web development.
+Fielding was calling REST-ful.  JSON APIs were a decade away from becoming common in web development.
 
-So, while JSON API developers may have co-opted the term REST (a long story, for later in this book), the fact of the
-matter is that, if you have ever built a simple website using nothing but HTML and a web server, you have built a more
-REST-ful system, a more REST-ful API, than the vast majority of those JSON API Developers.
+So, while JSON API developers may have co-opted the term REST (it's a long story, we will tell it later in this book),
+the fact of the matter is that, if you have ever built a simple website using nothing but HTML, some links and a basic
+web server, you have built a more REST-ful system, a more REST-ful API, than the vast majority of those JSON API Developers.
 
 == Hypermedia-Driven Applications
 
 In this book we are going to take a look at hypermedia as a _system architecture_, and then explore some practical,
 _modern_ approaches to building applications using it.  We will call applications built using this architecture
-_Hypermedia-Driven Applications_, or HDAs, and contrast them with a popular model in use today, the Single Page Application.
+_Hypermedia-Driven Applications_, or HDAs, and contrast them with a popular model in use today, the Single Page Application,
+or SPAs.
 
 A Hypermedia-Driven Application is simply an application built on top of a _hypermedia system_ and that respects
-and utilizes the hypermedia functionality of that system.
+and utilizes the hypermedia functionality of that underlying system.
 
 == Goals
 
@@ -114,7 +117,8 @@ a refresher.
 
 Hypermedia isn't seriously discussed very often these days.  Even many older programmers who grew up with The Web
 in the late 1990s and early 2000s haven't thought much about these ideas in over a decade.  Many younger web developers have
-grown up knowing nothing but SPAs, and, in particular, building React-talking-to-Node-via-JSON-APIs, and have never
+grown up knowing nothing but Single Page Applications and the frameworks associated with this approach.  In particular,
+many young web developers began building React.js applications that interact with a Node server using JSON, and have never
 learned about hypermedia at all.
 
 This is a tragedy, and, frankly, a failure on the part of the thought leaders in the web development community to properly
@@ -124,10 +128,9 @@ By the end of this book, you will have the tools and the _language_ to put this 
 applications.  And, further, you will be able to bring the ideas and concepts of hypermedia systems
 to the broader web development community.
 
-Hypermedia can compete, hypermedia _can win_, hypermedia _has won_ as an architectural choice against the SPA/JSON
-juggernaut, but _only_ if smart people (like you :) learn about it, build with it and then tell the world about it.
-
-Let's go.
+Hypermedia can compete, hypermedia _can win_, hypermedia _has won_ as an architectural choice against the Single
+Page Application juggernaut, but _only_ if smart people (like you) learn about it, build with it and then tell the world
+about it.
 
 [quote, Kyle Reese, Terminator 2: Judgement Day]
 ____

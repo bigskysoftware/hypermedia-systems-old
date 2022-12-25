@@ -44,13 +44,14 @@ templateEngine: njk
 
 <main class="">
 
-    <div class="box warn">
-        <p><strong>NOTE</strong>: Hypermedia Systems is a rewrite of a book that fell out of contract with
-            a publisher.  It will be released in 2023 in PDF, eBook and Hard Copy form, and is currently
-            a Work In Progress.  It will be available for free at this website in perpetuity.</p>
+    <div class="box warn crowded color">
+        <p>
+        <strong class="color margin-inline-end allcaps secondary-font">Note</strong>
+        Hypermedia Systems is a rewrite of a book that fell out of contract with
+        a publisher and is currently a <strong>work in progress</strong>.</p>
     </div>
 
-    <div class="grid">
+    <div class="grid margin-block">
         <ul id="blurb" role=list data-cols="1 3" data-cols@s="1" data-rows="1 3"
             class="big italic margin-inline-end flow-gap">
         <li>The revolutionary ideas that empowered the Web</li>
@@ -60,8 +61,24 @@ templateEngine: njk
         </ul>
 
         <ul data-cols="4 5" data-cols@s="1" role=list class="f-row flex-wrap:wrap crowded">
-        <li><strong><a href="/book/contents" class="big <button>">Read online for free</a></strong>
-        <li><strong><a href="#" class="big <button> disabled vh">Get PDF</a></strong>
+        <li><strong><a href="/book/contents" class="big <button>">
+            <span>
+                Read online
+                <small>(Free, forever)</small>
+            </span>
+        </a></strong>
+        <li><a disabled class="big <button>">
+            <span>
+                Hard copy
+                <small>(planned in 2023)</small>
+            </span>
+        </a></strong>
+        <li><a disabled class="big <button>">
+            <span>
+                Ebook
+                <small>(planned in 2023)</small>
+            </span>
+        </a></strong>
         </ul>
 
         <p data-cols="4 5" data-cols@s="1" class="<small> secondary-font">

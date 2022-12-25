@@ -37,7 +37,7 @@ we assure you, it is.
 So, we have a hypermedia API for Contact.app.  Should we include a Data API for Contact.app as well?
 
 Sure!  The existence of a hypermedia API _in no way means_ that you can't _also_ have a Data API.  In fact, this is a
-common situation in traditional web applications: there is the "web application" that is entered through that entry point
+common situation in traditional web applications: there is the `"web application`" that is entered through that entry point
 URL, say `https://mywebapp.example.com/`.  And there is also a _separate_ JSON API that is accessible through another
 URL, perhaps `https://api.mywebapp.example.com/v1`.
 
@@ -67,7 +67,7 @@ so presenting an HTML-based hypermedia API would be inefficient and complicated 
 
 JSON Data API fits the bill for what we want and, as always, we recommend using the right tool for the job.
 
-."What!?!  You Want Me To Parse HTML!?!"
+.`"What!?!  You Want Me To Parse HTML!?!`"
 ****
 A confusion we often run into in online discussions when we advocate a hypermedia approach to building web
 applications is that people think we mean that they should parse the HTML responses from the server, and then dump the
@@ -129,7 +129,7 @@ features or optimization needs in your application
 |===
 
 These two different types of APIs have different strengths and needs, so it makes sense to use both. The hypermedia
-approach can be used for your web application, allowing you to specialize the API for the "shape"
+approach can be used for your web application, allowing you to specialize the API for the `"shape`"
 of your application.  The Data API approach can be used for other, non-hypermedia clients like mobile, integration
 partners, etc.
 
@@ -139,10 +139,10 @@ than being thrashed around with every feature change, your Data API can focus on
 
 This is the core strength splitting your Data API from your Hypermedia API, in our opinion.
 
-.JSON Data APIs vs JSON "REST" APIs
+.JSON Data APIs vs JSON "`REST`" APIs
 ****
 Unfortunately, today, for historical reasons, what we are calling JSON Data APIs are often referred to
-"REST APIs" in the industry.  This is ironic, because, by any reasonable reading of Roy Fielding's work defining what REST
+"`REST APIs`" in the industry.  This is ironic, because, by any reasonable reading of Roy Fielding's work defining what REST
 means, the vast majority of JSON APIs are _not_ REST-ful.  Not even close.
 
 [quote, Roy Fielding, https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven]
@@ -155,14 +155,14 @@ words, if the engine of application state (and hence the API) is not being drive
 and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
 ____
 
-The story of how "REST API" came to mean "JSON APIs" in the industry is a long and sordid long one, and beyond the
-scope of this book.  However, if you are interested, you can refer to an essay entitled "How Did REST Come To Mean The Opposite of
-REST?" on the htmx website:
+The story of how "`REST API`" came to mean "`JSON APIs`" in the industry is a long and sordid long one, and beyond the
+scope of this book.  However, if you are interested, you can refer to an essay entitled "`How Did REST Come To Mean The Opposite of
+REST?`" on the htmx website:
 
 https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/
 
-In this book we will use the term "Data API" to describe these JSON APIs, while acknowledging that many people
-in the industry will continue to call them "REST APIs" for the foreseeable future.
+In this book we will use the term "`Data API`" to describe these JSON APIs, while acknowledging that many people
+in the industry will continue to call them "`REST APIs`" for the foreseeable future.
 ****
 
 == Adding a JSON Data API To Contact.app
@@ -189,7 +189,7 @@ this pattern baked into the language, making it very easy to switch on the reque
 
 Unfortunately, our experience with this pattern has not been great, for reasons that should be clear given the
 differences we outlined between Data and hypermedia APIs: they have different needs and often take on very different
-"shapes", and trying to pound them into the same set of URLs ends up creating a lot of tension in the application code.
+"`shapes`", and trying to pound them into the same set of URLs ends up creating a lot of tension in the application code.
 
 Given the different needs of the two APIs and our experience managing multiple APIs like this, we think separating the two
  from one another, and, therefore, breaking the JSON Data API out to its own set of URLs is the right choice.  This will
@@ -272,6 +272,8 @@ like this:
       "phone": ""
     },
     ...
+  ]
+}
 ----
 
 So, you can see, we now have a way to get a relatively simple JSON representation of our contacts via an HTTP request.
@@ -296,11 +298,11 @@ going to see the JSON API and the hypermedia API for our web application begin t
 In the web application, we needed a separate path, `/contacts/new` to host the HTML form for creating a new contact.  In
 the web application we made the decision to issue a `POST` to that same path to keep things consistent.
 
-In the case of the JSON API, there is no such path needed: the JSON API "just is": it doesn't need to provide any
+In the case of the JSON API, there is no such path needed: the JSON API "`just is`": it doesn't need to provide any
 hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to to create a contact,
 likely through some provided documentation about the API, and that's it.
 
-Because of that fact, we can put the "create" handler on the same path as the "list" handler: `/api/v1/contacts`, but
+Because of that fact, we can put the "`create`" handler on the same path as the "`list`" handler: `/api/v1/contacts`, but
 have it respond only to HTTP `POST` requests.
 
 The code here is relatively straight forward: populate a new contact with the information from the `POST` request,
@@ -438,7 +440,7 @@ the web application, allowing the application to know which user is making a giv
 ****
 HTTP Cookies are kind of a strange feature of HTTP.  In some ways they violate the goal of remaining stateless, a
 major component of the REST-ful architecture: a server will often use a session cookie as an index into state kept
-on the server "on the side", such as a cache of the last action performed by the user.
+on the server "`on the side`", such as a cache of the last action performed by the user.
 
 Nonetheless, cookies have proven extremely useful and so people tend not to complain about this aspect of them too much
 (I'm not sure what our other options would be here!)  An interesting example of pragmatism gone (relatively) right in
@@ -458,14 +460,14 @@ and then then token is part of every request.  However, in practice, the mechani
 These differing mechanics for establishing authentication are yet another good reason for splitting our JSON and hypermedia
 APIs up.
 
-=== The "Shape" of Our Two APIs
+=== The "`Shape`" of Our Two APIs
 
 When we were building out our API, we noted that in many cases the JSON API didn't require as many end points as our
 hypermedia API did: we didn't need a `/contacts/new` handler, for example, to provide a hypermedia representation for
 creating contacts.
 
 Another aspect of our hypermedia API to consider was the performance improvement we made: we pulled the total contact count
-out to a separate end point and implemented the "Lazy Load" pattern, to improve the perceived performance of our
+out to a separate end point and implemented the "`Lazy Load`" pattern, to improve the perceived performance of our
 application.
 
 Now, if we had both our hypermedia and JSON API sharing the same paths, would we want to publish this API as a JSON
@@ -493,7 +495,7 @@ Most of the hard work of updating data and so forth is done within the contact m
 connectors that provide a go-between the HTTP requests and the model.
 
 This is the ideal controller of the Model-View-Controller (MVC) paradigm that was so popular in the early web: a controller
-should be "thin", with the model containing the majority of the logic in the system.
+should be "`thin`", with the model containing the majority of the logic in the system.
 
 .The Model View Controller Pattern
 ****
@@ -503,8 +505,8 @@ and back-end camps, but most web developers are still familiar with the idea.
 
 Traditionally, the MVC pattern mapped into web development like so:
 
-* Model - A collection of "domain" classes that implement all the logic and rules for the particular domain your application
-  is designed for.  The model typically provides "resources" that are then presented to clients as HTML "representations".
+* Model - A collection of "`domain`" classes that implement all the logic and rules for the particular domain your application
+  is designed for.  The model typically provides "`resources`" that are then presented to clients as HTML "`representations`".
 * View - Typically views would be some sort of client-side templating system, and would render the aforementioned HTML representation
   for a given Model instance.
 * Controller - The controllers job is to take HTTP requests, convert them into sensible requests to the Model and forward
@@ -516,5 +518,5 @@ Thin controllers make it easy to split your JSON and hypermedia APIs out, becaus
 model that is shared by both.  This allows you to evolve both separately, while still keeping logic in sync with one
 another.
 
-With properly built "thin" controllers and "fat" models, keeping two separate APIs both in sync and yet
+With properly built "`thin`" controllers and "`fat`" models, keeping two separate APIs both in sync and yet
 still evolving separately is not as difficult or as crazy as it might sound at first.

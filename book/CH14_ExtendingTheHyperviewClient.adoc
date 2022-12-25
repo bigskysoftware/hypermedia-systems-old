@@ -7,7 +7,7 @@ This chapter covers:
 
 * Adding phone call and email integration with a custom behavior action
 * Showing confirmation toast messages with a custom behavior action
-* Supporting a "swipeable row" UI with a custom Hyperview component
+* Supporting a "`swipeable row`" UI with a custom Hyperview component
 
 In the previous chapter, we created a fully-featured native mobile version of our Contacts app.
 Aside from customizing the entrypoint URL, we didn't need to touch any code that runs on the mobile device.
@@ -47,9 +47,9 @@ On the web, calling phone numbers is supported with the `tel:` URI scheme, and e
 The Hyperview client doesn't support the `tel:` and `mailto:` URI schemes.
 But we can add these capabilities to the client with custom behavior actions.
 Remember that behaviors are interactions defined in HXML.
-Behaviors have triggers ("press", "refresh") and actions ("update, "share").
-The values of "action" are not limited to the set that comes in the Hyperview library.
-So let's define two new actions, "open-phone" and "open-email".
+Behaviors have triggers ("`press`", "`refresh`") and actions ("`update`", "`share`").
+The values of "`action`" are not limited to the set that comes in the Hyperview library.
+So let's define two new actions, "`open-phone`" and "`open-email`".
 
 .Phone and Email actions
 [source,xml]
@@ -125,8 +125,8 @@ If the phone number is defined on the element, we can call the `phonecall()` fun
 
 There's one more thing we need to before we can use our custom action: register the action with the Hyperview client.
 The Hyperview client is represented as a React Native component called `Hyperview`.
-This component takes a prop called `behaviors`, which is an array of custom action objects like our "open-phone" action.
-Let's pass our "open-phone" implementation to the `Hyperview` component in our demo app.
+This component takes a prop called `behaviors`, which is an array of custom action objects like our "`open-phone`" action.
+Let's pass our "`open-phone`" implementation to the `Hyperview` component in our demo app.
 
 .demo/src/HyperviewScreen.js
 [source,js]
@@ -157,7 +157,7 @@ export default class HyperviewScreen extends PureComponent {
 
 Under the hood, the `Hyperview` component is responsible for taking HXML and turning it into mobile UI elements.
 It also handles triggering behavior actions based on user interactions.
-By passing the "open-phone" action to Hyperview, we can now use it as a value for the `action` attribute on `<behavior>` elements.
+By passing the "`open-phone`" action to Hyperview, we can now use it as a value for the `action` attribute on `<behavior>` elements.
 In fact, let's switch do that now by updating the `show.xml` template in our Flask app:
 
 .Snippet of `hv/show.xml`
@@ -191,24 +191,24 @@ In fact, let's switch do that now by updating the `show.xml` template in our Fla
 </view>
 {% endblock %}
 ----
-<1> Add a behavior to the phone number section that triggers on "press".
-<2> Trigger the new "open-phone" action.
-<3> Set the attribute expected by the "open-phone" action.
-<4> Same idea, with a different action ("open-email")
+<1> Add a behavior to the phone number section that triggers on "`press`".
+<2> Trigger the new "`open-phone`" action.
+<3> Set the attribute expected by the "`open-phone`" action.
+<4> Same idea, with a different action ("`open-email`")
 
-I skipped over the implementation of the second custom action, "open-email".
+I skipped over the implementation of the second custom action, "`open-email`".
 As you can guess, this action will open a system-level email composer to let the user send an email to their contact.
-The implementation of "open-email" is almost identical to "open-phone".
+The implementation of "`open-email`" is almost identical to "`open-phone`".
 The `react-native-communications` library exposes a function called `email()`, so we just wrap it and pass arguments to it in the same way.
 
 There we have a complete example of extending the client with some custom behavior actions!
-We chose a new name for our actions ("open-phone" and "open-email"), and mapped those names to functions.
+We chose a new name for our actions ("`open-phone`" and "`open-email`"), and mapped those names to functions.
 The functions take `<behavior>` elements and can run any arbitrary React Native code.
 We wrapped an existing 3rd party library, and read attributes set on the `<behavior>` element to pass data to the library.
 After re-starting our demo app, our client has new capabilities we can immediately utilize by referencing the actions from our HXML templates.
 
 == Adding Toast Messages
-The phone and email actions added in the previous section are examples of "system actions".
+The phone and email actions added in the previous section are examples of "`system actions`".
 System actions trigger some UI or capability provided by the device's OS.
 But custom actions are not limited to only interacting with OS-level APIs.
 Remember, the callbacks that implement actions can run arbitrary code, including code that renders our own UI elements.
@@ -230,7 +230,7 @@ Let's add that support now.
 We could just show the messages using a similar technique to the web app: loop through the messages and render some `<text>` elements in `layout.xml`.
 This approach has a major downside: the rendered messages would be tied to a specific screen.
 If that screen get hidden by a navigation action, the message would be hidden too.
-What we really want is for our toast UI to display "above" all of the screens in the navigation stack.
+What we really want is for our toast UI to display "`above`" all of the screens in the navigation stack.
 That way, the toast would remain visible (fading away after a few seconds), even if the stack of screens changes below.
 To display some UI outside of the `<screen>` elements, we're going to need to extend the Hyperview client with a new custom action, `show-toast`.
 This is another opportunity to use an open-source library, `react-native-root-toast`.
@@ -305,8 +305,8 @@ There are 3 user actions that result in showing a toast message:
 3. Deleting a contact
 
 The first two actions are implemented in our app using the same HXML template, `form_fields.xml`.
-Upon successfully creating or updating a contact, this template will reload the screen and trigger an event, using behaviors that trigger on "load".
-The deletion action also uses behaviors that trigger on "load", defined in the `deleted.xml` template.
+Upon successfully creating or updating a contact, this template will reload the screen and trigger an event, using behaviors that trigger on "`load`".
+The deletion action also uses behaviors that trigger on "`load`", defined in the `deleted.xml` template.
 So both `form_fields.xml` and `deleted.xml` need to be modified to also show toasts on load.
 Since the actual behaviors will be the same in both templates, let's created a shared template to reuse the HXML.
 
@@ -324,8 +324,8 @@ Since the actual behaviors will be the same in both templates, let's created a s
 ----
 <1> Define a behavior for each message to display
 <2> Trigger this behavior as soon as the screen loads
-<3> Trigger the new "show-toast" action.
-<4> The "show-toast" action will display the flashed message in its UI.
+<3> Trigger the new "`show-toast`" action.
+<4> The "`show-toast`" action will display the flashed message in its UI.
 
 Like in `layout.html` of the web app, we loop through all of the flashed messages and render some markup for each message.
 However, in the web app, the message was directly rendered into the web page.
@@ -359,7 +359,7 @@ And we can do the same thing in `deleted.xml`:
 ----
 <1> Show the toasts as soon as the screen loads.
 
-In both `form_fields.xml` and `deleted.xml`, multiple behaviors get triggered on "load".
+In both `form_fields.xml` and `deleted.xml`, multiple behaviors get triggered on "`load`".
 In `deleted.xml`, we immediately navigate back to the previous screen.
 In `form_fields.xml`, we immediately reload the current screen to show the Contact details.
 If we rendered our toast UI elements directly in the screen, the user would barely see them before the screen disappeared or reloaded.
@@ -377,13 +377,13 @@ Custom components are implemented as React Native components.
 That means anything that's possible in React Native can be done in Hyperview as well!
 Custom components open up endless possibilities to build rich mobile apps with the Hypermedia architecture.
 
-To illustrate the possibilities, we will extend the Hyperview client in our mobile app to add a "swipeable row" component.
+To illustrate the possibilities, we will extend the Hyperview client in our mobile app to add a "`swipeable row`" component.
 How does it work?
-The "swipeable row" component supports a horizontal swiping gesture.
+The "`swipeable row`" component supports a horizontal swiping gesture.
 As the user swipes this component from right to left, the component will slide over, revealing a series of action buttons.
 Each action buttons will be able to trigger standard Hyperview behaviors when pressed.
 We will use this custom component in our Contacts List screen.
-Each contact item will be a "swipeable row", and the actions will give quick access to edit and delete actions for the contact.
+Each contact item will be a "`swipeable row`", and the actions will give quick access to edit and delete actions for the contact.
 
 [#figure-7-9, reftext="Figure {chapter}.{counter:figure}"]
 .Swipeable contact item
@@ -583,7 +583,7 @@ Currently, the HXML for a contact item in the list consists of a `<behavior>` an
 </item>
 ----
 
-With our swipeable row component, this markup will become the "main" UI.
+With our swipeable row component, this markup will become the "`main`" UI.
 So let's start by adding `<row>` and `<main>` as parent elements.
 
 .Adding swipeable row `hv/rows.xml`
@@ -641,9 +641,9 @@ Let's add two buttons to the swipeable row.
 <2> Added `<swipe:button>` for delete action
 
 Now if we use our mobile app, we can see the swipeable row in action!
-As you swipe the contact item, the "Edit" and "Delete" buttons reveal themselves.
+As you swipe the contact item, the "`Edit`" and "`Delete`" buttons reveal themselves.
 But they don't do anything yet. We need to add some behaviors to these buttons.
-The "Edit" button is straight-forward: pressing it should open the contact details screen in edit mode.
+The "`Edit`" button is straight-forward: pressing it should open the contact details screen in edit mode.
 
 .Snippet of `hv/rows.xml`
 [source,xml]
@@ -657,9 +657,9 @@ The "Edit" button is straight-forward: pressing it should open the contact detai
 ----
 <1> When pressed, push a new screen with the Edit Contact UI.
 
-The "Delete" button is a bit more complicated.
+The "`Delete`" button is a bit more complicated.
 There's no screen to open for deletion, so what should happen when the user presses this button?
-Perhaps we use the same interaction as the "Delete" button on the Edit Contact screen.
+Perhaps we use the same interaction as the "`Delete`" button on the Edit Contact screen.
 That interaction brings up a system dialog, asking the user to confirm the deletion.
 If the user confirms, the Hyperview client makes a `POST` request to `/contacts/<contact_id>/delete`, and appends the response to the screen.
 The response triggers a few behaviors immediately to reload the contacts list and show a toast message.
@@ -695,7 +695,7 @@ This interaction will work for our action button as well:
 <1> When pressed, open a system dialog box asking the user to confirm the action
 <2> If confirmed, make a POST request to the deletion endpoint, and append the response to the parent `<item>`.
 
-Now when we press "Delete", we get the confirmation dialog as expected.
+Now when we press "`Delete`", we get the confirmation dialog as expected.
 After pressing confirm, the backend response triggers behaviors that show a confirmation toast and reload the list of contacts.
 The item for the deleted contact disappears from the list.
 
@@ -716,7 +716,7 @@ They are both implemented using the same techniques desbribed in this section.
 Standard components and actions are just the ones that are universally needed by all mobile apps.
 But they are just the starting point.
 Most mobile apps will require some extensions to the Hyperview client to deliver a great user experience.
-Extensions evolve the client from being a generic "Hyperview client", to being a purpose-built client for your app.
+Extensions evolve the client from being a generic "`Hyperview client`", to being a purpose-built client for your app.
 And importantly, this evolution preserver the Hypermedia, server-driven architecture and all of its benefits.
 
 

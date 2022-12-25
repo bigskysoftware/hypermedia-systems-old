@@ -26,7 +26,7 @@ This JavaScript runtime is so powerful, in fact, that today many developers set 
 browser in favor of building their web applications entirely in JavaScript.  Applications built in this manner have come
 to be called a Single Page Applications (SPAs).  Rather than navigating between pages using hyperlinks and forms, these
 applications use JavaScript for updating the user interface.  When they communicate with a server, these applications
-typically use JSON API calls over AJAX, often updating the user interface using "reactive" style front-end JavaScript
+typically use JSON API calls over AJAX, often updating the user interface using "`reactive`" style front-end JavaScript
 libraries.
 
 HTML, in these applications, becomes a (somewhat awkward) graphical interface description language that is used
@@ -80,10 +80,10 @@ The goal of this book is to give you a strong sense of how the REST-ful, hyperme
 other client-server systems, and what the strengths (and weaknesses) of the hypermedia approach are.  Further, we hope
 to convince you that the hypermedia architecture is _relevant_ to developers building modern applications.
 
-We aim to give you the tools to evaluate a given applications requirements and answer the question: "Could I build this as a
-Hypermedia-Driven Application?"
+We aim to give you the tools to evaluate a given applications requirements and answer the question: "`Could I build this as a
+Hypermedia-Driven Application?`"
 
-And we hope that, for many applications, the answer to that question will be "Yes!"
+And we hope that, for many applications, the answer to that question will be "`Yes!`"
 
 == Book Layout
 

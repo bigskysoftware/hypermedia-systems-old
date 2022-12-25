@@ -64,7 +64,7 @@ After running `yarn start`, you will be presented with a prompt asking you to op
 Select an option based on which developer SDK you have installed.
 (The screenshots in this chapter will be taken from the iOS simulator.)
 With any luck, you will see the Expo mobile app installed in the simulator.
-The mobile app will automatically launch and show a screen saying "Network request failed."
+The mobile app will automatically launch and show a screen saying "`Network request failed.`"
 That's because by default, this app is configured to make a request to `http://0.0.0.0:8085/index.xml`, but our backend is listening on port 5000.
 To fix this, we can make a simple configuration change in the `demo/src/constants.js` file:
 
@@ -77,7 +77,7 @@ export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/'; <2>
 <2> Setting the URL to point to our contacts app
 
 We're not up and running yet.
-With our Hyperview client now pointing to the right endpoint, we see a different error, a "ParseError".
+With our Hyperview client now pointing to the right endpoint, we see a different error, a "`ParseError`".
 That's because the backend is responding to requests with HTML content, but the Hyperview client expects an XML response (specifically, HXML).
 So it's time to turn out attention to our Flask backend.
 We will go through the Flask views, and replace the HTML templates with HXML templates.
@@ -100,7 +100,7 @@ Every other action the user can take will be declared in the HXML of that first 
 This minimal configuration is one elegant aspect of the Hypermedia-driven architecture!
 
 Of course, you may want to write more on-device code to support more features in your mobile app.
-We will demonstrate how to do that later in this chapter, in the section called "Extending the Client".
+We will demonstrate how to do that later in this chapter, in the section called "`Extending the Client`".
 ----
 
 
@@ -109,10 +109,10 @@ We will start building our Hyperview app with the entrypoint screen, the list of
 For the initial version of this screen, let's support the following features from the web app:
 
 - display a scrollable list of contacts
-- "search-as-you-type" field above the list
-- "infinite-scroll" to load more contacts as the user scrolls through
+- "`search-as-you-type`" field above the list
+- "`infinite-scroll`" to load more contacts as the user scrolls through
 
-Additionally, we will add a "pull-to-refresh" interaction on the list, since users expect this from list UIs in mobile apps.
+Additionally, we will add a "`pull-to-refresh`" interaction on the list, since users expect this from list UIs in mobile apps.
 
 If you recall, all of the pages in the Contacts web app extended a common base template, `layout.html`.
 We need a similar base template for the screens of the mobile app.
@@ -358,11 +358,11 @@ So the value of the `<text-field>` will be included in our HTTP request for the 
 Since we are making a `GET` request, the name and value of the text field will be serialized as a query param.
 Any existing query params on the `href` will be preserved.
 This means the actual HTTP request to our backend looks like `GET /contacts?rows_only=true&q=Car`.
-Our backend already supports the `q` param for searching, so the response will include rows that match the string "Car".
+Our backend already supports the `q` param for searching, so the response will include rows that match the string "`Car`".
 
 === Infinite scroll
 If the user has hundreds or thousands of contacts, loading them all at once may result in poor app performance.
-That's why most mobile apps with long lists implement an interaction known as "infinite scroll".
+That's why most mobile apps with long lists implement an interaction known as "`infinite scroll`".
 The app loads a fixed number of initial items in the list, let's say 100 items.
 If the user scrolls to the bottom of the list, they see a spinner indicating more content is loading.
 Once the content is available, the spinner is replaced with the next page of 100 items.
@@ -423,19 +423,19 @@ Note that our href includes the `rows_only=true` query param, or our response wi
 Also, we're passing the `page` query param, incrementing the current page number to ensure we load the next page.
 
 What happens when there's more than one page of items?
-The initial screen will include the first 100 items, plus the "load-more" item at the bottom.
-When the user scrolls to the bottom of the screen, Hyperview will request the second page of items (`&page=2`), and replace the "load-more" item with the new items.
-But this second page of items will include a new "load-more" item.
+The initial screen will include the first 100 items, plus the "`load-more`" item at the bottom.
+When the user scrolls to the bottom of the screen, Hyperview will request the second page of items (`&page=2`), and replace the "`load-more`" item with the new items.
+But this second page of items will include a new "`load-more`" item.
 So once the user scrolls through all of the items from the second page, Hyperview will again request more items (`&page=3`).
-And once again, the "load-more" item will be replaced with the new items.
+And once again, the "`load-more`" item will be replaced with the new items.
 This will continue until all of the items will be loaded on the screen.
-At that point, there will be no more contacts to return, the response will not include another "load-more" item, and our pagination is over.
+At that point, there will be no more contacts to return, the response will not include another "`load-more`" item, and our pagination is over.
 
 === Pull-to-refresh
 Pull-to-refresh is a common interaction in mobile apps, especially on screens featuring dynamic content.
 It works like this:
 At the top of a scrolling view, the user pulls the scrolling content downwards with a swipe-down gesture.
-This reveals a spinner "below" the content.
+This reveals a spinner "`below`" the content.
 Pulling the content down sufficiently far will trigger a refresh.
 While the content refreshes, the spinner remains visible on screen, indicating to the user that the action is still taking place.
 Once the content is refreshed, the content retracts back up to its default position, hiding the spinner and letting the user know that the interaction is done.
@@ -460,7 +460,7 @@ Let's add pull-to-refresh to our list of contacs to see it in action.
   {% include 'hv/rows.xml' %}
 </list>
 ----
-<1> This behavior will trigger when the user does a "pull-to-refresh" gesture.
+<1> This behavior will trigger when the user does a "`pull-to-refresh`" gesture.
 <2> When the behavior triggers, this action will replace the content inside the target element.
 <3> The target of the action is the `<list>` element itself.
 <4> The replacement content will be fetched from this URL path.
@@ -504,7 +504,7 @@ Let's update the template that renders the contact `<item>` elements, and add a 
 
 Our Flask backend already has a route for serving the contact details at `/contacts/<contact_id>`.
 In our template, we use a Jinja variable to dynamically generate the URL path for the current contact in the for-loop.
-We also used the "push" action to show the details by pushing a new screen onto the stack.
+We also used the "`push`" action to show the details by pushing a new screen onto the stack.
 If you reload the app, you can now tap any contact in the list, and Hyperview will open the new screen.
 However, the new screen will show an error message.
 That's because our backend is still returning HTML in the response, and the Hyperview client expects HXML.
@@ -586,7 +586,7 @@ First we have to figure out how we want to display the editing UI.
 We could push a new editing screen onto the stack, the same way we pushed the contact details screen.
 But that's not the best design from a user-experience perspective.
 Pushing new screens makes sense when drilling down into data, like going from a list to a single item.
-But editing is not a "drill-down" interaction, it's a mode switch between viewing and editing.
+But editing is not a "`drill-down`" interaction, it's a mode switch between viewing and editing.
 So instead of pushing a new screen, let's replace the current screen with the editing UI.
 That means we need to add a button and behavior that use the `reload` action.
 This button can be added to the header of the contact details screen.
@@ -606,7 +606,7 @@ This button can be added to the header of the contact details screen.
   </text>
 {% endblock %}
 ----
-<1> The new "Edit" button
+<1> The new "`Edit`" button
 <2> Behavior to reload the current screen with the edit screen when pressed
 
 Once again, we're reusing an existing Flask route (`/contacts/<contact_id>/edit`) for the edit UI, and filling in the contact ID using data passed to the Jinja template.
@@ -687,7 +687,7 @@ That way, we don't need to make changes in our backend to parse the form data.
 Since we are editing an existing contact, it makes sense to pre-fill the text field with the current name, phone, or email.
 
 You might be wondering, why did I choose to define the form fields in a separate template (`form_fields.xml`)?
-To understand that decision, we need to first discuss the "Save" button.
+To understand that decision, we need to first discuss the "`Save`" button.
 When pressed, the Hyperview client will make an HTTP `POST` request to `contacts/<contact_id>/edit`, with form data serialized from the `<text-field>` inputs.
 The HXML response will replace the contents of form field container (ID `form-fields`).
 But what should that response be?
@@ -754,7 +754,7 @@ The Jinja template conditional ensures that our behavior only renders on success
 On success, the template includes a behavior that triggers immediately thanks to `trigger="load"`.
 The action reloads the current screen with the Contact Details screen (from the `/contacts/<contact_id>` route).
 The result?
-When the user hits "Save", our backend persists the new contact data, and the screen switches back to the Details screen.
+When the user hits "`Save`", our backend persists the new contact data, and the screen switches back to the Details screen.
 Since the app will make a new HTTP request to get the contact details, it's guaranteed to show the freshly saved edits.
 
 
@@ -787,8 +787,8 @@ If the backend accepts and persists the edits, the app will switch back to the d
 
 Let's add one more enhancement to the Edit UI.
 It would be nice to let the user switch away from the Edit mode without needing to save the contact.
-This is typically done by providing a "Cancel" action.
-We can add this as a new button below the "Save" button.
+This is typically done by providing a "`Cancel`" action.
+We can add this as a new button below the "`Save`" button.
 
 .Snippet of `hv/edit.xml`
 [source,xml]
@@ -811,7 +811,7 @@ We can add this as a new button below the "Save" button.
 <4> The screen will be reloaded with the contact details screen.
 
 This is the same technique we used to switch from the edit UI to the details UI upon successfully editing the contact.
-But pressing "Cancel" will update the UI faster than pressing "Save".
+But pressing "`Cancel`" will update the UI faster than pressing "`Save`".
 On save, the app will first make a `POST` request to save the data, and then a `GET` request for the details screen.
 Cancelling skips the `POST`, and immediately make the `GET` request.
 
@@ -829,14 +829,14 @@ It has to do with syncing the app state across multiple screens.
 Let's walk through this series of interactions:
 
 1. Launch the app to the Contacts List.
-2. Press on the contact "Joe Blow" to load his Contact Details.
-3. Press Edit to switch to the edit mode, and change the contact's first name to "Joseph".
-4. Press Save to switch back to viewing mode. The contact's name is now "Joseph Blow".
+2. Press on the contact "`Joe Blow`" to load his Contact Details.
+3. Press Edit to switch to the edit mode, and change the contact's first name to "`Joseph`".
+4. Press Save to switch back to viewing mode. The contact's name is now "`Joseph Blow`".
 5. Hit the back button to return to the Contacts List.
 
 Did you catch the issue?
 Our Contacts list is still showing the same list of names as when we launched the app.
-The contact we just renamed to "Joseph" is still showing up in the list as "Joe".
+The contact we just renamed to "`Joseph`" is still showing up in the list as "`Joe`".
 This is a general problem in Hypermedia applications.
 The client does not have a notion of shared data across different parts of the UI.
 Updates in one part of the app will not automatically update other parts of the app.
@@ -867,16 +867,16 @@ Let's look at this simple behavior:
 
 `<behavior trigger="press" action="toggle" target="container" />`.
 
-Pressing an element containing this behavior will toggle the visibility of an element with the ID "container".
+Pressing an element containing this behavior will toggle the visibility of an element with the ID "`container`".
 But what if the element we want to toggle is on a different screen?
-The "toggle" action and target ID lookup only work on the current screen, so this solution wouldn't work.
+The "`toggle`" action and target ID lookup only work on the current screen, so this solution wouldn't work.
 The solution is to create two behaviors, one on each screen, communicating via events:
 
 - Screen A: `<behavior trigger="press" action="dispatch-event" event-name="button-pressed" />`
 - Screen B: `<behavior trigger="on-event" event-name="button-pressed" action="toggle" target="container" />`
 
-Pressing an element containing the first behavior (on Screen A) will dispatch an event with the name "button-pressed".
-The second behavior (on Screen B) will trigger on an event with this name, and toggle the visibility of an element with ID "container".
+Pressing an element containing the first behavior (on Screen A) will dispatch an event with the name "`button-pressed`".
+The second behavior (on Screen B) will trigger on an event with this name, and toggle the visibility of an element with ID "`container`".
 
 Events have plenty of uses, but the most common is to inform different screens about backend state changes that require the UI to be re-fetched.
 ----
@@ -928,18 +928,18 @@ Now, we just need the contacts list to listen for the `contact-updated` event, a
 </form>
 ----
 <1> Trigger the behavior on event dispatch
-<2> Trigger the behavior for dispatched events with the name "contact-updated"
+<2> Trigger the behavior for dispatched events with the name "`contact-updated`"
 <3> When triggered, replace the contents of the `<list>` element with rows from the backend
 
 Any time the user edits a contact, the Contacts List screen will update to reflect the edits.
-The addition of these two `<behavior>` elements fixes the bug: the Contacts List screen will correctly show "Joseph Blow" in the list.
+The addition of these two `<behavior>` elements fixes the bug: the Contacts List screen will correctly show "`Joseph Blow`" in the list.
 Note that we intentionally added the new behavior inside the `<form>` element.
 The ensures the triggered request will preserve any search query.
 To show what I mean, let's revisit the set of steps that demonstrated the buggy behavior.
-Assume that before pressing on "Joe Blow", the user had searched the contacts by typing "Joe" in the search field.
-When the user later updates the contact to "Joseph Blow", our template dispatches the "contact-updated" event, which triggers the `replace-inner` behavior on the contact list screen.
-Due to the parent `<form>` element, the search query "Joe" will be serialized with the request: `GET /contacts?rows_only=true&q=Joe`.
-Since the name "Joseph" doesn't match the query "Joe", the contact we edited will not appear in the list (until the user clears out the query).
+Assume that before pressing on "`Joe Blow`", the user had searched the contacts by typing "`Joe`" in the search field.
+When the user later updates the contact to "`Joseph Blow`", our template dispatches the "`contact-updated`" event, which triggers the `replace-inner` behavior on the contact list screen.
+Due to the parent `<form>` element, the search query "`Joe`" will be serialized with the request: `GET /contacts?rows_only=true&q=Joe`.
+Since the name "`Joseph`" doesn't match the query "`Joe`", the contact we edited will not appear in the list (until the user clears out the query).
 Our app's state remains consistent across our backend and all active screens.
 
 Events introduce a level of abstraction to behaviors.
@@ -1074,19 +1074,19 @@ Since the functionality is so similar, I'm going to summarize the changes here w
 Hopefully, you can follow along:
 
 1. Update `index.xml`.
-  - Override the `header` block to add a new "Add" button.
+  - Override the `header` block to add a new "`Add`" button.
   - Include a behavior in the button. When pressed, push a new screen as a modal by using `action="new"`, and request the screen content from `/contacts/new`.
 2. Create a template `hv/new.xml`.
   - Override the header block to include a button that closes the modal, using `action="close"`.
   - Include the `hv/form_fields.xml` template to render empty form fields
-  - Add a "Add Contact" button below the form fields.
+  - Add a "`Add Contact`" button below the form fields.
   - Include a behavior in the button. When pressed, make a `POST` request to `/contacts/new`, and use `action="replace-inner"` to update the form fields.
 3. Update the Flask view.
   - Change `contacts_new_get()` to use `render_to_response()` with the `hv/new.xml` template.
   - Change `contacts_new()` to usee `render_to_response()` with the `hv/form_fields.xml` template. Pass `saved=True` when rendering the template after successfully persisting the new contact.
 
 By reusing `form_fields.xml` for both editing and adding a contact, we get to reuse some code and ensure the two features have a consistent UI.
-Also, our "Add Contact" screen will benefit from the "saved" logic that's already a part of `form_fields.xml`.
+Also, our "`Add Contact`" screen will benefit from the "`saved`" logic that's already a part of `form_fields.xml`.
 After succesfully adding a new contact, the screen will dispatch the `contact-updated` event, which will refresh the contacts list and show the newly added contact.
 The screen will reload itself to show the Contact Details.
 
@@ -1158,11 +1158,11 @@ They will see the Google home page localized in German and Japanese, respectivel
 How does Google know to return a different version of the homepage based on the user's preferred language?
 The answer lies in the REST architecture, and how it separates the concepts of resources and representations.
 
-In the REST architecture, the Google homepage is considered to be a single "resource", represented by a unique URL.
-However, that single resource can have multiple "representations".
+In the REST architecture, the Google homepage is considered to be a single "`resource`", represented by a unique URL.
+However, that single resource can have multiple "`representations`".
 Representations are variations on how the content of the resource is presented to the client.
 The German and Japanese versions of the Google homepage are two representations of the same resource..
-To determine the best representation of a resource to return, HTTP clients and servers engage in a process called "content negotiation".
+To determine the best representation of a resource to return, HTTP clients and servers engage in a process called "`content negotiation`".
 It works like this:
 
 - Clients specify the preferred representation through `Accept-*` request headers.
@@ -1311,7 +1311,7 @@ In practice, you may start out using Template Switching, but then realize you ne
 In fact, we're already doing that in the Contacts app.
 When porting the app from web to mobile, we didn't bring over certain features like archiving functionality.
 The dynamic archive UI might is a power feature that wouldn't make sense on a mobile device.
-Since our HXML templates don't expose any entrypoints to the Archive functionality, we can treat it as "web-only" and not worry about supporting it in Hyperview.
+Since our HXML templates don't expose any entrypoints to the Archive functionality, we can treat it as "`web-only`" and not worry about supporting it in Hyperview.
 
 
 == Summary

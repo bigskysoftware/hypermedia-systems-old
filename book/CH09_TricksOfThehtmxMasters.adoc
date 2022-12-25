@@ -66,7 +66,7 @@ In addition to these, `hx-swap` also supports the following modifiers:
 
 | `settle`
 | Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and
-  when its attributes are "settled", that is, updated from their old values (if any) to their new values.
+  when its attributes are "`settled`", that is, updated from their old values (if any) to their new values.
 
 | `show`
 | Allows you to specify an element that should be shown (that is, scrolled into the viewport of the browser if necessary)
@@ -125,7 +125,7 @@ This example took advantage of two modifiers available for the `hx-trigger` attr
 
 | `delay`
 | Allows you to specify a delay to wait before a request is issued.  If the event occurs again, the first event is
-  discarded and the timer resets.  This allows you to "debounce" requests.
+  discarded and the timer resets.  This allows you to "`debounce`" requests.
 
 | `changed`
 | Allows you to specify that a request should only be issued when the `value` property of the given element has changed
@@ -154,7 +154,7 @@ Here are the other modifiers available on `hx-trigger`:
 
 | `target`
 | A CSS selector that allows you to filter events to only those that occur directly on a given element.  In the DOM,
-  events "bubble" to their parent elements, so a `click` event on a button will also trigger a `click` event on a parent
+  events "`bubble`" to their parent elements, so a `click` event on a button will also trigger a `click` event on a parent
   `div`, all the way up to the `body` element.  Sometimes you want to specify an event directly on a given element, and
   this attribute allows you to do that.
 
@@ -206,7 +206,7 @@ Using event filters, you can use whatever logic you'd like to filter requests by
 
 ==== Synthetic Events
 
-In addition to these modifiers, `hx-trigger` offers a few "synthetic" events, that is events that are not part of the
+In addition to these modifiers, `hx-trigger` offers a few "`synthetic`" events, that is events that are not part of the
 regular DOM API.  We have already seen `load` and `revealed` in our lazy loading and infinite scroll examples, but
 htmx also gives you an `intersect` event that triggers when an element intersects its parent element.
 
@@ -229,7 +229,7 @@ Here are some of the most useful ones:
 |Attribute |Use
 
 | hx-push-url
-| "Pushes" the request URL (or some other value) into the navigation bar
+| "`Pushes`" the request URL (or some other value) into the navigation bar
 
 | hx-preserve
 | Preserves a bit of the DOM between requests (the original content will be kept, regardless of what is returned)
@@ -256,8 +256,8 @@ a simple case where we have two buttons that both target the same element on the
 </button>
 ----
 
-This is fine and will work, but what if a user clicks the "Get Contacts" button and then the request takes a while to
-respond?  And, in the meantime the user clicks the "Get Settings" button?  In this case we would have two requests in
+This is fine and will work, but what if a user clicks the "`Get Contacts`" button and then the request takes a while to
+respond?  And, in the meantime the user clicks the "`Get Settings`" button?  In this case we would have two requests in
 flight at the same time.
 
 If the `/settings` request finished first and displayed the user's setting information, they might be very surprised
@@ -288,8 +288,8 @@ Here is our updated code:
 <1> Hoist the duplicate `hx-target` attributes to the parent `div`
 <2> Synchronize on the parent `div`
 
-By placing the `hx-sync` attribute on the `div` with the value `this`, we are saying "Synchronize all htmx requests that
-occur within this `div` element with one another."  This means that if one button already has a request in flight, other
+By placing the `hx-sync` attribute on the `div` with the value `this`, we are saying "`Synchronize all htmx requests that
+occur within this `div` element with one another.`"  This means that if one button already has a request in flight, other
 buttons within the `div` will not issue requests until that has finished.
 
 The `hx-sync` attribute supports a few different strategies that allow you to, for example, replace an existing request
@@ -306,7 +306,7 @@ so simple) attribute has proven to be a powerful mechanism for driving our appli
 syntax.
 
 Events turn out to be a crucial component of both the extension of HTML as a hypermedia, as well as a crucial component
-of hypermedia-friendly scripting.  Events are the "glue" that brings the DOM, HTML, htmx and scripting together, with the
+of hypermedia-friendly scripting.  Events are the "`glue`" that brings the DOM, HTML, htmx and scripting together, with the
 DOM acting as a sophisticated "event bus" for our application.  We really can't stress how important Events are for
 building an advanced Hypermedia-Driven Application, and we encourage you to learn them
 https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events[in depth].
@@ -393,8 +393,8 @@ Here is what the code might look like:
 <1> A normal htmx-driven `GET` request to `/contacts`
 <2> JavaScript to look up the button and send it an `htxm:abort` event
 
-So now, if a user clicks on the "Get Contacts" button and the request takes a while, they can click on the "Cancel"
-button and end the request.  Of course, in a more sophisticated user interface, you may want to disable the "Cancel"
+So now, if a user clicks on the "`Get Contacts`" button and the request takes a while, they can click on the "`Cancel`"
+button and end the request.  Of course, in a more sophisticated user interface, you may want to disable the "`Cancel`"
 button unless an HTTP request is in flight, but that would be a pain to implement in pure JavaScript.
 
 Thankfully it isn't too bad to implement in hyperscript, so let's take a look at what that would look like:
@@ -412,7 +412,7 @@ Thankfully it isn't too bad to implement in hyperscript, so let's take a look at
 </button>
 ----
 
-Now we have a "Cancel" button that is disabled only when a request from the `contacts-btn` button is in flight.  And
+Now we have a "`Cancel`" button that is disabled only when a request from the `contacts-btn` button is in flight.  And
 we are taking advantage of htmx-generated and handled events, as well as the event-friendly syntax of hyperscript, to
 make it happen.  Not bad!
 
@@ -499,7 +499,7 @@ You can find a reference for all requests and response headers https://htmx.org/
 Even more important than response headers, in terms of information conveyed to the client, is the _HTTP Response Code_.
 We discussed HTTP Response Codes in Chapter 4.  By and large htmx handles various response codes in the manner that
 you would expect: it swaps content for all 200-level response codes and does nothing for others.  There are, however,
-two "special" 200-level response codes:
+two "`special`" 200-level response codes:
 
 * `204 No Content` - When htmx receives this response code, it will _not_ swap any content into the DOM (even if the response
   has a body)
@@ -532,15 +532,15 @@ codes in your application.  Full documentation on the `htmx:beforeSwap` event ca
 
 Above we saw how to use a server-triggered event, via the `HX-Trigger` HTTP response header, to update a piece of the
 DOM based on the response to another part of the DOM.  This technique addresses the general problem that comes up
-in Hypermedia Driven Applications: "How do I update other content?"  After all, in normal HTTP requests, there is only
-one "target", the entire screen, and, similarly, in htmx-based requests, there is only one target: either the explicit
+in Hypermedia Driven Applications: "`How do I update other content?`"  After all, in normal HTTP requests, there is only
+one "`target`", the entire screen, and, similarly, in htmx-based requests, there is only one target: either the explicit
 or implicit target of the element.
 
 If you want to update other content in htmx, you have a few options:
 
 === Expanding Your Selection
 
-The first option, and the simplest, is to "expand the target".  That is, rather than simply replacing a small part
+The first option, and the simplest, is to "`expand the target`".  That is, rather than simply replacing a small part
 of the screen, expand the target of your htmx-driven request until it is large enough to enclose all the elements that
 need to updated on a screen.  This has the tremendous advantage of being simple and reliable.  The downside is that
 it may not provide the user experience that you want, and it may not play well with a particular server-side template
@@ -548,7 +548,7 @@ layout.  Regardless, I always recommend at least thinking about this approach fi
 
 === Out of Band Swaps
 
-A second option, which is a bit more complex, is to take advantage of "Out Of Band" content support in htmx.  When
+A second option, which is a bit more complex, is to take advantage of "`Out Of Band`" content support in htmx.  When
 htmx receives a response, it will look for top-level content in that response that includes the `hx-swap-oob` attribute
 on it.  That content will be removed from the response, so it will not be swapped into the DOM in the normal manner.  Instead,
 it will be swapped in for the content that it matches, by its id.
@@ -558,7 +558,7 @@ conditionally, based on if an integration pulls down any new contacts.  Previous
 a server-triggered event via the `HX-Trigger` response header.
 
 In this case, instead of using an event, let's take advantage of the `hx-swap-oob` attribute in the response to the
-`POST` to `/integrations/1` to "piggy back" the new contacts table content on the response.
+`POST` to `/integrations/1` to "`piggy back`" the new contacts table content on the response.
 
 .The Updated Contacts Table
 [source, html]
@@ -576,7 +576,7 @@ In this case, instead of using an event, let's take advantage of the `hx-swap-oo
 <1> the button still issues a `POST` to `/integrations/1`
 <2> the table no longer listens for an event, but it now has an id
 
-Now let's look at a potential response to the `POST` to `/integrations/1`. This response will include the "regular"
+Now let's look at a potential response to the `POST` to `/integrations/1`. This response will include the "`regular`"
 content that needs to be swapped into the button, per the usual htmx mechanism.  But it will also include a new version,
 updated version of the contacts table, which will be marked as `hx-swap-oob="true"`.  This content will be removed from
 the response, so it is not inserted into the button but will be instead swapped into the DOM in place of the existing
@@ -616,7 +616,7 @@ this approach, and we are quite fond of it.
 
 === Being Pragmatic
 
-All of these approaches to the "Updating Other Content" problem will work, and will often work well.  However, there may
+All of these approaches to the "`Updating Other Content`" problem will work, and will often work well.  However, there may
 come a point where it would just be simpler to use a different approach, like the reactive one.  As much as we like
 the hypermedia approach, the reality is that there are some UX patterns that simply cannot be implemented
 easily using it.  The canonical example of this sort of pattern, which we have mentioned before, is something like a live
@@ -652,7 +652,7 @@ The first technique, provided by htmx itself, is to call the `htmx.logAll()` met
 all the internal events that occur as it goes about its business, loading up content, responding to events and so forth.
 
 This can be overwhelming, but with judicious filtering can help you zero in on a problem.  Here are what (a bit of) the logs
-look like when clicking on the "docs" link on https://htmx.org, with `logAll()` enabled:
+look like when clicking on the "`docs`" link on https://htmx.org, with `logAll()` enabled:
 
 .htmx Logs
 [source, text]

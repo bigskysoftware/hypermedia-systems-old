@@ -23,12 +23,12 @@ Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly appli
 
 == The state of mobile app development
 Before we can discuss how to apply hypermedia to mobile platforms, we need to understand how native mobile apps are commonly built.
-I'm using the word "native" to refer to code written against an SDK provided by the phone's operating system (typically Android or iOS).
+I'm using the word "`native`" to refer to code written against an SDK provided by the phone's operating system (typically Android or iOS).
 This code is packaged into an executable binary, and uploaded & approved through app stores controlled by Google and Apple.
 When users install or update an app, they're downloading this executable and running the code directly on their device's OS.
 In this way, mobile apps have a lot in common with old-school desktop apps for Mac, Windows, or Linux.
 There is one important difference between PC desktop apps of yesteryear and today's mobile apps.
-These days, almost all mobile apps are "networked".
+These days, almost all mobile apps are "`networked`".
 By networked, I mean the app needs to read and write data over the Internet to deliver its core functionality.
 In other words, a networked mobile app needs to to implement the client-server architecture.
 
@@ -76,9 +76,9 @@ There are two approaches employing hypermedia to build & ship native mobile apps
 
 === Web views
 The simplest way to use hypermedia architecture on mobile is by leveraging web technologies.
-Both Android and iOS SDKs provide "web views": chromeless web browsers tbat can be embedded in native apps.
+Both Android and iOS SDKs provide "`web views`": chromeless web browsers tbat can be embedded in native apps.
 Tools like Apache Cordova make it easy to take the URL of a website, and spit out native iOS and Android apps based on web views.
-If you already have a responsive web app, you can get a "native" Hypermedia apps for free.
+If you already have a responsive web app, you can get a "`native`" Hypermedia apps for free.
 Sounds too good to be true, right?
 
 Of course, there is a fundamental limitation with this approach.
@@ -128,7 +128,7 @@ Thus the choice of XML for the base format.
 In addition to familiar ergonomics, XML is compatible with server-side rendering libraries.
 For example, Jinja2 is perfectly suited as a templating library to render HXML.
 The familiarity of XML and the ease of integration on the backend make it simple to adopt in both new and existing codebases.
-Take a look at a "Hello World" app written in HXML.
+Take a look at a "`Hello World`" app written in HXML.
 The syntax should be familiar to anyone who's worked with HTML:
 
 .Hello World
@@ -153,9 +153,9 @@ But HXML is not just a straight port of HTML with differently named tags.
 In previous chapters, we've seen how htmx enhances HTML with a handful of new attributes.
 These additions maintain the declaritive nature of HTML, while giving developers the power to create rich web apps.
 In HXML, the concepts of htmx (and IntercoolerJS before it) are built into the spec.
-Specifically, HXML is not limited to "click to navigate" and "press to submit" interactions like basic HTML.
+Specifically, HXML is not limited to "`click to navigate`" and "`press to submit`" interactions like basic HTML.
 It supports a range of triggers and actions for modifying the content on a screen.
-These interactions are bundled together in a powerful concept of "behaviors".
+These interactions are bundled together in a powerful concept of "`behaviors`".
 Developers can even define new behavior actions to add new capabilities to their app, without the need for scripting.
 We will learn more about behaviors later in this chapter.
 
@@ -175,7 +175,7 @@ Any developer can build and host a web app, and any user can access it directly.
 
 As we know, that's not the case with mobile platforms.
 There is no open standard for building and distributing native mobile apps.
-And there's definitely no widely distributed "HXML browser".
+And there's definitely no widely distributed "`HXML browser`".
 So how can a developer deliver a Hypermedia mobile app using HXML?
 Well, unlike on the web, the mobile developer must provide both the backend to serve HXML, and a mobile client app to render those HXML responses.
 
@@ -186,7 +186,7 @@ image::figure_6_1.png[]
 It would be a lot to ask from developers to write their own HXML client.
 That's why Hyperview provides an open-source client library, written in React Native.
 This library can be used to bootstrap a new mobile app, or it can be embedded in an existing app.
-In either case, developers get a full "HXML browser" without needing to write it from scratch.
+In either case, developers get a full "`HXML browser`" without needing to write it from scratch.
 
 
 .The Benefits of Using Your Own Client
@@ -209,7 +209,7 @@ In fact, the Hyperview client library was built with extensibility in mind.
 There are extension points for custom UI elements and custom behavior actions.
 
 By extending the format and client itself, there's no need for Hyperview to include a scripting layer in HTMX.
-Features that require client-side logic get "built-in" to the client browser.
+Features that require client-side logic get "`built-in`" to the client browser.
 HTMX responses remain pure, with UI and interactions represented in declarative XML.
 ----
 
@@ -246,7 +246,7 @@ Then, we'll re-build our contacts app in Hyperview.
 
 === Hello World!
 HXML was designed to feel natural to web developers coming from HTML.
-Let's take a closer look at the "Hello World" app defined in HXML:
+Let's take a closer look at the "`Hello World`" app defined in HXML:
 
 .Hello World, revisited
 [source,xml]
@@ -313,9 +313,9 @@ Think of it like a `<div>` in HTML.
 Note that unlike in HTML, a `<div>` cannot directly contain text.
 
 `<text>` elements are the only way to render text in the UI.
-In this example, "Hello World" is contained within a  `<text>` element.
+In this example, "`Hello World`" is contained within a  `<text>` element.
 
-That's all there is to define a basic "Hello World" app in HXML.
+That's all there is to define a basic "`Hello World`" app in HXML.
 Of course, this isn't very exciting.
 Let's cover some other built-in display elements.
 
@@ -351,8 +351,8 @@ A `<list>` element only contains `<item>` elements.
 Of course, these represent each unique item in the list.
 Note that `<item>` is required to have a `key` attribute, which is unique among all items in the list.
 
-You might be asking, "Why do we need a custom syntax for lists of items?
-Can't we just use a bunch of `<view>` elements?".
+You might be asking, "`Why do we need a custom syntax for lists of items?
+Can't we just use a bunch of `<view>` elements?`".
 Yes, for lists with a small number of items, using nested `<views>` will work quite well.
 However, often the number of items in a list can be long enough to require optimizations to support smooth scrolling interactions.
 Consider browsing a feed of posts in a social media app.
@@ -396,14 +396,14 @@ For example, a UI showing a restaurant menu could group the offerings by dish ty
 ----
 <1> Element representing a list with sections
 <2> The first section of appetizer offerings
-<3> Element for the title of the section, rendering the text "Appetizers"
+<3> Element for the title of the section, rendering the text "`Appetizers`"
 <4> An item representing an appetizer
 <5> A section for entree offerings
 
 You'll notice a couple of differences between `<list>` and `<section-list>`.
 The section list element only contains `<section>` elements, representing a group of items.
 A section can contain a `<section-title>` element. This is used to render some UI that acts as the header of the section.
-This header is "sticky", meaning it stays on screen while scrolling through items that belong to the corresponding section.
+This header is "`sticky`", meaning it stays on screen while scrolling through items that belong to the corresponding section.
 Finally, `<item>` elements act the same as in the regular list, but can only appear within a `<section>`.
 
 ==== Images
@@ -419,7 +419,7 @@ Showing images in Hyperview is pretty similar to HTML, but there are a few diffe
 The `source` attribute specifies how to load the image.
 Like in HTML, the source can be an absolute or relative URL.
 Additionally, the source can be an encoded data URI, for example `data:image/png;base64,iVBORw`.
-However, the source can also be a "local" URL, refering to an image that is bundled as an asset in the mobile app.
+However, the source can also be a "`local`" URL, refering to an image that is bundled as an asset in the mobile app.
 The local URL is prefixed with `./`:
 
 .Image element, pointing to local source
@@ -551,8 +551,8 @@ Let's re-visit the Hello World app and fill out the `<styles>` element.
 </doc>
 ----
 <1> Element encapsulating all of the styling for the screen
-<2> Example of a definition of a style class for "body"
-<3> Applying the "body" style class to a UI element
+<2> Example of a definition of a style class for "`body`"
+<3> Applying the "`body`" style class to a UI element
 <4> Example of applying multiple style classes (h1 and info) to an element
 
 You'll note that in HXML, styling is part of the XML format, rather than using a separate language like CSS.
@@ -562,7 +562,7 @@ In the current version of HXML, the only available selector is a class name, ind
 The rest of the attributes on the `<style>` element are declarations, consisting of properties and property values.
 
 UI elements within the `<screen>` can reference the `<style>` rules by adding the class names to their `<style>` property.
-Note the `<text>` element around "Hello World!" references two style classes: `h1` and `info`. The styles from the corresponding classes are merged together in the order they appear on the element.
+Note the `<text>` element around "`Hello World!`" references two style classes: `h1` and `info`. The styles from the corresponding classes are merged together in the order they appear on the element.
 It's worth noting that styling properties are similar to those in CSS (color, margins/padding, borders, etc).
 Currently, the only available layout engine is based on flexbox.
 
@@ -574,7 +574,7 @@ For the sake of brevity, I won't include the `<styles>` element in the rest of t
 The core UI elements that ship with Hyperview are quite basic.
 Most mobile apps require richer elements to deliver a great user experience.
 Luckily, HXML can easily accomodate custom elements in its syntax.
-This is because HXML is really just XML, aka "Extensible Markup Language".
+This is because HXML is really just XML, aka "`Extensible Markup Language`".
 Extensibility is already built into the format!
 Developers are free to define new elements and attributes to represent custom elements.
 
@@ -609,7 +609,7 @@ Using these custom XML elements, an instance of the map in our app might look li
 
 The syntax feels right at home among the core HXML elements.
 However, there's a potential problem.
-"area" and "marker" are pretty generic names.
+"`area`" and "`marker`" are pretty generic names.
 I could see `<area>` and `<marker>` elements being used by a customization to render charts & graphs.
 If our app renders both maps and charts, the HXML markup would be ambiguous.
 What should the client render when it sees `<area>` or `<marker>`?
@@ -643,14 +643,14 @@ Now that we have a namespace and prefix, we need to use it for our elements:
   </screen>
 </doc>
 ----
-<1> Definition of namespace aliased to "map"
-<2> Adding the namespace to the "area" start tag
-<3> Adding the namespace to the "marker" self-closing tag
-<4> Adding the nemsapce to the "area" end tag
+<1> Definition of namespace aliased to "`map`"
+<2> Adding the namespace to the "`area`" start tag
+<3> Adding the namespace to the "`marker`" self-closing tag
+<4> Adding the nemsapce to the "`area`" end tag
 
-That's it! If we introduced a custom charting library with "area" and "marker" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate `<map:area>` from `<chart:area>`.
+That's it! If we introduced a custom charting library with "`area`" and "`marker`" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate `<map:area>` from `<chart:area>`.
 
-At this point you might be wondering, "how does the Hyperview client know to render a map when my doc includes `<map:area>` "?
+At this point you might be wondering, "`how does the Hyperview client know to render a map when my doc includes `<map:area>`?`"
 It's true, so far we only defined the custom element format, but we haven't implemented the element as a feature in our app.
 We will get into the details of implementing custom elements in the next chapter.
 
@@ -681,7 +681,7 @@ Htmx (and Intercooler before it) do exactly that with a new set of attributes:
 By decoupling elements, triggers, and actions, htmx allows us to build rich Hypermedia-driven applications in a way that feels very compatible with HTML syntax and server-side web development.
 
 HXML takes the idea of defining interactions via triggers & actions and builds them into the spec.
-We call these interactions "behaviors".
+We call these interactions "`behaviors`".
 We use a special `<behavior>` element to define then.
 Here's an example of a simple behavior that pushes a new mobile screen onto the navigation stack:
 
@@ -764,7 +764,7 @@ Behavior actions in Hyperview fall into 3 general categories:
 
 ===== Navigation Actions
 We've already seen the simplest type of action, `push`.
-We classify `push` as a "navigation action", since it's related to navigating screens in the mobile app.
+We classify `push` as a "`navigation action`", since it's related to navigating screens in the mobile app.
 Pushing a screen onto the navigation stack is just one of several navigation actions supported in Hyperview.
 Users also need to be able to go back to previous screens, open and close modals, switch between tabs, or jump to arbitrary screens.
 Each of these types of navigations is supported through a different value for the `action` attribute:
@@ -773,7 +773,7 @@ Each of these types of navigations is supported through a different value for th
 - `new`: Open a new navigation stack as a modal. This looks like a screen sliding in from the bottom, on top of the current screen.
 - `back`: This is a complement to the `push` action. It pops the current screen off of the navigation stack (sliding it to the right).
 - `close`: This is a complement to the `new` action. It closes the current navigation stack (sliding it down).
-- `reload`: Similar to a browser's "refresh" button, this will re-request the content of the current screen.
+- `reload`: Similar to a browser's "`refresh`" button, this will re-request the content of the current screen.
 - `navigate`: This action will attempt to find a screen with the given `href` already loaded in the app. If the screen exists, the app will jump to that screen. If it doesn't exist, it will act the same as `push`.
 
 `push`, `new`, and `navigate` all load a new screen.
@@ -783,7 +783,7 @@ Thus, they require an `href` attribute so that Hyperview knows what content to r
 By default, it will use the URL of the screen when re-requesting the content for the screen.
 However, if you want to replace the screen with a different one, you can provide an `href` attribute with `reload` on the behavior element.
 
-Let's look at an example "widgets" app that uses several navigation actions on one screen:
+Let's look at an example "`widgets`" app that uses several navigation actions on one screen:
 
 .Navigation action examples
 [source,xml]
@@ -819,14 +819,14 @@ Let's look at an example "widgets" app that uses several navigation actions on o
 <4> Pushes a new screen with details for a specific widget
 
 Most screens in your app will need a way for the user to backtrack to the previous screen.
-This is usually done with a button in the header that uses either a "back" or "close" action, depending on how the screen was opened.
-In this example, we're assuming the widgets screen was pushed onto the navigation stack, so the "back" action is appropriate.
+This is usually done with a button in the header that uses either a "`back`" or "`close`" action, depending on how the screen was opened.
+In this example, we're assuming the widgets screen was pushed onto the navigation stack, so the "`back`" action is appropriate.
 The header contains a second button that allows the user to enter data for a new widget.
-Pressing this button will open a modal with a "New Widget" screen.
-Since this "New Widget" screen will open as a modal, it will need a corresponding "close" action to dismiss itself and show our "widgets" screen again.
-Finally, to see more details about a specific widget, each `<item>` element contains a behavior with a "push" action.
-This action will push a "Widget Detail" screen onto the current navigation stack.
-Like in the "Widgets" screen, "Widget Detail" will need a button in the header that uses the "back" action to let the user backtrack.
+Pressing this button will open a modal with a "`New Widget`" screen.
+Since this "`New Widget`" screen will open as a modal, it will need a corresponding "`close`" action to dismiss itself and show our "`widgets`" screen again.
+Finally, to see more details about a specific widget, each `<item>` element contains a behavior with a "`push`" action.
+This action will push a "`Widget Detail`" screen onto the current navigation stack.
+Like in the "`Widgets`" screen, "`Widget Detail`" will need a button in the header that uses the "`back`" action to let the user backtrack.
 
 On the web, the browser handles basic navigation needs such as going back/forward, reloading the current page, or jumping to a bookmark.
 iOS and Android don't provide this sort of universal navigation for native mobile apps.
@@ -838,7 +838,7 @@ Navigation actions in HXML provide an easy but powerful way for developers to bu
 
 Behavior actions are not just limited to navigating between screens.
 They can also be used to change the content on the current screen.
-We call these "update actions".
+We call these "`update actions`".
 Much like navigation actions, update actions make a request to the backend.
 However, the response is not an entire HXML document, but a fragment of HXML.
 This fragment is added to the HXML of the current screen, resulting in an update to the UI.
@@ -906,10 +906,10 @@ Below each button, there's a corresponding `<view>` containing some text.
 Note that the `id` of each view matches the `target` on the behaviors of the corresponding button.
 
 When the user presses the first button, the Hyperview makes a request for `/fragment`.
-Next, it looks for the target, ie the element with id "area1".
+Next, it looks for the target, ie the element with id "`area1`".
 Finally, it replaces the `<view id="area1">` element with the fetched fragment, `<text>My fragment</text>`.
 The existing view and text contained in that view will be replaced.
-To the user, it will look like "Existing content" was changed to "My fragment".
+To the user, it will look like "`Existing content`" was changed to "`My fragment`".
 In the HXML, the element `<view id="area1">` will also be gone.
 
 The second button behaves in a similar way to the first one.
@@ -1005,15 +1005,15 @@ Like the other update actions, `hide`, `show`, and `toggle` use the `target` att
   </body>
 </screen>
 ----
-<1> Hides the element with id "area".
-<1> Shows the element with id "area".
-<1> Toggles the visibility of the element with id "area".
+<1> Hides the element with id "`area`".
+<1> Shows the element with id "`area`".
+<1> Toggles the visibility of the element with id "`area`".
 <4> The element targeted by the actions.
 
-In this example, the three buttons labeled "Hide", "Show", and "Toggle" will modify the display state of the `<view>` with ID "area".
-Pressing "Hide" multiple times will have no affect once the view is hidden.
-Likewise, pressing "Show" multiple times will have no affect once the view is showing.
-Pressing "Toggle" will keep flipping the visibility status of the element between showing and hidden.
+In this example, the three buttons labeled `"Hide`", "`Show`", and "`Toggle`" will modify the display state of the `<view>` with ID "`area`".
+Pressing "`Hide`" multiple times will have no affect once the view is hidden.
+Likewise, pressing "`Show`" multiple times will have no affect once the view is showing.
+Pressing "`Toggle`" will keep flipping the visibility status of the element between showing and hidden.
 
 Hyperview comes with other actions that modify the existing HXML.
 We won't cover them in detail, but I'll mention them breifly here:
@@ -1025,7 +1025,7 @@ We won't cover them in detail, but I'll mention them breifly here:
 
 Some standard Hyperview actions don't interact with the HXML at all.
 Instead, they expose functionality provided by the mobile OS.
-For example, both Android and iOS support a system-level "Share" UI.
+For example, both Android and iOS support a system-level "`Share`" UI.
 This UI allows sharing URLs and messages from one app to another app.
 Hyperview has a `share` action to support this interaction.
 It involves a custom namespace, and share-specific attributes.
@@ -1049,7 +1049,7 @@ It involves a custom namespace, and share-specific attributes.
 We've seen XML namespaces when talking about custom elements.
 Here, we are using a namespace for the `url` and `message` attributes on the `<behavior>`.
 These attribute names are generic and likely used by other components and behaviors, so the namespace ensures there will be no ambiguity.
-When pressed, the "share" action will trigger.
+When pressed, the "`share`" action will trigger.
 The values of the `url` and `message` attributes will be passed to the system Share UI.
 From there, the user will be able to share the URL & message via SMS, email, or other communication apps.
 
@@ -1081,16 +1081,16 @@ This level of configuration cannot be done with just attributes, so we use custo
 <1> Defines the namespace for the alert action.
 <2> The action of this behavior will bring up a system dialog box.
 <3> Title of the dialog box.
-<5> A "continue" option in the dialog box
-<6> When "continue" is pressed, push a new screen onto the navigation stack.
-<7> A "cancel" option that dismisses the dialog box.
+<5> A "`continue`" option in the dialog box
+<6> When "`continue`" is pressed, push a new screen onto the navigation stack.
+<7> A "`cancel`" option that dismisses the dialog box.
 
 Like the `share` behavior, `alert` uses a namespace to define some attributes and elements.
 The `<behavior>` element itself contains the `title` and `message` attributes for the dialog box.
 The button options for the dialog are defined using a new `<option>` element nested in the `<behavior>`.
 Notice that each `<option>` element has a label, and then optionally contains a `<behavior>` itself!
 This structure of the HXML allows the system dialog to trigger any interaction that can be defined as a `<behavior>`.
-In the example above, pressing the "Continue" button will open a new screen.
+In the example above, pressing the "`Continue`" button will open a new screen.
 But we could just as easily trigger an update action to change the current screen.
 We could even open a share sheet, or a second dialog box.
 But please don't do that in a real app!
@@ -1114,7 +1114,7 @@ We've already seen the simplest type of trigger, a `press` on an element. Hyperv
 ===== longPress
 Closely related to a press is a long-press.
 A behavior with `trigger="longPress"` will trigger when the user presses and holds on the element.
-"Long-press" interactions are often used for shortcuts and power features.
+"`Long-press`" interactions are often used for shortcuts and power features.
 Sometimes, elements will support different actions for both a `press` and `longPress`.
 This is done using multiple `<behavior>` elements on the same UI element.
 
@@ -1158,9 +1158,9 @@ One use case is to quickly load a shell of the screen, and then fill in the main
 <2> Behavior that immediately fires off a request for /content to replace the container
 <3> Loading UI that appears until the content is fetched and replaced.
 
-In this example, We load a screen with a heading ("My app") but no content.
-Instead, we show a `<view>` with ID "container" and some "Loading..." text.
-As soon as this screen loads, the behavior with `trigger="load"` fires off the `replace` action.
+In this example, We load a screen with a heading ("`My app`") but no content.
+Instead, we show a `<view>` with ID "`container`" and some "`Loading...`" text.
+As soon as this screen loads, the behavior with `trigger="`load`"` fires off the `replace` action.
 It requests content from the `/content` path and replaces the container view with the response.
 
 
@@ -1172,7 +1172,7 @@ The last item in the list includes a behavior with `trigger="visible"`.
 The `append` action will fetch the next page of items and append them to the list.
 
 ===== refresh
-This trigger captures a "pull to refresh" action on `<list>` and `<view>` items.
+This trigger captures a "`pull to refresh`" action on `<list>` and `<view>` items.
 This interaction is associated with fetching up-to-date content from the backend.
 Thus, it's typically paired with an update or reload action to show the latest data on the screen.
 
@@ -1207,9 +1207,9 @@ But there's no such limitation in Hyperview; elements can define multiple behavi
 We already saw an example where a single element had different actions triggered on `press` and `longPress`.
 But we can also trigger multiple actions on the same trigger.
 
-In this admittedly contrived example, we want to hide 2 elements on the screen when pressing the "Hide" button.
+In this admittedly contrived example, we want to hide 2 elements on the screen when pressing the "`Hide`" button.
 The two elements are far apart in the HXML, and cannot be hidden by hiding a common parent element.
-But, we can trigger two behaviors at the same time, each one executing a "hide" action but targeting different elements.
+But, we can trigger two behaviors at the same time, each one executing a "`hide`" action but targeting different elements.
 
 .Multiple behaviors triggering on press
 [source,xml]
@@ -1228,13 +1228,13 @@ But, we can trigger two behaviors at the same time, each one executing a "hide" 
   </body>
 </screen>
 ----
-<1> Hide element with ID "area1" when pressed
-<2> Hide element with ID "area2" when pressed
+<1> Hide element with ID "`area1`" when pressed
+<2> Hide element with ID "`area2`" when pressed
 
 Hyperview processes behaviors in the order they appear in the markup.
-In this case, the element with ID "area1" will be hidden first, followed by the element with ID "area2".
-Since "hide" is an instantaneous action (ie, it doesn't make an HTTP request), both elements will appear to hide simultaneously.
-But what if we triggered two actions that depend on responses from HTTP requests (like "replace-inner")?
+In this case, the element with ID "`area1`" will be hidden first, followed by the element with ID "`area2`".
+Since "`hide`" is an instantaneous action (ie, it doesn't make an HTTP request), both elements will appear to hide simultaneously.
+But what if we triggered two actions that depend on responses from HTTP requests (like "`replace-inner`")?
 In that case, each individual action get processed as soon as Hyperview receives the HTTP response.
 Depending on network latency, the two actions could take effect in any order, and they are not guaranteed to be applied simultaneously.
 

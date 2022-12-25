@@ -6,7 +6,7 @@
 == Active Search
 
 So far so good with Contact.app: we have a nice little web application with some significant improvements over a plain
-HTML-based application. We've added a proper "Delete Contact" button, done some dynamic validation of input and looked
+HTML-based application. We've added a proper "`Delete Contact`" button, done some dynamic validation of input and looked
 as some different approaches to add paging to the application.  As we have said, many web developers would expect that
 we would have needed to add a lot of JavaScript-based scripting to get these features, but we've done it all in relatively
 pure HTML, using only htmx attributes.
@@ -15,15 +15,15 @@ We _will_ eventually add some client-side scripting to our application: hypermed
 sometimes scripting might be the best (or only) way to achieve a given goal.  For now, however, let's see what we can accomplish
 with hypermedia.
 
-The first advanced htmx feature we will create is known as the "Active Search" pattern.  Active Search is when, as a
+The first advanced htmx feature we will create is known as the "`Active Search`" pattern.  Active Search is when, as a
 user types text into a search box, the results of that search are dynamically search are shown.  This pattern was made popular
 when Google adopted it for search results, and many applications now implement it.
 
 To implement Active Search, we are going to use techniques closely related to the way we did email validation in the
 previous chapter.  If you think about it, the two features are similar in many ways: in both cases we want to issue
 a request as the user types into an input and then update some other element with a response.  The server-side implementations
-will, of course, be very different, but the front end code will look fairly similar, a testament to how general the "issue
-a request on an event and replace something on the screen" approach htmx takes.
+will, of course, be very different, but the front end code will look fairly similar, a testament to how general the "`issue
+a request on an event and replace something on the screen`" approach htmx takes.
 
 === Our Current Search UI
 
@@ -38,12 +38,12 @@ Let's recall what the current search field in our application currently looks li
     <input type="submit" value="Search"/>
 </form>
 ----
-<1> The `q` or "query" parameter our client side code uses to search
+<1> The `q` or "`query`" parameter our client side code uses to search
 
 Recall that we have some server side code that looks for the `q` parameter and, if it is present, searches the contacts
 for that term.
 
-As it stands right now, the user must hit enter when the search input is focused, or click the "Search" button.  Both
+As it stands right now, the user must hit enter when the search input is focused, or click the "`Search`" button.  Both
 of these events will trigger a `submit` event on the form, causing it to issue an HTTP `GET` and re-rendering the whole
 page.
 
@@ -54,7 +54,7 @@ search-as-you-type behavior that we want.
 
 To add active search behavior, we will need to add a few htmx attributes to the search input.  We will leave the current
 form as it is, with an `action` and `method`, so that, in case a user does not have JavaScript enabled, the normal
-search behavior continues to work.  This will make our "Active Search" improvement a nice "progressive enhancement".
+search behavior continues to work.  This will make our "`Active Search`" improvement a nice "`progressive enhancement`".
 
 So, in addition to the regular form behavior, we _also_ want to issue an HTTP `GET` request when a key up occurs.  We want
 to issue this request to the same URL as the normal form submission.  Finally, we only want to do this after a small
@@ -84,7 +84,7 @@ Again, a great example of how common patterns come up again and again when you a
 We did make a small change to the `hx-trigger` attribute: we switched out the `change` event for the `search` event.
 The `search` event is triggered when someone clears the search or hits the enter key.  It is a non-standard event, but
 it doesn't hurt to include here.  The main functionality of the feature is provided by the second triggering event, the `keyup`
-which, as with the email example, is delayed with the `delay:200ms` modifier to "debounce" the input requests and
+which, as with the email example, is delayed with the `delay:200ms` modifier to "`debounce`" the input requests and
 avoid hammering our server with requests on every keyup.
 
 === Targeting The Correct Element
@@ -132,7 +132,7 @@ body of the table on the page.
 Now if you try typing something into the search box, we'll see some results: a request is made and the results are inserted
 into the document within the `tbody`.  Unfortunately, the content that is coming back is still an entire HTML document.
 
-Here we end up with a "double render" situation, where an entire document has been inserted _inside_ another element, with
+Here we end up with a "`double render`" situation, where an entire document has been inserted _inside_ another element, with
 all the navigation, headers and footers and so forth re-rendered within that element.  This is an example of one of those
 silly mis-targeting issues we mentioned earlier.
 
@@ -140,7 +140,7 @@ Thankfully, it is pretty easy to fix.
 
 === Paring Down Our Content
 
-Now, we could use the same trick we reached for in the "Click To Load" and "Infinite Scroll" features: the `hx-select`
+Now, we could use the same trick we reached for in the "`Click To Load`" and "`Infinite Scroll`" features: the `hx-select`
 attribute.  Recall that the `hx-select` attribute allows us to pick out the part of the response we are interested in using
 a CSS selector.
 
@@ -167,7 +167,7 @@ bit_ of HTML, rather than a full document. Currently, we are letting the server 
 and then, on the client side, we filter the HTML down to the bits that we want.  This is easy to do, and, in fact, might
 be necessary if we don't control the server side or can't easily modify responses.
 
-In our application, however, since we are doing "Full Stack" development (that is: we control both the front end _and_ the back end
+In our application, however, since we are doing "`Full Stack`" development (that is: we control both the front end _and_ the back end
 code, and can easily modify either) we have another option: we can modify our server responses to return only the content
 necessary, and remove the need to do client-side filtering.
 
@@ -194,9 +194,9 @@ def contacts():
 
 How do we want to change this?  We want to render two different bits of HTML content _conditionally_:
 
-* If this is a "normal" request for the entire page, we want to render the `index.html` template in the current
-  manner.  In fact, we don't want anything to change if this is a "normal" request.
-* However, if this is an "Active Search" request, we only want to render the content that is within the `tbody`,
+* If this is a "`normal`" request for the entire page, we want to render the `index.html` template in the current
+  manner.  In fact, we don't want anything to change if this is a "`normal`" request.
+* However, if this is an "`Active Search`" request, we only want to render the content that is within the `tbody`,
   that is, just the table rows of the page.
 
 So we need some way to determine exactly which of these two different types of requests to the `/contact` URL is being
@@ -241,19 +241,19 @@ Here is a table of the HTTP headers that htmx includes in HTTP requests:
 |Header | Description
 
 |HX-Boosted
-|This will be the string "true" if the request is made via an element using hx-boost
+|This will be the string "`true`" if the request is made via an element using hx-boost
 
 |HX-Current-URL
 |This will be the current URL of the browser
 
 |HX-History-Restore-Request
-|This will be the string "true" if the request is for history restoration after a miss in the local history cache
+|This will be the string "`true`" if the request is for history restoration after a miss in the local history cache
 
 |HX-Prompt
 |This will contain the user response to an hx-prompt
 
 |HX-Request
-|This value is always "true" for htmx-based requests
+|This value is always "`true`" for htmx-based requests
 
 |HX-Target
 |This value will be the id of the target element if it exists
@@ -286,7 +286,7 @@ def contacts():
         contacts_set = Contact.all()
     return render_template("index.html", contacts=contacts_set) <2>
 ----
-<1> If the request header `HX-Trigger` is equal to "search", we want to do something different
+<1> If the request header `HX-Trigger` is equal to "`search`", we want to do something different
 <2> We need to learn how to render just the table rows
 
 OK, so how do we render only the result rows?
@@ -371,7 +371,7 @@ from `rows.html` inserted:
         </tbody>
     </table>
 ----
-<1> This directive "includes" the `rows.html` file, inserting its content into the current template
+<1> This directive "`includes`" the `rows.html` file, inserting its content into the current template
 
 So far, so good: our `/contacts` page is still rendering properly, just as it did before we split the rows out of the
 `index.html` template.
@@ -427,7 +427,7 @@ documentation] discusses this issue as well.
 
 One shortcoming of our current Active Search implementation, when compared with the normal form submission, is that when
 you submit the form version it updates the navigation bar of the browser to include the search term.  So, for example, if
-you search for "joe"in the search box, you will end up with a url that looks like this in your browser's nav bar:
+you search for "`joe`" in the search box, you will end up with a url that looks like this in your browser's nav bar:
 
 .The Updated Location After A Form Search
 ----
@@ -438,16 +438,16 @@ This is a nice feature of browsers: it allows you to bookmark this search or to 
 All they have to do is to click on the link, and they will repeat the exact same search.  This is also tied in with
 the browser's notion of history: if you click the back button it will take you to the previous URL that you came
 from.  If you submit two searches and want to go back to the first one, you can simply hit back and the browser
-will "return" to that search.
+will "`return`" to that search.
 
 As it stands right now, during our Active Search, we are not updating the browser's navigation bar, so users aren't getting
 nice copy-and-pasteable links and you aren't getting history entries either, so no back button support.  Fortunately, htmx
 provides a way for fixing this that we've already seen: the `hx-push-url` attribute.
 
-The `hx-push-url` attribute lets you tell htmx "Please push the URL of this request into the browser's navigation bar".
+The `hx-push-url` attribute lets you tell htmx "`Please push the URL of this request into the browser's navigation bar`".
 Push might seem like an odd verb to use here, but that's the term that the underlying browser history API uses, which
-stems from the fact that it models browser history as a "stack" of locations: when you go to a new location, that
-location is "pushed" onto the stack of history elements, and when you click "back", that location is "popped" off
+stems from the fact that it models browser history as a "`stack`" of locations: when you go to a new location, that
+location is "`pushed`" onto the stack of history elements, and when you click "`back`", that location is "`popped`" off
 the history stack.
 
 So, to get proper history support for our Active Search, all we need to do is to set the `hx-push-url` attribute to
@@ -482,8 +482,8 @@ complete.
 
 htmx provides support for request indicators via the `hx-indicator` attribute.  This attribute takes, you guessed it,
 a CSS selector that points to the indicator for a given element.  The indicator can be anything, but it is typically
-some sort of animated image, such as a gif or svg file, that spins or otherwise communicates visually that "something
-is happening".
+some sort of animated image, such as a gif or svg file, that spins or otherwise communicates visually that "`something
+is happening`".
 
 Let's add a spinner after our search input:
 
@@ -596,7 +596,7 @@ image::screenshot_total_contacts.png[]
 Beautiful.
 
 Of course, as you probably suspected, all is not perfect.  Unfortunately, upon shipping this feature to production, we
-start getting some complaints from the users that the application "feels slow".  Like all good developers faced with
+start getting some complaints from the users that the application "`feels slow`".  Like all good developers faced with
 a performance issues, rather than guessing what the issue might be, we try to get a performance profile of the application
 to see what exactly is causing the problem.
 
@@ -619,7 +619,7 @@ out of request handler for the `/contacts` end point.
 
 Let's pull this function call into its own HTTP request handler as new HTTP end point that we will put at `/contacts/count`.
 For this new end point, we won't need to render a template at all: its sole job is going to be to render that small bit of text
-that is in the span, "(22 total Contacts)"
+that is in the span, "`(22 total Contacts)`"
 
 Here is what the new code will look like:
 
@@ -684,10 +684,10 @@ And, check it out, our `/contacts` page is fast again!  When you navigate to the
 profiling shows that yes, indeed, the page is loading much more quickly.  Why is that?  Well, we've deferred the
 expensive calculation to a secondary request, allowing the initial request to finish loading much more quickly.
 
-You might say "OK, great, but it's still taking a second or two to get the total count on the page."  True, but
+You might say "`OK, great, but it's still taking a second or two to get the total count on the page.`"  True, but
 often the user may not be particularly interested in the total count.  They may just want to come to the page and
 search for an existing user, or perhaps they may want to edit or add a user.  The total count of contacts
-is just a "nice to have" bit of information in these cases.
+is just a "`nice to have`" bit of information in these cases.
 
 By deferring the calculation of the count in this manner we let users get on with their use of the application while we
 perform the expensive calculation.
@@ -736,8 +736,8 @@ work with: implementing a new feature is often just copy-and-paste, maybe a twea
 
 === But That's Not Lazy!
 
-You might say "OK, but that's not really lazy.  We are still loading the count immediately when the page is loaded,
-we are just doing it in a second request.  You aren't really waiting until the value is actually needed."
+You might say "`OK, but that's not really lazy.  We are still loading the count immediately when the page is loaded,
+we are just doing it in a second request.  You aren't really waiting until the value is actually needed.`"
 
 Fine.  Let's make it _lazy_ lazy: we'll only issue the request when the `span` scrolls into view.
 
@@ -762,11 +762,11 @@ approach.
 
 == Inline Delete
 
-For our next hypermedia trick, we are going to implement the "Inline Delete" pattern.  With this feature, a contact can
+For our next hypermedia trick, we are going to implement the "`Inline Delete`" pattern.  With this feature, a contact can
 be deleted directly from the table of all contacts, rather than requiring the user to navigate all the way to the edit view
-of particular contact, in order to access the "Delete Contact" button we added in the last chapter.
+of particular contact, in order to access the "`Delete Contact`" button we added in the last chapter.
 
-Recall that we already have "Edit" and "View" links for each row, in the `rows.html` template:
+Recall that we already have "`Edit`" and "`View`" links for each row, in the `rows.html` template:
 
 .The Existing Row Actions
 [source, html]
@@ -777,11 +777,11 @@ Recall that we already have "Edit" and "View" links for each row, in the `rows.h
 </td>
 ----
 
-Now we want to add a "Delete" link as well.  And, thinking on it, we want that link to act an awful lot like the
-"Delete Contact" button from `edit.html`, don't we?  We'd like to issue an HTTP `DELETE` to the URL for the given
+Now we want to add a "`Delete`" link as well.  And, thinking on it, we want that link to act an awful lot like the
+"`Delete Contact`" button from `edit.html`, don't we?  We'd like to issue an HTTP `DELETE` to the URL for the given
 contact and we want a confirmation dialog to ensure the user doesn't accidentally delete a contact.
 
-Here is the "Delete Contact" button html:
+Here is the "`Delete Contact`" button html:
 
 .The Existing Row Actions
 [source, html]
@@ -796,12 +796,12 @@ Here is the "Delete Contact" button html:
 
 As you may suspect by now, this is going to be another copy-and-paste job.
 
-One thing to note is that, in the case of the "Delete Contact" button, we wanted to rerender the whole screen and update
+One thing to note is that, in the case of the "`Delete Contact`" button, we wanted to rerender the whole screen and update
 the URL, since we are going to be returning from the edit view for the contact to the list view of all contacts.  In
 the case of this link, however, we are already on the list of contacts, so there is no need to update the URL, and
 we can omit the `hx-push-url` attribute.
 
-Here is the code for our inline "Delete" link:
+Here is the code for our inline "`Delete`" link:
 
 .The Existing Row Actions
 [source, html]
@@ -814,14 +814,14 @@ Here is the code for our inline "Delete" link:
         hx-target="body">Delete</a> <1>
 </td>
 ----
-<1> Almost a straight copy of the "Delete Contact" button
+<1> Almost a straight copy of the "`Delete Contact`" button
 
 As you can see, we have added a new anchor tag and given it a blank target (the `#` value in its `href` attribute) to
 retain the correct mouse-over styling behavior of the link.  We've also copied the `hx-delete`, `hx-confirm` and
-`hx-target` attributes from the "Delete Contact" button, but omitted the `hx-push-url` attributes since we don't want
+`hx-target` attributes from the "`Delete Contact`" button, but omitted the `hx-push-url` attributes since we don't want
 to update the URL of the browser.
 
-We now have inline delete working, even with a confirmation dialog.  A user can click on the "Delete" link and the
+We now have inline delete working, even with a confirmation dialog.  A user can click on the "`Delete`" link and the
 row will disappear from the UI as the entire page is re-rendered.
 
 .A Style Sidebar
@@ -848,12 +848,12 @@ To do this, we'll need to do a couple of things:
 
 * We'll need to update this link to target the row that it is in
 * We'll need to change the swap to `outerHTML`, since we want to replace (really, remove) the entire row
-* We'll need to update the server side to render empty content when the `DELETE` is issued from a "Delete" link rather
-  than from the "Delete Contact" button on the contact edit page
+* We'll need to update the server side to render empty content when the `DELETE` is issued from a "`Delete`" link rather
+  than from the "`Delete Contact`" button on the contact edit page
 
-First things first, update the target of our "Delete" link to be the row that the link is in, rather than the entire
+First things first, update the target of our "`Delete`" link to be the row that the link is in, rather than the entire
 body.  We can once again take advantage of the relative positional `closest` feature to target the closest `tr`, like
-we did in our "Click To Load" and "Infinite Scroll" features:
+we did in our "`Click To Load`" and "`Infinite Scroll`" features:
 
 .The Existing Row Actions
 [source, html]
@@ -871,15 +871,15 @@ we did in our "Click To Load" and "Infinite Scroll" features:
 
 === Updating The Server Side
 
-Now we need to update the server side as well.  We want to keep the "Delete Contact" button working as well, and in
+Now we need to update the server side as well.  We want to keep the "`Delete Contact`" button working as well, and in
 that case the current logic is correct.  So we'll need some way to differentiate between `DELETE` requests that are
 triggered by the button and `DELETE` requests that come from this anchor.
 
-The cleanest way to do this is to add an `id` attribute to the "Delete Contact" button, so that we can inspect the
+The cleanest way to do this is to add an `id` attribute to the "`Delete Contact`" button, so that we can inspect the
 `HX-Trigger` HTTP Request header to determine if the delete button was the cause of the request.  This is a simple
 change to the existing HTML:
 
-.Adding an `id` to the "Delete Contact" button
+.Adding an `id` to the "`Delete Contact`" button
 [source, html]
 ----
     <button id="delete-btn" <1>
@@ -932,7 +932,7 @@ def contacts_delete(contact_id=0):
 <1> If the delete button on the edit page submitted this request, then continue to do the logic we had previous
 <2> If not, simply return an empty string, which will delete the row
 
-And that's our server-side implementation:  when a user clicks "Delete" on a contact row and confirms the delete, the row will
+And that's our server-side implementation:  when a user clicks "`Delete`" on a contact row and confirms the delete, the row will
 disappear from the UI.  Once again, we have a situation where just changing a few lines of simple code gives us a
 dramatically different behavior.  Hypermedia is very powerful in this manner.
 
@@ -1001,7 +1001,7 @@ So, think about what this means from the htmx swapping model:  when htmx gets co
 put the `htmx-swapping` class on the row and wait a bit.  This will allow the transition to a zero opacity to occur,
 fading the row out.  Then the new (empty) content will be swapped in, which will effectively removing the row.
 
-Sounds good, and we are nearly there.  There is one more thing we need to do: the default "swap delay" for htmx is very
+Sounds good, and we are nearly there.  There is one more thing we need to do: the default "`swap delay`" for htmx is very
 short, a few milliseconds.  That makes sense in most cases: you don't want to have much of a delay before you put the
 new content into the DOM.  But, in this case, we want to give the CSS animation time to complete before we do the swap,
 we want to give it a second, in fact.
@@ -1027,17 +1027,17 @@ update our HTML to allow a one second delay before the swap is done for the dele
 With this modification, the existing row will stay in the DOM for an additional second, with the `htmx-swapping` class
 on it.  This will give the row time to transition to an opacity of zero, giving the fade out effect we want.
 
-Now, when a user clicks on a "Delete" link and confirms the delete, the row will slowly fade out and then, once it has
+Now, when a user clicks on a "`Delete`" link and confirms the delete, the row will slowly fade out and then, once it has
 faded to a 0 opacity, it will be removed.  Pretty fanyc, and all done in a declarative, hypermedia oriented manner, no
 JavaScript required.  (Well, obviously htmx is written in JavaScript, but you know what I mean: we didn't have to write
 any JavaScript to implement the feature.)
 
 == Bulk Delete
 
-The final feature we are going to implement in this chapter is a "Bulk Delete".  The current mechanism for deleting users
+The final feature we are going to implement in this chapter is a "`Bulk Delete`".  The current mechanism for deleting users
 is nice, but it would be annoying if a user wanted to delete five or ten contacts at a time, wouldn't it?  For the bulk
 delete feature, we want to add the ability to select rows via a checkbox input and delete them all in a single go by clicking
-a "Delete Selected Contacts" button.
+a "`Delete Selected Contacts`" button.
 
 To get started with this feature, we'll need to add a checkbox input to each row in the `rows.html` template.  This input
 will have the name `contacts` and its value will be the `id` of the contact for the current row.
@@ -1069,7 +1069,7 @@ with the name of the input if and only if it is checked.  So if, for example, yo
 7 and 9, then those three values would all be submitted to the server.  Since all the checkboxes in this case have
 the same name, `contacts`, all three values would be submitted with the name `contacts`.
 
-=== The "Delete Selected Contacts" button
+=== The "`Delete Selected Contacts`" button
 
 The next step is to add a button below the table that will delete all the selected contacts.  We want this button, like
 our delete links in each row, to issue an HTTP `DELETE`, but rather than issuing it to the URL for a given contact, like

@@ -14,7 +14,7 @@ using the core concepts of the original web.
 == Installing htmx
 
 The first thing we need to do is install htmx in our web application.  We are going to do this by downloading the
-source and saving it locally in our application, so we aren't dependent on any external systems.  This is known as "vendoring"
+source and saving it locally in our application, so we aren't dependent on any external systems.  This is known as "`vendoring`"
 the library.  We can grab the latest version of htmx by navigating our browser to `https://unpkg.com/htmx.org`, which will
 redirect us to the source of the latest version of the library.
 
@@ -46,15 +46,15 @@ Believe it or not, that's it!  This simple script tag will make htmx's functiona
 
 == AJAX-ifying Our Application
 
-To get our feet wet with htmx, the first feature of we are going to take advantage of what is known as "boosting".  This is
-a bit of a "cheater" feature of htmx in that we don't need to do much beyond adding a single attribute, `hx-boost`, to the
+To get our feet wet with htmx, the first feature of we are going to take advantage of what is known as "`boosting`".  This is
+a bit of a "`cheater`" feature of htmx in that we don't need to do much beyond adding a single attribute, `hx-boost`, to the
 application.  This `hx-boost` attribute is unlike most other attributes in htmx: whereas other htmx attributes tend to be
 very focused on one aspect of improving HTML (e.g. `hx-trigger` focuses on the events that trigger a request, `hx-swap` focuses on how responses
 are swapped into the DOM, etc.) the `hx-boost` attribute, in contrast, is a high-level .
 
-When you put `hx-boost` on a given element with the value `true`, it will "boost" all anchor and form elements within that
-element.  "Boost", here, means that htmx will convert all those anchors and forms from "normal" hypermedia controls
-into AJAX-powered hypermedia controls.  Rather than issuing "normal" HTTP requests that replace the whole page, the links
+When you put `hx-boost` on a given element with the value `true`, it will "`boost`" all anchor and form elements within that
+element.  "`Boost`", here, means that htmx will convert all those anchors and forms from "`normal`" hypermedia controls
+into AJAX-powered hypermedia controls.  Rather than issuing "`normal`" HTTP requests that replace the whole page, the links
 and forms will issue AJAX requests and then htmx will swap the response to these requests into the `body` tag.  This makes
 navigation feel faster because the browser will not be re-interpreting the `<head>` tags and so forth.
 
@@ -83,7 +83,7 @@ resources: the scripts and styles have already been processed and will continue 
 often be a very easy way to speed up your hypermedia application.
 
 A second question you might have is: does the response need to be formatted specially to work with `hx-boost`?  After all,
-the settings page would normally render an `html` tag, with a `head` tag and so forth.  Do you need to handle "boosted"
+the settings page would normally render an `html` tag, with a `head` tag and so forth.  Do you need to handle "`boosted`"
 requests specially?
 
 The answer is no: htmx is smart enough to pull out only the content of the `body` tag to swap in to the new page.
@@ -91,8 +91,8 @@ The `head` tag, etc. are all ignored.  This means you don't need to do anything 
 templates that `hx-boost` can handle: just return the normal HTML for your page, and it should work fine.
 
 Note that boosted links (and forms) will also continue to update the navigation bar and history, just like normal links,
-so users will be able to use the browser back button, will be able to copy and paste URLs (or "deep links") and so on.
-Links will act pretty much like a "normal", they will just be faster.
+so users will be able to use the browser back button, will be able to copy and paste URLs (or "`deep links`") and so on.
+Links will act pretty much like a "`normal`", they will just be faster.
 
 === Boosted Forms
 
@@ -117,12 +117,12 @@ A big advantage of the AJAX-based request that `hx-boost` uses (and the lack of 
 avoids what is known as a _flash of unstyled content_:
 
 Flash Of Unstyled Content (FOUC):: A situation where a browser renders a web page before all the styling information is
-available for the page.  A FOUC causes a disconcerting momentary "flash" of the unstyled content, which is then restyled
+available for the page.  A FOUC causes a disconcerting momentary "`flash`" of the unstyled content, which is then restyled
 when all the style information is available.  You will notice this as a flicker when you move around the internet: text,
-images and other content can "jump around" on the page as styles are applied to it.
+images and other content can "`jump around`" on the page as styles are applied to it.
 
 With `hx-boost` the sites styling is already loaded _before_ the new content is retrieved, so there is no such flash of
-unstyled content.  This can make a "boosted" application feel both smoother and also snappier in general.
+unstyled content.  This can make a "`boosted`" application feel both smoother and also snappier in general.
 
 === Attribute Inheritance
 
@@ -144,9 +144,9 @@ right next to one another.
 
 htmx offers a feature to help reduce this redundancy: attribute inheritance.  With most attributes in htmx, if you
 place it on a parent, the attribute will also apply to children elements.  This is how Cascading Style Sheets work, and
-that idea inspired htmx to adopt a similar "cascading htmx attributes" feature.
+that idea inspired htmx to adopt a similar "`cascading htmx attributes`" feature.
 
-To avoid the redundancy in this example, let's introduce a `div` element that encloses all the links and then "hoist" the
+To avoid the redundancy in this example, let's introduce a `div` element that encloses all the links and then "`hoist`" the
 `hx-boost` attribute up to that parent `div`.  This will let us remove the redundant `hx-boost` attributes but ensure all the links are
 still boosted, inheriting that functionality from the parent `div`.
 
@@ -169,7 +169,7 @@ existing ones, and they, too, will be boosted, without us needing to explicitly 
 
 That's fine, but what if you have a link that you _don't_ want boosted within an element that has `hx-boost="true"` on
 it?  A good example of this situation is when a link is to a resource to be downloaded, such as a PDF.  Downloading a
-file can't be handled well by an AJAX request, so you probably want that link to behave "normally", issuing a full
+file can't be handled well by an AJAX request, so you probably want that link to behave "`normally`", issuing a full
 page request for the PDF, which the browser will then offer to save as a file on the users local system.
 
 To handle with this situation, you would simply override the parent `hx-boost` value with `hx-boost="false"` on the
@@ -214,7 +214,7 @@ often won't function _at all_ without JavaScript enabled. It is often very diffi
 approach when you adopt an SPA framework.
 
 This is _not_ to say that every htmx feature offers progressive enhancement.  It is certainly possible to build features that
-do not offer a "No JS" fallback in htmx, and, in fact, many of the features we will build later in the book will fall
+do not offer a "`No JS`" fallback in htmx, and, in fact, many of the features we will build later in the book will fall
 into this category.  We will note when a feature is progressive enhancement friendly and when it is not.
 
 Ultimately, it is up to you, the developer, to decide if the tradeoffs of progressive enhancement (a more basic UX,
@@ -222,7 +222,7 @@ limited improvements over plain HTML) are worth the benefits for your applicatio
 
 === Adding `hx-boost` to Contact.app
 
-For the contact app we are building, we want this htmx "boost" behavior... well, everywhere.
+For the contact app we are building, we want this htmx "`boost`" behavior... well, everywhere.
 
 Right?  Why not?
 
@@ -245,23 +245,23 @@ Well, it's pretty darned easy (and pretty common in htmx-powered web application
 <1> All links and forms will be boosted now!
 
 Now every link and form in our application will use AJAX by default, making it feel much snappier.  Consider the
-"New Contact" link that we created on the main page:
+"`New Contact`" link that we created on the main page:
 
-. A Newly Boosted "Add Contact" Link
+.A Newly Boosted "`Add Contact`" Link
 [source,html]
 ----
   <a href="/contacts/new">Add Contact</a>
 ----
 
 Even though we haven't touched anything on this link or on the server side handling of the URL it targets, it will
-now "just work" as a boosted link, using AJAX for a snappier user experience, and including updating history, back button
+now "`just work`" as a boosted link, using AJAX for a snappier user experience, and including updating history, back button
 support and so on.  And, if JavaScript isn't enabled, it will fall back to the normal link behavior.
 
 All this with one, single htmx attribute.
 
-`hx-boost` is more "magic" than other attributes in htmx, which generally are lower level and require a bit more explicit
+`hx-boost` is more "`magic`" than other attributes in htmx, which generally are lower level and require a bit more explicit
 annotation work, in order to specify exactly what you want htmx to do.  In general, this is the design philosophy of htmx:
-prefer explicit to implicit and obvious to "magic".  However, the `hx-boost` attribute is too useful to allow dogma to
+prefer explicit to implicit and obvious to "`magic`".  However, the `hx-boost` attribute is too useful to allow dogma to
 override practicality, and so it is included as a feature in the library.
 
 == A Second Step: Deleting Contacts With an HTTP DELETE
@@ -285,11 +285,11 @@ transferring HTML.
 
 Thankfully, now, with htmx, we have a chance to rectify this situation.
 
-The "right thing", from a REST-ful, resource oriented perspective is, rather than issuing an HTTP `POST` to
+The "`right thing`", from a REST-ful, resource oriented perspective is, rather than issuing an HTTP `POST` to
 `/contacts/42/delete`, to issue an HTTP `DELETE` to `/contacts/42`.  We want to delete the contact.  The contact is
 a resource.  The URL for that resource is `/contacts/42`.  So the ideal is a `DELETE` request to ``/contacts/42/`.
 
-Let's update our application to do this by adding the htmx `hx-delete` attribute to the "Delete Contact" button:
+Let's update our application to do this by adding the htmx `hx-delete` attribute to the "`Delete Contact`" button:
 
 [source, html]
 .An htmx Powered Button For Deleting A Contact
@@ -399,12 +399,12 @@ This is a much more natural HTTP-based approach to deleting a resource!
 
 === Targeting The Right Element
 
-We aren't quite finished with our updated delete button yet, however.  Recall that, by default, htmx "targets" the element
-that triggers a request, and will place the HTML returned by the server inside that element.  Right now, the "Delete Contact"
+We aren't quite finished with our updated delete button yet, however.  Recall that, by default, htmx "`targets`" the element
+that triggers a request, and will place the HTML returned by the server inside that element.  Right now, the "`Delete Contact`"
 button is targeting itself.
 
 That means that, since the redirect to the `/contacts` URL is going to re-render the entire contact list, we will end up
-with that contact list placed _inside_ the "Delete Contact" button.
+with that contact list placed _inside_ the "`Delete Contact`" button.
 
 Mis-targeting like this comes up from time to time when you are working with htmx and can lead to some pretty funny situations.
 
@@ -434,7 +434,7 @@ the URL: it just issues the `DELETE` request and then updates the DOM with the r
 
 As we mentioned, boosting will naturally update the location bar for you, mimicking normal anchors and forms, but in
 this case we are building a custom button hypermedia control because we want to issue a `DELETE`.  So, in this case, we
-need to let htmx know that we want the resulting URL from this request "pushed" into the location bar.
+need to let htmx know that we want the resulting URL from this request "`pushed`" into the location bar.
 
 We can achieve this by adding the `hx-push-url` attribute with the value `true` to our button:
 
@@ -461,8 +461,8 @@ the built-in features of the web as a hypermedia system without any URL hacks.
 
 === One More Thing...
 
-There is one additional "bonus" feature we can add to our "Delete Contact" button: a confirmation dialog.  Deleting
-a contact is a destructive operation and,as it stands right now, if the user inadvertantly clicked the "Delete Contact"
+There is one additional "`bonus`" feature we can add to our "`Delete Contact`" button: a confirmation dialog.  Deleting
+a contact is a destructive operation and,as it stands right now, if the user inadvertantly clicked the "`Delete Contact`"
 button, the application would just delete that contact.  Too bad, so sad for the user.
 
 Fortunately htmx has an easy mechanism for adding a confirmation message on destructive operations like this: the
@@ -484,18 +484,18 @@ Here is how we would add confirmation of the contact delete operation:
 ----
 <1> This message will be shown to the user, asking them to confirm the delete
 
-Now, when someone clicks on the "Delete Contact" button, they will be presented with a prompt that asks "Are you sure
-you want to delete this contact?" and they will have an opportunity to cancel if they clicked the button in error.  Very
+Now, when someone clicks on the "`Delete Contact`" button, they will be presented with a prompt that asks "`Are you sure
+you want to delete this contact?`" and they will have an opportunity to cancel if they clicked the button in error.  Very
 nice.
 
-With this final change we now have a pretty solid "delete contact" mechanic: we are using the correct REST-ful routes
+With this final change we now have a pretty solid "`delete contact`" mechanic: we are using the correct REST-ful routes
 and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
 all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
 
 === Progressive Enhancement?
 
 One thing to note about this solution, however, is that it is _not_ a progressive enhancement to our web application: if
-someone has disabled JavaScript then this "Delete Contact" button will no longer work.  We could do additional work to keep
+someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We could do additional work to keep
 the older mechanism working in a JavaScript-disabled environment, but this would introduce additional HTML and redundant
 server-side code.
 
@@ -781,7 +781,7 @@ With this tiny change, every time a user types a character we will issue a reque
 
 Simple as, yes, but probably not what we want: issuing a new request on every key up event would be very wasteful
 and could potentially overwhelm your server.  What we want instead is only issue the request if the user has paused for
-a small amount of time.  This is called "debouncing" the input, where requests are delayed until things have "settled down".
+a small amount of time.  This is called "`debouncing`" the input, where requests are delayed until things have "`settled down`".
 
 htmx supports a `delay` modifier for triggers that allows you to debounce a request by adding a delay before the request
 is sent. If another event of the same kind appears within that interval, htmx will not issue the request and will reset
@@ -855,17 +855,17 @@ at the `/contacts` path and rendering the `index.html` template.
 
 Currently, Contact.app does not support paging: if there are 10,000 contacts in the database we will show
 all 10,000 contacts on the root page.  Showing so much data can bog a browser (and a server) down, so most web applications
-adopt a concept of "paging" to deal with data sets this large, where only one "page" of a smaller number of items is
+adopt a concept of "`paging`" to deal with data sets this large, where only one "`page`" of a smaller number of items is
 shown, with the ability to navigate around the pages in the data set.
 
-Let's fix our application, so that we only show ten contacts at a time with a "Next" and "Previous" link if there are more
+Let's fix our application, so that we only show ten contacts at a time with a "`Next`" and "`Previous`" link if there are more
 than 10 contacts in the contact database.
 
 The first change we will need to make is to add a simple paging widget to our `index.html` template.
 
 We will conditionally include two links:
 
-* If we are beyond the "first" page, we will include a link to the previous page
+* If we are beyond the "`first`" page, we will include a link to the previous page
 * If there are ten contacts in the current result set, we will include a link to the next page
 
 This isn't a perfect paging widget: ideally we'd show the number of pages and offer the ability to do more
@@ -929,26 +929,26 @@ And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost
 === Click To Load
 
 This paging mechanism is fine for a basic web application, and it is used extensively on the internet.  But it has some
-drawbacks associated with it: every time you click the "Next" or "Previous" buttons you get a whole new page of contacts
+drawbacks associated with it: every time you click the "`Next`" or "`Previous`" buttons you get a whole new page of contacts
 and lose any context you had on the previous page.
 
 Sometimes a more advanced paging UI pattern might be better.  Maybe, rather than loading in a new page of elements and
 replacing the current elements, it would be nicer to append the next page of elements _inline_, after the current
 elements.
 
-This is the common "click to load" UX pattern, found in more advanced web applications.
+This is the common "`click to load`" UX pattern, found in more advanced web applications.
 
 [#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .A Click To Load UI
 image::screenshot_click_to_load.txt.svg[]
 
 Here, you have a button that you can click, and it will load the next set of contacts directly into the page, rather
-than "paging" to the next page.  This allows you to keep the current contacts "in context" visually on the page, but
+than "`paging`" to the next page.  This allows you to keep the current contacts "`in context`" visually on the page, but
 still progress through them as you would in a normal, paged user interface.
 
 Let's see how we can implement this UX pattern in htmx.
 
-It's actually surprisingly simple: we can just take the existing "Next" link and repurpose it a bit using
+It's actually surprisingly simple: we can just take the existing "`Next`" link and repurpose it a bit using
 nothing but a few htmx attributes!
 
 We want to have a button that, when clicked, appends the rows from the next page of contacts to the current,
@@ -956,7 +956,7 @@ exiting table, rather than re-rendering the whole table.  This can be achieved b
 that has just such a button in it:
 
 [source, html]
-.Changing To "Click To Load"
+.Changing To "`Click To Load`"
 ----
         <tbody>
         {% for contact in contacts %}
@@ -982,33 +982,33 @@ that has just such a button in it:
         {% endif %}
         </tbody>
 ----
-<1> Only show "Load More" if there are 10 contact results in the current page
+<1> Only show "`Load More`" if there are 10 contact results in the current page
 <2> Target the closest enclosing row
 <3> Replace the entire row with the response from the server
 <4> Select out the table rows from the response
 
 Let's go through each attribute in detail here.
 
-First, we hare using `hx-target` to target the "closest" `tr` element, that is, the closest _parent_ table row.
+First, we hare using `hx-target` to target the "`closest`" `tr` element, that is, the closest _parent_ table row.
 
 Second, we want to replace this _entire_ row with whatever content comes back from the server.
 
 Third, we want to yank out only the `tr` elements in the response.  We are replacing this `tr` element with a new set
-of `tr` elements, which will have additional contact information in them, as well as, if necessary, a new "Load More"
+of `tr` elements, which will have additional contact information in them, as well as, if necessary, a new "`Load More`"
 button that points to the _next_ next page.  To do this, we use a CSS selector `tbody > tr` to ensure we only pull
 out the rows in the body of the table in the response.  This avoids including rows in the table header, for example.
 
-Finally, we issue an HTTP `GET` to the url that will serve the next page of contacts, which looks just like the "Next"
+Finally, we issue an HTTP `GET` to the url that will serve the next page of contacts, which looks just like the "`Next`"
 link from above.
 
 Somewhat surprisingly, no server side changes are necessary for this new functionality.  This is because of the flexibility
 that htmx gives you with respect to how it processes server responses.
 
-So, four attributes, and we now have a sophisticated "Click To Load" UX, via htmx.
+So, four attributes, and we now have a sophisticated "`Click To Load`" UX, via htmx.
 
 === Infinite Scroll
 
-Another common pattern for dealing with large sets of things is known as the "Infinite Scroll" pattern.  In this pattern,
+Another common pattern for dealing with large sets of things is known as the "`Infinite Scroll`" pattern.  In this pattern,
 as the last item of a list or table of elements is scrolled into view, more elements are loaded and appended to the list
 or table.
 
@@ -1016,9 +1016,9 @@ Now, this behavior makes more sense in situations where a user is exploring a ca
 than in the context of a contact application.  However, for completeness, and to just show off what you can do with
 htmx, we will show how to implement this pattern as well.
 
-It turns out that we can repurpose the "Click To Load" code to implement this new pattern quite easily: if you think
-about it for a moment, infinite scroll is really just the "Click To Load" logic, but rather than loading when a click
-event occurs, we want to load when an element is "revealed" in the view portal of the browser.
+It turns out that we can repurpose the "`Click To Load`" code to implement this new pattern quite easily: if you think
+about it for a moment, infinite scroll is really just the "`Click To Load`" logic, but rather than loading when a click
+event occurs, we want to load when an element is "`revealed`" in the view portal of the browser.
 
 As luck would have it, htmx offers a synthetic (non-standard) DOM event, `revealed` that can be used in tandem
 with the `hx-trigger` attribute, to trigger a request when, well, when an element is revealed.
@@ -1026,7 +1026,7 @@ with the `hx-trigger` attribute, to trigger a request when, well, when an elemen
 So let's convert our button to a span and take advantage of this event:
 
 [source, html]
-.Changing To "Infinite Scroll"
+.Changing To "`Infinite Scroll`"
 ----
 {% if contacts|length == 10 %} <1>
     <tr>
@@ -1043,7 +1043,7 @@ So let's convert our button to a span and take advantage of this event:
 <1> We have converted our element from a button to a span, since the user will not be clicking on it
 <2> We trigger the request when the element is revealed, that is when it comes into view in the portal
 
-All we needed to do to convert from "Click to Load" to "Infinite Scroll" was to update our element to be
+All we needed to do to convert from "`Click to Load`" to "`Infinite Scroll`" was to update our element to be
 a span and then add the `revealed` event trigger.
 
 The fact that switching to infinite scroll was so easy shows how well htmx generalizes HTML: just a few attributes allow

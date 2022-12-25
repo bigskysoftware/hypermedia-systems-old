@@ -21,7 +21,7 @@ ____
 When I say hypertext, I mean the simultaneous presentation of information and controls such that the information becomes the affordance through which the user (or automaton) obtains choices and selects actions.
 ____
 
-HTML, as well as hypermedia before and after it, removes the distinction between the information being accessed and the application used to access it. HTML is for documents, insofar as you're willing to adopt a broad definition of "document", and it is for applications, ones that are interwoven with the data they process.
+HTML, as well as hypermedia before and after it, removes the distinction between the information being accessed and the application used to access it. HTML is for documents, insofar as you're willing to adopt a broad definition of "`document`", and it is for applications, ones that are interwoven with the data they process.
 
 HTML is a hypermedium.
 
@@ -37,7 +37,7 @@ Have you noticed that a lot of websites are bad?
 
  - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times. footnote:[https://almanac.httparchive.org/en/2020/markup[]. Other than `<div>` being the most common element, the HTTP Archive Web Almanac found that 0.06% of pages surveyed in 2020 contained the nonexistent `<h7>` element. 0.0015% for `<h8>`.]
  - Websites, including websites containing public data or results of publicly-funded research, are impossible to scrape programmatically.
- - So-called MVPs (minimum viable product) are released in open beta while being completely unusable by vast swathes of people -- UX not just buggy, but nonexistent footnote:[https://adrianroselli.com/2022/11/accessibility-gaps-in-mvps.html]. Is an inaccessible product "viable"?
+ - So-called MVPs (minimum viable product) are released in open beta while being completely unusable by vast swathes of people -- UX not just buggy, but nonexistent footnote:[https://adrianroselli.com/2022/11/accessibility-gaps-in-mvps.html]. Is an inaccessible product "`viable`"?
  - Search engines have a hard time extracting useful information from a page, and rank that page lower as a result. 
 
 There are several disparate reasons for these issues, but the neglect of HTML is a significant one.
@@ -62,15 +62,17 @@ Good HTML will not absolve you from doing your job, but it will make it easier.
 
 == The S word
 
-"Gretchen, stop trying to make fetch happen! It's not going to happen!"
--- _Mean Girls_ (2004)
+[quote,_Mean Girls_ (2004)]
+____
+Gretchen, stop trying to make fetch happen! It's not going to happen!
+____
 
 In human language, a word can only have a certain meaning if some group of people know it to have that meaning.
 You could define your own words and use them, the aforementioned Ted Nelson and company really liked to, but it's difficult.
 Providing a definition when you use it is not enough;
 you also need an audience interested enough to read and remember that definition.
 
-As this applies to computer languages too, any hypermedia format which lets documents define their own elements is an infinite universe of "fetch"-es to make happen.
+As this applies to computer languages too, any hypermedia format which lets documents define their own elements is an infinite universe of "`fetch`"-es to make happen.
 Thus, let us renounce the schematamania that plagues many hypermedia discussions.
 Instead, when we talk about semantics, we'll refer to about the simple act of using elements in accordance with their agreed-upon meaning.
 
@@ -86,9 +88,9 @@ Instead of being extensible through schemas or namespaces, or whatever DTDs are,
 This might seem like a downgrade, and an anxiety-inducing one at that.
 Think of the name collisions!
 Indeed, it has some significant compromises, but it also correctly acknowledges that defining custom semantics without prior agreement between all parties is a fiction.
-A flexible format --- not an infinity of namespaces with URLs pointing to nothing --- is "software design on the scale of decades".
+A flexible format --- not an infinity of namespaces with URLs pointing to nothing --- is "`software design on the scale of decades`".
 
-Let's be real, after all --- out of all the sites using "Open Graph" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
+Let's be real, after all --- out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
 
 
 ## Writing quality HTML
@@ -105,7 +107,7 @@ It's currently incomplete and **very** unorganized.
 
 ### HTML is for humans first
 
-People who write HTML are referred to in Web platform specifications as "authors".
+People who write HTML are referred to in Web platform specifications as "`authors`".
 This sells our lot short by quite a lot, however;
 from day to day, the average web developer might take on the role of
 typesetter, copy editor, graphic designer, and of course, programmer.
@@ -119,12 +121,12 @@ Those are the means, but usability is the goal.
 
 ### You don't need to guess what tags mean
 
-"The beginning of wisdom is to call things by their right names."
--- Confucius
+[quote,Confucius]
+The beginning of wisdom is to call things by their right names.
 
 If you have ever made the mistake of publishing code online,
 you might have had someone send you links to the HTML specification.
-It was probably some section of chapter 4, "The elements of HTML".
+It was probably some section of chapter 4, "`The elements of HTML`".
 (You might even have received it from this author).
 
 While the big spec document with all the algorithms is probably better for smugly correcting people in chatrooms,
@@ -142,7 +144,7 @@ This is a valid HTML document.
 ----
 
 
-### Revisit the "HTML5 elements"
+### Revisit the "`HTML5 elements`"
 
 A set of elements introduced with HTML5 have become a sort of shorthand symbol for semantic markup:
 
@@ -153,7 +155,7 @@ A set of elements introduced with HTML5 have become a sort of shorthand symbol f
  - footer
  - TODO were there more
 
-You can find websites that were clearly built with the mindset: "The more of these elements there are, the more semantic it is." An example from the wonderful https://www.htmhell.dev/[HTMHell]:
+You can find websites that were clearly built with the mindset: "`The more of these elements there are, the more semantic it is.`" An example from the wonderful https://www.htmhell.dev/[HTMHell]:
 
 .HTMHell, [.cite]##10 <section> is no replacement for <div>#, https://www.htmhell.dev/10-section-is-no-replacement-for-div/
 [source,html]
@@ -238,7 +240,7 @@ This can be a good option for inputs where a nearby element provides context.
 
 Use the `alt` attribute instead! Figure captions shouldn't regurgitate the information in an image. Instead, they should be used to give context or provide metadata such as source or date. The `alt` attribute, on the other hand, should be a substitute for the image, describing the relevant aspects of what is depicted for the benefit of people who can't view it.
 
-Captions might be misused for alt text when the author wants the alt text to be visible as text. To achieve this, some social media platforms use an "ALT" button that opens the alt text in a popup window. The main drawback of this approach is that you need to implement a popup window. You could instead use a `<p>` after the image with `aria-hidden` on it.
+Captions might be misused for alt text when the author wants the alt text to be visible as text. To achieve this, some social media platforms use an "`ALT`" button that opens the alt text in a popup window. The main drawback of this approach is that you need to implement a popup window. You could also use a `<p>` after the image with `aria-hidden` on it.
 
 .The `alt` attribute
 ****
@@ -252,7 +254,7 @@ TODO link resources on alt text.
 
 ### Write useful link text
 
-Wherever possible, the text of a link should describe what the link points to without much context needed. Of course, you might need to alter it to fit a sentence structure, but you should avoid links that don't give information other than "this is a link".
+Wherever possible, the text of a link should describe what the link points to without much context needed. Of course, you might need to alter it to fit a sentence structure, but you should avoid links that don't give information other than "`this is a link`".
 
 |===
 | Do | Don't

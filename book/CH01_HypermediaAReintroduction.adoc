@@ -43,8 +43,8 @@ ____
 Let us begin at the beginning: what is hypermedia?
 
 Hypermedia is a media, for example a text, that includes _non-linear branching_ from one location in the media to another,
-via, for example, hyperlinks embedded that the media. The prefix "hyper-" derives from the Greek prefix "ὑπερ-" which
-means "beyond" or "over", indicating that hypermedia _goes beyond_ normal, passively consumed media like magazines and
+via, for example, hyperlinks embedded that the media. The prefix "`hyper-`" derives from the Greek prefix "`ὑπερ-`" which
+means "`beyond`" or "`over`", indicating that hypermedia _goes beyond_ normal, passively consumed media like magazines and
 newspapers.
 
 Hyperlinks are a canonical example of a _hypermedia control_:
@@ -73,19 +73,19 @@ It is this entire hypermedia _system architecture_ that we feel is underapprecia
 Where did the idea of hypermedia come from?
 
 While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
-to the article _"As We May Think"_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
+to the article _As We May Think_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
 has become modern hypermedia.
 
 In this article Bush described a device called a Memex, which, using a complex mechanical system of reels and microfilm,
 along with an encoding system, would allow users to jump between related frames of content.  The Memex was never actually
 implemented, but it was an inspiration for later work on the idea of hypermedia.
 
-The terms "hypertext" and "hypermedia" were coined in 1963 by Ted Nelson, who would go on to work on the _Hypertext Editing
+The terms "`hypertext`" and "`hypermedia`" were coined in 1963 by Ted Nelson, who would go on to work on the _Hypertext Editing
 System_ at Brown University and who later created the _File Retrieval and Editing System (FRESS)_, a shockingly advanced
-hypermedia system for its time.  (This was perhaps the first digital system to have a notion of "undo"!)
+hypermedia system for its time.  (This was perhaps the first digital system to have a notion of "`undo`"!)
 
 While Nelson was working on his ideas, Douglas Engelbart was busy at work at the Stanford Research Institute, explicitly
-attempting to make Vannevar Bush's Memex a reality.  In 1968, Englebart gave "The Mother of All Demos" in San Francisco,
+attempting to make Vannevar Bush's Memex a reality.  In 1968, Englebart gave "`The Mother of All Demos`" in San Francisco,
 California.
 
 Englebart demonstrated an unbelievable amount of technology:
@@ -116,8 +116,8 @@ By 1994 The Web had grown so quickly that Berners-Lee founded the W3C, a working
 tasked with improving The Web.  All standards created by the W3C were royalty-free and could be adopted and implemented
 by anyone, cementing the open, collaborative nature of The Web.
 
-In 2000, Roy Fielding, then at U.C. Irvine, published a seminal PhD dissertation on The Web: "Architectural Styles and the
-Design of Network-based Software Architectures".  Fielding had been working on the open source Apache HTTP Server and
+In 2000, Roy Fielding, then at U.C. Irvine, published a seminal PhD dissertation on The Web: "`Architectural Styles and the
+Design of Network-based Software Architectures`".  Fielding had been working on the open source Apache HTTP Server and
 his thesis was a description of what he felt was a _new and distinct networking architecture_ that had emerged in the early
 web.  Fielding was responsible for the HTTP specification and, in the paper, defined the web's hypermedia
 network model using the term _REpresentationalState Transfer (REST)_.
@@ -220,7 +220,7 @@ falls to the form tag.  Here is a simple example of a form in HTML:
 Like an anchor tag, a form tag consists of the tag itself (i.e. `<form></form>`) combined with attributes and then
 content within the tag.  Note that the form tag does not have an `href` attribute, bur rather has an `action` attribute
 that specifies where to issue an HTTP request to.  Furthermore, it also has a `method` attribute, which specifies exactly
-which HTTP "Method" to use.  (In this case, the form is asking the browser to issue a `POST` request.)
+which HTTP "`Method`" to use.  (In this case, the form is asking the browser to issue a `POST` request.)
 
 The content _within_ the form is also more important than the content is within an anchor tag.  The values of `input` tags
 (and other tags such as `select`) will be included with the HTTP request when the form is _submitted_.  This allows you to
@@ -228,9 +228,9 @@ include an arbitrary amount of information collected from a user in a request, i
 
 Again, in a typical browser, this form tag and its contents would be interpreted by the browser roughly as follows:
 
-- Show a text input and a "Sign Up" button to the user
-- When the user submits the form by clicking the "Sign Up" button or by hitting the enter key while the input element is
-  focused, issue an HTTP `POST` request to the path '/signup' on the "current" server
+- Show a text input and a "`Sign Up`" button to the user
+- When the user submits the form by clicking the "`Sign Up`" button or by hitting the enter key while the input element is
+  focused, issue an HTTP `POST` request to the path `/signup` on the "`current`" server
 - Take the HTML content in the body of the HTTP response body and replace the entire screen in the browser as a new
   document, updating the navigation bar to this new URL
 
@@ -273,7 +273,7 @@ We have looked at the main two ways to interact with a server via hypermedia in 
 
 Now let's consider a different approach: let's interact with a server by issuing an HTTP request via JavaScript.  To
 do this, we will use the https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API[`fetch()`] API, a popular API for
-issuing an "Asynchronous JavaScript and XML", or AJAX request, available in all modern web browsers:
+issuing an "`Asynchronous JavaScript and XML`", or AJAX request, available in all modern web browsers:
 
 [#listing-1-3, reftext={chapter}.{counter:listing}]
 .Javascript
@@ -291,8 +291,8 @@ issuing an "Asynchronous JavaScript and XML", or AJAX request, available in all 
 
 This button has an `onclick` attribute which specifies some JavaScript to run when the button is clicked.
 
-The JavaScript will issue an AJAX HTTP `GET` request to `/api/v1/contacts/1` using `fetch()`.  An AJAX request is like a "normal"
-HTTP request in many ways, but it is issued "behind the scenes" by the browser: the user does not see a request indicator
+The JavaScript will issue an AJAX HTTP `GET` request to `/api/v1/contacts/1` using `fetch()`.  An AJAX request is like a "`normal`"
+HTTP request in many ways, but it is issued "`behind the scenes`" by the browser: the user does not see a request indicator
 like in normal links and forms, and, unlike with hypermedia, it is up to the JavaScript code that issues the request to
 handle the response.
 
@@ -350,8 +350,8 @@ is the beginning of a _Single Page Application (SPA)_.  The web application is n
 hypermedia controls, as in our first two examples.
 
 Instead, the application is exchanging _plain data_ with the server and then updating the content _within_ a single page.
-When this strategy (or, more correctly, architecture) is adopted for an entire application, everything happens on a "Single Page" and,
-thus the application becomes a "Single Page Application."
+When this strategy (or, more correctly, architecture) is adopted for an entire application, everything happens on a "`Single Page`" and,
+thus the application becomes a "`Single Page Application.`"
 
 This Single Page Application architecture is extremely popular today, and has been the dominant (at least in terms of
 mind-share and blog posts) approach to building web applications for the last decade.
@@ -361,9 +361,9 @@ user interface than this simple example shows.  Popular libraries such as React,
 and, indeed, standard, ways to manage far more complex user interactions than our little button achieves.
 
 With these more complex frameworks you typically work with an elaborate client-side model (that is, JavaScript objects
-stored locally in the browser's memory that represent the "model" or "domain" of your application.)  These JavaScript objects
-are updated via your JavaScript code and the framework then "reacts" to these updates, updating the user interface.  When
-the user interface is updated by a user, these changes also flow _into_ the model objects, establishing a "Two Way" binding
+stored locally in the browser's memory that represent the "`model`" or "`domain`" of your application.)  These JavaScript objects
+are updated via your JavaScript code and the framework then "`reacts`" to these updates, updating the user interface.  When
+the user interface is updated by a user, these changes also flow _into_ the model objects, establishing a "`two-way`" binding
 mechanism: the model can update the UI and the UI can update the model.
 
 All very sophisticated and, today, very popular.  But developers that adopt this approach have abandoned the underyling
@@ -427,7 +427,7 @@ The first two advantages, in particular, address major pain points in modern web
   many application teams
 
 These two problems, combined with other various issues (e.g. constant JavaScript library turnover), are causing what has come to
-be known as "Javascript Fatigue": a general sense of exhaustion with all the hoops that are necessary to jump through to
+be known as "`Javascript Fatigue`": a general sense of exhaustion with all the hoops that are necessary to jump through to
 get anything done in web applications.
 
 We believe that a hypermedia architecture can help cure Javascript Fatigue for many developers and teams.  But, if hypermedia
@@ -487,7 +487,7 @@ These _hypermedia-oriented_ libraries re-center hypermedia as a viable choice fo
 === Hypermedia-Oriented Javascript Libraries
 
 In the web development world today there is a debate going on between the SPA approach and what are now being called
-"Multi-Page Applications" or MPAs.  MPA is a modern name for the old, web 1.0 way of building web applications, with
+"`Multi-Page Applications`" or MPAs.  MPA is a modern name for the old, web 1.0 way of building web applications, with
 links and forms located on multiple web pages, submitting HTTP requests and getting HTML responses.
 
 MPA applications and are thus, by their nature, Hypermedia-Driven Applications.
@@ -496,17 +496,17 @@ They tend to be clunky, but, despite this, they work reasonably well.  Many web 
 just accept the limitations of plain HTML, in the interest of their simplicity and reliability.
 
 Rich Harris, creator of svelte.js, a popular SPA library, and a thought-leader on the SPA side of the debate, has proposed a mix
-of this older MPA style and the newer SPA style.  Harris calls this approach to building web applications "transitional", in that
+of this older MPA style and the newer SPA style.  Harris calls this approach to building web applications "`transitional`", in that
 it attempts to mix both the MPA approach and the newer SPA approach into a coherent whole.  (This is somewhat
-similar to the "transitional" trend in architecture, which blends traditional and modern architectural styles together.)
+similar to the "`transitional`" trend in architecture, which blends traditional and modern architectural styles together.)
 
-"Transitional" a good term for these mixed-style applications and offers a reasonable compromise between the two, using
+"`Transitional`" a good term for these mixed-style applications and offers a reasonable compromise between the two, using
 either approach where it makes the most sense on an ad hoc basis.
 
 But this compromise still feels a bit unsatisfactory.  Why have these two very different architectural models _by default_?
 Recall that the crux of the tradeoffs between SPAs and MPAs is the _user experience_, or interactivity of the application.
 This is typically the driving decision when choosing one approach versus the other for an application or, in the case
-of a "transitional" application, for a particular feature.
+of a "`transitional`" application, for a particular feature.
 
 It turns out that by adopting a hypermedia-oriented library, the interactivity gap between the MPA and the SPA approach
 closes dramatically.  You can use the MPA approach, that is, the hypermedia approach, for much more of your application without compromising
@@ -523,7 +523,7 @@ your web application can be powerful, interactive _and_ simple.
 
 One such hypermedia oriented library is https://htmx.org[htmx], created by the authors of this book.  htmx will be the
 focus of much (but not all!) of the remainder of this book.  We hope to show you that you can, in fact, create many common
-"modern" UI features found in sophisticated Single Page Applications using the hypermedia model.
+"`modern`" UI features found in sophisticated Single Page Applications using the hypermedia model.
 
 And, not only that, but that it is refreshingly fun and simple to do so.
 
@@ -543,7 +543,7 @@ in the application, but rather the underlying _system_ architecture.
 Hypermedia-Driven Application (HDA):: A web application that uses _hypermedia_ and _hypermedia exchanges_ as its primary
 mechanism for communicating with a server.
 
-What does an HDA look like "in the small"?  Let's look at how a htmx-powered button that implements a similar
+What does an HDA look like "`in the small`"?  Let's look at how a htmx-powered button that implements a similar
 bit functionality as the JavaScript-powered button bove works:
 
 [#listing-1-4, reftext={chapter}.{counter:listing}]
@@ -560,9 +560,9 @@ As with the JavaScript powered button, we can see that this button has been anno
 we do not have any JavaScript scripting going on.
 
 Instead, we have _declarative_ attributes, much like the `href` attribute on anchor tags and the `action` attribute on
-form tags.  The `hx-get` attribute tells htmx: "When the user clicks this button, issue a `GET` request to `/contacts/1`".
-The `hx-target` attribute tells htmx: "When the response returns, take the resulting HTML and place it into the element
-with the id `contact-ui`".
+form tags.  The `hx-get` attribute tells htmx: "`When the user clicks this button, issue a `GET` request to `/contacts/1``".
+The `hx-target` attribute tells htmx: "`When the response returns, take the resulting HTML and place it into the element
+with the id `contact-ui``".
 
 And here we get to the crux of htmx and how it allows you to build an Hypermedia-Driven Application:
 
@@ -596,14 +596,14 @@ In any of these cases, using a hypermedia approach would likely be a great choic
 these applications are not dramatic, and much of the value of these applications lives on the server side, rather on
 than on the client side.
 
-All of these applications are amenable to what Roy Fielding called "large-grain hypermedia data transfers": you can simply
+All of these applications are amenable to what Roy Fielding called "`large-grain hypermedia data transfers`": you can simply
 use anchor tags and forms, with responses that return entire HTML documents from requests, and things will work just fine.
 This is exactly what the web was designed to do!
 
 By adopting the hypermedia approach for these applications, you will save yourself a huge amount of client-side complexity
 that comes with adopting the Single Page Application approach: there is no need for client-side routing, for managing
-a client side model, for hand-wiring in JavaScript logic, and so forth.  The back button will "just work".  Deep linking
-will "just work".  You will be able to focus your efforts on your server, where your application is actually adding value.
+a client side model, for hand-wiring in JavaScript logic, and so forth.  The back button will "`just work`".  Deep linking
+will "`just work`".  You will be able to focus your efforts on your server, where your application is actually adding value.
 
 And, by layering htmx or another hypermedia-oriented library on top of this approach, you can address many of the usability
 issues that come with vanilla HTML and take advantage of finer-grained hypermedia transfers.  This opens up a whole slew of new
@@ -623,7 +623,7 @@ In this case we have a highly dynamic user interface without clear boundaries as
 a particular change.  Introducing a hypermedia-style server round-trip on every cell change would bog performance down
 tremendously.
 
-This is simply not a situation amenable to that "large-grain hypermedia data transfer" approach.  For an application like
+This is simply not a situation amenable to that "`large-grain hypermedia data transfer`" approach.  For an application like
 this we would certainly look into using a sophisticated client-side JavaScript approach.
 
 _However_, even in the case of an online spreadsheet, there are likely areas where the hypermedia approach might help.
@@ -652,9 +652,9 @@ is to keep complexity under control.
 The surefire way to keep complexity down is also the hardest: say no.  Pushing back on feature requests is an art
 and, if you can learn to do it well, making people feel like _they_ said no, you will go far.
 
-Sadly this is not always possible: some features will need to be built.  At this point the question becomes: "what is
-the simplest thing that could possibly work?"  Understanding the possibilities available in the hypermedia approach
-will give you another tool in your "simplest thing" tool chest.
+Sadly this is not always possible: some features will need to be built.  At this point the question becomes: "`what is
+the simplest thing that could possibly work?`"  Understanding the possibilities available in the hypermedia approach
+will give you another tool in your "`simplest thing`" tool chest.
 ****
 
 == Hypermedia: A Sophisticated, Modern System Architecture
@@ -673,6 +673,6 @@ you can take advantage of this system architecture in your own software.
 In the coming chapter you develop a firm understanding of all the benefits and techniques enabled by this approach.  We
 hope that, in addition, you will also become as passionate about it as we are.
 
-This book is, in part, a plea that we "let The Web be The Web", that we take the original architecture of The Web
+This book is, in part, a plea that we "`let The Web be The Web`", that we take the original architecture of The Web
 seriously, and that we consider the entire _hypermedia system_ it makes available to us when we build applications
 with it.

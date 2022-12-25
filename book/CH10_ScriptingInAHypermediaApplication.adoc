@@ -359,7 +359,7 @@ Behavior, and has the additional benefit that it is baked into HTML.
 Unfortunately, however, the `on*`  JavaScript attributes also come with some drawbacks:
 
 * They don't support custom events.
-* There is no good mechanism for associating long-lasting variables with an element --- all variables are discarded when an event listener completes executing.
+* There is no good mechanism for associating long-lasting variables with an element --all variables are discarded when an event listener completes executing.
 * If you have multiple instances of an element, you will need to repeat the listener code on each, or use something more clever like event delegation.
 * JavaScript code that directly manipulates the DOM gets verbose, and clutters the markup.
 * An element cannot listen for events on another element.
@@ -434,8 +434,8 @@ Using RSJS solves, or at least alleviates, many of the problems we pointed out w
 split out to a separate file:
 
 * The JS that attaches behavior to a given element is *clear* (though only through naming conventions).
-* Reuse is *easy* --- you can create another counter component on the page it will just work.
-* The code is *well-organized* --- one behavior per file
+* Reuse is *easy* --you can create another counter component on the page it will just work.
+* The code is *well-organized* --one behavior per file
 
 All in all, RSJS is a good way to structure your vanilla JavaScript in a Hypermedia Driven Application.  So long as the
 JavaScript isn't communicating with a server via a plain data JSON API, or holding a bunch of internal state outside of

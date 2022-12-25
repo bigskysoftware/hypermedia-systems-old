@@ -76,7 +76,7 @@ The ubiquity of the web means that:
 * *You will need to create an appropriate user experience for different platforms in one codebase.* This is known as ((responsive web design)). You can try to work around this requirement by trying to detect different types of devices and delivering a different app accordingly. This technique may be frowned upon but it still finds use. For instance, at the time of writing, Twitter redirects mobile clients to `mobile.twitter.com`. There are, of course, devices that are neither desktop nor mobile. These devices will likely be neglected by this kind of application. Hypermedia-driven applications should instead shift as much of the burden of responsive web design as possible to the platform developer, who is tasked with providing a conformant Web browser.
 
 [sidebar]
-The existence of `mobile.twitter.com` is an annoyance to anyone who uses a browser that synchronizes history between devices --- the address bar will often suggest mobile pages when searching on desktop.
+The existence of `mobile.twitter.com` is an annoyance to anyone who uses a browser that synchronizes history between devices --the address bar will often suggest mobile pages when searching on desktop.
 
 
 == Pervasive scripting, localized scripting

@@ -88,9 +88,9 @@ Instead of being extensible through schemas or namespaces, or whatever DTDs are,
 This might seem like a downgrade, and an anxiety-inducing one at that.
 Think of the name collisions!
 Indeed, it has some significant compromises, but it also correctly acknowledges that defining custom semantics without prior agreement between all parties is a fiction.
-A flexible format --- not an infinity of namespaces with URLs pointing to nothing --- is "`software design on the scale of decades`".
+A flexible format --not an infinity of namespaces with URLs pointing to nothing --is "`software design on the scale of decades`".
 
-Let's be real, after all --- out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
+Let's be real, after all --out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
 
 
 ## Writing quality HTML
@@ -246,7 +246,7 @@ Captions might be misused for alt text when the author wants the alt text to be 
 ****
 They say a picture is worth a thousand words. How am I supposed to produce an acceptable substitute in just a few sentences?
 
-When writing alt text, you should only provide the information that is relevant. This means that the alt text should not be stored with the image (as is unfortunately the case with many CMSs) but in the document --- because different aspects of an image are relevant in different contexts.
+When writing alt text, you should only provide the information that is relevant. This means that the alt text should not be stored with the image (as is unfortunately the case with many CMSs) but in the document --because different aspects of an image are relevant in different contexts.
 
 TODO link resources on alt text.
 ****
@@ -264,7 +264,7 @@ Wherever possible, the text of a link should describe what the link points to wi
 |===
 
 
-### ARIA is easy --- as long as you stick to the basics
+### ARIA is easy --as long as you stick to the basics
 
 // Stick to the patterns
 

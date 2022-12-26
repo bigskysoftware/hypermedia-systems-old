@@ -129,7 +129,7 @@ in the late 1990s and early 2000s haven't thought much about these ideas in year
 grown up knowing nothing but Single Page Applications and the frameworks that are used to build them.
 
 In particular, many young web developers began building React.js applications that interact with a Node server using a
-JSON APU, and have never learned about hypermedia at all.
+JSON API and have never learned about hypermedia at all.
 
 This is a tragedy, and, frankly, a failure on the part of the thought leaders in the web development community to properly
 communicate and advocate for the hypermedia approach.

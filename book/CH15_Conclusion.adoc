@@ -21,7 +21,7 @@ HTML:
 * By making any element capable of issuing an HTTP request
 * By making any event capable of triggering an HTTP event
 * By making all the different types of HTTP actions available
-* By aking it possible to target any element in the DOM for replacement
+* By making it possible to target any element in the DOM for replacement
 
 We were able to build user interfaces that many developers would assume require a significant amount of client-side
 JavaScript, but using only hypermedia concepts.

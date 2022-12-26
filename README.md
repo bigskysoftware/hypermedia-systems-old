@@ -9,3 +9,9 @@ The book is divided into three parts:
 * Using hypermedia in modern mobile applications with [HyperView](https://hyperview.org)
 
 The book is available online here: https://hypermedia.systems
+
+# Licensing
+
+All content found in the `/book` directory is licenced under [Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
+
+All other content is licensed under [Zero-Clause BSD](https://opensource.org/licenses/0BSD)

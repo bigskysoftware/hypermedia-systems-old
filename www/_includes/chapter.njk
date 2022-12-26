@@ -29,7 +29,12 @@ layout: layout.njk
             {% endif %}
             {% if next %}
             <p>
-                Next: <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+                Next:
+                {% if next.data.part %}
+                <a class="italic" href="/book/{{ next.data.part_url }}">{{ next.data.part }}</a>
+                {% else %}
+                <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+                {% endif %}
             {% endif %}
         </div>
 

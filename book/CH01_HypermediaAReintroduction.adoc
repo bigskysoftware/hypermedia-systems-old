@@ -48,7 +48,7 @@ ____
 Let us begin at the beginning: what is hypermedia?
 
 Hypermedia is a media, for example a text, that includes _non-linear branching_ from one location in the media to another,
-via, for example, hyperlinks embedded that the media. The prefix "`hyper-`" derives from the Greek prefix "`ὑπερ-`" which
+via, for example, hyperlinks embedded in the media. The prefix "`hyper-`" derives from the Greek prefix "`ὑπερ-`" which
 means "`beyond`" or "`over`", indicating that hypermedia _goes beyond_ normal, passively consumed media like magazines and
 newspapers.
 
@@ -106,7 +106,7 @@ Englebart demonstrated became mainstream.
 
 === Modern Implementation
 
-In 1990, Tim Berners-Lee, working a CERN, published the first website.  He had been working on the idea of hypertext
+In 1990, Tim Berners-Lee, working at CERN, published the first website.  He had been working on the idea of hypertext
 for a decade and was finally, out of desperation at the fact it was so hard for researchers to share their research,
 found the right moment and institutional support to create the World Wide Web:
 
@@ -126,7 +126,7 @@ In 2000, Roy Fielding, then at U.C. Irvine, published a seminal PhD dissertation
 Design of Network-based Software Architectures`".  Fielding had been working on the open source Apache HTTP Server and
 his thesis was a description of what he felt was a _new and distinct networking architecture_ that had emerged in the early
 web.  Fielding had worked on the initial HTTP specifications and, in the paper, defined the web's hypermedia
-network model using the term _REpresentationalState Transfer (REST)_.
+network model using the term _REpresentational State Transfer (REST)_.
 
 Fielding's dissertation became a major touchstone for early web developers, giving them a language to discuss the new technical
 medium they were building applications in.
@@ -305,7 +305,7 @@ This button has an `onclick` attribute which specifies some JavaScript to run wh
 The JavaScript will issue an AJAX HTTP `GET` request to `/api/v1/contacts/1` using `fetch()`.  An AJAX request is like a
 "`normal`" HTTP request in many ways, but it is issued "`behind the scenes`" by the browser.  The user does not see a
 request indicator by the browser like they would with normal links and forms, and, unlike with requests issued by
-those hypermedia controls, it is up to the JavaScript code that to handle the response from the server.
+those hypermedia controls, it is up to the JavaScript code to handle the response from the server.
 
 Despite AJAX having XML as part of its acronym, today the HTTP response to this request would almost certainly be in the
 JavaScript Object Notation (JSON) format rather than XML.
@@ -328,7 +328,7 @@ An HTTP response to this request might look something like this:
 The JavaScript code above converts the JSON text received from the server into a JavaScript object by calling the
 `json()` method on it.  This produces a JavaScript object.  This object is then handed off to the `updateUI()` method.
 
-The `updateUI()` method is then responsibel for updating the UI based on the data that has been received from the server,
+The `updateUI()` method is then responsible for updating the UI based on the data that has been received from the server,
 perhaps displaying this contact in a bit of HTML generated via a client-side template in the JavaScript application.
 
 The details of exactly what the `updateUI()` function does aren't important for our discussion.
@@ -371,7 +371,7 @@ thus the application becomes a "`Single Page Application.`"
 This Single Page Application architecture is extremely popular today and has been the dominant (at least in terms of
 mind-share and blog posts) approach to building web applications for the last decade.
 
-Today the vast majority of Simple Page Applications adopt far more sophisticated frameworks for managing their
+Today the vast majority of Single Page Applications adopt far more sophisticated frameworks for managing their
 user interface than this simple example shows.  Popular libraries such as React, Angular, Vue.js, etc. are all common,
 and, indeed, the standard way to build web applications.
 
@@ -441,7 +441,7 @@ The first two advantages, in particular, address major pain points in modern web
 
 * Single Page Application infrastructure has become extremely complex, often requiring an entire team to manage
 
-* JSON API churn, constant changes made JSON APIs to support application needs, has become a major pain point for
+* JSON API churn, constant changes made to JSON APIs to support application needs, has become a major pain point for
   many application teams
 
 These two problems, combined with other various issues such as JavaScript library churn, are causing what has come to
@@ -622,8 +622,7 @@ data analysis and then presenting it to a user.  Perhaps your application adds v
 well-designed database, with simple Create-Read-Update-Delete (CRUD) operations.  Again, there is no shame in this!
 
 In any of these cases, using a hypermedia approach would likely be a great choice: the interactivity needs of
-these applications are not dramatic, and much of the value of these applications lives on the server side, rather on
-than on the client side.
+these applications are not dramatic, and much of the value of these applications lives on the server side, rather than on the client side.
 
 All of these applications are amenable to what Roy Fielding called "`large-grain hypermedia data transfers`": you can simply
 use anchor tags and forms, with responses that return entire HTML documents from requests, and things will work just fine.
@@ -701,8 +700,8 @@ applications, in some ways _more modern_ than the prevailing Single Page Applica
 of this book we will reintroduce you to the core, practical concepts of hypermedia and then demonstrate exactly how
 you can take advantage of this system architecture in your own software.
 
-In the coming chapters you develop a firm understanding of all the benefits and techniques enabled by this approach.  We
-hope that, in addition, you will also become as passionate about it as we are.
+In the coming chapters you will develop a firm understanding of all the benefits and techniques enabled by this approach.
+We hope that, in addition, you will also become as passionate about it as we are.
 
 This book is, in part, a plea that we "`let The Web be The Web`", that we take the original architecture of The Web
 seriously, and that we consider the entire _hypermedia system_ it makes available to us when we build applications

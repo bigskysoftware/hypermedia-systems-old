@@ -165,13 +165,13 @@ There are many methods available in HTTP; the ones of most practical importance 
 | A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
 
 |`PATCH`
-| A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
+| A PATCH request replaces the data of the specified resource. This results in a mutation of state on the server.
 
 |`DELETE`
 | A DELETE request deletes the specified resource. This results in a mutation of state on the server.
 |===
 
-These methods very roughly line up with the "`Create/Read/Update/Delete`" or CRUD pattern found in many applications:
+These methods _roughly_ line up with the "`Create/Read/Update/Delete`" or CRUD pattern found in many applications:
 
 * `POST` corresponds with Creating a resource
 * `GET` corresponds with Reading a resource

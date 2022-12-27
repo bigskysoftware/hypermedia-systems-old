@@ -179,9 +179,9 @@ And there's definitely no widely distributed "`HXML browser`".
 So how can a developer deliver a Hypermedia mobile app using HXML?
 Well, unlike on the web, the mobile developer must provide both the backend to serve HXML, and a mobile client app to render those HXML responses.
 
-[#figure-6-1, reftext="Figure {chapter}.{counter:figure}"]
+[#figure-6-2, reftext="Figure {chapter}.{counter:figure}"]
 .One HXML server, one HXML client
-image::figure_6_1.png[]
+image::figure_6_2.png[]
 
 It would be a lot to ask from developers to write their own HXML client.
 That's why Hyperview provides an open-source client library, written in React Native.

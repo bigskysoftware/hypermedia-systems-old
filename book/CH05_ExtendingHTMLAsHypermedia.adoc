@@ -761,7 +761,7 @@ that allow you to specify a CSS selector _relative_ to the element it is declare
 
 | `previous`
 | Find the previous element (scanning backwards) matching the given selector
-| `next input`
+| `previous input`
 
 | `find`
 | Find the next element within this element matching the given selector

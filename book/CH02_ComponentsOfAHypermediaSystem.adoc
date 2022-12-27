@@ -147,7 +147,7 @@ showing the user this new page, and updating the address bar to reflect the new 
 
 ==== HTTP Methods
 
-The anchor tag above issued an HTTP `GET`, where `GET is the _method_ of the request.  The particular method
+The anchor tag above issued an HTTP `GET`, where `GET` is the _method_ of the request.  The particular method
 being used in an HTTP request is perhaps the most important piece of information about it, after the actual resource that
 the request is directed at.
 
@@ -225,7 +225,7 @@ HTML specification yet!
 
 ==== HTTP Response Codes
 
-HTTP Request methods allow client to tell a server _what_ to do to a given resource.  HTTP Responses contain
+HTTP Request methods allow a client to tell a server _what_ to do to a given resource.  HTTP Responses contain
 _response codes_, which tell a client what the result of the request was.   HTTP response codes are numeric
 values that are embedded in the HTTP response, as we saw above.
 
@@ -380,7 +380,7 @@ being a hypermedia client, to being a sort of cross-platform virtual machine for
 
 Browsers aren't the only hypermedia clients out there, however.  In the last section of this book we will look at
 HyperView, a mobile-oriented hypermedia.  One of the outstanding features of HyperView is that it doesn't simply provide
-a hypermedia, HXML, but also provides a _ working hypermedia client_ for that hypermedia.  This makes building a proper
+a hypermedia, HXML, but also provides a _working hypermedia client_ for that hypermedia.  This makes building a proper
 Hypermedia-Driven Application with HyperView extremely easy.
 
 A crucial feature of a hypermedia system is what is known as _the uniform interface_.  We discuss this concept in depth

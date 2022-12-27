@@ -30,13 +30,13 @@ applications.
 
 This JavaScript runtime is so powerful, in fact, that today many developers ignore the _hypermedia_ features of the
 browser, in favor of building their web applications entirely in JavaScript.  Applications built in this manner have come
-to be called a Single Page Applications (SPAs).  Rather than navigating between pages, these web applications use
+to be called Single Page Applications (SPAs).  Rather than navigating between pages, these web applications use
 JavaScript for updating the user interface directly.  When they communicate with a server, these applications
 typically use JSON API calls via AJAX.  And they often update the user interface using a "`reactive`" style front-end
 JavaScript library.
 
 In these applications HTML becomes a (somewhat awkward) graphical interface description language that is used
-because, for historical reasons, that's what happens there, in the browser.
+because, for historical reasons, that's what happens to be there, in the browser.
 
 Applications built in this style are not _hypermedia driven_: they do not take advantage of the underlying hypermedia
 system of The Web.

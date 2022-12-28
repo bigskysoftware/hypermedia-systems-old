@@ -55,14 +55,14 @@ Did you think I was going to talk about semantic HTML? Keep reading for that, bu
 
 So where does HTML and the s-word come in?
 
-Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by rewritlng semantic HTML as opposed to heaping JavaScript and ARIA attributes over everything.
+Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by rewriting semantic HTML as opposed to heaping JavaScript and ARIA attributes over everything.
 
 Good HTML will not absolve you from doing your job, but it will make it easier.
 
 
 == The S word
 
-[quote,_Mean Girls_ (2004)]
+[quote, _Mean Girls_ (2004)]
 ____
 Gretchen, stop trying to make fetch happen! It's not going to happen!
 ____
@@ -74,7 +74,7 @@ you also need an audience interested enough to read and remember that definition
 
 As this applies to computer languages too, any hypermedia format which lets documents define their own elements is an infinite universe of "`fetch`"-es to make happen.
 Thus, let us renounce the schematamania that plagues many hypermedia discussions.
-Instead, when we talk about semantics, we'll refer to about the simple act of using elements in accordance with their agreed-upon meaning.
+Instead, when we talk about semantics, we refer to the simple act of using elements in accordance with their agreed-upon meaning.
 
 Instead of being extensible through schemas or namespaces, or whatever DTDs are, HTML is extended in two ways:
 

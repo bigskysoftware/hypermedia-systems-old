@@ -120,7 +120,7 @@ route, and will be executed when an HTTP request to the given path is made.
 
 Note that the name of the function doesn't matter, we can call it whatever we'd like so long as it is unique.  In this
 case we chose `index()` because that fits with the route we are handling: the root "`index`" of the web
-applications.
+application.
 
 So we have the `index()` function immediately following our route definition for the root, and this will become the
 handler for the root URL in our web application.
@@ -183,7 +183,7 @@ Note that the source code of Contact.app is available on https://github.com/bigs
 
 === Showing A Searchable List Of Contacts
 
-Let's look at our first real bit of functionality: the ability show all the contacts in our system in a list (really,
+Let's look at our first real bit of functionality: the ability to show all the contacts in our system in a list (really,
 in a table).
 
 This functionality is going to be found at the `/contacts` path, which is the path our previous route is redirecting to.
@@ -192,7 +192,7 @@ We will use Flask to route the `/contacts` path to a handler function, `contacts
 two things:
 
 * If there is a search term found in the request, it will filter down to only contacts matching that term
-* If not, it will simply all contacts
+* If not, it will simply list all contacts
 
 This is a common approach in web 1.0 style applications: the same URL that displays all instances of some resource
 also serves as the search results page for those resources.  Taking this approach makes it easy to reuse the list
@@ -239,14 +239,14 @@ of these two functions we ended up calling.
 ****
 The `Contact` Python class being used above is obviously a very important part of our overall system.  It is the "`domain
 model`" or just "`model`" class for our application, providing the "`business logic`" around the management of Contacts.
-However, the_implementation_ of the `Contact` class is not relevant to Contact.app as a Hypermedia-Driven Application,
+However, the _implementation_ of the `Contact` class is not relevant to Contact.app as a Hypermedia-Driven Application,
 so we will not be looking at the internals of the class.
 
 It could be working with a database (it isn't) or a simple flat file (it is), but it doesn't really matter.  We want
 to leave that part of the system aside, and treat it as a black box.  We will present contacts as a resource to our
 Hypermedia-Driven front end, but not concern ourselves with the internal details of the model.
 
-We sk you to simply accept that it is a "`normal`" domain model class, and the methods on it act in the "`normal`" manner.
+We ask you to simply accept that it is a "`normal`" domain model class, and the methods on it act in the "`normal`" manner.
 We will focus on `Contact` as a _resource_ and how to effectively provide hypermedia representations
 of that resource to clients.
 ****
@@ -305,7 +305,7 @@ as a query string (since this is a `GET` request.)
 
 Note that the value of this input is set to the Jinja expression `{{ request.args.get('q') or '' }}`.  This expression
 is evaluated by Jinja and will insert the request value of "`q`" as the input's value, if it exists.  This will "`preserve`"
-the search value when a user does a search, so that when the results of a search are rendered the text input contain
+the search value when a user does a search, so that when the results of a search are rendered the text input contains
 the term that was searched for.  This makes for a better user experience since the user can see exactly what the
 current results match, rather than having a blank text box at the top of the screen.
 
@@ -355,7 +355,7 @@ Additionally, we have another table cell that includes two links:
 * A link to the "Edit" page for the contact, located at `/contacts/{{ contact.id }}/edit` (e.g. For the contact with
   id 42, the edit link will point to `/contacts/42/edit`)
 
-* A link to the "View" page for the contact `/contacts/{{ contact.id }}` (using our previous contact example, the show
+* A link to the "View" page for the contact `/contacts/{{ contact.id }}` (using our previous contact example, the view
   page would be at `/contacts/42`)
 
 
@@ -385,7 +385,7 @@ image::figure_2-2_table_etc.png[]
 
 Now, our application won't win any design awards at this point, but notice that our template, when rendered,
 provides all the functionality necessary to see all the contacts and search them, and also provides links to edit them,
-view details of them or even create a new one.  A
+view details of them or even create a new one.
 
 And it does all this without the client (that is, the browser) knowing a thing about what contacts are or how to
 work with them.  Everything is encoded _in_ the hypermedia.  A web browser accessing this application just knows how to
@@ -582,7 +582,7 @@ resources are organized in a coherent manner:
 
 * If you wish to view all contacts, you issue a `GET` to `/contacts`
 * If you wish to get a hypermedia representation allowing you to create a new contact, you issue a `GET` to `/contacts/new`
-* If you wish to view a specific contacts (with, say, and id of `42), you issue a `GET` to `/contacts/42`
+* If you wish to view a specific contact (with, say, an id of `42), you issue a `GET` to `/contacts/42`
 
 .The Eternal Bike Shed of URL Design
 ****
@@ -590,7 +590,7 @@ It is easy to quibble about the particulars of the path scheme you use for your 
 
 "`Should we `POST` to `/contacts/new` or to `/contacts`?`"
 
-We have seen many arguments online and in person adovcating for one approach versus another.  We feel it is more
+We have seen many arguments online and in person advocating for one approach versus another.  We feel it is more
 important to understand the overarching idea of _resources_ and the _hypermedia representations_, rather than
 getting too worked up about the smaller details of your URL design.
 
@@ -614,7 +614,7 @@ def contacts_view(contact_id=0): <2>
     return render_template("show.html", contact=contact) <4>
 ----
 <1> Map the path, with a path variable named `contact_id`
-<2> The handler takes the value of this path parameters
+<2> The handler takes the value of this path parameter
 <3> Look up the corresponding contact
 <4> Render the `show.html` template
 
@@ -631,7 +631,7 @@ then pass this contact into the `show.html` template and render a response.
 === The Contact Detail Template
 
 Our `show.html` template is relatively simple, just showing the same information as the table but in a slightly different
-format (perhaps for printing.)  If we add functionality like "`notes`" to the application later on, however, this will give
+format (perhaps for printing).  If we add functionality like "`notes`" to the application later on, however, this will give
 us a good place to do so.
 
 Again, I will omit the "`chrome`" of the template and focus on the meat:
@@ -653,7 +653,7 @@ Again, I will omit the "`chrome`" of the template and focus on the meat:
 ----
 
 We simply render a nice First Name and Last Name header, with the additional contact information below it,
-and a couple of links: a link to edit tge contact and a link to navigate back to the full list of contacts.
+and a couple of links: a link to edit the contact and a link to navigate back to the full list of contacts.
 
 === Editing And Deleting A Contact
 

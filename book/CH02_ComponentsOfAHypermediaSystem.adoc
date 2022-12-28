@@ -78,7 +78,7 @@ for example:
 <a href="/book/contents/">Table Of Contents</a>
 ----
 
-Here we have a _relative_ hypermedia reference, where the protocol and host are _implied_ to be that of the "`current
+Here we have a _relative_ hypermedia reference, where the protocol, host and port are _implied_ to be that of the "`current
 document`", that is, the same as whatever the protocol and server were to retrieve the current HTML page.  So, if this
 link was found in an HTML document retrieved from `https://hypermedia.systems/`, then the implied URL for this anchor
 would be `https://hypermedia.systems/book/contents/`.
@@ -328,7 +328,7 @@ Hypermedia servers are any server that can respond to an HTTP request with an HT
 this means that nearly any programming language can be used to build a hypermedia server.  There are a vast number of
 libraries available for building HTTP-based hypermedia servers in nearly every programming language imaginable.
 
-This is one best aspects of adopting hypermedia as your primary technology for building a web application: it removes
+This is one of the best aspects of adopting hypermedia as your primary technology for building a web application: it removes
 the pressure of adopting JavaScript as a back-end technology.  In contrast, if you decide to adopt a JavaScript-heavy
 Single Page Application-based front end, and you use JSON Data APIs, you will feel significant pressure to adopt
 JavaScript on the back end.
@@ -762,7 +762,7 @@ that JSON Data APIs do*.
 Once a Hypermedia-Driven Application has been "`entered into`" (that is, loaded through some entry point URL), all functionality
 and resources are surfaced through self-describing messages.  Therefore, there is no need to exchange documentation with
 the client: the client simply renders the hypermedia (in this case HTML) and everything works out.  When a change occurs,
-there is no need to create a new version of the API: clients simply retrieves updated hypermedia, which encodes the new
+there is no need to create a new version of the API: clients simply retrieve updated hypermedia, which encodes the new
 operations and resources in it, and display it to users to work with.
 
 === Layered System

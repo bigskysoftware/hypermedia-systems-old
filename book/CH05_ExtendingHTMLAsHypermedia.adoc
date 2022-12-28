@@ -18,12 +18,12 @@ what's not to like about the application, then?
 
 Unfortunately, our application has a few issues common to web 1.0 style applications:
 
-* From a user experience perspective: there is a noticeable refresh when you move between pages of the application, of when you create, update or
+* From a user experience perspective: there is a noticeable refresh when you move between pages of the application, or when you create, update or
   delete a contact.  This is because every user interaction (link click or form submission) requires a full page
   refresh, with a whole new HTML document to process after each action.
 
 * From a technical perspective, all the updates are done with the `POST` HTTP action.  This, despite the fact that
-  more logical actions HTTP request types like `PUT` and `DELETE` exist and would make more sense for some
+  more logical actions and HTTP request types like `PUT` and `DELETE` exist and would make more sense for some
   of the operations we implemented.  After all, if we wanted to delete a resource, wouldn't it make more sense to use an HTTP `DELETE` request
   to do so?  Somewhat ironically, since we are using pure HTML, we are unable to access the full expressive power
   of HTTP, which was designed specifically _for_ HTML.
@@ -44,13 +44,13 @@ in a page directly, without the use of hypermedia.  Using this API, JavaScript c
 update existing content, entirely outside the normal browser request mechanism.
 ****
 
-There are a few of different styles of SPA, but, as we discussed in Chapter 1, the most common approach today is to tie
+There are a few different styles of SPA, but, as we discussed in Chapter 1, the most common approach today is to tie
 the DOM to a JavaScript model and then let an SPA framework like react (https://reactjs.org/) or vue (https://vuejs.org/)
 _reactively_ update the DOM when a JavaScript model is updated: you make a change to a JavaScript object that is
 stored locally in memory in the browser, and the web page "`magically`" updates its state to reflect the change in the
 model.
 
-In this style of application communication with the server is typically done via a JSON Data API,
+In this style of application, communication with the server is typically done via a JSON Data API,
 with the application sacrificing the advantages of hypermedia in order to provide a better, smoother user experience.
 
 Many web developers today would not even consider the hypermedia approach due to the perceived "`legacy`" feel of these
@@ -78,14 +78,14 @@ this book:
 </a>
 ----
 
-Let's bread down in painstaking detail exactly what happens with this link:
+Let's break down in painstaking detail exactly what happens with this link:
 
 * The browser will render the text "`Hypermedia Systems`" to the screen, likely with a decoration indicating it is clickable
 * Then, when a user clicks on the text...
 * The browser will issue an HTTP `GET` to `https://hypermedia.systems` and then...
 * The browser will load the HTML body of the HTTP response into the browser window, replacing the current document
 
-So we have four aspects of a simple hypermedia link like this, with the last three aspects supplying the mechanic that distinguishes
+So we have four aspects of a simple hypermedia link like this, with the last three aspects supplying the mechanism that distinguishes
 a hyperlink from "`normal`" text and makes this a hypermedia control.
 
 Now, let's take a moment and think about how we can _generalize_ these last three aspects of a hyperlink.
@@ -181,7 +181,7 @@ a Single Page Application, where only part of the DOM is updated by a given user
 
 == Extending HTML as a Hypermedia with htmx
 
-These four opportunities present us a way generalize HTML that would extend HTML well beyond its current abilities, but
+These four opportunities present us a way to generalize HTML that would extend HTML well beyond its current abilities, but
 in a way that is _entirely within_ the original hypermedia model of the web. The fundamentals of HTML, HTTP, the browser,
 and so on, won't be changed dramatically.  Rather, these generalizations of _existing functionality_ already found within
 HTML would simply let us accomplish _more_ using HTML.
@@ -281,11 +281,11 @@ Very easy to understand and very consistent with the rest of HTML.
 With this request being issued by the button above, we get to perhaps the most important thing to understand about htmx:
 it expects the response to this AJAX request _to be HTML_!  htmx is an extension of HTML.  A native hypermedia control
 like an anchor tag will typically get an HTML response to a request it creates.  Similarly, htmx expects the server to
-the requests that it makes with HTML.
+respond to the requests that it makes with HTML.
 
 This may come as a bit of a shock to web developers who are used to responding to an AJAX request with JSON,
 which is far and away the most common response format for such requests.  But AJAX requests are just HTTP requests and
-there is no rule saying they must user JSON!  Recall again that AJAX stands for Asynchronous Javascript & XML, so JSON
+there is no rule saying they must use JSON!  Recall again that AJAX stands for Asynchronous Javascript & XML, so JSON
 is already a step away from the format originally envisioned for this API: XML.
 
 htmx simply goes another direction and expects HTML.
@@ -331,7 +331,7 @@ the DOM in place of some element in the page.  (More on exactly where it will be
 in HTML content in this manner is fast and efficient because it leverages the existing native HTML parser in the browser,
 rather than requiring a significant amount of client-side JavaScript to be executed.
 
-This small HTML response might not look like much, but it shows how htmx is stays within the hypermedia
+This small HTML response might not look like much, but it shows how htmx stays within the hypermedia
 paradigm: just like in a "`normal`" hypermedia control in a "`normal`" web application, we see hypermedia being transferred
 to the client in a stateless and uniform manner.
 
@@ -349,7 +349,7 @@ the button element.  That will look pretty silly and is obviously not what we wa
 
 Fortunately htmx provides another attribute, `hx-target` which can be used to specify exactly where in the DOM the
 new content should be placed.  The value of the `hx-target` attribute is a Cascading Style Sheet (CSS) _selector_ that
-allows you to specify the element to put the new hypermedia content into
+allows you to specify the element to put the new hypermedia content into.
 
 Let's add a `div` tag that encloses the button with the id `main`.  We will then target this `div` with the response:
 
@@ -474,10 +474,10 @@ the requirement that the entire page be replaced.
 * Opportunity 4: We can now replace any element we want in our page via transclusion, and we can do so in any manner want
 
 So, with only seven relatively simple additional attributes, we have addressed most of the shortcomings of HTML as a
-hypermedia that we identified earliers.
+hypermedia that we identified earlier.
 
 There was one remaining shortcoming of HTML that we noted: the fact that only a `click` event (on an anchor) or a `submit` event
-(on a form) can trigger HTTP request.  Let's look at how we can address that concern next.
+(on a form) can trigger a HTTP request.  Let's look at how we can address that concern next.
 
 == Using Events
 
@@ -500,11 +500,11 @@ familiar with HTML:
 * Requests on `form` elements are triggered on the `submit` event
 * Requests on all other elements are triggered by the `click` event
 
-In order to demonstrate how `hx-trigger` works, lets consider the following situation: we wanted to trigger the request
+In order to demonstrate how `hx-trigger` works, lets consider the following situation: we want to trigger the request
 on our button when the mouse enters it.  Now, this is certainly not a _good_ UX pattern, but bear with us: we are just
 using this an example.
 
-To response to a mouse entering the button, we would add the following attribute to our button:
+To respond to a mouse entering the button, we would add the following attribute to our button:
 
 [#listing-3-8, reftext={chapter}.{counter:listing}]
 .A Bad Idea, But It Demonstrates The Concept!
@@ -530,9 +530,9 @@ the `hx-trigger` attribute supports: event filters and additional arguments.
 Event filters are a mechanism for determining if a given event should trigger a request or not.  They are applied to an
 event by adding square brackets after it: `someEvent[someFilter]`.  The filter itself is a JavaScript expression that
 will be evaluated when the given event occurs.  If the result is truthy, in the JavaScript sense, it will trigger the
-request.  If not, it the request will not be triggered.
+request.  If not, the request will not be triggered.
 
-In the case of keyboard shortcuts, we want to catch the `keyup` event in addition to the keyup event:
+In the case of keyboard shortcuts, we want to catch the `keyup` event in addition to the click event:
 
 [#listing-3-9, reftext={chapter}.{counter:listing}]
 .A Start
@@ -553,7 +553,7 @@ one potential triggering event.  We still want to respond to the `click` event a
 to handling the `Ctrl-L` keyboard shortcut.
 
 There are, unfortunately, two problems with our `keyup` addition:  As it stands, it will trigger requests on _any_ keyup
-event that occurs.  And, worse, it only trigger when a keyup occurs _within_ this button.  This is highly unlikely (the
+event that occurs.  And, worse, it will only trigger when a keyup occurs _within_ this button.  This is highly unlikely (the
 user would need to tab onto the button to make it active and then begin typing!)
 
 Let's fix these two issues. To fix the first one, we will use a trigger filter to test that Control key and the "`L`" key
@@ -582,7 +582,7 @@ OK, so this filter limits the keyup events that will trigger the request to only
 the problem that, as it stands, only `keyup` events _within_ the button will trigger the request.
 
 If you are not familiar with the JavaScript event bubbling model: events typically "`bubble`" up to parent elements.  So an
-event like `keyup` will be triggered first on the focused element, and then on it's parent (enclosing) element, and so
+event like `keyup` will be triggered first on the focused element, and then on its parent (enclosing) element, and so
 on, until it reaches the top level `document` object that is the root of all other elements.
 
 To support a global keyboard shortcut that works regardless of what element has focus, we will take advantage of
@@ -614,7 +614,7 @@ request when it is clicked on and also whenever someone hits `Ctrl-L` within the
 A nice keyboard shortcut for our Hypermedia-Driven Application.
 
 The `hx-trigger` attribute supports many more modifiers, and it is more elaborate than other htmx attributes. This is because
-events, in general, complicated and require a lot of small details to get just right.  The default trigger will often
+events, in general, are complicated and require a lot of small details to get just right.  The default trigger will often
 suffice, however, and you shouldn't need to reach for complicated `hx-trigger` features too often when using htmx.
 
 Even with more sophisticated trigger specifications like the keyboard shortcut we just added, the overall feel of htmx is
@@ -623,7 +623,7 @@ in a way that adding significant amounts of JavaScript does not.
 
 == htmx: HTML eXtended
 
-And hey, check it out!  With `hx-trigger` we have addressed the final opportunity for improvement of HTMl that we
+And hey, check it out!  With `hx-trigger` we have addressed the final opportunity for improvement of HTML that we
 outlined at the start of this chapter:
 
 * Opportunity 2: We can use _any_ event to trigger an HTTP request
@@ -654,7 +654,7 @@ Here is a table summarizing those opportunities and which htmx attributes exactl
 
 == Passing Request Parameters
 
-So far we have been just looking at situation where a button makes a simple `GET` request.  This is conceptually very
+So far we have been just looking at a situation where a button makes a simple `GET` request.  This is conceptually very
 close to what an anchor tag might do.  But there is that other native hypermedia control in HTML-based applications:
 forms.  Forms are used to pass additional information beyond just a URL up to the server in a request.
 
@@ -705,7 +705,7 @@ of requests.
 
 This may seem a little strange, but it avoids junking up URLs that are used within form when dealing with history
 entries, which we will discuss in a bit.  And you can always include an enclosing form's values with an element that
-uses a `GET` but using the `hx-include` attribute, discussed next.
+uses a `GET` by using the `hx-include` attribute, discussed next.
 
 === Including inputs
 
@@ -715,8 +715,8 @@ placed in some spots in HTML documents.  A good example of the latter situation 
 `form` tag is not a valid child or parent of table rows, so you can't place a form within or around an entire
 row of data in a table.
 
-To address this issue, htmx provides another mechanism for including value in requests: the `hx-include` attribute.  The
-`hx-include` attribute allows you to select input values that you wish to include in a request via CSS selectors.
+To address this issue, htmx provides another mechanism for including input values in requests: the `hx-include` attribute.
+The `hx-include` attribute allows you to select input values that you wish to include in a request via CSS selectors.
 
 Here is the above example reworked to include the input, dropping the form:
 
@@ -795,7 +795,7 @@ Here is an example of `hx-vals`:
 ----
 <1> `hx-vals`, a JSON value to include in the request
 
-The parameter `state` the value `MT` will be included in the `GET` request, resulting in a path and parameters that
+The parameter `state` with the value `MT` will be included in the `GET` request, resulting in a path and parameters that
 looks like this:  `/contacts?state=MT`.  One thing to note is that we switched the `hx-vals` attribute to use single quotes
 around its value.  This is because JSON strictly requires double quotes and, therefore, to avoid escaping we needed to
 use the single-quote form for the attribute value.
@@ -842,7 +842,7 @@ If you have ever used a Single Page Application and accidentally clicked the bac
 application state and have to start over, you have seen this problem in action.
 
 In htmx, as with Single Page Application frameworks, you will often need to explicitly work with the history API.
-Fortunately, since htmx stick so close to the original model of the web and since it is declarative, getting web history
+Fortunately, since htmx sticks so close to the original model of the web and since it is declarative, getting web history
 right is typically much easier to do in an htmx-based application.
 
 Consider the button we have been looking at to load contacts:
@@ -874,14 +874,14 @@ If we wanted it to create a history entry when this request happened, we would a
 
 Now, when the button is clicked, the `/contacts` path will be put into the browser's navigation bar and a history entry
 will be created for it.  Furthermore, if the user clicks the back button, the original content for the page will be
-restored, along with th original URL.
+restored, along with the original URL.
 
 Now, the name `hx-push-url` for this attribute might sound a little obscure, but it is based on the JavaScript API,
 `history.pushState()`.  This notion of "`pushing`" derives from the fact that history entries are modeled as a stack, and
 so you are "`pushing`" new entries onto the top of the stack of history entries.
 
 With this relatively simple, declarative mechanism, htmx allows you to integrate with the back button in a way that mimics the
-"`normal`" behavior of HTML.  Not bad if you look at what other JavaScript libraries you to do to make history work!
+"`normal`" behavior of HTML.  Not bad if you look at what other JavaScript libraries want you to do to make history work!
 
 Now, there is one additional thing we need to handle to get history "`just right`": we have "`pushed`" the `/contacts` path
 into the browsers location bar successfully, and the back button works.  But what if someone refreshes their browser while

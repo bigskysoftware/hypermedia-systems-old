@@ -371,7 +371,7 @@ Let's add a `div` tag that encloses the button with the id `main`.  We will then
 We have added `hx-target="#main"` to our button, where `#main` is a CSS selector that says "`The thing with the ID '`main`'`".
 
 By using CSS selectors, htmx is once again building on top of familiar and standard HTML concepts.  This keeps the
-additional conceptual load beyond HTML required for working with htmx to a minimum.
+additional conceptual load required for working with htmx to a minimum.
 
 Given this new configuration, what would the HTML on the client look like after a user clicks on this button and a
 response has been received and processed?
@@ -587,8 +587,8 @@ on, until it reaches the top level `document` object that is the root of all oth
 
 To support a global keyboard shortcut that works regardless of what element has focus, we will take advantage of
 event bubbling and a feature that the `hx-trigger` attribute supports: the ability to listen to _other elements_ for
-events.  The syntax for doing this is the `from:` modifier, which is added after an event name and that allows you to
-specify a specific element to listen for the given event on using a CSS selector.
+events.  The syntax for doing this is the `from:` modifier, which is added after an event name. This allows you to listen
+for the given event on a specific element using a CSS selector.
 
 In this case, we want to listen to the `body` element, which is the parent element of all visible elements on the page.
 
@@ -703,9 +703,9 @@ You might have noticed that the button was switched from a `GET` request to a `P
 htmx does _not_ include the closest enclosing form for `GET` requests, but it _does_ include the form for all other types
 of requests.
 
-This may seem a little strange, but it avoids junking up URLs that are used within form when dealing with history
-entries, which we will discuss in a bit.  And you can always include an enclosing form's values with an element that
-uses a `GET` by using the `hx-include` attribute, discussed next.
+This may seem a little strange, but this default behaviour avoids junking up URLs in history entries, which we will discuss
+in a bit.  And you can always include an enclosing form's values with an element that uses a `GET` by using the `hx-include`
+attribute, discussed next.
 
 === Including inputs
 

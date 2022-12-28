@@ -60,7 +60,7 @@ https://hypermedia.systems/book
 This particular URL is made up of the following components:
 
 * A protocol or scheme (in this case `https`)
-* A domain (in this case `hypermedia.systems`)
+* A host, represented by a domain name (in this case `hypermedia.systems`)
 * A path (in this case `/book`)
 
 This URL uniquely identifies a retrievable _resource_ on the internet, to which an _HTTP Request_ can be issued by
@@ -345,10 +345,10 @@ with or are passionate about, or just what you feel like trying out.
 You certainly aren't writing your server side logic in HTML!  And every major programming language has at least one good
 web framework and templating library that can be used to handle HTTP requests cleanly.
 
-Perhaps if you are doing something in big data, perhaps you'd like to use Python, which has tremendous support for that
+Perhaps if you are doing something in big data, you'd like to use Python, which has tremendous support for that
 domain.
 
-Perhaps if you are doing AI work, perhaps you'd like to use Lisp, leaning on a language with a long history in that
+Perhaps if you are doing AI work, you'd like to use Lisp, leaning on a language with a long history in that
 area of research.
 
 Maybe you are a functional programming enthusiast and want to use OCaml or Haskell.  Perhaps you just really like Julia or
@@ -491,7 +491,7 @@ indeed, be simpler and therefore more robust.
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_4[Section 5.1.4] for the Caching constraint.
 
 This constraint states that a RESTful system should support the notion of caching, with explicit information on the
-cache-ability of responses for future requests of the same resource.  This allows both clients as well as intermediary
+cacheability of responses for future requests of the same resource.  This allows both clients as well as intermediary
 servers between a given client and final server to cache the results of a given request.
 
 As we discussed above, HTTP has a sophisticated caching mechanism via Response headers that is often overlooked or
@@ -753,8 +753,8 @@ In this case, the JSON client may be broken in a much more serious manner.
 
 The HTML response, however, would simply be updated to exclude the removed options or to update the URLs used for them.  Clients
 would see the new HTML, display it properly, and allow users to select whatever the new set of operations happens to be.  Once
-again, the uniform interface of REST has proven to be extremely flexible: despite a potentially radically new layout
-for our hypermedia API, clients continue to keep working.
+again, the uniform interface of REST has proven to be extremely flexible: despite a potentially radical new layout
+for our hypermedia API, clients continue to work.
 
 An important fact falls out of this:  because of this flexibility, hypermedia APIs *do not have the versioning headaches
 that JSON Data APIs do*.
@@ -811,7 +811,7 @@ model: hypermedia should still be the engine of application state, server commun
 hypermedia exchanges rather than, for example, JSON data exchanges, and so on.
 
 Today, unfortunately, the scripting layer of the web, JavaScript, is quite often used to _replace_, rather than augment
-the hypermedia model.  We will elaborate in a later chapter what scripting that does not replace the underlying hypermedia
+the hypermedia model.  In a later chapter, we will elaborate on what scripting to augment the underlying hypermedia
 system of the web looks like.
 
 == Conclusion

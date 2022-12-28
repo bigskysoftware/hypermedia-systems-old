@@ -397,7 +397,7 @@ found in HTML's native hypermedia controls.
 SPAs are, in some sense, much more akin to _thick client applications_ like the client-server applications of the
 1980s, which popular _before_ The Web came along.
 
-This isn't a _necessarily wrong approach_, but it is worth thinking about _why_ web developers so frequently take it and
+_This isn't necessarily a wrong approach_, but it is worth thinking about _why_ web developers so frequently take it and
 if there are reasons _not_ to go down this path.
 
 == Why Use Hypermedia?

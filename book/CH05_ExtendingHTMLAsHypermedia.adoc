@@ -582,7 +582,7 @@ OK, so this filter limits the keyup events that will trigger the request to only
 the problem that, as it stands, only `keyup` events _within_ the button will trigger the request.
 
 If you are not familiar with the JavaScript event bubbling model: events typically "`bubble`" up to parent elements.  So an
-event like `keyup` will be triggered first on the focused element, and then on it's parent (enclosing) element, and so
+event like `keyup` will be triggered first on the focused element, and then on its parent (enclosing) element, and so
 on, until it reaches the top level `document` object that is the root of all other elements.
 
 To support a global keyboard shortcut that works regardless of what element has focus, we will take advantage of

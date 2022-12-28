@@ -864,7 +864,7 @@ to see if there are any selected contacts, quite easily:
 
 The next step is to ensure that toggling a checkbox for a given contact adds (or removes) a given contact's id from the
 `selected` property.  To do this, we will need to use a new Alpine attribute, `x-model`.  The `x-model` attribute allows
-you to _bind_ a given element to some underlying data, or it's "model".
+you to _bind_ a given element to some underlying data, or its "model".
 
 In this case, we want to bind the value of the checkbox inputs to the `selected` property.  This is how we do this:
 

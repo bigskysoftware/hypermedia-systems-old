@@ -521,7 +521,7 @@ of the _existing_ element.  CSS transitions, unfortunately, only apply when the 
 not when the element is replaced.  This is a reason why pure HTML-based applications feel jerky and unpolished when compared
 with their SPA counterparts: it isn't possible to use CSS transitions without using JavaScript.
 
-Very unfortunate, but htmx rectifies this situation with it's swapping model.  Let's look at how.
+Very unfortunate, but htmx rectifies this situation with its swapping model.  Let's look at how.
 
 === The "`Settling`" Step in htmx
 

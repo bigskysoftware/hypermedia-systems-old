@@ -4,7 +4,7 @@
 :url: ./a-web-1-0-application/
 
 To start our journey into Hypermedia-Driven Applications, we are going to create a simple contact management web
-application called Contacts.app.  We will start with a basic, "`Web 1.0-style`" Multi-Page Application (MPA), in the grand
+application called Contact.app.  We will start with a basic, "`Web 1.0-style`" Multi-Page Application (MPA), in the grand
 CRUD (Create, Read, Update, Delete) tradition.  It will not be the best contact management application in the world.  But
 that's OK because it will be simple (a great virtue of web 1.0 applications!) and it will do its job.
 
@@ -160,7 +160,7 @@ Now the `index()` function simply returns the result of calling the Flask-suppli
 we with to redirect the user to.  In this case the path is `/contacts`, and we pass this path in as a string argument.
 Now, if you navigate to the root path, `/`, our Flask application will forward you on to the `/contacts` path.
 
-== Contact.App Functionality
+== Contact.app Functionality
 
 OK, now that we have our feet under us with respect to defining routes, let's get down to specifying and then implementing
 our web application.
@@ -379,7 +379,7 @@ can respond with an HTML _representation_ of all the contacts requested.  So far
 Here is what the template looks like, rendered with a bit of contact information:
 
 [#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
-.Contact.App
+.Contact.app
 image::figure_2-2_table_etc.png[]
 
 
@@ -837,7 +837,7 @@ back to the list of contacts with a success flash message.
 
 No need for a template in this case, the contact is gone.
 
-=== Contact.App... Implemented!
+=== Contact.app... Implemented!
 
 And, well... believe it or not, that's our entire contact application!  The Flask and Jinja2 code should be simple enough
 that you are able to follow along, even if Python isn't your preferred language or Flask isn't your preferred web
@@ -865,7 +865,7 @@ However, our application does suffer from that "`clunkiness`" that we mentioned 
 every request replaces the entire screen, introducing a noticeable flicker when navigating between pages.  You lose your
 scroll state.  You have to click around a bit more than you might in a more sophisticated web application.
 
-Contact.App, at this point, just doesn't feel like a "`modern`" web application, does it?
+Contact.app, at this point, just doesn't feel like a "`modern`" web application, does it?
 
 Is it time to reach for a JavaScript framework and JSON APIs to make our contact application more interactive?
 

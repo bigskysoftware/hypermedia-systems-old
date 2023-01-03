@@ -341,7 +341,7 @@ The behaviour of a unit of code should be as obvious as possible by looking only
 In simple terms: you should be able to tell what a button does by simply looking at the code or markup that creates that button.
 This does not mean you need to inline the entire implementation, but that you shouldn't need to hunt for it or require prior knowledge of the codebase to find it.
 
-We will demonstrate Locality of Behavior in all of our examples, both the counter demos and the features we add to ContactApp.
+We will demonstrate Locality of Behavior in all of our examples, both the counter demos and the features we add to Contact.app.
 Locality of behavior is an explicit design goal of both +_hyperscript+ and Alpine.js (which we will cover later) as well as htmx.
 
 All of these tools achieve Locality of Behavior by having you embed attributes directly within your HTML, as opposed to
@@ -441,7 +441,7 @@ All in all, RSJS is a good way to structure your vanilla JavaScript in a Hyperme
 JavaScript isn't communicating with a server via a plain data JSON API, or holding a bunch of internal state outside of
 the DOM, this is perfectly compatible with the HDA approach.
 
-Let's next take a look at implementing a feature in Contact.App using the RSJS/vanilla JavaScript approach.
+Let's next take a look at implementing a feature in Contact.app using the RSJS/vanilla JavaScript approach.
 
 === VanillaJS in action: an overflow menu
 

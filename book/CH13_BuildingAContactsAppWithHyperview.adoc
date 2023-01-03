@@ -128,7 +128,7 @@ Let's call it `layout.xml`.
     <body style="body" safe-area="true">
       <header style="header">
         {% block header %} <1>
-          <text style="header-title">Contacts.app</text>
+          <text style="header-title">Contact.app</text>
         {% endblock %}
       </header>
 

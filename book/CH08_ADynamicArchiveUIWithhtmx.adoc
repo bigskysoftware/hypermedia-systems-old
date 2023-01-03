@@ -5,9 +5,9 @@
 
 == A Dynamic Archive UI
 
-Contact.app has come a long way from the traditional web 1.0-style web application it started life as at this point:
+Contact.app has come a long way from the traditional web 1.0-style web application it started life as, at this point:
 we've added active search, bulk delete (with some nice animations) and a slew of other features.  We have reached a level
-of interactivity that most web developers would assume requires some sort Single-Page Application JavaScript framework,
+of interactivity that most web developers would assume requires some sort of Single-Page Application JavaScript framework,
 but we've done nearly all of it using htmx-powered hypermedia instead.
 
 Let's look at how we can add a final significant feature to Contact.app: downloading an archive of all the contacts.
@@ -55,7 +55,7 @@ What we'd _really_ like in this scenario is something more like what you see whe
 browser: a nice progress bar indicating where in the process you are, and, when the process is complete, a link to click immediately
 to view the result of the process.
 
-This may sound like something impossible to implement with hypermedia, and, top be honest, we'll need to push htmx pretty hard
+This may sound like something impossible to implement with hypermedia, and, to be honest, we'll need to push htmx pretty hard
 to make this all work, but, when it is done, it won't be _that_ much code, and we will be able to achieve the user experience
 we want for this archiving feature.
 
@@ -69,7 +69,7 @@ show a link to the user to download the contact archive file.
 
 In order to actually do the archiving, we are going to use a python class, `Archiver`, that implements all the
 functionality that we need.  As with the `Contact` class, we aren't going to go into the implementation details of `Archiver`
-, because that's beyond the scope of this book.  All you, the reader, needs to know is that it provides all the server-side
+, because that's beyond the scope of this book.  All you, the reader, need to know is that it provides all the server-side
 behavior necessary to start a contact archive process and get the results when that process is done.
 
 `Archiver` gives us the following methods to work with:
@@ -539,7 +539,7 @@ has a stable id between swaps, you _can_ write CSS transitions between various s
 has the _old_ attributes, the normal CSS mechanism will kick in when the actual values are restored.
 
 So, in our case, all we need to do is to add a stable ID to our `progress-bar` element, and, rather than jumping
-on every update, it the progress bar should smoothly move across the screen as it is updating, using the CSS transition
+on every update, the progress bar should smoothly move across the screen as it is updating, using the CSS transition
 defined in our style sheet:
 
 .Smoothing Things Out
@@ -554,7 +554,7 @@ defined in our style sheet:
 So, despite all the complicated mechanics going on behind the scenes in htmx, all we have to do, as an htmx user,
 is add a stable `id` attribute to the element we want to animate.
 
-With that done, viola: we get a nice nice, smooth progress bar as the contact archiving process proceeds.  Because of
+With that done, voila: we get a nice nice, smooth progress bar as the contact archiving process proceeds.  Because of
 the htmx swapping model, we get this nice animation even though we are replacing the content with new HTML.  So we get
 the simplicity of the HTML-based approach, but the look and feel of a more sophisticated JavaScript-based approach.
 
@@ -593,7 +593,7 @@ def reset_archive():
 ----
 <1> Call `reset()` on the archiver
 
-THis looks pretty similar to our other handlers, doesn't it?  Yep, that's the idea.
+This looks pretty similar to our other handlers, doesn't it?  Yep, that's the idea.
 
 == An Alternative UX: Auto-Download
 

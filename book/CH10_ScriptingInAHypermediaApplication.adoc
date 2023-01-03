@@ -7,7 +7,7 @@
 REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts.
 This simplifies clients by reducing the number of features required to be pre-implemented.
 
-Thus far we have (mostly) avoided writing any JavaScript (or hyperscript) in Contact.app, mainly because the functionality
+Thus far we have (mostly) avoided writing any JavaScript (or \\_hyperscript) in Contact.app, mainly because the functionality
 we implemented has not required it.  In this chapter we are going to look at scripting and, in particular, hypermedia-friendly
 scripting within the context of a Hypermedia-Driven Application.
 
@@ -24,7 +24,7 @@ It is true in many ways that HTML, as specified and implemented, lacks affordanc
 that were implemented within those older systems. None of this means, however, that hypermedia's _purpose_ is "`documents`"
 over "`applications`".
 
-Rather, while the theoretical foundation is there, but the implementation is underdeveloped. With JavaScript being the
+Rather, while the theoretical foundation is there, the implementation is underdeveloped. With JavaScript being the
 only extension point and hypermedia controls not being well integrated to JavaScript  (why can't I click a link without
 halting my program?), developers have not internalized hypermedia and have instead used the Web as a dumb pipe for apps
 that imitate "`native`" ones.
@@ -68,7 +68,7 @@ whichever languages or tools are appropriate for our business domain.
 .The Server
 [note]
 ****
-Keeping business logic and presentation logic both being "`on the server`" does not mean these two "`concerns`" are mixed or
+Keeping business logic and presentation logic both "`on the server`" does not mean these two "`concerns`" are mixed or
 coupled. They can be modularized on the server. In fact, they _should_ be modularized on the server, along with all the
 other concerns of our application.
 
@@ -119,7 +119,7 @@ We will instead focus on three client-side scripting technologies that _are_ hyp
 
 * Alpine.js, a JavaScript library for adding behavior directly in HTML.
 
-* hyperscript, a non-JavaScript scripting language created alongside htmx. Like AlpineJS, hyperscript is usually embedded in HTML.
+* \\_hyperscript, a non-JavaScript scripting language created alongside htmx. Like AlpineJS, \\_hyperscript is usually embedded in HTML.
 
 Let's take a quick look at each of these scripting options, so we know what we are dealing with.
 
@@ -171,7 +171,7 @@ Hypermedia Driven Applications:
 * It has a complicated and confusing set of features for working with asynchronous code.
 * Working with events is surprisingly difficult.
 * DOM APIs (a large portion of which were originally designed for Java, yes _Java_)
-  are verbose and don't have a habit of make common functionality easy to use.
+  are verbose and don't have a habit of making common functionality easy to use.
 
 None of these limitations are deal-breakers, of course. Many of them are gradually being fixed and many people prefer
 the "`close to the metal`" (for lack of a better term) nature of vanilla JavaScript over more elaborate client-side scripting approaches.
@@ -342,7 +342,7 @@ In simple terms: you should be able to tell what a button does by simply looking
 This does not mean you need to inline the entire implementation, but that you shouldn't need to hunt for it or require prior knowledge of the codebase to find it.
 
 We will demonstrate Locality of Behavior in all of our examples, both the counter demos and the features we add to ContactApp.
-Locality of behavior is an explicit design goal of both _hyperscript and Alpine.js (which we will cover later) as well as htmx.
+Locality of behavior is an explicit design goal of both \\_hyperscript and Alpine.js (which we will cover later) as well as htmx.
 
 All of these tools achieve Locality of Behavior by having you embed attributes directly within your HTML, as opposed to
 having code look up elements in a document through CSS selectors in order to add event listeners onto them.
@@ -434,7 +434,7 @@ Using RSJS solves, or at least alleviates, many of the problems we pointed out w
 split out to a separate file:
 
 * The JS that attaches behavior to a given element is *clear* (though only through naming conventions).
-* Reuse is *easy* --you can create another counter component on the page it will just work.
+* Reuse is *easy* --you can create another counter component on the page and it will just work.
 * The code is *well-organized* --one behavior per file
 
 All in all, RSJS is a good way to structure your vanilla JavaScript in a Hypermedia Driven Application.  So long as the
@@ -541,7 +541,7 @@ easily and effectively.
 With this ARIA introduction out the way, let's return to our VanillaJS drop down menu.  We'll begin with the RSJS
 boilerplate: query for all elements with some data attribute, iterate over them, get any relevant descendants.
 
-Note that, below, we've modified the RSJS boilerplate a bit to integrate with htmx, in particular we load the apply the
+Note that, below, we've modified the RSJS boilerplate a bit to integrate with htmx, in particular we load the
 overflow menu when htmx loads new content.
 
 [source,js]
@@ -754,7 +754,7 @@ an `x-text` attribute.
 
 Next, we will _bind_ the `x-text` attribute to the `count` attribute we declared in the `x-data` attribute
 on the parent `div` element.  This will have the effect of setting the text of the `output` element to whatever the
-value of `count` is: if `count` is updates, so will the text of the `output`.  This is "`reactive`" programming, in that
+value of `count` is: if `count` is updated, so will the text of the `output`.  This is "`reactive`" programming, in that
 the DOM will "`react`" to changes to the backing data.
 
 .Counter with Alpine, lines 1-2
@@ -807,14 +807,14 @@ As we said, the Alpine `x-on:click` attribute (or its shorthand, the `@click` at
 We hope that you'll agree that the AlpineJS version of the counter widget is better, in general, than the VanillaJS
 implementation, which was either somewhat hacky or spread out over multiple files.
 
-A big part of the power of AlpineJS is that it supports a notion of `"reactive`" variables, allowing you to bind the count
+A big part of the power of AlpineJS is that it supports a notion of "`reactive`" variables, allowing you to bind the count
 of the `div` element to a variable that both the `output` and the `button` can reference, and properly updating all the
 dependencies when a mutation occurs.  Alpine allows for much more elaborate data bindings than what we have demonstrated
 here, and it is an excellent general purpose client-side scripting library.
 
 === Alpine.js in Action: A Bulk Action Toolbar
 
-Next, let's implement a feature in Contact.app with Alpine. As it stands currently, Contact.app has a `"Delete Selected
+Next, let's implement a feature in Contact.app with Alpine. As it stands currently, Contact.app has a "`Delete Selected
 Contacts`" button at the very bottom of the page. This button has a long name, is not easy to find and takes up a
 lot of room.  If we wanted to add additional "`bulk`" actions, this wouldn't really scale very well visually.
 
@@ -824,7 +824,7 @@ one go.
 
 The first thing we will need to add is an `x-data` attribute, to hold the state that we will use to determine if the
 toolbar is visible or not.  We will need to place this on a parent element of both the toolbar that we are going to
-add, as well as of the checkboxes, which will be updating the state when they are checked and unchecked.  The best
+add, as well as the checkboxes, which will be updating the state when they are checked and unchecked.  The best
 option given our current HTML is to place the attribute on the `form` element that surrounds the contacts table.  We
 will declare a property, `selected`, which will be an array that holds the selected contact ids, based on the checkboxes
 that are selected.
@@ -876,7 +876,7 @@ In this case, we want to bind the value of the checkbox inputs to the `selected`
 ----
 <1> The `x-model` attribute binds the `value` of this input to the `selected` property
 
-Now, when a checkbox is checked or unchecked, the `selected` array will be updated with the given rows contact id.
+Now, when a checkbox is checked or unchecked, the `selected` array will be updated with the given row's contact id.
 Furthermore, mutations we make to the `selected` array will similarly be reflected in the checkboxes' state.  This is
 known as a _two-way_ binding.
 
@@ -925,7 +925,7 @@ The `htmx.ajax()` function is just a way to access the normal, HTML-driven hyper
 HTML attributes give you directly from JavaScript.
 
 Looking at how we call `htmx.ajax`, we first pass in that we want to issue a `DELETE` to `/contacts`.  We then pass in
-two additional pieces of information: `source` and `target`. The `source` properly is the element from which htmx will
+two additional pieces of information: `source` and `target`. The `source` property is the element from which htmx will
 collect data to include in the request. We set this to `$root`, which is a special symbol in Alpine that will be
 the element that has the `x-data` attribute declared on it.  In this case, it will be  the form containing all of our
 contacts. The `target`, or where the response HTML will be placed, is just the entire document's body, since the
@@ -942,28 +942,28 @@ visual clutter and the toolbar can be extended with more options without creatin
 
 == _hyperscript
 
-The final scripting technology we are going to look at is a bit further afield: _hyperscript (https://hyperscript.org[])
+The final scripting technology we are going to look at is a bit further afield: \\_hyperscript (https://hyperscript.org[])
 
-While previous two examples are JavaScript-oriented, _hyperscript is an _entire new_ scripting language for front-end
-development. _hyperscript has a completely different syntax than JavaScript, based on an older language called HyperTalk.
+While the previous two examples are JavaScript-oriented, \\_hyperscript is an _entire new_ scripting language for front-end
+development. \\_hyperscript has a completely different syntax than JavaScript, based on an older language called HyperTalk.
 HyperTalk was the scripting language for a technology called HyperCard, an old hypermedia system available on early
 Macintosh Computers.
 
-The most noticeable thing about \_hyperscript is that it resembles English prose more than it resembles other programming
-languages. \_hyperscript was initially created as a sibling project to htmx, because we felt that JavaScript wasn't
+The most noticeable thing about \\_hyperscript is that it resembles English prose more than it resembles other programming
+languages. \\_hyperscript was initially created as a sibling project to htmx, because we felt that JavaScript wasn't
 event-oriented enough, which made adding small scripting enhancements to htmx applications cumbersome.  Like Alpine,
-\_hyperscript, is a modern jQuery replacement.
+\\_hyperscript, is a modern jQuery replacement.
 
-Also like Alpine, _hyperscript allows you to write your scripting inline, in HTML.
+Also like Alpine, \\_hyperscript allows you to write your scripting inline, in HTML.
 
-Unline Alpine, however, \_hyprescript is _not_ reactive.  It instead focuses on making DOM manipulations in response to events
+Unline Alpine, however, \\_hyperscript is _not_ reactive.  It instead focuses on making DOM manipulations in response to events,
 easy to write and easy to read. It has built-in language constructs for many DOM operations, preventing you from needing
 to navigate the sometimes-verbose JavaScript DOM APIs.
 
 We will not be doing a deep dive on the language, but again just want to give you a flavor of what scripting in
-_hyperscript is like, so you can pursue the language in more depth later if you find it interesting.
+\\_hyperscript is like, so you can pursue the language in more depth later if you find it interesting.
 
-Like htmx and AlpineJS, _hyperscript can be installed via a CDN or from npm (package name `hyperscript.org`):
+Like htmx and AlpineJS, \\_hyperscript can be installed via a CDN or from npm (package name `hyperscript.org`):
 
 .Installing _hyperscript via CDN
 [source,html]
@@ -971,14 +971,14 @@ Like htmx and AlpineJS, _hyperscript can be installed via a CDN or from npm (pac
 <script src="//unpkg.com/hyperscript.org"></script>
 ----
 
-\_hyperscript uses the `_` (underscore) attribute for putting scripting on DOM elements.  You may also use the `script`
+\\_hyperscript uses the `\\_` (underscore) attribute for putting scripting on DOM elements.  You may also use the `script`
 or `data-script` attributes, depending on your HTML validation needs.
 
-Let's look at how to implement the simple counter component we have been looking at using \_hyperscript.  We will place
+Let's look at how to implement the simple counter component we have been looking at using \\_hyperscript.  We will place
  an `output` element and a `button` inside of a `div`.  To implement the counter, we will need to add a small bit of
-\_hyperscript to the button.  On a click, the button should increment the text of the previous `output` tag.
+\\_hyperscript to the button.  On a click, the button should increment the text of the previous `output` tag.
 
-It turns out that that last sentence is nearly valid \_hyperscript!
+It turns out that that last sentence is nearly valid \\_hyperscript!
 
 Here is our code:
 
@@ -989,42 +989,42 @@ Here is our code:
   <button _="on click increment the textContent of the previous <output/>">Increment</button> <1>
 </div>
 ----
-<1> This is what _hyperscript looks like, believe it or not
+<1> This is what \\_hyperscript looks like, believe it or not
 
 Let's go through each component of this script:
 
 * `on click` This is an event listener, telling the button to listen for a `click` event and then executing
   the remaining code
 
-* `increment` This is a "`command`" in \_hyperscript that `"increments`" things, similar to the `++` operator in JavaScript
-* `the` "`the`" doesn't have any semantic meaning \_hyperscript, but can used to make scripts more readable
-* `textContent of` -  This one form of _property access_ in \_hyperscript.  You are probably familiar with the JavaScript
-   syntax `a.b`, meaning `"Get the property `b` on object `a``".  \_hyperscript supports this syntax, but _also_ supports
+* `increment` This is a "`command`" in \\_hyperscript that "`increments`" things, similar to the `++` operator in JavaScript
+* the "`the`" doesn't have any semantic meaning \\_hyperscript, but can used to make scripts more readable
+* `textContent of` -  This one form of _property access_ in \\_hyperscript.  You are probably familiar with the JavaScript
+   syntax `a.b`, meaning "Get the property `b` on object `a`".  \\_hyperscript supports this syntax, but _also_ supports
    the forms `b of a` and `a's b`.  Which one you use should depend on which one is most readable.
-*  `the previous` The `previous` expression in hyperscript finds the previous element in the DOM that matches some condition
-*  `<output />` This is a _query literal_, which is a CSS selector is wrapped between `<` and `/>`
+*  `the previous` The `previous` expression in \\_hyperscript finds the previous element in the DOM that matches some condition
+*  `<output />` This is a _query literal_, which is a CSS selector wrapped between `<` and `/>`
 
-In this code, the `previous` keyword (and the accompanying `next` keyword) is an example of how _hyperscript makes DOM operations
+In this code, the `previous` keyword (and the accompanying `next` keyword) is an example of how \\_hyperscript makes DOM operations
 easier: there is no such native functionality to be found in the standard DOM API, and implementing this in VanillaJS is trickier
 than you might think!
 
-So, you can see, \_hyperscript is very expressive, particularly when it comes to DOM manipulations.  This makes it
+So, you can see, \\_hyperscript is very expressive, particularly when it comes to DOM manipulations.  This makes it
 easier to embed scripts directly in HTML: since the scripting language is more powerful, scripts written in it tend
 to be shorter and easier to read.
 
 .Natural Language Programming?
 ****
-Seasoned programmers are often suspicious of _hyperscript: There have been many `"natural language programming`" (NLP)
+Seasoned programmers are often suspicious of \\_hyperscript: There have been many "natural language programming" (NLP)
 projects that target non-programmers and beginner programmers, assuming that being able to read code in their
-`"natural language`" will give them the ability to write it as well.  This has lead to some badly written and
+"natural language" will give them the ability to write it as well.  This has lead to some badly written and
 structured code and has failed to live up to the (often over the top) hype.
 
-\_hyperscript is _not_ an NLP programming language.  Yes, its syntax is inspired in many places
-by the speech patterns of web developers. But _hyperscript's readability is achieved not through complex
+\\_hyperscript is _not_ an NLP programming language.  Yes, its syntax is inspired in many places
+by the speech patterns of web developers. But \\_hyperscript's readability is achieved not through complex
 heuristics or fuzzy NLP processing, but rather through judicious use of common parsing tricks, coupled with a culture
 of readability.
 
-As you can see in the above example, with the use of a _query reference_, `<output/>`,  _hyperscript does not shy away
+As you can see in the above example, with the use of a _query reference_, `<output/>`,  \\_hyperscript does not shy away
 from using DOM-specific, non-natural language when appropriate.
 ****
 
@@ -1033,7 +1033,7 @@ from using DOM-specific, non-natural language when appropriate.
 // TODO: alt-S instead?  shift-S too aggressive?
 
 While the counter demo is a good way to compare various approaches to scripting, the rubber meets the road when
-you try to actually implement a useful feature with an approach.  For \_hyperscript, let's add a keyboard shortcut
+you try to actually implement a useful feature with an approach.  For \\_hyperscript, let's add a keyboard shortcut
 to Contact.app: when a user hits Shift-S in our app, we will focus the search field.
 
 Since our keyboard shortcut focuses the search input, let's put the code for it on that search input, satisfying
@@ -1047,13 +1047,13 @@ Here is the original HTML for the search input:
 ----
 
 We will add an event listener using the `on keydown` syntax, which will fire whenever a keydown occurs.  Further, we
-can use an _event filter_ syntax in \_hyperscript using square brackets after the event.  In the square brackets we
+can use an _event filter_ syntax in \\_hyperscript using square brackets after the event.  In the square brackets we
 can place a _filter expression_ that will filter out `keydown` events we aren't interested in.  In our case, we only
 want to consider events where the shift key is held down and where the "`S`" key is being pressed.  We can create a
 boolean expression that inspects the `shiftKey` property (to see if it is `true`) and the `code` property (to see if
 it is `"KeyS"`) of the event to achieve this.
 
-So far our hyperscript looks like this:
+So far our \\_hyperscript looks like this:
 
 .A Start On Our Keyboard Shortcut
 [source, hyperscript]
@@ -1061,7 +1061,7 @@ So far our hyperscript looks like this:
   on keydown[shiftKey and code is 'KeyS'] ...
 ----
 
-Now, by default, \_hyperscript will listen for a given event _on the element it is declared on_.  So, in this case, with
+Now, by default, \\_hyperscript will listen for a given event _on the element it is declared on_.  So, in this case, with
 the script we have so far, we would only get `keydown` events if the search box is already focused.  That's not what
 we want!  We want to have this key work _globally_, no matter which element has focus.
 
@@ -1096,28 +1096,28 @@ read.
 
 === Why a new programming language?
 
-This is all well and good, but you may be thinking `"An entirely new scripting language?  That seems excessive.`"  And,
+This is all well and good, but you may be thinking "`An entirely new scripting language?  That seems excessive.`"  And,
 at some level, you are right: JavaScript is a decent scripting language, is very well optimized and is widely understood
 in web development.  On the other hand, by creating an entirely new front end scripting language, we had the freedom
 to address some problems that we saw generating ugly and verbose code in JavaScript:
 
-Async transparency:: In _hyperscript, asynchronous functions (i.e. functions that return `Promise` instances) can be
-invoked _as if they were synchronous_. Changing a function from sync to async does not break any \_hyperscript code that
+Async transparency:: In \\_hyperscript, asynchronous functions (i.e. functions that return `Promise` instances) can be
+invoked _as if they were synchronous_. Changing a function from sync to async does not break any \\_hyperscript code that
 calls it.  This is achieved by checking for a Promise when evaluating any expression, and suspending the running script
 if one exists (only the current event handler is suspended and the main thread is not blocked). JavaScript, instead, requires
 either the explicit use of callbacks _or_ the use of explicit `async` annotations (which can't be mixed with synchronous
 code).
 
-Array property access:: In _hyperscript, accessing a property on an array (other than `length` or a number) will return
+Array property access:: In \\_hyperscript, accessing a property on an array (other than `length` or a number) will return
 an array of the values of property on each member of that array, making array property access act like a flat-map operation.
 jQuery has a similar feature, but only for its own data structure.
 
-Native CSS Syntax:: In _hyperscript, you can use things like CSS class and ID literals, or CSS query literals, directly
-in the language, rather than needing to call out to a wordy DOM API, as you do in JavaScript
+Native CSS Syntax:: In \\_hyperscript, you can use things like CSS class and ID literals, or CSS query literals, directly
+in the language, rather than needing to call out to a wordy DOM API, as you do in JavaScript.
 
-Deep Event Support:: Working with events in \_hyperscript is far more pleasant than working with them in JavaScript, with
+Deep Event Support:: Working with events in \\_hyperscript is far more pleasant than working with them in JavaScript, with
 native support for responding to and sending events, as well as for common event-handling patterns such as "`debouncing`"
-or rate limiting events.  Hyperscript also provides declarative mechanisms for synchronizing events within a given element
+or rate limiting events.  \\_hyperscript also provides declarative mechanisms for synchronizing events within a given element
 and across multiple elements.
 
 Again we wish to stress that, in this example, we are not stepping outside the lines of a Hypermedia-Driven
@@ -1125,11 +1125,11 @@ Application: we are only adding front-end, client-side functionality with our sc
 managing a large amount of state outside of the DOM itself, or communicating with the server in a non-hypermedia
 exchange.
 
-Additionally, since \_hyperscript embeds so well in HTML, it keeps the focus _on the hypermedia_, rather than on the
+Additionally, since \\_hyperscript embeds so well in HTML, it keeps the focus _on the hypermedia_, rather than on the
 scripting logic.
 
-Taken all together, given a certain style of scripting and certain scripting needs, \_hyperscript can provide an
-excellent scripting experience for your Hypermedia Driven Application.  Of course, it is small and obscure programming
+Taken all together, given a certain style of scripting and certain scripting needs, \\_hyperscript can provide an
+excellent scripting experience for your Hypermedia Driven Application.  Of course, it is a small and obscure programming
 language, so we won't blame you if you decide to pass on it, but it is at least worth a look to understand what it
 is trying to achieve, if only out of intellectual interest.
 
@@ -1142,7 +1142,7 @@ some sort of functionality, such as showing modal dialogs.
 
 Components have become very popular in the web development works, with libraries like DataTables (https://datatables.net/)
 providing rich user experiences with very little JavaScript code on the part of a user.  Unfortunately, if these libraries
-aren't integrated well into a website, they can begin to make an application feel `"patched together`".  Furthermore, some
+aren't integrated well into a website, they can begin to make an application feel "`patched together`".  Furthermore, some
 libraries go beyond simple DOM manipulation, and require that you integrate with a server end point, almost invariably
 with a JSON data API.  This means you are no longer building a Hypermedia Driven Application, simply because a particular
 widget demands something different.  A shame!
@@ -1156,14 +1156,14 @@ The best JavaScript libraries to work with when you are building a Hypermedia Dr
 * Trigger many custom events, as the library updates things
 
 The last point, triggering many custom events (over the alternative of using lots of methods and callbacks) is especially
-important, as these custom events can be dispatched or listened to without additional glue code written in a scripting.
+important, as these custom events can be dispatched or listened to without additional glue code written in a scripting language.
 
 Let's take a look at two different approaches to scripting, one using JavaScript call backs, and one using events.
 
 To make things concrete, let's  implement a better confirmation dialog for the `DELETE` button we created in Alpine in the
 previous section.  In the original example we used the `confirm()` function built in to JavaScript, which shows a
 pretty bare-bones system confirmation dialog.  We will replace this function with a popular JavaScript library,
-SweetAlert2, that shows a much nicern nice looking confirmation dialog.  Unlink the `confirm()` function, which blocks
+SweetAlert2, that shows a much nicer looking confirmation dialog.  Unlink the `confirm()` function, which blocks
 and returns a boolean (`true` if the user confirmed, `false` otherwise), SweetAlert2 returns a `Promise` object, which
 is a JavaScript mechanism for hooking in a callback once an asynchronous action (such as waiting for a user to confirm
 or deny an action) completes.
@@ -1236,7 +1236,7 @@ function sweetConfirm(elt, config) {
 }
 ----
 <1> Pass the config through to the `fire()` function
-<2> If the user confirmed the action, trigger an `confirmed` event
+<2> If the user confirmed the action, trigger a `confirmed` event
 
 With this method available, we can now tighten up our delete button quite a bit.  We can remove all the SweetAlert2
 code that we had in the `@click` Alpine attribute, and simply call this new `sweetConfirm()` method, passing in the
@@ -1291,7 +1291,7 @@ to script your Hypermedia-Driven Application.
 Do you have more leeway and like the look of Alpine.js?  That's a great way to add more structured, localized JavaScript
 to your application, and offers some nice reactive features as well.
 
-Are you a bit more bold in your technical choices?  Maybe \_hypercript would be worth taking a look at.  (We certainly think so.)
+Are you a bit more bold in your technical choices?  Maybe \\_hyperscript would be worth taking a look at.  (We certainly think so.)
 
 Sometimes you might even consider picking two (or more) of these approaches within an application.  Each has its own
 strengths and weaknesses, and all of them are relatively small and self-contained, so picking the right tool for the job

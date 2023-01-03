@@ -76,7 +76,7 @@ There are two approaches employing hypermedia to build & ship native mobile apps
 
 === Web views
 The simplest way to use hypermedia architecture on mobile is by leveraging web technologies.
-Both Android and iOS SDKs provide "`web views`": chromeless web browsers tbat can be embedded in native apps.
+Both Android and iOS SDKs provide "`web views`": chromeless web browsers that can be embedded in native apps.
 Tools like Apache Cordova make it easy to take the URL of a website, and spit out native iOS and Android apps based on web views.
 If you already have a responsive web app, you can get a "`native`" Hypermedia apps for free.
 Sounds too good to be true, right?

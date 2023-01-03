@@ -24,7 +24,7 @@ It is true in many ways that HTML, as specified and implemented, lacks affordanc
 that were implemented within those older systems. None of this means, however, that hypermedia's _purpose_ is "`documents`"
 over "`applications`".
 
-Rather, while the theoretical foundation is there, but the implementation is underdeveloped. With JavaScript being the
+Rather, while the theoretical foundation is there, the implementation is underdeveloped. With JavaScript being the
 only extension point and hypermedia controls not being well integrated to JavaScript  (why can't I click a link without
 halting my program?), developers have not internalized hypermedia and have instead used the Web as a dumb pipe for apps
 that imitate "`native`" ones.
@@ -359,7 +359,7 @@ Behavior, and has the additional benefit that it is baked into HTML.
 Unfortunately, however, the `on*`  JavaScript attributes also come with some drawbacks:
 
 * They don't support custom events.
-* There is no good mechanism for associating long-lasting variables with an element --all variables are discarded when an event listener completes executing.
+* There is no good mechanism for associating long-lasting variables with an element -- all variables are discarded when an event listener completes executing.
 * If you have multiple instances of an element, you will need to repeat the listener code on each, or use something more clever like event delegation.
 * JavaScript code that directly manipulates the DOM gets verbose, and clutters the markup.
 * An element cannot listen for events on another element.
@@ -944,7 +944,7 @@ visual clutter and the toolbar can be extended with more options without creatin
 
 The final scripting technology we are going to look at is a bit further afield: _hyperscript (https://hyperscript.org[])
 
-While previous two examples are JavaScript-oriented, _hyperscript is an _entire new_ scripting language for front-end
+While the previous two examples are JavaScript-oriented, _hyperscript is an _entire new_ scripting language for front-end
 development. _hyperscript has a completely different syntax than JavaScript, based on an older language called HyperTalk.
 HyperTalk was the scripting language for a technology called HyperCard, an old hypermedia system available on early
 Macintosh Computers.

@@ -105,7 +105,7 @@ While these interactions are not natively supported by web browsers, they can be
 Of course, these libraries will never have the same feel and performance as native gestures.
 And using these libraries usually requires embracing a JS-heavy SPA architecture.
 This puts us back at square 1!
-To avoid using the typical thick-client architecture of native mobile apps, we turned to a Web view.
+To avoid using the typical thick-client architecture of native mobile apps, we turned to a web view.
 The web view allows us to use good-old hypermedia-based HTML.
 But to get the desired look & feel of a mobile app, we end up building a SPA in JS, losing the benefits of Hypermedia in the process.
 
@@ -230,7 +230,7 @@ Both approaches solve the fundamental issues with traditional, SPA-like mobile a
 - The app always runs the latest version, there's no API churn to worry about
 
 So which approach should you use for a Hypermedia-driven mobile app?
-Based on my experience building both types of apps, I strongly believe the Hyperview results in a better user experience.
+Based on my experience building both types of apps, I strongly believe the Hyperview approach results in a better user experience.
 The web-view will always feel out-of-place on iOS and Android; there's just no good way to replicate the patterns of navigation and interaction that mobile users expect.
 Hyperview was created specifically to address the limitations of thick-client and web view approaches.
 After the initial investment to learn Hyperview, you'll get all of the benefits of the Hypermedia architecture, without the downsides of a degraded user experience.
@@ -334,7 +334,7 @@ HXML has dedicated elements for representing lists and items.
 <list> <1>
   <item key="item1"> <2>
     <text>My first item</text> <3>
-  </item>`
+  </item>
   <item key="item2">
     <text>My second item</text>
   </item>
@@ -345,7 +345,7 @@ HXML has dedicated elements for representing lists and items.
 <3> The content of the item in the list.
 
 Lists are represented with two new elements.
-The `<list>` wraps all of items in the list.
+The `<list>` wraps all of the items in the list.
 It can be styled like a generic `<view>` (width, height, etc).
 A `<list>` element only contains `<item>` elements.
 Of course, these represent each unique item in the list.
@@ -459,7 +459,7 @@ Let's start with an example of the simplest type of input, a text field.
 ----
 <1> The name used when serializing data from this input
 <2> The style class applied to the UI element
-<3> The currently value set in the field
+<3> The current value set in the field
 <4> A placeholder to display when the value is empty
 
 This element should feel familiar to anyone who's created a text field in HTML.
@@ -507,7 +507,7 @@ Like I mentioned, describing all features of inputs in HXML would take an entire
 Instead, I'll summarize a few other input elements and their features.
 
 - `<select-multiple>` works like `<select-single>`, but it supports toggling multiple options on & off. This replaces checkbox inputs in HTML.
-- The `<switch>` element renders a on/off switch that is common in mobile UIs
+- The `<switch>` element renders an on/off switch that is common in mobile UIs
 - The `<date-field>` element supports entering in specific dates, and comes with a wide range of customizations for formatting, settings ranges, etc.
 
 Two more things to mention about inputs.
@@ -566,7 +566,7 @@ Note the `<text>` element around "`Hello World!`" references two style classes: 
 It's worth noting that styling properties are similar to those in CSS (color, margins/padding, borders, etc).
 Currently, the only available layout engine is based on flexbox.
 
-Styles rules can get quite verbose.
+Style rules can get quite verbose.
 For the sake of brevity, I won't include the `<styles>` element in the rest of the examples in this chapter unless necessary.
 
 === Custom elements
@@ -596,7 +596,7 @@ Using these custom XML elements, an instance of the map in our app might look li
     <body>
       <view>
         <text>Hello World!</text>
-        <area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude=delta="0.1"> <1>
+        <area latitude="37.8270" longitude="122.4230" latitude-delta="0.1" longitude-delta="0.1"> <1>
           <marker latitude="37.8118" longitude="-122.4177" /> <2>
         </area>
       </view>
@@ -646,11 +646,11 @@ Now that we have a namespace and prefix, we need to use it for our elements:
 <1> Definition of namespace aliased to "`map`"
 <2> Adding the namespace to the "`area`" start tag
 <3> Adding the namespace to the "`marker`" self-closing tag
-<4> Adding the nemsapce to the "`area`" end tag
+<4> Adding the namespace to the "`area`" end tag
 
 That's it! If we introduced a custom charting library with "`area`" and "`marker`" elements, we would create a unique namespace for those elements as well. Within the HXML doc, we could easily disambiguate `<map:area>` from `<chart:area>`.
 
-At this point you might be wondering, "`how does the Hyperview client know to render a map when my doc includes `<map:area>`?`"
+At this point you might be wondering, "`how does the Hyperview client know to render a map when my doc includes <map:area>?`"
 It's true, so far we only defined the custom element format, but we haven't implemented the element as a feature in our app.
 We will get into the details of implementing custom elements in the next chapter.
 
@@ -660,7 +660,7 @@ We will get into the details of implementing custom elements in the next chapter
 As discussed in earlier chapters, HTML supports two basic types of interactions:
 
 - Clicking a hyperlink: the client will make a GET request and render the response as a new web page.
-- Submitting a form: the client will make a (typically) POST request with the serialized content of the form, and render the response as a new web page.
+- Submitting a form: the client will (typically) make a POST request with the serialized content of the form, and render the response as a new web page.
 
 Clicking hyperlinks and submitting forms is enough to build simple web applications.
 But relying on just these two interactions limits our ability to build richer UIs.
@@ -682,7 +682,7 @@ By decoupling elements, triggers, and actions, htmx allows us to build rich Hype
 
 HXML takes the idea of defining interactions via triggers & actions and builds them into the spec.
 We call these interactions "`behaviors`".
-We use a special `<behavior>` element to define then.
+We use a special `<behavior>` element to define them.
 Here's an example of a simple behavior that pushes a new mobile screen onto the navigation stack:
 
 .Basic behavior
@@ -747,7 +747,7 @@ But the full syntax achieves our goals of decoupling elements, triggers, and act
 - Extra attributes like `href` provide more context for the action.
 
 Additionally, using a dedicated `<behavior>` element means a single element can define multiple behaviors.
-This let us execute several actions from the same trigger.
+This lets us execute several actions from the same trigger.
 Or, we can execute different actions for different triggers on the same element.
 We will show examples of the power of multiple behaviors at the end of this chapter.
 First we need to show the variety of supported actions and triggers.
@@ -755,7 +755,7 @@ First we need to show the variety of supported actions and triggers.
 
 ==== Actions
 
-Behavior actions in Hyperview fall into 3 general categories:
+Behavior actions in Hyperview fall into four general categories:
 
 - Navigation actions, which load new screens and move between them
 - Update actions, which modify the HXML of the current screen
@@ -778,7 +778,7 @@ Each of these types of navigations is supported through a different value for th
 
 `push`, `new`, and `navigate` all load a new screen.
 Thus, they require an `href` attribute so that Hyperview knows what content to request for the new screen.
-`back`, `close` do not load new screens, and thus do not require the `href` attribute.
+`back` and `close` do not load new screens, and thus do not require the `href` attribute.
 `reload` is an interesting case.
 By default, it will use the URL of the screen when re-requesting the content for the screen.
 However, if you want to replace the screen with a different one, you can provide an `href` attribute with `reload` on the behavior element.
@@ -846,7 +846,7 @@ The `action` attribute of the `<behavior>` determines how the fragment gets inco
 We also need to introduce a new `target` attribute on `<behavior>` to define where the fragment gets incorporated in the existing doc.
 The `target` attribute is an ID reference to an existing element on the screen.
 
-Hyperview supports the current update actions, representing different ways to incorporate the fragment into the screen:
+Hyperview currently supports these update actions, representing different ways to incorporate the fragment into the screen:
 
 - `replace`: replaces the entire target element with the fragment
 - `replace-inner`: replaces the children of the target element with the fragment
@@ -905,7 +905,7 @@ In this example, we have a screen with four buttons corresponding to the four up
 Below each button, there's a corresponding `<view>` containing some text.
 Note that the `id` of each view matches the `target` on the behaviors of the corresponding button.
 
-When the user presses the first button, the Hyperview makes a request for `/fragment`.
+When the user presses the first button, the Hyperview client makes a request for `/fragment`.
 Next, it looks for the target, ie the element with id "`area1`".
 Finally, it replaces the `<view id="area1">` element with the fetched fragment, `<text>My fragment</text>`.
 The existing view and text contained in that view will be replaced.
@@ -1010,7 +1010,7 @@ Like the other update actions, `hide`, `show`, and `toggle` use the `target` att
 <1> Toggles the visibility of the element with id "`area`".
 <4> The element targeted by the actions.
 
-In this example, the three buttons labeled `"Hide`", "`Show`", and "`Toggle`" will modify the display state of the `<view>` with ID "`area`".
+In this example, the three buttons labeled "`Hide`", "`Show`", and "`Toggle`" will modify the display state of the `<view>` with ID "`area`".
 Pressing "`Hide`" multiple times will have no affect once the view is hidden.
 Likewise, pressing "`Show`" multiple times will have no affect once the view is showing.
 Pressing "`Toggle`" will keep flipping the visibility status of the element between showing and hidden.
@@ -1166,7 +1166,6 @@ It requests content from the `/content` path and replaces the container view wit
 
 ===== visible
 Unlike `load`, the `visible` trigger will only execute the behavior when the element with the behavior is scrolled into the viewport on the mobile device.
-This allows us to 
 The `visible` action is commonly used to implement an infinite-scroll interaction on a `<list>` of `<item>` elements.
 The last item in the list includes a behavior with `trigger="visible"`.
 The `append` action will fetch the next page of items and append them to the list.
@@ -1207,7 +1206,7 @@ But there's no such limitation in Hyperview; elements can define multiple behavi
 We already saw an example where a single element had different actions triggered on `press` and `longPress`.
 But we can also trigger multiple actions on the same trigger.
 
-In this admittedly contrived example, we want to hide 2 elements on the screen when pressing the "`Hide`" button.
+In this admittedly contrived example, we want to hide two elements on the screen when pressing the "`Hide`" button.
 The two elements are far apart in the HXML, and cannot be hidden by hiding a common parent element.
 But, we can trigger two behaviors at the same time, each one executing a "`hide`" action but targeting different elements.
 
@@ -1235,7 +1234,7 @@ Hyperview processes behaviors in the order they appear in the markup.
 In this case, the element with ID "`area1`" will be hidden first, followed by the element with ID "`area2`".
 Since "`hide`" is an instantaneous action (ie, it doesn't make an HTTP request), both elements will appear to hide simultaneously.
 But what if we triggered two actions that depend on responses from HTTP requests (like "`replace-inner`")?
-In that case, each individual action get processed as soon as Hyperview receives the HTTP response.
+In that case, each individual action is processed as soon as Hyperview receives the HTTP response.
 Depending on network latency, the two actions could take effect in any order, and they are not guaranteed to be applied simultaneously.
 
 We've seen elements with multiple behaviors and different triggers.
@@ -1259,4 +1258,4 @@ Using multiple behaviors with custom actions keeps HXML declarative, without sac
 - Updates to screens in Hyperview are defined using behaviors with update actions, such as `replace` and `append`.
 - System interactions in Hyperview are defined using behaviors with system actions, such as `alert` and `share`.
 - New actions can be added to HXML using namespaced attributes. The Hyperview client can be easily extended to interpret the new actions.
-- The extensibility of HXML and the Hyperview client make it easy for developers to define custom element and behaviors. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture.
+- The extensibility of HXML and the Hyperview client make it easy for developers to define custom elements and behaviors. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture.

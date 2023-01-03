@@ -17,7 +17,7 @@ We introduced Hyperview as an example of a hypermedia format and client specific
 But you may still be wondering: what is it like to create a fully-featured, production-ready mobile app using Hyperview?
 Do I have to learn a whole new language and framework?
 In this chapter, we will show Hyperview in action by porting the Contacts web app to a native mobile app.
-You will see that almost many web development techniques (and indeed, much of the code) are completely identical when developing with Hyperview.
+You will see that many web development techniques (and indeed, much of the code) are completely identical when developing with Hyperview.
 How is that possible?
 
 1. Our Contacts web app was built with the principle of HATEOAS (Hypermedia as the Engine of Application State).
@@ -79,7 +79,7 @@ export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/'; <2>
 We're not up and running yet.
 With our Hyperview client now pointing to the right endpoint, we see a different error, a "`ParseError`".
 That's because the backend is responding to requests with HTML content, but the Hyperview client expects an XML response (specifically, HXML).
-So it's time to turn out attention to our Flask backend.
+So it's time to turn our attention to our Flask backend.
 We will go through the Flask views, and replace the HTML templates with HXML templates.
 Specifically, let's support the following features to our mobile app:
 
@@ -91,7 +91,7 @@ Specifically, let's support the following features to our mobile app:
 
 
 .Zero Client-Configuration in Hypermedia Applications
-----
+****
 For many mobile apps that use the Hyperview client, configuring this entrypoint URL is the only on-device code you need to write to deliver a full-featured app.
 Think of the entrypoint URL as the address you type into a web browser to open a web app.
 Except in Hyperview, there is no address bar, and the browser is hard-coded to only open one URL.
@@ -101,7 +101,7 @@ This minimal configuration is one elegant aspect of the Hypermedia-driven archit
 
 Of course, you may want to write more on-device code to support more features in your mobile app.
 We will demonstrate how to do that later in this chapter, in the section called "`Extending the Client`".
-----
+****
 
 
 == A Searchable List of Contacts
@@ -140,7 +140,7 @@ Let's call it `layout.xml`.
 </doc>
 ----
 <1> The header section of the template, with a default title
-<2> The content section of the template, to be provided out by other templates.
+<2> The content section of the template, to be provided by other templates.
 
 We covered the HXML tags and attributes in the previous chapter.
 This template sets up a basic screen layout using `<doc>`, `<screen>`, `<body>`, `<header>`, and `<view>` tags.
@@ -335,12 +335,12 @@ The `trigger="change"` attribute tells Hyperview that a change to the value of t
 Any time the user edits the content of the text field by adding or deleting characters, an action will trigger.
 The remaining attributes on the `<behavior>` element define the action.
 `action="replace-inner"` means the action will update content on the screen, by replacing the HXML content of an element with new content.
-For `replace-inner` to do its thing, we need to know 2 things: the current element on the screen that will be targeted by the action, and the content that will used for the replacement.
+For `replace-inner` to do its thing, we need to know two things: the current element on the screen that will be targeted by the action, and the content that will used for the replacement.
 `target="contacts-list"` tells us the ID of the current element.
 Note that we set `id="contacts-list"` on the `<list>` element in `index.xml`.
-So when the user enters a search query into the text field, Hyperview will replace the content of `<list>` (a bunch of `<item>` elements) with new content (`<item>` elements that match the search query).
-relative href.
-(The domain is inferred from the domain used to fetch the screen).
+So when the user enters a search query into the text field, Hyperview will replace the content of `<list>` (a bunch of `<item>` elements)
+with new content (`<item>` elements that match the search query) received in the relative href response
+(the domain is inferred from the domain used to fetch the screen).
 Note that `href` includes our `rows_only` query param; we want the response to only include the rows and not the entire screen.
 
 [#figure-7-2, reftext="Figure {chapter}.{counter:figure}"]
@@ -419,7 +419,7 @@ The `visibile` trigger can be used for this exact purpose.
 It will trigger the action when the element with the behavior is visible in the device viewport.
 In this case, the new `<item>` element is the last item in the list, so the action will trigger when the user scrolls down far enough for the item to enter the viewport.
 As soon as the item is visible, the action will make an HTTP GET request, and replace the loading `<item>` element with the response content.
-Note that our href includes the `rows_only=true` query param, or our response will only include HXML for the contact items, and not the entire screen.
+Note that our href must include the `rows_only=true` query param, so that our response will only include HXML for the contact items, and not the entire screen.
 Also, we're passing the `page` query param, incrementing the current page number to ensure we load the next page.
 
 What happens when there's more than one page of items?
@@ -478,7 +478,7 @@ If the user did a search or pull-to-refresh, we would replace the content of `<l
 The `<behavior>` would no longer be defined on the `<list>`, and subsequent attempts to pull-to-refresh would not work.
 By defining the behavior as attributes of `<list>`, the behavior will persist even when replacing the items in the list.
 Generally, I prefer to use explicit `<behavior>` elements in my HXML.
-it makes it easier to define multiple behaviors, and to move the behavior around while refactoring.
+It makes it easier to define multiple behaviors, and to move the behavior around while refactoring.
 But the shorthand syntax is good to apply in situations like this.
 
 === Viewing The Details Of A Contact
@@ -697,7 +697,7 @@ That depends on the validitiy of the form data:
 This allows the user to correct the errors and try saving again.
 2. If the data is valid, our backend will persist the edits, and our UI will switch back to a display mode (the contact details UI).
 
-So our backend needs to distinguish between a valid and invalid edits.
+So our backend needs to distinguish between a valid and invalid edit.
 To support these two scenarios, let's make some changes to the existing `contacts_edit_post()` view in the Flask app.
 
 .`app.py`
@@ -759,7 +759,7 @@ Since the app will make a new HTTP request to get the contact details, it's guar
 
 
 .Why not use a redirect?
-----
+****
 You may remember the web app version of this code behaved a little differently.
 On a successful save, the view returned `redirect("/contacts/" + str(contact_id))`.
 This HTTP redirect would tell the web browser to navigate to the contact details page.
@@ -774,9 +774,9 @@ In this world, how would the Hyperview client interpret an HTTP redirect?
 Should it reload the current screen, push a new one, or navigate to a screen in the stack with the same URL?
 Instead of making a choice that would be suboptimal for many scenarios, Hyperview takes a different approach.
 Server-controlled redirects are not possible, but the backend can render navigation behaviors into the HXML.
-This is what we do switch from the Edit UI to the Details UI in the code above.
+This is what we do to switch from the Edit UI to the Details UI in the code above.
 Think of these as client-side redirects, or better yet client-side navigations.
-----
+****
 
 
 We now have a working Edit UI in our contacts app.
@@ -845,7 +845,7 @@ Events are built into the behavior system, and allow lightweight communication b
 
 
 .Event Behaviors
-----
+****
 Events are a client-side feature of Hyperview.
 You are probably familiar with events from working with HTML and the DOM.
 DOM Elements will dispatch events as a result of user interactions.
@@ -879,7 +879,7 @@ Pressing an element containing the first behavior (on Screen A) will dispatch an
 The second behavior (on Screen B) will trigger on an event with this name, and toggle the visibility of an element with ID "`container`".
 
 Events have plenty of uses, but the most common is to inform different screens about backend state changes that require the UI to be re-fetched.
-----
+****
 
 We know enough about Hyperview's event system to solve the bug in our app.
 When the user saves a change to a contact, we need to dispatch an event from the Details screen.
@@ -1083,7 +1083,7 @@ Hopefully, you can follow along:
   - Include a behavior in the button. When pressed, make a `POST` request to `/contacts/new`, and use `action="replace-inner"` to update the form fields.
 3. Update the Flask view.
   - Change `contacts_new_get()` to use `render_to_response()` with the `hv/new.xml` template.
-  - Change `contacts_new()` to usee `render_to_response()` with the `hv/form_fields.xml` template. Pass `saved=True` when rendering the template after successfully persisting the new contact.
+  - Change `contacts_new()` to use `render_to_response()` with the `hv/form_fields.xml` template. Pass `saved=True` when rendering the template after successfully persisting the new contact.
 
 By reusing `form_fields.xml` for both editing and adding a contact, we get to reuse some code and ensure the two features have a consistent UI.
 Also, our "`Add Contact`" screen will benefit from the "`saved`" logic that's already a part of `form_fields.xml`.
@@ -1096,7 +1096,7 @@ image::screenshot_hyperview_add.png[]
 
 == Deploying the App
 With the completion of the contact creation UI, we have a fully implemented mobile app!
-It supports searching a list of contacts, viewing the details of a contact, editing & deleting a contact, and adding a new contact.
+It supports searching a list of contacts, viewing the details of a contact, editing and deleting a contact, and adding a new contact.
 But so far, we've been developing the app using a simulator on our desktop computer.
 How can we see it running on a mobile device?
 And how can we get it into the hands of our users?
@@ -1127,14 +1127,14 @@ Remember to update `ENTRY_POINT_URL` in the Hyperview client to point to the pro
 
 Once the app is approved, congratulations!
 Our mobile app can be downloaded by Android and iOS users.
-And here's the best part.
+And here's the best part:
 Because our app uses the hypermedia architecture, we can add features to our app by simply updating the backend.
 The UI and interactions are completely specified with the HXML generated from server-side templates.
 Want to add a new section to a screen?
 Just update an existing HXML template.
 Want to add a new type of screen to the app?
 Create a new route, view, and HXML template.
-Then, add a behavior to and existing screen that will open the new screen.
+Then, add a behavior to an existing screen that will open the new screen.
 To push these changes to your users, you just need to re-deploy the backend.
 Our app knows how to interpret HXML, and that's enough for it to understand how to handle the new features.
 
@@ -1161,7 +1161,7 @@ The answer lies in the REST architecture, and how it separates the concepts of r
 In the REST architecture, the Google homepage is considered to be a single "`resource`", represented by a unique URL.
 However, that single resource can have multiple "`representations`".
 Representations are variations on how the content of the resource is presented to the client.
-The German and Japanese versions of the Google homepage are two representations of the same resource..
+The German and Japanese versions of the Google homepage are two representations of the same resource.
 To determine the best representation of a resource to return, HTTP clients and servers engage in a process called "`content negotiation`".
 It works like this:
 
@@ -1170,7 +1170,7 @@ It works like this:
 
 In the Google homepage example, the German speaker uses a browser that is set to prefer content localized for German.
 Every HTTP request made by the web browser will include a header `Accept-Language: de-DE`.
-The server sees the request heade, and it will return a response localized for German (if it can).
+The server sees the request header, and it will return a response localized for German (if it can).
 The HTTP response will include a `Content-Language: de-DE` header to inform the client of the language of the response content.
 
 Language is just one factor for resource representation.
@@ -1178,7 +1178,7 @@ More importantly for us, resources can be represented using different content ty
 Content negotiation over content type is done using the `Accept` request header and `Content-Type` response header.
 Web browsers set `text/html` as the preferred content type in the `Accept` header.
 The Hyperview client sets `application/vnd.hyperview+xml` as the preferred content type.
-This gives us our backend a way to distinguish requests coming from a web browser or Hyperview client, and serve the appropriate content to each.
+This gives our backend a way to distinguish requests coming from a web browser or Hyperview client, and serve the appropriate content to each.
 There are two main approaches: fine-grained and global.
 
 === Approach 1: Template Switching
@@ -1304,13 +1304,13 @@ Likewise, all subsequent requests from the web app go to paths prefixed with `/w
 
 You may be thinking that the Redirect Fork leads to a lot of code duplication.
 After all, we need to write double the number of views: one set for the web application, and one set for the mobile app.
-That is true, which is why the Redirect Fork is only preferred if the two platforms require a disjoint set of view logic.
+That is true, which is why the Redirect Fork is only preferred if the two platforms require a disjointed set of view logic.
 If the apps are similar on both platforms, Template Switching will save a lot of time and keep the apps consistent.
 Even if we need to use the Redirect Fork, the bulk of the logic in our models can be shared by both sets of views.
 In practice, you may start out using Template Switching, but then realize you need to implement a fork for platform-specific features.
 In fact, we're already doing that in the Contacts app.
 When porting the app from web to mobile, we didn't bring over certain features like archiving functionality.
-The dynamic archive UI might is a power feature that wouldn't make sense on a mobile device.
+The dynamic archive UI is a power feature that wouldn't make sense on a mobile device.
 Since our HXML templates don't expose any entrypoints to the Archive functionality, we can treat it as "`web-only`" and not worry about supporting it in Hyperview.
 
 

@@ -37,7 +37,7 @@ we assure you, it is.
 So, we have a hypermedia API for Contact.app.  Should we include a Data API for Contact.app as well?
 
 Sure!  The existence of a hypermedia API _in no way means_ that you can't _also_ have a Data API.  In fact, this is a
-common situation in traditional web applications: there is the `"web application`" that is entered through that entry point
+common situation in traditional web applications: there is the "`web application`" that is entered through that entry point
 URL, say `https://mywebapp.example.com/`.  And there is also a _separate_ JSON API that is accessible through another
 URL, perhaps `https://api.mywebapp.example.com/v1`.
 
@@ -63,11 +63,9 @@ For example:
   and it would make more sense to provide something more amenable to scripting.
 
 For all of these use cases, a JSON Data API makes sense: in each case the API is not being consumed by a hypermedia client,
-so presenting an HTML-based hypermedia API would be inefficient and complicated for the client to deal with.  A simple
+so presenting an HTML-based hypermedia API would be inefficient and complicated for the client to deal with.  A simple JSON Data API fits the bill for what we want and, as always, we recommend using the right tool for the job.
 
-JSON Data API fits the bill for what we want and, as always, we recommend using the right tool for the job.
-
-.`"What!?!  You Want Me To Parse HTML!?!`"
+."`What!?!  You Want Me To Parse HTML!?!`"
 ****
 A confusion we often run into in online discussions when we advocate a hypermedia approach to building web
 applications is that people think we mean that they should parse the HTML responses from the server, and then dump the
@@ -109,7 +107,7 @@ Let's contrast the needs of JSON APIs with Hypermedia APIs:
 * It must remain stable over time: you cannot change the API willy nilly or you risk breaking clients that use the API
 and expect certain end points to behave in certain ways
 * It must be versioned: related to the first point, when you do make a major change, you need to version the API so
-that clients that are using the old API continues to work
+that clients that are using the old API continue to work
 * It should be rate limited: since data APIs are often used by other clients, not just your own internal web application,
 requests should be rate limited, often by user, in order to avoid a single client overloading the system
 * It should be a general API: since the API is for _all_ clients, not just for your web application, you should avoid
@@ -129,7 +127,7 @@ features or optimization needs in your application
 |===
 
 These two different types of APIs have different strengths and needs, so it makes sense to use both. The hypermedia
-approach can be used for your web application, allowing you to specialize the API for the `"shape`"
+approach can be used for your web application, allowing you to specialize the API for the "`shape`"
 of your application.  The Data API approach can be used for other, non-hypermedia clients like mobile, integration
 partners, etc.
 
@@ -137,7 +135,7 @@ Note in particular that, by splitting these two APIs apart from one another, you
 application through your general Data API produces to be constantly changing the API to address application needs.  Rather
 than being thrashed around with every feature change, your Data API can focus on remaining stable and reliable.
 
-This is the core strength splitting your Data API from your Hypermedia API, in our opinion.
+This is the core strength of splitting your Data API from your Hypermedia API, in our opinion.
 
 .JSON Data APIs vs JSON "`REST`" APIs
 ****
@@ -155,7 +153,7 @@ words, if the engine of application state (and hence the API) is not being drive
 and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
 ____
 
-The story of how "`REST API`" came to mean "`JSON APIs`" in the industry is a long and sordid long one, and beyond the
+The story of how "`REST API`" came to mean "`JSON APIs`" in the industry is a long and sordid one, and beyond the
 scope of this book.  However, if you are interested, you can refer to an essay entitled "`How Did REST Come To Mean The Opposite of
 REST?`" on the htmx website:
 
@@ -183,7 +181,7 @@ Accept: application/json
 GET /contacts
 ----
 
-If we adopted this pattern then our request handler for `/contacts/ would need to be updated to inspect this header and,
+If we adopted this pattern then our request handler for `/contacts/` would need to be updated to inspect this header and,
 depending on the value, return a JSON rather than HTML representation for the contacts.  Ruby on Rails has support for
 this pattern baked into the language, making it very easy to switch on the requested MIME type.
 
@@ -202,11 +200,11 @@ Given that we are going to split our JSON Data API routes out from our regular h
 them?  One important consideration here is that we want to make sure that we can version our API cleanly in some way,
 regardless of the pattern we choose.
 
-Looking around, a lot of places end up using a sub-domain for their apis, something
-like `https://api.mywebapp.example.com` and, in fact, often encode versioning in the subdomain: `https://vi.api.mywebapp.example.com`.
+Looking around, a lot of places end up using a subdomain for their apis, something
+like `https://api.mywebapp.example.com` and, in fact, often encode versioning in the subdomain: `https://v1.api.mywebapp.example.com`.
 
 While this makes sense for large companies, it seems like a bit of overkill for our modest little Contact.app.  Rather
-than using sub-domains, which are a pain for local development, we will use sub-paths within the existing application:
+than using subdomains, which are a pain for local development, we will use sub-paths within the existing application:
 
 * We will use `/api` as the root for our Data API functionality
 * We will use `/api/v1` as the entry point for version 1 of our Data API
@@ -219,7 +217,7 @@ a large team of API developers.  :)
 
 === Our First JSON Endpoint: Listing All Contacts
 
-Let's add our first Data API End point.  It will handle an HTTP `GET` request to `/api/v1/contacts`, and return
+Let's add our first Data API end point.  It will handle an HTTP `GET` request to `/api/v1/contacts`, and return
 a JSON list of all contacts in the system.  In some ways it will look quite a bit like our initial code for the
 hypermedia route `/contacts`: we will load all the contacts from the contacts database and then render some text
 as a response.
@@ -338,7 +336,7 @@ on the same set of URLs less and less appealing.
 
 === Viewing Contact Details
 
-Next let's make it possible for a JSON API client to download the details for a single client.  We will naturally use an
+Next let's make it possible for a JSON API client to download the details for a single contact.  We will naturally use an
 HTTP `GET` for this functionality and we will follow the convention we established for our regular web application, and
 put the path at `/api/v1/contacts/<contact id>`, so, for example, if you want to see the details of the contact with the
 id `42`, you would issue an HTTP `GET` to `/api/v1/contacts/42`.
@@ -477,7 +475,7 @@ Maybe, but maybe not.  This was a pretty specific need for our web application, 
 our JSON API, it doesn't make sense to include it for JSON consumers.
 
 And what if, by some miracle, the performance issues with `Contact.count()` that we were addressing with the Lazy Load
-pattern goes away?  Well, in our Hypermedia Drive Application we can simply revert to the old code and include the
+pattern goes away?  Well, in our Hypermedia Driven Application we can simply revert to the old code and include the
 count directly in the request to `/contacts`.  We can remove the `contacts/count` end point and all the logic associated
 with it.  Because of the uniform interface of hypermedia, the system will continue to work just fine.
 

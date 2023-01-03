@@ -612,7 +612,7 @@ equivalent JavaScript would be nearly as simple.
 All we need to do to implement the auto-download feature is the following: when the download link renders,
  automatically click on the link for the user.
 
-The hyperscript reads nearly identical that sentence (which is why we love hyperscript):
+The +_hyperscript+ reads nearly identical that sentence (which is why we love hyperscript):
 
 .Auto-Downloading
 [source, html]
@@ -622,9 +622,9 @@ The hyperscript reads nearly identical that sentence (which is why we love hyper
     Archive Downloading!  Click here if the download does not start.
   </a>
 ----
-<1> a bit of hyperscript to make the file auto-download
+<1> a bit of +_hyperscript+ to make the file auto-download
 
-Have we mentioned that we love hyperscript?
+Have we mentioned that we love +_hyperscript+?
 
 Crucially, the scripting here is simply _enhancing_ the existing hypermedia, rather than replacing it with
 a non-hypermedia request.  This is hypermedia-friendly scripting, as we will cover in more depth in a bit.

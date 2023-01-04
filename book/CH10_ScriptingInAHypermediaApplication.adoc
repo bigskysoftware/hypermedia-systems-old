@@ -1,5 +1,5 @@
 
-= Client Side Scripting
+== Client Side Scripting
 :chapter: 10
 :url: ./client-side-scripting/
 
@@ -11,7 +11,7 @@ Thus far we have (mostly) avoided writing any JavaScript (or hyperscript) in Con
 we implemented has not required it.  In this chapter we are going to look at scripting and, in particular, hypermedia-friendly
 scripting within the context of a Hypermedia-Driven Application.
 
-== Is Scripting Allowed?
+=== Is Scripting Allowed?
 
 A common criticism of the web is that it's being misused.  There is a narrative that WWW was created as a delivery system
 for "`documents`", and only came to be used for "`applications`" by way of an accident or bizarre circumstances.
@@ -96,7 +96,7 @@ The important takeaway in the implementation of each of these features is that, 
 the client-side using scripting, they _don't exchange information with the server_ via a non-hypermedia format, such
 as JSON, and that they don't store a significant amount of state outside of the DOM itself.
 
-== Scripting tools for the Web
+=== Scripting tools for the Web
 
 The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today.
 
@@ -126,7 +126,7 @@ Let's take a quick look at each of these scripting options, so we know what we a
 Note that, as with CSS, we are not going to do a deep dive into any of these options.  Instead, we are going to show you
 just enough to give you a flavor of how they work and, we hope, spark your interest in looking into any of them more extensively.
 
-== Vanilla JavaScript
+=== Vanilla JavaScript
 
 [quote,Merb]
 No code is faster than no code.
@@ -176,7 +176,7 @@ Hypermedia Driven Applications:
 None of these limitations are deal-breakers, of course. Many of them are gradually being fixed and many people prefer
 the "`close to the metal`" (for lack of a better term) nature of vanilla JavaScript over more elaborate client-side scripting approaches.
 
-== A Simple Counter
+=== A Simple Counter
 
 To dive into vanilla JavaScript as a front end scripting option, let's create a simple counter widget.
 
@@ -193,7 +193,7 @@ With vanilla JavaScript, there are no rules!
 This isn't all bad. It presents a great opportunity to take a small journey through various styles that people have
 developed for writing their JavaScript.
 
-=== An Inline Implementation
+==== An Inline Implementation
 
 To begin, let's start with the simplest thing imaginable: all of our JavaScript will be written inline, directly in the
 HTML.  When the button is clicked, we will look up the `output` element holding the number, and increment the number
@@ -228,7 +228,7 @@ But it works. It's also easy enough to understand, and crucially it doesn't requ
 
 So that's the simple, inline approach with VanillaJS.
 
-=== Separating Our Scripting Out
+==== Separating Our Scripting Out
 
 While the inline implementation is simple in some sense, a more standard way to write this code would be to move the code
 into a separate JavaScript file. This JavaScript file would then either be linked to via a `<script src>` tag or
@@ -314,7 +314,7 @@ In Contact.app we are not _concerned_ with "`structure`", "`styling`" or "`behav
 info and presenting it to users. SoC, in the way it's formulated in web development orthodoxy, is not really an inviolate
 architectural guideline, but rather a stylistic choice that, as we can see, can even become a hindrance.
 
-=== Locality
+==== Locality
 
 It turns out that there is a burgeoning reaction _against_ the Separation of Concerns design principle.  Consider the
 following web technologies and techniques:
@@ -351,7 +351,7 @@ having code look up elements in a document through CSS selectors in order to add
 In a Hypermedia Driven Application, we feel that the Locality of Behavior design principle is often more important than 
 the more traditional Separation of Concerns design principle.
 
-=== What To Do With Our Counter?
+==== What To Do With Our Counter?
 
 So, should we go back to the `onclick` attribute way of doing things? That approach certainly wins in Locality of
 Behavior, and has the additional benefit that it is baked into HTML.
@@ -379,7 +379,7 @@ need to make it clear that a given element is _invoking_ some code, which can be
 Keeping this in mind, it _is_ possible to improve LoB while writing JavaScript in a separate file, provided we have a
 reasonable system for structuring our JavaScript.
 
-==== RSJS
+===== RSJS
 
 RSJS (the "`Reasonable System for JavaScript Structure`", https://ricostacruz.com/rsjs/) is a set of guidelines for
 JavaScript architecture targeted at "`a typical non-SPA website`". RSJS provides a solution to the lack of a standard code
@@ -443,7 +443,7 @@ the DOM, this is perfectly compatible with the HDA approach.
 
 Let's next take a look at implementing a feature in Contact.App using the RSJS/vanilla JavaScript approach.
 
-=== VanillaJS in action: an overflow menu
+==== VanillaJS in action: an overflow menu
 
 Our homepage has "`Edit`", "`View`" and "`Delete`" links for every contact in our table. This uses a lot of space and creates
 visual clutter.  Let's fix that by placing these actions inside a drop-down menu with a button to open it.
@@ -710,7 +710,7 @@ more sense to use an off-the-shelf library such as, GitHub's https://github.com/
 But, for our relatively simple use case, this library does a fine job, and we got to explore ARIA and RSJS while
 implementing it.
 
-== Alpine.js
+=== Alpine.js
 
 OK, so that's an in-depth look at how to structure plain VanillaJS-style JavaScript.  Let's turn our attention to an
 actual JavaScript framework that enables a different approach for adding dynamic behavior to your application,
@@ -788,7 +788,7 @@ code will look like:
 
 And that's all it takes.  A simple component like a counter should be simple, and Alpine delivers.
 
-=== `x-on:click` vs. `onclick`
+==== `x-on:click` vs. `onclick`
 
 As we said, the Alpine `x-on:click` attribute (or its shorthand, the `@click` attribute) is similar to the built-in
 `onclick` attribute.   However, it has additional features that make it significantly more useful:
@@ -802,7 +802,7 @@ As we said, the Alpine `x-on:click` attribute (or its shorthand, the `@click` at
 * You can listen to custom events.  For example, if you wanted to listen for the `htmx:after-request` event you could write
   `x-on:htmx:after-request="doSomething()"`
 
-=== Reactivity and Templating
+==== Reactivity and Templating
 
 We hope that you'll agree that the AlpineJS version of the counter widget is better, in general, than the VanillaJS
 implementation, which was either somewhat hacky or spread out over multiple files.
@@ -812,7 +812,7 @@ of the `div` element to a variable that both the `output` and the `button` can r
 dependencies when a mutation occurs.  Alpine allows for much more elaborate data bindings than what we have demonstrated
 here, and it is an excellent general purpose client-side scripting library.
 
-=== Alpine.js in Action: A Bulk Action Toolbar
+==== Alpine.js in Action: A Bulk Action Toolbar
 
 Next, let's implement a feature in Contact.app with Alpine. As it stands currently, Contact.app has a `"Delete Selected
 Contacts`" button at the very bottom of the page. This button has a long name, is not easy to find and takes up a
@@ -884,7 +884,7 @@ With this code written, we can make the toolbar appear and disappear, based on w
 
 Very slick.
 
-==== Implementing Actions
+===== Implementing Actions
 
 Now that we have the mechanics of showing and hiding the toolbar, let's look at how to implement the buttons within
 the toolbar.
@@ -940,7 +940,7 @@ This is the key to scripting in a hypermedia-friendly manner within a Hypermedia
 So, with all of this in place, we now have a much improved experience for performing bulk actions on contacts:  less
 visual clutter and the toolbar can be extended with more options without creating bloat in the main interface of our app.
 
-== _hyperscript
+=== _hyperscript
 
 The final scripting technology we are going to look at is a bit further afield: _hyperscript (https://hyperscript.org[])
 
@@ -1028,7 +1028,7 @@ As you can see in the above example, with the use of a _query reference_, `<outp
 from using DOM-specific, non-natural language when appropriate.
 ****
 
-=== _hyperscript in action: a keyboard shortcut
+==== _hyperscript in action: a keyboard shortcut
 
 // TODO: alt-S instead?  shift-S too aggressive?
 
@@ -1094,7 +1094,7 @@ Here is the entire script, embedded in HTML
 Given all the functionality, this is surprisingly terse, and, as an English-like programming language, pretty easy to
 read.
 
-=== Why a new programming language?
+==== Why a new programming language?
 
 This is all well and good, but you may be thinking `"An entirely new scripting language?  That seems excessive.`"  And,
 at some level, you are right: JavaScript is a decent scripting language, is very well optimized and is widely understood
@@ -1133,7 +1133,7 @@ excellent scripting experience for your Hypermedia Driven Application.  Of cours
 language, so we won't blame you if you decide to pass on it, but it is at least worth a look to understand what it
 is trying to achieve, if only out of intellectual interest.
 
-== Using Off-the-shelf Components
+=== Using Off-the-shelf Components
 
 That concludes our look at three different options for _your_ scripting infrastructure, that is, the code that _you_ write
 to enhance your Hypermedia Driven Application.  However, there is another major area to consider when discussing client
@@ -1147,7 +1147,7 @@ libraries go beyond simple DOM manipulation, and require that you integrate with
 with a JSON data API.  This means you are no longer building a Hypermedia Driven Application, simply because a particular
 widget demands something different.  A shame!
 
-=== Integration Options
+==== Integration Options
 
 The best JavaScript libraries to work with when you are building a Hypermedia Driven Application are ones that:
 
@@ -1168,7 +1168,7 @@ and returns a boolean (`true` if the user confirmed, `false` otherwise), SweetAl
 is a JavaScript mechanism for hooking in a callback once an asynchronous action (such as waiting for a user to confirm
 or deny an action) completes.
 
-==== Integrating Using Callbacks
+===== Integrating Using Callbacks
 
 With SweetAlert2 installed as a library, you have access to the `Swal` object, which has a `fire()` function on it to
 trigger showing an alert.  You can pass in arguments to the `fire()` method to configure exactly what the buttons
@@ -1213,7 +1213,7 @@ trigger the request via events.
 
 So let's take a different approach and see how that looks.
 
-==== Integrating Using Events
+===== Integrating Using Events
 
 To clean this code up, we will pull the `Swal.fire()` code out to a custom JavaScript function we will create called
 `sweetConfirm()`.  `sweetConfirm()` will take the dialog options that are passed into the `fire()` method, as well as
@@ -1275,7 +1275,7 @@ SweetAlert2: they expect you to pass a callback in the first style.  In these ca
 have demonstrated here, wrapping the library in a function that triggers events in a callback, to make the library more
 hypermedia and htmx-friendly.
 
-== Pragmatic Scripting
+=== Pragmatic Scripting
 
 [quote,W3C,HTML Design Principles § 3.2 Priority of Constituencies]
 ____

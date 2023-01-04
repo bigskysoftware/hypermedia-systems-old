@@ -55,7 +55,7 @@ What we'd _really_ like in this scenario is something more like what you see whe
 browser: a nice progress bar indicating where in the process you are, and, when the process is complete, a link to click immediately
 to view the result of the process.
 
-This may sound like something impossible to implement with hypermedia, and, top be honest, we'll need to push htmx pretty hard
+This may sound like something impossible to implement with hypermedia, and, to be honest, we'll need to push htmx pretty hard
 to make this all work, but, when it is done, it won't be _that_ much code, and we will be able to achieve the user experience
 we want for this archiving feature.
 
@@ -539,7 +539,7 @@ has a stable id between swaps, you _can_ write CSS transitions between various s
 has the _old_ attributes, the normal CSS mechanism will kick in when the actual values are restored.
 
 So, in our case, all we need to do is to add a stable ID to our `progress-bar` element, and, rather than jumping
-on every update, it the progress bar should smoothly move across the screen as it is updating, using the CSS transition
+on every update, the progress bar should smoothly move across the screen as it is updating, using the CSS transition
 defined in our style sheet:
 
 .Smoothing Things Out
@@ -554,7 +554,7 @@ defined in our style sheet:
 So, despite all the complicated mechanics going on behind the scenes in htmx, all we have to do, as an htmx user,
 is add a stable `id` attribute to the element we want to animate.
 
-With that done, viola: we get a nice nice, smooth progress bar as the contact archiving process proceeds.  Because of
+With that done, viola: we get a nice, smooth progress bar as the contact archiving process proceeds.  Because of
 the htmx swapping model, we get this nice animation even though we are replacing the content with new HTML.  So we get
 the simplicity of the HTML-based approach, but the look and feel of a more sophisticated JavaScript-based approach.
 
@@ -612,7 +612,7 @@ equivalent JavaScript would be nearly as simple.
 All we need to do to implement the auto-download feature is the following: when the download link renders,
  automatically click on the link for the user.
 
-The hyperscript reads nearly identical that sentence (which is why we love hyperscript):
+The hyperscript reads nearly identical to that sentence (which is why we love hyperscript):
 
 .Auto-Downloading
 [source, html]

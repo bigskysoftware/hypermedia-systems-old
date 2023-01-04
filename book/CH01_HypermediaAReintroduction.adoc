@@ -5,7 +5,7 @@
 
 Hypermedia is a universal technology today, almost as common as electricity.
 
-Billions of people use a hypermedia-based systems every day, mainly by interacting with the _HyperText Markup Language
+Billions of people use hypermedia-based systems every day, mainly by interacting with the _HyperText Markup Language
 (HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a Web Browser connected to the World Wide
 Web.
 
@@ -107,7 +107,7 @@ Englebart demonstrated became mainstream.
 === Modern Implementation
 
 In 1990, Tim Berners-Lee, working at CERN, published the first website.  He had been working on the idea of hypertext
-for a decade and was finally, out of desperation at the fact it was so hard for researchers to share their research,
+for a decade and had finally, out of desperation at the fact it was so hard for researchers to share their research,
 found the right moment and institutional support to create the World Wide Web:
 
 [quote, Tim Berners-Lee, https://britishheritage.org/tim-berners-lee-the-world-wide-web]
@@ -141,7 +141,7 @@ ____
 In the beginning was the hyperlink, and the hyperlink was with the web, and the hyperlink was the web.  And it was good.
 ____
 
-The system that Lee, Fielding and many others had created revolved around a hypermedia: HTML.  HTML started as a read-only
+The system that Berners-Lee, Fielding and many others had created revolved around a hypermedia: HTML.  HTML started as a read-only
 hypermedia, used to publish (at first) academic documents.  These documents were linked together via anchor tags which
 created _hyperlinks_ between them, allowing users of The Web to quickly navigate between documents.
 
@@ -395,7 +395,7 @@ It does not take advantage of the natural REST-ful architecture of The Web, nor 
 found in HTML's native hypermedia controls.
 
 SPAs are, in some sense, much more akin to _thick client applications_ like the client-server applications of the
-1980s, which popular _before_ The Web came along.
+1980s, which were popular _before_ The Web came along.
 
 This isn't a _necessarily wrong approach_, but it is worth thinking about _why_ web developers so frequently take it and
 if there are reasons _not_ to go down this path.
@@ -559,7 +559,7 @@ the crux of the application architecture.  htmx, as you will see, doesn't _need_
 htmx-based application can reside entirely within a single page.  We certainly don't recommend this practice, but it is
 possible!
 
-So it isn't quite right to call web applications build with htmx "Multi-Page Applications".  What the older Web 1.0 MPA
+So it isn't quite right to call web applications built with htmx "Multi-Page Applications".  What the older Web 1.0 MPA
 approach and the newer hypermedia-oriented library powered applications have in common is their use of _hypermedia_ as
 their core technology and architecture.
 

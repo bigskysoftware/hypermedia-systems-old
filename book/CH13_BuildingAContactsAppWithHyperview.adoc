@@ -15,7 +15,7 @@ These benefits were demonstrated by building a robust Contacts web application.
 Then, Chapter 6 argued that hypermedia concepts can and should be applied to platforms other than the Web.
 We introduced Hyperview as an example of a hypermedia format and client specifically designed for building mobile apps.
 But you may still be wondering: what is it like to create a fully-featured, production-ready mobile app using Hyperview?
-Do I have to learn a whole new language and framework?
+Do we have to learn a whole new language and framework?
 In this chapter, we will show Hyperview in action by porting the Contacts web app to a native mobile app.
 You will see that many web development techniques (and indeed, much of the code) are completely identical when developing with Hyperview.
 How is that possible?
@@ -469,7 +469,7 @@ Let's add pull-to-refresh to our list of contacs to see it in action.
 You'll notice something unusual in the snippet above: rather than adding a `<behavior>` element to the `<list>`, we added the behavior attributes directly to the `<list>` element.
 This is a shorthand notation that's sometimes useful for specifying single behaviors on an element.
 It is equivalent to adding a `<behavior>` element to the `<list>` with the same attributes.
-So why did I use the shorthand syntax here?
+So why did we use the shorthand syntax here?
 It has to do with the action, `replace-inner`.
 Remember, this action replaces all child elements of the target with the new content.
 This includes `<behavior>` elements too!
@@ -477,7 +477,7 @@ Let's say our `<list>` did contain a `<behavior>`.
 If the user did a search or pull-to-refresh, we would replace the content of `<list>` with the content from `rows.xml`.
 The `<behavior>` would no longer be defined on the `<list>`, and subsequent attempts to pull-to-refresh would not work.
 By defining the behavior as attributes of `<list>`, the behavior will persist even when replacing the items in the list.
-Generally, I prefer to use explicit `<behavior>` elements in my HXML.
+Generally, we prefer to use explicit `<behavior>` elements in my HXML.
 It makes it easier to define multiple behaviors, and to move the behavior around while refactoring.
 But the shorthand syntax is good to apply in situations like this.
 
@@ -686,7 +686,7 @@ That way, we don't need to make changes in our backend to parse the form data.
 - `value` defines the pre-filled data in the text field.
 Since we are editing an existing contact, it makes sense to pre-fill the text field with the current name, phone, or email.
 
-You might be wondering, why did I choose to define the form fields in a separate template (`form_fields.xml`)?
+You might be wondering, why did we choose to define the form fields in a separate template (`form_fields.xml`)?
 To understand that decision, we need to first discuss the "`Save`" button.
 When pressed, the Hyperview client will make an HTTP `POST` request to `contacts/<contact_id>/edit`, with form data serialized from the `<text-field>` inputs.
 The HXML response will replace the contents of form field container (ID `form-fields`).
@@ -935,7 +935,7 @@ Any time the user edits a contact, the Contacts List screen will update to refle
 The addition of these two `<behavior>` elements fixes the bug: the Contacts List screen will correctly show "`Joseph Blow`" in the list.
 Note that we intentionally added the new behavior inside the `<form>` element.
 The ensures the triggered request will preserve any search query.
-To show what I mean, let's revisit the set of steps that demonstrated the buggy behavior.
+To show what we mean, let's revisit the set of steps that demonstrated the buggy behavior.
 Assume that before pressing on "`Joe Blow`", the user had searched the contacts by typing "`Joe`" in the search field.
 When the user later updates the contact to "`Joseph Blow`", our template dispatches the "`contact-updated`" event, which triggers the `replace-inner` behavior on the contact list screen.
 Due to the parent `<form>` element, the search query "`Joe`" will be serialized with the request: `GET /contacts?rows_only=true&q=Joe`.

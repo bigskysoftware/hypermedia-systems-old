@@ -69,10 +69,10 @@ So let's define two new actions, "`open-phone`" and "`open-email`".
 <1> When pressed, prompt the user to call the given phone number
 <2> When pressed, open an e-mail client with the given address populated in the `to:` field.
 
-Notice I defined the actual phone number and email address using separate attributes.
+Notice we defined the actual phone number and email address using separate attributes.
 In HTML, the scheme and data are crammed into the `href` attribute.
 HXML's `<behavior>` elements give more options for representing the data.
-I chose to use attributes, but I could've represented the phone number or email using child elements.
+I chose to use attributes, but we could've represented the phone number or email using child elements.
 I'm also using a namespace to avoid potential future conflicts with other client extensions.
 
 So far so good, but how does the Hyperview client know how to interpret `open-phone` and `open-email`, and how to reference the `phone-number` and `email-address` attributes?
@@ -404,8 +404,8 @@ Rather than implementing the swipe gesture from scratch, we will once again use 
 This library provides a React Native component called `Swipeable`.
 It can render any React Native components as its main content (the part that can be swiped). 
 It also takes an array of React Native components as a prop to render as the action buttons.
-When designing a custom component, I like to iterate on the HXML of the component before writing the code.
-This way, I can make sure the markup is expressive but succinct, and will work with the underlying library.
+When designing a custom component, we like to define the HXML of the component before writing the code.
+This way, we can make sure the markup is expressive but succinct, and will work with the underlying library.
 For the swipeable row, we need a way to represent the entire component, the main content, and one of many buttons.
 I came up with something that looks like this:
 

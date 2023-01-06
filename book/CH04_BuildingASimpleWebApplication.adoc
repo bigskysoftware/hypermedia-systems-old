@@ -19,7 +19,7 @@ slick features that most developers today would assume requires the use of a hea
 In order to demonstrate how web 1.0 applications works, we need to pick a server-side language and a library for
 handling HTTP requests.  Colloquially, this is called our "`Server Side`" or "`Web`" stack, and there are literally hundreds
 of options to choose from, many with passionate followings.  You probably have a web framework that you prefer and, while
-I wish we could write this book for every possible stack out there, in the interest of simplicty (and sanity) we can only pick one.
+we wish we could write this book for every possible stack out there, in the interest of simplicty (and sanity) we can only pick one.
 
 For this book we are going to use the following stack:
 
@@ -421,8 +421,8 @@ Simple enough. We just render a `new.html` template with a new Contact.  (`Conta
 of the `Contact` class in Python, if you aren't familiar with it.)
 
 While the handler code for this route is very simple, the `new.html` template is more complicated.  For the
-remaining templates I am going to omit the layout directive and the content block declaration, but you
-can assume they are the same unless I say otherwise.  This will let us focus on the "meat" of the template.
+remaining templates we are going to omit the layout directive and the content block declaration, but you
+can assume they are the same unless we say otherwise.  This will let us focus on the "meat" of the template.
 
 If you are familiar with HTML you are probably expecting a form element here, and you will not be disappointed.  We are
 going to use the standard form hypermedia control for collecting contact information and submitting it to the server.
@@ -634,7 +634,7 @@ Our `show.html` template is relatively simple, just showing the same information
 format (perhaps for printing).  If we add functionality like "`notes`" to the application later on, however, this will give
 us a good place to do so.
 
-Again, I will omit the "`chrome`" of the template and focus on the meat:
+Again, we will omit the "`chrome`" of the template and focus on the meat:
 
 .The Contact Details Template
 [source, html]
@@ -849,8 +849,8 @@ traditional, web 1.0 applications: CRUD, the Post/Redirect/Get pattern, working
 with domain logic in a controller, organizing our URLs in a coherent, resource-oriented manner.
 
 And, furthermore, this is a deeply _Hypermedia-Driven_ web application.  Without thinking about it very much, we have
-been using REST, HATEOAS and all the other hypermedia concepts we discussed earlier.  I would bet that this simple
-little contact app we have built is more REST-ful than 99% of all JSON APIs ever built!
+been using REST, HATEOAS and all the other hypermedia concepts we discussed earlier.  We would bet that this simple
+little contact app of ours is more REST-ful than 99% of all JSON APIs ever built!
 
 And it was all effortless:just by virtue of using a _hypermedia_, HTML, we naturally fall into the REST-ful network
 architecture.

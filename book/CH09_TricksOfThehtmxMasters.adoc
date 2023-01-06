@@ -544,7 +544,7 @@ The first option, and the simplest, is to "`expand the target`".  That is, rathe
 of the screen, expand the target of your htmx-driven request until it is large enough to enclose all the elements that
 need to updated on a screen.  This has the tremendous advantage of being simple and reliable.  The downside is that
 it may not provide the user experience that you want, and it may not play well with a particular server-side template
-layout.  Regardless, I always recommend at least thinking about this approach first.
+layout.  Regardless, we always recommend at least thinking about this approach first.
 
 === Out of Band Swaps
 

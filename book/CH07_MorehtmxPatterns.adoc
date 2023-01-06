@@ -994,7 +994,7 @@ tr.htmx-swapping { <1>
 <2> The `opacity` will be 0, making it invisible
 <3> The `opacity` will transition to 0 over a 1 second time period, using the `ease-out` function
 
-Again, this is not a CSS book and I am not going to go deeply into the details of CSS transitions, but hopefully the
+Again, this is not a CSS book and we are not going to go deeply into the details of CSS transitions, but hopefully the
 above makes sense to you, even if this is the first time you've seen CSS transitions.
 
 So, think about what this means from the htmx swapping model:  when htmx gets content back to swap into the row it will
@@ -1029,7 +1029,7 @@ on it.  This will give the row time to transition to an opacity of zero, giving 
 
 Now, when a user clicks on a "`Delete`" link and confirms the delete, the row will slowly fade out and then, once it has
 faded to a 0 opacity, it will be removed.  Pretty fancy, and all done in a declarative, hypermedia oriented manner, no
-JavaScript required.  (Well, obviously htmx is written in JavaScript, but you know what I mean: we didn't have to write
+JavaScript required.  (Well, obviously htmx is written in JavaScript, but you know what we mean: we didn't have to write
 any JavaScript to implement the feature.)
 
 == Bulk Delete

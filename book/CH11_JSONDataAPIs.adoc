@@ -419,7 +419,7 @@ Now, we obviously have a lot more to do if we want to make this a production rea
 * Lots of small issues that we aren't addressing, such as rendering a proper `404 (Not Found)` response if someone makes
   a request with a contact id that doesn't exist.
 
-A full discussion around all of these topics is beyond the scope of this book, but I'd like to focus in on one in
+A full discussion around all of these topics is beyond the scope of this book, but we'd like to focus in on one in
 particular, authentication, in order to show the difference between our hypermedia and JSON API.  In order to secure
 our application we need to add _authentication_, some mechanism for determining who a request is coming from, and
 also _authorization_, determining if they have the right to perform the request.
@@ -441,7 +441,7 @@ major component of the REST-ful architecture: a server will often use a session 
 on the server "`on the side`", such as a cache of the last action performed by the user.
 
 Nonetheless, cookies have proven extremely useful and so people tend not to complain about this aspect of them too much
-(I'm not sure what our other options would be here!)  An interesting example of pragmatism gone (relatively) right in
+(We are not sure what our other options would be here!)  An interesting example of pragmatism gone (relatively) right in
 web development.
 ****
 

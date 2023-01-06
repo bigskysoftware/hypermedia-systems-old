@@ -51,7 +51,7 @@ Any other way of using a website becomes an afterthought.
 
 Thus, if you care about machine readability, or human readability, or page weight, what you should do is **test**.
 
-Did you think I was going to talk about semantic HTML? Keep reading for that, but alas, it's no substitute for testing. Test manually. Test automatically. Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI). Read the markup -- the markup being sent to browsers, not the templates and code you write. Know exactiy what any type of hypermedia client is doing in any circumstance.
+Did you think we were going to talk about semantic HTML? Keep reading for that, but alas, it's no substitute for testing. Test manually. Test automatically. Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI). Read the markup -- the markup being sent to browsers, not the templates and code you write. Know exactly what any type of hypermedia client is doing in any circumstance.
 
 So where does HTML and the s-word come in?
 
@@ -244,7 +244,7 @@ Captions might be misused for alt text when the author wants the alt text to be 
 
 .The `alt` attribute
 ****
-They say a picture is worth a thousand words. How am I supposed to produce an acceptable substitute in just a few sentences?
+They say a picture is worth a thousand words. How are we supposed to produce an acceptable substitute in just a few sentences?
 
 When writing alt text, you should only provide the information that is relevant. This means that the alt text should not be stored with the image (as is unfortunately the case with many CMSs) but in the document --because different aspects of an image are relevant in different contexts.
 

@@ -327,7 +327,7 @@ This CSS-based progress bar has two components: an outer `div` that provides the
 (note we need to multiply the `progress()` result by 100 to get a percentage) and that will make the progress
 indicator the appropriate width within the parent div.
 
-As I have mentioned before, this is not a book on CSS, but, for completeness, here is the CSS for this progress bar:
+As we have mentioned before, this is not a book on CSS, but, for completeness, here is the CSS for this progress bar:
 
 .The CSS For Our Progress Bar
 [source, css]

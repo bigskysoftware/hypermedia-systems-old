@@ -56,7 +56,7 @@ with the application sacrificing the advantages of hypermedia in order to provid
 Many web developers today would not even consider the hypermedia approach due to the perceived "`legacy`" feel of these
 Web 1.0 style applications.
 
-The second, technical point may strike you as a bit pedantic, and I am the first to admit that conversations around
+The second, technical point may strike you as a bit pedantic, and we am the first to admit that conversations around
 REST and which HTTP Action is right for a given operation can become very tedious.  But still, it's mildly infuriating that,
 when using plain HTML, it is impossible to use HTTP fully.
 
@@ -892,7 +892,7 @@ can do this using HTTP headers, a topic we will go into in detail later in the b
 
 == Conclusion
 
-So that's our whirlwind introduction to htmx.  We've only seen about ten attributes from the library, but I think you
+So that's our whirlwind introduction to htmx.  We've only seen about ten attributes from the library, but we think you
 can probably see a hint of just how powerful these attributes can be: by adopting htmx you will be able to create a much
 more sophisticated web application than is possible in plain HTML, but your conceptual load will not be nearly as high
 as it is for most JavaScript-based approaches.

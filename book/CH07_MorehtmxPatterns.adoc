@@ -969,7 +969,7 @@ you changed the height of something from 10 pixels to 20 pixels, by using a CSS 
 smoothly animate to the new height.  These sorts of animations are fun, often increase application usability, and are
 a great mechanism to add polish and fit-and-finish to your web application.
 
-Unfortunately, CSS transitions are not available in plain HTML: you have to use JavaScript and add or remove classes
+Unfortunately, CSS transitions are difficult to access in plain HTML: you usually have to use JavaScript and add or remove classes
 to get them to trigger.  This is why the htmx swap model is more complicated than you might initially think: by swapping
 in classes and adding small delays, you can access CSS transitions purely within HTML, without needing to write any
 JavaScript!

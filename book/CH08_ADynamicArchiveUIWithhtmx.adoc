@@ -518,10 +518,10 @@ effect).
 Unfortunately that nice transition isn't being applied in our current UI.  This is because, in our example, htmx is
 _replacing_ the progress bar with new one every time it polls.  It isn't updating the width
 of the _existing_ element.  CSS transitions, unfortunately, only apply when the properties of an existing element change,
-not when the element is replaced.  This is a reason why pure HTML-based applications feel jerky and unpolished when compared
-with their SPA counterparts: it isn't possible to use CSS transitions without using JavaScript.
+not when the element is replaced.  This is a reason why pure HTML-based applications can feel jerky and unpolished when compared
+with their SPA counterparts: it is hard to use CSS transitions without using some JavaScript.
 
-Very unfortunate, but htmx rectifies this situation with its swapping model.  Let's look at how.
+This is unfortunate, but htmx rectifies this situation with its swapping model.  Let's look at how.
 
 === The "`Settling`" Step in htmx
 

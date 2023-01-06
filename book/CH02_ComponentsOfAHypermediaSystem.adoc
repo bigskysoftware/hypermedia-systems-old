@@ -197,7 +197,7 @@ would like within the constraint of being idempotent.
 
 This sort of academic language (and arguments around it) can be alienating to many web developers.  While we feel it is
 good to learn these concepts (e.g. idempotency) in depth, we also feel that requiring a PhD to build effective hypermedia
-systems is unreasonable.  Frankly, the academic and pedantic language around things like HTTP actions is one reason why
+systems is unreasonable.  Frankly, the academic and pedantic language around things like HTTP methods is one reason why
 hypermedia has fallen on hard times.
 
 In any event, in a properly structured HTML-based hypermedia system you should use an appropriate HTTP method for the operation a
@@ -533,7 +533,7 @@ enough today, end up solving the very complex problem of uniquely identifying an
 
 In a REST-ful system, _representations_ of the resource are transferred between clients and servers.  These
 representations can contain both data and metadata about the request (such as "`control data`" like an HTTP
-action or response code).  A particular data format or _media type_ may be used to present a given resource to a client,
+method or response code).  A particular data format or _media type_ may be used to present a given resource to a client,
 and that media type can be negotiated between the client and the server.
 
 We saw this latter aspect of the uniform interface in the `Accept` header in the requests above.
@@ -747,7 +747,7 @@ A pretty neat trick!
 
 Now, in this case, if the JSON client is not properly updated, the error state is relatively benign: a new bit of functionality
 is simply not made available to users.  But consider a more severe change to the API: what if the archive functionality
-was removed?  Or what if the URLs or HTTP actions for these operations changed in some way?
+was removed?  Or what if the URLs or the HTTP methods for these operations changed in some way?
 
 In this case, the JSON client may be broken in a much more serious manner.
 

@@ -403,7 +403,7 @@ clicks on that link, the browser will issue a `GET` request to the `/contacts/ne
 All the other routes we have been looking at so far are using `GET` as well, but we are actually going to use two
 different HTTP methods for this bit of functionality: an HTTP `GET` to render a form for adding a new contact,
 and then an HTTP `POST` _to the same path_ to actually create the contact, so we are going to be explicit about the
-HTTP action we want to handle when we declare this route.
+HTTP method we want to handle when we declare this route.
 
 Here is the code:
 

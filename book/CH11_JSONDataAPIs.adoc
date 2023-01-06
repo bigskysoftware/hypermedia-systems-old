@@ -363,8 +363,8 @@ Next, let's add updating and deleting a contact as well.
 === Updating & Deleting Contacts
 
 As with the create contact API end point, because there is no HTML UI to produce for them, we can reuse the
-`/api/v1/contacts/<contact id>` path.  We will use the `PUT` HTTP action for updating a contact and the `DELETE`
-action for deleting one.
+`/api/v1/contacts/<contact id>` path.  We will use the `PUT` HTTP method for updating a contact and the `DELETE`
+method for deleting one.
 
 Our update code is going to look nearly identical to the create handler, except that, rather than creating a new contact,
 we will look up the contact by ID and update its fields.  In this sense we are just combining the code of the create

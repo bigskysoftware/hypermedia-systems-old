@@ -22,7 +22,7 @@ Unfortunately, our application has a few issues common to web 1.0 style applicat
   delete a contact.  This is because every user interaction (link click or form submission) requires a full page
   refresh, with a whole new HTML document to process after each action.
 
-* From a technical perspective, all the updates are done with the `POST` HTTP action.  This, despite the fact that
+* From a technical perspective, all the updates are done with the `POST` HTTP method.  This, despite the fact that
   more logical actions and HTTP request types like `PUT` and `DELETE` exist and would make more sense for some
   of the operations we implemented.  After all, if we wanted to delete a resource, wouldn't it make more sense to use an HTTP `DELETE` request
   to do so?  Somewhat ironically, since we are using pure HTML, we are unable to access the full expressive power
@@ -152,7 +152,7 @@ This gives us our third opportunity to expand the expressiveness of HTML:
 [IMPORTANT]
 .Opportunity 3
 ====
-HTML could be extended so that it could access these missing three HTTP actions, `PUT`, `PATCH` and `DELETE`.
+HTML could be extended so that it could access these missing three HTTP methods, `PUT`, `PATCH` and `DELETE`.
 ====
 
 === Why Only Replace The Entire Screen?

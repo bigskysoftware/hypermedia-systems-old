@@ -554,7 +554,7 @@ defined in our style sheet:
 So, despite all the complicated mechanics going on behind the scenes in htmx, all we have to do, as an htmx user,
 is add a stable `id` attribute to the element we want to animate.
 
-With that done, voila: we get a nice nice, smooth progress bar as the contact archiving process proceeds.  Because of
+With that done, voila: we get a nice, smooth progress bar as the contact archiving process proceeds.  Because of
 the htmx swapping model, we get this nice animation even though we are replacing the content with new HTML.  So we get
 the simplicity of the HTML-based approach, but the look and feel of a more sophisticated JavaScript-based approach.
 

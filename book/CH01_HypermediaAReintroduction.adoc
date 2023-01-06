@@ -583,7 +583,7 @@ Let's look at a htmx-powered implementation of the simple JavaScript-powered but
     Fetch Contact
 </button>
 ----
-<1> issues a `GET` request to `/contacts/1`, replacing the `contact-table`
+<1> issues a `GET` request to `/contacts/1`, replacing the `contact-ui`
 
 As with the JavaScript powered button we can see that this button has been annotated with some attributes.  However, in
 this case we do not have any JavaScript scripting going on.

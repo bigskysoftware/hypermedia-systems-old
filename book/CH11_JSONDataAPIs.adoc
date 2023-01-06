@@ -183,7 +183,7 @@ GET /contacts
 
 If we adopted this pattern then our request handler for `/contacts/` would need to be updated to inspect this header and,
 depending on the value, return a JSON rather than HTML representation for the contacts.  Ruby on Rails has support for
-this pattern baked into the language, making it very easy to switch on the requested MIME type.
+this pattern baked into the framework, making it very easy to switch on the requested MIME type.
 
 Unfortunately, our experience with this pattern has not been great, for reasons that should be clear given the
 differences we outlined between Data and hypermedia APIs: they have different needs and often take on very different
@@ -254,7 +254,7 @@ like this:
 {
   "contacts": [
     {
-      "email": "carson@example.comz",
+      "email": "carson@example.com",
       "errors": {},
       "first": "Carson",
       "id": 2,

@@ -256,7 +256,7 @@ like this:
 {
   "contacts": [
     {
-      "email": "carson@example.comz",
+      "email": "carson@example.com",
       "errors": {},
       "first": "Carson",
       "id": 2,

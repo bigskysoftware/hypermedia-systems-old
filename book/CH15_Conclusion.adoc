@@ -29,7 +29,7 @@ JavaScript, but using only hypermedia concepts.
 The Hypermedia Driven Application approach is not right for every application (after all, no approach is right for
 _every_ application) but, for many applications, the increased flexibility and simplicity of hypermedia can be a huge
 benefit.  And, even if your application wouldn't benefit from this approach, it is at least worthwhile to _understand_
-the approach, it's strengths and weaknesses, and how it differs from the approach you are taking.  The original web
+the approach, its strengths and weaknesses, and how it differs from the approach you are taking.  The original web
 grew faster than any distributed system in history, and it is worth understanding the underlying technologies that
 made that growth possible.
 

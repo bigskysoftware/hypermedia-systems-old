@@ -76,7 +76,7 @@ There are two approaches employing hypermedia to build & ship native mobile apps
 
 === Web views
 The simplest way to use hypermedia architecture on mobile is by leveraging web technologies.
-Both Android and iOS SDKs provide "`web views`": chromeless web browsers tbat can be embedded in native apps.
+Both Android and iOS SDKs provide "`web views`": chromeless web browsers that can be embedded in native apps.
 Tools like Apache Cordova make it easy to take the URL of a website, and spit out native iOS and Android apps based on web views.
 If you already have a responsive web app, you can get a "`native`" Hypermedia apps for free.
 Sounds too good to be true, right?
@@ -190,18 +190,18 @@ In either case, developers get a full "`HXML browser`" without needing to write 
 
 
 .The Benefits of Using Your Own Client
-----
+****
 At first, it might seem like the Hyperview approach requires extra work to write and maintain the mobile app client.
 But there is a benefit to controlling both parts of the client-server architecture.
 Did you ever wish you could fix a web browser bug?
 Or maybe add a new HTML element or features to the browser itself?
 The open nature of the Web means that progress happens slowly.
-New features go through a lengthly standardization process.
+New features go through a lengthy standardization process.
 Browser vendors may prioritize bugs and features that don't match your individual priorities.
 As a Web developer, you may need to wait years until browsers support the feature you need.
 Or, you can try to work around it with some kludgy JS.
 
-Well, with Hyperview, there is no standards body or lengthly process for new features.
+Well, with Hyperview, there is no standards body or lengthy process for new features.
 As a Hyperview developer, you control your backend and mobile app client.
 Do you want to add a new element to HXML?
 Go right ahead!
@@ -211,7 +211,7 @@ There are extension points for custom UI elements and custom behavior actions.
 By extending the format and client itself, there's no need for Hyperview to include a scripting layer in HTMX.
 Features that require client-side logic get "`built-in`" to the client browser.
 HTMX responses remain pure, with UI and interactions represented in declarative XML.
-----
+****
 
 
 === Which Hypermedia architecture should I use?

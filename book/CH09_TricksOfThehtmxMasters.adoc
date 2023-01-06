@@ -644,7 +644,7 @@ often want to know why an event _isn't_ happening.  But where can you set a brea
 The answer, as of right now, is: you can't.
 
 There are two techniques that can help in this regard, one provided by htmx, the other provided by Chrome, the browser
-by google.
+by Google.
 
 === Logging htmx Events
 

@@ -21,7 +21,7 @@ redirect us to the source of the latest version of the library.
 We can save the content from this URL into the `static/js/htmx.js` file in our project.
 
 You can, of course, use a more sophisticated JavaScript package manager such as Node Package Manager (NPM) or yarn to install
-htmx.  You do this by referring to it's package name, `htmx.org`, in the manner appropriate for your tool.  However,
+htmx.  You do this by referring to its package name, `htmx.org`, in the manner appropriate for your tool.  However,
 htmx is very small (approximately 12kb when compressed and zipped) and is dependency free, so using it does not require
 an elaborate mechanism or build tool.
 

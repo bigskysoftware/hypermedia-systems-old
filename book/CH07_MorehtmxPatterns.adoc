@@ -1040,7 +1040,7 @@ delete feature, we want to add the ability to select rows via a checkbox input a
 a "`Delete Selected Contacts`" button.
 
 To get started with this feature, we'll need to add a checkbox input to each row in the `rows.html` template.  This input
-will have the name `contacts` and its value will be the `id` of the contact for the current row.
+will have the name `selected_contact_ids` and its value will be the `id` of the contact for the current row.
 
 Here is what the updated code for `rows.html` looks like:
 
@@ -1067,7 +1067,7 @@ image::screenshot_checkboxes.png[]
 If you are not familiar with or have forgotten the way checkboxes work in HTML: a checkbox will submit its value associated
 with the name of the input if and only if it is checked.  So if, for example, you checked the contacts with the ids 3,
 7 and 9, then those three values would all be submitted to the server.  Since all the checkboxes in this case have
-the same name, `contacts`, all three values would be submitted with the name `contacts`.
+the same name, `selected_contact_ids`, all three values would be submitted with the name `selected_contact_ids`.
 
 === The "`Delete Selected Contacts`" button
 

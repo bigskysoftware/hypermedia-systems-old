@@ -16,14 +16,14 @@ sometimes scripting might be the best (or only) way to achieve a given goal.  Fo
 with hypermedia.
 
 The first advanced htmx feature we will create is known as the "`Active Search`" pattern.  Active Search is when, as a
-user types text into a search box, the results of that search are dynamically search are shown.  This pattern was made popular
+user types text into a search box, the results of that search are dynamically shown.  This pattern was made popular
 when Google adopted it for search results, and many applications now implement it.
 
 To implement Active Search, we are going to use techniques closely related to the way we did email validation in the
 previous chapter.  If you think about it, the two features are similar in many ways: in both cases we want to issue
 a request as the user types into an input and then update some other element with a response.  The server-side implementations
 will, of course, be very different, but the front end code will look fairly similar, a testament to how general the "`issue
-a request on an event and replace something on the screen`" approach htmx takes.
+a request on an event and replace something on the screen`" approach that htmx takes really is.
 
 === Our Current Search UI
 
@@ -60,7 +60,7 @@ So, in addition to the regular form behavior, we _also_ want to issue an HTTP `G
 to issue this request to the same URL as the normal form submission.  Finally, we only want to do this after a small
 pause in typing has occurred.
 
-As we said, this functionality is very similar to what we needed for email validation isn't it? We can, in copy take
+As we said, this functionality is very similar to what we needed for email validation isn't it? We can, in fact copy
 the `hx-trigger` attribute directly from our email validation example, with its small 200-millisecond delay, to allow a
 user to stop typing before a request is triggered.
 
@@ -92,10 +92,10 @@ avoid hammering our server with requests on every keyup.
 What we have is already pretty close to what we want, but we need to set up the correct target.  Recall that the default
 target for an element is itself.  As things currently stand, an HTTP `GET` request will be issued to the `/contacts` path,
 which will, as of now, return an entire HTML document of search results, and then this whole document will be inserted
-into the _inner_ HTML the search input.
+into the _inner_ HTML of the search input.
 
 This is, in fact, nonsense: `input` elements aren't allowed to have any HTML inside of them. The browser will,
-sensibly, just ignore the htmx request to do put the response HTML inside the input.  So, at this point, when a user
+sensibly, just ignore the htmx request to put the response HTML inside the input.  So, at this point, when a user
 types anything into our input, a request will be issued (you can see it in your browser development console if you try
 it out) but, unfortunately, it will appear to the user as if nothing has happened at all.
 
@@ -299,7 +299,7 @@ the results table out to a separate template.  We will call this new template `r
 the original `index.html` template, and also use it in our controller to render it by itself when we want to respond with only the
 rows for Active Search requests.
 
-Here what the table in our `index.html` file currently looks like:
+Here's what the table in our `index.html` file currently looks like:
 
 .The Contacts Table
 [source, html]
@@ -418,7 +418,7 @@ a _non-htmx_ request (e.g. refreshing a page) and yet the _htmx_ content is retu
 in a partial page of content for the user.
 
 The solution to this problem is to use the HTTP Response `Vary` header and call out the htmx headers that you are using
-to determine what content you are returning.  A full treatment of HTTP Caching is beyond the scope of this book, but
+to determine what content you are returning.  A full explanation of HTTP Caching is beyond the scope of this book, but
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[the MDN article] on the topic is quite good, and the https://htmx.org/docs/#caching[htmx
 documentation] discusses this issue as well.
 ****
@@ -511,7 +511,7 @@ the element from view, while at the same time not disrupting the layout of the p
 When an htmx request is triggered that points to this indicator, another class, `htmx-request` is added to the indicator
 which transitions its opacity to 1.  So you can use just about anything as an indicator, and it will be hidden by default,
 and then, when a request is in flight, will be shown.  This is all done via standard CSS classes, allowing you to control
-the transitions and even the mechanism by which the indicator is show (e.g. you might use `display` rather than
+the transitions and even the mechanism by which the indicator is shown (e.g. you might use `display` rather than
 `opacity`).  htmx is flexible in this regard.
 
 .Use Request Indicators!
@@ -597,12 +597,12 @@ Beautiful.
 
 Of course, as you probably suspected, all is not perfect.  Unfortunately, upon shipping this feature to production, we
 start getting some complaints from the users that the application "`feels slow`".  Like all good developers faced with
-a performance issues, rather than guessing what the issue might be, we try to get a performance profile of the application
+a performance issue, rather than guessing what the issue might be, we try to get a performance profile of the application
 to see what exactly is causing the problem.
 
 It turns out, surprisingly, that the problem is that innocent looking `Contacts.count()` call, which is taking up to
 a second and a half to complete.  Unfortunately, for reasons beyond the scope of this book, it is not possible to improve
-that load time, nor it is also not possible to cache the result.
+that load time, nor is possible to cache the result.
 
 This leaves us with two choices:
 
@@ -614,10 +614,10 @@ using htmx instead.
 
 === Pulling The Expensive Code Out
 
-The first step in implementing the Lazy Load pattern is to pull the expensive code, that is, the call to `Contacts.count()`.
+The first step in implementing the Lazy Load pattern is to pull the expensive code, that is, the call to `Contacts.count()`
 out of request handler for the `/contacts` end point.
 
-Let's pull this function call into its own HTTP request handler as new HTTP end point that we will put at `/contacts/count`.
+Let's pull this function call into its own HTTP request handler as a new HTTP end point that we will put at `/contacts/count`.
 For this new end point, we won't need to render a template at all: its sole job is going to be to render that small bit of text
 that is in the span, "`(22 total Contacts)`"
 
@@ -672,7 +672,7 @@ Here is our updated template code:
 [source, html]
 ----
 <p>
-    <a href="/contacts/new">Add Contact</a> <span hx-get="/contacts/count" hx-trigger="load"</span><1>
+    <a href="/contacts/new">Add Contact</a> <span hx-get="/contacts/count" hx-trigger="load"></span><1>
 </p>
 ----
 <1> Issue a `GET` to `/contacts/count` when the `load` event occurs
@@ -757,7 +757,7 @@ new problems in htmx.
 <1> Change the `hx-trigger` to `revealed`
 
 Now we have a truly lazy implementation, deferring the expensive computation until we are absolutely sure we need it. A
-pretty cool trick, and, again, a simple one-attribute change demonstrates the flexibility of both htmx the hypermedia
+pretty cool trick, and, again, a simple one-attribute change demonstrates the flexibility of both htmx and the hypermedia
 approach.
 
 == Inline Delete
@@ -1028,7 +1028,7 @@ With this modification, the existing row will stay in the DOM for an additional 
 on it.  This will give the row time to transition to an opacity of zero, giving the fade out effect we want.
 
 Now, when a user clicks on a "`Delete`" link and confirms the delete, the row will slowly fade out and then, once it has
-faded to a 0 opacity, it will be removed.  Pretty fanyc, and all done in a declarative, hypermedia oriented manner, no
+faded to a 0 opacity, it will be removed.  Pretty fancy, and all done in a declarative, hypermedia oriented manner, no
 JavaScript required.  (Well, obviously htmx is written in JavaScript, but you know what I mean: we didn't have to write
 any JavaScript to implement the feature.)
 

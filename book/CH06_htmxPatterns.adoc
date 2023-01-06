@@ -46,11 +46,11 @@ Believe it or not, that's it!  This simple script tag will make htmx's functiona
 
 == AJAX-ifying Our Application
 
-To get our feet wet with htmx, the first feature of we are going to take advantage of what is known as "`boosting`".  This is
+To get our feet wet with htmx, the first feature we are going to take advantage of, is what is known as "`boosting`".  This is
 a bit of a "`cheater`" feature of htmx in that we don't need to do much beyond adding a single attribute, `hx-boost`, to the
 application.  This `hx-boost` attribute is unlike most other attributes in htmx: whereas other htmx attributes tend to be
 very focused on one aspect of improving HTML (e.g. `hx-trigger` focuses on the events that trigger a request, `hx-swap` focuses on how responses
-are swapped into the DOM, etc.) the `hx-boost` attribute, in contrast, is a high-level .
+are swapped into the DOM, etc.) the `hx-boost` attribute, in contrast, is a high-level attribute.
 
 When you put `hx-boost` on a given element with the value `true`, it will "`boost`" all anchor and form elements within that
 element.  "`Boost`", here, means that htmx will convert all those anchors and forms from "`normal`" hypermedia controls
@@ -92,7 +92,7 @@ templates that `hx-boost` can handle: just return the normal HTML for your page,
 
 Note that boosted links (and forms) will also continue to update the navigation bar and history, just like normal links,
 so users will be able to use the browser back button, will be able to copy and paste URLs (or "`deep links`") and so on.
-Links will act pretty much like a "`normal`", they will just be faster.
+Links will act pretty much like "`normal`", they will just be faster.
 
 === Boosted Forms
 
@@ -121,7 +121,7 @@ available for the page.  A FOUC causes a disconcerting momentary "`flash`" of th
 when all the style information is available.  You will notice this as a flicker when you move around the internet: text,
 images and other content can "`jump around`" on the page as styles are applied to it.
 
-With `hx-boost` the sites styling is already loaded _before_ the new content is retrieved, so there is no such flash of
+With `hx-boost` the site's styling is already loaded _before_ the new content is retrieved, so there is no such flash of
 unstyled content.  This can make a "`boosted`" application feel both smoother and also snappier in general.
 
 === Attribute Inheritance
@@ -170,9 +170,9 @@ existing ones, and they, too, will be boosted, without us needing to explicitly 
 That's fine, but what if you have a link that you _don't_ want boosted within an element that has `hx-boost="true"` on
 it?  A good example of this situation is when a link is to a resource to be downloaded, such as a PDF.  Downloading a
 file can't be handled well by an AJAX request, so you probably want that link to behave "`normally`", issuing a full
-page request for the PDF, which the browser will then offer to save as a file on the users local system.
+page request for the PDF, which the browser will then offer to save as a file on the user's local system.
 
-To handle with this situation, you would simply override the parent `hx-boost` value with `hx-boost="false"` on the
+To handle this situation, you would simply override the parent `hx-boost` value with `hx-boost="false"` on the
 anchor tag that you didn't want to be boosted:
 
 [#listing-4-3, reftext={chapter}.{counter:listing}]
@@ -189,7 +189,7 @@ anchor tag that you didn't want to be boosted:
 <1> The `hx-boost` is still on the parent div
 <2> The boosting behavior is overridden for this link
 
-Here we have a new link to a documentation PDF that we wish to function like a regular links.  We have added
+Here we have a new link to a documentation PDF that we wish to function like a regular link.  We have added
 `hx-boost="false"` to the link and this declaration will override the `hx-boost="true"` on the parent `div`, reverting
 it to regular link behavior and, thus, allowing for the file download behavior that we want.
 
@@ -207,7 +207,7 @@ Nothing much!
 The application would continue to work, but it would issue regular HTTP requests, rather than AJAX-based
 HTTP requests.  This means that your web application will work for the maximum number of users, with users of more modern
 browsers (or users who have not turned off JavaScript) able to take advantage of the benefits of the AJAX-style navigation
-that htmx offers, but other people still able to use the app just fine.
+that htmx offers, but other people will still able to use the app just fine.
 
 Compare the behavior of htmx's `hx-boost` attribute with a JavaScript heavy Single Page Application: such an application
 often won't function _at all_ without JavaScript enabled. It is often very difficult to adopt a progressive enhancement
@@ -254,7 +254,7 @@ Now every link and form in our application will use AJAX by default, making it f
 ----
 
 Even though we haven't touched anything on this link or on the server side handling of the URL it targets, it will
-now "`just work`" as a boosted link, using AJAX for a snappier user experience, and including updating history, back button
+now "`just work`" as a boosted link, using AJAX for a snappier user experience, including updating history, back button
 support and so on.  And, if JavaScript isn't enabled, it will fall back to the normal link behavior.
 
 All this with one, single htmx attribute.
@@ -287,7 +287,7 @@ Thankfully, now, with htmx, we have a chance to rectify this situation.
 
 The "`right thing`", from a REST-ful, resource oriented perspective is, rather than issuing an HTTP `POST` to
 `/contacts/42/delete`, to issue an HTTP `DELETE` to `/contacts/42`.  We want to delete the contact.  The contact is
-a resource.  The URL for that resource is `/contacts/42`.  So the ideal is a `DELETE` request to ``/contacts/42/`.
+a resource.  The URL for that resource is `/contacts/42`.  So the ideal is a `DELETE` request to `/contacts/42/`.
 
 Let's update our application to do this by adding the htmx `hx-delete` attribute to the "`Delete Contact`" button:
 
@@ -363,7 +363,7 @@ According to the Mozilla Developer Network (MDN) web docs on the https://develop
 response, this means that the HTTP _method_ of the request _will be unchanged_ when the redirected HTTP request is issued.
 
 We are now issuing a `DELETE` request with htmx and then being redirected to the `/contacts` path by flask.  According to this
-logic, that would mean that the redirected HTTP request would still be a `DELETE` method.  This means that, as it stand,
+logic, that would mean that the redirected HTTP request would still be a `DELETE` method.  This means that, as it stands,
 the browser will issue a `DELETE` request to `/contacts`.
 
 This is definitely _not_ what we want: we would like the HTTP redirect to issue a `GET` request, slightly modifying the
@@ -462,7 +462,7 @@ the built-in features of the web as a hypermedia system without any URL hacks.
 === One More Thing...
 
 There is one additional "`bonus`" feature we can add to our "`Delete Contact`" button: a confirmation dialog.  Deleting
-a contact is a destructive operation and,as it stands right now, if the user inadvertantly clicked the "`Delete Contact`"
+a contact is a destructive operation and as it stands right now, if the user inadvertantly clicked the "`Delete Contact`"
 button, the application would just delete that contact.  Too bad, so sad for the user.
 
 Fortunately htmx has an easy mechanism for adding a confirmation message on destructive operations like this: the
@@ -488,7 +488,7 @@ Now, when someone clicks on the "`Delete Contact`" button, they will be presente
 you want to delete this contact?`" and they will have an opportunity to cancel if they clicked the button in error.  Very
 nice.
 
-With this final change we now have a pretty solid "`delete contact`" mechanic: we are using the correct REST-ful routes
+With this final change we now have a pretty solid "`delete contact`" mechanism: we are using the correct REST-ful routes
 and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
 all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
 
@@ -663,7 +663,7 @@ Let's make those changes to our HTML:
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
-<1> Issue an HTTP `GET` to the `email` endpoint the contact
+<1> Issue an HTTP `GET` to the `email` endpoint for the contact
 <2> Target the next element with the class `error` on it
 
 Note that in the `hx-target` attribute we are using a _relative positional_ selector.  This is a feature of htmx and
@@ -813,7 +813,7 @@ a bit and then issue the request.  Much better for our server, and still a great
 
 === Ignoring Non-Mutating Keys
 
-There is one last issue we should address with the keyup event: as it stand we will issue a request no matter _which_ keys
+There is one last issue we should address with the keyup event: as it stands we will issue a request no matter _which_ keys
 are pressed, even if they are keys that have no effect on the value of the input, such as arrow keys.  It would be better
 if there were a way to only issue a request if the input value has changed.
 
@@ -836,7 +836,7 @@ updates the inputs value:
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
-<1> We do away with pointless requests by only issuing them when the inputs value has actually changed
+<1> We do away with pointless requests by only issuing them when the input's value has actually changed
 
 That's some pretty good-looking and powerful HTML, providing an experience that most developers would think requires
 a complicated client-side solution.
@@ -878,7 +878,7 @@ Let's look at the jinja template code for this in `index.html`
 .Adding Paging Widgets To Our List of Contacts
 ----
 <div>
-    <span  style="float: right"> <1>
+    <span style="float: right"> <1>
         {% if page > 1 %}
           <a href="/contacts?page={{ page - 1 }}">Previous</a> <2>
         {% endif %}
@@ -989,7 +989,7 @@ that has just such a button in it:
 
 Let's go through each attribute in detail here.
 
-First, we hare using `hx-target` to target the "`closest`" `tr` element, that is, the closest _parent_ table row.
+First, we are using `hx-target` to target the "`closest`" `tr` element, that is, the closest _parent_ table row.
 
 Second, we want to replace this _entire_ row with whatever content comes back from the server.
 

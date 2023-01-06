@@ -28,7 +28,7 @@ We'll be leveraging these libraries to create our custom extensions to the Hyper
 
 == Adding Phone Calls and Email
 Let's start with the most obvious feature missing from our Contacts app: phone calls.
-Mobile device can make phone calls.
+Mobile devices can make phone calls.
 The contacts in our app have phone numbers.
 Shouldn't our app support calling those phone numbers?
 And while we're at it, our app should also support e-mailing the contacts.
@@ -115,7 +115,7 @@ export default {
 <4> Get the phone number from the `<behavior>` element.
 <5> Pass the phone number to the function from the 3rd party library.
 
-Custom actions are defined as a JavaScript objects with two keys: `action` and `callback`.
+Custom actions are defined as a JavaScript object with two keys: `action` and `callback`.
 This is how the Hyperview client associates a custom action in the HXML with our custom code.
 The callback value is a function that takes a single parameter, `behaviorElement`.
 This parameter is an XML DOM representation of the `<behavior>` element that triggered the action.
@@ -123,7 +123,7 @@ That means we can call methods on it like `getAttribute`, or access attributes l
 In this case, we use `getAttributeNS` to read the phone number from the `phone-number` attribute on the `<behavior>` element.
 If the phone number is defined on the element, we can call the `phonecall()` function provided by the `react-native-communications` library.
 
-There's one more thing we need to before we can use our custom action: register the action with the Hyperview client.
+There's one more thing we need to do before we can use our custom action: register the action with the Hyperview client.
 The Hyperview client is represented as a React Native component called `Hyperview`.
 This component takes a prop called `behaviors`, which is an array of custom action objects like our "`open-phone`" action.
 Let's pass our "`open-phone`" implementation to the `Hyperview` component in our demo app.
@@ -158,7 +158,7 @@ export default class HyperviewScreen extends PureComponent {
 Under the hood, the `Hyperview` component is responsible for taking HXML and turning it into mobile UI elements.
 It also handles triggering behavior actions based on user interactions.
 By passing the "`open-phone`" action to Hyperview, we can now use it as a value for the `action` attribute on `<behavior>` elements.
-In fact, let's switch do that now by updating the `show.xml` template in our Flask app:
+In fact, let's do that now by updating the `show.xml` template in our Flask app:
 
 .Snippet of `hv/show.xml`
 [source,xml]
@@ -216,7 +216,7 @@ This next custom action example will do just that: render a custom confirmation 
 
 If you recall, our Contacts web app shows messages upon successful actions, such as deleting or creating a contact.
 These messages are generated in the Flask backend using the `flash()` function, called from the views.
-Thenm the base `layout.html` template rendered the messages into the final web page.
+Then the base `layout.html` template rendered the messages into the final web page.
 
 .Snippet templates/layout.html
 ----
@@ -229,7 +229,7 @@ Our Flask app still includes the calls to `flash()`, but the Hyperview app is no
 Let's add that support now.
 We could just show the messages using a similar technique to the web app: loop through the messages and render some `<text>` elements in `layout.xml`.
 This approach has a major downside: the rendered messages would be tied to a specific screen.
-If that screen get hidden by a navigation action, the message would be hidden too.
+If that screen was hidden by a navigation action, the message would be hidden too.
 What we really want is for our toast UI to display "`above`" all of the screens in the navigation stack.
 That way, the toast would remain visible (fading away after a few seconds), even if the stack of screens changes below.
 To display some UI outside of the `<screen>` elements, we're going to need to extend the Hyperview client with a new custom action, `show-toast`.
@@ -298,7 +298,7 @@ export default class HyperviewScreen extends PureComponent {
 <2> Pass the action to the `Hyperview` component, as a prop called `behaviors`.
 
 All that's left to do is trigger the `show-toast` action from our HXML.
-There are 3 user actions that result in showing a toast message:
+There are three user actions that result in showing a toast message:
 
 1. Creating a new contact
 2. Updating an existing contact
@@ -308,7 +308,7 @@ The first two actions are implemented in our app using the same HXML template, `
 Upon successfully creating or updating a contact, this template will reload the screen and trigger an event, using behaviors that trigger on "`load`".
 The deletion action also uses behaviors that trigger on "`load`", defined in the `deleted.xml` template.
 So both `form_fields.xml` and `deleted.xml` need to be modified to also show toasts on load.
-Since the actual behaviors will be the same in both templates, let's created a shared template to reuse the HXML.
+Since the actual behaviors will be the same in both templates, let's create a shared template to reuse the HXML.
 
 .hv/templates/toasts.xml
 [source,xml]
@@ -381,7 +381,7 @@ To illustrate the possibilities, we will extend the Hyperview client in our mobi
 How does it work?
 The "`swipeable row`" component supports a horizontal swiping gesture.
 As the user swipes this component from right to left, the component will slide over, revealing a series of action buttons.
-Each action buttons will be able to trigger standard Hyperview behaviors when pressed.
+Each action button will be able to trigger standard Hyperview behaviors when pressed.
 We will use this custom component in our Contacts List screen.
 Each contact item will be a "`swipeable row`", and the actions will give quick access to edit and delete actions for the contact.
 
@@ -442,8 +442,8 @@ If down the line, we add another list screen to our app, we can use this compone
 Now that we know the HXML structure of our custom component, we can write the code to implement it.
 What does that code look like?
 Hyperview components are written as React Native components.
-These React Native components are mapped to a unique XML namespace & tag name.
-When the Hyperview client encounters that namespace & tag name in the HXML, it delegates rendering of the HXML element to the matching React Native component.
+These React Native components are mapped to a unique XML namespace and tag name.
+When the Hyperview client encounters that namespace and tag name in the HXML, it delegates rendering of the HXML element to the matching React Native component.
 As part of delegation, the Hyperview Client passes several props to the React Native component:
 
 - `element`: The XML DOM element that maps to the React Native component
@@ -454,7 +454,6 @@ As part of delegation, the Hyperview Client passes several props to the React Na
 Our swipeable row component is a container with slots to render arbitrary main content and buttons.
 That means it needs to delegate rendering back to the Hyperview client to render those parts of the UI.
 This is done with a public function exposed by the Hyperview client, `Hyperview.renderChildren()`.
-`renderChildren()`
 
 Now that we know how custom Hyperview components are implemented, let's write the code for our swipeable row.
 
@@ -505,7 +504,7 @@ export default class SwipeableRow extends PureComponent { <1>
 
 The `SwipeableRow` class implements a React Native component.
 At the top of the class, we set a static `namespaceURI` property and `localName` property.
-These properties map the React Native component to a unique namespace & tag name pair in the HXML.
+These properties map the React Native component to a unique namespace and tag name pair in the HXML.
 This is how the Hyperview client knows to delegate to `SwipeableRow` when encountering custom elements in the HXML.
 At the bottom of the class, you'll see a `render()` method.
 `render()` gets called by React Native to return the rendered component.
@@ -712,12 +711,12 @@ In fact, I'll let you in on a secret.
 Within the Hyperview client, standard components and actions are implemented the same way as custom components and actions!
 The rendering code does not treat `<view>` differently from `<swipe:row>`.
 The behavior code does not treat `alert` differently from `open-phone`.
-They are both implemented using the same techniques desbribed in this section.
+They are both implemented using the same techniques described in this section.
 Standard components and actions are just the ones that are universally needed by all mobile apps.
 But they are just the starting point.
 Most mobile apps will require some extensions to the Hyperview client to deliver a great user experience.
 Extensions evolve the client from being a generic "`Hyperview client`", to being a purpose-built client for your app.
-And importantly, this evolution preserver the Hypermedia, server-driven architecture and all of its benefits.
+And importantly, this evolution preserves the Hypermedia, server-driven architecture and all of its benefits.
 
 
 == Conclusion
@@ -725,5 +724,5 @@ And importantly, this evolution preserver the Hypermedia, server-driven architec
 - Support for system actions (like SMS and email) can be added with a Hyperview behavior action.
 - Support for high-level UIs (like confirmation toasts) can also be added with a Hyperview behavior action.
 - Support for customized screen elements (like swipeable items in lists) can be added with Hyperview custom components.
-- The standard behaviors and components that come with the Hyperview client are implemented the same was as custom behavior actions and components.
+- The standard behaviors and components that come with the Hyperview client are implemented the same way as custom behavior actions and components.
 - By customizing the Hyperivew client, developers can build a mobile app that suits their specific needs while retaining the benefits of a thin-client, hypermedia architecture.

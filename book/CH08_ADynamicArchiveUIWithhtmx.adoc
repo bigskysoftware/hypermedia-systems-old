@@ -5,9 +5,9 @@
 
 == A Dynamic Archive UI
 
-Contact.app has come a long way from the traditional web 1.0-style web application it started life as at this point:
+Contact.app has come a long way from the traditional web 1.0-style web application it started life as, at this point:
 we've added active search, bulk delete (with some nice animations) and a slew of other features.  We have reached a level
-of interactivity that most web developers would assume requires some sort Single-Page Application JavaScript framework,
+of interactivity that most web developers would assume requires some sort of Single-Page Application JavaScript framework,
 but we've done nearly all of it using htmx-powered hypermedia instead.
 
 Let's look at how we can add a final significant feature to Contact.app: downloading an archive of all the contacts.
@@ -69,7 +69,7 @@ show a link to the user to download the contact archive file.
 
 In order to actually do the archiving, we are going to use a python class, `Archiver`, that implements all the
 functionality that we need.  As with the `Contact` class, we aren't going to go into the implementation details of `Archiver`
-, because that's beyond the scope of this book.  All you, the reader, needs to know is that it provides all the server-side
+, because that's beyond the scope of this book.  All you, the reader, need to know is that it provides all the server-side
 behavior necessary to start a contact archive process and get the results when that process is done.
 
 `Archiver` gives us the following methods to work with:
@@ -554,7 +554,7 @@ defined in our style sheet:
 So, despite all the complicated mechanics going on behind the scenes in htmx, all we have to do, as an htmx user,
 is add a stable `id` attribute to the element we want to animate.
 
-With that done, viola: we get a nice, smooth progress bar as the contact archiving process proceeds.  Because of
+With that done, voila: we get a nice, smooth progress bar as the contact archiving process proceeds.  Because of
 the htmx swapping model, we get this nice animation even though we are replacing the content with new HTML.  So we get
 the simplicity of the HTML-based approach, but the look and feel of a more sophisticated JavaScript-based approach.
 
@@ -593,7 +593,7 @@ def reset_archive():
 ----
 <1> Call `reset()` on the archiver
 
-THis looks pretty similar to our other handlers, doesn't it?  Yep, that's the idea.
+This looks pretty similar to our other handlers, doesn't it?  Yep, that's the idea.
 
 == An Alternative UX: Auto-Download
 
@@ -612,7 +612,7 @@ equivalent JavaScript would be nearly as simple.
 All we need to do to implement the auto-download feature is the following: when the download link renders,
  automatically click on the link for the user.
 
-The hyperscript reads nearly identical to that sentence (which is why we love hyperscript):
+The +_hyperscript+ reads nearly identical that sentence (which is why we love hyperscript):
 
 .Auto-Downloading
 [source, html]
@@ -622,9 +622,9 @@ The hyperscript reads nearly identical to that sentence (which is why we love hy
     Archive Downloading!  Click here if the download does not start.
   </a>
 ----
-<1> a bit of hyperscript to make the file auto-download
+<1> a bit of +_hyperscript+ to make the file auto-download
 
-Have we mentioned that we love hyperscript?
+Have we mentioned that we love +_hyperscript+?
 
 Crucially, the scripting here is simply _enhancing_ the existing hypermedia, rather than replacing it with
 a non-hypermedia request.  This is hypermedia-friendly scripting, as we will cover in more depth in a bit.

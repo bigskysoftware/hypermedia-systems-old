@@ -11,7 +11,7 @@ In this chapter we are going to look more deeply into htmx.  We've accomplished 
 so far, but, when you are developing Hypermedia-Driven Applications, there are likely to be situations that arise
 that require additional functionality to address cleanly.
 
-We will go over some the more advanced attributes in htmx, as well as expand on the advanced details of some attributes we
+We will go over some of the more advanced attributes in htmx, as well as expand on the advanced details of some attributes we
 have already used.
 
 Additionally, we will look at functionality that htmx offers beyond simple HTML attributes:  how htmx extends
@@ -22,12 +22,12 @@ Finally, we will take a look at practical considerations when doing htmx develop
 effectively, security considerations you will need to take into account when working with htmx, and how to configure
 the behavior of htmx.
 
-By understanding all the features and techniques in this chapter, you should will be able to pull off extremely
+By understanding all the features and techniques in this chapter, you will be able to pull off extremely
 sophisticated user interfaces using only htmx and perhaps a small bit of hypermedia-friendly client-side scripting.
 
 == htmx Attributes
 
-Thus far we have, we've used about fifteen different attributes from htmx in our application.  The most important ones
+Thus far we have used about fifteen different attributes from htmx in our application.  The most important ones
 have been:
 
 |===
@@ -216,7 +216,7 @@ here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 Intersection gives you much finer grained control over exactly when a request should be triggered.  For example, you can
 specify a threshold and specify that the request should only be issued when an element is 50% visible.
 
-The `hx-trigger` attribute certainly is the most complex on in htmx, and more details and examples can be found online its
+The `hx-trigger` attribute certainly is the most complex one in htmx, and more details and examples can be found on its
 documentation page: https://htmx.org/attributes/hx-trigger/
 
 === Other Attributes
@@ -338,7 +338,7 @@ Here are some of the most commonly used events in htmx:
 === Using The `htmx:configRequest` Event
 
 Let's take a look at how you might use the `htmx:configRequest` event to configure an HTTP request.  Consider the following
-scenario: our server-side team has decided that they want you to include a token for extra validation on every request.
+scenario: your server-side team has decided that they want you to include a token for extra validation on every request.
 The token is going to be stored in `localStorage` in the browser, in the slot `special-token`.  The server-side team
 wants you to include this special token on every request made by htmx, as the `X-SPECIAL-TOKEN` header.
 
@@ -424,11 +424,11 @@ have discussed before how HTTP requests and responses support _headers_, name-va
 a given request or response.  We took advantage of the `HX-Trigger` request header, which includes the id of the element
 that triggered a given request.
 
-In addition to this _request header_, htmx also supports a _response_ header also named `HX-Trigger`.  This response header
+In addition to this _request header_, htmx also supports a _response header_ also named `HX-Trigger`.  This response header
 allows you to _trigger an event_ on the element that submitted an AJAX request.  This turns out to be a powerful way
 to coordinate elements in the DOM in a decoupled manner.
 
-To see how this might work, lets consider the following situation: we have a button that grabs new contacts from some
+To see how this might work, let's consider the following situation: we have a button that grabs new contacts from some
 remote system on the server.  We will ignore the details of the server side implementation, but we know that if we issue
 a `POST` to the `/integrations/1` path, it will trigger a synchronization with the system.
 
@@ -439,7 +439,7 @@ the table.
 How could we implement this using the `HX-Trigger` response header?  Well, we could conditionally add an `HX-Trigger`
 response header with the value `contacts-updated`, which would trigger the `contacts-updated` event on the button that
 made the AJAX request to `/integrations/1`.  And we can then take advantage of the `from:` modifier of the `hx-trigger`
-attribute to listen for that event.  Now we can effectively trigger htmx request from the server side.
+attribute to listen for that event.  Now we can effectively trigger htmx requests from the server side.
 
 Here is what the client-side code might look like:
 
@@ -466,13 +466,13 @@ Additionally, we may want _other_ elements or requests to trigger the `contacts-
 general mechanism for refreshing the contacts table in our application.
 
 We are omitting the server side implementation of this feature in the interest of simplicity, but this gives you
-and idea of how the `HX-Trigger` response header can be used to coordinate sophisticated interactions in the DOM.
+an idea of how the `HX-Trigger` response header can be used to coordinate sophisticated interactions in the DOM.
 
 == HTTP Requests & Responses
 
 We have just seen an advanced feature of HTTP responses supported by htmx, the `HX-Trigger` response header,
 but htmx supports quite a few more headers for both requests and responses.  In chapter 5 we discussed the
-headers present in HTTP Requests.  Here some of the more important headers you can use to change htmx behavior with
+headers present in HTTP Requests.  Here are some of the more important headers you can use to change htmx behavior with
 HTTP responses:
 
 |===
@@ -577,7 +577,7 @@ In this case, instead of using an event, let's take advantage of the `hx-swap-oo
 <2> the table no longer listens for an event, but it now has an id
 
 Now let's look at a potential response to the `POST` to `/integrations/1`. This response will include the "`regular`"
-content that needs to be swapped into the button, per the usual htmx mechanism.  But it will also include a new version,
+content that needs to be swapped into the button, per the usual htmx mechanism.  But it will also include a new,
 updated version of the contacts table, which will be marked as `hx-swap-oob="true"`.  This content will be removed from
 the response, so it is not inserted into the button but will be instead swapped into the DOM in place of the existing
 table since it has the same id value.
@@ -620,7 +620,7 @@ All of these approaches to the "`Updating Other Content`" problem will work, and
 come a point where it would just be simpler to use a different approach, like the reactive one.  As much as we like
 the hypermedia approach, the reality is that there are some UX patterns that simply cannot be implemented
 easily using it.  The canonical example of this sort of pattern, which we have mentioned before, is something like a live
-online spreadsheet: it is simply to complex a user interface, with too many inter-dependencies, to be done well via
+online spreadsheet: it is simply too complex a user interface, with too many inter-dependencies, to be done well via
 exchanges of hypermedia with a server.
 
 In cases like this, and any time you feel like an htmx-based solution is proving to be more complex than another approach
@@ -636,7 +636,7 @@ hope is that, with htmx, hypermedia might be a tool you reach for more frequentl
 
 We have been talking a lot about events in this chapter and we are not ashamed to admit: we are big fans of events.  They
 are the underlying technology of almost any interesting user interface, and are particularly useful in the DOM once they
-have been unlocked for general using in HTML.  They let you build nicely decoupled software while often preserving
+have been unlocked for general use in HTML.  They let you build nicely decoupled software while often preserving
 the locality of behavior we like so much.
 
 However, events are not perfect.  One area where events can be particularly tricky to deal with is _debugging_: you

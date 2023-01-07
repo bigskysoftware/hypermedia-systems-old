@@ -29,7 +29,7 @@ When users install or update an app, they're downloading this executable and run
 In this way, mobile apps have a lot in common with old-school desktop apps for Mac, Windows, or Linux.
 There is one important difference between PC desktop apps of yesteryear and today's mobile apps.
 These days, almost all mobile apps are "`networked`".
-By networked, I mean the app needs to read and write data over the Internet to deliver its core functionality.
+By networked, we mean the app needs to read and write data over the Internet to deliver its core functionality.
 In other words, a networked mobile app needs to to implement the client-server architecture.
 
 When implementing the client-server architecture, the developer needs to make a decision: Should the app be designed as a thin client or thick client?
@@ -71,7 +71,7 @@ So how can you use Hypermedia for your mobile app?
 There are two approaches employing hypermedia to build & ship native mobile apps today:
 
 - Web views, which wraps the trusty web platform in a mobile app shell
-- Hyperview, a new hypermedia format I designed specifically for mobile apps
+- Hyperview, a new hypermedia format we designed specifically for mobile apps
 
 
 === Web views
@@ -214,7 +214,7 @@ HTMX responses remain pure, with UI and interactions represented in declarative 
 ****
 
 
-=== Which Hypermedia architecture should I use?
+=== Which Hypermedia architecture should you use?
 
 We've discussed two approaches for creating mobile apps using Hypermedia architecture:
 
@@ -230,14 +230,14 @@ Both approaches solve the fundamental issues with traditional, SPA-like mobile a
 - The app always runs the latest version, there's no API churn to worry about
 
 So which approach should you use for a Hypermedia-driven mobile app?
-Based on my experience building both types of apps, I strongly believe the Hyperview approach results in a better user experience.
+Based on my experience building both types of apps, we strongly believe the Hyperview approach results in a better user experience.
 The web-view will always feel out-of-place on iOS and Android; there's just no good way to replicate the patterns of navigation and interaction that mobile users expect.
 Hyperview was created specifically to address the limitations of thick-client and web view approaches.
 After the initial investment to learn Hyperview, you'll get all of the benefits of the Hypermedia architecture, without the downsides of a degraded user experience.
 
 Of course, if you already have a simple, mobile-friendly web app, then using a web-view approach is sensible.
 You will certainly save time from not having to serve your app as HXML in addition to HTML.
-But as I will show at the end of this chapter, it doesn't take a lot of work to convert an existing Hypermedia-driven web app into a Hyperview mobile app.
+But as we will show at the end of this chapter, it doesn't take a lot of work to convert an existing Hypermedia-driven web app into a Hyperview mobile app.
 But before we get there, we need to introduce the concepts of elements and behaviors in Hyperview.
 Then, we'll re-build our contacts app in Hyperview.
 
@@ -503,7 +503,7 @@ This means that we're not hampered by rendering the input as a list of radio but
 We can render the options as radios, tags, images, or anything else that would be intuitive for our interface.
 HXML styling supports modifiers for pressed and selected states, letting us customize the UI to highlight the selected option.
 
-Like I mentioned, describing all features of inputs in HXML would take an entire chapter.
+Describing all features of inputs in HXML would take an entire chapter.
 Instead, I'll summarize a few other input elements and their features.
 
 - `<select-multiple>` works like `<select-single>`, but it supports toggling multiple options on & off. This replaces checkbox inputs in HTML.
@@ -567,7 +567,7 @@ It's worth noting that styling properties are similar to those in CSS (color, ma
 Currently, the only available layout engine is based on flexbox.
 
 Style rules can get quite verbose.
-For the sake of brevity, I won't include the `<styles>` element in the rest of the examples in this chapter unless necessary.
+For the sake of brevity, we won't include the `<styles>` element in the rest of the examples in this chapter unless necessary.
 
 === Custom elements
 

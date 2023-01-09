@@ -208,9 +208,9 @@ Go right ahead!
 In fact, the Hyperview client library was built with extensibility in mind.
 There are extension points for custom UI elements and custom behavior actions.
 
-By extending the format and client itself, there's no need for Hyperview to include a scripting layer in HTMX.
+By extending the format and client itself, there's no need for Hyperview to include a scripting layer in HXML.
 Features that require client-side logic get "`built-in`" to the client browser.
-HTMX responses remain pure, with UI and interactions represented in declarative XML.
+HXML responses remain pure, with UI and interactions represented in declarative XML.
 ****
 
 

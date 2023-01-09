@@ -49,7 +49,7 @@ want to interact with your application as well.
 
 For example:
 
-* Perhaps you have a mobile application that isn't built using HyperView.  That application will need to interact with
+* Perhaps you have a mobile application that isn't built using Hyperview.  That application will need to interact with
   your server somehow, and using the existing HTML API would almost certainly be a poor fit!  You want programmatic
   access to your system via a Data API, and JSON is a natural choice for this.
 

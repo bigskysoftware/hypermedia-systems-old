@@ -35,7 +35,7 @@ when you, a web developer, are considering the architecture of your next applica
 Application on top of a  _hypermedia system_ like The Web is a viable and, indeed, often excellent choice for
 _modern_ web applications.
 
-(And, as the section on HyperView will show, not just web applications.)
+(And, as the section on Hyperview will show, not just web applications.)
 
 == What Is Hypermedia?
 
@@ -62,7 +62,7 @@ It is hypermedia controls that differentiate hypermedia from other sorts of medi
 
 You may be more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-category of hypermedia and much of this book is going to discuss how to build modern applications using
-hypertexts such as  HTML, the HyperText Markup Language, or HXML, a hypertext used by the HyperView mobile hypermedia
+hypertexts such as  HTML, the HyperText Markup Language, or HXML, a hypertext used by the Hyperview mobile hypermedia
 system.
 
 Hypertexts like HTML function along-side other technologies crucial for making an entire hypermedia system work: network

@@ -379,9 +379,9 @@ are incredibly sophisticated pieces of software.  (So sophisticated, in fact, th
 being a hypermedia client, to being a sort of cross-platform virtual machine for launching Single Page Applications.)
 
 Browsers aren't the only hypermedia clients out there, however.  In the last section of this book we will look at
-HyperView, a mobile-oriented hypermedia.  One of the outstanding features of HyperView is that it doesn't simply provide
+Hyperview, a mobile-oriented hypermedia.  One of the outstanding features of Hyperview is that it doesn't simply provide
 a hypermedia, HXML, but also provides a _working hypermedia client_ for that hypermedia.  This makes building a proper
-Hypermedia-Driven Application with HyperView extremely easy.
+Hypermedia-Driven Application with Hyperview extremely easy.
 
 A crucial feature of a hypermedia system is what is known as _the uniform interface_.  We discuss this concept in depth
 in the next section on REST.  What is often ignored in discussions about hypermedia is how important the hypermedia

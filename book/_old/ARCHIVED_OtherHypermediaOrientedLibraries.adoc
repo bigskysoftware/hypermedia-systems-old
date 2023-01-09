@@ -5,7 +5,7 @@
 
 This chapter covers
 
-* Hypermedia libraries beyond htmx and HyperView
+* Hypermedia libraries beyond htmx and Hyperview
 * Non-HTML hypermedia technologies
 
 [partintro]
@@ -18,7 +18,7 @@ that take different approaches, some similar some very different, while at the s
 concept of the web: exchanging HTML with the server.
 
 In addition to these HTML-based technologies, there is a whole world of non-HTML hypermedias.  We have covered one
-in depth in this book: HyperView, a mobile hypermedia.  But it is not the only non-HTML hypermedia out there, and
+in depth in this book: Hyperview, a mobile hypermedia.  But it is not the only non-HTML hypermedia out there, and
 it behooves us to look at some of these other technologies as well.
 
 == Unpoly
@@ -230,9 +230,9 @@ libraries using this approach may outweigh the syntactic convenience and additio
 
 == Non-HTML Hypermedia
 
-We have focused on two hypermedia formats in this book: HTML and HyperView.  These two hypermedia formats address the
+We have focused on two hypermedia formats in this book: HTML and Hyperview.  These two hypermedia formats address the
 two most common platforms for building online applications: the browser and mobile clients.  HTML is the most widely
-known and deployed hypermedia in the world, whereas HyperView is a relatively new and unknown technology.  But are
+known and deployed hypermedia in the world, whereas Hyperview is a relatively new and unknown technology.  But are
 there other hypermedia formats out there?
 
 It turns out that yes, there are.
@@ -357,14 +357,14 @@ first, but Mark has written a series of books on exactly this topic.  One, in pa
 
 In our experience, the idea of hypermedia APIs are fairly clear to most developers.  However, understanding how to
 create a proper hypermedia *client* is a tricky, and much less discussed part of the hypermedia puzzle.  One of the reasons we
-are so excited about HyperView, and were thrilled to have Adam Stepinski, the creator of HyperView, join us as a co-author
+are so excited about Hyperview, and were thrilled to have Adam Stepinski, the creator of Hyperview, join us as a co-author
 of this book, is because he did the hard work of not only defining a hypermedia format, but also of creating a hypermedia
 client that can work with that format.  By creating both sides of the hypermedia puzzle for mobile application, Adam has
-made HyperView a far more practical and useful technology!
+made Hyperview a far more practical and useful technology!
 
 === Summary
 
-* In this book we've looked at two hypermedia-based technologies in depth: htmx and HyperView
+* In this book we've looked at two hypermedia-based technologies in depth: htmx and Hyperview
 * There are other hypermedia-oriented libraries out there worth considering, especially for web development. Unpoly
   and Hotwire are two popular ones.
 * There are hypermedia beyond HTML, such as Atom, a hypermedia for representing feeds of articles and HAL, as simple

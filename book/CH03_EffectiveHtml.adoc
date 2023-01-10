@@ -42,6 +42,12 @@ Have you noticed that a lot of websites are bad?
 
 There are several disparate reasons for these issues, but the neglect of HTML is a significant one.
 
+People who write HTML are referred to in Web platform specifications as "`authors`".
+This sells our lot short by quite a lot, however;
+from day to day, the average web developer might take on the role of
+typesetter, copy editor, graphic designer, and of course, programmer.
+THus, anyone in the business of making websites should take HTML seriously.
+
 The way most of us write HTML (and likely the way many of us learned it) is a very tight feedback loop:
 we write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
 It's an amazingly fast and enjoyable way to build, but the way it's often practiced has a significant flaw:
@@ -93,49 +99,64 @@ A flexible format --not an infinity of namespaces with URLs pointing to nothing 
 Let's be real, after all --out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
 
 
-## Writing quality HTML
+== HTML is for humans first
 
-// TODO introduce the chapter
+An HTML file is not a program that produces a human-readable document.
+It _is_ the document.
+
+Treat HTML semantics not as a technical specification, but as something close to a _style guide_.
+The meanings of HTML elements and attributes
+(besides a few like `<meta>` and `<script>`)
+are derived from conventions of human communication:
+intractably fuzzy, and culturally dependent.
+They have quite specific meanings in the spec,
+but these meanings can be used sarcastically, hyperbolically, ...
+
+// TODO: Give examples
+
+The relationship between the content and the markup means good HTML is actually quite expensive.
+If a site has a developer/author split, authors will need to work closely with developers or know HTML themselves to produce markup that reflects their intended meaning.
+This is rarely feasible, except for sites written, designed and coded by one person.
+Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
+Dishearteningly, but understandably, it's an expense few organizations can spare.
+
+Thus, we don't demand that every site makes the "most semantic" HTML.
+The most important is not to use "wrong" HTML---it's better to fall back on a more generic element than give people false hope.
+Focus on people, not the spec.
+
+If you have the resources, however, putting more care in your HTML will produce a more **polished** site.
+Much like style guides, well-written semantic HTML confers prestige upon a document even though few people notice it.
+It can also make your HTML easier to maintain.
+
+This is also important for non-visual usage.
+When working on accessibility, you may find yourself trying and failing to please screen readers.
+You should follow all the relevant specs and guidelines, yes,
+but don't just rely on specs, and try not to get too angry at assistive technologies (even when they don't work properly).
+Focus on people, not the tools they use.
+
+HTML is not _for_ browsers.
+HTML is for humans.
+Browsers are for HTML.
+
 
 .Author's note
 [.info]
 ****
-This section is a collection of HTML best practices and footguns.
-It's currently incomplete and **very** unorganized.
+The rest of this chapter is currently incomplete and **very** unorganized.
 ****
 
+## Using the spec
 
-### HTML is for humans first
+While the big spec document with all the algorithms is probably better for smugly linking to people in chatrooms,
+don't miss out on the developer-friendly version at https://html.spec.whatwg.org/dev/.
 
-People who write HTML are referred to in Web platform specifications as "`authors`".
-This sells our lot short by quite a lot, however;
-from day to day, the average web developer might take on the role of
-typesetter, copy editor, graphic designer, and of course, programmer.
-
-... [TODO]
-
-This is also important for non-visual usage.
-Don't orient yourself solely towards following ARIA specifications or herding screen readers.
-Those are the means, but usability is the goal.
-
-
-### You don't need to guess what tags mean
-
-[quote,Confucius]
-The beginning of wisdom is to call things by their right names.
-
-If you have ever made the mistake of publishing code online,
-you might have had someone send you links to the HTML specification.
-It was probably some section of chapter 4, "`The elements of HTML`".
-(You might even have received it from this author).
-
-While the big spec document with all the algorithms is probably better for smugly correcting people in chatrooms,
-there is actually a developer-friendly version at https://html.spec.whatwg.org/dev/.
-For a sufficiently patient reader, it's practically a textbook.
-
-For a less patient reader, section 4 features a list of all tags in HTML.
+For readers with better things to do, section 4 features a list of all tags in HTML.
 It includes what tags mean, where they can occur, and what they are allowed to contain.
 It even tells you when you're allowed to leave out closing tags!
+
+// WAR IS PEACE
+// IGNORANCE IS STRENGTH
+// THE <STRONG> TAG REPRESENTS STRONG EMPHASIS
 
 [source,html]
 ----
@@ -146,14 +167,16 @@ This is a valid HTML document.
 
 ### Revisit the "`HTML5 elements`"
 
-A set of elements introduced with HTML5 have become a sort of shorthand symbol for semantic markup:
+[quote,Confucius]
+The beginning of wisdom is to call things by their right names.
+
+A set of elements introduced with HTML5 have become a symbol of semantic markup:
 
  - section
  - article
  - nav
  - header
  - footer
- - TODO were there more
 
 You can find websites that were clearly built with the mindset: "`The more of these elements there are, the more semantic it is.`" An example from the wonderful https://www.htmhell.dev/[HTMHell]:
 
@@ -185,6 +208,8 @@ You can find websites that were clearly built with the mindset: "`The more of th
 </main>
 ----
 
+Please don't do this. Sometimes, `<div>` is fine.
+
 
 ### Don't limit yourself to Markdown
 
@@ -203,6 +228,7 @@ You can find websites that were clearly built with the mindset: "`The more of th
 - shows up in copy-paste
 ////
 
+== HTML tips and tricks
 
 ### Label your inputs, one way or another
 

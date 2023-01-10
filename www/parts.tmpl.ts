@@ -1,3 +1,4 @@
+/// <reference lib="es2022" />
 
 import { Data, Page, PageData } from "lume/core.ts"
 
@@ -24,7 +25,7 @@ export default function* ({ search }: PageData) {
                 partNumber: ++partnumber,
                 chapters: [chapter],
                 previousPart: parts.at(-1),
-                url: "/book/" + chapter.data.part_url + "/",
+                url: "/book/" + chapter.data.part_url,
             });
             const last = parts.at(-2);
             last && (last.nextPart = parts.at(-1));

@@ -23,13 +23,13 @@ layout: layout.njk
         {% if nextPart %}
         <p>
             Next part:
-            <a  class="bold" href="/book/part/{{ nextPart.partNumber }}">{{ nextPart.part }}</a>
+            <a  class="bold italic" href="{{ nextPart.url }}">{{ nextPart.part }}</a>
         </p>
         {% endif %}
         {% if previousPart %}
         <p>
             Previous part:
-            <a  class="bold" href="/book/part/{{ previousPart.partNumber }}">{{ previousPart.part }}</a>
+            <a  class="bold italic" href="{{ previousPart.url }}">{{ previousPart.part }}</a>
         </p>
         {% set previousChapter = previousPart.chapters | last %}
         <p>

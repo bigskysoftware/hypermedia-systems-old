@@ -25,8 +25,8 @@ that were implemented within those older systems. None of this means, however, t
 over "`applications`".
 
 Rather, while the theoretical foundation is there, the implementation is underdeveloped. With JavaScript being the
-only extension point and hypermedia controls not being well integrated to JavaScript  (why can't I click a link without
-halting my program?), developers have not internalized hypermedia and have instead used the Web as a dumb pipe for apps
+only extension point and hypermedia controls not being well integrated to JavaScript (why can't one click a link without
+halting the program?), developers have not internalized hypermedia and have instead used the Web as a dumb pipe for apps
 that imitate "`native`" ones.
 
 A goal of this book is to show that it is possible to build sophisticated web applications using the original technology

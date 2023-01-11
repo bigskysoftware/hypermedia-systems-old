@@ -2,7 +2,7 @@
 = Extending HTML As Hypermedia
 :chapter: 05
 :part: Hypermedia-Driven Web Applications with htmx
-:part_url: ./part/htmx
+:part_url: ./part/htmx/
 :url: ./extending-html-as-hypermedia/
 
 In the previous chapter we introduced a simple Web 1.0-style hypermedia application to manage contacts.  Our application

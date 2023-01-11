@@ -137,10 +137,10 @@ When browsers misbehave, we complain, but most of us don't just down tools and c
 We get in there and fix it.
 So, instead of banging your head against a wall, focus on people, not the tools they use.
 
-Don't write HTML for browsers.+
-Don't write HTML for assistive tools.+
-Don't write HTML for validators.+
-HTML is not _for_ them.+
+Don't write HTML for browsers. +
+Don't write HTML for assistive tools. +
+Don't write HTML for validators. +
+HTML is not _for_ them. +
 HTML is for humans.
 
 

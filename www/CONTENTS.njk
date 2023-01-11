@@ -21,12 +21,10 @@ renderOrder: 1
                 this.setAttribute(`aria-pressed`, false);
                 document.querySelector(`[data-chapters]`).classList.add(`textcolumns`);
                 document.querySelectorAll(`[data-toc]`).forEach(toc => toc.hidden = true);
-                this.textContent = this.textContent.replace(`Hide`, `Show`);
             } else {
                 this.setAttribute(`aria-pressed`, true);
                 document.querySelector(`[data-chapters]`).classList.remove(`textcolumns`);
                 document.querySelectorAll(`[data-toc]`).forEach(toc => toc.hidden = false);
-                this.textContent = this.textContent.replace(`Show`, `Hide`);
             }            
             "
         >Show full table of contents</button>

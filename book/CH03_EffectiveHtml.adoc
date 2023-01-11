@@ -121,22 +121,27 @@ Furthermore, for internationalized sites, content in different languages being i
 Dishearteningly, but understandably, it's an expense few organizations can spare.
 
 Thus, we don't demand that every site makes the "most semantic" HTML.
-The most important is not to use "wrong" HTML---it's better to fall back on a more generic element than give people false hope.
-Focus on people, not the spec.
+What's most important is to avoid **wrong** HTML---it's better to fall back on a more generic element than be precisely incorrect.
+Sometimes, div is fine.
 
 If you have the resources, however, putting more care in your HTML will produce a more **polished** site.
-Much like style guides, well-written semantic HTML confers prestige upon a document even though few people notice it.
+Much like style guides, well-written semantic HTML gives prestige tp a document, even when few people notice it.
 It can also make your HTML easier to maintain.
 
-This is also important for non-visual usage.
+Good HTML is also good for non-visual usage.
 When working on accessibility, you may find yourself trying and failing to please screen readers.
-You should follow all the relevant specs and guidelines, yes,
-but don't just rely on specs, and try not to get too angry at assistive technologies (even when they don't work properly).
-Focus on people, not the tools they use.
+Especially if ARIA is involved, it can be extremely frustrating to do what seems like the right thing and have assistive tools not do what you expect.
+What helps with this frustration is to stop treating hypermedia exchanges as machine-to-machine communication.
+When browsers misbehave, we complain, but most of us don't just down tools and concede:
+"I did as the spec told me; it's not my fault that the website is broken, my work here is done."
+We get in there and fix it.
+So, instead of banging your head against a wall, focus on people, not the tools they use.
 
-HTML is not _for_ browsers.
+Don't write HTML for browsers.+
+Don't write HTML for assistive tools.+
+Don't write HTML for validators.+
+HTML is not _for_ them.+
 HTML is for humans.
-Browsers are for HTML.
 
 
 .Author's note
@@ -178,7 +183,9 @@ A set of elements introduced with HTML5 have become a symbol of semantic markup:
  - header
  - footer
 
-You can find websites that were clearly built with the mindset: "`The more of these elements there are, the more semantic it is.`" An example from the wonderful https://www.htmhell.dev/[HTMHell]:
+Don't write HTML with the mindset of
+"`The more of these elements there are, the more semantic it is.`"
+Otherwise, the results might look somewhat like this:
 
 .HTMHell, [.cite]##10 <section> is no replacement for <div>#, https://www.htmhell.dev/10-section-is-no-replacement-for-div/
 [source,html]
@@ -208,11 +215,17 @@ You can find websites that were clearly built with the mindset: "`The more of th
 </main>
 ----
 
-Please don't do this. Sometimes, `<div>` is fine.
+Sometimes, `<div>` really is fine.
 
 
 ### Don't limit yourself to Markdown
 
+
+// In many ways, the corollary to the previous
+// Master the full range of HTML elements
+// i, cite, dfn, address etc.
+
+== HTML tips and tricks
 
 ////
 ### Hide stuff the right way
@@ -227,8 +240,6 @@ Please don't do this. Sometimes, `<div>` is fine.
 - seen by AT
 - shows up in copy-paste
 ////
-
-== HTML tips and tricks
 
 ### Label your inputs, one way or another
 

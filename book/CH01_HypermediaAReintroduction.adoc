@@ -263,7 +263,7 @@ image::figure_1-1_http_mental_model_post.png[]
 
 ==== Web 1.0 Applications
 
-As someone interested in web development the above diagrams and discussion probably look very familiar to you.  You may
+As someone interested in web development the above diagrams and discussion are probably very familiar to you.  You may
 even find this content boring.  But take a step back and consider the fact that these two hypermedia controls,
 anchors and forms, are really the _only_ native ways for a user to interact with a server in plain HTML.
 
@@ -521,7 +521,7 @@ of this older MPA style and the newer SPA style.  Harris calls this approach to 
 it attempts to mix both the MPA approach and the newer SPA approach into a coherent whole.  (This is somewhat
 similar to the "`transitional`" trend in architecture, which blends traditional and modern architectural styles together.)
 
-"`Transitional`" a good term for these mixed-style applications and offers a reasonable compromise between the two, using
+"`Transitional`" is a good term for these mixed-style applications and offers a reasonable compromise between the two, using
 either approach where it makes the most sense on an ad hoc basis.
 
 But this compromise still feels unsatisfactory.
@@ -547,7 +547,7 @@ but by adopting a hypermedia-first approach and using a hypermedia-oriented libr
 your web application can be powerful, interactive _and_ simple.
 
 One such hypermedia oriented library is https://htmx.org[htmx], created by the authors of this book.  htmx will be the
-focus of much (but not all!) of the remainder of this book.  We hope to show you that you can, in fact, create many common
+focus of Part Two.  We hope to show you that you can, in fact, create many common
 "`modern`" UI features found in sophisticated Single Page Applications using the hypermedia model.
 
 And not only that, but that it is refreshingly fun and simple to do so.

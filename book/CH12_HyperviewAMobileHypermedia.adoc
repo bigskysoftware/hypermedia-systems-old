@@ -672,7 +672,7 @@ This is a very common scenario in rich web applications, where users expect to f
 
 So with basic HTML, interactions (clicks and submits) are limited and tightly coupled to a single action (loading a new page).
 Of course, using JavaScript, we can extend HTML and add some new syntax to support our desired interactions.
-Htmx (and Intercooler before it) do exactly that with a new set of attributes:
+htmx (and Intercooler before it) do exactly that with a new set of attributes:
 
 - Interactions can be added to any element, not just links and forms.
 - The interaction can be triggered via a click, submit, mouseover, or any other JavaScript event.

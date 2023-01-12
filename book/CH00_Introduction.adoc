@@ -16,8 +16,7 @@ Well, yes, HTML is _a_ hypermedia.  But there is more to the way The Web works t
 Transfer Protocol, is what transfers HTML from servers to clients, and there are many details and features associated
 with it: caching, various headers, response codes, and so forth.
 
-And then, of course, there are _hypermedia servers_, which present a _hypermedia APIs_ (yes, _APIS_) to clients over
-the network.
+And then, of course, there are _hypermedia servers_, which present _hypermedia APIs_ (yes, _APIs_) to clients over the network.
 
 And, finally, there is the all-important _hypermedia client_: a software client that understands how to render a _hypermedia
 response_ intelligibly to a human, so that a human can interact with the remote system.  The most widely known and used

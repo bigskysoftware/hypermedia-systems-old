@@ -49,7 +49,7 @@ to enhance their HTML websites, but also create fully-fledged client-side applic
 native, thick client applications.
 
 This JavaScript-centric approach to building web applications is a testament to the power of the web and to the sophistication
-of web browsers in partiular.  It has its place in web development: there are situations where the hypermedia approach
+of web browsers in particular.  It has its place in web development: there are situations where the hypermedia approach
 simply can't provide the level of interaction that an SPA can.
 
 However, in addition to this more JavaScript-centric style, we want to develop a style of scripting more compatible and
@@ -140,7 +140,7 @@ use some library with a name ending in "`.js`". As JavaScript matured as a scrip
 provided more and more functionality, these frameworks and libraries became less important.
 
 Somewhat ironically though, as JavaScript became more powerful and removed the need for the first generation of
-JavaScript libraries such as jQuery, it also enabled people to build complext SPA libraries.  These SPA libraries are often
+JavaScript libraries such as jQuery, it also enabled people to build complex SPA libraries.  These SPA libraries are often
 even more elaborate than the original first generation of JavaScript libraries.
 
 A quote from the website http://vanilla-js.com, which is well worth visiting even though it's slightly out of date,
@@ -960,7 +960,7 @@ event-oriented enough, which made adding small scripting enhancements to htmx ap
 
 Also like Alpine, +_hyperscript+ allows you to write your scripting inline, in HTML.
 
-Unline Alpine, however, +_hyperscript+ is _not_ reactive.  It instead focuses on making DOM manipulations in response to events,
+Unlike Alpine, however, +_hyperscript+ is _not_ reactive.  It instead focuses on making DOM manipulations in response to events,
 easy to write and easy to read. It has built-in language constructs for many DOM operations, preventing you from needing
 to navigate the sometimes-verbose JavaScript DOM APIs.
 
@@ -1182,7 +1182,7 @@ too much, but you will see what a dialog looks like in a bit.
 So, given we have installed the SweetAlert2 library, we can swap it in place of the `confirm()` function call.  We then
 need to restructure the code to pass a _callback_ to the `then()` method on the `Promise` that `Swal.fire()` returns.  A
 deep dive into Promises is beyond the scope of this chapter, but suffice to say that this callback will be called when
-a user confirms or denys the action.  If the user confirmed the action, then the `result.isConfirmed` property will be
+a user confirms or denies the action.  If the user confirmed the action, then the `result.isConfirmed` property will be
 `true`.
 
 Given all that, our updated code will look like this:

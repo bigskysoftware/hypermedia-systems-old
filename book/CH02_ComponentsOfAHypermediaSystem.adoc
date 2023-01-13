@@ -18,7 +18,7 @@ Fielding's dissertation, "`Architectural Styles and the Design of Network-based 
 terms REpresenation State Transfer (REST), REST-ful and Hypermedia As The Engine Of Application State (HATEOAS) come from,
 and we will analyze these terms in the context of The Web.
 
-This should give you a stronger understanding of the theoretical basis of The Web as a a hypermedia system, how it is
+This should give you a stronger understanding of the theoretical basis of The Web as a hypermedia system, how it is
 supposed to fit together, and why Hypermedia-Driven Applications are REST-ful, whereas JSON APIs, despite how the
 term REST is currently used in the industry, are not.
 
@@ -285,7 +285,7 @@ Here are some of the more common or interesting ones:
 | The server cannot find the requested resource.
 
 | `500 Internal Server Error`
-| The server encountered an error when attempting to process the reesponse.
+| The server encountered an error when attempting to process the response.
 
 |===
 
@@ -479,7 +479,7 @@ like the current users email or id, their roles, partially created domain object
 This violation of the Statelessness REST architectural constraint has proven to be useful for building web applications
 and, for the most part, does not appear to have had a significant impact on the overall flexibility of the approach.  But
 it is worth bearing in mind that even Web 1.0 applications often violate the purity of REST in the interest of pragmatic
-tradeoffs.
+trade-offs.
 
 It should be noted, however, that sessions do cause additional operational complexity headaches when deploying hypermedia
 servers, which now may need to have shared access to the session state information stored across an entire cluster.  So
@@ -589,7 +589,7 @@ The second implementation returns a JSON representation:
 What can we say about the differences between these two responses?
 
 One thing that may initially jump out at you is that the JSON representation is smaller than the HTML
-representation.  Fielding notes exactly this tradeoff when using a REST-ful architecture in his dissertation:
+representation.  Fielding notes exactly this trade-off when using a REST-ful architecture in his dissertation:
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
 ____
@@ -788,7 +788,7 @@ nonetheless.
 
 === An Optional Constraint: Code-On-Demand
 
-We called The Layered System constraint the final "`required`" constraint on a REST-ful system.  We used this langauge because
+We called The Layered System constraint the final "`required`" constraint on a REST-ful system.  We used this language because
 there is one additional constraint mentioned in the dissertation.  This constraint is called The Code On Demand constraint
 and is, somewhat awkwardly, described as an "`optional constraint`".  The constraint can be found in
 https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7[Section 5.1.7] of the dissertation.

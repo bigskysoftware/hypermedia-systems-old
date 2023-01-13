@@ -707,7 +707,7 @@ able to make sense of the event stream, and it can help you debug htmx-related i
 
 === Monitoring Events in Chrome
 
-The preceding technique is useful if the problem is occuring somewhere _within_ htmx, but what if htmx is never getting
+The preceding technique is useful if the problem is occurring somewhere _within_ htmx, but what if htmx is never getting
 triggered at all?  This comes up some times, like when, for example, you have accidentally typed an event name incorrectly
 somewhere.
 

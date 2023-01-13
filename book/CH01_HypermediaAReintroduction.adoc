@@ -528,7 +528,7 @@ But this compromise still feels unsatisfactory.
 
 Why have these two very different architectural models _by default_?
 
-Recall that the crux of the tradeoffs between SPAs and MPAs is the _user experience_, or interactivity of the application.
+Recall that the crux of the trade-offs between SPAs and MPAs is the _user experience_, or interactivity of the application.
 This is typically the driving decision when choosing one approach versus the other for an application or, in the case
 of a "`transitional`" application, for a particular feature.
 
@@ -613,7 +613,7 @@ will become more and more apparent.
 Hypermedia is often, though _not always_, a great choice for a web application.
 
 Perhaps you are building a website or application that simply doesn't _need_ a huge amount of user-interactivity.  There are
-many useful web applications like this, and there is no shame in it!  Applications like Amazon, Ebay, any number of news
+many useful web applications like this, and there is no shame in it!  Applications like Amazon, eBay, any number of news
 sites, shopping sites, message boards and so on don't need a massive amount of interactivity to be effective: they are
 mainly text and images, which is exactly what The Web was designed for.
 
@@ -678,7 +678,7 @@ intractable.  Even worse, efforts to help control complexity, such as introducin
 manage the complexity, often end up making things even more complex.  Truly, the job of the good software engineer
 is to keep complexity under control.
 
-The surefire way to keep complexity down is also the hardest: say no.  Pushing back on feature requests is an art
+The sure-fire way to keep complexity down is also the hardest: say no.  Pushing back on feature requests is an art
 and, if you can learn to do it well, making people feel like _they_ said no, you will go far.
 
 Sadly this is not always possible: some features will need to be built.  At this point the question becomes: "`what is

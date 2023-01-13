@@ -725,4 +725,4 @@ And importantly, this evolution preserves the Hypermedia, server-driven architec
 - Support for high-level UIs (like confirmation toasts) can also be added with a Hyperview behavior action.
 - Support for customized screen elements (like swipeable items in lists) can be added with Hyperview custom components.
 - The standard behaviors and components that come with the Hyperview client are implemented the same way as custom behavior actions and components.
-- By customizing the Hyperivew client, developers can build a mobile app that suits their specific needs while retaining the benefits of a thin-client, hypermedia architecture.
+- By customizing the Hyperview client, developers can build a mobile app that suits their specific needs while retaining the benefits of a thin-client, hypermedia architecture.

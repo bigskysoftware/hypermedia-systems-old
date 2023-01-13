@@ -469,7 +469,7 @@ it, just like when the form is submitted.
 
 Now, you might not _want_ this behavior.  You might feel it would be confusing to users to see the navigation bar updated
 and have history entries for every Active Search made, for example.  Which is fine: you can simply omit the `hx-push-url`
-attribute and it will go back ot the behavior you want.  htmx tries to be flexible enough that you can achieve the UX
+attribute and it will go back to the behavior you want.  htmx tries to be flexible enough that you can achieve the UX
 that _you_ want, while staying within the declarative HTML model.
 
 === Adding A Request Indicator

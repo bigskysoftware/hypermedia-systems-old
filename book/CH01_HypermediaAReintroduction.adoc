@@ -338,11 +338,11 @@ These two tags give a tremendous amount of expressive power to HTML.
 
 === So What _Isn't_ Hypermedia?
 
-So `<a>` and `<form>` are the two main hypermedia-based mechanisms for interacting with a server available in HTML.
+So links and forms are the two main hypermedia-based mechanisms for interacting with a server available in HTML.
 
 Now let's consider a different approach: let's interact with a server by issuing an HTTP request via JavaScript.  To
 do this, we will use the https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API[`fetch()`] API, a popular API for
-issuing an "`Asynchronous JavaScript and XML`", or AJAX request, available in all modern web browsers:
+issuing an "`Asynchronous JavaScript and XML,`" or AJAX request, available in all modern web browsers:
 
 [#listing-1-3, reftext={chapter}.{counter:listing}]
 .Javascript
@@ -354,16 +354,16 @@ issuing an "`Asynchronous JavaScript and XML`", or AJAX request, available in al
     Fetch Contacts
 </button>
 ----
-<1> Issue the request
-<2> Convert the response to a JavaScript object
-<3> Invoke the `updateUI()` function with the object
+<1> Issue the request.
+<2> Convert the response to a JavaScript object.
+<3> Invoke the `updateUI()` function with the object.
 
 This button has an `onclick` attribute which specifies some JavaScript to run when the button is clicked.
 
 The JavaScript will issue an AJAX HTTP `GET` request to `/api/v1/contacts/1` using `fetch()`.  An AJAX request is like a
-"`normal`" HTTP request in many ways, but it is issued "`behind the scenes`" by the browser.  The user does not see a
-request indicator by the browser like they would with normal links and forms, and, unlike with requests issued by
-those hypermedia controls, it is up to the JavaScript code to handle the response from the server.
+"`normal`" HTTP request, but it is issued "`behind the scenes`" by the browser.  The user does not see a
+request indicator from the browser as they would with normal links and forms. Additionally, unlike requests issued by those
+hypermedia controls, it is up to the JavaScript code to handle the response from the server.
 
 Despite AJAX having XML as part of its acronym, today the HTTP response to this request would almost certainly be in the
 JavaScript Object Notation (JSON) format rather than XML.
@@ -379,9 +379,9 @@ An HTTP response to this request might look something like this:
   "email" : "json-example@example.org" <3>
 }
 ----
-<1> The start of a JSON object
-<2> A property, in this case with the name `id` and the value `42`
-<3> Another property, the email of the contact with this id
+<1> The start of a JSON object.
+<2> A property, in this case with the name `id` and the value `42`.
+<3> Another property, the email of the contact with this id.
 
 The JavaScript code above converts the JSON text received from the server into a JavaScript object by calling the
 `json()` method on it.  This produces a JavaScript object.  This object is then handed off to the `updateUI()` method.
@@ -404,11 +404,11 @@ In particular, the code in `updateUI()` needs to know about the _internal struct
 
 It needs to know:
 
-- Exactly how the fields in the JSON data object are structured and named
-- How they relate to one another
-- How to update the local data this new data corresponds with
-- How to render this data to the browser
-- What additional actions/API end points can be called with this data
+- Exactly how the fields in the JSON data object are structured and named.
+- How they relate to one another.
+- How to update the local data this new data corresponds with.
+- How to render this data to the browser.
+- What additional actions/API end points can be called with this data.
 
 In short, the logic in `updateUI()` needs to have intimate knowledge of the API endpoint at `/api/v1/contact/1`, provided
 via some side-channel beyond the response itself.  Because of this, it can be said that the `updateUI()` code and the

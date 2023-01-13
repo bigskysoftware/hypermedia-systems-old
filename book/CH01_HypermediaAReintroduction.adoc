@@ -187,7 +187,7 @@ In a typical Web browser, this anchor tag would be interpreted to mean:
 document, updating the navigation bar to this new URL.
 
 Anchors provide the main mechanism we use to navigate around the web today, by selecting links to navigate from document
-to document (or from resource to resource).
+to document, or from resource to resource.
 
 Here is what a user interaction with an anchor tag/hyperlink looks like in visual form:
 

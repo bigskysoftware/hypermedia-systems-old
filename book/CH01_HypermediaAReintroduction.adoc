@@ -6,7 +6,7 @@
 Hypermedia is a universal technology today, almost as common as electricity.
 
 Billions of people use hypermedia-based systems every day, mainly by interacting with the _HyperText Markup Language
-(HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a Web Browser connected to the World Wide Web.
+(HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a web browser connected to the World Wide Web.
 
 People use these systems to get their news, check in on friends, buy things online, play games, send emails and so
 forth: the variety and sheer number of online services being delivered by hypermedia is truly astonishing.
@@ -31,7 +31,7 @@ tremendously innovative, simple and _flexible_ way to build robust applications:
 
 We hope that by the end of this book you will feel, as we do, that the hypermedia approach deserves a seat at the table
 when you, a web developer, are considering the architecture of your next application.  Creating a Hypermedia-Driven
-Application on top of a  _hypermedia system_ like The Web is a viable and, indeed, often excellent choice for
+Application on top of a  _hypermedia system_ like the web is a viable and, indeed, often excellent choice for
 _modern_ web applications.
 
 (And, as the section on Hyperview will show, not just web applications.)
@@ -145,7 +145,7 @@ hypermedia, used to publish (at first) academic documents.  These documents were
 created _hyperlinks_ between them, allowing users to quickly navigate between documents.
 
 When HTML 2.0 was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e. hyperlink) as a
-second hypermedia control.  The introduction of the form tag made building _applications_ on The Web viable by providing
+second hypermedia control.  The introduction of the form tag made building _applications_ on the web viable by providing
 a mechanism for _updating_ resources, rather than just reading them.
 
 It was at this point that the web transitioned from an interesting document-oriented system to a compelling
@@ -179,7 +179,7 @@ An anchor tag consists of the tag itself -- `<a></a>` -- as well as the attribut
 interest is the `href` attribute, which specifies a _hypertext reference_ to another document or document fragment.  It
 is this attribute that makes the anchor tag a hypermedia control.
 
-In a typical Web browser, this anchor tag would be interpreted to mean:
+In a typical web browser, this anchor tag would be interpreted to mean:
 
 - Show the text "`Hypermedia Systems`" in a manner indicating that it is clickable.
 - When the user clicks on that text, issue an HTTP `GET` request to the URL `https://hypermedia.systems/`.
@@ -228,7 +228,7 @@ Here is what a user interaction with an anchor tag/hyperlink looks like in visua
 When the link is clicked the browser (or, as we sometimes refer to it, the _hypermedia client_) initiates an HTTP
 `GET` request to the URL encoded in the link's `href` attribute.
 
-Note that the HTTP request includes additional data (i.e. _metadata_) on what, exactly, the browser wants from the server,
+Note that the HTTP request includes additional data (i.e., _metadata_) on what, exactly, the browser wants from the server,
 in the form of headers.  We will discuss these headers, and HTTP in more depth in Chapter 3.
 
 The _hypermedia server_ then responds to this request with a _hypermedia response_, that is, with the HTML for the new page.
@@ -237,7 +237,7 @@ system_: the client and server must communicate via hypermedia!
 
 ==== Form Tags
 
-Anchor tags provide _navigation_ between documents (or resources) but don't allow you to update them.  That functionality
+Anchor tags provide _navigation_ between documents or resources, but don't allow you to update those resources.  That functionality
 falls to the form tag.
 
 Here is a simple example of a form in HTML:
@@ -252,7 +252,7 @@ Here is a simple example of a form in HTML:
 </form>
 ----
 
-Like an anchor tag, a form tag consists of the tag itself (i.e. `<form></form>`) combined with attributes and then
+Like an anchor tag, a form tag consists of the tag itself -- `<form></form>` -- combined with attributes and then
 content within the tag.  Note that the form tag does not have an `href` attribute, but rather has an `action` attribute
 that specifies where to issue an HTTP request to.
 
@@ -442,7 +442,7 @@ When the user interface is updated by a user these changes also flow _into_ the 
 binding mechanism: the model can update the UI and the UI can update the model.
 
 All very sophisticated and, today, very popular.  But the fact is that developers that adopt this approach to building
-web applications have largely abandoned the underlying hypermedia system of The Web.
+web applications have largely abandoned the web's underlying hypermedia system.
 
 HTML is still used to build user interfaces, but the _hypermedia_ aspect of the two major hypermedia controls,
 anchors and forms, are ignored.  Neither tag interacts with a server via their native _hypermedia_ mechanism.  Rather,
@@ -450,11 +450,11 @@ they become mere user interface elements that drive local interactions with the 
 which is then synchronized with the server using plain data JSON APIs.
 
 So, like our simple button above, the Single Page Application approach is _not_ built on top of a hypermedia architecture.
-It does not take advantage of the natural REST-ful architecture of The Web, nor does it utilize the built-in functionality
+It does not take advantage of the natural REST-ful architecture of the web, nor does it utilize the built-in functionality
 found in HTML's native hypermedia controls.
 
 SPAs are, in some sense, much more akin to _thick client applications_ like the client-server applications of the
-1980s, which were popular _before_ The Web came along.
+1980s, which were popular _before_ the web came along.
 
 This isn't a _necessarily wrong approach_, but it is worth thinking about _why_ web developers so frequently take it and
 if there are reasons _not_ to go down this path.
@@ -557,7 +557,7 @@ This might seem like idle speculation, but we have some good news on this score:
 idiosyncratic, alternative front end libraries have arisen that attempt to get HTML moving again.  Ironically these
 libraries are written in JavaScript, the technology that supplanted HTML as the center of web development.
 
-However, these libraries use JavaScript not as a __replacement__ for the fundamental hypermedia system of The Web.
+However, these libraries use JavaScript not as a __replacement__ for the fundamental hypermedia system of the web.
 
 Instead, they use JavaScript to augment HTML itself _as a hypermedia_.
 
@@ -657,9 +657,9 @@ Here we get to the crux of htmx and how it allows you to build Hypermedia-Driven
 _The HTTP response from the server is expected to be in HTML format, not JSON_
 
 This means that this htmx-powered button is exchanging _hypermedia_ with the server, just like an anchor tag or form
-might, and thus the interaction is still within this original hypermedia model of The Web.  htmx _is_ adding functionality
+might, and thus the interaction is still within this original hypermedia model of the web.  htmx _is_ adding functionality
 to this button (via JavaScript), but that functionality is _augmenting_ HTML as a hypermedia, extending the hypermedia
-system of The Web, rather than _replacing_ that hypermedia system with a totally different architecture.
+system of the web, rather than _replacing_ that hypermedia system with a totally different architecture.
 
 Despite looking superficially similar to one another it turns out that this htmx-powered button and the JavaScript-based
 button are using extremely different system architectures and, thus, approaches to web development.
@@ -674,7 +674,7 @@ Hypermedia is often, though _not always_, a great choice for a web application.
 Perhaps you are building a website or application that simply doesn't _need_ a huge amount of user-interactivity.  There are
 many useful web applications like this, and there is no shame in it!  Applications like Amazon, Ebay, any number of news
 sites, shopping sites, message boards and so on don't need a massive amount of interactivity to be effective: they are
-mainly text and images, which is exactly what The Web was designed for.
+mainly text and images, which is exactly what the web was designed for.
 
 Perhaps your application adds most of its value on the _server side_, by coordinating users or by applying sophisticated
 data analysis and then presenting it to a user.  Perhaps your application adds value by simply sitting in front of a
@@ -710,7 +710,7 @@ In this case we have a highly dynamic user interface without clear boundaries as
 a particular change.  Introducing a hypermedia-style server round-trip on every cell change would hurt performance
 tremendously.
 
-This is simply not a situation amenable to the "`large-grain hypermedia data transfer`" approach of The Web.  For an
+This is simply not a situation amenable to the "`large-grain hypermedia data transfer`" approach of the web.  For an
 application like this we would certainly recommend looking into using a sophisticated client-side JavaScript approach.
 
 _However_ even in the case of an online spreadsheet there are likely areas where the hypermedia approach might help.
@@ -762,6 +762,6 @@ you can take advantage of this system architecture in your own software.
 In the coming chapters you will develop a firm understanding of all the benefits and techniques enabled by this approach.
 We hope that, in addition, you will also become as passionate about it as we are.
 
-This book is, in part, a plea that we "`let The Web be The Web`", that we take the original architecture of The Web
+This book is, in part, a plea that we "`let the web be the web`", that we take the original architecture of the web
 seriously, and that we consider the entire _hypermedia system_ it makes available to us when we build applications
 with it.

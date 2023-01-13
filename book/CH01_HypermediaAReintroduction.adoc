@@ -142,13 +142,13 @@ ____
 
 The system that Berners-Lee, Fielding and many others had created revolved around a hypermedia: HTML.  HTML started as a read-only
 hypermedia, used to publish (at first) academic documents.  These documents were linked together via anchor tags which
-created _hyperlinks_ between them, allowing users of The Web to quickly navigate between documents.
+created _hyperlinks_ between them, allowing users to quickly navigate between documents.
 
 When HTML 2.0 was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e. hyperlink) as a
 second hypermedia control.  The introduction of the form tag made building _applications_ on The Web viable by providing
 a mechanism for _updating_ resources, rather than just reading them.
 
-It was at this point that The Web transitioned from an interesting document-oriented system to a compelling
+It was at this point that the web transitioned from an interesting document-oriented system to a compelling
 _application architecture_.
 
 Today HTML is the most widely used hypermedia in existence and this book naturally assumes that the reader has a
@@ -175,7 +175,7 @@ Consider a simple anchor tag, embedded within a larger HTML document:
 </a>
 ----
 
-An anchor tag consists of the tag itself (i.e. `<a></a>`) as well as attributes and content within the tag.  Of particular
+An anchor tag consists of the tag itself - `<a></a>` - as well as attributes and content within the tag.  Of particular
 interest is the `href` attribute, which specifies a _hypertext reference_ to another document (or fragment, etc.)  It
 is this attribute that makes the anchor tag a hypermedia control.
 

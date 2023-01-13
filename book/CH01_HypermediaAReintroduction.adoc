@@ -181,10 +181,10 @@ is this attribute that makes the anchor tag a hypermedia control.
 
 In a typical Web browser, this anchor tag would be interpreted to mean:
 
-- Show the text "`Hypermedia Systems`" in a manner indicating that it is clickable
-- When the user clicks on that text, issue an HTTP `GET` request to the URL `https://hypermedia.systems/`
+- Show the text "`Hypermedia Systems`" in a manner indicating that it is clickable.
+- When the user clicks on that text, issue an HTTP `GET` request to the URL `https://hypermedia.systems/`.
 - Take the HTML content in the body of the HTTP response to this request and replace the entire screen in the browser as a new
-document, updating the navigation bar to this new URL
+document, updating the navigation bar to this new URL.
 
 Anchors provide the main mechanism we use to navigate around the web today, by selecting links to navigate from document
 to document (or from resource to resource).

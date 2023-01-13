@@ -252,7 +252,7 @@ Here is a simple example of a form in HTML:
 </form>
 ----
 
-Like an anchor tag, a form tag consists of the tag itself (`<form></form>`) -- combined with attributes and then
+Like an anchor tag, a form tag consists of the tag itself (`<form></form>`) combined with attributes and then
 content within the tag.  Note that the form tag does not have an `href` attribute, but rather has an `action` attribute
 that specifies where to issue an HTTP request to.
 

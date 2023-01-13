@@ -6,13 +6,12 @@
 Hypermedia is a universal technology today, almost as common as electricity.
 
 Billions of people use hypermedia-based systems every day, mainly by interacting with the _HyperText Markup Language
-(HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a Web Browser connected to the World Wide
-Web.
+(HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a Web Browser connected to the World Wide Web.
 
 People use these systems to get their news, check in on friends, buy things online, play games, send emails and so
 forth: the variety and sheer number of online services being delivered by hypermedia is truly astonishing.
 
-And yet, despite this ubiquity, the topic hypermedia itself is a strangely under-explored concept today, left mainly to
+And yet, despite this ubiquity, the topic of hypermedia itself is a strangely under-explored concept today, left mainly to
 specialists.  Yes, you can find a lot of tutorials on how to author HTML, create links and forms, etc.  But it is rare
 to see a discussion of HTML __as a hypermedia__ and, more broadly, on how an entire hypermedia _system_ fits together.
 
@@ -58,14 +57,14 @@ Hypermedia Control:: A _hypermedia control_ is an element in a hypermedia that d
 interaction, often with a remote server, by encoding information about that interaction directly and completely within
 itself.
 
-It is hypermedia controls that differentiate hypermedia from other sorts of media.
+Hypermedia controls are what differentiate hypermedia from other sorts of media.
 
 You may be more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-category of hypermedia and much of this book is going to discuss how to build modern applications using
 hypertexts such as  HTML, the HyperText Markup Language, or HXML, a hypertext used by the Hyperview mobile hypermedia
 system.
 
-Hypertexts like HTML function along-side other technologies crucial for making an entire hypermedia system work: network
+Hypertexts like HTML function alongside other technologies crucial for making an entire hypermedia system work: network
 protocols like HTTP, other media types such as images, videos, hypermedia servers (i.e. servers providing hypermedia APIs),
 sophisticated hypermedia clients (e.g. web browsers), and so on.
 
@@ -79,7 +78,7 @@ It is the entire hypermedia _system architecture_ that is underappreciated and i
 Where did the idea of hypermedia come from?
 
 While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
-to the article _As We May Think_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
+to the 1945 article _As We May Think_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
 has become modern hypermedia.
 
 In this article Bush described a device called a Memex, which, using a complex mechanical system of reels and microfilm,
@@ -96,10 +95,10 @@ California.
 
 Englebart demonstrated an unbelievable amount of technology:
 
-* Remote, collaborative text editing with his peers in Menlo Park
-* Video and audio chat
+* Remote, collaborative text editing with his peers in Menlo Park.
+* Video and audio chat.
 * An integrated windowing system, with window resizing, etc.
-* A recognizable hypertext, whereby clicking on underlined text navigated to new content
+* A recognizable hypertext, whereby clicking on underlined text navigated to new content.
 
 Despite receiving a standing ovation from a shocked audience after his talk, it was decades before the technologies
 Englebart demonstrated became mainstream.
@@ -118,20 +117,20 @@ been designed already. I just had to put them together. It was a step of general
 thinking about all the documentation systems out there as being possibly part of a larger imaginary documentation system.
 ____
 
-By 1994 The Web had grown so quickly that Berners-Lee founded the W3C, a working group of companies and researchers
-tasked with improving The Web.  All standards created by the W3C were royalty-free and could be adopted and implemented
-by anyone, cementing the open, collaborative nature of The Web.
+By 1994 his creation was taking off so quickly that Berners-Lee founded the W3C, a working group of companies and researchers
+tasked with improving the web.  All standards created by the W3C were royalty-free and could be adopted and implemented
+by anyone, cementing the open, collaborative nature of the web.
 
-In 2000, Roy Fielding, then at U.C. Irvine, published a seminal PhD dissertation on The Web: "`Architectural Styles and the
+In 2000, Roy Fielding, then at U.C. Irvine, published a seminal PhD dissertation on the web: "`Architectural Styles and the
 Design of Network-based Software Architectures`".  Fielding had been working on the open source Apache HTTP Server and
 his thesis was a description of what he felt was a _new and distinct networking architecture_ that had emerged in the early
 web.  Fielding had worked on the initial HTTP specifications and, in the paper, defined the web's hypermedia
 network model using the term _REpresentational State Transfer (REST)_.
 
-Fielding's dissertation became a major touchstone for early web developers, giving them a language to discuss the new technical
+Fielding's work became a major touchstone for early web developers, giving them a language to discuss the new technical
 medium they were building applications in.
 
-We will discuss Fielding's dissertation in depth in Chapter 3, and try to correct the record with respect to REST,
+We will discuss Fielding's key ideas in depth in Chapter 3, and try to correct the record with respect to REST,
 HATEOAS and hypermedia.
 
 == The World's Most Successful Hypertext: HTML

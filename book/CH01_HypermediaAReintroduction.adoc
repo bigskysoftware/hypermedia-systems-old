@@ -6,13 +6,12 @@
 Hypermedia is a universal technology today, almost as common as electricity.
 
 Billions of people use hypermedia-based systems every day, mainly by interacting with the _HyperText Markup Language
-(HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a Web Browser connected to the World Wide
-Web.
+(HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a Web Browser connected to the World Wide Web.
 
 People use these systems to get their news, check in on friends, buy things online, play games, send emails and so
 forth: the variety and sheer number of online services being delivered by hypermedia is truly astonishing.
 
-And yet, despite this ubiquity, the topic hypermedia itself is a strangely under-explored concept today, left mainly to
+And yet, despite this ubiquity, the topic of hypermedia itself is a strangely under-explored concept today, left mainly to
 specialists.  Yes, you can find a lot of tutorials on how to author HTML, create links and forms, etc.  But it is rare
 to see a discussion of HTML __as a hypermedia__ and, more broadly, on how an entire hypermedia _system_ fits together.
 
@@ -58,7 +57,7 @@ Hypermedia Control:: A _hypermedia control_ is an element in a hypermedia that d
 interaction, often with a remote server, by encoding information about that interaction directly and completely within
 itself.
 
-It is hypermedia controls that differentiate hypermedia from other sorts of media.
+Hypermedia controls are what differentiate hypermedia from other sorts of media.
 
 You may be more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-category of hypermedia and much of this book is going to discuss how to build modern applications using

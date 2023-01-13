@@ -127,10 +127,10 @@ his thesis was a description of what he felt was a _new and distinct networking 
 web.  Fielding had worked on the initial HTTP specifications and, in the paper, defined the web's hypermedia
 network model using the term _REpresentational State Transfer (REST)_.
 
-Fielding's dissertation became a major touchstone for early web developers, giving them a language to discuss the new technical
+Fielding's work became a major touchstone for early web developers, giving them a language to discuss the new technical
 medium they were building applications in.
 
-We will discuss Fielding's dissertation in depth in Chapter 3, and try to correct the record with respect to REST,
+We will discuss Fielding's key ideas in depth in Chapter 3, and try to correct the record with respect to REST,
 HATEOAS and hypermedia.
 
 == The World's Most Successful Hypertext: HTML

@@ -176,7 +176,7 @@ Consider a simple anchor tag, embedded within a larger HTML document:
 ----
 
 An anchor tag consists of the tag itself -- `<a></a>` -- as well as the attributes and content within the tag.  Of particular
-interest is the `href` attribute, which specifies a _hypertext reference_ to another document (or fragment, etc.)  It
+interest is the `href` attribute, which specifies a _hypertext reference_ to another document or document fragment.  It
 is this attribute that makes the anchor tag a hypermedia control.
 
 In a typical Web browser, this anchor tag would be interpreted to mean:

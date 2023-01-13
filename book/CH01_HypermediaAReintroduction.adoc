@@ -192,9 +192,39 @@ to document (or from resource to resource).
 
 Here is what a user interaction with an anchor tag/hyperlink looks like in visual form:
 
-// TODO REDO IMAGE
 .An HTTP GET In Action
-image::figure_1-1_http_mental_model_get.txt.svg[]
+[,asciiart]
+----
+┌────────────────────────┐   ┌─HTTP REQUEST────────────────┐
+│ BROWSER              X │   │                             │
+├────────────────────────┤   │ GET /                       │
+│                        │   │ Host: hypermedia.systems    │
+│ lorem ipsum dolor      │   └─────────────────────────────┘
+│                        │
+│ Hypermedia Systems ────────────────┐
+│ ──────────────────     │           │
+│ sit amet               │           │
+│                        │           │
+└────────────────────────┘           │
+                              ┌──────▼──────┐
+                              │   H T T P   │
+                              │ S E R V E R │
+                              └──────┬──────┘
+┌────────────────────────┐           │
+│ BROWSER              X │           │
+├────────────────────────┤           │
+│                        │           │
+│ HYPERMEDIA SYSTEMS     ◀───────────┘
+│                        │
+│ The revolutionary      │   ┌─HTTP RESPONSE───────────────┐
+│                        │   │                             │
+│ ideas that empowered...│   │ 200 OK                      │
+│                        │   │ ...                         │
+└────────────────────────┘   │ <h1>Hypermedia Systems</h1> │
+                             │ ...                         │
+                             └─────────────────────────────┘
+
+----
 
 When the link is clicked the browser (or, as we sometimes refer to it, the _hypermedia client_) initiates an HTTP
 `GET` request to the given URL encoded `href` attribute of the link.
@@ -256,10 +286,40 @@ example suffices to demonstrate the core mechanism for updating system state pur
 
 Here is a diagram of the interaction:
 
-// TODO update, needs to omit the 302 redirect
-[#figure-1-2, reftext="Figure {chapter}.{counter:figure}"]
+// alt: When a link is clicked, the browser sends a GET request as before. The server sends a 200 OK response that contains a page.
 .An HTTP POST In Action
-image::figure_1-1_http_mental_model_post.png[]
+[,asciiart]
+----
+┌────────────────────────┐   ┌─HTTP REQUEST────────────────┐
+│ BROWSER              X │   │                             │
+├────────────────────────┤   │ POST /sign-up               │
+│                        │   │ Host: hypermedia.systems    │
+│ SIGN UP                │   │ ...                         │
+│ ┌────────────────────┐ │   │ email=joe@example.com       │
+│ │ joe@example.com    │ │   └─────────────────────────────┘
+│ └────────────────────┘ │
+│ ┌─────────┐            │
+│ │ Sign up │────────────────────────┐
+│ └─────────┘            │           │
+└────────────────────────┘           │
+                              ┌──────▼──────┐
+                              │   H T T P   │
+                              │ S E R V E R │
+                              └──────┬──────┘
+┌────────────────────────┐           │
+│ BROWSER              X │           │
+├────────────────────────┤           │
+│                        │           │
+│ THANK YOU FOR SIGNING  ◀───────────┘
+│ UP                     │
+│                        │   ┌─HTTP RESPONSE───────────────┐
+│                        │   │                             │
+│                        │   │ 200 OK                      │
+│                        │   │ ...                         │
+└────────────────────────┘   │ <h1>Thank you for signing   │
+                             │ up</h1>                     │
+                             └─────────────────────────────┘
+----
 
 ==== Web 1.0 Applications
 

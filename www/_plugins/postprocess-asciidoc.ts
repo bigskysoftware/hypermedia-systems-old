@@ -65,6 +65,16 @@ export default () => {
                 cite.append(...el.childNodes);
                 el.append(cite);
             })
+
+            $$(document, ".language-asciiart").forEach(el => {
+                const wrapper = el.parentElement!;
+                el.tagName = "pre";
+                wrapper.tagName = "div";
+
+                wrapper.setAttribute("role", "img");
+                el.setAttribute("aria-hidden", "true");
+                el.classList.add("asciiart");
+            })
         })
     }
 }

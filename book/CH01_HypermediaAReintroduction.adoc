@@ -321,7 +321,7 @@ Here is a diagram of the interaction:
 
 ==== Web 1.0 Applications
 
-As someone interested in web development the above diagrams and discussion probably look very familiar to you.  You may
+As someone interested in web development the above diagrams and discussion probably look very familiar.  You may
 even find this content boring.  But take a step back and consider the fact that these two hypermedia controls,
 anchors and forms, are really the _only_ native ways for a user to interact with a server in plain HTML.
 
@@ -338,7 +338,7 @@ These two tags give a tremendous amount of expressive power to HTML.
 
 === So What _Isn't_ Hypermedia?
 
-So these are the two main hypermedia-based mechanisms for interacting with a server available in HTML.
+So `<a>` and `<form>` are the two main hypermedia-based mechanisms for interacting with a server available in HTML.
 
 Now let's consider a different approach: let's interact with a server by issuing an HTTP request via JavaScript.  To
 do this, we will use the https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API[`fetch()`] API, a popular API for

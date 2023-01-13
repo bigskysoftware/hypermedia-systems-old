@@ -9,6 +9,7 @@ export default () => {
 
             $$(document, ".listingblock, .imageblock").forEach((el) => {
                 el.tagName = "figure";
+                el.classList.add("contents"); // Don't draw box around images and code listings
                 const title = el.querySelector(".title");
                 if (title) title.tagName = "figcaption";
             })

@@ -259,18 +259,17 @@ that specifies where to issue an HTTP request.
 Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`Method`" to use.  In this example
 the form is asking the browser to issue a `POST` request.
 
-The content _within_ the form is more important than the content within an anchor tag is.  The values of `input` tags
+The content _within_ the form is more important than the content within an anchor tag.  The values of `input` tags
 and other tags such as `select` tags will be included with the HTTP request when the form is submitted.  This allows a
-form to include an arbitrary amount of information collected from a user in a request, which is in contrast with the
-anchor tag.
+form to include an arbitrary amount of information collected from a user in a request, unlike the anchor tag.
 
 In a typical browser this form tag and its contents would be interpreted by the browser roughly as follows:
 
-- Show a text input and a "`Sign Up`" button to the user
+- Show a text input and a "`Sign Up`" button to the user.
 - When the user submits the form by clicking the "`Sign Up`" button or by hitting the enter key while the input element is
-  focused, issue an HTTP `POST` request to the path `/signup` on the "`current`" server
+  focused, issue an HTTP `POST` request to the path `/signup` on the "`current`" server.
 - Take the HTML content in the body of the HTTP response body and replace the entire screen in the browser as a new
-  document, updating the navigation bar to this new URL
+  document, updating the navigation bar to this new URL.
 
 This mechanism allows the user to issue requests to _update the state_ of resources on the server.  Note that despite
 this new type of request the communication between client and server is still done entirely with _hypermedia_.

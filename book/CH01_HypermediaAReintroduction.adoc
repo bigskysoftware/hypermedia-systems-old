@@ -226,7 +226,7 @@ Here is what a user interaction with an anchor tag/hyperlink looks like in visua
 ----
 
 When the link is clicked the browser (or, as we sometimes refer to it, the _hypermedia client_) initiates an HTTP
-`GET` request to the given URL encoded `href` attribute of the link.
+`GET` request to the URL encoded in the link's `href` attribute.
 
 Note that the HTTP request includes additional data (i.e. _metadata_) on what, exactly, the browser wants from the server,
 in the form of headers.  We will discuss these headers, and HTTP in more depth in Chapter 3.

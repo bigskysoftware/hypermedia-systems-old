@@ -175,7 +175,7 @@ Consider a simple anchor tag, embedded within a larger HTML document:
 </a>
 ----
 
-An anchor tag consists of the tag itself -- `<a></a>` -- as well as the attributes and content within the tag.  Of particular
+An anchor tag consists of the tag itself, `<a></a>`, as well as the attributes and content within the tag.  Of particular
 interest is the `href` attribute, which specifies a _hypertext reference_ to another document or document fragment.  It
 is this attribute that makes the anchor tag a hypermedia control.
 
@@ -254,7 +254,7 @@ Here is a simple example of a form in HTML:
 
 Like an anchor tag, a form tag consists of the tag itself, `<form></form>`, combined with attributes and then
 content within the tag.  Note that the form tag does not have an `href` attribute, but rather has an `action` attribute
-that specifies where to issue an HTTP request to.
+that specifies where to issue an HTTP request.
 
 Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`Method`" to use.  In this example
 the form is asking the browser to issue a `POST` request.

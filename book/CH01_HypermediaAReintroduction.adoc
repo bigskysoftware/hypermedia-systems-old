@@ -447,7 +447,7 @@ they become mere user interface elements that drive local interactions with the 
 which is then synchronized with the server using plain data JSON APIs.
 
 So, as with our simple button above, the Single Page Application approach is _not_ built on top of a hypermedia architecture.
-It does not take advantage of the natural REST-ful architecture of the web, nor does it utilize the built-in functionality
+It does not take advantage of the existing REST-ful architecture of the web, nor does it utilize the built-in functionality
 found in HTML's native hypermedia controls.
 
 SPAs are, in some sense, much more akin to _thick client applications_ like the client-server applications of the

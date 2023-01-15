@@ -472,12 +472,12 @@ ____
 
 The JavaScript-based Single Page Application approach has taken the web development world by storm, and there was one
 major and very good reason for its success: The Single Page Application offers a far more interactive and immersive experience
-than the old, gronky, Web 1.0 hypermedia-based applications could.  The ability to smoothly update elements inline on
+than the old, gronky, Web 1.0 hypermedia-based applications could.  It had the ability to smoothly update elements inline on
 a page without a dramatic reload of the entire document, the ability to use CSS transitions to create nice visual effects,
-the ability to hook into arbitrary events like mouse movements, all gave JavaScript-based applications a huge advantage
+the ability to hook into arbitrary events like mouse movements. All of these gave JavaScript-based applications a huge advantage
 in building sophisticated user experiences.
 
-So why on earth would you abandon this popular and modern approach for an older, less popular and much less discussed
+So why on earth would you abandon this popular and modern approach for an older and much less discussed
 approach such as hypermedia?
 
 === JavaScript Fatigue
@@ -487,18 +487,18 @@ Well, we are glad you asked.
 It turns out that the hypermedia architecture, even in its original Web 1.0 form, has a number of advantages when compared with
 the Single Page Application + JSON Data API approach:
 
-* It is an extremely simple approach to building web applications
+* It is an extremely simple approach to building web applications.
 
-* It is extremely tolerant of content and API changes (in fact, it thrives on them!)
+* It is extremely tolerant of content and API changes. In fact, it thrives on them!
 
-* It leverages tried and true features of web browsers, such as caching
+* It leverages tried and true features of web browsers, such as caching.
 
 The first two advantages, in particular, address major pain points in modern web development:
 
-* Single Page Application infrastructure has become extremely complex, often requiring an entire team to manage
+* Single Page Application infrastructure has become extremely complex, often requiring an entire team to manage.
 
-* JSON API churn, constant changes made to JSON APIs to support application needs, has become a major pain point for
-  many application teams
+* JSON API churn -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
+  many application teams.
 
 These two problems, combined with other various issues such as JavaScript library churn, are causing what has come to
 be known as "`Javascript Fatigue`": a general sense of exhaustion with all the hoops that are necessary to jump through to

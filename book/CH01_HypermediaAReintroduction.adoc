@@ -450,10 +450,10 @@ So, as with our simple button above, the Single Page Application approach is _no
 It does not take advantage of the existing REST-ful architecture of the web, nor does it utilize the built-in functionality
 found in HTML's native hypermedia controls.
 
-SPAs are, in some sense, much more akin to _thick client applications_ like the client-server applications of the
-1980s, which were popular _before_ the web came along.
+SPAs are somewhat like _thick client applications_ like the client-server applications of the
+1980s -- an architecture popular _before_ the web came along. 
 
-This isn't a _necessarily wrong approach_, but it is worth thinking about _why_ web developers so frequently take it and
+This approach _isn't necessarily wrong_, but it is worth thinking about _why_ web developers so frequently take it and
 if there are reasons _not_ to go down this path.
 
 == Why Use Hypermedia?
@@ -473,7 +473,7 @@ ____
 The JavaScript-based Single Page Application approach has taken the web development world by storm, and there was one
 major and very good reason for its success: The Single Page Application offers a far more interactive and immersive experience
 than the old, gronky, Web 1.0 hypermedia-based applications could.  The ability to smoothly update elements inline on
-a page without a dramatic reload of the entire document, the ability to use CSS transitions to create nice visual easements,
+a page without a dramatic reload of the entire document, the ability to use CSS transitions to create nice visual effects,
 the ability to hook into arbitrary events like mouse movements, all gave JavaScript-based applications a huge advantage
 in building sophisticated user experiences.
 

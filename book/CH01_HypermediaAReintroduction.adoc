@@ -321,9 +321,9 @@ Here is a diagram of the interaction:
 
 ==== Web 1.0 Applications
 
-As someone interested in web development the above diagrams and discussion probably look very familiar.  You may
+As someone interested in web development, the discussion above probably sounds very familiar to you.  You may
 even find this content boring.  But take a step back and consider the fact that these two hypermedia controls,
-anchors and forms, are really the _only_ native ways for a user to interact with a server in plain HTML.
+anchors and forms, are the _only_ native ways for a user to interact with a server in plain HTML.
 
 Only two tags!
 
@@ -358,7 +358,7 @@ issuing an "`Asynchronous JavaScript and XML,`" or AJAX request, available in al
 <2> Convert the response to a JavaScript object.
 <3> Invoke the `updateUI()` function with the object.
 
-This button has an `onclick` attribute which specifies some JavaScript to run when the button is clicked.
+This button has an `onclick` attribute that specifies some JavaScript to run when the button is clicked.
 
 The JavaScript will issue an AJAX HTTP `GET` request to `/api/v1/contacts/1` using `fetch()`.  An AJAX request is like a
 "`normal`" HTTP request, but it is issued "`behind the scenes`" by the browser.  The user does not see a
@@ -384,10 +384,10 @@ An HTTP response to this request might look something like this:
 <3> Another property, the email of the contact with this id.
 
 The JavaScript code above converts the JSON text received from the server into a JavaScript object by calling the
-`json()` method on it.  This produces a JavaScript object.  This object is then handed off to the `updateUI()` method.
+`json()` method on it.  This new JavaScript object object is then handed off to the `updateUI()` method.
 
-The `updateUI()` method is then responsible for updating the UI based on the data that has been received from the server,
-perhaps displaying this contact in a bit of HTML generated via a client-side template in the JavaScript application.
+The `updateUI()` method is responsible for updating the UI based on the data encoded in the JavaScript Object,
+perhaps by displaying the contact in a bit of HTML generated via a client-side template in the JavaScript application.
 
 The details of exactly what the `updateUI()` function does aren't important for our discussion.
 
@@ -410,9 +410,9 @@ It needs to know:
 - How to render this data to the browser.
 - What additional actions/API end points can be called with this data.
 
-In short, the logic in `updateUI()` needs to have intimate knowledge of the API endpoint at `/api/v1/contact/1`, provided
-via some side-channel beyond the response itself.  Because of this, it can be said that the `updateUI()` code and the
-API are _tightly coupled_: if the format of the JSON response changes, then the code for `updateUI()` will almost certainly
+In short, the logic in `updateUI()` needs to have intimate knowledge of the API endpoint at `/api/v1/contact/1`, knowledge provided
+via some side-channel beyond the response itself.  As a result, the `updateUI()` code and the
+API have a strong relationship, known as _tight coupling_: if the format of the JSON response changes, then the code for `updateUI()` will almost certainly
 also need to be changed.
 
 ==== Single Page Applications
@@ -426,21 +426,20 @@ Instead, the application is exchanging _plain data_ with the server and then upd
 When this strategy (or architecture) is adopted for an entire application, everything happens on a "`Single Page`" and,
 thus the application becomes a "`Single Page Application.`"
 
-This Single Page Application architecture is extremely popular today and has been the dominant (at least in terms of
-mind-share and blog posts) approach to building web applications for the last decade.
+The Single Page Application architecture is extremely popular today and has been the dominant approach to building web applications for the last decade. This can be observed by the high level of mind-share and discussion it has received in the industry. 
 
 Today the vast majority of Single Page Applications adopt far more sophisticated frameworks for managing their
 user interface than this simple example shows.  Popular libraries such as React, Angular, Vue.js, etc. are all common,
 and, indeed, the standard way to build web applications.
 
-With these more complex frameworks developers typically work with an elaborate client-side model (that is, JavaScript objects
-stored locally in the browser's memory that represent the "`model`" or "`domain`" of your application.)  These JavaScript objects
+With these more complex frameworks developers typically work with an elaborate client-side model -- that is, with JavaScript objects
+stored locally in the browser's memory that represent the "`model`" or "`domain`" of your application.  These JavaScript objects
 are updated via JavaScript code and the framework then "`reacts`" to these changes, updating the user interface.
 
 When the user interface is updated by a user these changes also flow _into_ the model objects, establishing a "`two-way`"
 binding mechanism: the model can update the UI and the UI can update the model.
 
-All very sophisticated and, today, very popular.  But the fact is that developers that adopt this approach to building
+This is all very sophisticated and, today, very popular.  But the fact is that developers that adopt this approach to building
 web applications have largely abandoned the web's underlying hypermedia system.
 
 HTML is still used to build user interfaces, but the _hypermedia_ aspect of the two major hypermedia controls,

@@ -559,29 +559,27 @@ These _hypermedia-oriented_ libraries re-center hypermedia as the core technolog
 
 === Hypermedia-Oriented Javascript Libraries
 
-In the web development world today there is a debate going on between the SPA approach and what are now being called
-"`Multi-Page Applications`" or MPAs.  MPA is a modern name for the old, Web 1.0 way of building web applications, using
+In the web development world today there is a debate between the Single Page Application (SPA) approach and what is now being called the
+"`Multi-Page Application`" (MPA) approach.  MPA is a modern name for the old, Web 1.0 way of building web applications, using
 links and forms located on multiple web pages, submitting HTTP requests and getting HTML responses.
 
 MPA applications, by their nature, are Hypermedia-Driven Applications: after all, they are exactly what Roy Fielding
 was describing in his dissertation.
 
-These applications tend to be clunky but, despite this, they work reasonably well.  Many web developers and teams have
-decided to just accept the limitations of plain HTML in the interest of the simplicity and reliability that it offers.
+These applications tend to be clunky, but they work reasonably well.  Many web developers and teams choose to accept the limitations of plain HTML in the interest of simplicity and reliability.
 
-Rich Harris, creator of svelte.js, a popular SPA library, and a thought-leader on the SPA side of the debate, has proposed a mix
-of this older MPA style and the newer SPA style.  Harris calls this approach to building web applications "`transitional`", in that
-it attempts to mix both the MPA approach and the newer SPA approach into a coherent whole.  (This is somewhat
-similar to the "`transitional`" trend in architecture, which blends traditional and modern architectural styles together.)
+Rich Harris, creator of Svelte.js, a popular SPA library, and a thought-leader on the SPA side of the debate, has proposed a mix
+of this older MPA style and the newer SPA style.  Harris calls this approach to building web applications "`transitional,`" in that
+it attempts to blend the MPA approach and the newer SPA approach into a coherent whole.  (This is somewhat
+similar to the "`transitional`" trend in architecture, which combines traditional and modern architectural styles.)
 
-"`Transitional`" a good term for these mixed-style applications and offers a reasonable compromise between the two, using
-either approach where it makes the most sense on an ad hoc basis.
+"`Transitional`" is a fitting term for mixed-style applications, and it offers a reasonable compromise between the two approaches, using either one as appropriate on a case-by-case basis.
 
 But this compromise still feels unsatisfactory.
 
 Why have these two very different architectural models _by default_?
 
-Recall that the crux of the tradeoffs between SPAs and MPAs is the _user experience_, or interactivity of the application.
+Recall that the crux of the tradeoff between SPAs and MPAs is the _user experience_, or interactivity of the application.
 This is typically the driving decision when choosing one approach versus the other for an application or, in the case
 of a "`transitional`" application, for a particular feature.
 
@@ -603,7 +601,7 @@ One such hypermedia oriented library is https://htmx.org[htmx], created by the a
 focus of much (but not all!) of the remainder of this book.  We hope to show you that you can, in fact, create many common
 "`modern`" UI features found in sophisticated Single Page Applications using the hypermedia model.
 
-And not only that, but that it is refreshingly fun and simple to do so.
+And, it is refreshingly fun and simple to do so.
 
 === Hypermedia-Driven Applications
 

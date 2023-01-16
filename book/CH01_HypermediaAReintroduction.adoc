@@ -522,13 +522,13 @@ HTML-as-hypermedia has fallen on hard times: as the interactivity and expressive
 demands of web users have continued to increase, calling for more and more interactive web applications.
 
 JavaScript-based applications coupled to data-oriented JSON APIs have stepped in as a way to provide these more
-sophisticated user interfaces for web applications. It was the _user experience_ that you could achieve in JavaScript, and that you couldn't achieve in plain HTML, that drove the web development community over to the JavaScript-based
-Single Page Application approach. The shift was not driven by superiority of the Single Page Application as a system
+sophisticated user interfaces. It was the _user experience_ that you could achieve in JavaScript, and that you couldn't achieve in plain HTML, that drove the web development community to the JavaScript-based
+Single Page Application approach. The shift was not driven by any inherent superiority of the Single Page Application as a system
 architecture.
 
 It didn't have to be this way.  There is nothing _intrinsic_ to the idea of hypermedia that prevents it from having a
-richer, more expressive interactivity model than what vanilla HTML provides.  Rather than abandoning
-the hypermedia architecture the industry could have demanded more interactivity from HTML.
+richer, more expressive interactivity model than vanilla HTML.  Rather than abandoning
+the hypermedia architecture, the industry could have demanded more interactivity from HTML.
 
 But the industry didn't.  Instead, it reverted to making thick-client style applications within web browsers, in an
 understandable move to a more familiar model for building rich applications.
@@ -536,8 +536,8 @@ understandable move to a more familiar model for building rich applications.
 Not everyone abandoned hypermedia, of course. There have been heroic efforts to continue to advance hypermedia outside of
 HTML, efforts like HyTime, VoiceXML, and HAL.
 
-But HTML, the most widely used hypermedia in the world, stopped making progress as a hypermedia and the web development
-world moved on, solving the interactivity problems with HTML and, wittingly or not, adopting a completely different
+But HTML, the most widely used hypermedia in the world, stopped making progress as a hypermedia. The web development
+world moved on, solving the interactivity problems with HTML and adopting a completely different
 system architecture along the way.
 
 == A Hypermedia Resurgence?

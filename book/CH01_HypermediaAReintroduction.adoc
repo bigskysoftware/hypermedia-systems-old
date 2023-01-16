@@ -500,13 +500,11 @@ The first two advantages, in particular, address major pain points in modern web
 * JSON API churn -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
   many application teams.
 
-These two problems, combined with other various issues such as JavaScript library churn, are causing what has come to
-be known as "`Javascript Fatigue`": a general sense of exhaustion with all the hoops that are necessary to jump through to
+The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon known as "`Javascript Fatigue.`" This refers to a general sense of exhaustion with all the hoops that are necessary to jump through to
 get anything done in modern-day web applications.
 
-We believe that a hypermedia architecture can help cure Javascript Fatigue for many developers and teams.  On the other
-hand, however, if hypermedia is so great and if it addresses so many of the problems that obviously beset the web
-development industry, why was hypermedia abandoned in the first place?  After all, hypermedia was there first.
+We believe that a hypermedia architecture can help cure Javascript Fatigue for many developers and teams.  But if hypermedia is so great, and if it addresses so many of the problems that beset the web
+development industry, why was it abandoned in the first place?  After all, hypermedia was there first.
 
 Why didn't web developers just stick with it?
 
@@ -514,19 +512,18 @@ We believe that hypermedia hasn't made a comeback yet for two reasons.
 
 The first is this: the expressiveness of HTML _as a hypermedia_ hasn't changed much, if at all, since HTML 2.0, which
 was released _in the mid 1990s_.  Many new _features_ have been added to HTML, of course, but there haven't been _any_
-major new ways to interact with a server in HTML added in almost three decades.
+major new ways to interact with a server in HTML in almost three decades.
 
 HTML developers still only have anchor tags and forms available as hypermedia controls, and those hypermedia controls
 can still only issue `GET` and `POST` requests.
 
 This baffling lack of progress by HTML leads immediately to the second, and perhaps more practical reason that
 HTML-as-hypermedia has fallen on hard times: as the interactivity and expressiveness of HTML has remained frozen, the
-demands from web users has continued to increase, demanding more and more interactive web applications.
+demands of web users have continued to increase, calling for more and more interactive web applications.
 
-JavaScript-based applications coupled to data-oriented JSON APIs has stepped in as a way to provide these more
-sophisticated user interfaces for web applications. It was the _user experience_ that you could achieve in JavaScript
-(and that you couldn't achieve in plain HTML) that drove the web development community over to the JavaScript-based
-Single Page Application approach, rather than a superiority of the Single Page Application approach as a system
+JavaScript-based applications coupled to data-oriented JSON APIs have stepped in as a way to provide these more
+sophisticated user interfaces for web applications. It was the _user experience_ that you could achieve in JavaScript, and that you couldn't achieve in plain HTML, that drove the web development community over to the JavaScript-based
+Single Page Application approach. The shift was not driven by superiority of the Single Page Application as a system
 architecture.
 
 It didn't have to be this way.  There is nothing _intrinsic_ to the idea of hypermedia that prevents it from having a

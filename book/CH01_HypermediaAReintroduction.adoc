@@ -577,7 +577,7 @@ similar to the "`transitional`" trend in architecture, which combines traditiona
 
 But this compromise still feels unsatisfactory.
 
-Why have these two very different architectural models _by default_?
+Why would we default to having these two very different architectural models in our applications?
 
 Recall that the crux of the tradeoff between SPAs and MPAs is the _user experience_, or interactivity of the application.
 This is typically the driving decision when choosing one approach versus the other for an application or, in the case

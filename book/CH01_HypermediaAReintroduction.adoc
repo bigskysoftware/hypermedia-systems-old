@@ -544,11 +544,11 @@ system architecture along the way.
 
 It is interesting to think about how HTML _could_ have advanced.  Instead of stalling as a hypermedia, how could HTML
 have continued to develop? Could it have kept adding new hypermedia controls and increasing the expressiveness of
-existing ones?  Would it have become possible to build modern web applications within this original, hypermedia-oriented
-and REST-ful model that made the early web so powerful, so flexible, so... fun?
+existing ones?  Would it have been possible to build modern web applications within this original, hypermedia-oriented
+and RESTful model that made the early web so powerful, so flexible, so... fun?
 
 This might seem like idle speculation, but we have some good news on this score: in the last decade a few
-idiosyncratic, alternative front end libraries have arisen that attempt to get HTML moving again.  Ironically these
+idiosyncratic, alternative front end libraries have arisen that attempt to get HTML moving again.  Ironically, these
 libraries are written in JavaScript, the technology that supplanted HTML as the center of web development.
 
 However, these libraries use JavaScript not as a __replacement__ for the fundamental hypermedia system of the web.

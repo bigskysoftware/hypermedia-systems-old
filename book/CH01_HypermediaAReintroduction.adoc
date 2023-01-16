@@ -559,7 +559,7 @@ These _hypermedia-oriented_ libraries re-center hypermedia as the core technolog
 
 === Hypermedia-Oriented Javascript Libraries
 
-In the web development world today there is a debate between the Single Page Application (SPA) approach and what is now being called the
+In the web development world there is an ongoing debate between the Single Page Application (SPA) approach and what is now being called the
 "`Multi-Page Application`" (MPA) approach.  MPA is a modern name for the old, Web 1.0 way of building web applications, using
 links and forms located on multiple web pages, submitting HTTP requests and getting HTML responses.
 
@@ -577,7 +577,7 @@ similar to the "`transitional`" trend in architecture, which combines traditiona
 
 But this compromise still feels unsatisfactory.
 
-Why would we default to having these two very different architectural models in our applications?
+Must we default to having these two very different architectural models in our applications?
 
 Recall that the crux of the tradeoff between SPAs and MPAs is the _user experience_, or interactivity of the application.
 This is typically the driving decision when choosing one approach versus the other for an application or, in the case

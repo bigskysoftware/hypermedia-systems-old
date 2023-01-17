@@ -232,7 +232,7 @@ Note that the HTTP request includes additional data (i.e., _metadata_) on what, 
 in the form of headers.  We will discuss these headers, and HTTP in more depth in Chapter 3.
 
 The _hypermedia server_ then responds to this request with a _hypermedia response_, that is, with the HTML for the new page.
-This may seem like a small and obvious point, but it is an absolutely crucial aspect of a truly REST-ful _hypermedia
+This may seem like a small and obvious point, but it is an absolutely crucial aspect of a truly RESTful _hypermedia
 system_: the client and server must communicate via hypermedia!
 
 ==== Form Tags
@@ -447,7 +447,7 @@ they become mere user interface elements that drive local interactions with the 
 which is then synchronized with the server using plain data JSON APIs.
 
 So, as with our simple button above, the Single Page Application approach is _not_ built on top of a hypermedia architecture.
-It does not take advantage of the existing REST-ful architecture of the web, nor does it utilize the built-in functionality
+It does not take advantage of the existing RESTful architecture of the web, nor does it utilize the built-in functionality
 found in HTML's native hypermedia controls.
 
 SPAs are somewhat like _thick client applications_ like the client-server applications of the
@@ -605,12 +605,12 @@ And, it is refreshingly fun and simple to do so.
 
 === Hypermedia-Driven Applications
 
-When building a web application with htmx the term Multi-Page Application applies _roughly_, but it doesn't really capture
-the crux of the application architecture.  htmx, as you will see, doesn't _need_ to replace entire pages and, in fact, an
-htmx-based application can reside entirely within a single page.  We certainly don't recommend this practice, but it is
-possible!
+When building a web application with htmx the term Multi-Page Application applies _roughly_, but it doesn't fully characterize
+the core of the application architecture.  Htmx, as you will see, doesn't _need_ to replace entire pages, and, in fact, an
+htmx-based application can reside entirely within a single page. We don't recommend this practice, but it is
+possible! 
 
-So it isn't quite right to call web applications built with htmx "Multi-Page Applications".  What the older Web 1.0 MPA
+So it isn't quite right to call web applications built with htmx "Multi-Page Applications."  What the older Web 1.0 MPA
 approach and the newer hypermedia-oriented library powered applications have in common is their use of _hypermedia_ as
 their core technology and architecture.
 
@@ -622,35 +622,35 @@ in the application, but rather the underlying _system_ architecture.
 Hypermedia-Driven Application (HDA):: A web application that uses _hypermedia_ and _hypermedia exchanges_ as its primary
 mechanism for communicating with a server.
 
-So, what does an HDA look like "`in the small`"?
+So, what does an HDA look like up close?
 
-Let's look at a htmx-powered implementation of the simple JavaScript-powered button above:
+Let's look at an htmx-powered implementation of the simple JavaScript-powered button above:
 
 [#listing-1-4, reftext={chapter}.{counter:listing}]
-.an htmx implementation
+.An Htmx Implementation
 [source,html]
 ----
 <button hx-get="/contacts/1" hx-target="#contact-ui"> <1>
     Fetch Contact
 </button>
 ----
-<1> issues a `GET` request to `/contacts/1`, replacing the `contact-ui`
+<1> issues a `GET` request to `/contacts/1`, replacing the `contact-ui`.
 
-As with the JavaScript powered button we can see that this button has been annotated with some attributes.  However, in
-this case we do not have any JavaScript scripting going on.
+As with the JavaScript powered button, this button has been annotated with some attributes.  However, in
+this case we do not have any JavaScript scripting.
 
 Instead, we have _declarative_ attributes much like the `href` attribute on anchor tags and the `action` attribute on
-form tags.  The `hx-get` attribute tells htmx: "`When the user clicks this button, issue a `GET` request to `/contacts/1``".
+form tags.  The `hx-get` attribute tells htmx: "`When the user clicks this button, issue a `GET` request to `/contacts/1`.`"
 The `hx-target` attribute tells htmx: "`When the response returns, take the resulting HTML and place it into the element
-with the id `contact-ui``".
+with the id `contact-ui`.`"
 
 Here we get to the crux of htmx and how it allows you to build Hypermedia-Driven Applications:
 
-_The HTTP response from the server is expected to be in HTML format, not JSON_
+_The HTTP response from the server is expected to be in HTML format, not JSON_.
 
-This means that this htmx-powered button is exchanging _hypermedia_ with the server, just like an anchor tag or form
-might, and thus the interaction is still within this original hypermedia model of the web.  htmx _is_ adding functionality
-to this button (via JavaScript), but that functionality is _augmenting_ HTML as a hypermedia, extending the hypermedia
+This htmx-powered button is exchanging _hypermedia_ with the server, just like an anchor tag or form
+might, and thus the interaction is still within the original hypermedia model of the web.  Htmx _is_ adding functionality
+to this button (via JavaScript), but that functionality is _augmenting_ HTML as a hypermedia. Htmx extends the hypermedia
 system of the web, rather than _replacing_ that hypermedia system with a totally different architecture.
 
 Despite looking superficially similar to one another it turns out that this htmx-powered button and the JavaScript-based

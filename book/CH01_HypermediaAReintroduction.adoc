@@ -580,8 +580,8 @@ But this compromise still feels unsatisfactory.
 Must we default to having these two very different architectural models in our applications?
 
 Recall that the crux of the tradeoff between SPAs and MPAs is the _user experience_, or interactivity of the application.
-This is typically the driving decision when choosing one approach versus the other for an application or, in the case
-of a "`transitional`" application, for a particular feature.
+This typically drives the decision to choose one approach versus the other for an application or -- in the case
+of a "`transitional`" application -- for a particular feature.
 
 It turns out that by adopting a hypermedia-oriented library, the interactivity gap between the MPA and the SPA approach
 closes dramatically.  You can use the MPA approach, that is, the hypermedia approach, for much more of your application
@@ -593,13 +593,13 @@ a web application that is _primarily_ or _entirely_ hypermedia driven, and that 
 users require.
 
 This can _tremendously_ simplify your web application and produce a much more coherent and understandable piece of
-software.  There are still times and places for the more complex SPA approach, and we will discuss those later in the book,
-but by adopting a hypermedia-first approach and using a hypermedia-oriented library to push HTML as far as possible,
+software.  While there are still times and places for the more complex SPA approach, which we will discuss later in the book,
+by adopting a hypermedia-first approach and using a hypermedia-oriented library to push HTML as far as possible,
 your web application can be powerful, interactive _and_ simple.
 
-One such hypermedia oriented library is https://htmx.org[htmx], created by the authors of this book.  htmx will be the
-focus of much (but not all!) of the remainder of this book.  We hope to show you that you can, in fact, create many common
-"`modern`" UI features found in sophisticated Single Page Applications using the hypermedia model.
+One such hypermedia oriented library is https://htmx.org[htmx], created by the authors of this book.  Htmx will be the
+focus of much (but not all!) of the remainder of this book.  We show that you can, in fact, create many common
+"`modern`" UI features found in sophisticated Single Page Applications by instead using the hypermedia model.
 
 And, it is refreshingly fun and simple to do so.
 

@@ -123,8 +123,8 @@ Hypermedia isn't a frequent topic of discussion these days.  Even many older pro
 in the late 1990s and early 2000s haven't thought much about these ideas in years.  Many younger web developers have
 grown up knowing nothing but Single Page Applications and the frameworks that are used to build them.
 
-In particular, many young web developers begin their careers by building React.js applications that interact with a Node server using a
-JSON API; they may never learn about hypermedia as a system at all.
+In particular, many young web developers began their careers by building React.js applications that interact with a Node server using a
+JSON API; they may never have learned about hypermedia as a system at all.
 
 This is a tragedy, and, frankly, a failure on the part of the thought leaders in the web development community to properly
 communicate and advocate for the hypermedia approach.

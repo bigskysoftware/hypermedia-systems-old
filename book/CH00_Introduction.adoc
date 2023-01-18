@@ -58,7 +58,7 @@ distributed software.
 We define a _hypermedia system_ as a system that adheres to the RESTful network architecture in Fielding's _original_
 sense of this term.
 
-Unfortunately, today, you probably associate the term "REST" with JSON APIs, since that is where the term is typically
+Unfortunately, today, you probably associate the term "REST" with JSON APIs, since that is how the term is typically
 used in industry.  This is a misapplied use of the term REST because JSON is not a hypermedia, which is an explicit
 requirement for a system to be considered "RESTful."  It is a long story how we got here, using the term REST so
 incorrectly, and we will go into the details later in this book.  But, for now, if you currently think "REST == JSON",

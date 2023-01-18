@@ -755,7 +755,7 @@ content injection-based attacks.  A full discussion of CSPs is beyond the scope 
 the https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP[Mozilla Developer Network article] on them for more information.
 
 A common feature to disable using a CSP is the `eval()` feature of JavaScript, which allows you to evaluate arbitrary
-javascript code from a string.  This has proven to be a security issue and many teams have decided that it is not worth
+JavaScript code from a string.  This has proven to be a security issue and many teams have decided that it is not worth
 the risk to keep it enabled in their web applications.
 
 htmx does not make heavy use of `eval()` and, thus, a CSP with this restriction in place will be fine.  The one

@@ -682,7 +682,7 @@ API documentation.
 
 Furthermore, in the majority of front end SPA frameworks today, this contact information would live _in memory_ in a
 JavaScript object representing a model of the contact.  The DOM would be updated based on changes to this model, that
-is, the DOM would "`react`" to changes to this backing javascript model.
+is, the DOM would "`react`" to changes to this backing JavaScript model.
 
 This approach is certainly _not_ using Hypermedia As The Engine Of Application State: rather, it is using a javascript
 model as the engine of application state, and synchronizing that model with a server and with the browser.

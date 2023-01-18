@@ -801,7 +801,7 @@ around its value.  This is because JSON strictly requires double quotes and, the
 use the single-quote form for the attribute value.
 
 You can also prefix `hx-vals` with a `js:` and pass values evaluated at the time of the request, which can be useful for
-including things like a dynamically maintained variable, or value from a third party javascript library.
+including things like a dynamically maintained variable, or value from a third party JavaScript library.
 
 For example, if the `state` variable were maintained dynamically, via some JavaScript, and there existed a JavaScript
 function, `getCurrentState()`, that returned the currently selected state, it could be included dynamically in htmx

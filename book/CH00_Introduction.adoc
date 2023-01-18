@@ -68,7 +68,7 @@ It is important to understand that, in his dissertation, Fielding was describing
 late 1990s.  The web, at that point, was simply web browsers exchanging hypermedia.  That system, with its simple links
 and forms, was what Fielding was calling RESTful.
 
-JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _The Web 1.0_.
+JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _the Web 1.0_.
 
 == Hypermedia-Driven Applications
 

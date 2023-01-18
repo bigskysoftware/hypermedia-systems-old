@@ -219,7 +219,7 @@ to do just that:
 <2> Render different content when status is "`Running`"
 <3> For now, just some text saying things are Running
 
-OK, great, we have some conditional logic in our template view, and the server side logic to support kicking off the
+OK, great, we have some conditional logic in our template view, and the server-side logic to support kicking off the
 archive process.  We don't have a progress bar yet, but we'll get there!  Let's see how this works as it stands, and
 refresh the main page of our application...
 
@@ -256,7 +256,7 @@ def contacts():
 Now with that done, we can load up the page.  And, sure enough, we can see the "`Download Contact Archive`" button.
 
 When we click on it, the button is replaced with the content "`Running...`", and we can see in our development console
-on the server side that the job is indeed getting kicked off properly.
+on the server-side that the job is indeed getting kicked off properly.
 
 == Polling
 
@@ -580,7 +580,7 @@ invoke the `reset()` method on the archiver, and re-render the `archive_ui.html`
 
 Since this button is picking up the same `hx-target` and `hx-swap` configuration as everything else, it "`just works`".
 
-Here is the server side code:
+Here is the server-side code:
 
 .Resetting The Download
 [source, python]

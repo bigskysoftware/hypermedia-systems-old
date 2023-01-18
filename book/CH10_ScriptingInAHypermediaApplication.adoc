@@ -155,7 +155,7 @@ typically provided by more elaborate Single Page Application JavaScript framewor
 
 * Client-side routing
 * An abstraction over DOM manipulation, i.e.: templates that automatically update when referenced variables change
-* Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server side rendering
+* Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server-side rendering
   is not needed in a HDA because generating HTML on the server is the default.]
 * Attaching dynamic behavior to server-rendered tags on load, i.e. "`hydration`"
 * Network requests

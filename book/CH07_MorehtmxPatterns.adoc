@@ -40,7 +40,7 @@ Let's recall what the current search field in our application currently looks li
 ----
 <1> The `q` or "`query`" parameter our client side code uses to search
 
-Recall that we have some server side code that looks for the `q` parameter and, if it is present, searches the contacts
+Recall that we have some server-side code that looks for the `q` parameter and, if it is present, searches the contacts
 for that term.
 
 As it stands right now, the user must hit enter when the search input is focused, or click the "`Search`" button.  Both
@@ -175,7 +175,7 @@ This turns out to be more efficient, since we aren't returning all the content s
 saving bandwidth as well as CPU and memory on the server side.  So let's take this opportunity to explore returning
 different HTML content based on the context information that htmx provides with the HTTP requests it makes.
 
-Here's a look again at the current server side code for our search logic:
+Here's a look again at the current server-side code for our search logic:
 
 .Server Side Search
 [source,python]
@@ -293,7 +293,7 @@ OK, so how do we render only the result rows?
 
 === Factoring Your Templates
 
-Now we come to what is a common pattern in htmx: we want to _factor_ our server side templates.  This means that we want to
+Now we come to what is a common pattern in htmx: we want to _factor_ our server-side templates.  This means that we want to
 break our templates up a bit so that they can be called from multiple contexts.  In this case, we want to break the rows of
 the results table out to a separate template.  We will call this new template `rows.html` and we will include it from
 the original `index.html` template, and also use it in our controller to render it by itself when we want to respond with only the
@@ -914,7 +914,7 @@ are currently doing: delete the contact and redirect to `/contacts` page.
 If it _does not_ have that value, then we can simply delete the contact and return an empty string.  This empty string
 will replace the target, in this case the row for the given contact, thereby removing the row from the UI.
 
-Let's refactor our server side code to do this:
+Let's refactor our server-side code to do this:
 
 .Updating Our Server Code To Handle Two Different Delete Patterns
 [source, python]
@@ -1133,14 +1133,14 @@ Now, when the button issues a `DELETE`, it will include all the contact ids that
 
 === The Server Side for Delete Selected Contacts
 
-The server side implementation is going to look an awful lot like our original server side code for deleting a contact.
+The server-side implementation is going to look an awful lot like our original server-side code for deleting a contact.
 In fact, once again, we can just copy and paste, and fix a bit of stuff up:
 
 * We want to change the URL to `/contacts`
 * We want the handler to get _all_ the ids submitted as `selected_contact_ids` and iterate over each one, deleting the
   given contact
 
-Those are really the only changes we need to make!  Here is what the server side code looks like:
+Those are really the only changes we need to make!  Here is what the server-side code looks like:
 
 .The Delete Selected Contacts Button.
 [source, python]

@@ -21,7 +21,7 @@ web developers.
 
 In a sad turn of events, today, the world's most popular hypermedia, HTML, is often viewed resentfully: it is an
 awkward, legacy markup language that must be grudgingly used to build user interfaces in what are
-increasingly entirely Javascript-based web applications.
+increasingly entirely JavaScript-based web applications.
 
 HTML happens to be there, in the browser, and so we have to use it.
 
@@ -345,7 +345,7 @@ do this, we will use the https://developer.mozilla.org/en-US/docs/Web/API/Fetch_
 issuing an "`Asynchronous JavaScript and XML,`" or AJAX request, available in all modern web browsers:
 
 [#listing-1-3, reftext={chapter}.{counter:listing}]
-.Javascript
+.JavaScript
 [source,html]
 ----
 <button onclick="fetch('/api/v1/contacts/1') <1>
@@ -500,10 +500,10 @@ The first two advantages, in particular, address major pain points in modern web
 * JSON API churn -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
   many application teams.
 
-The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon known as "`Javascript Fatigue.`" This refers to a general sense of exhaustion with all the hoops that are necessary to jump through to
+The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon known as "`JavaScript Fatigue.`" This refers to a general sense of exhaustion with all the hoops that are necessary to jump through to
 get anything done in modern-day web applications.
 
-We believe that a hypermedia architecture can help cure Javascript Fatigue for many developers and teams.  But if hypermedia is so great, and if it addresses so many of the problems that beset the web
+We believe that a hypermedia architecture can help cure JavaScript Fatigue for many developers and teams.  But if hypermedia is so great, and if it addresses so many of the problems that beset the web
 development industry, why was it abandoned in the first place?  After all, hypermedia was there first.
 
 Why didn't web developers just stick with it?
@@ -557,7 +557,7 @@ Instead, they use JavaScript to augment HTML itself _as a hypermedia_.
 
 These _hypermedia-oriented_ libraries re-center hypermedia as the core technology in web applications.
 
-=== Hypermedia-Oriented Javascript Libraries
+=== Hypermedia-Oriented JavaScript Libraries
 
 In the web development world there is an ongoing debate between the Single Page Application (SPA) approach and what is now being called the
 "`Multi-Page Application`" (MPA) approach.  MPA is a modern name for the old, Web 1.0 way of building web applications, using

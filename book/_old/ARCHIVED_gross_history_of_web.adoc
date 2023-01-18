@@ -68,7 +68,7 @@ helped build with his thesis: JSON didn't even exist when he was writing!
 
 We will take an in-depth look at Fielding's thesis in the next chapter.
 
-=== Javascript & AJAX
+=== JavaScript & AJAX
 
 In 1994 Netscape Navigator was released, quickly becoming the most popular browser on the web.  In 1995, LiveScript,
 a scripting language that merged concepts from Scheme (a lisp variant) and Java (a hot language from Sun Mirosystems)
@@ -344,7 +344,7 @@ As of this writing, React is king of the hill in Single Page Application framewo
 challengers: Vue.js and Svelte.js are two examples.  Today, many web developers will automatically reach for these tools
 for any web project that they work on and employers are clamoring for more React developers.
 
-.Why Did Javascript & AJAX Win?
+.Why Did JavaScript & AJAX Win?
 ****
 It is worth taking a step back at this point and ask: why did JavaScript and AJAX become so popular?  What need were they
 satisfying?  The answer is that HTML and the hypermedia model of the web, for all the amazing aspects of them, felt
@@ -355,7 +355,7 @@ a jarring experience.
 
 By using JavaScript and AJAX requests, the web could compete with native applications, smoothly updating content in
 a web page without any flicker or other jarring visual issues.  Additionally, a richer UI event model was available to
-Javascript: any event could drive a server request, not just clicks and submits.  This allowed web applications like
+JavaScript: any event could drive a server request, not just clicks and submits.  This allowed web applications like
 Google Maps to smoothly respond to scroll wheel events, dragging, etc. in a way that was simply impossible to
 achieve in plain old HTML.
 ****

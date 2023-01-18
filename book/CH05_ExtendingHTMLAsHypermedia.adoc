@@ -285,7 +285,7 @@ respond to the requests that it makes with HTML.
 
 This may come as a bit of a shock to web developers who are used to responding to an AJAX request with JSON,
 which is far and away the most common response format for such requests.  But AJAX requests are just HTTP requests and
-there is no rule saying they must use JSON!  Recall again that AJAX stands for Asynchronous Javascript & XML, so JSON
+there is no rule saying they must use JSON!  Recall again that AJAX stands for Asynchronous JavaScript & XML, so JSON
 is already a step away from the format originally envisioned for this API: XML.
 
 htmx simply goes another direction and expects HTML.

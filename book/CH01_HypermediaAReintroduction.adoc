@@ -231,7 +231,7 @@ When the link is clicked the browser (or, as we sometimes refer to it, the _hype
 Note that the HTTP request includes additional data (i.e., _metadata_) on what, exactly, the browser wants from the server,
 in the form of headers.  We will discuss these headers, and HTTP in more depth in Chapter 3.
 
-The _hypermedia server_ then responds to this request with a _hypermedia response_, that is, with the HTML for the new page.
+The _hypermedia server_ then responds to this request with a _hypermedia response_ -- the HTML -- for the new page.
 This may seem like a small and obvious point, but it is an absolutely crucial aspect of a truly RESTful _hypermedia
 system_: the client and server must communicate via hypermedia!
 
@@ -252,14 +252,14 @@ Here is a simple example of a form in HTML:
 </form>
 ----
 
-Like an anchor tag, a form tag consists of the tag itself, `<form></form>`, combined with attributes and then
+Like an anchor tag, a form tag consists of the tag itself, `<form></form>`, combined with the attributes and
 content within the tag.  Note that the form tag does not have an `href` attribute, but rather has an `action` attribute
 that specifies where to issue an HTTP request.
 
-Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`Method`" to use.  In this example
+Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`method`" to use.  In this example
 the form is asking the browser to issue a `POST` request.
 
-The content _within_ the form is more important than the content within an anchor tag.  The values of `input` tags
+The content _within_ the form does different work than the content within an anchor tag.  The values of `input` tags
 and other tags such as `select` tags will be included with the HTTP request when the form is submitted.  This allows a
 form to include an arbitrary amount of information collected from a user in a request, unlike the anchor tag.
 

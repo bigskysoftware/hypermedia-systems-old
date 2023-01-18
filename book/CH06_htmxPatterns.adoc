@@ -285,7 +285,7 @@ transferring HTML.
 
 Thankfully, now, with htmx, we have a chance to rectify this situation.
 
-The "`right thing`", from a REST-ful, resource oriented perspective is, rather than issuing an HTTP `POST` to
+The "`right thing`", from a RESTful, resource oriented perspective is, rather than issuing an HTTP `POST` to
 `/contacts/42/delete`, to issue an HTTP `DELETE` to `/contacts/42`.  We want to delete the contact.  The contact is
 a resource.  The URL for that resource is `/contacts/42`.  So the ideal is a `DELETE` request to `/contacts/42/`.
 
@@ -488,7 +488,7 @@ Now, when someone clicks on the "`Delete Contact`" button, they will be presente
 you want to delete this contact?`" and they will have an opportunity to cancel if they clicked the button in error.  Very
 nice.
 
-With this final change we now have a pretty solid "`delete contact`" mechanism: we are using the correct REST-ful routes
+With this final change we now have a pretty solid "`delete contact`" mechanism: we are using the correct RESTful routes
 and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
 all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
 
@@ -1049,7 +1049,7 @@ a span and then add the `revealed` event trigger.
 The fact that switching to infinite scroll was so easy shows how well htmx generalizes HTML: just a few attributes allow
 us to dramatically expand what we can achieve in the hypermedia.
 
-And, again, we note that we are doing all this within the original, REST-ful model of the web: despite all this new
+And, again, we note that we are doing all this within the original, RESTful model of the web: despite all this new
 behavior, we are still exchanging hypermedia with the server, no JSON API response to be seen.
 
 As the web was designed.

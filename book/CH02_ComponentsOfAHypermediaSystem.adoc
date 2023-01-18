@@ -11,15 +11,15 @@ including:
 * A server that presents a hypermedia API, that is, that responds to network requests with hypermedia responses
 * A client that properly interprets those responses
 
-In this chapter we will take a look at each of these components and their implementation in the context of The Web.
+In this chapter we will look at these components and their implementation in the context of the web.
 
-Once we have reviewed the major components of The Web as a hypermedia system, we will take a look at Chapter 5 of Roy
-Fielding's dissertation, "`Architectural Styles and the Design of Network-based Software Architectures`".  This is where the
-terms REpresenation State Transfer (REST), REST-ful and Hypermedia As The Engine Of Application State (HATEOAS) come from,
+Once we have reviewed the major components of the web as a hypermedia system, we will look at Chapter 5 of Roy
+Fielding's dissertation, "`Architectural Styles and the Design of Network-based Software Architectures.`"  This is where the
+terms REpresenation State Transfer (REST), RESTful and Hypermedia As The Engine Of Application State (HATEOAS) come from,
 and we will analyze these terms in the context of The Web.
 
 This should give you a stronger understanding of the theoretical basis of The Web as a a hypermedia system, how it is
-supposed to fit together, and why Hypermedia-Driven Applications are REST-ful, whereas JSON APIs, despite how the
+supposed to fit together, and why Hypermedia-Driven Applications are RESTful, whereas JSON APIs, despite how the
 term REST is currently used in the industry, are not.
 
 == Components Of A Hypermedia System
@@ -425,14 +425,14 @@ He was describing the early web, with HTML being transferred over HTTP by early 
 
 Today, in a strange turn of events, the term "`REST`" is mainly associated with JSON Data APIs, rather than with HTML
 and hypermedia.  This becomes extremely humorous once you realize that the vast majority of JSON Data APIs aren't
-REST-ful, and, in fact _can't_ be REST-ful, since they aren't using a natural hypermedia format.
+RESTful, and, in fact _can't_ be RESTful, since they aren't using a natural hypermedia format.
 
 To re-emphasise: REST, as coined by Fielding, describes _the pre-JSON API web_, and letting go of the current, common
 usage of the term as "`JSON API`" is necessary to develop a proper understanding of it.
 
 === The "`Constraints`" of REST
 
-In his dissertation, Fielding defines various "`constraints`" to describe how a REST-ful system must behave.  This approach
+In his dissertation, Fielding defines various "`constraints`" to describe how a RESTful system must behave.  This approach
 can feel a little round-about and difficult to follow for many people, but it is an appropriate approach for an academic
 dissertation.  Given a bit of time thinking about the constraints he outlines, and some concrete examples, it will
 become easy to understand if a given system actually satisfies the architectural requirements of REST or not.
@@ -465,7 +465,7 @@ It should be obvious that any web application, regardless of how it is designed,
 
 See https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_3[Section 5.1.3] for the Stateless constraint.
 
-As described by Fielding, a REST-ful system is stateless: every request should encapsulate all information necessary to
+As described by Fielding, a RESTful system is stateless: every request should encapsulate all information necessary to
 respond to that request, with no side state or context stored on either the client or the server.
 
 In practice, for many web applications today, we actually violate this constraint: it is common to establish a
@@ -483,7 +483,7 @@ tradeoffs.
 
 It should be noted, however, that sessions do cause additional operational complexity headaches when deploying hypermedia
 servers, which now may need to have shared access to the session state information stored across an entire cluster.  So
-Fielding was correct in pointing out that an ideal REST-ful system, one that did not violate this constraint, would,
+Fielding was correct in pointing out that an ideal RESTful system, one that did not violate this constraint, would,
 indeed, be simpler and therefore more robust.
 
 === The Caching Constraint
@@ -522,16 +522,16 @@ So we have four additional sub-constraints that, taken together, form the Unifor
 
 ==== Identification of Resources
 
-In a REST-ful system, resources should have a unique identifier.  Today the concept of Universal Resource Locators (URLs) is
+In a RESTful system, resources should have a unique identifier.  Today the concept of Universal Resource Locators (URLs) is
 common, but at the time of Fielding's writing they were still relatively new and novel.
 
-What might be more interesting today is the notion of a _resource_, thus being identified: in a REST-ful system, _any_ sort of
+What might be more interesting today is the notion of a _resource_, thus being identified: in a RESTful system, _any_ sort of
 data that can be referenced, that is, the target of a hypermedia reference, is considered a resource.  URLs, though common
 enough today, end up solving the very complex problem of uniquely identifying any and every resource on the internet.
 
 ==== Manipulation of Resources Through Representations
 
-In a REST-ful system, _representations_ of the resource are transferred between clients and servers.  These
+In a RESTful system, _representations_ of the resource are transferred between clients and servers.  These
 representations can contain both data and metadata about the request (such as "`control data`" like an HTTP
 method or response code).  A particular data format or _media type_ may be used to present a given resource to a client,
 and that media type can be negotiated between the client and the server.
@@ -543,10 +543,10 @@ We saw this latter aspect of the uniform interface in the `Accept` header in the
 The Self-Descriptive Messages constraint, combined with the next one, HATEOAS, form what we consider to be the core of
 the Uniform Interface, of REST and why hypermedia provides such a powerful system architecture.
 
-The Self-Descriptive Messages constraint requires that, in a REST-ful system, messages must be _self-describing_.
+The Self-Descriptive Messages constraint requires that, in a RESTful system, messages must be _self-describing_.
 
 This means that _all information_ necessary to both display _and also operate_ on the data being represented must be
-present in the response.  In a properly REST-ful system, there can be no additional "`side`" information necessary for
+present in the response.  In a properly RESTful system, there can be no additional "`side`" information necessary for
 client to transform a response from a server into a useful user interface.  Everything must "`be in`" the message itself,
 in the form of hypermedia controls.
 
@@ -589,7 +589,7 @@ The second implementation returns a JSON representation:
 What can we say about the differences between these two responses?
 
 One thing that may initially jump out at you is that the JSON representation is smaller than the HTML
-representation.  Fielding notes exactly this tradeoff when using a REST-ful architecture in his dissertation:
+representation.  Fielding notes exactly this tradeoff when using a RESTful architecture in his dissertation:
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
 ____
@@ -629,7 +629,7 @@ to the system itself.
 
 ==== Hypermedia As The Engine of Application State (HATEOAS)
 
-The final sub-constraint on the Uniform Interface is that, in a REST-ful system, hypermedia should be "`the engine of
+The final sub-constraint on the Uniform Interface is that, in a RESTful system, hypermedia should be "`the engine of
 application state`".  This is sometimes abbreviated as "`HATEOAS`", although Fielding prefers to use the terminology
 "`the hypermedia constraint`" when discussing it.
 
@@ -738,7 +738,7 @@ The JSON representation, on the other hand, might look like this:
 Note that, once again, the JSON representation is unchanged.  There is no indication of this new functionality.  Instead,
 a client must *know* about this change, presumably via some shared documentation between the client and the server.
 
-Contrast this with the HTML response.  Because of the uniform interface of the REST-ful model and, in particular,
+Contrast this with the HTML response.  Because of the uniform interface of the RESTful model and, in particular,
 because we are using Hypermedia As The Engine of Application State, no such exchange of documentation is necessary!  Instead,
 the client (a browser) simply renders the new HTML with this operation in it, making this operation available for the end user
 without any additional coding changes.
@@ -767,12 +767,12 @@ operations and resources in it, and display it to users to work with.
 
 === Layered System
 
-The final "`required`" constraint on a REST-ful system that we will consider is The Layered System constraint.  This constraint can be found in
+The final "`required`" constraint on a RESTful system that we will consider is The Layered System constraint.  This constraint can be found in
 https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_6[Section 5.1.6] of Fielding's dissertation.
 
 To be frank, after the excitement of the uniform interface constraint, the "`layered system`" constraint is a bit of a
 let down.  But it is still worth understanding and it is actually utilized effectively by The web.  The constraint
-requires that a REST-ful architecture be "`layered`", allowing for multiple servers to act as intermediaries between
+requires that a RESTful architecture be "`layered`", allowing for multiple servers to act as intermediaries between
 a client and the eventual "`source of truth`" server.
 
 These intermediary servers can act as proxies, transform intermediate requests and responses and so forth.
@@ -788,7 +788,7 @@ nonetheless.
 
 === An Optional Constraint: Code-On-Demand
 
-We called The Layered System constraint the final "`required`" constraint on a REST-ful system.  We used this langauge because
+We called The Layered System constraint the final "`required`" constraint on a RESTful system.  We used this langauge because
 there is one additional constraint mentioned in the dissertation.  This constraint is called The Code On Demand constraint
 and is, somewhat awkwardly, described as an "`optional constraint`".  The constraint can be found in
 https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7[Section 5.1.7] of the dissertation.
@@ -803,7 +803,7 @@ after deployment improves system extensibility. However, it also reduces visibil
 within REST.
 ____
 
-So, scripting was and is a native aspect of the original REST-ful model of the web, and, thus something that
+So, scripting was and is a native aspect of the original RESTful model of the web, and, thus something that
 should of course be allowed in a Hypermedia-Driven Application.
 
 However, in a Hypermedia-Driven Application the presence of scripting should _not_ change the fundamental networking

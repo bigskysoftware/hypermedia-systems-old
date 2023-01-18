@@ -392,7 +392,7 @@ work with them.  Everything is encoded _in_ the hypermedia.  A web browser acces
 issue HTTP requests and then render HTML, nothing more about the specifics of our applications end points or underlying
 domain model.
 
-As simple as our application is at this point, it is thoroughly REST-ful.
+As simple as our application is at this point, it is thoroughly RESTful.
 
 === Adding A New Contact
 
@@ -850,9 +850,9 @@ with domain logic in a controller, organizing our URLs in a coherent, resource-o
 
 And, furthermore, this is a deeply _Hypermedia-Driven_ web application.  Without thinking about it very much, we have
 been using REST, HATEOAS and all the other hypermedia concepts we discussed earlier.  We would bet that this simple
-little contact app of ours is more REST-ful than 99% of all JSON APIs ever built!
+little contact app of ours is more RESTful than 99% of all JSON APIs ever built!
 
-And it was all effortless:just by virtue of using a _hypermedia_, HTML, we naturally fall into the REST-ful network
+And it was all effortless:just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
 architecture.
 
 So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style

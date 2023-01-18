@@ -1170,5 +1170,5 @@ to redirect and have the URL update to something new.  We can just re-render the
 contacts that were deleted) will be re-rendered.
 
 And there we go, we now have a bulk delete feature for our application.  Once again, not a huge amount of code, and we
-are implementing these features entirely by exchanging hypermedia with a server in the traditional, REST-ful manner of
+are implementing these features entirely by exchanging hypermedia with a server in the traditional, RESTful manner of
 the web.

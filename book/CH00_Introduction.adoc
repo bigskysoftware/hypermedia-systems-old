@@ -107,7 +107,7 @@ The book is broken into three parts:
 * Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system, related to, but distinct from the web.  It supports _mobile specific_ features by providing not only a mobile specific hypermedia, but also a mobile hypermedia client, a network protocol and so on.  It provides a full _mobile hypermedia system_ for you to build your mobile application with, and, in doing so, makes it possible to build mobile
   Hypermedia-Driven Applications.
 
-Note that each section is _somewhat_ independent of one another.  If you already know hypermedia in-depth and how basic Web
+Note that each section is _somewhat_ independent of the others.  If you already know hypermedia in-depth and how basic Web
 1.0 applications function, you may want to skip ahead to the second section on htmx and how to build modern web applications
 using hypermedia.  Similarly, if you are well versed in htmx and want to dive into a novel _mobile_ hypermedia,
 you can skip ahead to the Hyperview section.

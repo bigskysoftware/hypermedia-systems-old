@@ -86,7 +86,7 @@ would be `https://hypermedia.systems/book/contents/`.
 === Hypermedia Protocols
 
 The hypermedia control (link) above tells a browser: "`When a user clicks on this text, issue request to
-https://hypermedia.systems/book/contents/ using the HyperText Transfer Protocol`", or HTTP.
+https://hypermedia.systems/book/contents/ using the Hypertext Transfer Protocol`", or HTTP.
 
 HTTP is the _protocol_ used to transfer HTML (hypermedia) between browsers (hypermedia clients) and servers (hypermedia
 servers) and, as such, is the key network technology that binds the distributed hypermedia system of The Web together.
@@ -207,7 +207,7 @@ it should an HTTP `DELETE` request to do so.
 .HTML & HTTP Methods
 ****
 A strange thing about HTML is that, despite being the world's most popular hypermedia and despite being designed alongside
-HTTP (which is the HyperText Transfer Protocol, after all!), the native hypermedia controls in HTML can only issue
+HTTP (which is the Hypertext Transfer Protocol, after all!), the native hypermedia controls in HTML can only issue
 HTTP `GET` and `POST` requests:
 
 Anchor tags always issue a `GET` request.

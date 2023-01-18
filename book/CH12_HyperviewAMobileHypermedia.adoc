@@ -164,7 +164,7 @@ Web developers are lucky.
 They can assume their users have access to a web browser capable of rendering any web app.
 In Hypermedia terms, the Hypermedia (HTML) client is already built and distributed to users.
 Half the work is done!
-The developer has to only build the backend to serve Hypermedia responses.
+The developer only has to build the backend to serve Hypermedia responses.
 
 [#figure-6-1, reftext="Figure {chapter}.{counter:figure}"]
 .One HTML server, multiple HTML clients

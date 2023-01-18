@@ -606,7 +606,7 @@ And, it is refreshingly fun and simple to do so.
 === Hypermedia-Driven Applications
 
 When building a web application with htmx the term Multi-Page Application applies _roughly_, but it doesn't fully characterize
-the core of the application architecture.  Htmx, as you will see, doesn't _need_ to replace entire pages, and, in fact, an
+the core of the application architecture.  As you will see, htmx doesn't _need_ to replace entire pages, and, in fact, an
 htmx-based application can reside entirely within a single page. We don't recommend this practice, but it is
 possible! 
 

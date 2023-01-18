@@ -527,7 +527,7 @@ def contacts_new():
 <1> We construct a new contact object with the values from the form
 <2> We try to save it
 <3> On success, "`flash`" a success message & redirect to the `/contacts` page
-<4> On failure, rerender the form, showing any errors to the user
+<4> On failure, re-render the form, showing any errors to the user
 
 
 The logic in this handler is a bit more complex than other methods we have seen, but it isn't too bad.  The first thing
@@ -549,7 +549,7 @@ If we are able to save the contact (that is, there were no validation errors), w
 success and redirect the browser back to the list page.  A "`flash`" is a common feature in web frameworks that allows
 you to store a message that will be available on the _next_ request, typically in a cookie or in a session store.
 
-Finally, if we are unable to save the contact, we rerender the `new.html` template with the contact.  This will show the
+Finally, if we are unable to save the contact, we re-render the `new.html` template with the contact.  This will show the
 same template as above, but the inputs will be filled in with the submitted values, and any errors associated with the
 fields will be rendered to feedback to the user as to what validation failed.
 
@@ -801,7 +801,7 @@ def contacts_edit_post(contact_id=0):
 <3> update the contact with the new information from the form
 <4> Attempt to save it
 <5> On success, flash a success message & redirect to the detail page
-<6> On failure, rerender the edit template, showing any errors
+<6> On failure, re-render the edit template, showing any errors
 
 The logic in this handler is very similar to the logic in the handler for adding a new contact.  The only real difference
 is that, rather than creating a new Contact, we look the contact up by id and then call the `update()` method on it with

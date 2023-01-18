@@ -190,7 +190,7 @@ def contacts():
     return render_template("index.html", contacts=contacts_set) <2>
 ----
 <1> This is where the search logic happens
-<2> We simply rerender the `index.html` template every time, no matter what
+<2> We simply re-render the `index.html` template every time, no matter what
 
 How do we want to change this?  We want to render two different bits of HTML content _conditionally_:
 
@@ -796,7 +796,7 @@ Here is the "`Delete Contact`" button html:
 
 As you may suspect by now, this is going to be another copy-and-paste job.
 
-One thing to note is that, in the case of the "`Delete Contact`" button, we wanted to rerender the whole screen and update
+One thing to note is that, in the case of the "`Delete Contact`" button, we wanted to re-render the whole screen and update
 the URL, since we are going to be returning from the edit view for the contact to the list view of all contacts.  In
 the case of this link, however, we are already on the list of contacts, so there is no need to update the URL, and
 we can omit the `hx-push-url` attribute.
@@ -1077,7 +1077,7 @@ we do with the inline delete links and with the delete button on the edit page, 
 the `/contacts` URL.
 
 As with the other delete elements, we want to confirm that the user wishes to delete the contacts,
-and, for this case, we are going to target the body of page, since we are going to rerender the whole table.
+and, for this case, we are going to target the body of page, since we are going to re-render the whole table.
 
 Here is what the button code looks like:
 
@@ -1165,8 +1165,8 @@ So, as you can see, we just took the original delete logic and slightly modified
 than a single id.
 
 Readers with sharp eyes might notice one other small change: we did away with the redirect that was  in the original
-delete code.  We did so because we are already on the page we want to rerender, so there is no reason
-to redirect and have the URL update to something new.  We can just rerender the page, and the new list of contacts (sans the
+delete code.  We did so because we are already on the page we want to re-render, so there is no reason
+to redirect and have the URL update to something new.  We can just re-render the page, and the new list of contacts (sans the
 contacts that were deleted) will be re-rendered.
 
 And there we go, we now have a bulk delete feature for our application.  Once again, not a huge amount of code, and we

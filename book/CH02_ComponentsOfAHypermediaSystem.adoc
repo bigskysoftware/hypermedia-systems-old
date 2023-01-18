@@ -335,14 +335,14 @@ JavaScript on the back end.
 
 In this latter situation, you already have a ton of code written in JavaScript.  Why maintain two separate code bases in
 two different languages? Why not create reusable domain logic on the client-side as well as the server-side?  Now that
-JavaScript has excellent server side technologies available like node and deno, why not just a single language for
+JavaScript has excellent server-side technologies available like node and deno, why not just a single language for
 everything?
 
 In contrast, using a hypermedia-based front end gives you a lot more freedom in picking the back end technology you want
 to use.  Your decision can be based on the domain of your application, what languages and server software you are familiar
 with or are passionate about, or just what you feel like trying out.
 
-You certainly aren't writing your server side logic in HTML!  And every major programming language has at least one good
+You certainly aren't writing your server-side logic in HTML!  And every major programming language has at least one good
 web framework and templating library that can be used to handle HTTP requests cleanly.
 
 Perhaps if you are doing something in big data, perhaps you'd like to use Python, which has tremendous support for that
@@ -354,7 +354,7 @@ area of research.
 Maybe you are a functional programming enthusiast and want to use OCaml or Haskell.  Perhaps you just really like Julia or
 Nim.
 
-These are all perfectly valid reasons for choosing a particular server side technology!
+These are all perfectly valid reasons for choosing a particular server-side technology!
 
 By using hypermedia as your system architecture, you are freed up to adopt any of these choices. There simply isn't a
 large JavaScript code base on the front end pressuring you to adopt JavaScript on the back end.
@@ -471,7 +471,7 @@ respond to that request, with no side state or context stored on either the clie
 In practice, for many web applications today, we actually violate this constraint: it is common to establish a
 _session cookie_ that acts as a unique identifier for a given user and that is sent along with every request.  While this
 session cookie is, by itself, not stateful (it is sent with every request), it is typically
-used as a key to look up information stored on the server side, in what is usually termed "`the session`".
+used as a key to look up information stored on the server, in what is usually termed "`the session`."
 
 This session information is typically stored in some sort of shared storage across multiple web servers, holding things
 like the current users email or id, their roles, partially created domain objects, caches, and so forth.

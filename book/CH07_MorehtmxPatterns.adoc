@@ -38,7 +38,7 @@ Let's recall what the current search field in our application currently looks li
     <input type="submit" value="Search"/>
 </form>
 ----
-<1> The `q` or "`query`" parameter our client side code uses to search
+<1> The `q` or "`query`" parameter our client-side code uses to search
 
 Recall that we have some server-side code that looks for the `q` parameter and, if it is present, searches the contacts
 for that term.
@@ -403,7 +403,7 @@ def contacts():
 
 Now, when an Active Search request is made, rather than getting an entire HTML document back, we only get a partial
 bit of HTML, the table rows for the contacts that match the search.  These rows are then inserted into the `tbody` on
-the index page, without any need for an `hx-select` or any other client side processing.
+the index page, without any need for an `hx-select` or any other client-side processing.
 
 And, as a bonus, the old form-based search still works as well, thanks to the fact that we conditionally render the rows
 only when the `search` input issues the HTTP request via htmx.  Again, this is a progressive enhancement to our

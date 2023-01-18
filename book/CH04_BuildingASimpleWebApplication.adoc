@@ -770,7 +770,7 @@ With Hypermedia Driven Applications, in contrast, you factor your application on
 refactored into a shared template between the edit and create templates, allowing you to achieve a reusable and DRY (Don't
 Repeat Yourself) implementation.
 
-Note that factoring on the server-side tends to be coarser-grained than on the client side: you tend to split out common
+Note that factoring on the server-side tends to be coarser-grained than on the client-side: you tend to split out common
 _sections_ rather than create lots of individual components.  This has both benefits (it tends to be simple) as well as
 drawbacks (it is not nearly as isolated as client-side components) .
 

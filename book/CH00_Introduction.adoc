@@ -99,12 +99,12 @@ The book is broken into three parts:
 * An introduction (or re-introduction) to hypermedia, with a particular focus on HTML and HTTP.  We will finish this
   review of core hypermedia concepts by creating a simple "Web 1.0"-style application, Contact.app, for managing contacts.
 
-* Next we will look at how we can use https://htmx.org[htmx], a hypermedia-oriented JavaScript library, to improve
-  Contact.app.  By using htmx, we will be able to achieve a level of interactivity in our application that many developers
-  would expect to require a large, sophisticated front end library, such as React.  Thanks to htmx, we will be able to do
-  this _without_ abandoning hypermedia as a system architecture.
+* Next we will look at how we can use https://htmx.org[htmx], a hypermedia-oriented JavaScript library created by the
+  authors of this book, to improve Contact.app.  By using htmx, we will be able to achieve a level of interactivity in our
+  application that many developers would expect to require a large, sophisticated front end library, such as React.
+  Thanks to htmx, we will be able to do this _without_ abandoning hypermedia as a system architecture.
 
-* Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system, related to, but distinct from the web.  It supports _mobile specific_ features by providing not only a mobile specific hypermedia, but also a mobile hypermedia client, a network protocol and so on.  It provides a full _mobile hypermedia system_ for you to build your mobile application with, and, in doing so, makes it possible to build mobile Hypermedia-Driven Applications.
+* Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system, related to, but distinct from the web and creatred by one of the authors of this book -- Adam Stepinski.  It supports _mobile specific_ features by providing not only a mobile specific hypermedia, but also a mobile hypermedia client, a network protocol and so on.  It provides a full _mobile hypermedia system_ for you to build your mobile application with, and, in doing so, makes it possible to build mobile Hypermedia-Driven Applications.
 
 Note that each section is _somewhat_ independent of the others.  If you already know hypermedia in-depth and how basic Web
 1.0 applications function, you may want to skip ahead to the second section on htmx and how to build modern web applications

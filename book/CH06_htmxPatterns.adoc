@@ -496,8 +496,7 @@ all while using declarative attributes in our HTML and staying firmly within the
 
 One thing to note about this solution, however, is that it is _not_ a progressive enhancement to our web application: if
 someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We could do additional work to keep
-the older mechanism working in a JavaScript-disabled environment, but this would introduce additional HTML and redundant
-server-side code.
+the older mechanism working in a JavaScript-disabled environment.
 
 Progressive Enhancement can be a hot-button topic in web development, with lots of passionate opinions and perspectives.
 Like nearly all JavaScript libraries, htmx makes it possible to create applications that do not function in the absence of

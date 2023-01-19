@@ -35,7 +35,7 @@ https://www.tiobe.com/tiobe-index/[TIOBE index], a respected measure of programm
 Perhaps more importantly, Python is very easy to read even if you aren't very familiar with it.
 
 Flask was chosen as the web framework because it is very simple and does not impose a lot of structure on top of the
-basics of HTTP request handling. This bare-bones approach isn't for everyone: in the python community, for example, many people
+basics of HTTP request handling. This bare-bones approach isn't for everyone: in the Python community, for example, many people
 prefer the "`Batteries Included`" nature of Django, which supplies much more functionality out of the box than Flask does.
 
 For teaching purposes, and to minimize the conceptual burden for non-Python developers, we feel that an un-opinionated
@@ -47,7 +47,7 @@ Jinja2 templates were picked because they are the default templating language fo
 similar enough to most other server-side templating languages that most people who are familiar with any server-side
 (or client-side) templating library should be able to understand them quickly and easily.
 
-With this stack we will be rendering HTML _on the server_ to return to clients, rather than producing JSON.  This
+With this stack we will be rendering HTML _on the server-side_ to return to clients, rather than producing JSON.  This
 is the traditional approach to building web applications, but, with the rise of SPAs, is not as widely used a technique
 as it once was.  Today, as people are rediscovering this approach to building web applications, the term "`Server-Side
 Rendering`" or SSR is emerging as the way that people talk about this style of templating.  This is in contrast with

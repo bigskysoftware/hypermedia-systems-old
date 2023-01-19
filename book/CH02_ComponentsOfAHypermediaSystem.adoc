@@ -18,9 +18,9 @@ Fielding's dissertation, "`Architectural Styles and the Design of Network-based 
 terms REpresenation State Transfer (REST), RESTful and Hypermedia As The Engine Of Application State (HATEOAS) come from,
 and we will analyze these terms in the context of the web.
 
-This should give you a stronger understanding of the theoretical basis of the web as a a hypermedia system, how it is
-supposed to fit together, and why Hypermedia-Driven Applications are RESTful, whereas JSON APIs, despite how the
-term REST is currently used in the industry, are not.
+This should give you a stronger understanding of the theoretical basis of the web as a hypermedia system, how it is
+supposed to fit together, and why Hypermedia-Driven Applications are RESTful, whereas JSON APIs -- despite the way the
+term REST is currently used in the industry -- are not.
 
 == Components Of A Hypermedia System
 

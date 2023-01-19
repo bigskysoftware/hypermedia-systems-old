@@ -801,7 +801,7 @@ after deployment improves system extensibility. However, it also reduces visibil
 within REST.
 ____
 
-So, scripting was and is a native aspect of the original RESTful model of the web, and, thus something that
+So, scripting was and is a native aspect of the original RESTful model of the web, and thus
 should of course be allowed in a Hypermedia-Driven Application.
 
 However, in a Hypermedia-Driven Application the presence of scripting should _not_ change the fundamental networking

@@ -788,10 +788,8 @@ nonetheless.
 
 === An Optional Constraint: Code-On-Demand
 
-We called The Layered System constraint the final "`required`" constraint on a RESTful system.  We used this langauge because
-there is one additional constraint mentioned in the dissertation.  This constraint is called The Code On Demand constraint
-and is, somewhat awkwardly, described as an "`optional constraint`".  The constraint can be found in
-https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7[Section 5.1.7] of the dissertation.
+We called The Layered System constraint the final "required" constraint because
+Fielding mentions one additional constraint on a RESTful system. This Code On Demand constraint is somewhat awkwardly described as "optional" (Section 5.1.7).
 
 In this section, Fielding says:
 

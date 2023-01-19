@@ -44,14 +44,14 @@ exchanges_, rather than deeper server-side functionality like working with a dat
 to keep the book focused on that aspect.
 
 Jinja2 templates were picked because they are the default templating language for Flask.  They are simple enough and
-similar enough to most other server side templating languages that most people who are familiar with any server side
-(or client side) templating library should be able to understand them quickly and easily.
+similar enough to most other server-side templating languages that most people who are familiar with any server-side
+(or client-side) templating library should be able to understand them quickly and easily.
 
-With this stack we will be rendering HTML _on the server side_ to return to clients, rather than producing JSON.  This
+With this stack we will be rendering HTML _on the server_ to return to clients, rather than producing JSON.  This
 is the traditional approach to building web applications, but, with the rise of SPAs, is not as widely used a technique
-as it once was.  Today, as people are rediscovering this approach to building web applications, the term "`Server Side
+as it once was.  Today, as people are rediscovering this approach to building web applications, the term "`Server-Side
 Rendering`" or SSR is emerging as the way that people talk about this style of templating.  This is in contrast with
-"`Client Side Rendering`", that is, rendering templates in the browser with data retrieved in JSON form from the server,
+"`Client-Side Rendering`", that is, rendering templates in the browser with data retrieved in JSON form from the server,
 as is common in SPA libraries.
 
 In Contact.app we will intentionally keep things as simple as possible to maximize the teaching value of our code: it
@@ -373,7 +373,7 @@ Finally, we have a bit of end-matter: a link to add a new contact and a Jinja2 d
 <1>  Link to the page that allows you to create a new contact
 <2>  The closing element of the `content` block
 
-And that's our complete template.  Using this simple server side template, in combination with our handler method, we
+And that's our complete template.  Using this simple server-side template, in combination with our handler method, we
 can respond with an HTML _representation_ of all the contacts requested.  So far, so hypermedia.
 
 Here is what the template looks like, rendered with a bit of contact information:
@@ -392,7 +392,7 @@ work with them.  Everything is encoded _in_ the hypermedia.  A web browser acces
 issue HTTP requests and then render HTML, nothing more about the specifics of our applications end points or underlying
 domain model.
 
-As simple as our application is at this point, it is thoroughly REST-ful.
+As simple as our application is at this point, it is thoroughly RESTful.
 
 === Adding A New Contact
 
@@ -527,7 +527,7 @@ def contacts_new():
 <1> We construct a new contact object with the values from the form
 <2> We try to save it
 <3> On success, "`flash`" a success message & redirect to the `/contacts` page
-<4> On failure, rerender the form, showing any errors to the user
+<4> On failure, re-render the form, showing any errors to the user
 
 
 The logic in this handler is a bit more complex than other methods we have seen, but it isn't too bad.  The first thing
@@ -549,7 +549,7 @@ If we are able to save the contact (that is, there were no validation errors), w
 success and redirect the browser back to the list page.  A "`flash`" is a common feature in web frameworks that allows
 you to store a message that will be available on the _next_ request, typically in a cookie or in a session store.
 
-Finally, if we are unable to save the contact, we rerender the `new.html` template with the contact.  This will show the
+Finally, if we are unable to save the contact, we re-render the `new.html` template with the contact.  This will show the
 same template as above, but the inputs will be filled in with the submitted values, and any errors associated with the
 fields will be rendered to feedback to the user as to what validation failed.
 
@@ -770,7 +770,7 @@ With Hypermedia Driven Applications, in contrast, you factor your application on
 refactored into a shared template between the edit and create templates, allowing you to achieve a reusable and DRY (Don't
 Repeat Yourself) implementation.
 
-Note that factoring on the server side tends to be coarser-grained than on the client side: you tend to split out common
+Note that factoring on the server-side tends to be coarser-grained than on the client-side: you tend to split out common
 _sections_ rather than create lots of individual components.  This has both benefits (it tends to be simple) as well as
 drawbacks (it is not nearly as isolated as client-side components) .
 
@@ -801,7 +801,7 @@ def contacts_edit_post(contact_id=0):
 <3> update the contact with the new information from the form
 <4> Attempt to save it
 <5> On success, flash a success message & redirect to the detail page
-<6> On failure, rerender the edit template, showing any errors
+<6> On failure, re-render the edit template, showing any errors
 
 The logic in this handler is very similar to the logic in the handler for adding a new contact.  The only real difference
 is that, rather than creating a new Contact, we look the contact up by id and then call the `update()` method on it with
@@ -850,9 +850,9 @@ with domain logic in a controller, organizing our URLs in a coherent, resource-o
 
 And, furthermore, this is a deeply _Hypermedia-Driven_ web application.  Without thinking about it very much, we have
 been using REST, HATEOAS and all the other hypermedia concepts we discussed earlier.  We would bet that this simple
-little contact app of ours is more REST-ful than 99% of all JSON APIs ever built!
+little contact app of ours is more RESTful than 99% of all JSON APIs ever built!
 
-And it was all effortless:just by virtue of using a _hypermedia_, HTML, we naturally fall into the REST-ful network
+And it was all effortless:just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
 architecture.
 
 So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style

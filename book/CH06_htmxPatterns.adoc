@@ -253,7 +253,7 @@ Now every link and form in our application will use AJAX by default, making it f
   <a href="/contacts/new">Add Contact</a>
 ----
 
-Even though we haven't touched anything on this link or on the server side handling of the URL it targets, it will
+Even though we haven't touched anything on this link or on the server-side handling of the URL it targets, it will
 now "`just work`" as a boosted link, using AJAX for a snappier user experience, including updating history, back button
 support and so on.  And, if JavaScript isn't enabled, it will fall back to the normal link behavior.
 
@@ -285,7 +285,7 @@ transferring HTML.
 
 Thankfully, now, with htmx, we have a chance to rectify this situation.
 
-The "`right thing`", from a REST-ful, resource oriented perspective is, rather than issuing an HTTP `POST` to
+The "`right thing`", from a RESTful, resource oriented perspective is, rather than issuing an HTTP `POST` to
 `/contacts/42/delete`, to issue an HTTP `DELETE` to `/contacts/42`.  We want to delete the contact.  The contact is
 a resource.  The URL for that resource is `/contacts/42`.  So the ideal is a `DELETE` request to `/contacts/42/`.
 
@@ -324,7 +324,7 @@ In the interest of keeping our application simple, we are going to omit that mor
 
 We have updated the client-side code (if HTML can be considered code) so it now issues a `DELETE` request to the appropriate
 URL, but we still have some work to do.  Since we updated both the route and the HTTP method we are using, we are going to
-need to update the server side implementation as well to handle this new HTTP Request.
+need to update the server-side implementation as well to handle this new HTTP Request.
 
 Here is the original code for deleting a contact on the server side:
 
@@ -488,7 +488,7 @@ Now, when someone clicks on the "`Delete Contact`" button, they will be presente
 you want to delete this contact?`" and they will have an opportunity to cancel if they clicked the button in error.  Very
 nice.
 
-With this final change we now have a pretty solid "`delete contact`" mechanism: we are using the correct REST-ful routes
+With this final change we now have a pretty solid "`delete contact`" mechanism: we are using the correct RESTful routes
 and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
 all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
 
@@ -508,10 +508,10 @@ other JavaScript framework, for improving your web applications.
 == Next Steps: Validating Contact Emails
 
 Let's move on to another improvement in our application: a big part of any web app is validating the data that is
-submitted to the server side: ensuring emails are correctly formatted and unique, numeric values are valid, dates are
+submitted to the server: ensuring emails are correctly formatted and unique, numeric values are valid, dates are
 acceptable, and so forth.
 
-Currently, our application has a small amount of validation that is done entirely server side and that displays an error
+Currently, our application has a small amount of validation that is done entirely server-side and that displays an error
 message when an error is detected.
 
 We are not going to go into the details of how validation works in the model objects, but recall what
@@ -562,9 +562,9 @@ database.  This is a very common validation example: emails are usually unique a
 is almost certainly a user error.
 
 Again, we are not going to go into the details of how validation works in our models, in the interest of staying focused
-on hypermedia, but whatever server side framework you are using almost certainly has some sort of infrastructure available
+on hypermedia, but whatever server-side framework you are using almost certainly has some sort of infrastructure available
 for validating data and collecting errors to display to the user.  This sort of infrastructure is very common in
-Web 1.0 server side frameworks.
+Web 1.0 server-side frameworks.
 ****
 
 The error message shown when a user attempts to save a contact with a duplicate email is "Email Must Be Unique":
@@ -618,7 +618,7 @@ and figure out a mechanism around our validation entirely, such as using the dev
 This is a perpetual danger in web development: all validations done on the client side cannot be trusted
 and, if the validation is important, _must be redone_ on the server side.  This is less of a problem in
 Hypermedia-Driven Applications than in Single Page Applications, because the focus of HDAs is the server
-side, but it is still something worth bearing in mind as you build your application.
+side, but it is worth bearing in mind as you build your application.
 ****
 
 === Inline Validation
@@ -704,7 +704,7 @@ will be loaded into the error span.
 
 === Validating Emails Server Side
 
-Next, let's look at the server side implementation.  We are going to add another end point, similar to our edit
+Next, let's look at the server-side implementation.  We are going to add another end point, similar to our edit
 end point in some ways: it is going to look up the contact based on the ID encoded in the URL.  In this case, however,
 we only want to update the email of the contact, and we obviously don't want to save it!  Instead, we will call the
 `validate()` method on it.
@@ -738,7 +738,7 @@ earlier by use of htmx.
 
 It is also worth noting that this particular email validation _must_ be done on the server side: you cannot
 determine that an email is unique across all contacts unless you have access to the data store of record.  This is another
-simplifying aspect of Hypermedia-Driven Applications: since validations are done server side, you have access to all
+simplifying aspect of Hypermedia-Driven Applications: since validations are done server-side, you have access to all
 the data you might need to do any sort of validation you'd like.
 
 Here again we want to stress that this interaction is done entirely within the hypermedia model: we are using declarative
@@ -896,7 +896,7 @@ Note that here we are using a special jinja filter syntax `contacts|length` to c
 list.  The details of this filter syntax is beyond the scope of this book, but in this case you can think of it as
 invoking the `contacts.length` property and then comparing that with `10`.
 
-Now that we have these links in place to support paging, let's address the server side implementation of paging.
+Now that we have these links in place to support paging, let's address the server-side implementation of paging.
 
 We are using the `page` request parameter to encode the paging state of the UI.  So, in our handler, we need to look for
 that `page` parameter and pass that through to our model, as an integer, so the model knows which page of contacts to return:
@@ -1001,7 +1001,7 @@ out the rows in the body of the table in the response.  This avoids including ro
 Finally, we issue an HTTP `GET` to the url that will serve the next page of contacts, which looks just like the "`Next`"
 link from above.
 
-Somewhat surprisingly, no server side changes are necessary for this new functionality.  This is because of the flexibility
+Somewhat surprisingly, no server-side changes are necessary for this new functionality.  This is because of the flexibility
 that htmx gives you with respect to how it processes server responses.
 
 So, four attributes, and we now have a sophisticated "`Click To Load`" UX, via htmx.
@@ -1049,7 +1049,7 @@ a span and then add the `revealed` event trigger.
 The fact that switching to infinite scroll was so easy shows how well htmx generalizes HTML: just a few attributes allow
 us to dramatically expand what we can achieve in the hypermedia.
 
-And, again, we note that we are doing all this within the original, REST-ful model of the web: despite all this new
+And, again, we note that we are doing all this within the original, RESTful model of the web: despite all this new
 behavior, we are still exchanging hypermedia with the server, no JSON API response to be seen.
 
 As the web was designed.

@@ -131,7 +131,7 @@ HTML could be extended to allow _any_ event, not just a click, as in the case of
 Getting a bit more technical in our thinking leads us to the problem we noted earlier: plain HTML only
 give us access to the `GET` and `POST` actions of HTTP?
 
-HTTP _stands_ for HyperText Transfer Protocol, and yet the format it was explicitly designed for, HTML, only supports
+HTTP _stands_ for Hypertext Transfer Protocol, and yet the format it was explicitly designed for, HTML, only supports
 two of the five developer-facing request types!  You _have_ to use JavaScript and issue an AJAX request to get at the
 other three: `DELETE`, `PUT` and `PATCH`.
 
@@ -285,7 +285,7 @@ respond to the requests that it makes with HTML.
 
 This may come as a bit of a shock to web developers who are used to responding to an AJAX request with JSON,
 which is far and away the most common response format for such requests.  But AJAX requests are just HTTP requests and
-there is no rule saying they must use JSON!  Recall again that AJAX stands for Asynchronous Javascript & XML, so JSON
+there is no rule saying they must use JSON!  Recall again that AJAX stands for Asynchronous JavaScript & XML, so JSON
 is already a step away from the format originally envisioned for this API: XML.
 
 htmx simply goes another direction and expects HTML.
@@ -801,7 +801,7 @@ around its value.  This is because JSON strictly requires double quotes and, the
 use the single-quote form for the attribute value.
 
 You can also prefix `hx-vals` with a `js:` and pass values evaluated at the time of the request, which can be useful for
-including things like a dynamically maintained variable, or value from a third party javascript library.
+including things like a dynamically maintained variable, or value from a third party JavaScript library.
 
 For example, if the `state` variable were maintained dynamically, via some JavaScript, and there existed a JavaScript
 function, `getCurrentState()`, that returned the currently selected state, it could be included dynamically in htmx

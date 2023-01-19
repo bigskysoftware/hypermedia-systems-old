@@ -5,8 +5,8 @@
 
 Hypermedia is a universal technology today, almost as common as electricity.
 
-Billions of people use hypermedia-based systems every day, mainly by interacting with the _HyperText Markup Language
-(HTML)_  being exchanged via the _HyperText Transfer Protocol (HTTP)_ by using a web browser connected to the World Wide Web.
+Billions of people use hypermedia-based systems every day, mainly by interacting with the _Hypertext Markup Language
+(HTML)_  being exchanged via the _Hypertext Transfer Protocol (HTTP)_ by using a web browser connected to the World Wide Web.
 
 People use these systems to get their news, check in on friends, buy things online, play games, send emails and so
 forth: the variety and sheer number of online services being delivered by hypermedia is truly astonishing.
@@ -21,11 +21,11 @@ web developers.
 
 In a sad turn of events, today, the world's most popular hypermedia, HTML, is often viewed resentfully: it is an
 awkward, legacy markup language that must be grudgingly used to build user interfaces in what are
-increasingly entirely Javascript-based web applications.
+increasingly entirely JavaScript-based web applications.
 
 HTML happens to be there, in the browser, and so we have to use it.
 
-This as a shame and we hope that with this book we can convince you that this hypermedia is _not_ simply a
+This is a shame and we hope to convince you that hypermedia is _not_ simply a
 piece of legacy technology that we have to accept and deal with.  Instead, we aim to show you that hypermedia is a
 tremendously innovative, simple and _flexible_ way to build robust applications: _Hypermedia-Driven Applications_.
 
@@ -61,7 +61,7 @@ Hypermedia controls are what differentiate hypermedia from other sorts of media.
 
 You may be more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-category of hypermedia and much of this book is going to discuss how to build modern applications using
-hypertexts such as  HTML, the HyperText Markup Language, or HXML, a hypertext used by the Hyperview mobile hypermedia
+hypertexts such as  HTML, the Hypertext Markup Language, or HXML, a hypertext used by the Hyperview mobile hypermedia
 system.
 
 Hypertexts like HTML function alongside other technologies crucial for making an entire hypermedia system work: network
@@ -231,7 +231,7 @@ When the link is clicked the browser (or, as we sometimes refer to it, the _hype
 Note that the HTTP request includes additional data (i.e., _metadata_) on what, exactly, the browser wants from the server,
 in the form of headers.  We will discuss these headers, and HTTP in more depth in Chapter 3.
 
-The _hypermedia server_ then responds to this request with a _hypermedia response_, that is, with the HTML for the new page.
+The _hypermedia server_ then responds to this request with a _hypermedia response_ -- the HTML -- for the new page.
 This may seem like a small and obvious point, but it is an absolutely crucial aspect of a truly RESTful _hypermedia
 system_: the client and server must communicate via hypermedia!
 
@@ -252,14 +252,14 @@ Here is a simple example of a form in HTML:
 </form>
 ----
 
-Like an anchor tag, a form tag consists of the tag itself, `<form></form>`, combined with attributes and then
+Like an anchor tag, a form tag consists of the tag itself, `<form></form>`, combined with the attributes and
 content within the tag.  Note that the form tag does not have an `href` attribute, but rather has an `action` attribute
 that specifies where to issue an HTTP request.
 
-Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`Method`" to use.  In this example
+Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`method`" to use.  In this example
 the form is asking the browser to issue a `POST` request.
 
-The content _within_ the form is more important than the content within an anchor tag.  The values of `input` tags
+The content _within_ the form does different work than the content within an anchor tag.  The values of `input` tags
 and other tags such as `select` tags will be included with the HTTP request when the form is submitted.  This allows a
 form to include an arbitrary amount of information collected from a user in a request, unlike the anchor tag.
 
@@ -321,7 +321,7 @@ Here is a diagram of the interaction:
 
 ==== Web 1.0 Applications
 
-As someone interested in web development, the discussion above probably sounds very familiar to you.  You may
+As someone interested in web development, the above diagrams and discussion are probably very familiar to you.  You may
 even find this content boring.  But take a step back and consider the fact that these two hypermedia controls,
 anchors and forms, are the _only_ native ways for a user to interact with a server in plain HTML.
 
@@ -345,7 +345,7 @@ do this, we will use the https://developer.mozilla.org/en-US/docs/Web/API/Fetch_
 issuing an "`Asynchronous JavaScript and XML,`" or AJAX request, available in all modern web browsers:
 
 [#listing-1-3, reftext={chapter}.{counter:listing}]
-.Javascript
+.JavaScript
 [source,html]
 ----
 <button onclick="fetch('/api/v1/contacts/1') <1>
@@ -500,10 +500,10 @@ The first two advantages, in particular, address major pain points in modern web
 * JSON API churn -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
   many application teams.
 
-The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon known as "`Javascript Fatigue.`" This refers to a general sense of exhaustion with all the hoops that are necessary to jump through to
+The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon known as "`JavaScript Fatigue.`" This refers to a general sense of exhaustion with all the hoops that are necessary to jump through to
 get anything done in modern-day web applications.
 
-We believe that a hypermedia architecture can help cure Javascript Fatigue for many developers and teams.  But if hypermedia is so great, and if it addresses so many of the problems that beset the web
+We believe that a hypermedia architecture can help cure JavaScript Fatigue for many developers and teams.  But if hypermedia is so great, and if it addresses so many of the problems that beset the web
 development industry, why was it abandoned in the first place?  After all, hypermedia was there first.
 
 Why didn't web developers just stick with it?
@@ -557,7 +557,7 @@ Instead, they use JavaScript to augment HTML itself _as a hypermedia_.
 
 These _hypermedia-oriented_ libraries re-center hypermedia as the core technology in web applications.
 
-=== Hypermedia-Oriented Javascript Libraries
+=== Hypermedia-Oriented JavaScript Libraries
 
 In the web development world there is an ongoing debate between the Single Page Application (SPA) approach and what is now being called the
 "`Multi-Page Application`" (MPA) approach.  MPA is a modern name for the old, Web 1.0 way of building web applications, using
@@ -606,7 +606,7 @@ And, it is refreshingly fun and simple to do so.
 === Hypermedia-Driven Applications
 
 When building a web application with htmx the term Multi-Page Application applies _roughly_, but it doesn't fully characterize
-the core of the application architecture.  Htmx, as you will see, doesn't _need_ to replace entire pages, and, in fact, an
+the core of the application architecture.  As you will see, htmx doesn't _need_ to replace entire pages, and, in fact, an
 htmx-based application can reside entirely within a single page. We don't recommend this practice, but it is
 possible! 
 
@@ -681,7 +681,7 @@ This is exactly what the web was designed to do!
 
 By adopting the hypermedia approach for these applications, you will save yourself a huge amount of client-side complexity
 that comes with adopting the Single Page Application approach: there is no need for client-side routing, for managing
-a client side model, for hand-wiring in JavaScript logic, and so forth.  The back button will "`just work`".  Deep linking
+a client-side model, for hand-wiring in JavaScript logic, and so forth.  The back button will "`just work`".  Deep linking
 will "`just work`".  You will be able to focus your efforts on your server, where your application is actually adding value.
 
 And, by layering htmx or another hypermedia-oriented library on top of this approach, you can address many of the usability

@@ -68,7 +68,7 @@ It is important to understand that, in his dissertation, Fielding was describing
 late 1990s.  The web, at that point, was simply web browsers exchanging hypermedia.  That system, with its simple links
 and forms, was what Fielding was calling RESTful.
 
-JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _The Web 1.0_.
+JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _the Web 1.0_.
 
 == Hypermedia-Driven Applications
 
@@ -82,7 +82,7 @@ hypermedia functionality of that underlying system.
 
 == Goals
 
-The goal of this book is to give you a strong sense of how the REST-ful, hypermedia system architecture _differs_ from
+The goal of this book is to give you a strong sense of how the RESTful, hypermedia system architecture _differs_ from
 other client-server systems, and what the strengths (and weaknesses) of the hypermedia approach are.  Further, we hope
 to convince you that the hypermedia architecture is _relevant_ to developers building modern web applications.
 
@@ -101,13 +101,13 @@ The book is broken into three parts:
 
 * Next we will look at how we can use https://htmx.org[htmx], a hypermedia-oriented JavaScript library, to improve
   Contact.app.  By using htmx, we will be able to achieve a level of interactivity in our application that many developers
-  would expect requires a large, sophisticated front end library, such as React.  Thanks to htmx, we will be able to do
+  would expect to require a large, sophisticated front end library, such as React.  Thanks to htmx, we will be able to do
   this _without_ abandoning hypermedia as a system architecture.
 
 * Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system, related to, but distinct from the web.  It supports _mobile specific_ features by providing not only a mobile specific hypermedia, but also a mobile hypermedia client, a network protocol and so on.  It provides a full _mobile hypermedia system_ for you to build your mobile application with, and, in doing so, makes it possible to build mobile
   Hypermedia-Driven Applications.
 
-Note that each section is _somewhat_ independent of one another.  If you already know hypermedia in-depth and how basic Web
+Note that each section is _somewhat_ independent of the others.  If you already know hypermedia in-depth and how basic Web
 1.0 applications function, you may want to skip ahead to the second section on htmx and how to build modern web applications
 using hypermedia.  Similarly, if you are well versed in htmx and want to dive into a novel _mobile_ hypermedia,
 you can skip ahead to the Hyperview section.
@@ -123,8 +123,8 @@ Hypermedia isn't a frequent topic of discussion these days.  Even many older pro
 in the late 1990s and early 2000s haven't thought much about these ideas in years.  Many younger web developers have
 grown up knowing nothing but Single Page Applications and the frameworks that are used to build them.
 
-In particular, many young web developers begin their careers by building React.js applications that interact with a Node server using a
-JSON API; they may never learn about hypermedia as a system at all.
+In particular, many young web developers began their careers by building React.js applications that interact with a Node server using a
+JSON API; they may never have learned about hypermedia as a system at all.
 
 This is a tragedy, and, frankly, a failure on the part of the thought leaders in the web development community to properly
 communicate and advocate for the hypermedia approach.

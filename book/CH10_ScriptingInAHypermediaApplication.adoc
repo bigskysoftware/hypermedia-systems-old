@@ -77,7 +77,7 @@ other concerns of our application.
 
 Note also that, especially in web development parlance, the humble "`server`" is usually a whole fleet of racks, virtual
 machines, containers and more. Even a worldwide network of datacenters is reduced to "`the server`" when discussing
-the client-side of a Hypermedia Driven-Application.
+the server-side of a Hypermedia Driven-Application.
 ****
 
 Satisfying these two constraints sometimes requires us to diverge from what is typically considered best practice for
@@ -155,7 +155,7 @@ typically provided by more elaborate Single Page Application JavaScript framewor
 
 * Client-side routing
 * An abstraction over DOM manipulation, i.e.: templates that automatically update when referenced variables change
-* Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server side rendering
+* Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server-side rendering
   is not needed in a HDA because generating HTML on the server is the default.]
 * Attaching dynamic behavior to server-rendered tags on load, i.e. "`hydration`"
 * Network requests

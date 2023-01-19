@@ -12,12 +12,11 @@ Like with HTML, on the World Wide Web?
 
 What do you mean hypermedia _systems_?
 
-Well, yes, HTML is _a_ hypermedia.  But there is more to the way The Web works than just HTML:  HTTP, the Hyper Text
+Well, yes, HTML is _a_ hypermedia.  But there is more to the way the web works than just HTML:  HTTP, the Hyper Text
 Transfer Protocol, is what transfers HTML from servers to clients, and there are many details and features associated
 with it: caching, various headers, response codes, and so forth.
 
-And then, of course, there are _hypermedia servers_, which present a _hypermedia APIs_ (yes, _APIS_) to clients over
-the network.
+And then, of course, there are _hypermedia servers_, which present _hypermedia APIs_ (yes, _APIs_) to clients over the network.
 
 And, finally, there is the all-important _hypermedia client_: a software client that understands how to render a _hypermedia
 response_ intelligibly to a human, so that a human can interact with the remote system.  The most widely known and used
@@ -39,10 +38,10 @@ In these applications HTML becomes a (somewhat awkward) graphical interface desc
 because, for historical reasons, that's what happens to be there, in the browser.
 
 Applications built in this style are not _hypermedia driven_: they do not take advantage of the underlying hypermedia
-system of The Web.
+system of the web.
 
 To explain what a hypermedia driven application looks like, and to contrast it with the popular SPA approach of today,
-we need to first explore the entire _hypermedia system_ of The Web, beyond just discussing HTML.  We need to look at the
+we need to first explore the entire _hypermedia system_ of the web, beyond just discussing HTML.  We need to look at the
 _network architecture_ of the original web, including how a web server delivers a hypermedia API, and how to effectively
 use the hypermedia features available in the hypermedia _client_ (e.g. the browser).
 
@@ -52,25 +51,24 @@ _hypermedia system_ that comes together to make hypermedia such a powerful archi
 == What is a Hypermedia System?
 
 To understand what a hypermedia system is we'll first take an in-depth look at _the_ canonical hypermedia system: the
-World Wide Web.  In his PhD dissertation, Roy Fielding, an engineer who helped create specifications and build the
-implementations of many early pieces of the web, gave us the term REpresentational State Transfer, or REST.  In
-his dissertation he described REST as a _network architecture_, and he contrasted it with earlier approaches to building
+World Wide Web.  Roy Fielding, an engineer who helped create specifications and build the
+implementations of many early pieces of the web, gave us the term REpresentational State Transfer, or REST.  In his PhD dissertation he described REST as a _network architecture_, and he contrasted it with earlier approaches to building
 distributed software.
 
-We define a _hypermedia system_ as a system that adheres to the REST-ful network architecture in Fielding's _original_
+We define a _hypermedia system_ as a system that adheres to the RESTful network architecture in Fielding's _original_
 sense of this term.
 
 Unfortunately, today, you probably associate the term "REST" with JSON APIs, since that is where the term is typically
 used in industry.  This is a misapplied use of the term REST because JSON is not a hypermedia, which is an explicit
-requirement for a system to be considered "REST-ful."  It is a long story how we got here, using the term REST so
+requirement for a system to be considered "RESTful."  It is a long story how we got here, using the term REST so
 incorrectly, and we will go into the details later in this book.  But, for now, if you currently think "REST == JSON",
 please try to set that understanding aside while reading this book, and come to the concept with fresh eyes.
 
 It is important to understand that, in his dissertation, Fielding was describing The World Wide Web as it existed in the
-late 1990s.  The Web, at that point, was simply web browsers exchanging hypermedia.  *That* system, with its simple links
-and forms, was what Fielding was calling REST-ful.
+late 1990s.  The web, at that point, was simply web browsers exchanging hypermedia.  That system, with its simple links
+and forms, was what Fielding was calling RESTful.
 
-JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _The Web_.
+JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _the Web 1.0_.
 
 == Hypermedia-Driven Applications
 
@@ -84,7 +82,7 @@ hypermedia functionality of that underlying system.
 
 == Goals
 
-The goal of this book is to give you a strong sense of how the REST-ful, hypermedia system architecture _differs_ from
+The goal of this book is to give you a strong sense of how the RESTful, hypermedia system architecture _differs_ from
 other client-server systems, and what the strengths (and weaknesses) of the hypermedia approach are.  Further, we hope
 to convince you that the hypermedia architecture is _relevant_ to developers building modern web applications.
 
@@ -103,16 +101,12 @@ The book is broken into three parts:
 
 * Next we will look at how we can use https://htmx.org[htmx], a hypermedia-oriented JavaScript library, to improve
   Contact.app.  By using htmx, we will be able to achieve a level of interactivity in our application that many developers
-  would expect requires a large, sophisticated front end library, such as React.  Thanks to htmx, we will be able to do
+  would expect to require a large, sophisticated front end library, such as React.  Thanks to htmx, we will be able to do
   this _without_ abandoning hypermedia as a system architecture.
 
-* Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system,
-  related to, but distinct from The Web.  It supports _mobile specific_ features by providing not only a mobile specific
-  hypermedia, but also a mobile hypermedia client, a network protocol and so on.  It provides a full _mobile hypermedia
-  system_ for you to build your mobile application with, and, in doing so, makes it possible to build mobile
-  Hypermedia-Driven Applications.
+* Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system, related to, but distinct from the web.  It supports _mobile specific_ features by providing not only a mobile specific hypermedia, but also a mobile hypermedia client, a network protocol and so on.  It provides a full _mobile hypermedia system_ for you to build your mobile application with, and, in doing so, makes it possible to build mobile Hypermedia-Driven Applications.
 
-Note that each section is _somewhat_ independent of one another.  If you already know hypermedia in-depth and how basic Web
+Note that each section is _somewhat_ independent of the others.  If you already know hypermedia in-depth and how basic Web
 1.0 applications function, you may want to skip ahead to the second section on htmx and how to build modern web applications
 using hypermedia.  Similarly, if you are well versed in htmx and want to dive into a novel _mobile_ hypermedia,
 you can skip ahead to the Hyperview section.
@@ -124,12 +118,12 @@ a refresher.
 
 == Hypermedia: A New Generation
 
-Hypermedia isn't seriously discussed very often these days.  Even many older programmers who grew up with The Web
+Hypermedia isn't a frequent topic of discussion these days.  Even many older programmers who grew up with the web
 in the late 1990s and early 2000s haven't thought much about these ideas in years.  Many younger web developers have
 grown up knowing nothing but Single Page Applications and the frameworks that are used to build them.
 
-In particular, many young web developers began building React.js applications that interact with a Node server using a
-JSON API and have never learned about hypermedia at all.
+In particular, many young web developers began their careers by building React.js applications that interact with a Node server using a
+JSON API; they may never have learned about hypermedia as a system at all.
 
 This is a tragedy, and, frankly, a failure on the part of the thought leaders in the web development community to properly
 communicate and advocate for the hypermedia approach.

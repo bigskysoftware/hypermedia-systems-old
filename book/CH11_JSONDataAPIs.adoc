@@ -7,7 +7,7 @@
 == JSON Data APIs
 
 So far we have been focusing on using hypermedia to build Hypermedia-Driven Applications.  In doing so we are
-following the original networking architecture of the web, and building a REST-ful system, in the original sense
+following the original networking architecture of the web, and building a RESTful system, in the original sense
 of that term.
 
 However, today, we should acknowledge that many web applications are often _not_ built using this approach.  Instead, they use a
@@ -29,7 +29,7 @@ that is, a browser, understands.  We are building an API for the browser to inte
 magic of HTML and hypermedia, the browser doesn't need to know anything about our hypermedia API beyond an entry point
 URL: all the actions and display information comes, self-contained, within the HTML responses.
 
-Building REST-ful web applications like this is so natural and simple that you might not think of it as an API at all, but
+Building RESTful web applications like this is so natural and simple that you might not think of it as an API at all, but
 we assure you, it is.
 
 == Hypermedia APIs & JSON Data APIs
@@ -141,7 +141,7 @@ This is the core strength of splitting your Data API from your Hypermedia API, i
 ****
 Unfortunately, today, for historical reasons, what we are calling JSON Data APIs are often referred to
 "`REST APIs`" in the industry.  This is ironic, because, by any reasonable reading of Roy Fielding's work defining what REST
-means, the vast majority of JSON APIs are _not_ REST-ful.  Not even close.
+means, the vast majority of JSON APIs are _not_ RESTful.  Not even close.
 
 [quote, Roy Fielding, https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven]
 ____
@@ -437,7 +437,7 @@ the web application, allowing the application to know which user is making a giv
 .HTTP Cookies
 ****
 HTTP Cookies are kind of a strange feature of HTTP.  In some ways they violate the goal of remaining stateless, a
-major component of the REST-ful architecture: a server will often use a session cookie as an index into state kept
+major component of the RESTful architecture: a server will often use a session cookie as an index into state kept
 on the server "`on the side`", such as a cache of the last action performed by the user.
 
 Nonetheless, cookies have proven extremely useful and so people tend not to complain about this aspect of them too much

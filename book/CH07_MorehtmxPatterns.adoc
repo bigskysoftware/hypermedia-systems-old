@@ -38,9 +38,9 @@ Let's recall what the current search field in our application currently looks li
     <input type="submit" value="Search"/>
 </form>
 ----
-<1> The `q` or "`query`" parameter our client side code uses to search
+<1> The `q` or "`query`" parameter our client-side code uses to search
 
-Recall that we have some server side code that looks for the `q` parameter and, if it is present, searches the contacts
+Recall that we have some server-side code that looks for the `q` parameter and, if it is present, searches the contacts
 for that term.
 
 As it stands right now, the user must hit enter when the search input is focused, or click the "`Search`" button.  Both
@@ -175,7 +175,7 @@ This turns out to be more efficient, since we aren't returning all the content s
 saving bandwidth as well as CPU and memory on the server side.  So let's take this opportunity to explore returning
 different HTML content based on the context information that htmx provides with the HTTP requests it makes.
 
-Here's a look again at the current server side code for our search logic:
+Here's a look again at the current server-side code for our search logic:
 
 .Server Side Search
 [source,python]
@@ -190,7 +190,7 @@ def contacts():
     return render_template("index.html", contacts=contacts_set) <2>
 ----
 <1> This is where the search logic happens
-<2> We simply rerender the `index.html` template every time, no matter what
+<2> We simply re-render the `index.html` template every time, no matter what
 
 How do we want to change this?  We want to render two different bits of HTML content _conditionally_:
 
@@ -293,7 +293,7 @@ OK, so how do we render only the result rows?
 
 === Factoring Your Templates
 
-Now we come to what is a common pattern in htmx: we want to _factor_ our server side templates.  This means that we want to
+Now we come to what is a common pattern in htmx: we want to _factor_ our server-side templates.  This means that we want to
 break our templates up a bit so that they can be called from multiple contexts.  In this case, we want to break the rows of
 the results table out to a separate template.  We will call this new template `rows.html` and we will include it from
 the original `index.html` template, and also use it in our controller to render it by itself when we want to respond with only the
@@ -403,7 +403,7 @@ def contacts():
 
 Now, when an Active Search request is made, rather than getting an entire HTML document back, we only get a partial
 bit of HTML, the table rows for the contacts that match the search.  These rows are then inserted into the `tbody` on
-the index page, without any need for an `hx-select` or any other client side processing.
+the index page, without any need for an `hx-select` or any other client-side processing.
 
 And, as a bonus, the old form-based search still works as well, thanks to the fact that we conditionally render the rows
 only when the `search` input issues the HTTP request via htmx.  Again, this is a progressive enhancement to our
@@ -469,7 +469,7 @@ it, just like when the form is submitted.
 
 Now, you might not _want_ this behavior.  You might feel it would be confusing to users to see the navigation bar updated
 and have history entries for every Active Search made, for example.  Which is fine: you can simply omit the `hx-push-url`
-attribute and it will go back to the behavior you want.  htmx tries to be flexible enough that you can achieve the UX
+attribute and it will go back to the behavior you want.  Htmx tries to be flexible enough that you can achieve the UX
 that _you_ want, while staying within the declarative HTML model.
 
 === Adding A Request Indicator
@@ -796,7 +796,7 @@ Here is the "`Delete Contact`" button html:
 
 As you may suspect by now, this is going to be another copy-and-paste job.
 
-One thing to note is that, in the case of the "`Delete Contact`" button, we wanted to rerender the whole screen and update
+One thing to note is that, in the case of the "`Delete Contact`" button, we wanted to re-render the whole screen and update
 the URL, since we are going to be returning from the edit view for the contact to the list view of all contacts.  In
 the case of this link, however, we are already on the list of contacts, so there is no need to update the URL, and
 we can omit the `hx-push-url` attribute.
@@ -914,7 +914,7 @@ are currently doing: delete the contact and redirect to `/contacts` page.
 If it _does not_ have that value, then we can simply delete the contact and return an empty string.  This empty string
 will replace the target, in this case the row for the given contact, thereby removing the row from the UI.
 
-Let's refactor our server side code to do this:
+Let's refactor our server-side code to do this:
 
 .Updating Our Server Code To Handle Two Different Delete Patterns
 [source, python]
@@ -1077,7 +1077,7 @@ we do with the inline delete links and with the delete button on the edit page, 
 the `/contacts` URL.
 
 As with the other delete elements, we want to confirm that the user wishes to delete the contacts,
-and, for this case, we are going to target the body of page, since we are going to rerender the whole table.
+and, for this case, we are going to target the body of page, since we are going to re-render the whole table.
 
 Here is what the button code looks like:
 
@@ -1133,14 +1133,14 @@ Now, when the button issues a `DELETE`, it will include all the contact ids that
 
 === The Server Side for Delete Selected Contacts
 
-The server side implementation is going to look an awful lot like our original server side code for deleting a contact.
+The server-side implementation is going to look an awful lot like our original server-side code for deleting a contact.
 In fact, once again, we can just copy and paste, and fix a bit of stuff up:
 
 * We want to change the URL to `/contacts`
 * We want the handler to get _all_ the ids submitted as `selected_contact_ids` and iterate over each one, deleting the
   given contact
 
-Those are really the only changes we need to make!  Here is what the server side code looks like:
+Those are really the only changes we need to make!  Here is what the server-side code looks like:
 
 .The Delete Selected Contacts Button.
 [source, python]
@@ -1165,10 +1165,10 @@ So, as you can see, we just took the original delete logic and slightly modified
 than a single id.
 
 Readers with sharp eyes might notice one other small change: we did away with the redirect that was  in the original
-delete code.  We did so because we are already on the page we want to rerender, so there is no reason
-to redirect and have the URL update to something new.  We can just rerender the page, and the new list of contacts (sans the
+delete code.  We did so because we are already on the page we want to re-render, so there is no reason
+to redirect and have the URL update to something new.  We can just re-render the page, and the new list of contacts (sans the
 contacts that were deleted) will be re-rendered.
 
 And there we go, we now have a bulk delete feature for our application.  Once again, not a huge amount of code, and we
-are implementing these features entirely by exchanging hypermedia with a server in the traditional, REST-ful manner of
+are implementing these features entirely by exchanging hypermedia with a server in the traditional, RESTful manner of
 the web.

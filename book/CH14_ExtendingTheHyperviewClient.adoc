@@ -76,7 +76,7 @@ I chose to use attributes, but we could've represented the phone number or email
 I'm also using a namespace to avoid potential future conflicts with other client extensions.
 
 So far so good, but how does the Hyperview client know how to interpret `open-phone` and `open-email`, and how to reference the `phone-number` and `email-address` attributes?
-This is where we finally need to write some Javascript.
+This is where we finally need to write some JavaScript.
 
 First, I'm going to add a 3rd-party library (`react-native-communications`) to our demo app.
 This library provides a simple API that interacts with OS-level functionality for calls and emails.

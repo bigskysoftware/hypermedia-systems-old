@@ -429,7 +429,7 @@ allows you to _trigger an event_ on the element that submitted an AJAX request. 
 to coordinate elements in the DOM in a decoupled manner.
 
 To see how this might work, let's consider the following situation: we have a button that grabs new contacts from some
-remote system on the server.  We will ignore the details of the server side implementation, but we know that if we issue
+remote system on the server.  We will ignore the details of the server-side implementation, but we know that if we issue
 a `POST` to the `/integrations/1` path, it will trigger a synchronization with the system.
 
 Now, this synchronization may or may not result in new contacts being created.  In the case where new contacts _are_
@@ -465,7 +465,7 @@ we can move the button and table around as we like and, via events, the behavior
 Additionally, we may want _other_ elements or requests to trigger the `contacts-updated` event, so this provides a
 general mechanism for refreshing the contacts table in our application.
 
-We are omitting the server side implementation of this feature in the interest of simplicity, but this gives you
+We are omitting the server-side implementation of this feature in the interest of simplicity, but this gives you
 an idea of how the `HX-Trigger` response header can be used to coordinate sophisticated interactions in the DOM.
 
 == HTTP Requests & Responses
@@ -601,7 +601,7 @@ Pull Contacts From Integration <1>
 Using this technique, you are able to piggyback content updates of other elements on top of requests by other elements.
 The `hx-swap-oob` attribute supports other additional features, all of which are documented https://htmx.org/attributes/hx-swap-oob/[here].
 
-Depending on how exactly your server side templating technology works, and what level of interactivity your application
+Depending on how exactly your server-side templating technology works, and what level of interactivity your application
 requires, out of band swapping can be a powerful mechanism for more flexible content updates.
 
 === Events
@@ -742,7 +742,7 @@ However, even with hypermedia, there are still situations that require care when
 concern are situations where user-generated content is shown to other users: a clever user might try to insert
 htmx code that tricks the other users into clicking on content that triggers actions they don't want to take.
 
-In general, all user-generated content should be escaped on the server side, and most server side rendering frameworks
+In general, all user-generated content should be escaped on the server-side, and most server-side rendering frameworks
 provide functionality for handling this situation.  But there is always a risk that something slips through the cracks.
 
 In order to help you sleep better at night, htmx provides the `hx-disable` attribute.  When this attribute is placed
@@ -755,7 +755,7 @@ content injection-based attacks.  A full discussion of CSPs is beyond the scope 
 the https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP[Mozilla Developer Network article] on them for more information.
 
 A common feature to disable using a CSP is the `eval()` feature of JavaScript, which allows you to evaluate arbitrary
-javascript code from a string.  This has proven to be a security issue and many teams have decided that it is not worth
+JavaScript code from a string.  This has proven to be a security issue and many teams have decided that it is not worth
 the risk to keep it enabled in their web applications.
 
 htmx does not make heavy use of `eval()` and, thus, a CSP with this restriction in place will be fine.  The one

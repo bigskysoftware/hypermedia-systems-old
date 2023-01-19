@@ -68,7 +68,7 @@ helped build with his thesis: JSON didn't even exist when he was writing!
 
 We will take an in-depth look at Fielding's thesis in the next chapter.
 
-=== Javascript & AJAX
+=== JavaScript & AJAX
 
 In 1994 Netscape Navigator was released, quickly becoming the most popular browser on the web.  In 1995, LiveScript,
 a scripting language that merged concepts from Scheme (a lisp variant) and Java (a hot language from Sun Mirosystems)
@@ -110,7 +110,7 @@ JavaScript.  The APIs, over time, came to be known as "Web Services".
 The early Web Service development community quickly realized that many of these new XML APIs seemed different
 than "regular" HTML-based web requests: the XML APIs often did not use hypermedia concepts, but rather were plain data APIs,
 returning raw data without any additional context or information.  This fact was viewed with ambivalence: the web
-had proven to be extremely flexible and vibrant, surely the core REST-ful concepts that it was built on should also be
+had proven to be extremely flexible and vibrant, surely the core RESTful concepts that it was built on should also be
 part of this new approach as well!
 
 ==== The Richarson Maturity Model
@@ -257,7 +257,7 @@ both of which seem reasonably true.
 
 Despite these benefits, and even during the XML API era, when REST was a well known and hypermedia oriented concept
 ,it was rare for web services to reach the third level of Richardson maturity.  There were, at the time, heated arguments
-around whether or not a particular API is REST-ful.  Over time, those arguments have, to a large extent, faded away.
+around whether or not a particular API is RESTful.  Over time, those arguments have, to a large extent, faded away.
 
 Most APIs stopped at level 2 of the Richarson Maturity Model and simply published API documentation rather than embedding
 hypermedia controls.  There were scattered examples of successful hypermedia controls in APIs, around paging and things
@@ -304,10 +304,10 @@ JSON, on the other hand, is a plain data representation.  It becomes harder to s
 this format.  It's possible to do, and some JSON APIs do include them, but, in moving to JSON as a response format, the
 Web Service world, or, today, the JSON API world, took another step away from hypermedia.
 
-.REST-ful JSON APIs?
+.RESTful JSON APIs?
 ****
 A funny thing that happened along the way here was that the term REST, which was coined to described the HTML-based
-web: it increasingly became associated with JSON APIs which were _not_, for the most part, REST-ful, at least in the original
+web: it increasingly became associated with JSON APIs which were _not_, for the most part, RESTful, at least in the original
 sense of that term.  Today it is mostly JSON API engineers and you are unlikely to see or hear the term being discussed
 among web developers.
 
@@ -337,14 +337,14 @@ with the server.
 AngularJS was followed by React, from Facebook, in 2013.  React introduced the notion of reactive programming, where
 a backing JavaScript model could be updated, and the DOM would automatically update to reflect the new state of the world.
 This made management of JavaScript-based web applications much easier in some ways, but also pushed React-based web
-applications further away from the original REST-ful model of the web in which *hypermedia* was intended to store (i.e. encode)
+applications further away from the original RESTful model of the web in which *hypermedia* was intended to store (i.e. encode)
 the state of the application.
 
 As of this writing, React is king of the hill in Single Page Application frameworks, but there are many up and coming
 challengers: Vue.js and Svelte.js are two examples.  Today, many web developers will automatically reach for these tools
 for any web project that they work on and employers are clamoring for more React developers.
 
-.Why Did Javascript & AJAX Win?
+.Why Did JavaScript & AJAX Win?
 ****
 It is worth taking a step back at this point and ask: why did JavaScript and AJAX become so popular?  What need were they
 satisfying?  The answer is that HTML and the hypermedia model of the web, for all the amazing aspects of them, felt
@@ -355,7 +355,7 @@ a jarring experience.
 
 By using JavaScript and AJAX requests, the web could compete with native applications, smoothly updating content in
 a web page without any flicker or other jarring visual issues.  Additionally, a richer UI event model was available to
-Javascript: any event could drive a server request, not just clicks and submits.  This allowed web applications like
+JavaScript: any event could drive a server request, not just clicks and submits.  This allowed web applications like
 Google Maps to smoothly respond to scroll wheel events, dragging, etc. in a way that was simply impossible to
 achieve in plain old HTML.
 ****

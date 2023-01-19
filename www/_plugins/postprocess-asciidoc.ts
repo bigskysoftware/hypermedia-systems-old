@@ -9,6 +9,7 @@ export default () => {
 
             $$(document, ".listingblock, .imageblock").forEach((el) => {
                 el.tagName = "figure";
+                el.classList.add("contents"); // Don't draw box around images and code listings
                 const title = el.querySelector(".title");
                 if (title) title.tagName = "figcaption";
             })
@@ -63,6 +64,16 @@ export default () => {
                 const cite = document.createElement("cite");
                 cite.append(...el.childNodes);
                 el.append(cite);
+            })
+
+            $$(document, ".language-asciiart").forEach(el => {
+                const wrapper = el.parentElement!;
+                el.tagName = "pre";
+                wrapper.tagName = "div";
+
+                wrapper.setAttribute("role", "img");
+                el.setAttribute("aria-hidden", "true");
+                el.classList.add("asciiart");
             })
         })
     }

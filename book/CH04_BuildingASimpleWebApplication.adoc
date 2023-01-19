@@ -23,10 +23,10 @@ we wish we could write this book for every possible stack out there, in the inte
 
 For this book we are going to use the following stack:
 
-* We will use https://www.python.org/[Python] as our programming language
-* We will use https://palletsprojects.com/p/flask/[Flask] as our web framework, allowing us to connect HTTP requests to python logic
+* We will use https://www.python.org/[Python] as our programming language.
+* We will use https://palletsprojects.com/p/flask/[Flask] as our web framework, allowing us to connect HTTP requests to python logic.
 * We will use https://palletsprojects.com/p/jinja/[Jinja2] for our server-side templating language, allowing us to render HTML responses using a familiar
-  and intuitive syntax
+  and intuitive syntax.
 
 Why did we pick this particular stack?
 

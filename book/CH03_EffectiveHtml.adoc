@@ -124,8 +124,8 @@ Thus, we don't demand that every site makes the "most semantic" HTML.
 What's most important is to avoid **wrong** HTML---it's better to fall back on a more generic element than be precisely incorrect.
 Sometimes, div is fine.
 
-If you have the resources, however, putting more care in your HTML will produce a more **polished** site.
-Much like style guides, well-written semantic HTML gives prestige tp a document, even when few people notice it.
+If you have the resources, however, putting more care in your HTML will produce a more polished site.
+Much like style guides, well-written semantic HTML gives prestige to a document, even when few people notice it.
 It can also make your HTML easier to maintain.
 
 Good HTML is also good for non-visual usage.

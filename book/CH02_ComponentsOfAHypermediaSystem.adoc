@@ -604,7 +604,7 @@ to archive the contact.  The JSON representation, in contrast, does not have thi
 
 What are the ramifications of this fact for a client of the JSON API?
 
-What this means is that the JSON API client must know *in advance* exactly what other URLs (and request methods) are
+What this means is that the JSON API client must know _in advance_ exactly what other URLs (and request methods) are
 available for working with the contact information.  If the JSON client is able to update this contact in some way, it
 must know how to do so from some source of information _external_ to the JSON message.  Is if the contact has a different
 status, say "`Archived`", does this change the allowable actions?  If so, what are the new allowable actions?

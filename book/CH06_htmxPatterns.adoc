@@ -55,8 +55,11 @@ are swapped into the DOM, etc.) the `hx-boost` attribute, in contrast, is a high
 When you put `hx-boost` on a given element with the value `true`, it will "`boost`" all anchor and form elements within that
 element.  "`Boost`", here, means that htmx will convert all those anchors and forms from "`normal`" hypermedia controls
 into AJAX-powered hypermedia controls.  Rather than issuing "`normal`" HTTP requests that replace the whole page, the links
-and forms will issue AJAX requests and then htmx will swap the response to these requests into the `body` tag.  This makes
-navigation feel faster because the browser will not be re-interpreting the `<head>` tags and so forth.
+and forms will issue AJAX requests and then htmx will swap the inner content of the `<body>` tag in the response to these
+requests into the existing pages `<body>` tag.
+
+This makes navigation feel faster because the browser will not be re-interpreting most of the tags in the response
+`<head>` and so forth.
 
 === Boosted Links
 

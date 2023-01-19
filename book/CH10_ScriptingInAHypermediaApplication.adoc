@@ -77,7 +77,7 @@ other concerns of our application.
 
 Note also that, especially in web development parlance, the humble "`server`" is usually a whole fleet of racks, virtual
 machines, containers and more. Even a worldwide network of datacenters is reduced to "`the server`" when discussing
-the client-side of a Hypermedia Driven-Application.
+the server-side of a Hypermedia Driven-Application.
 ****
 
 Satisfying these two constraints sometimes requires us to diverge from what is typically considered best practice for

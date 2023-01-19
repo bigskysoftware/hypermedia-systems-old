@@ -17,9 +17,9 @@ slick features that most developers today would assume requires the use of a hea
 == Picking A "`Web Stack`" To Use
 
 In order to demonstrate how web 1.0 applications works, we need to pick a server-side language and a library for
-handling HTTP requests.  Colloquially, this is called our "`Server Side`" or "`Web`" stack, and there are literally hundreds
+handling HTTP requests.  Colloquially, this is called our "`Server-Side`" or "`Web`" stack, and there are literally hundreds
 of options to choose from, many with passionate followings.  You probably have a web framework that you prefer and, while
-we wish we could write this book for every possible stack out there, in the interest of simplicty (and sanity) we can only pick one.
+we wish we could write this book for every possible stack out there, in the interest of simplicity (and sanity) we can only pick one.
 
 For this book we are going to use the following stack:
 

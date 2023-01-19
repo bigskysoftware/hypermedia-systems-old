@@ -285,7 +285,7 @@ Here are some of the more common or interesting ones:
 | The server cannot find the requested resource.
 
 | `500 Internal Server Error`
-| The server encountered an error when attempting to process the reesponse.
+| The server encountered an error when attempting to process the response.
 
 |===
 

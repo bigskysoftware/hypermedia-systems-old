@@ -321,7 +321,7 @@ Here is a diagram of the interaction:
 
 ==== Web 1.0 Applications
 
-As someone interested in web development, the discussion above probably sounds very familiar to you.  You may
+As someone interested in web development, the above diagrams and discussion are probably very familiar to you.  You may
 even find this content boring.  But take a step back and consider the fact that these two hypermedia controls,
 anchors and forms, are the _only_ native ways for a user to interact with a server in plain HTML.
 

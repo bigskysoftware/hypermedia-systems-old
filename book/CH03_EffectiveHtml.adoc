@@ -35,7 +35,7 @@ We'll learn why HTML is far cooler than a programming language.
 
 Have you noticed that a lot of websites are bad?
 
- - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times. footnote:[https://almanac.httparchive.org/en/2020/markup[]. Other than `<div>` being the most common element, the HTTP Archive Web Almanac found that 0.06% of pages surveyed in 2020 contained the nonexistent `<h7>` element. 0.0015% for `<h8>`.]
+ - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times.footnote:[https://almanac.httparchive.org/en/2020/markup] Other than `<div>` being the most common element, the HTTP Archive Web Almanac found that 0.06% of pages surveyed in 2020 contained the nonexistent `<h7>` element. 0.0015% used `<h8>`.
  - Websites, including websites containing public data or results of publicly-funded research, are impossible to scrape programmatically.
  - So-called MVPs (minimum viable product) are released in open beta while being completely unusable by vast swathes of people -- UX not just buggy, but nonexistent footnote:[https://adrianroselli.com/2022/11/accessibility-gaps-in-mvps.html]. Is an inaccessible product "`viable`"?
  - Search engines have a hard time extracting useful information from a page, and rank that page lower as a result. 

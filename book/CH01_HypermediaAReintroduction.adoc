@@ -664,7 +664,7 @@ will become more and more apparent.
 Hypermedia is often, though _not always_, a great choice for a web application.
 
 Perhaps you are building a website or application that simply doesn't _need_ a huge amount of user-interactivity.  There are
-many useful web applications like this, and there is no shame in it!  Applications like Amazon, Ebay, any number of news
+many useful web applications like this, and there is no shame in it!  Applications like Amazon, eBay, any number of news
 sites, shopping sites, message boards and so on don't need a massive amount of interactivity to be effective: they are
 mainly text and images, which is exactly what the web was designed for.
 

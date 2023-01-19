@@ -852,7 +852,7 @@ And, furthermore, this is a deeply _Hypermedia-Driven_ web application.  Without
 been using REST, HATEOAS and all the other hypermedia concepts we discussed earlier.  We would bet that this simple
 little contact app of ours is more RESTful than 99% of all JSON APIs ever built!
 
-And it was all effortless:just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
+And it was all effortless: just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
 architecture.
 
 So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style

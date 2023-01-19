@@ -87,8 +87,9 @@ the settings page would normally render an `html` tag, with a `head` tag and so 
 requests specially?
 
 The answer is no: htmx is smart enough to pull out only the content of the `body` tag to swap in to the new page.
-The `head` tag, etc. are all ignored.  This means you don't need to do anything special on the server side to render
-templates that `hx-boost` can handle: just return the normal HTML for your page, and it should work fine.
+The `head` tag is mostly ignored: only the title tag, if it is present, will be processed.  This means you don't need to
+do anything special on the server side to render templates that `hx-boost` can handle: just return the normal HTML for
+your page, and it should work fine.
 
 Note that boosted links (and forms) will also continue to update the navigation bar and history, just like normal links,
 so users will be able to use the browser back button, will be able to copy and paste URLs (or "`deep links`") and so on.

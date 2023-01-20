@@ -259,9 +259,11 @@ that specifies where to issue an HTTP request.
 Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`method`" to use.  In this example
 the form is asking the browser to issue a `POST` request.
 
-The content _within_ the form does different work than the content within an anchor tag.  The values of `input` tags
-and other tags such as `select` tags will be included with the HTTP request when the form is submitted.  This allows a
-form to include an arbitrary amount of information collected from a user in a request, unlike the anchor tag.
+In contrast with anchor tags, the content and tags _within_ a form can have an effect on the hypermedia interaction
+that the form makes with a server.  The _values_ of `input` tags and other tags such as `select` tags will be included
+with the HTTP request when the form is submitted, as URL parameters in the case of a `GET` and as part of the request
+body in the case of a `POST`.  This allows a form to include an arbitrary amount of information
+collected from a user in a request, unlike the anchor tag.
 
 In a typical browser this form tag and its contents would be interpreted by the browser roughly as follows:
 

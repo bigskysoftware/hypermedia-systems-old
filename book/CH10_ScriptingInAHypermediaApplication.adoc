@@ -333,9 +333,9 @@ Each of these technologies _colocate_ code in various languages that address a s
 All of them mix _implementation_ concerns together in order to present a unified abstraction to the end-user.  Separating
 technical detail concerns just isn't as much of an, ahem, concern.
 
-.Locality of Behavior
+.Locality of Behaviour
 ****
-Locality of Behavior (LoB) is an alternative software design principle that we coined, in opposition to Separation of Concerns.
+Locality of Behaviour (LoB) is an alternative software design principle that we coined, in opposition to Separation of Concerns.
 It describes the following characteristic of a piece of software:
 
 [quote, https://htmx.org/essays/locality-of-behaviour/]
@@ -344,14 +344,14 @@ The behaviour of a unit of code should be as obvious as possible by looking only
 In simple terms: you should be able to tell what a button does by simply looking at the code or markup that creates that button.
 This does not mean you need to inline the entire implementation, but that you shouldn't need to hunt for it or require prior knowledge of the codebase to find it.
 
-We will demonstrate Locality of Behavior in all of our examples, both the counter demos and the features we add to Contact.app.
+We will demonstrate Locality of Behaviour in all of our examples, both the counter demos and the features we add to Contact.app.
 Locality of behavior is an explicit design goal of both +_hyperscript+ and Alpine.js (which we will cover later) as well as htmx.
 
-All of these tools achieve Locality of Behavior by having you embed attributes directly within your HTML, as opposed to
+All of these tools achieve Locality of Behaviour by having you embed attributes directly within your HTML, as opposed to
 having code look up elements in a document through CSS selectors in order to add event listeners onto them.
 ****
 
-In a Hypermedia Driven Application, we feel that the Locality of Behavior design principle is often more important than 
+In a Hypermedia Driven Application, we feel that the Locality of Behaviour design principle is often more important than
 the more traditional Separation of Concerns design principle.
 
 ==== What To Do With Our Counter?
@@ -373,7 +373,7 @@ the body element would need to have listeners attached to it that deal with many
 components may not even be on the page when it was first rendered, if they are added dynamically after the initial
 HTML page is rendered.
 
-So vanilla JavaScript and Locality of Behavior don't seem to mesh _quite_ as well as we would like them to.
+So vanilla JavaScript and Locality of Behaviour don't seem to mesh _quite_ as well as we would like them to.
 
 The situation is not hopeless, however: it's important to understand that LoB does not require behavior to be _implemented_
 at a use site, but merely _invoked_ there.  That is, we don't need to write all our code on a given element, we just

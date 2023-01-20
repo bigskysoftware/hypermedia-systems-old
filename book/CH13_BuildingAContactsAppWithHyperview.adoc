@@ -29,7 +29,7 @@ The HTTP server for our web app is written using the Flask framework.
 Hyperview also uses HTTP for client-server communication.
 So we can re-use the Flask routes and views from the web app for the mobile app as well.
 3. The web app uses HTML for its hypermedia format, and Hyperview uses HXML.
-HTML and HXML are different formats, but the base syntax is similar (nested tags with attribues).
+HTML and HXML are different formats, but the base syntax is similar (nested tags with attributes).
 This means we can use the same templating library (Jinja) for HTML and HXML.
 Additionally, many of the concepts of htmx are built into HXML.
 We can directly port web app features implemented with htmx (search, infinite loading) to HXML.
@@ -344,7 +344,7 @@ with new content (`<item>` elements that match the search query) received in the
 Note that `href` includes our `rows_only` query param; we want the response to only include the rows and not the entire screen.
 
 [#figure-7-2, reftext="Figure {chapter}.{counter:figure}"]
-.Searchings for Contacts
+.Searching for Contacts
 image::screenshot_hyperview_search.png[]
 
 That's all it takes to add search-as-you-type functionality to our mobile app!
@@ -414,8 +414,8 @@ So we use a Jinja conditional to only include this new `<item>` if the list of c
 This new `<item>` element gets an ID and a behavior.
 The behavior defines the infinite scroll interaction.
 Up until now, we've seen `trigger` values of `change` and `refresh`.
-But to implement infinite scroll, we need a way to trigger the action when the user scrolls to the botton of the list.
-The `visibile` trigger can be used for this exact purpose.
+But to implement infinite scroll, we need a way to trigger the action when the user scrolls to the bottom of the list.
+The `visible` trigger can be used for this exact purpose.
 It will trigger the action when the element with the behavior is visible in the device viewport.
 In this case, the new `<item>` element is the last item in the list, so the action will trigger when the user scrolls down far enough for the item to enter the viewport.
 As soon as the item is visible, the action will make an HTTP GET request, and replace the loading `<item>` element with the response content.
@@ -445,7 +445,7 @@ Once the content is refreshed, the content retracts back up to its default posit
 image::screenshot_hyperview_refresh_cropped.png[]
 
 This pattern is so common and useful that it's built in to Hyperview via the `refresh` action.
-Let's add pull-to-refresh to our list of contacs to see it in action.
+Let's add pull-to-refresh to our list of contacts to see it in action.
 
 .Snippet of `hv/index.xml`
 [source,xml]
@@ -691,7 +691,7 @@ To understand that decision, we need to first discuss the "`Save`" button.
 When pressed, the Hyperview client will make an HTTP `POST` request to `contacts/<contact_id>/edit`, with form data serialized from the `<text-field>` inputs.
 The HXML response will replace the contents of form field container (ID `form-fields`).
 But what should that response be?
-That depends on the validitiy of the form data:
+That depends on the validity of the form data:
 
 1. If the data is invalid (eg duplicate email address), our UI will remain in the editing mode and show error messages on the invalid fields.
 This allows the user to correct the errors and try saving again.
@@ -1087,7 +1087,7 @@ Hopefully, you can follow along:
 
 By reusing `form_fields.xml` for both editing and adding a contact, we get to reuse some code and ensure the two features have a consistent UI.
 Also, our "`Add Contact`" screen will benefit from the "`saved`" logic that's already a part of `form_fields.xml`.
-After succesfully adding a new contact, the screen will dispatch the `contact-updated` event, which will refresh the contacts list and show the newly added contact.
+After successfully adding a new contact, the screen will dispatch the `contact-updated` event, which will refresh the contacts list and show the newly added contact.
 The screen will reload itself to show the Contact Details.
 
 [#figure-7-7, reftext="Figure {chapter}.{counter:figure}"]
@@ -1198,7 +1198,7 @@ def render_to_response(template_name, *args, **kwargs):
 
 `render_to_response()` renders a template with the given context, and turns it into an Flask response object with the appropriate Hyperview `Content-Type` header.
 Obviously, the implementation is highly-specific to serving our Hyperview mobile app.
-But we can modify the function to do content negotiation based on the requests's `Accept` header:
+But we can modify the function to do content negotiation based on the request's `Accept` header:
 
 .`app.py`
 [source,py]

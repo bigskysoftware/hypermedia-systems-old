@@ -302,7 +302,7 @@ In htmx-powered interactions, as you will see, we are often not replacing the en
 to transfer an entire HTML document from the server to the browser.
 
 This fact can be used to save bandwidth as well as resource loading time, since less overall content is transferred from
-the server to the client and since it isn't necessary to reprocess a `head` tag with style sheets,script tags, and so forth.
+the server to the client and since it isn't necessary to reprocess a `head` tag with style sheets, script tags, and so forth.
 ****
 
 Let's consider what a simple _partial_ HTML response to the "`Get Contacts`" button might be when it is clicked.
@@ -899,7 +899,7 @@ as it is for most JavaScript-based approaches.
 
 htmx is a very pure extension to HTML, aiming to incrementally improve the language as a hypermedia in a manner that is
 conceptually coherent with the underlying markup language.  Like any technical choice, this is not without
-tradeoffs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel
+trade-offs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel
 should be there "`by default`".
 
 A good example is the concept of modal dialogs. Many web applications today make heavy use of modal dialogs, effectively

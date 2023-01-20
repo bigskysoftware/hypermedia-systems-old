@@ -17,16 +17,16 @@ slick features that most developers today would assume requires the use of a hea
 == Picking A "`Web Stack`" To Use
 
 In order to demonstrate how web 1.0 applications works, we need to pick a server-side language and a library for
-handling HTTP requests.  Colloquially, this is called our "`Server Side`" or "`Web`" stack, and there are literally hundreds
+handling HTTP requests.  Colloquially, this is called our "`Server-Side`" or "`Web`" stack, and there are literally hundreds
 of options to choose from, many with passionate followings.  You probably have a web framework that you prefer and, while
-we wish we could write this book for every possible stack out there, in the interest of simplicty (and sanity) we can only pick one.
+we wish we could write this book for every possible stack out there, in the interest of simplicity (and sanity) we can only pick one.
 
 For this book we are going to use the following stack:
 
-* We will use https://www.python.org/[Python] as our programming language
-* We will use https://palletsprojects.com/p/flask/[Flask] as our web framework, allowing us to connect HTTP requests to python logic
+* We will use https://www.python.org/[Python] as our programming language.
+* We will use https://palletsprojects.com/p/flask/[Flask] as our web framework, allowing us to connect HTTP requests to python logic.
 * We will use https://palletsprojects.com/p/jinja/[Jinja2] for our server-side templating language, allowing us to render HTML responses using a familiar
-  and intuitive syntax
+  and intuitive syntax.
 
 Why did we pick this particular stack?
 
@@ -35,7 +35,7 @@ https://www.tiobe.com/tiobe-index/[TIOBE index], a respected measure of programm
 Perhaps more importantly, Python is very easy to read even if you aren't very familiar with it.
 
 Flask was chosen as the web framework because it is very simple and does not impose a lot of structure on top of the
-basics of HTTP request handling. This bare-bones approach isn't for everyone: in the python community, for example, many people
+basics of HTTP request handling. This bare-bones approach isn't for everyone: in the Python community, for example, many people
 prefer the "`Batteries Included`" nature of Django, which supplies much more functionality out of the box than Flask does.
 
 For teaching purposes, and to minimize the conceptual burden for non-Python developers, we feel that an un-opinionated
@@ -47,7 +47,7 @@ Jinja2 templates were picked because they are the default templating language fo
 similar enough to most other server-side templating languages that most people who are familiar with any server-side
 (or client-side) templating library should be able to understand them quickly and easily.
 
-With this stack we will be rendering HTML _on the server_ to return to clients, rather than producing JSON.  This
+With this stack we will be rendering HTML _on the server-side_ to return to clients, rather than producing JSON.  This
 is the traditional approach to building web applications, but, with the rise of SPAs, is not as widely used a technique
 as it once was.  Today, as people are rediscovering this approach to building web applications, the term "`Server-Side
 Rendering`" or SSR is emerging as the way that people talk about this style of templating.  This is in contrast with
@@ -852,7 +852,7 @@ And, furthermore, this is a deeply _Hypermedia-Driven_ web application.  Without
 been using REST, HATEOAS and all the other hypermedia concepts we discussed earlier.  We would bet that this simple
 little contact app of ours is more RESTful than 99% of all JSON APIs ever built!
 
-And it was all effortless:just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
+And it was all effortless: just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
 architecture.
 
 So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style

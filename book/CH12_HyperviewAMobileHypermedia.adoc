@@ -2,7 +2,7 @@
 = Hyperview: A Mobile Hypermedia
 :chapter: 12
 :part: Bringing Hypermedia To Mobile
-:part_url: ./part/hyperview
+:part_url: ./part/hyperview/
 :url: ./hyperview-a-mobile-hypermedia/
 
 This chapter covers
@@ -17,8 +17,8 @@ No doubt, the Web is the largest hypermedia system, and web browsers are the mos
 The dominance of the Web in discussions about hypermedia make it easy to forget that hypermedia is a general concept, and can be applied to all types of platforms and applications.
 In this chapter, we will see the hypermedia architecture applied to a non-web platform: native mobile applications.
 Mobile as a platform has different constraints than the Web.
-It requires different tradeoffs and design decisions.
-Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly applied to build delightul mobile applications!
+It requires different trade-offs and design decisions.
+Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly applied to build delightful mobile applications!
 
 
 == The state of mobile app development
@@ -30,10 +30,10 @@ In this way, mobile apps have a lot in common with old-school desktop apps for M
 There is one important difference between PC desktop apps of yesteryear and today's mobile apps.
 These days, almost all mobile apps are "`networked`".
 By networked, we mean the app needs to read and write data over the Internet to deliver its core functionality.
-In other words, a networked mobile app needs to to implement the client-server architecture.
+In other words, a networked mobile app needs to implement the client-server architecture.
 
 When implementing the client-server architecture, the developer needs to make a decision: Should the app be designed as a thin client or thick client?
-The current mobile ecoystems strongly push developers towards a thick-client approach.
+The current mobile ecosystems strongly push developers towards a thick-client approach.
 Why?
 Remember, Android and iOS require that a native mobile app be packaged and distributed as an executable binary.
 There's no way around it.
@@ -151,7 +151,7 @@ The syntax should be familiar to anyone who's worked with HTML:
 
 But HXML is not just a straight port of HTML with differently named tags.
 In previous chapters, we've seen how htmx enhances HTML with a handful of new attributes.
-These additions maintain the declaritive nature of HTML, while giving developers the power to create rich web apps.
+These additions maintain the declarative nature of HTML, while giving developers the power to create rich web apps.
 In HXML, the concepts of htmx (and IntercoolerJS before it) are built into the spec.
 Specifically, HXML is not limited to "`click to navigate`" and "`press to submit`" interactions like basic HTML.
 It supports a range of triggers and actions for modifying the content on a screen.
@@ -267,7 +267,7 @@ Let's take a closer look at the "`Hello World`" app defined in HXML:
 ----
 <1> The root element of the HXML app
 <2> The element representing a screen of the app
-<3> The element representing the UI of the screem
+<3> The element representing the UI of the screen
 <4> The element representing the top header of the screen
 <5> A wrapper element around the content shown on the screen
 <6> The text content shown on the screen
@@ -419,7 +419,7 @@ Showing images in Hyperview is pretty similar to HTML, but there are a few diffe
 The `source` attribute specifies how to load the image.
 Like in HTML, the source can be an absolute or relative URL.
 Additionally, the source can be an encoded data URI, for example `data:image/png;base64,iVBORw`.
-However, the source can also be a "`local`" URL, refering to an image that is bundled as an asset in the mobile app.
+However, the source can also be a "`local`" URL, referring to an image that is bundled as an asset in the mobile app.
 The local URL is prefixed with `./`:
 
 .Image element, pointing to local source
@@ -431,7 +431,7 @@ The local URL is prefixed with `./`:
 Using Local URLs is an optimization.
 Since the images are on the mobile device, they don't require a network request and will appear quickly.
 However, bundling the image with the mobile app binary increases the binary size.
-Using local images is a good tradeoff for images that are frequently accessed but rarely change.
+Using local images is a good trade-off for images that are frequently accessed but rarely change.
 Good examples include the app logo, or common button icons.
 
 The other thing to note is the presence of the `style` attribute on the `<image>` element.
@@ -515,7 +515,7 @@ First is the `<form>` element.
 The `<form>` element is used to group together inputs for serialization.
 When a user takes an action that triggers a backend request, the Hyperview client will serialize all inputs in the surrounding `<form>` and include them in the request.
 This is true for both `GET` and `POST` requests.
-We will cover this in more detail when talking about behaviors later in this chatper.
+We will cover this in more detail when talking about behaviors later in this chapter.
 Also later in this chapter, I'll talk about support for custom elements in HXML.
 With custom elements, you can also create your own input elements.
 Custom input elements allow you to build incredible powerful interactions with simple XML syntax that integrates well with the rest of HXML.
@@ -573,7 +573,7 @@ For the sake of brevity, we won't include the `<styles>` element in the rest of 
 
 The core UI elements that ship with Hyperview are quite basic.
 Most mobile apps require richer elements to deliver a great user experience.
-Luckily, HXML can easily accomodate custom elements in its syntax.
+Luckily, HXML can easily accommodate custom elements in its syntax.
 This is because HXML is really just XML, aka "`Extensible Markup Language`".
 Extensibility is already built into the format!
 Developers are free to define new elements and attributes to represent custom elements.
@@ -672,7 +672,7 @@ This is a very common scenario in rich web applications, where users expect to f
 
 So with basic HTML, interactions (clicks and submits) are limited and tightly coupled to a single action (loading a new page).
 Of course, using JavaScript, we can extend HTML and add some new syntax to support our desired interactions.
-Htmx (and Intercooler before it) do exactly that with a new set of attributes:
+htmx (and Intercooler before it) do exactly that with a new set of attributes:
 
 - Interactions can be added to any element, not just links and forms.
 - The interaction can be triggered via a click, submit, mouseover, or any other JavaScript event.
@@ -759,7 +759,7 @@ Behavior actions in Hyperview fall into four general categories:
 
 - Navigation actions, which load new screens and move between them
 - Update actions, which modify the HXML of the current screen
-- System actions, which interact with with OS-level capabilities.
+- System actions, which interact with OS-level capabilities.
 - Custom actions, which can execute any code you add to the client.
 
 ===== Navigation Actions
@@ -1016,7 +1016,7 @@ Likewise, pressing "`Show`" multiple times will have no affect once the view is 
 Pressing "`Toggle`" will keep flipping the visibility status of the element between showing and hidden.
 
 Hyperview comes with other actions that modify the existing HXML.
-We won't cover them in detail, but I'll mention them breifly here:
+We won't cover them in detail, but I'll mention them briefly here:
 
 - `set-value`: this action can set the value of an input element such as `<text-field>`, `<switch>`, `<select-single>`, etc.
 - `select-all` and `unselect-all` work with the `<select-multiple>` element to select/deselect all options.

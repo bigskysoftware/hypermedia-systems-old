@@ -221,7 +221,7 @@ This is _not_ to say that every htmx feature offers progressive enhancement.  It
 do not offer a "`No JS`" fallback in htmx, and, in fact, many of the features we will build later in the book will fall
 into this category.  We will note when a feature is progressive enhancement friendly and when it is not.
 
-Ultimately, it is up to you, the developer, to decide if the tradeoffs of progressive enhancement (a more basic UX,
+Ultimately, it is up to you, the developer, to decide if the trade-offs of progressive enhancement (a more basic UX,
 limited improvements over plain HTML) are worth the benefits for your application users.
 
 === Adding `hx-boost` to Contact.app
@@ -374,7 +374,7 @@ This is definitely _not_ what we want: we would like the HTTP redirect to issue 
 Post/Redirect/Get behavior we discussed earlier to be a Delete/Redirect/Get.
 
 Fortunately, there is a different response code, https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303[`303 See Other`],
-that does what we want: when a browser recieves a `303 See Other` redirect response, it will issue a `GET` to the new
+that does what we want: when a browser receives a `303 See Other` redirect response, it will issue a `GET` to the new
 location.
 
 So we want to update our code to use the `303` response code in controller.
@@ -466,7 +466,7 @@ the built-in features of the web as a hypermedia system without any URL hacks.
 === One More Thing...
 
 There is one additional "`bonus`" feature we can add to our "`Delete Contact`" button: a confirmation dialog.  Deleting
-a contact is a destructive operation and as it stands right now, if the user inadvertantly clicked the "`Delete Contact`"
+a contact is a destructive operation and as it stands right now, if the user inadvertently clicked the "`Delete Contact`"
 button, the application would just delete that contact.  Too bad, so sad for the user.
 
 Fortunately htmx has an easy mechanism for adding a confirmation message on destructive operations like this: the

@@ -53,9 +53,9 @@ For example:
   your server somehow, and using the existing HTML API would almost certainly be a poor fit!  You want programmatic
   access to your system via a Data API, and JSON is a natural choice for this.
 
-* Perhaps you have automated script that needs to interact with the system on a regular basis.  For example, maybe we
+* Perhaps you have an automated script that needs to interact with the system on a regular basis.  For example, maybe we
   have a bulk-import job that runs nightly, and needs to import/sync thousands of contacts.  While it would be possible
-  to script this agains the HTML API, it would also be annoying: parsing HTML in scripts is error prone and tedious.  It
+  to script this against the HTML API, it would also be annoying: parsing HTML in scripts is error prone and tedious.  It
   would be better to have a simple JSON API for this use case.
 
 * Perhaps there are 3rd party clients who wish to integrate with your system's data in some way.  Maybe a partner
@@ -200,7 +200,7 @@ Given that we are going to split our JSON Data API routes out from our regular h
 them?  One important consideration here is that we want to make sure that we can version our API cleanly in some way,
 regardless of the pattern we choose.
 
-Looking around, a lot of places end up using a subdomain for their apis, something
+Looking around, a lot of places use a subdomain for their APIs, something
 like `https://api.mywebapp.example.com` and, in fact, often encode versioning in the subdomain: `https://v1.api.mywebapp.example.com`.
 
 While this makes sense for large companies, it seems like a bit of overkill for our modest little Contact.app.  Rather
@@ -297,14 +297,14 @@ In the web application, we needed a separate path, `/contacts/new` to host the H
 the web application we made the decision to issue a `POST` to that same path to keep things consistent.
 
 In the case of the JSON API, there is no such path needed: the JSON API "`just is`": it doesn't need to provide any
-hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to to create a contact,
-likely through some provided documentation about the API, and that's it.
+hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to, to create a contact,
+likely through some documentation provided about the API, and that's it.
 
 Because of that fact, we can put the "`create`" handler on the same path as the "`list`" handler: `/api/v1/contacts`, but
 have it respond only to HTTP `POST` requests.
 
-The code here is relatively straight forward: populate a new contact with the information from the `POST` request,
-attempt to save it and, if it is not successful, show some error messages.  Here is the code:
+The code here is relatively straightforward: populate a new contact with the information from the `POST` request,
+attempt to save it, and -- if it is not successful -- show error messages.  Here is the code:
 
 .Adding Contacts With Our JSON API
 [source, python]
@@ -318,27 +318,27 @@ def json_contacts_new():
     else:
         return {"errors": c.errors}, 400 <4>
 ----
-<1> This handler is on the same path as the first one for our JSON API, but handles `POST` requests
-<2> We create a new Contact based on values submitted with the request
-<3> We attempt to save the contact and, if successful, render it as a JSON object
-<4> If the save is not successful, we render an object showing the errors, with a response code of `400 (Bad Request)`
+<1> This handler is on the same path as the first one for our JSON API, but handles `POST` requests.
+<2> We create a new Contact based on values submitted with the request.
+<3> We attempt to save the contact and, if successful, render it as a JSON object.
+<4> If the save is not successful, we render an object showing the errors, with a response code of `400 (Bad Request)`.
 
-In some ways similar to our `contacts_new()` handler from our web application (we are creating the contact and attempting
-to save it) but in other ways very different:
+In some ways this is similar to our `contacts_new()` handler from our web application; we are creating the contact and attempting
+to save it. In other ways it is very different:
 
 * There is no redirection happening here on a successful creation, because we are not dealing with a hypermedia client
-  like the browser
+  like the browser.
 * In the case of a bad request, we simply return an error response code, `400 (Bad Request)`.  This is in contrast with
    the web application, where we simply re-render the form with error messages in it.
 
-It is these sorts of differences that, over time, build up and make the idea of keeping your JSON and hypermedia APIs
+These sorts of differences, over time, build up and make the idea of keeping your JSON and hypermedia APIs
 on the same set of URLs less and less appealing.
 
 === Viewing Contact Details
 
-Next let's make it possible for a JSON API client to download the details for a single contact.  We will naturally use an
-HTTP `GET` for this functionality and we will follow the convention we established for our regular web application, and
-put the path at `/api/v1/contacts/<contact id>`, so, for example, if you want to see the details of the contact with the
+Next, let's make it possible for a JSON API client to download the details for a single contact.  We will naturally use an
+HTTP `GET` for this functionality and will follow the convention we established for our regular web application, and
+put the path at `/api/v1/contacts/<contact id>`. So, for example, if you want to see the details of the contact with the
 id `42`, you would issue an HTTP `GET` to `/api/v1/contacts/42`.
 
 This code is quite simple:

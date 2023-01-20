@@ -479,7 +479,7 @@ like the current users email or id, their roles, partially created domain object
 This violation of the Statelessness REST architectural constraint has proven to be useful for building web applications
 and, for the most part, does not appear to have had a significant impact on the overall flexibility of the approach.  But
 it is worth bearing in mind that even Web 1.0 applications often violate the purity of REST in the interest of pragmatic
-tradeoffs.
+trade-offs.
 
 It should be noted, however, that sessions do cause additional operational complexity headaches when deploying hypermedia
 servers, which now may need to have shared access to the session state information stored across an entire cluster.  So

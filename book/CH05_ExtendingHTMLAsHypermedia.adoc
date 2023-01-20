@@ -899,7 +899,7 @@ as it is for most JavaScript-based approaches.
 
 htmx is a very pure extension to HTML, aiming to incrementally improve the language as a hypermedia in a manner that is
 conceptually coherent with the underlying markup language.  Like any technical choice, this is not without
-tradeoffs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel
+trade-offs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel
 should be there "`by default`".
 
 A good example is the concept of modal dialogs. Many web applications today make heavy use of modal dialogs, effectively

@@ -296,9 +296,9 @@ going to see the JSON API and the hypermedia API for our web application begin t
 In the web application, we needed a separate path, `/contacts/new` to host the HTML form for creating a new contact.  In
 the web application we made the decision to issue a `POST` to that same path to keep things consistent.
 
-In the case of the JSON API, no such path is needed: the JSON API "`just is,`" it doesn't need to provide a
-hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to create a contact,
-likely through some provided documentation about the API, and that's it.
+In the case of the JSON API, there is no such path needed: the JSON API "`just is`": it doesn't need to provide any
+hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to, to create a contact,
+likely through some documentation provided about the API, and that's it.
 
 Because of that fact, we can put the "`create`" handler on the same path as the "`list`" handler: `/api/v1/contacts`, but
 have it respond only to HTTP `POST` requests.

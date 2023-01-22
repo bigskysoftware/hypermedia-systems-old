@@ -589,7 +589,7 @@ The second implementation returns a JSON representation:
 What can we say about the differences between these two responses?
 
 One thing that may initially jump out at you is that the JSON representation is smaller than the HTML
-representation.  Fielding notes exactly this tradeoff when using a RESTful architecture:
+representation.  Fielding notes exactly this trade-off when using a RESTful architecture:
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
 ____

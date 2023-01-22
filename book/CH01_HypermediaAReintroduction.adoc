@@ -581,7 +581,7 @@ But this compromise still feels unsatisfactory.
 
 Must we default to having these two very different architectural models in our applications?
 
-Recall that the crux of the tradeoff between SPAs and MPAs is the _user experience_, or interactivity of the application.
+Recall that the crux of the trade-off between SPAs and MPAs is the _user experience_, or interactivity of the application.
 This typically drives the decision to choose one approach versus the other for an application or -- in the case
 of a "`transitional`" application -- for a particular feature.
 

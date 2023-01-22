@@ -813,7 +813,7 @@ We can add this as a new button below the "`Save`" button.
 This is the same technique we used to switch from the edit UI to the details UI upon successfully editing the contact.
 But pressing "`Cancel`" will update the UI faster than pressing "`Save`".
 On save, the app will first make a `POST` request to save the data, and then a `GET` request for the details screen.
-Cancelling skips the `POST`, and immediately make the `GET` request.
+Cancelling skips the `POST`, and immediately makes the `GET` request.
 
 [#figure-7-5, reftext="Figure {chapter}.{counter:figure}"]
 .Contact Edit Screen

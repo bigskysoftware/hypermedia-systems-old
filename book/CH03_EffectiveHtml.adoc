@@ -55,7 +55,7 @@ _If it looks right, it gets shipped._
 The developer is focusing almost exclusively to their own UI needs.
 Any other way of using a website becomes an afterthought.
 
-Thus, if you care about machine readability, or human readability, or page weight, what you should do is **test**.
+Thus, if you care about machine readability, or human readability, or page weight, what you should do is _test_.
 
 Did you think we were going to talk about semantic HTML? Keep reading for that, but alas, it's no substitute for testing. Test manually. Test automatically. Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI). Read the markup -- the markup being sent to browsers, not the templates and code you write. Know exactly what any type of hypermedia client is doing in any circumstance.
 
@@ -121,7 +121,7 @@ Furthermore, for internationalized sites, content in different languages being i
 Dishearteningly, but understandably, it's an expense few organizations can spare.
 
 Thus, we don't demand that every site makes the "most semantic" HTML.
-What's most important is to avoid **wrong** HTML---it's better to fall back on a more generic element than be precisely incorrect.
+What's most important is to avoid _wrong_ HTML---it's better to fall back on a more generic element than be precisely incorrect.
 Sometimes, div is fine.
 
 If you have the resources, however, putting more care in your HTML will produce a more polished site.
@@ -147,7 +147,7 @@ HTML is for humans.
 .Author's note
 [.info]
 ****
-The rest of this chapter is currently incomplete and **very** unorganized.
+The rest of this chapter is currently incomplete and _very_ unorganized.
 ****
 
 ## Using the spec

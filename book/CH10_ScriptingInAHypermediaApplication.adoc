@@ -436,9 +436,9 @@ document.querySelectorAll("[data-counter]") <2>
 Using RSJS solves, or at least alleviates, many of the problems we pointed out with our first, unstructured example of VanillaJS being
 split out to a separate file:
 
-* The JS that attaches behavior to a given element is *clear* (though only through naming conventions).
-* Reuse is *easy* --you can create another counter component on the page and it will just work.
-* The code is *well-organized* --one behavior per file
+* The JS that attaches behavior to a given element is _clear_ (though only through naming conventions).
+* Reuse is _easy_ -- you can create another counter component on the page and it will just work.
+* The code is _well-organized_ -- one behavior per file.
 
 All in all, RSJS is a good way to structure your vanilla JavaScript in a Hypermedia Driven Application.  So long as the
 JavaScript isn't communicating with a server via a plain data JSON API, or holding a bunch of internal state outside of
@@ -504,7 +504,7 @@ The first is the `role` attribute. This attribute has a predefined set of possib
 * `radiogroup`
 * etc.
 
-The `role` attribute **does not add any behavior** to HTML elements. Rather, it is a promise you make to the user.  When
+The `role` attribute _does not add any behavior_ to HTML elements. Rather, it is a promise you make to the user.  When
 you annotate an element as `role='menu'`, you are saying: _I will make this element work like a menu._
 
 Because this is a promise you are making, if you add the `role` attribute to an element but you _don't_ uphold
@@ -798,7 +798,7 @@ As we said, the Alpine `x-on:click` attribute (or its shorthand, the `@click` at
 `onclick` attribute.   However, it has additional features that make it significantly more useful:
 
 * You can listen for events from other elements. For example, the `.outside` modifier lets you listen to any click event
-  that is **not** within the element.
+  that is _not_ within the element.
 * You can use other modifiers to:
 ** throttle or debounce event listeners,
 ** ignore events that are bubbled up from descendant elements, or

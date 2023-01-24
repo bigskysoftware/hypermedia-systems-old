@@ -165,9 +165,9 @@ model entirely and were really using HTTP to implement their own Remote Procedur
 
 ===== Level 1: Resources
 
-At this more mature level, URLs are organized into coherent *resources*, so, if, for example, you
+At this more mature level, URLs are organized into coherent _resources_, so, if, for example, you
 wanted to retrieve the details for the contact with id `42`, you would issue a `GET` to
-`/contacts/42`, where the path `contacts/42` represents a *resource* on the server that can be
+`/contacts/42`, where the path `contacts/42` represents a _resource_ on the server that can be
 retrieved:
 
 [#listing-1-5, reftext={chapter}.{counter:listing}]
@@ -223,7 +223,7 @@ The final and most mature level of an API, according to this model, was to adopt
 controls.  In all the examples above, the data being returned from the XML API was still a
 simple XML representation of the resource.
 
-At Level 3, the responses should include *hypermedia controls*, that is content indicating actions and relationships that
+At Level 3, the responses should include _hypermedia controls_, that is content indicating actions and relationships that
 exist for that piece of data being represented.
 
 [#listing-1-7, reftext={chapter}.{counter:listing}]
@@ -337,7 +337,7 @@ with the server.
 AngularJS was followed by React, from Facebook, in 2013.  React introduced the notion of reactive programming, where
 a backing JavaScript model could be updated, and the DOM would automatically update to reflect the new state of the world.
 This made management of JavaScript-based web applications much easier in some ways, but also pushed React-based web
-applications further away from the original RESTful model of the web in which *hypermedia* was intended to store (i.e. encode)
+applications further away from the original RESTful model of the web in which _hypermedia_ was intended to store (i.e. encode)
 the state of the application.
 
 As of this writing, React is king of the hill in Single Page Application frameworks, but there are many up and coming

@@ -671,7 +671,7 @@ The second implementation returns the following JSON representation:
 
 The important point to notice here is that, by virtue of being a self-describing message, the HTML response now shows that
 the "`Archive`" operation is no longer available, and a new "`Unarchive`" operation has become available.  The HTML representation
-of the contact *encodes* the state of the application (that is, exactly what can and cannot be done with this particular
+of the contact _encodes_ the state of the application (that is, exactly what can and cannot be done with this particular
 representation) in a way that the JSON representation does not.
 
 A client interpreting the JSON response must, again, understand not only the general concept of a Contact,
@@ -736,7 +736,7 @@ The JSON representation, on the other hand, might look like this:
 ----
 
 Note that, once again, the JSON representation is unchanged.  There is no indication of this new functionality.  Instead,
-a client must *know* about this change, presumably via some shared documentation between the client and the server.
+a client must _know_ about this change, presumably via some shared documentation between the client and the server.
 
 Contrast this with the HTML response.  Because of the uniform interface of the RESTful model and, in particular,
 because we are using Hypermedia As The Engine of Application State, no such exchange of documentation is necessary!  Instead,
@@ -756,8 +756,8 @@ would see the new HTML, display it properly, and allow users to select whatever 
 again, the uniform interface of REST has proven to be extremely flexible: despite a potentially radically new layout
 for our hypermedia API, clients continue to keep working.
 
-An important fact falls out of this:  because of this flexibility, hypermedia APIs *do not have the versioning headaches
-that JSON Data APIs do*.
+An important fact falls out of this:  because of this flexibility, hypermedia APIs _do not have the versioning headaches
+that JSON Data APIs do_.
 
 Once a Hypermedia-Driven Application has been "`entered into`" (that is, loaded through some entry point URL), all functionality
 and resources are surfaced through self-describing messages.  Therefore, there is no need to exchange documentation with

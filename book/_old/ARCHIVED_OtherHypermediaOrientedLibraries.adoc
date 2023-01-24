@@ -353,10 +353,10 @@ client will be able to work with these resources without any deep understanding 
 Another approach, one championed by Mark Amundsen, is to build your _own_ hypermedia.  This may sound a bit crazy at
 first, but Mark has written a series of books on exactly this topic.  One, in particular, that we can recommend is
 "Restful Web Clients", which goes over the design of both good hypermedia APIs as well as how to write good hypermedia
-*clients* for those APIs.
+_clients_ for those APIs.
 
 In our experience, the idea of hypermedia APIs are fairly clear to most developers.  However, understanding how to
-create a proper hypermedia *client* is a tricky, and much less discussed part of the hypermedia puzzle.  One of the reasons we
+create a proper hypermedia _client_ is a tricky, and much less discussed part of the hypermedia puzzle.  One of the reasons we
 are so excited about Hyperview, and were thrilled to have Adam Stepinski, the creator of Hyperview, join us as a co-author
 of this book, is because he did the hard work of not only defining a hypermedia format, but also of creating a hypermedia
 client that can work with that format.  By creating both sides of the hypermedia puzzle for mobile application, Adam has

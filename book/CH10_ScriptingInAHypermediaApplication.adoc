@@ -578,7 +578,7 @@ Instead of taking this approach, we will use the DOM to store our state.  We'll 
 menu element to tell us it's closed. If the HTML of the page is snapshotted and restored, the menu can be restored as
 well by simply re-running the JS.
 
-[source,js,highlight=2]
+[source,js,highlight=3]
 ----
   items = [...menu.querySelectorAll("[role=menuitem]")];
 
@@ -590,7 +590,7 @@ well by simply re-running the JS.
 
 We'll also make the menu items non-tabbable, so we can manage their focus ourselves.
 
-[source,js,highlight=2]
+[source,js,highlight=3]
 ----
   const isOpen = () => !menu.hidden; <1>
 
@@ -601,7 +601,7 @@ We'll also make the menu items non-tabbable, so we can manage their focus oursel
 
 Now let's implement toggling the menu in JavaScript:
 
-[source,js,highlight=2..15]
+[source,js,highlight=3..16]
 ----
   items.forEach(item => item.setAttribute("tabindex", "-1"));
 
@@ -618,7 +618,7 @@ Now let's implement toggling the menu in JavaScript:
 
   toggleMenu(isOpen()); <3>
   button.addEventListener("click", () => toggleMenu()); <4>
-  menuRoot.addEventListener("blur", e => console.log(e) || toggleMenu(false)); <5>
+  menuRoot.addEventListener("blur", e => toggleMenu(false)); <5>
 
 })
 ----
@@ -648,9 +648,9 @@ algorithms, our strategy removes listeners in a nondeterministic amount of time 
 for us, With a frequent event like "`the user clicks anywhere in the page`" driving the collection, it should work well
 enough for our system.
 
-[source,js,highlight=2..6]
+[source,js,highlight=3..6]
 ----
-  button.addEventListener("click", () => toggleMenu())
+  menuRoot.addEventListener("blur", e => toggleMenu(false));
 
   window.addEventListener("click", function clickAway(event) {
     if (!menuRoot.isConnected) window.removeEventListener("click", clickAway); <1>
@@ -664,8 +664,11 @@ enough for our system.
 Now, let's move on to the keyboard interactions for our dropdown menu. The keyboard handlers turn out to all be pretty
 similar to one another and not particularly intricate, so let's knock them all out in one go:
 
-[source,js]
+[source,js,highlight=4..30]
 ----
+    if (!menuRoot.contains(event.target)) toggleMenu(false); <2>
+  });
+
   const currentIndex = () => { <1>
     const idx = items.indexOf(document.activeElement);
     if (idx === -1) return 0;
@@ -693,6 +696,7 @@ similar to one another and not particularly intricate, so let's knock them all o
       button.focus(); <8>
     }
   });
+});
 ----
 <1> Helper: Get the index in the items array of the currently focused menu item (0 if none).
 <2> Move focus to the previous menu item when the up arrow key is pressed
@@ -762,7 +766,7 @@ value of `count` is: if `count` is updated, so will the text of the `output`.  T
 the DOM will "`react`" to changes to the backing data.
 
 .Counter with Alpine, lines 1-2
-[source,html,highlight=2..2]
+[source,html,highlight=2]
 ----
 <div class="counter" x-data="{ count: 0 }">
   <output x-text="count"></output> <1>
@@ -779,7 +783,7 @@ We want to listen for a `click` event, and we want to increment `count` when a c
 code will look like:
 
 .Counter with Alpine, the full thing
-[source,html,highlight=4..4]
+[source,html,highlight=4]
 ----
 <div class="counter" x-data="{ count: 0 }">
   <output x-text="count"></output>

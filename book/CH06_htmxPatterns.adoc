@@ -673,30 +673,20 @@ Note that in the `hx-target` attribute we are using a _relative positional_ sele
 an extension to normal CSS.  htmx supports prefixes that will find targets _relative_ to the current element.  Here
 is a table of relative positional expressions available:
 
-|===
-|keyword |description|example
+`next`::
+Scan forward in the DOM for the next matching element, e.g. `next .error`
 
-|`next`
-|Scan forward in the DOM for the next matching element
-|`next .error`
+`previous`::
+Scan backwards in the DOM for the closest previous matching element, e.g. `previous .alert`
 
-|`previous`
-|Scan backwards in the DOM for the closest previous matching element
-|`previous .alert`
+`closest`::
+Scan the parents of this element for matching element, e.g. `closest table`
 
-|`closest`
-|Scan the parents of this element for matching element
-|`closest table`
+`find`::
+Scan the children of this element for matching element, e.g. `find span`
 
-|`find`
-|Scan the children of this element for matching element
-|`find span`
-
-|`this`
-| the current element is the target (default)
-|`this`
-
-|===
+`this`::
+ the current element is the target (default)
 
 By using relative positional expressions we can avoid adding explicit ids to elements and take advantage of the local
 structure of HTML.

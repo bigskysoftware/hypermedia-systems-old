@@ -236,34 +236,29 @@ what logic to execute on the server, and what sort of HTML response you want to 
 
 Here is a table of the HTTP headers that htmx includes in HTTP requests:
 
-[cols="1,1"]
-|===
-|Header | Description
+`HX-Boosted`::
+This will be the string "`true`" if the request is made via an element using hx-boost
 
-|HX-Boosted
-|This will be the string "`true`" if the request is made via an element using hx-boost
+`HX-Current-URL`::
+This will be the current URL of the browser
 
-|HX-Current-URL
-|This will be the current URL of the browser
+`HX-History-Restore-Request`::
+This will be the string "`true`" if the request is for history restoration after a miss in the local history cache
 
-|HX-History-Restore-Request
-|This will be the string "`true`" if the request is for history restoration after a miss in the local history cache
+`HX-Prompt`::
+This will contain the user response to an hx-prompt
 
-|HX-Prompt
-|This will contain the user response to an hx-prompt
+`HX-Request`::
+This value is always "`true`" for htmx-based requests
 
-|HX-Request
-|This value is always "`true`" for htmx-based requests
+`HX-Target`::
+This value will be the id of the target element if it exists
 
-|HX-Target
-|This value will be the id of the target element if it exists
+`HX-Trigger-Name`::
+This value will be the name of the triggered element if it exists
 
-|HX-Trigger-Name
-|This value will be the name of the triggered element if it exists
-
-|HX-Trigger
-|This value will be the id of the triggered element if it exists
-|===
+`HX-Trigger`::
+This value will be the id of the triggered element if it exists
 
 Looking through this list of headers, the last one stands out: we have an id, `search` on our search input.  So the
 value of the `HX-Trigger` header should be set to `search` when the request is coming from the search input, which

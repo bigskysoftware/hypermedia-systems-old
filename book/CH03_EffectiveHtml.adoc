@@ -293,12 +293,9 @@ TODO link resources on alt text.
 
 Wherever possible, the text of a link should describe what the link points to without much context needed. Of course, you might need to alter it to fit a sentence structure, but you should avoid links that don't give information other than "`this is a link`".
 
-|===
-| Don't | Do
-
-| For user records, [click here]
-| [User records]
-|===
+[horizontal]
+Don't:: For user records, [click here]
+Do:: [User records]
 
 
 ### ARIA is easy --as long as you stick to the basics

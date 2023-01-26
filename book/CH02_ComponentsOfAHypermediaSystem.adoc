@@ -153,23 +153,21 @@ the request is directed at.
 
 There are many methods available in HTTP; the ones of most practical importance to developers are the following:
 
-[cols="1,6"]
-|===
-|`GET`
-| A GET request retrieves the representation of the specified resource. GET requests should not mutate data.
+`GET`::
+  A GET request retrieves the representation of the specified resource. GET requests should not mutate data.
 
-|`POST`
-| A POST request submits data to the specified resource. This will often result in a mutation of state on the server.
+`POST`::
+  A POST request submits data to the specified resource. This will often result in a mutation of state on the server.
 
-|`PUT`
-| A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
+`PUT`::
+  A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
 
-|`PATCH`
-| A PATCH request replaces the data of the specified resource. This results in a mutation of state on the server.
+`PATCH`::
+  A PATCH request replaces the data of the specified resource. This results in a mutation of state on the server.
 
-|`DELETE`
-| A DELETE request deletes the specified resource. This results in a mutation of state on the server.
-|===
+`DELETE`::
+  A DELETE request deletes the specified resource. This results in a mutation of state on the server.
+
 
 These methods _roughly_ line up with the "`Create/Read/Update/Delete`" or CRUD pattern found in many applications:
 
@@ -234,60 +232,53 @@ is the response code that is returned by web servers when a resource that does n
 
 HTTP breaks response codes up into various categories:
 
-[cols="1,4"]
-|===
-|`100`-`199`
-| Informational responses that provide information about how the server is processing the response
+`100`-`199`::
+  Informational responses that provide information about how the server is processing the response
 
-|`200`-`299`
-| Successful responses indicating that the request succeeded
+`200`-`299`::
+  Successful responses indicating that the request succeeded
 
-|`300`-`399`
-| Redirection responses indicating that the request should be sent to some other URL
+`300`-`399`::
+  Redirection responses indicating that the request should be sent to some other URL
 
-|`400`-`499`
-| Client error responses indicating that the client made some sort of bad request (e.g. asking for something that didn't
+`400`-`499`::
+  Client error responses indicating that the client made some sort of bad request (e.g. asking for something that didn't
 exist in the case of `404` errors)
 
-|`500`-`599`
-| Server error responses indicating that the server encountered an error internally as it attempted to respond to the request
-|===
+`500`-`599`::
+  Server error responses indicating that the server encountered an error internally as it attempted to respond to the request
 
 Within each of these categories there are multiple response codes for specific situations.
 
 Here are some of the more common or interesting ones:
 
-[cols="1,4"]
-|===
-| `200 OK`
-| The HTTP request succeeded
+`200 OK`::
+  The HTTP request succeeded
 
-| `301 Moved Permanently`
-| The URL for the requested resource has moved to a new location permanently, and the new URL will be provided in
+`301 Moved Permanently`::
+  The URL for the requested resource has moved to a new location permanently, and the new URL will be provided in
   the `Location` response header
 
-| `302 Found`
-| The URL for the requested resource has moved to a new location temporarily, and the new URL will be provided in
+`302 Found`::
+  The URL for the requested resource has moved to a new location temporarily, and the new URL will be provided in
   the `Location` response header
 
-| `303 See Other`
-| The URL for the requested resource has moved to a new location, and the new URL will be provided in
+`303 See Other`::
+  The URL for the requested resource has moved to a new location, and the new URL will be provided in
   the `Location` response header.  Additionally, this new URL should be retrieved with a `GET` request.
 
-| `401 Unauthorized`
-| The client is not yet authenticated (yes, authenticated, despite the name) and must be authenticated
+`401 Unauthorized`::
+  The client is not yet authenticated (yes, authenticated, despite the name) and must be authenticated
   to retrieve the given resource.
 
-| `403 Forbidden`
-| The client does not have access to this resource.
+`403 Forbidden`::
+  The client does not have access to this resource.
 
-| `404 Not Found`
-| The server cannot find the requested resource.
+`404 Not Found`::
+  The server cannot find the requested resource.
 
-| `500 Internal Server Error`
-| The server encountered an error when attempting to process the response.
-
-|===
+`500 Internal Server Error`::
+  The server encountered an error when attempting to process the response.
 
 There are some fairly subtle differences between HTTP response codes.  (And, to be honest, some ambiguities between them.)
 The difference between a `302` redirect and a `303` redirect, for example, is that the former will issue the request to the

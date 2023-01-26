@@ -635,22 +635,17 @@ within HTML.
 Here is a table summarizing those opportunities and which htmx attributes exactly address them:
 
 .Opportunities For Improving HTML
-|===
-|Opportunity To Improve HTML | htmx attributes
+Any element should be able to make HTTP requests::
+  `hx-get`, `hx-post`, `hx-put`, `hx-patch`, `hx-delete`
 
-|Any element should be able to make HTTP requests
-| `hx-get`, `hx-post`, `hx-put`, `hx-patch`, `hx-delete`
+Any event should be able to trigger an HTTP request::
+  `hx-trigger`
 
-|Any event should be able to trigger an HTTP request
-| `hx-trigger`
+Any HTTP Action should be available::
+  `hx-put`, `hx-patch`, `hx-delete`
 
-|Any HTTP Action should be available
-|`hx-put`, `hx-patch`, `hx-delete`
-
-|Any place on the page should be replaceable (transclusion)
-|`hx-target`, `hx-swap`
-
-|===
+Any place on the page should be replaceable (transclusion)::
+  `hx-target`, `hx-swap`
 
 == Passing Request Parameters
 
@@ -748,30 +743,20 @@ htmx with respect to `GET` requests.
 The `hx-include` attribute and, in fact, most attributes that take a CSS selector, also support _relative_ CSS selectors,
 that allow you to specify a CSS selector _relative_ to the element it is declared on.  Here are some examples:
 
-|===
-| Relative Modifier | Meaning | Example
+`closest`::
+Find the closest parent element matching the given selector, e.g. `closest form`
 
-| `closest`
-| Find the closest parent element matching the given selector
-| `closest form`
+`next`::
+Find the next element (scanning forward) matching the given selector, e.g. `next input`
 
-| `next`
-| Find the next element (scanning forward) matching the given selector
-| `next input`
+`previous`::
+Find the previous element (scanning backwards) matching the given selector, e.g. `previous input`
 
-| `previous`
-| Find the previous element (scanning backwards) matching the given selector
-| `previous input`
+`find`::
+Find the next element within this element matching the given selector, e.g. `find input`
 
-| `find`
-| Find the next element within this element matching the given selector
-| `find input`
-
-| `this`
-| the current element
-| `this`
-
-|===
+`this`::
+the current element
 
 Using relative CSS selectors often allows you to avoid needing to generate ids for elements, since you can take advantage
 of their local structural layout instead.

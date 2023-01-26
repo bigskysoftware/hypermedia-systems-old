@@ -30,21 +30,17 @@ sophisticated user interfaces using only htmx and perhaps a small bit of hyperme
 Thus far we have used about fifteen different attributes from htmx in our application.  The most important ones
 have been:
 
-|===
-|Attribute |Use
+`hx-get`, `hx-post`, etc.::
+To specify the AJAX request an element should make
 
-| `hx-get`, `hx-post`, etc.
-| To specify the AJAX request an element should make
+`hx-trigger`::
+To specify the event that triggers a request
 
-| `hx-trigger`
-| To specify the event that triggers a request
+`hx-swap`::
+To specify how to swap the returned HTML content into the DOM
 
-| `hx-swap`
-| To specify how to swap the returned HTML content into the DOM
-
-| `hx-target`
-| To specify where in the DOM to swap the returned HTML content
-|===
+`hx-target`::
+To specify where in the DOM to swap the returned HTML content
 
 Let's do a deep dive on two of these attributes, `hx-swap` and `hx-trigger`, because they support a large number of
 options that might be useful when you are creating more advanced Hypermedia Driven Applications.
@@ -61,26 +57,21 @@ it was removed from the DOM.
 
 In addition to these, `hx-swap` also supports the following modifiers:
 
-|===
-|Modifier |Use
-
-| `settle`
-| Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and
+`settle`::
+Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and
   when its attributes are "`settled`", that is, updated from their old values (if any) to their new values.
 
-| `show`
-| Allows you to specify an element that should be shown (that is, scrolled into the viewport of the browser if necessary)
+`show`::
+Allows you to specify an element that should be shown (that is, scrolled into the viewport of the browser if necessary)
  when a request is completed
 
-| `scroll`
-| Allows you to specify a scrollable element (that is, an element with scrollbars), that should be scrolled to the top
+`scroll`::
+Allows you to specify a scrollable element (that is, an element with scrollbars), that should be scrolled to the top
   or bottom when a request is completed
 
-| `focus-scroll`
-| Allows you to specify that htmx should scroll to the focused element when a request completes.  (This defaults to
+`focus-scroll`::
+Allows you to specify that htmx should scroll to the focused element when a request completes.  (This defaults to
   false)
-
-|===
 
 So, for example, if we had a button that issued a `GET` request, and we wished to scroll to the top of the `body` element
 when the request had completed, we would write the following HTML:
@@ -120,55 +111,45 @@ search example we implemented in Contact.app:
 
 This example took advantage of two modifiers available for the `hx-trigger` attribute:
 
-|===
-|Modifier |Use
-
-| `delay`
-| Allows you to specify a delay to wait before a request is issued.  If the event occurs again, the first event is
+`delay`::
+Allows you to specify a delay to wait before a request is issued.  If the event occurs again, the first event is
   discarded and the timer resets.  This allows you to "`debounce`" requests.
 
-| `changed`
-| Allows you to specify that a request should only be issued when the `value` property of the given element has changed
-
-|===
+`changed`::
+Allows you to specify that a request should only be issued when the `value` property of the given element has changed
 
 `hx-trigger` has quite a few additional modifiers.  This makes sense, because events are fairly complex and we want to
 be able to take advantage of all the power they offer.  (We will discuss events in more detail below.)
 
 Here are the other modifiers available on `hx-trigger`:
 
-|===
-|Modifier |Use
+`once`::
+  The given event will only trigger a request once
 
-| `once`
-| The given event will only trigger a request once
-
-| `throttle`
-| Allows you to throttle events, only issuing them once every certain interval.  This is different than `delay` in that
+`throttle`::
+  Allows you to throttle events, only issuing them once every certain interval.  This is different than `delay` in that
   the first event will trigger immediately, but any following events will not trigger until the throttle time period
   has elapsed
 
-| `from`
-| A CSS selector that allows you to pick another element to listen for events on.  We will see an example of this used
+`from`::
+  A CSS selector that allows you to pick another element to listen for events on.  We will see an example of this used
   later in the chapter.
 
-| `target`
-| A CSS selector that allows you to filter events to only those that occur directly on a given element.  In the DOM,
+`target`::
+  A CSS selector that allows you to filter events to only those that occur directly on a given element.  In the DOM,
   events "`bubble`" to their parent elements, so a `click` event on a button will also trigger a `click` event on a parent
   `div`, all the way up to the `body` element.  Sometimes you want to specify an event directly on a given element, and
   this attribute allows you to do that.
 
-| `consume`
-| If this option is set to `true`, the triggering event will be cancelled and not propagate to parent elements.
+`consume`::
+  If this option is set to `true`, the triggering event will be cancelled and not propagate to parent elements.
 
-| `queue`
-| This option allows you to specify how events are queued in htmx.  By default, when htmx receives a triggering event,
+`queue`::
+  This option allows you to specify how events are queued in htmx.  By default, when htmx receives a triggering event,
   it will issue a request and start an event queue.  If the request is still in flight when another event is received,
   it will queue the event and, when the request finishes, trigger a new request.  By default, it only keeps the last
   event it receives, but you can modify that behavior using this option: for example, you can set it to `none` and ignore
   all triggering events that occur during a request.
-
-|===
 
 ==== Filters
 
@@ -225,22 +206,17 @@ htmx offers many other less commonly used attributes for fine-tuning the behavio
 
 Here are some of the most useful ones:
 
-|====
-|Attribute |Use
+hx-push-url::
+  "`Pushes`" the request URL (or some other value) into the navigation bar
 
-| hx-push-url
-| "`Pushes`" the request URL (or some other value) into the navigation bar
+hx-preserve::
+  Preserves a bit of the DOM between requests (the original content will be kept, regardless of what is returned)
 
-| hx-preserve
-| Preserves a bit of the DOM between requests (the original content will be kept, regardless of what is returned)
+hx-sync::
+  Synchronized requests between two or more elements
 
-| hx-sync
-| Synchronized requests between two or more elements
-
-| hx-disable
-| Disables htmx behavior on this element and any children.  We will discuss this more below in the security section.
-
-|====
+hx-disable::
+  Disables htmx behavior on this element and any children.  We will discuss this more below in the security section.
 
 Let's take a look at `hx-sync`, which allows us to synchronize AJAX requests between two or more elements.  Consider
 a simple case where we have two buttons that both target the same element on the screen:
@@ -318,22 +294,17 @@ can use these events to add more functionality to your application, either via h
 
 Here are some of the most commonly used events in htmx:
 
-|===
-|Event |Description
+`htmx:load`::
+  Triggered when new content is loaded into the DOM by htmx
 
-|`htmx:load`
-|Triggered when new content is loaded into the DOM by htmx
+`htmx:configRequest`::
+  Triggered before a request is issued, allowing you to programmatically configure the request (or cancel it entirely)
 
-|`htmx:configRequest`
-|Triggered before a request is issued, allowing you to programmatically configure the request (or cancel it entirely)
+`htmx:afterRequest`::
+  Triggered after a request has responded
 
-|`htmx:afterRequest`
-|Triggered after a request has responded
-
-|`htmx:abort`
-|A custom event that can be sent to an htmx-powered element to abort an open request
-
-|===
+`htmx:abort`::
+  A custom event that can be sent to an htmx-powered element to abort an open request
 
 === Using The `htmx:configRequest` Event
 
@@ -475,22 +446,17 @@ but htmx supports quite a few more headers for both requests and responses.  In 
 headers present in HTTP Requests.  Here are some of the more important headers you can use to change htmx behavior with
 HTTP responses:
 
-|===
-|Response Header |Description
+`HX-Location`::
+  Causes a client-side redirection to a new location
 
-|`HX-Location`
-| Causes a client-side redirection to a new location
+`HX-Push-Url`::
+  Pushes a new URL into the location bar
 
-|`HX-Push-Url`
-| Pushes a new URL into the location bar
+`HX-Refresh`::
+  Refreshes the current page
 
-|`HX-Refresh`
-| Refreshes the current page
-
-|`HX-Retarget`
-| Allows you to specify a new target to swap the response content into on the client side
-
-|===
+`HX-Retarget`::
+  Allows you to specify a new target to swap the response content into on the client side
 
 You can find a reference for all requests and response headers https://htmx.org/reference/#headers[here].
 

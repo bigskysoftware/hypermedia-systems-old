@@ -950,9 +950,9 @@ visual clutter and the toolbar can be extended with more options without creatin
 
 == _hyperscript
 
-The final scripting technology we are going to look at is a bit further afield: +_hyperscript+ (https://hyperscript.org[])
+The final scripting technology we are going to look at is a bit further afield:  https://hyperscript.org[+_hyperscript+].
 
-While the previous two examples are JavaScript-oriented, +_hyperscript+ is an _entire new_ scripting language for front-end
+While the previous two examples are JavaScript-oriented, +_hyperscript+ is an _entirely new_ scripting language for front-end
 development. +_hyperscript+ has a completely different syntax than JavaScript, based on an older language called HyperTalk.
 HyperTalk was the scripting language for a technology called HyperCard, an old hypermedia system available on early
 Macintosh Computers.
@@ -960,7 +960,7 @@ Macintosh Computers.
 The most noticeable thing about +_hyperscript+ is that it resembles English prose more than it resembles other programming
 languages. +_hyperscript+ was initially created as a sibling project to htmx, because we felt that JavaScript wasn't
 event-oriented enough, which made adding small scripting enhancements to htmx applications cumbersome.  Like Alpine,
-+_hyperscript+, is a modern jQuery replacement.
++_hyperscript+ is a modern jQuery replacement.
 
 Also like Alpine, +_hyperscript+ allows you to write your scripting inline, in HTML.
 
@@ -1148,7 +1148,7 @@ to enhance your Hypermedia Driven Application.  However, there is another major 
 side scripting: "`off the shelf`" components.  That is, JavaScript libraries that other people have created that offer
 some sort of functionality, such as showing modal dialogs.
 
-Components have become very popular in the web development works, with libraries like DataTables (https://datatables.net/)
+Components have become very popular in the web development works, with libraries like  https://datatables.net/[DataTables]
 providing rich user experiences with very little JavaScript code on the part of a user.  Unfortunately, if these libraries
 aren't integrated well into a website, they can begin to make an application feel "`patched together`".  Furthermore, some
 libraries go beyond simple DOM manipulation, and require that you integrate with a server end point, almost invariably

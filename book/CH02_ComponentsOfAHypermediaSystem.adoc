@@ -310,8 +310,8 @@ pattern in htmx-powered applications is to use a custom header set by htmx, `HX-
 "`normal`" web requests and requests submitted by htmx.  To properly cache the response to these requests, the `HX-Request`
 request header must be indicated by the `Vary` response header.
 
-A full discussion of caching HTTP responses is beyond the scope of this chapter, but please see
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[The MDN Article on HTTP Caching] for a more in-depth discussion.
+A full discussion of caching HTTP responses is beyond the scope of this chapter; see
+the https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[MDN Article on HTTP Caching] if you would like to know more on the topic.
 
 === Hypermedia Servers
 
@@ -543,7 +543,7 @@ in the form of hypermedia controls.
 
 This might sound a little abstract, lets look at a concrete example.
 
-Consider two different potential responses from of an HTTP server for the URL  `https://example.com/contacts/42`.
+Consider two different potential responses from of an HTTP server for the URL `https://example.com/contacts/42`.
 
 Both responses will return information about a contact, but they will take very different forms.
 
@@ -758,8 +758,7 @@ operations and resources in it, and display it to users to work with.
 
 === Layered System
 
-The final "`required`" constraint on a RESTful system that we will consider is The Layered System constraint.  This constraint can be found in
-https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_6[Section 5.1.6] of Fielding's dissertation.
+The final "`required`" constraint on a RESTful system that we will consider is The Layered System constraint.  This constraint can be found in https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_6[Section 5.1.6] of Fielding's dissertation.
 
 To be frank, after the excitement of the uniform interface constraint, the "`layered system`" constraint is a bit of a
 let down.  But it is still worth understanding and it is actually utilized effectively by The web.  The constraint

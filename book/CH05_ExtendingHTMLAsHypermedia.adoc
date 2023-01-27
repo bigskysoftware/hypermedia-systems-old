@@ -45,7 +45,7 @@ update existing content, entirely outside the normal browser request mechanism.
 ****
 
 There are a few different styles of SPA, but, as we discussed in Chapter 1, the most common approach today is to tie
-the DOM to a JavaScript model and then let an SPA framework like react (https://reactjs.org/) or vue (https://vuejs.org/)
+the DOM to a JavaScript model and then let an SPA framework like https://reactjs.org/[React] or https://vuejs.org/[Vue]
 _reactively_ update the DOM when a JavaScript model is updated: you make a change to a JavaScript object that is
 stored locally in memory in the browser, and the web page "`magically`" updates its state to reflect the change in the
 model.
@@ -80,10 +80,10 @@ this book:
 
 Let's break down in painstaking detail exactly what happens with this link:
 
-* The browser will render the text "`Hypermedia Systems`" to the screen, likely with a decoration indicating it is clickable
+* The browser will render the text "`Hypermedia Systems`" to the screen, likely with a decoration indicating it is clickable.
 * Then, when a user clicks on the text...
-* The browser will issue an HTTP `GET` to `https://hypermedia.systems` and then...
-* The browser will load the HTML body of the HTTP response into the browser window, replacing the current document
+* The browser will issue an HTTP `GET` to `https://hypermedia.systems`...
+* The browser will load the HTML body of the HTTP response into the browser window, replacing the current document.
 
 So we have four aspects of a simple hypermedia link like this, with the last three aspects supplying the mechanism that distinguishes
 a hyperlink from "`normal`" text and makes this a hypermedia control.
@@ -193,7 +193,7 @@ its pursuit of extending HTML as a hypermedia.
 
 === Installing and Using htmx
 
-From a practical "`getting started`" perspective, htmx is a simple, dependency-free and stand-alone JavaScript library that
+From a practical "`getting started`" perspective, Htmx is a simple, dependency-free and stand-alone JavaScript library that
 can be added to a web application by simply including it via a `script` tag in your `head` element.
 
 Because of this simple installation model, you can take advantage of tools like public CDNs to install the library.

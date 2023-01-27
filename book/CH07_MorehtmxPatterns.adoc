@@ -413,8 +413,8 @@ a _non-htmx_ request (e.g. refreshing a page) and yet the _htmx_ content is retu
 in a partial page of content for the user.
 
 The solution to this problem is to use the HTTP Response `Vary` header and call out the htmx headers that you are using
-to determine what content you are returning.  A full explanation of HTTP Caching is beyond the scope of this book, but
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[the MDN article] on the topic is quite good, and the https://htmx.org/docs/#caching[htmx
+to determine what content you are returning.  A full explanation of HTTP Caching is beyond the scope of this book, but the 
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[MDN article on the topic] is quite good, and the https://htmx.org/docs/#caching[htmx
 documentation] discusses this issue as well.
 ****
 

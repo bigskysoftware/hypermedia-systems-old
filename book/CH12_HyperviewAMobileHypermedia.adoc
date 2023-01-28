@@ -1006,8 +1006,8 @@ Like the other update actions, `hide`, `show`, and `toggle` use the `target` att
 </screen>
 ----
 <1> Hides the element with id "`area`".
-<1> Shows the element with id "`area`".
-<1> Toggles the visibility of the element with id "`area`".
+<2> Shows the element with id "`area`".
+<3> Toggles the visibility of the element with id "`area`".
 <4> The element targeted by the actions.
 
 In this example, the three buttons labeled "`Hide`", "`Show`", and "`Toggle`" will modify the display state of the `<view>` with ID "`area`".
@@ -1081,6 +1081,7 @@ This level of configuration cannot be done with just attributes, so we use custo
 <1> Defines the namespace for the alert action.
 <2> The action of this behavior will bring up a system dialog box.
 <3> Title of the dialog box.
+<4> Content of the dialog box.
 <5> A "`continue`" option in the dialog box
 <6> When "`continue`" is pressed, push a new screen onto the navigation stack.
 <7> A "`cancel`" option that dismisses the dialog box.

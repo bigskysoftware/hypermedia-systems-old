@@ -116,8 +116,9 @@ Here is the start of the template content for our new archive user interface:
 .Our Initial Archive UI Template
 [source, html]
 ----
-<div id="archive-ui" hx-target="this"<1> hx-swap="outerHTML"<2>>
-
+<div id="archive-ui"
+    hx-target="this" <1>
+    hx-swap="outerHTML"> <2>
 </div>
 ----
 <1> This div will be the target for all elements within it

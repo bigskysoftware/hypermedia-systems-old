@@ -277,7 +277,7 @@ def render_to_response(template_name, *args, **kwargs):
 ----
 <1> Renders the given template with the supplied arguments and keyword arguments.
 <2> Create an explicit response object with the rendered template
-<2> Sets the response `Content-Type` header to XML.
+<3> Sets the response `Content-Type` header to XML.
 
 As you can see, this helper function uses `render_template()` under the hood.
 `render_template()` returns a string.
@@ -292,7 +292,7 @@ So all we need to do is update the last line of the `contacts()` function.
 ----
 return render_to_response(template_name, contacts=contacts_set, page=page) <1>
 ----
-<2> Render the HXML template to an XML response.
+<1> Render the HXML template to an XML response.
 
 With these changes to the `contacts()` view, we can finally see the fruits of our labor.
 After restarting the backend and refreshing the screen in our mobile app, we can see the contacts screen!
@@ -807,8 +807,8 @@ We can add this as a new button below the "`Save`" button.
 </view>
 ----
 <1> New Cancel button on the edit screen
-<3> When pressed, reload the entire screen
-<4> The screen will be reloaded with the contact details screen.
+<2> When pressed, reload the entire screen
+<3> The screen will be reloaded with the contact details screen.
 
 This is the same technique we used to switch from the edit UI to the details UI upon successfully editing the contact.
 But pressing "`Cancel`" will update the UI faster than pressing "`Save`".
@@ -971,15 +971,15 @@ So let's add a new button to `edit.xml`.
     trigger="press"
     action="append" <2>
     target="form-fields"
-    href="/contacts/{{contact.id}}/delete" <4>
+    href="/contacts/{{contact.id}}/delete" <3>
     verb="post"
   /> 
   <text style="button-label button-label-delete">Delete Contact</text>
 </view>
 ----
 <1> New Delete Contact button on the edit screen
-<3> When pressed, append HXML to a container on the screen
-<4> The HXML will be fetched by making a `POST /contacts/<contact_id>/delete` request
+<2> When pressed, append HXML to a container on the screen
+<3> The HXML will be fetched by making a `POST /contacts/<contact_id>/delete` request
 
 The HXML for the Delete button is pretty similar to the Save button, but there are a few subtle differences.
 Remember, pressing the Save button results in one of two expected outcomes: failing and showing validation errors on the form, or succeeding and switching to the contact details screen.

@@ -378,7 +378,6 @@ can respond with an HTML _representation_ of all the contacts requested.  So far
 
 Here is what the template looks like, rendered with a bit of contact information:
 
-[#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .Contact.app
 image::figure_2-2_table_etc.png[]
 

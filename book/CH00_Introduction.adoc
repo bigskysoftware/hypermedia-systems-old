@@ -48,6 +48,7 @@ use the hypermedia features available in the hypermedia _client_ (e.g. the brows
 Each of these are important aspects of building an effective hypermedia driven application, and it is the entire
 _hypermedia system_ that comes together to make hypermedia such a powerful architecture.
 
+[discrete]
 == What is a Hypermedia System?
 
 To understand what a hypermedia system is we'll first take an in-depth look at _the_ canonical hypermedia system: the
@@ -72,6 +73,7 @@ and forms, was what Fielding was calling RESTful.
 
 JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _the Web 1.0_.
 
+[discrete]
 == Hypermedia-Driven Applications
 
 In this book we are going to take a look at hypermedia as a _system architecture_ and then explore some practical,
@@ -82,6 +84,7 @@ Application.
 A Hypermedia-Driven Application is an application built on top of a hypermedia system that respects and utilizes the
 hypermedia functionality of that underlying system.
 
+[discrete]
 == Goals
 
 The goal of this book is to give you a strong sense of how the RESTful, hypermedia system architecture _differs_ from
@@ -94,6 +97,7 @@ We aim to give you the tools to evaluate the requirements for an application and
 
 We hope that for many applications the answer to that question will be "`Yes!`"
 
+[discrete]
 == Book Layout
 
 The book is broken into three parts:
@@ -118,6 +122,7 @@ application described at the end of the first section.  Furthermore, even if you
 of hypermedia and details of HTML & HTTP, it is likely worth it to at least skim through the first few chapters for
 a refresher.
 
+[discrete]
 == Hypermedia: A New Generation
 
 Hypermedia isn't a frequent topic of discussion these days.  Even many older programmers who grew up with the web

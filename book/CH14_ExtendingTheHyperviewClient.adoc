@@ -66,8 +66,8 @@ So let's define two new actions, "`open-phone`" and "`open-email`".
 </view>
 ----
 <1> Define an alias for an XML namespace used by our new attributes
-<1> When pressed, prompt the user to call the given phone number
-<2> When pressed, open an e-mail client with the given address populated in the `to:` field.
+<2> When pressed, prompt the user to call the given phone number
+<3> When pressed, open an e-mail client with the given address populated in the `to:` field.
 
 Notice we defined the actual phone number and email address using separate attributes.
 In HTML, the scheme and data are crammed into the `href` attribute.
@@ -500,7 +500,7 @@ export default class SwipeableRow extends PureComponent { <1>
 <4> Function that returns an array of React Native components for each `<button>` element.
 <5> Delegate to the Hyperview client to render each button
 <6> Pass the buttons and main content to the third-party library
-<5> Delegate to the Hyperview client to render the main content
+<7> Delegate to the Hyperview client to render the main content
 
 The `SwipeableRow` class implements a React Native component.
 At the top of the class, we set a static `namespaceURI` property and `localName` property.

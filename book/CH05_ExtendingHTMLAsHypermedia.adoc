@@ -261,7 +261,6 @@ URL you wish to issue the given HTTP request type to.  Typically, this is done v
 As a first example, if we wanted a button to issue a `GET` request to `/contacts` then we would write the following
 HTML:
 
-[#listing-3-2, reftext={chapter}.{counter:listing}]
 .A Simple htmx-Powered Button
 [source,html]
 ----
@@ -770,7 +769,6 @@ standard mechanism for including additional, hidden information in HTML.)
 
 Here is an example of `hx-vals`:
 
-[#listing-3-13, reftext={chapter}.{counter:listing}]
 .A Simple htmx-Powered Button
 [source,html]
 ----
@@ -792,7 +790,6 @@ For example, if the `state` variable were maintained dynamically, via some JavaS
 function, `getCurrentState()`, that returned the currently selected state, it could be included dynamically in htmx
 requests like so:
 
-[#listing-3-13, reftext={chapter}.{counter:listing}]
 .A Dynamic Value
 [source,html]
 ----
@@ -847,7 +844,6 @@ id `main`, but it will _not_ create a new history entry.
 If we wanted it to create a history entry when this request happened, we would add a new attribute to the button, the
 `hx-push-url` attribute:
 
-[#listing-3-14, reftext={chapter}.{counter:listing}]
 .Our trusty button, now with history!
 [source,html]
 ----

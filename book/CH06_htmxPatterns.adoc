@@ -68,7 +68,6 @@ Because it has `hx-boost="true"` on it, htmx will halt the normal link behavior 
 the entire page with the response.  Instead, htmx will issue an AJAX request to `/settings`, taking the result and replacing
 the `body` element with the new content.
 
-[#listing-4-1, reftext={chapter}.{counter:listing}]
 .A Boosted Link
 [source,html]
 ----
@@ -156,7 +155,6 @@ still boosted, inheriting that functionality from the parent `div`.
 
 Note that any legal HTML element could be used here, we just use a `div` out of habit.
 
-[#listing-4-3, reftext={chapter}.{counter:listing}]
 .Boosting Links Via The Parent
 [source,html]
 ----
@@ -179,7 +177,6 @@ page request for the PDF, which the browser will then offer to save as a file on
 To handle this situation, you would simply override the parent `hx-boost` value with `hx-boost="false"` on the
 anchor tag that you didn't want to be boosted:
 
-[#listing-4-3, reftext={chapter}.{counter:listing}]
 .Disabling Boosting
 [source,html]
 ----
@@ -235,8 +232,7 @@ How could we accomplish that?
 Well, it's pretty darned easy (and pretty common in htmx-powered web applications): we can just add `hx-boost` on the
 `body` tag of our `layout.html` template, and we are done.
 
-[#listing-4-3, reftext={chapter}.{counter:listing}]
-. Boosting The Entire Contact.app
+.Boosting The Entire Contact.app
 [source,html]
 ----
 <html>
@@ -931,7 +927,6 @@ elements.
 
 This is the common "`click to load`" UX pattern, found in more advanced web applications.
 
-[#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .A Click To Load UI
 image::screenshot_click_to_load.txt.svg[]
 

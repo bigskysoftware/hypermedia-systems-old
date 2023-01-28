@@ -823,7 +823,6 @@ row will disappear from the UI as the entire page is re-rendered.
 ****
 One side effect of adding this delete link is that we are starting to pile up the actions in a contact row:
 
-[#figure-5-1, reftext="Figure {chapter}.{counter:figure}"]
 .That's a Lot of Actions
 image::screenshot_stacked_actions.png[]
 

@@ -159,10 +159,6 @@ For readers with better things to do, section 4 features a list of all tags in H
 It includes what tags mean, where they can occur, and what they are allowed to contain.
 It even tells you when you're allowed to leave out closing tags!
 
-// WAR IS PEACE
-// IGNORANCE IS STRENGTH
-// THE <STRONG> TAG REPRESENTS STRONG EMPHASIS
-
 [source,html]
 ----
 <!doctype html>
@@ -217,13 +213,17 @@ Otherwise, the results might look somewhat like this:
 
 Sometimes, `<div>` really is fine.
 
-
-### Don't limit yourself to Markdown
-
+However, while you shouldn't abuse advanced HTML, you shouldn't restrict yourself either.
+Instead, learn the meaning of every tag and consider each another tool in your tool chest.
+(With the 113 elements currently defined in the spec, it's more of a tool shed).
 
 // In many ways, the corollary to the previous
 // Master the full range of HTML elements
 // i, cite, dfn, address etc.
+// Don't limit yourself to Markdown
+// WAR IS PEACE
+// IGNORANCE IS STRENGTH
+// THE <STRONG> TAG REPRESENTS STRONG EMPHASIS
 
 == HTML tips and tricks
 

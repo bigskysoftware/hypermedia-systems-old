@@ -599,7 +599,7 @@ software.  While there are still times and places for the more complex SPA appro
 by adopting a hypermedia-first approach and using a hypermedia-oriented library to push HTML as far as possible,
 your web application can be powerful, interactive _and_ simple.
 
-One such hypermedia oriented library is htmx (https://htmx.org).  Htmx will be the focus of Part Two.
+One such hypermedia oriented library is https://htmx.org[htmx].  Htmx will be the focus of Part Two.
 We show that you can, in fact, create many common "`modern`" UI features found in sophisticated Single
 Page Applications by instead using the hypermedia model.
 

@@ -151,7 +151,7 @@ place it on a parent, the attribute will also apply to children elements.  This 
 that idea inspired htmx to adopt a similar "`cascading htmx attributes`" feature.
 
 To avoid the redundancy in this example, let's introduce a `div` element that encloses all the links and then "`hoist`" the
-`hx-boost` attribute up to that parent `div`.  This will let us remove the redundant `hx-boost` attributes but ensure all the links are
+`hx-boost` attribute up to that parent `div`. This will let us remove the redundant `hx-boost` attributes but ensure all the links are
 still boosted, inheriting that functionality from the parent `div`.
 
 Note that any legal HTML element could be used here, we just use a `div` out of habit.
@@ -472,7 +472,7 @@ button, the application would just delete that contact.  Too bad, so sad for the
 Fortunately htmx has an easy mechanism for adding a confirmation message on destructive operations like this: the
 `hx-confirm` attribute.  You can place this attribute on an element, with a message as its value, and the JavaScript
 method `confirm()` will be called before a request is issued, which will show a simple confirmation dialog to the user
-asking them to confirm the action.  Very easy and a great way to prevent accidents.
+asking them to confirm the action. Very easy and a great way to prevent accidents.
 
 Here is how we would add confirmation of the contact delete operation:
 

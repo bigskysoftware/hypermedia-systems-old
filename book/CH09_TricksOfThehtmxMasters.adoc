@@ -86,7 +86,7 @@ when the request had completed, we would write the following HTML:
 ----
 <1> This tells htmx to show the top of the body after the swap occurs
 
-More details and examples can be found online at the https://htmx.org/attributes/hx-swap/[documentation page] for `hx-swap`.
+More details and examples can be found online in the `hx-swap` https://htmx.org/attributes/hx-swap/[documentation].
 
 === `hx-trigger`
 
@@ -192,17 +192,16 @@ regular DOM API.  We have already seen `load` and `revealed` in our lazy loading
 htmx also gives you an `intersect` event that triggers when an element intersects its parent element.
 
 This synthetic event uses the modern Intersection Observer API, which you can read more about
-here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+at https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API[MDN].
 
-Intersection gives you much finer grained control over exactly when a request should be triggered.  For example, you can
-specify a threshold and specify that the request should only be issued when an element is 50% visible.
+Intersection gives you fine grained control over exactly when a request should be triggered.  For example, you can
+set a threshold and specify that the request be issued only when an element is 50% visible.
 
-The `hx-trigger` attribute certainly is the most complex one in htmx, and more details and examples can be found on its
-documentation page: https://htmx.org/attributes/hx-trigger/
+The `hx-trigger` attribute certainly is the most complex in htmx. More details and examples can be found in its https://htmx.org/attributes/hx-trigger/[documentation].
 
 === Other Attributes
 
-htmx offers many other less commonly used attributes for fine-tuning the behavior of your Hypermedia Driven Application.
+Htmx offers many other less commonly used attributes for fine-tuning the behavior of your Hypermedia Driven Application.
 
 Here are some of the most useful ones:
 
@@ -458,7 +457,7 @@ HTTP responses:
 `HX-Retarget`::
   Allows you to specify a new target to swap the response content into on the client side
 
-You can find a reference for all requests and response headers https://htmx.org/reference/#headers[here].
+You can find a reference for all requests and response headers in the https://htmx.org/reference/#headers[htmx documentation].
 
 === HTTP Response Codes
 
@@ -492,7 +491,7 @@ document.body.addEventListener('htmx:beforeSwap', function(evt) { <1>
 
 You can also use the `htmx:beforeSwap` event to configure if the response should be swapped into the DOM and what element
 the response should target.  This gives you quite a bit of flexibility in choosing how you want to use HTTP Response
-codes in your application.  Full documentation on the `htmx:beforeSwap` event can be found https://htmx.org/events/#htmx:beforeSwap[here].
+codes in your application.  Full documentation on the `htmx:beforeSwap` event can be found at https://htmx.org/events/#htmx:beforeSwap[htmx.org].
 
 == Updating Other Content
 
@@ -565,7 +564,7 @@ Pull Contacts From Integration <1>
 <2> this content will be removed from the response and swapped by id
 
 Using this technique, you are able to piggyback content updates of other elements on top of requests by other elements.
-The `hx-swap-oob` attribute supports other additional features, all of which are documented https://htmx.org/attributes/hx-swap-oob/[here].
+The `hx-swap-oob` attribute supports other additional features, all of which are https://htmx.org/attributes/hx-swap-oob/[documented].
 
 Depending on how exactly your server-side templating technology works, and what level of interactivity your application
 requires, out of band swapping can be a powerful mechanism for more flexible content updates.
@@ -718,13 +717,13 @@ on an element, all htmx attributes within that element will be ignored.
 
 A Content Security Policy (CSP) is a browser technology that allows you to detect and prevent certain types of
 content injection-based attacks.  A full discussion of CSPs is beyond the scope of this book, but we refer you to
-the https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP[Mozilla Developer Network article] on them for more information.
+the  https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP[Mozilla Developer Network article] on the topic for more information.
 
 A common feature to disable using a CSP is the `eval()` feature of JavaScript, which allows you to evaluate arbitrary
 JavaScript code from a string.  This has proven to be a security issue and many teams have decided that it is not worth
 the risk to keep it enabled in their web applications.
 
-htmx does not make heavy use of `eval()` and, thus, a CSP with this restriction in place will be fine.  The one
+Htmx does not make heavy use of `eval()` and, thus, a CSP with this restriction in place will be fine.  The one
 feature that does rely on `eval()` is event filters, discussed above.  If you decide to disable `eval()` for your
 web application, you will not be able to use the event filtering syntax.
 
@@ -738,7 +737,7 @@ There are a large number of configuration options available for htmx.  Some exam
 
 A full list of configuration options can be found in the config section of the https://htmx.org/docs/#config[main htmx documentation].
 
-htmx is typically configured via a `meta` tag, found in the header of a page.  The name of the meta tag should be
+Htmx is typically configured via a `meta` tag, found in the header of a page.  The name of the meta tag should be
 `htmx-config`, and the content attribute should contain the configuration overrides, formatted as JSON.  Here is
 an example:
 

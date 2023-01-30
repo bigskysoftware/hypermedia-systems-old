@@ -33,7 +33,11 @@ export default () => {
 
             $$(document, ".admonitionblock").forEach(el => {
                 const type =
-                    el.classList.contains("important") ? "info" : "plain";
+                    el.classList.contains("important")
+                    ? "info"
+                    : el.classList.contains("warning")
+                    ? "warn"
+                    : "plain";
 
                 const content = el.querySelector(".content");
                 if (!content) return;

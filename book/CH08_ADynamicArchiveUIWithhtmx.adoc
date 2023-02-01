@@ -358,7 +358,6 @@ As we have mentioned before, this is not a book on CSS, but, for completeness, h
 
 Which ends up rendering like this:
 
-[#figure-8-1, reftext="Figure {chapter}.{counter:figure}"]
 .Our CSS-Based Progress Bar
 image::screenshot_progress_bar.png[]
 

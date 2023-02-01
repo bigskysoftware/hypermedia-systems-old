@@ -297,7 +297,6 @@ return render_to_response(template_name, contacts=contacts_set, page=page) <1>
 With these changes to the `contacts()` view, we can finally see the fruits of our labor.
 After restarting the backend and refreshing the screen in our mobile app, we can see the contacts screen!
 
-[#figure-7-1, reftext="Figure {chapter}.{counter:figure}"]
 .Contacts Screen
 image::screenshot_hyperview_list.png[]
 
@@ -343,7 +342,6 @@ with new content (`<item>` elements that match the search query) received in the
 (the domain is inferred from the domain used to fetch the screen).
 Note that `href` includes our `rows_only` query param; we want the response to only include the rows and not the entire screen.
 
-[#figure-7-2, reftext="Figure {chapter}.{counter:figure}"]
 .Searching for Contacts
 image::screenshot_hyperview_search.png[]
 
@@ -440,7 +438,6 @@ Pulling the content down sufficiently far will trigger a refresh.
 While the content refreshes, the spinner remains visible on screen, indicating to the user that the action is still taking place.
 Once the content is refreshed, the content retracts back up to its default position, hiding the spinner and letting the user know that the interaction is done.
 
-[#figure-7-3, reftext="Figure {chapter}.{counter:figure}"]
 .Pull-to-refresh
 image::screenshot_hyperview_refresh_cropped.png[]
 
@@ -566,7 +563,6 @@ On iOS, users can also navigate to the previous screen by swiping right from the
 On Android, users can also navigate to the previous screen by pressing the hardware back button.
 We don't need to specify anything extra in the HXML to get these interactions!
 
-[#figure-7-4, reftext="Figure {chapter}.{counter:figure}"]
 .Contact Details Screen
 image::screenshot_hyperview_detail_cropped.png[]
 
@@ -815,7 +811,6 @@ But pressing "`Cancel`" will update the UI faster than pressing "`Save`".
 On save, the app will first make a `POST` request to save the data, and then a `GET` request for the details screen.
 Cancelling skips the `POST`, and immediately makes the `GET` request.
 
-[#figure-7-5, reftext="Figure {chapter}.{counter:figure}"]
 .Contact Edit Screen
 image::screenshot_hyperview_edit.png[]
 
@@ -1053,7 +1048,6 @@ Unlike before, pressing the delete button will not have an immediate effect.
 Instead, the user will be presented with the dialog box and asked to confirm or cancel.
 Our core deletion behavior didn't change, we just chained it from another behavior.
 
-[#figure-7-6, reftext="Figure {chapter}.{counter:figure}"]
 .Delete Contact confirmation
 image::screenshot_hyperview_delete_cropped.png[]
 
@@ -1090,7 +1084,6 @@ Also, our "`Add Contact`" screen will benefit from the "`saved`" logic that's al
 After successfully adding a new contact, the screen will dispatch the `contact-updated` event, which will refresh the contacts list and show the newly added contact.
 The screen will reload itself to show the Contact Details.
 
-[#figure-7-7, reftext="Figure {chapter}.{counter:figure}"]
 .Add Contact modal
 image::screenshot_hyperview_add.png[]
 

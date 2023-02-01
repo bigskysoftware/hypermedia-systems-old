@@ -358,14 +358,13 @@ And we can do the same thing in `deleted.xml`:
 </view>
 ----
 <1> Show the toasts as soon as the screen loads.
-
+ 
 In both `form_fields.xml` and `deleted.xml`, multiple behaviors get triggered on "`load`".
 In `deleted.xml`, we immediately navigate back to the previous screen.
 In `form_fields.xml`, we immediately reload the current screen to show the Contact details.
 If we rendered our toast UI elements directly in the screen, the user would barely see them before the screen disappeared or reloaded.
 By using a custom action, the toast UI remains visible even while the screens change beneath them.
 
-[#figure-7-8, reftext="Figure {chapter}.{counter:figure}"]
 .Toast shown during back navigation
 image::screenshot_hyperview_toast.png[]
 
@@ -385,7 +384,6 @@ Each action button will be able to trigger standard Hyperview behaviors when pre
 We will use this custom component in our Contacts List screen.
 Each contact item will be a "`swipeable row`", and the actions will give quick access to edit and delete actions for the contact.
 
-[#figure-7-9, reftext="Figure {chapter}.{counter:figure}"]
 .Swipeable contact item
 image::screenshot_hyperview_swipe.png[]
 
@@ -516,7 +514,6 @@ The React Native components for the buttons and main content are created using a
 - Turn those elements into React Native components using `Hyperview.renderChildren()`
 - Set the components as children or props of `Swipeable`.
 
-[#figure-7-10, reftext="Figure {chapter}.{counter:figure}"]
 .Component rendering delegation
 image::figure_hyperview_components.png[]
 
@@ -698,7 +695,6 @@ Now when we press "`Delete`", we get the confirmation dialog as expected.
 After pressing confirm, the backend response triggers behaviors that show a confirmation toast and reload the list of contacts.
 The item for the deleted contact disappears from the list.
 
-[#figure-7-11, reftext="Figure {chapter}.{counter:figure}"]
 .Delete from swipe button
 image::screenshot_hyperview_swipe_delete.png[]
 

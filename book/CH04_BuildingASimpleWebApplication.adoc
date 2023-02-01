@@ -128,7 +128,6 @@ handler for the root URL in our web application.
 The handler in this case is dead simple, it just returns a string, "`Hello Flask!`", to the client.  This isn't even
 hypermedia yet, but, nonetheless, a browser will render it just fine:
 
-[#figure-1-1, reftext="Figure {chapter}.{counter:figure}"]
 .Hello Flask!
 image::figure_2-1_hello_world.png[]
 

@@ -584,7 +584,6 @@ joys of developing web applications the old way.
 
 Here is what the feature looks like in our application:
 
-[#figure-5-1, reftext="Figure {chapter}.{counter:figure}"]
 .Total Contact Count Display
 image::screenshot_total_contacts.png[]
 
@@ -1054,7 +1053,6 @@ Here is what the updated code for `rows.html` looks like:
 We'll also need to add an empty column in the header for the table to accommodate the checkbox column.  With that
 done we now get a series of check boxes, one for each row, a pattern no doubt familiar to you from the web:
 
-[#figure-5-2, reftext="Figure {chapter}.{counter:figure}"]
 .Checkboxes For Our Contact Rows
 image::screenshot_checkboxes.png[]
 

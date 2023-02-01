@@ -166,9 +166,8 @@ In Hypermedia terms, the Hypermedia (HTML) client is already built and distribut
 Half the work is done!
 The developer only has to build the backend to serve Hypermedia responses.
 
-[#figure-6-1, reftext="Figure {chapter}.{counter:figure}"]
 .One HTML server, multiple HTML clients
-image::figure_6_1.png[]
+image::diagram/one-server-many-clients.svg[Many clients connect to one server]
 
 This is possible because the web is an open ecosystem built on standards.
 Any developer can build and host a web app, and any user can access it directly.
@@ -179,9 +178,8 @@ And there's definitely no widely distributed "`HXML browser`".
 So how can a developer deliver a Hypermedia mobile app using HXML?
 Well, unlike on the web, the mobile developer must provide both the backend to serve HXML, and a mobile client app to render those HXML responses.
 
-[#figure-6-2, reftext="Figure {chapter}.{counter:figure}"]
 .One HXML server, one HXML client
-image::figure_6_2.png[]
+image::diagram/one-server-one-hxml-client.svg[One mobile client connects to the server]
 
 It would be a lot to ask from developers to write their own HXML client.
 That's why Hyperview provides an open-source client library, written in React Native.

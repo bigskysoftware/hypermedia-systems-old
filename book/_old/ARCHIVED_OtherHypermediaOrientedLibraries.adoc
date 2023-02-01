@@ -66,7 +66,7 @@ to the normal "root" layer, where content will replace the current window.
 As an example, here is a screenshot from the Unpoly demo application, available at https://demo.unpoly.com
 
 .An Unpoly Modal
-image::figure_11-1_unpoly.png[]
+image::screenshot_11-1_unpoly.png[]
 
 This modal was launched by clicking on a normal anchor tag link that had been annotated to indicate that the result should be
 placed in a new modal layer.  Unpoly provided the infrastructure to show the response from the server within a

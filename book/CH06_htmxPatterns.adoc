@@ -568,7 +568,6 @@ Web 1.0 server-side frameworks.
 
 The error message shown when a user attempts to save a contact with a duplicate email is "Email Must Be Unique":
 
-[#figure-4-1, reftext="Figure {chapter}.{counter:figure}"]
 .Email Validation Error
 image::screenshot_validation_error.png[]
 

@@ -293,11 +293,13 @@ _jQuery soup_.  jQuery soup is a situation where:
 * Code reuse is difficult.
 * The code ends up wildly disorganized and "`flat`", with lots of unrelated event handlers mixed together.
 
-The name "`jQuery soup`" comes from the fact that early JavaScript-heavy applications were typically built in jQuery,
+The name "`jQuery soup`" comes from the fact that most JavaScript-heavy applications used to be built in jQuery (many still are),
 which, perhaps inadvertently, tended to encourage this style of JavaScript.
 
 So, you can see that the notion of Separation of Concerns doesn't always work out as well as promised: our concerns
 end up intertwined or coupled pretty deeply, even when we separate them into different files.
+
+image::images/diagram/separation-of-concerns.svg["Expectation: HTML concern, CSS concern, JS concern. Reality: HTML Co co co CSS nc nc nc JS ern ern ern"]
 
 To show that it isn't just naming between concerns that can get you into trouble, consider another small change to our HTML
 that demonstrates the problems with our separation of concerns: imagine that we decide to change the number field from

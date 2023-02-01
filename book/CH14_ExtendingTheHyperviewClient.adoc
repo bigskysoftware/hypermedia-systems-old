@@ -366,7 +366,7 @@ If we rendered our toast UI elements directly in the screen, the user would bare
 By using a custom action, the toast UI remains visible even while the screens change beneath them.
 
 .Toast shown during back navigation
-image::screenshot_hyperview_toast.png[]
+image::screenshot_hyperview_toast.png["Small gray box shows at top of screen: 'Deleted Contact!'"]
 
 
 == Swipe gesture on Contacts
@@ -385,7 +385,7 @@ We will use this custom component in our Contacts List screen.
 Each contact item will be a "`swipeable row`", and the actions will give quick access to edit and delete actions for the contact.
 
 .Swipeable contact item
-image::screenshot_hyperview_swipe.png[]
+image::screenshot_hyperview_swipe.png["As we swipe the contact list item to the left, Edit and Delete buttons are revealed"]
 
 === Designing The Component
 Rather than implementing the swipe gesture from scratch, we will once again use an open-source third-party library: `react-native-swipeable`.
@@ -515,7 +515,7 @@ The React Native components for the buttons and main content are created using a
 - Set the components as children or props of `Swipeable`.
 
 .Component rendering delegation
-image::figure_hyperview_components.png[]
+image::figure_hyperview_components.png["The HyperviewClient delegates to us to render XML swipe:row element. We delegate back to render text elements."]
 
 I realize this code may be hard to follow if you've never worked with React or React Native.
 That's ok.
@@ -696,7 +696,7 @@ After pressing confirm, the backend response triggers behaviors that show a conf
 The item for the deleted contact disappears from the list.
 
 .Delete from swipe button
-image::screenshot_hyperview_swipe_delete.png[]
+image::screenshot_hyperview_swipe_delete.png[Swiping and pressing Delete shows delete confirmation dialog]
 
 Notice that the action buttons are able to support any type of behavior action, from `push` to `alert`.
 If we wanted to, we could have the action buttons trigger our custom actions, like `open-phone` and `open-email`.

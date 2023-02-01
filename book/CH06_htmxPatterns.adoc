@@ -569,7 +569,7 @@ Web 1.0 server-side frameworks.
 The error message shown when a user attempts to save a contact with a duplicate email is "Email Must Be Unique":
 
 .Email Validation Error
-image::screenshot_validation_error.png[]
+image::screenshot_validation_error.png[Red text next to email input in form: Email Must Be Unique]
 
 All of this is done using plain HTML and using Web 1.0 techniques, and it works well.
 
@@ -927,7 +927,7 @@ elements.
 This is the common "`click to load`" UX pattern, found in more advanced web applications.
 
 .A Click To Load UI
-image::screenshot_click_to_load.txt.svg[]
+image::screenshot_click_to_load.png[Button at the end of the contacts table: Load More]
 
 Here, you have a button that you can click, and it will load the next set of contacts directly into the page, rather
 than "`paging`" to the next page.  This allows you to keep the current contacts "`in context`" visually on the page, but

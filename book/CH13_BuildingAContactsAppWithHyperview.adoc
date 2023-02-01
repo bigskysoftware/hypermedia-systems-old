@@ -298,7 +298,7 @@ With these changes to the `contacts()` view, we can finally see the fruits of ou
 After restarting the backend and refreshing the screen in our mobile app, we can see the contacts screen!
 
 .Contacts Screen
-image::screenshot_hyperview_list.png[]
+image::screenshot_hyperview_list.png[List of contacts showing names and a search bar at the top]
 
 
 === Searching Contacts
@@ -343,7 +343,7 @@ with new content (`<item>` elements that match the search query) received in the
 Note that `href` includes our `rows_only` query param; we want the response to only include the rows and not the entire screen.
 
 .Searching for Contacts
-image::screenshot_hyperview_search.png[]
+image::screenshot_hyperview_search.png[Searching the letters c a r brings up Carson Gross]
 
 That's all it takes to add search-as-you-type functionality to our mobile app!
 As the user types a search query, the client will make requests to the backend and replace the list with the search results.
@@ -439,7 +439,7 @@ While the content refreshes, the spinner remains visible on screen, indicating t
 Once the content is refreshed, the content retracts back up to its default position, hiding the spinner and letting the user know that the interaction is done.
 
 .Pull-to-refresh
-image::screenshot_hyperview_refresh_cropped.png[]
+image::screenshot_hyperview_refresh_cropped.png[Pulling the contact list down shows the refresh progress indicator]
 
 This pattern is so common and useful that it's built in to Hyperview via the `refresh` action.
 Let's add pull-to-refresh to our list of contacts to see it in action.
@@ -564,7 +564,7 @@ On Android, users can also navigate to the previous screen by pressing the hardw
 We don't need to specify anything extra in the HXML to get these interactions!
 
 .Contact Details Screen
-image::screenshot_hyperview_detail_cropped.png[]
+image::screenshot_hyperview_detail_cropped.png[Contact detail shows phone number and email as well as back and edit buttons in navbar]
 
 With just a few simple changes, we've gone from a single-screen app to a multi-screen app.
 Note that we didn't need to change anything in the actual mobile app code to support our new screen.
@@ -812,7 +812,7 @@ On save, the app will first make a `POST` request to save the data, and then a `
 Cancelling skips the `POST`, and immediately makes the `GET` request.
 
 .Contact Edit Screen
-image::screenshot_hyperview_edit.png[]
+image::screenshot_hyperview_edit.png[We can edit the contact details and even see validation errors inline]
 
 
 === Updating the Contacts List
@@ -1049,7 +1049,7 @@ Instead, the user will be presented with the dialog box and asked to confirm or 
 Our core deletion behavior didn't change, we just chained it from another behavior.
 
 .Delete Contact confirmation
-image::screenshot_hyperview_delete_cropped.png[]
+image::screenshot_hyperview_delete_cropped.png[Deleting shows a native confirmation dialog]
 
 
 == Adding a New Contact
@@ -1085,7 +1085,7 @@ After successfully adding a new contact, the screen will dispatch the `contact-u
 The screen will reload itself to show the Contact Details.
 
 .Add Contact modal
-image::screenshot_hyperview_add.png[]
+image::screenshot_hyperview_add.png[Form to enter contact details pops up from bottom of screen]
 
 == Deploying the App
 With the completion of the contact creation UI, we have a fully implemented mobile app!

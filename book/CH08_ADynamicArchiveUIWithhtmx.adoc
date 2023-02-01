@@ -359,7 +359,7 @@ As we have mentioned before, this is not a book on CSS, but, for completeness, h
 Which ends up rendering like this:
 
 .Our CSS-Based Progress Bar
-image::screenshot_progress_bar.png[]
+image::screenshot_progress_bar.png[A blue progress bar that's a little under half full]
 
 Let's add the code for our progress bar into our `archive_ui.html` template for the case when the archiver is
 running, and let's update the copy to say "`Creating Archive...`":

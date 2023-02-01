@@ -192,7 +192,7 @@ to document, or from resource to resource.
 Here is what a user interaction with an anchor tag/hyperlink looks like in visual form:
 
 .An HTTP GET In Action
-image::diagram/http-get-in-action.svg[]
+image::diagram/http-get-in-action.svg[Browser sends GET request to the server with the path and hostname, server responds with page]
 
 When the link is clicked the browser (or, as we sometimes refer to it, the _hypermedia client_) initiates an HTTP
 `GET` request to the URL encoded in the link's `href` attribute.
@@ -255,9 +255,8 @@ example suffices to demonstrate the core mechanism for updating system state pur
 
 Here is a diagram of the interaction:
 
-// alt: When a link is clicked, the browser sends a GET request as before. The server sends a 200 OK response that contains a page.
 .An HTTP POST In Action
-image::diagram/http-post-in-action.svg[]
+image::diagram/http-post-in-action.svg[When submitting a sign up form, browser sends POST request with form data. Server responds creates account and responds with a thank you page.]
 
 ==== Web 1.0 Applications
 

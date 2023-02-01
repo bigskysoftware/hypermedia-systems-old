@@ -129,7 +129,7 @@ The handler in this case is dead simple, it just returns a string, "`Hello Flask
 hypermedia yet, but, nonetheless, a browser will render it just fine:
 
 .Hello Flask!
-image::figure_2-1_hello_world.png[]
+image::figure_2-1_hello_world.png[Browser window, large text: Hello World!]
 
 Great, there's our first step into Flask, showing the core technique we are going to use to respond to HTTP requests:
 routes mapped to handlers.
@@ -378,7 +378,7 @@ can respond with an HTML _representation_ of all the contacts requested.  So far
 Here is what the template looks like, rendered with a bit of contact information:
 
 .Contact.app
-image::figure_2-2_table_etc.png[]
+image::figure_2-2_table_etc.png[Table showing info of 3 contacts with a title and a search bar above and an Add Contact link below]
 
 
 Now, our application won't win any design awards at this point, but notice that our template, when rendered,

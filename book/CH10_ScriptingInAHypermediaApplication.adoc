@@ -1214,7 +1214,7 @@ Given all that, our updated code will look like this:
 
 And now, when this button is clicked, we get a nice looking dialog in our web application:
 
-image::screenshot_sweet_alert.png[]
+image::screenshot_sweet_alert.png[Modal dialog: "Delete these contacts?" with a colorful delete button and gray cancel button.]
 
 Much nicer than the system confirmation dialog.  Still, this feels a little wrong.  This is a lot of code to write
 just to trigger a slightly nicer `confirm()`, isn't it?  And the htmx JavaScript code we are using here feels a little

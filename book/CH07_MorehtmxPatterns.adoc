@@ -585,7 +585,7 @@ joys of developing web applications the old way.
 Here is what the feature looks like in our application:
 
 .Total Contact Count Display
-image::screenshot_total_contacts.png[]
+image::screenshot_total_contacts.png[(22 total Contacts)]
 
 Beautiful.
 
@@ -823,7 +823,7 @@ row will disappear from the UI as the entire page is re-rendered.
 One side effect of adding this delete link is that we are starting to pile up the actions in a contact row:
 
 .That's a Lot of Actions
-image::screenshot_stacked_actions.png[]
+image::screenshot_stacked_actions.png["All 3 table rows have Edit, View, Delete links at the end"]
 
 It would be nice if we didn't show the actions all in a row, and, additionally, it would be nice if we only showed the
 actions when the user indicated interest in a given row.  We will return to this problem after we look at the relationship
@@ -1054,7 +1054,7 @@ We'll also need to add an empty column in the header for the table to accommodat
 done we now get a series of check boxes, one for each row, a pattern no doubt familiar to you from the web:
 
 .Checkboxes For Our Contact Rows
-image::screenshot_checkboxes.png[]
+image::screenshot_checkboxes.png[Table rows each have a checkbox in the first column]
 
 If you are not familiar with or have forgotten the way checkboxes work in HTML: a checkbox will submit its value associated
 with the name of the input if and only if it is checked.  So if, for example, you checked the contacts with the ids 3,

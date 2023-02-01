@@ -123,8 +123,9 @@ Reading it through (skipping over the implementation details) will give you a se
 .You get what you pay for
 ****
 The close relationship between the content and the markup means that good HTML is actually quite expensive.
-Most sites have a CMS between the authors, who are rarely familiar with HTML and _very_ rarely want to think about it,
-and the developers, who need to develop a generic system able to handle any content that's thrown at it.
+Most sites have a separation between the authors, who are rarely familiar with HTML and _very_ rarely want to think about it,
+and the developers, who need to develop a generic system able to handle any content that's thrown at it --
+this separation usually taking the form of a CMS.
 As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
 Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
 Dishearteningly, but understandably, it's an expense few organizations can spare.
@@ -142,6 +143,13 @@ It can also make your HTML easier to maintain.
 === Don't make soup
 
 While programming code turns into spaghetti when it's not well organized,
+the food metaphor of choice for markup is soup
+(hence BeautifulSoup, the web scraping library).
+
+HTML can turn into soup in a variety of ways,
+usually due to a disregard or misunderstanding of semantics.
+It can also happen due to an excess of layers between the developer and the HTML.
+Different kinds of soup call for different remedies.
 
 ==== HTML5 soup
 
@@ -153,9 +161,9 @@ A set of elements introduced with HTML5 have become a symbol of semantic markup:
  - header
  - footer
 
-Don't write HTML with the mindset of
-"`The more of these elements there are, the more semantic it is.`"
-Otherwise, the results might look somewhat like this:
+HTML5 soup happens when a developer comes to believe that
+the more of these elements there are, the more semantic it is.
+The results might look somewhat like this:
 
 .HTMHell, [.cite]##10 <section> is no replacement for <div>#, https://www.htmhell.dev/10-section-is-no-replacement-for-div/
 [source,html]
@@ -185,7 +193,11 @@ Otherwise, the results might look somewhat like this:
 </main>
 ----
 
-Sometimes, `<div>` really is fine.
+If you're experiencing HTML5 soup, there are two remedies:
+* Make sure you're using the meanings of elements defined in the spec.
+  Don't try to use advanced HTML without having learned it.
+* Don't try to be specific with your semantics when you can't or don't need to.
+  Sometimes, `<div>` really is fine.
 
 
 ==== Div soup

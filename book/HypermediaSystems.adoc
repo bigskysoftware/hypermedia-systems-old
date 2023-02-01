@@ -3,13 +3,24 @@
 Adam Stepinski, Carson Gross, Deniz Akşimşek
 :doctype: book
 :title-page:
-:toc-title:
+:toc: macro
+:toclevels: 2
+:toc-title!:
 :imagesdir: images
 :sectnums:
 :sectnumlevels: 2
 :showtitle:
 :layout: chapter.njk
 :url: ./hypermedia-systems/
+
+ifdef::hypermedia-systems-pdf[]
+[.toc-container]
+--
+[discrete]
+== Contents
+toc::[]
+--
+endif::[]
 
 
 = Hypermedia Concepts

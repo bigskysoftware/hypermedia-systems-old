@@ -3,7 +3,7 @@
 :chapter: 02
 :url: ./hypermedia-components/
 
-A _hypermedia system_ consists of a number of components:
+A _hypermedia system_ consists of a number of components, including:
 
 * A hypermedia, such as HTML
 * A network protocol, such as HTTP
@@ -27,8 +27,8 @@ term REST is currently used in the industry -- are not.
 
 The fundamental technology of a hypermedia system is a hypermedia that allows a
 client and server to communicate with one another in a dynamic, non-linear fashion.  Again, what makes a hypermedia
-a hypermedia is the presence of _hypermedia controls_: elements in the hypermedia that allow users to select
-non-linear actions within the hypermedia.  Users of a hypermedia system can _interact_ with the media in a manner beyond
+a hypermedia is the presence of _hypermedia controls_: elements that allow users to select
+non-linear actions within the hypermedia. Users can _interact_ with the media in a manner beyond
 simply reading from start to end.
 
 We have already mentioned the two primary hypermedia controls in HTML, anchors and forms, which allow a browser to
@@ -58,9 +58,9 @@ https://hypermedia.systems/book
 
 This particular URL is made up of the following components:
 
-* A protocol or scheme (in this case `https`)
-* A domain (in this case `hypermedia.systems`)
-* A path (in this case `/book`)
+* A protocol or scheme (in this case, `https`)
+* A domain (e.g., `hypermedia.systems`)
+* A path (e.g., `/book`)
 
 This URL uniquely identifies a retrievable _resource_ on the internet, to which an _HTTP Request_ can be issued by
 a hypermedia client that "`speaks`" HTTPS, such as a web browser.  If this URL is found as the reference of a
@@ -84,7 +84,7 @@ would be `https://hypermedia.systems/book/contents/`.
 
 === Hypermedia Protocols
 
-The hypermedia control (link) above tells a browser: "`When a user clicks on this text, issue request to
+The hypermedia control (link) above tells a browser: "`When a user clicks on this text, issue a request to
 https://hypermedia.systems/book/contents/ using the Hypertext Transfer Protocol`", or HTTP.
 
 HTTP is the _protocol_ used to transfer HTML (hypermedia) between browsers (hypermedia clients) and servers (hypermedia
@@ -104,7 +104,7 @@ Host: hypermedia.systems
 The first line specifies that this is an HTTP `GET` request.  It then specifies the path of the resource being
 requested.  Finally, it contains the HTTP version for this request.
 
-After that are a series of HTTP _Request Headers_, individual lines of name/value pairs, separated by a colon, which provide
+After that are a series of HTTP _request headers_, individual lines of name/value pairs, separated by a colon. The request headers provide
 _metadata_ that can be used by the server to determine exactly how to respond to the client request.  In this case,
 with the `Accept` header, the browser is saying it would prefer HTML as a response format, but will accept anything that
 the server responds with.
@@ -137,7 +137,7 @@ indicating that the given resource was found and that the request succeeded.  Th
 corresponds to the response code.  (The actual string doesn't matter, it is the response code that tells the client
 the result of a request, as we will discuss in more detail below.)
 
-After the first line of the response, as with the HTTP Request, we see a series of _Response Headers_ that provide
+After the first line of the response, as with the HTTP Request, we see a series of _response headers_ that provide
 metadata to the client to assist in displaying the _representation_ of the resource correctly.
 
 Finally, we see some new HTML content.  This content is the HTML _representation_ of the requested resource, in this
@@ -170,10 +170,10 @@ There are many methods available in HTTP; the ones of most practical importance 
 
 These methods _roughly_ line up with the "`Create/Read/Update/Delete`" or CRUD pattern found in many applications:
 
-* `POST` corresponds with Creating a resource
-* `GET` corresponds with Reading a resource
-* `PUT` and `PATCH` correspond with Updating a resource
-* `DELETE` corresponds, well, with Deleting a resource
+* `POST` corresponds with Creating a resource.
+* `GET` corresponds with Reading a resource.
+* `PUT` and `PATCH` correspond with Updating a resource.
+* `DELETE` corresponds, well, with Deleting a resource.
 
 Note that this HTTP Action/CRUD correspondence is a rough rule of thumb for application development, the underlying RFCs
 that specify them make no such connection and are often somewhat obscure.  Here, for example, is the documentation
@@ -199,7 +199,7 @@ hypermedia has fallen on hard times.
 
 In any event, in a properly structured HTML-based hypermedia system you should use an appropriate HTTP method for the operation a
 particular hypermedia control performs: If a hypermedia control such as a button _deletes_ a resource, for example, ideally
-it should an HTTP `DELETE` request to do so.
+it should issue an HTTP `DELETE` request to do so.
 
 .HTML & HTTP Methods
 ****

@@ -5,10 +5,10 @@
 
 A _hypermedia system_ consists of a number of components, including:
 
-* A hypermedia, such as HTML
-* A network protocol, such as HTTP
-* A server that presents a hypermedia API responding to network requests with hypermedia responses
-* A client that properly interprets those responses
+* A hypermedia, such as HTML.
+* A network protocol, such as HTTP.
+* A server that presents a hypermedia API responding to network requests with hypermedia responses.
+* A client that properly interprets those responses.
 
 In this chapter we will look at these components and their implementation in the context of the web.
 
@@ -104,12 +104,11 @@ Host: hypermedia.systems
 The first line specifies that this is an HTTP `GET` request.  It then specifies the path of the resource being
 requested.  Finally, it contains the HTTP version for this request.
 
-After that are a series of HTTP _request headers_, individual lines of name/value pairs, separated by a colon. The request headers provide
+After that are a series of HTTP _request headers_: individual lines of name/value pairs separated by a colon. The request headers provide
 _metadata_ that can be used by the server to determine exactly how to respond to the client request.  In this case,
-with the `Accept` header, the browser is saying it would prefer HTML as a response format, but will accept anything that
-the server responds with.
+with the `Accept` header, the browser is saying it would prefer HTML as a response format, but will accept any server response.
 
-Next, it has a `Host` header, which specifies the server that the request has been sent to. This is useful when multiple
+Next, it has a `Host` header that specifies which server the request has been sent to. This is useful when multiple
 domains are hosted on the same host.
 
 An HTTP response from a server to this request might look something like this:
@@ -175,8 +174,9 @@ These methods _roughly_ line up with the "`Create/Read/Update/Delete`" or CRUD p
 * `PUT` and `PATCH` correspond with Updating a resource.
 * `DELETE` corresponds, well, with Deleting a resource.
 
-Note that this HTTP Action/CRUD correspondence is a rough rule of thumb for application development, the underlying RFCs
-that specify them make no such connection and are often somewhat obscure.  Here, for example, is the documentation
+. Put, Post, and... Idempotency?
+****
+While HTTP Actions correspond roughly to CRUD, they are not the same. The technical specfications for these methods make no such connection, and are often somewhat difficult to read.  Here, for example, is the documentation
 on the distinction between a `POST` and a `PUT` from https://www.rfc-editor.org/rfc/rfc2616[RCF-2616]:
 
 [quote, RCF-2616, https://www.rfc-editor.org/rfc/rfc2616#section-9.6]
@@ -187,46 +187,39 @@ resource's own semantics, whereas the enclosed representation in a PUT request i
 target resource.  Hence, the intent of PUT is idempotent and visible to intermediaries, even though the exact
 effect is only known by the origin server.
 ____
-
 So, in plain terms, a `POST` can be handled by a server pretty much however it likes, whereas a `PUT` should be handled
 as a "`replacement`" of the resource, although the language, once again allows the server to do pretty much whatever it
-would like within the constraint of being idempotent.
+would like within the constraint of being https://developer.mozilla.org/en-US/docs/Glossary/Idempotent[_idempotent_]. 
 
-This sort of academic language (and arguments around it) can be alienating to many web developers.  While we feel it is
-good to learn these concepts (e.g. idempotency) in depth, we also feel that requiring a PhD to build effective hypermedia
-systems is unreasonable.  Frankly, the academic and pedantic language around things like HTTP methods is one reason why
+The obscure language around things like HTTP methods may be one reason why
 hypermedia has fallen on hard times.
-
-In any event, in a properly structured HTML-based hypermedia system you should use an appropriate HTTP method for the operation a
-particular hypermedia control performs: If a hypermedia control such as a button _deletes_ a resource, for example, ideally
-it should issue an HTTP `DELETE` request to do so.
-
-.HTML & HTTP Methods
 ****
-A strange thing about HTML is that, despite being the world's most popular hypermedia and despite being designed alongside
-HTTP (which is the Hypertext Transfer Protocol, after all!), the native hypermedia controls in HTML can only issue
-HTTP `GET` and `POST` requests:
+
+==== HTML & HTTP Methods
+
+In a properly structured HTML-based hypermedia system you would use an appropriate HTTP method for the operation a
+particular hypermedia control performs. For example, if a hypermedia control such as a button _deletes_ a resource, ideally it should issue an HTTP `DELETE` request to do so.
+
+A strange thing about HTML, though, is that the native hypermedia controls can only issue HTTP `GET` and `POST` requests. 
 
 Anchor tags always issue a `GET` request.
 
 Forms can issue either a `GET` or `POST` using the `method` attribute.
 
-Forms and anchor tags _can't_ issue `PUT`, `PATCH` or `DELETE` requests!  If you wish to issue these last three types
-of requests, you currently _have_ to resort to JavaScript to do so.  Since a `POST` can do damned near anything, it
-ends up being used for any mutation on the server, and `PUT`, `PATCH` and `DELETE` are left aside in plain HTML-based
+Despite the fact that HTML -- the world's most popular hypermedia -- has been designed alongside
+HTTP (which is the Hypertext Transfer Protocol, after all!): if you wish to issue `PUT`, `PATCH` or `DELETE` requests you currently _have to_ resort to JavaScript to do so.  Since a `POST` can do almost anything, it ends up being used for any mutation on the server, and `PUT`, `PATCH` and `DELETE` are left aside in plain HTML-based
 applications.
 
-This is an obvious shortcoming of HTML as a hypermedia, and it is hard to understand why this hasn't been fixed in the
-HTML specification yet!
-****
+This is an obvious shortcoming of HTML as a hypermedia; it is hard to understand why this hasn't been fixed in the
+HTML specification. We'll discuss ways to get around this in Chapter 5.
 
 ==== HTTP Response Codes
 
-HTTP Request methods allow a client to tell a server _what_ to do to a given resource.  HTTP Responses contain
-_response codes_, which tell a client what the result of the request was.   HTTP response codes are numeric
+HTTP request methods allow a client to tell a server _what_ to do to a given resource.  HTTP responses contain
+_response codes_, which tell a client what the result of the request was.  HTTP response codes are numeric
 values that are embedded in the HTTP response, as we saw above.
 
-The most familiar response code for most web developers is probably `404`, which stands for "`Not Found`".  This
+The most familiar response code for web developers is probably `404`, which stands for "`Not Found`".  This
 is the response code that is returned by web servers when a resource that does not exist is requested from them.
 
 HTTP breaks response codes up into various categories:

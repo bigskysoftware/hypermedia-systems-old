@@ -322,7 +322,7 @@ An HTTP response to this request might look something like this:
 <3> Another property, the email of the contact with this id.
 
 The JavaScript code above converts the JSON text received from the server into a JavaScript object by calling the
-`json()` method on it.  This new JavaScript object object is then handed off to the `updateUI()` method.
+`json()` method on it.  This new JavaScript object is then handed off to the `updateUI()` method.
 
 The `updateUI()` method is responsible for updating the UI based on the data encoded in the JavaScript Object,
 perhaps by displaying the contact in a bit of HTML generated via a client-side template in the JavaScript application.

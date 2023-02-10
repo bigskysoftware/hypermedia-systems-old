@@ -59,11 +59,11 @@ distributed software.
 We define a _hypermedia system_ as a system that adheres to the RESTful network architecture in Fielding's _original_
 sense of this term.
 
-Unfortunately, today, you probably associate the term "REST" with JSON APIs, since that is where the term is typically
+Unfortunately, today, you probably associate the term "`REST`" with JSON APIs, since that is where the term is typically
 used in industry.  This is a misapplied use of the term REST because JSON is not a _natural_ hypermedia due to the absence of
-hypermedia controls. The exchange of hypermedia is an explicit requirement for a system to be considered "RESTful."
+hypermedia controls. The exchange of hypermedia is an explicit requirement for a system to be considered "`RESTful.`"
 It is a long story how we got here, using the term REST so incorrectly, and we will go into the details later in this book.
-But, for now, if you currently think "REST == JSON", please try to set that understanding aside while reading this book,
+But, for now, if you currently think "`REST == JSON`", please try to set that understanding aside while reading this book,
 and come to the concept with fresh eyes.
 
 It is important to understand that, in his dissertation, Fielding was describing The World Wide Web as it existed in the
@@ -99,7 +99,7 @@ We hope that for many applications the answer to that question will be "`Yes!`"
 The book is broken into three parts:
 
 * An introduction (or re-introduction) to hypermedia, with a particular focus on HTML and HTTP.  We will finish this
-  review of core hypermedia concepts by creating a simple "Web 1.0"-style application, Contact.app, for managing contacts.
+  review of core hypermedia concepts by creating a simple "`Web 1.0`"-style application, Contact.app, for managing contacts.
 
 * Next we will look at how we can use https://htmx.org[htmx], a hypermedia-oriented JavaScript library created by the
   authors of this book, to improve Contact.app.  By using htmx, we will be able to achieve a level of interactivity in our

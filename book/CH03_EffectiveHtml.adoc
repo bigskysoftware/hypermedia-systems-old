@@ -130,7 +130,7 @@ As a result, having markup tailored to content, which is often necessary for adv
 Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
 Dishearteningly, but understandably, it's an expense few organizations can spare.
 
-Thus, we don't demand that every site contains the "most semantic" HTML.
+Thus, we don't demand that every site contains the "`most semantic`" HTML.
 What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
 Most of the defects caused by _inadequate_ HTML can be caught through testing.
 

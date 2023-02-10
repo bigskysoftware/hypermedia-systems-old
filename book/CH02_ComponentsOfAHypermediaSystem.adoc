@@ -78,14 +78,14 @@ for example:
 ----
 
 Here we have a _relative_ hypermedia reference, where the protocol, host and port are _implied_ to be that of the "`current
-document`", that is, the same as whatever the protocol and server were to retrieve the current HTML page.  So, if this
+document,`" that is, the same as whatever the protocol and server were to retrieve the current HTML page.  So, if this
 link was found in an HTML document retrieved from `https://hypermedia.systems/`, then the implied URL for this anchor
 would be `https://hypermedia.systems/book/contents/`.
 
 === Hypermedia Protocols
 
 The hypermedia control (link) above tells a browser: "`When a user clicks on this text, issue a request to
-https://hypermedia.systems/book/contents/ using the Hypertext Transfer Protocol`", or HTTP.
+https://hypermedia.systems/book/contents/ using the Hypertext Transfer Protocol,`" or HTTP.
 
 HTTP is the _protocol_ used to transfer HTML (hypermedia) between browsers (hypermedia clients) and servers (hypermedia
 servers) and, as such, is the key network technology that binds the distributed hypermedia system of the web together.
@@ -213,7 +213,7 @@ HTTP request methods allow a client to tell a server _what_ to do to a given res
 _response codes_, which tell a client what the result of the request was.  HTTP response codes are numeric
 values that are embedded in the HTTP response, as we saw above.
 
-The most familiar response code for web developers is probably `404`, which stands for "`Not Found`".  This
+The most familiar response code for web developers is probably `404`, which stands for "`Not Found.`"  This
 is the response code that is returned by web servers when a resource that does not exist is requested from them.
 
 HTTP breaks response codes up into various categories:
@@ -448,20 +448,19 @@ respond to that request, with no side state or context stored on either the clie
 In practice, for many web applications today, we actually violate this constraint: it is common to establish a
 _session cookie_ that acts as a unique identifier for a given user and that is sent along with every request.  While this
 session cookie is, by itself, not stateful (it is sent with every request), it is typically
-used as a key to look up information stored on the server, in what is usually termed "`the session`."
+used as a key to look up information stored on the server, in what is usually termed "`the session.`"
 
 This session information is typically stored in some sort of shared storage across multiple web servers, holding things
-like the current users email or id, their roles, partially created domain objects, caches, and so forth.
+like the current user's email or id, their roles, partially created domain objects, caches, and so forth.
 
 This violation of the Statelessness REST architectural constraint has proven to be useful for building web applications
-and, for the most part, does not appear to have had a significant impact on the overall flexibility of the approach.  But
-it is worth bearing in mind that even Web 1.0 applications often violate the purity of REST in the interest of pragmatic
+and does not appear to have had a significant impact on the overall flexibility of the approach.  But
+bear in mind that even Web 1.0 applications often violate the purity of REST in the interest of pragmatic
 trade-offs.
 
-It should be noted, however, that sessions do cause additional operational complexity headaches when deploying hypermedia
-servers, which now may need to have shared access to the session state information stored across an entire cluster.  So
-Fielding was correct in pointing out that an ideal RESTful system, one that did not violate this constraint, would,
-indeed, be simpler and therefore more robust.
+Note, however, that sessions do cause additional operational complexity headaches when deploying hypermedia
+servers; these may need shared access to session state information stored across an entire cluster.  So
+Fielding was correct in pointing out that an ideal RESTful system, one that did not violate this constraint, would be simpler and therefore more robust.
 
 === The Caching Constraint
 
@@ -746,7 +745,7 @@ The final "`required`" constraint on a RESTful system that we will consider is T
 
 To be frank, after the excitement of the uniform interface constraint, the "`layered system`" constraint is a bit of a
 let down.  But it is still worth understanding and it is actually utilized effectively by The web.  The constraint
-requires that a RESTful architecture be "`layered`", allowing for multiple servers to act as intermediaries between
+requires that a RESTful architecture be "`layered,`" allowing for multiple servers to act as intermediaries between
 a client and the eventual "`source of truth`" server.
 
 These intermediary servers can act as proxies, transform intermediate requests and responses and so forth.
@@ -762,8 +761,8 @@ nonetheless.
 
 === An Optional Constraint: Code-On-Demand
 
-We called The Layered System constraint the final "required" constraint because
-Fielding mentions one additional constraint on a RESTful system. This Code On Demand constraint is somewhat awkwardly described as "optional" (Section 5.1.7).
+We called The Layered System constraint the final "`required`" constraint because
+Fielding mentions one additional constraint on a RESTful system. This Code On Demand constraint is somewhat awkwardly described as "`optional`" (Section 5.1.7).
 
 In this section, Fielding says:
 

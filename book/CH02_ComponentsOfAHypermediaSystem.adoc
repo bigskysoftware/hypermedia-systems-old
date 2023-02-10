@@ -527,7 +527,7 @@ in the form of hypermedia controls.
 
 This might sound a little abstract, let's look at a concrete example.
 
-Consider two different potential responses from an HTTP server for the URL `https://example.com/contacts/42`.
+Consider two different potential responses from an HTTP server for the URL `\https://example.com/contacts/42`.
 
 Both responses will return information about a contact, but they will take very different forms.
 

@@ -79,6 +79,10 @@ export default () => {
                 el.setAttribute("aria-hidden", "true");
                 el.classList.add("asciiart");
             })
+
+            $$(document, "li>p:only-child").forEach(el => {
+                el.replaceWith(...el.childNodes);
+            })
         })
     }
 }

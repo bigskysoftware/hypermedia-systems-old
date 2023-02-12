@@ -35,6 +35,7 @@ As a result, its development in terms of hypermedia controls has stagnated.
 This chapter looks at HTML as something worth studying in its own right, even in this day and age.
 It covers our best practices for writing/generating HTML,
 and why HTML is something far cooler than a programming language.
+It won't be an HTML tutorial, as that would take a whole other book, but it can accompany you in your HTML re-learning journey.
 
 
 == The state of affairs
@@ -57,7 +58,7 @@ So where does HTML and the s-word come in?
 
 Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by rewriting semantic HTML as opposed to heaping JavaScript and ARIA attributes over everything.
 
-Good HTML will not absolve you from doing your job, but it will make it easier.
+Good HTML might not absolve you from doing your job, but it will make it easier.
 
 
 == `<div>` soup
@@ -92,7 +93,7 @@ It's a fast and enjoyable way to build things,
 but it means that during most of development,
 developers are biased towards their own UI needs,
 and users (who might use websites differently) become an afterthought.
-However, if we use HTML, we can catch many of these issues before they ever occur, even before testing.
+However, if we use HTML effectively, we can catch many of these issues before they ever occur, even before testing.
 
 Given all this, why are so many developers writing div soup?
 There is a tendency to understate the sophistication of HTML.
@@ -177,32 +178,26 @@ While encapsulating behavior is a good way to organize code,
 they also separate elements from their surrounding context,
 which can lead to wrong or inadequate semantics,
 and conceal the number of elements within.
-The result is **component soup**, where information is hidden in component state rather than being present in the HTML.
+The result is what one might call **component soup**,
+where information is hidden in component state,
+rather than being present in the HTML, which is now incomprehensible doe to missing context.
 In our Client Side Scripting chapter, we'll look at alternatives to component-based frameworks that can be used to avoid these shortcomings.
 
-We should clarify that components, when used for the right purpose, can improve HTML clarity.
-A good rule of thumb is to ask:
+We should clarify that components, when used for the right purpose, can actually _improve_ the clarity of your HTML.
+To decide if a component is appropriate for your use case, a good rule of thumb is to ask:
 "`Could this reasonably be a built-in HTML element?`"
 For example, a code editor is a good candidate,
-since HTML already has `<textarea>` and `contenteditable` elements,
-and since a fully-featured code editor will likely have many inner elements that don't provide much information to a reader.
-By encapsulating these in a component, we are _extending_ HTML for our purposes,
-rather than _abstracting_ it away.
+since HTML already has `<textarea>` and `contenteditable` elements.
+In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
+By encapsulating these in a component, we are _extending_ HTML, rather than abstracting it away.
 
 
 == HTML5 soup
 
-A set of elements introduced with HTML5 have become a symbol of semantic markup:
-
- - section
- - article
- - nav
- - header
- - footer
-
-HTML5 soup happens when a developer comes to believe that
-the more of these elements there are, the more semantic it is.
-The results might look somewhat like this:
+A particular set of elements introduced with HTML5 have become a symbol of semantic markup:
+`<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` and more.
+To make HTML5 soup, convince yourself that the more of these elements there are in a page, the more semantic it is.
+Don't change your development habits in any other way and you have HTML5 soup:
 
 .HTMHell, [.cite]##10 <section> is no replacement for <div>#, https://www.htmhell.dev/10-section-is-no-replacement-for-div/
 [source,html]
@@ -239,14 +234,14 @@ If you're experiencing HTML5 soup, there are two remedies:
   Sometimes, `<div>` really is fine.
 
 
-=== Remedy: Refer frequently to the spec
+=== Remedy: Keep the spec on hand
 
 [quote,Confucius]
 The beginning of wisdom is to call things by their right names.
 
-The best resource for learning about HTML is the HTML specification.
+The most authoritative (though not necessarily best) resource for learning about HTML is the HTML specification.
 The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
-The single-page version is too slow to load and render on most computers.]
+The single-page version is too slow to load and render on most computers. There's also a developers' edition at /dev, though I haven't noticed much of a difference between the two.]
 
 Section 4 features a list of all tags in HTML.
 It includes what tags mean, where they can occur, and what they are allowed to contain.
@@ -258,13 +253,17 @@ It even tells you when you're allowed to leave out closing tags!
 This is a valid HTML document.
 ----
 
-This chapter in particular is not only a great piece of reference material, but also a good read in general.
-Reading it through (skipping over the implementation details) will give you a sense of how HTML is intended to be written.
+This chapter in particular is a great piece of reference material and an useful read in general.
+Reading it through (skipping over the implementation details, like the several pages of algorithms)
+will give you a sense of how HTML is intended to be written.
 
-.You get what you pay for
-****
-The close relationship between the content and the markup means that good HTML is actually quite expensive.
-Most sites have a separation between the authors, who are rarely familiar with HTML and _very_ rarely want to think about it,
+
+=== Remedy: Know your budget
+
+The close relationship between the content and the markup means that
+good HTML is actually quite labor-intensive, often across a whole organization.
+Most sites have a separation between the authors,
+who are rarely familiar with HTML and _very_ rarely want to think about it,
 and the developers, who need to develop a generic system able to handle any content that's thrown at it --
 this separation usually taking the form of a CMS.
 As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
@@ -273,17 +272,16 @@ Dishearteningly, but understandably, it's an expense few organizations can spare
 
 Thus, we don't demand that every site contains the "most semantic" HTML.
 What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
-Most of the defects caused by _inadequate_ HTML can be caught through testing.
+The kinds of defects caused by _inadequate_ HTML can usually be caught through testing.
 
 If you have the resources, however, putting more care in your HTML will produce a more polished site.
-Much like style guides, well-written semantic HTML gives an air of quality and prestige to a document, even when few people notice it.
-It can also make your HTML easier to maintain.
-****
+Much like style guides, well-written semantic HTML gives an air of quality and prestige to a document, even if few notice it.
+When it comes to HTML, you get what you pay for.
 
 
 == The S word
 
-[quote, _Mean Girls_ (2004)]
+[quote, '_Mean Girls_ (2004)']
 Gretchen, stop trying to make fetch happen! It's not going to happen!
 
 In natural language, a word can only have a certain meaning if some group of people know it to have that meaning.
@@ -319,6 +317,10 @@ Let's be real, after all -- out of all the sites using "`Open Graph`" tags, how 
 
 == The A word
 
+{blank}// TODO(dz4k): After dancing around accessibility, finally address the subject directly.
+
+{blank}// The following is supposed to be addressing the frustration many people experience trying to make accessible sites, how accessibility itself feels inaccessible to many developers.
+
 The purpose of writing good HTML is not to please the specification deities.
 It's to make good websites.
 The spec is a good starting point when deciding how to mark something up,
@@ -347,12 +349,7 @@ HTML is for humans.
 // WAI has a very friendly webpage
 
 
-=== Machine-readable HTML
-
-==== Data attributes
-
-// TODO to mark elements,to store state
-
+== Machine-readable HTML
 
 ==== Microformats
 
@@ -384,7 +381,7 @@ HTML is for humans.
 <https://microformats.org/>
 
 
-=== Custom elements
+== Custom elements
 
 // TODO get on a soapbox about custom elements, why they're good and disappointing
 
@@ -394,7 +391,7 @@ HTML is for humans.
 * HTML specification: https://html.spec.whatwg.org/multipage
 * TODO link resources on alt text.
 * https://htmhell.dev
-* 
-referenced
+
+.referenced
 * Manuel Matuzović. _Lost in Translation_. https://www.youtube.com/watch?v=Wno1IhEBTxc
 * https://www.matuzo.at/blog/2023/single-page-applications-criticism/

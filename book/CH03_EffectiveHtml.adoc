@@ -42,21 +42,13 @@ and why HTML is something far cooler than a programming language.
 Have you noticed that a lot of websites are bad?
 
  - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times.footnote:[https://almanac.httparchive.org/en/2020/markup] Other than `<div>` being the most common element, the HTTP Archive Web Almanac found that 0.06% of pages surveyed in 2020 contained the nonexistent `<h7>` element. 0.0015% used `<h8>`.
- - Websites, including websites containing public data or results of publicly-funded research, are impossible to scrape programmatically.
  - So-called MVPs (minimum viable product) are released in open beta while being completely unusable by vast swathes of people -- UX not just buggy, but nonexistent.footnote:[https://adrianroselli.com/2022/11/accessibility-gaps-in-mvps.html] Is an inaccessible product "`viable`"?
+ - Websites, including websites containing public data or results of publicly-funded research, are impossible to scrape programmatically.
  - Search engines have a hard time extracting useful information from a page, and rank that page lower as a result. 
 
-There are several disparate reasons for these issues, but the neglect of HTML is a significant one.
-
-The way most of us write HTML (and likely the way many of us learned it) is a very tight feedback loop:
-we write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
-It's an amazingly fast and enjoyable way to build, but the way it's often practiced has a significant flaw:
-_If it looks right, it gets shipped._
-The developer is focusing almost exclusively to their own UI needs.
-Any other way of using a website becomes an afterthought.
-
-We should first note that, if you care about machine readability, or human readability, or page weight,
-what you should do is **test**.
+In the rest of the chapter, we'll look at these issues in more detail and see how effective HTML can help us develop better websites.
+However, we should first note that HTML is not a panacea.
+If you care about machine readability, or human readability, or page weight, the most important thing to do is **testing**.
 Test manually.
 Test automatically.
 Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI).
@@ -68,90 +60,32 @@ Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you
 Good HTML will not absolve you from doing your job, but it will make it easier.
 
 
-== HTML practices
-
-
-=== Stay close to the output
-
-Web frameworks, particularly SPA frameworksfootnote:[
-This also applies to frameworks like Next and Remix that use SPA technologies like React to render static HTML.],
-can have a tall tower of abstraction between the code the developer writes and the generated markup.
-While these abstractions can allow developers to create richer UI or work faster,
-their pervasiveness means that they can lose sight of the actual HTML (and JavaScript) being sent to clients.
-Without diligent testing, this leads to poor semantics, inaccessibility, bloat and soup.
-
-One popular concept found in many frameworks is *components*.
-Components encapsulate a section of a page along with its dynamic behavior.
-While encapsulating behavior is a good way to organize code,
-they also separate elements from their surreounding context,
-which can lead to wrong or insufficiently specific semantics,
-and conceal the number of elements within,
-which can lead to bloat and soup.
-In chapter:[Client Side Scripting], we'll look at alternative tools and architectures that can be used to avoid these shortcomings.
-
-Generally, lower level solutions will let you create better HTML.
-Instead of reaching for frameworks, consider using less abstract options:
-
-* Could you get away with a static hand-written HTML file?
-* If not, could you use a simple template?
-
-It can also be a good idea to check the resulting HTML, especially when evaluating a new tool or library.
-
-
-=== Refer frequently to the spec
-
-[quote,Confucius]
-The beginning of wisdom is to call things by their right names.
-
-The best resource for learning about HTML is the HTML specification.
-The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
-The single-page version is too slow to load and render on most computers.]
-
-Section 4 features a list of all tags in HTML.
-It includes what tags mean, where they can occur, and what they are allowed to contain.
-It even tells you when you're allowed to leave out closing tags!
-
-[source,html]
-----
-<!doctype html>
-This is a valid HTML document.
-----
-
-This chapter in particular is not only a great piece of reference material, but also a good read in general.
-Reading it through (skipping over the implementation details) will give you a sense of how HTML is intended to be written.
-
-.You get what you pay for
-****
-The close relationship between the content and the markup means that good HTML is actually quite expensive.
-Most sites have a separation between the authors, who are rarely familiar with HTML and _very_ rarely want to think about it,
-and the developers, who need to develop a generic system able to handle any content that's thrown at it --
-this separation usually taking the form of a CMS.
-As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
-Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
-Dishearteningly, but understandably, it's an expense few organizations can spare.
-
-Thus, we don't demand that every site contains the "most semantic" HTML.
-What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
-Most of the defects caused by _inadequate_ HTML can be caught through testing.
-
-If you have the resources, however, putting more care in your HTML will produce a more polished site.
-Much like style guides, well-written semantic HTML gives an air of quality and prestige to a document, even when few people notice it.
-It can also make your HTML easier to maintain.
-****
-
-
-=== Don't make soup
+== Soup
 
 While programming code turns into spaghetti when it's not well organized,
-the food metaphor of choice for markup is soup
-(hence BeautifulSoup, the web scraping library).
+the food metaphor of choice for markup is soupfootnote:[hence BeautifulSoup, the web scraping library].
 
 HTML can turn into soup in a variety of ways,
 usually due to a disregard or misunderstanding of semantics.
 It can also happen due to an excess of layers between the developer and the HTML.
 Different kinds of soup call for different remedies.
 
-==== HTML5 soup
+
+=== Div soup
+
+However, while you shouldn't abuse advanced HTML, you shouldn't restrict yourself either.
+Instead, learn the meaning of every tag and consider each another tool in your tool chest.
+(With the 113 elements currently defined in the spec, it's more of a tool shed).
+
+// Master the full range of HTML elements
+// i, cite, dfn, address etc.
+// Don't limit yourself to Markdown
+// WAR IS PEACE
+// IGNORANCE IS STRENGTH
+// THE <STRONG> TAG REPRESENTS STRONG EMPHASIS
+
+
+=== HTML5 soup
 
 A set of elements introduced with HTML5 have become a symbol of semantic markup:
 
@@ -200,35 +134,114 @@ If you're experiencing HTML5 soup, there are two remedies:
   Sometimes, `<div>` really is fine.
 
 
-==== Div soup
+==== Component soup
 
-However, while you shouldn't abuse advanced HTML, you shouldn't restrict yourself either.
-Instead, learn the meaning of every tag and consider each another tool in your tool chest.
-(With the 113 elements currently defined in the spec, it's more of a tool shed).
+// -
 
-// Master the full range of HTML elements
-// i, cite, dfn, address etc.
-// Don't limit yourself to Markdown
-// WAR IS PEACE
-// IGNORANCE IS STRENGTH
-// THE <STRONG> TAG REPRESENTS STRONG EMPHASIS
 
-.The S word
+== HTML practices
+
+
+=== Stay close to the output
+
+
+[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
+The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
+
+Web frameworks, particularly SPA frameworksfootnote:[
+This also applies to frameworks like Next and Remix that use SPA technologies like React to render static HTML.],
+can have a tall tower of abstraction between the code the developer writes and the generated markup.
+While these abstractions can allow developers to create richer UI or work faster,
+their pervasiveness means that they can lose sight of the actual HTML (and JavaScript) being sent to clients.
+Without diligent testing, this leads to poor semantics, inaccessibility, bloat and soup.
+
+For example, a popular concept found in many frameworks is *components*.
+Components encapsulate a section of a page along with its dynamic behavior.
+While encapsulating behavior is a good way to organize code,
+they also separate elements from their surrounding context,
+which can lead to wrong or insufficiently specific semantics,
+and conceal the number of elements within,
+which can lead to bloat and soup.
+In our Client Side Scripting chapter, we'll look at alternative tools and architectures that can be used to avoid these shortcomings.
+
+Generally, lower level solutions will let you create better HTML.
+Instead of reaching for frameworks, consider using less abstract options:
+
+* Could you get away with a static hand-written HTML file?
+* If not, could you use a simple template?
+
+It can also be a good idea to check the resulting HTML, especially when evaluating a new tool or library.
+
+---
+
+
+The way most of us write HTML (and likely the way many of us learned it) is a tight feedback loop:
+write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
+It's an amazingly fast and enjoyable way to build websites.
+The problem arises when it's the only way a website is built:
+_If it looks right, it gets shipped._
+The developer is focusing almost exclusively to their own UI needs.
+Any other way of using a website becomes an afterthought.
+
+
+=== Refer frequently to the spec
+
+[quote,Confucius]
+The beginning of wisdom is to call things by their right names.
+
+The best resource for learning about HTML is the HTML specification.
+The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
+The single-page version is too slow to load and render on most computers.]
+
+Section 4 features a list of all tags in HTML.
+It includes what tags mean, where they can occur, and what they are allowed to contain.
+It even tells you when you're allowed to leave out closing tags!
+
+[source,html]
+----
+<!doctype html>
+This is a valid HTML document.
+----
+
+This chapter in particular is not only a great piece of reference material, but also a good read in general.
+Reading it through (skipping over the implementation details) will give you a sense of how HTML is intended to be written.
+
+.You get what you pay for
 ****
+The close relationship between the content and the markup means that good HTML is actually quite expensive.
+Most sites have a separation between the authors, who are rarely familiar with HTML and _very_ rarely want to think about it,
+and the developers, who need to develop a generic system able to handle any content that's thrown at it --
+this separation usually taking the form of a CMS.
+As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
+Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
+Dishearteningly, but understandably, it's an expense few organizations can spare.
+
+Thus, we don't demand that every site contains the "most semantic" HTML.
+What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
+Most of the defects caused by _inadequate_ HTML can be caught through testing.
+
+If you have the resources, however, putting more care in your HTML will produce a more polished site.
+Much like style guides, well-written semantic HTML gives an air of quality and prestige to a document, even when few people notice it.
+It can also make your HTML easier to maintain.
+****
+
+
+== The S word
+
 [quote, _Mean Girls_ (2004)]
 Gretchen, stop trying to make fetch happen! It's not going to happen!
 
 In natural language, a word can only have a certain meaning if some group of people know it to have that meaning.
-You could define your own words and use them, the aforementioned Ted Nelson and company really liked to, but it's difficult.
+Whereas in programming, we are used to defining functions and variables, creating names for them at a break-neck pace.
+This is possible because the computer doesn't need to understand the names of functions to execute them.
+However, hypermedia formats are not programming languages.
+The names in HTML are not _identifiers_ for behavior, but _words_ with well-understood meanings.
+Any hypermedia format which lets documents define their own elements is an infinite universe of "`fetch`"-es to make happen.
 
-[quote, , Xanadu Hypertext Documents]
-The index space used by the granfilade is I-stream tumbler space. The wid of a granfilade crum is a tumbler specifying the span of I-space beneath the crum (i.e., the distance, in tumbler space, from the first to the last bottom crum descended from it). The widdative function is tumbler addition, therefore a crum’s wid is simply the tumbler sum of its children’s wids. Bottom crums have an implicit wid of 0.0.0.0.1 (i.e., spanning no nodes, no accounts, no orgls, no V-spaces and spanning a single atom). Granfilade disps are tumbler offsets in I-space from the parent crum.
-
-As this applies to computer languages too, any hypermedia format which lets documents define their own elements is an infinite universe of "`fetch`"-es to make happen.
 This was a massive blind spot in the Semantic Web, which dominated hypermedia discourse for years:
 its semantics attempted to replace natural language.
 
-The semantic web is considered a failure, and the __schematamania__ is over.
+The semantic web is considered a failure, and Schematamania will soon be over.
 Instead, when we talk about semantics, we refer to the simple act of using elements in accordance with their agreed-upon meaning.
 Our semantics do
 
@@ -244,10 +257,9 @@ Instead of being extensible through schemas or namespaces, or whatever DTDs are,
 This might seem like a downgrade, and an anxiety-inducing one at that.
 Think of the name collisions!
 Indeed, it has some significant compromises, but it also correctly acknowledges that defining custom semantics without prior agreement between all parties is a fiction.
-A flexible format --not an infinity of namespaces with URLs pointing to nothing --is "`software design on the scale of decades`".
+A flexible format -- not an infinity of namespaces with URLs pointing to nothing -- is "`software design on the scale of decades`".
 
-Let's be real, after all --out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
-****
+Let's be real, after all -- out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
 
 
 === Focus on people
@@ -301,3 +313,8 @@ HTML is for humans.
 
 * HTML specification: https://html.spec.whatwg.org/multipage
 * TODO link resources on alt text.
+* https://htmhell.dev
+* 
+referenced
+* Manuel Matuzović. _Lost in Translation_. https://www.youtube.com/watch?v=Wno1IhEBTxc
+* https://www.matuzo.at/blog/2023/single-page-applications-criticism/

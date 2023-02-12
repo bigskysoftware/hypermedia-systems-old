@@ -60,32 +60,137 @@ Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you
 Good HTML will not absolve you from doing your job, but it will make it easier.
 
 
-== Soup
+== `<div>` soup
 
-While programming code turns into spaghetti when it's not well organized,
-the food metaphor of choice for markup is soupfootnote:[hence BeautifulSoup, the web scraping library].
+While programming code is described as spaghetti when it's not well organized,
+the food of choice for messy markup is soupfootnote:[hence BeautifulSoup, the web scraping library.].
 
 HTML can turn into soup in a variety of ways,
-usually due to a disregard or misunderstanding of semantics.
-It can also happen due to an excess of layers between the developer and the HTML.
-Different kinds of soup call for different remedies.
+usually due to a disregard for or misunderstanding of semantics
+or due to an excess of layers between the developer and the HTML.
 
+The best-known kind of messy HTML is `<div>` soup.
+When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
+we either degrade the quality of our websites or create more work for ourselves -- probably both.
+For example, instead of adding a button using the dedicated `<button>` element,
+a `<div>` element might have a `click` event listener added to it.
+The developer would then (if they want to preserve the usability of their website) need to:
 
-=== Div soup
+* Make the div keyboard-focusable, using `tabindex="1"`
+* Expose it to assistive technologies as a button with `role="button"`
 
-However, while you shouldn't abuse advanced HTML, you shouldn't restrict yourself either.
+Of course, these are both easy fixes, but why bother?
+Even if you always remember to add the correct attributes and JavaScript
+(and yes, if you're making anything bigger than a button with a div, you will need JavaScript),
+you've made your HTML less readable for little reason.
+The source code of pages with div soup is difficult to edit and debug.
+
+Furthermore, we often _don't_ remember these types of UX and accessibility issues.
+**F5-Driven Development** is the way most of us write HTML:
+write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
+It's a fast and enjoyable way to build things,
+but it means that during most of development,
+developers are biased towards their own UI needs,
+and users (who might use websites differently) become an afterthought.
+However, if we use HTML, we can catch many of these issues before they ever occur, even before testing.
+
+Given all this, why are so many developers writing div soup?
+There is a tendency to understate the sophistication of HTML.
+
 Instead, learn the meaning of every tag and consider each another tool in your tool chest.
 (With the 113 elements currently defined in the spec, it's more of a tool shed).
 
-// Master the full range of HTML elements
-// i, cite, dfn, address etc.
-// Don't limit yourself to Markdown
-// WAR IS PEACE
-// IGNORANCE IS STRENGTH
-// THE <STRONG> TAG REPRESENTS STRONG EMPHASIS
+
+=== Markdown soup
+
+Markdown soup is the lesser known sibling of `<div>` soup.
+This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
+even when these elements are incorrect.
+Consider the following example of an IEEE-style citation:
+
+[source,markdown]
+----
+[1] C.H. Gross, A. Stepinski, and D. Akşimşek, <1>
+_Hypermedia Systems_, <2>
+Bozeman, MT, USA: Big Sky Software.
+Available: <https://hypermedia.systems/>
+----
+<1> The reference number is written in brackets.
+<2> Underscores around the book title creates an <em> element.
+
+Here, <em> is used because it's the only Markdown element that is presented in italics by default.
+This indicates that the book title is being stressed, but the purpose is to mark it as the title of a work.
+HTML has the `<cite>` element that's intended for this exact purpose.
+
+Furthermore, even though this is a numbered list perfect for the `<ol>` element, which Markdown supports, plain text is used for the reference numbers instead.
+Why could this be?
+The IEEE citation style requires that these numbers are presented in square brackets.
+This could be achieved on an `<ol>` with CSS,
+but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.footnote:[
+We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If we were using a style like APA in our reference list, where citations are not referenced by number, we would use an <ul>.]
+
+Don't shy away from using embedded HTML in Markdown.
+For larger sites, also consider Markdown extensions.
+
+[source,markdown]
+----
+{.ieee-reference-list} <1>
+1. C.H. Gross, A. Stepinski, and D. Akşimşek, <2>
+   <cite>Hypermedia Systems</cite>, <3>
+   Bozeman, MT, USA: Big Sky Software.
+   Available: <https://hypermedia.systems/>
+----
+<1> Many Markdown dialects let us add ids, classes and attributes using curly braces.
+<2> We can now use the <ol> element.
+<3> We use `<cite>` to mark the title of the work being cited (not the whole citation!)
+
+You can also use custom processors to produce extra-detailed HTML instead of writing it by hand:
+
+[source,markdown]
+----
+{% reference_list %} <1>
+[hypers2023]: <2>
+C.H. Gross, A. Stepinski, and D. Akşimşek, _Hypermedia Systems_,
+Bozeman, MT, USA: Big Sky Software, 2023.
+Available: <https://hypermedia.systems/>
+{% end %}
+----
+<1> `reference_list` is a macro that will transform the plain text to semantic HTML.
+<2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
 
 
-=== HTML5 soup
+=== Remedy: Stay close to the output
+
+[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
+The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
+
+Web frameworks, particularly SPA frameworksfootnote:[
+This also applies to frameworks like Next and Remix that use SPA technologies like React to render static HTML.],
+can have a tall tower of abstraction between the code the developer writes and the generated markup.
+While these abstractions can allow developers to create richer UI or work faster,
+their pervasiveness means that they can lose sight of the actual HTML (and JavaScript) being sent to clients.
+Without diligent testing, this leads to poor semantics, inaccessibility, and bloat.
+
+For example, a popular concept found in many frameworks is *components*.
+Components encapsulate a section of a page along with its dynamic behavior.
+While encapsulating behavior is a good way to organize code,
+they also separate elements from their surrounding context,
+which can lead to wrong or inadequate semantics,
+and conceal the number of elements within.
+The result is **component soup**, where information is hidden in component state rather than being present in the HTML.
+In our Client Side Scripting chapter, we'll look at alternatives to component-based frameworks that can be used to avoid these shortcomings.
+
+We should clarify that components, when used for the right purpose, can improve HTML clarity.
+A good rule of thumb is to ask:
+"`Could this reasonably be a built-in HTML element?`"
+For example, a code editor is a good candidate,
+since HTML already has `<textarea>` and `contenteditable` elements,
+and since a fully-featured code editor will likely have many inner elements that don't provide much information to a reader.
+By encapsulating these in a component, we are _extending_ HTML for our purposes,
+rather than _abstracting_ it away.
+
+
+== HTML5 soup
 
 A set of elements introduced with HTML5 have become a symbol of semantic markup:
 
@@ -134,57 +239,7 @@ If you're experiencing HTML5 soup, there are two remedies:
   Sometimes, `<div>` really is fine.
 
 
-==== Component soup
-
-// -
-
-
-== HTML practices
-
-
-=== Stay close to the output
-
-
-[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
-The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
-
-Web frameworks, particularly SPA frameworksfootnote:[
-This also applies to frameworks like Next and Remix that use SPA technologies like React to render static HTML.],
-can have a tall tower of abstraction between the code the developer writes and the generated markup.
-While these abstractions can allow developers to create richer UI or work faster,
-their pervasiveness means that they can lose sight of the actual HTML (and JavaScript) being sent to clients.
-Without diligent testing, this leads to poor semantics, inaccessibility, bloat and soup.
-
-For example, a popular concept found in many frameworks is *components*.
-Components encapsulate a section of a page along with its dynamic behavior.
-While encapsulating behavior is a good way to organize code,
-they also separate elements from their surrounding context,
-which can lead to wrong or insufficiently specific semantics,
-and conceal the number of elements within,
-which can lead to bloat and soup.
-In our Client Side Scripting chapter, we'll look at alternative tools and architectures that can be used to avoid these shortcomings.
-
-Generally, lower level solutions will let you create better HTML.
-Instead of reaching for frameworks, consider using less abstract options:
-
-* Could you get away with a static hand-written HTML file?
-* If not, could you use a simple template?
-
-It can also be a good idea to check the resulting HTML, especially when evaluating a new tool or library.
-
----
-
-
-The way most of us write HTML (and likely the way many of us learned it) is a tight feedback loop:
-write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
-It's an amazingly fast and enjoyable way to build websites.
-The problem arises when it's the only way a website is built:
-_If it looks right, it gets shipped._
-The developer is focusing almost exclusively to their own UI needs.
-Any other way of using a website becomes an afterthought.
-
-
-=== Refer frequently to the spec
+=== Remedy: Refer frequently to the spec
 
 [quote,Confucius]
 The beginning of wisdom is to call things by their right names.
@@ -262,7 +317,7 @@ A flexible format -- not an infinity of namespaces with URLs pointing to nothing
 Let's be real, after all -- out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
 
 
-=== Focus on people
+== The A word
 
 The purpose of writing good HTML is not to please the specification deities.
 It's to make good websites.
@@ -300,6 +355,31 @@ HTML is for humans.
 
 
 ==== Microformats
+
+[source,html]
+----
+<ol class="reference-list">
+  <li id="h-cite cite-hypers2023">
+    <span class="p-author">C.&#8202;H. Gross</span>,
+    <span class="p-author">A. Stepinski</span>,
+    and <span class="p-author">D. Aksimsek</span>,
+    <cite>Hypermedia Systems</cite>,
+    <span class="p-publisher h-card">
+      <span class="p-adr h-adr">
+        <span class="p-locality">Bozeman</span>,
+        <span class="p-region">MT</span>,
+        <span class="p-country-name">USA</span>
+      </span>:
+      <span class="p-name">Big Sky Software</span>
+    </span>,
+    <time class="dt-published">2023</time>.
+    Available:
+    <a class="u-url" href="https://hypermedia.systems/">
+      https://hypermedia.systems/
+    </a>
+  </li>
+</ol>
+----
 
 <https://microformats.org/>
 

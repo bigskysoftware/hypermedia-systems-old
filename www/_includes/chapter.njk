@@ -42,17 +42,22 @@ layout: layout.njk
             <details>
                 <summary>Contents</summary>
 
-                {% macro toc(block) %}
-                <ul>
-                    {% for sect in block.getSections() %}
-                    <li>
-                        <a href="#{{ sect.getId() }}">{{ sect.getTitle() | safe }}</a>
-                        {{ toc(sect) if sect.getSections().length > 0 }}
-                    </li>
-                    {% endfor %}
-                </ul>
+                {% macro toc(block, level=0) %}
+                    {% set isPart = level == 0 and is_whole_book %}
+                    {% set isChapter = level == 1 and is_whole_book %}
+                    <ul>
+                        {% for sect in block.getSections() %}
+                        <li>
+                            <a href="#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">
+                                {{ 'Part ' + loop.index + ':' if isPart }}
+                                {{ sect.getTitle() | safe }}
+                            </a>
+                            {{ toc(sect, level + 1) if level < 2 and sect.getSections().length > 0 }}
+                        </li>
+                        {% endfor %}
+                    </ul>
                 {% endmacro %}
-                {{ asciidoc and toc(asciidoc) }}
+                {{ asciidoc and toc(asciidoc, 0) }}
             </details>
         {% endif %}
     </nav>

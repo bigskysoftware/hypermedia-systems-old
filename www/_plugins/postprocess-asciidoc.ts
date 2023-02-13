@@ -7,6 +7,11 @@ export default () => {
             const document = page.document;
             if (!document) return;
 
+            $$(document, ".sect0").forEach((el) => {
+                const [num, ...title] = el.innerHTML.split(":");
+                el.innerHTML = `<sub-title>Part ${num}<v-h>:</v-h></sub-title> ${title.join(":")}`
+            });
+
             $$(document, ".listingblock, .imageblock").forEach((el) => {
                 el.tagName = "figure";
                 el.classList.add("contents"); // Don't draw box around images and code listings

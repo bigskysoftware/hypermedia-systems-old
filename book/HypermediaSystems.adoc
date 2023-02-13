@@ -1,5 +1,5 @@
 
-= Hypermedia Systems
+= [.allcaps.big]#Hypermedia Systems#
 Adam Stepinski, Carson Gross, Deniz Akşimşek
 :doctype: book
 :title-page:
@@ -7,11 +7,12 @@ Adam Stepinski, Carson Gross, Deniz Akşimşek
 :toclevels: 2
 :toc-title!:
 :imagesdir: images
-:sectnums:
-:sectnumlevels: 2
-:showtitle:
+:partnums:
+:sectnums: all
+:sectnumlevels: 4
 :layout: chapter.njk
 :url: ./hypermedia-systems/
+:is_whole_book: 1
 
 ifdef::hypermedia-systems-pdf[]
 [.toc-container]

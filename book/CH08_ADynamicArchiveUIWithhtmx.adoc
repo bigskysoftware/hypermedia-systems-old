@@ -157,9 +157,9 @@ comes back from the `POST` to `/contacts/archive`.
 
 === Adding the Archiving End Point
 
-Our next step is to handle the `POST` that our button is making.  What we are going to want to do is to get the
+Our next step is to handle the `POST` that our button is making.  We want to get the
 `Archiver` for the current user and invoke the `run()` method on it.  This will start the archive process running.  Then
-we will want to render some new content indicating that the process is running.
+we will render some new content indicating that the process is running.
 
 To do that, what we want to do is reuse the `archive_ui` template to handle rendering the archive UI for both states,
 when the archiver is "`Waiting`" and when it is "`Running`".  (We will handle the "`Complete`" state in a bit.)

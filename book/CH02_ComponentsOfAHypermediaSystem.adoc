@@ -423,7 +423,7 @@ Here are the constraints of REST, as outlined in Fielding's dissertation:
 * It is a layered system (section 5.1.6).
 * Optionally, it can allow for Code-On-Demand (section 5.1.7), that is, scripting.
 
-Let's go through each of these constrains in turn and discuss them in detail, looking at how (and to what extent) the web
+Let's go through each of these constraints in turn and discuss them in detail, looking at how (and to what extent) the web
 satisfies each of them.
 
 === The Client-Server Constraint

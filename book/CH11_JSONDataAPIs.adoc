@@ -147,10 +147,10 @@ and cannot be a REST API. Period. Is there some broken manual somewhere that nee
 ____
 
 The story of how "`REST API`" came to mean "`JSON APIs`" in the industry is a long and sordid one, and beyond the
-scope of this book.  However, if you are interested, you can refer to an essay entitled "`How Did REST Come To Mean The Opposite of
-REST?`" on the htmx website:
+scope of this book.  However, if you are interested, you can refer to an essay by one of the authors of this book entitled "`How Did REST Come To Mean The Opposite of
+REST?`" on the https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/[htmx website].
 
-https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/
+
 
 In this book we use the term "`Data API`" to describe these JSON APIs, while acknowledging that many people
 in the industry will continue to call them "`REST APIs`" for the foreseeable future.

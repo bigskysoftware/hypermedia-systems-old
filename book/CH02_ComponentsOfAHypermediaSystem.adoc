@@ -14,7 +14,7 @@ In this chapter we will look at these components and their implementation in the
 
 Once we have reviewed the major components of the web as a hypermedia system, we will look at some key ideas behind this system -- especially as developed by Roy
 Fielding in his dissertation, "`Architectural Styles and the Design of Network-based Software Architectures.`"  We will see where the
-terms REpresenation State Transfer (REST), RESTful and Hypermedia As The Engine Of Application State (HATEOAS) come from,
+terms REpresentational State Transfer (REST), RESTful and Hypermedia As The Engine Of Application State (HATEOAS) come from,
 and we will analyze these terms in the context of the web.
 
 This should give you a stronger understanding of the theoretical basis of the web as a hypermedia system, how it is

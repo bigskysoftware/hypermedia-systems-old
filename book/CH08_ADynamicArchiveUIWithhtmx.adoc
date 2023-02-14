@@ -161,8 +161,8 @@ Our next step is to handle the `POST` that our button is making.  We want to get
 `Archiver` for the current user and invoke the `run()` method on it.  This will start the archive process running.  Then
 we will render some new content indicating that the process is running.
 
-To do that, what we want to do is reuse the `archive_ui` template to handle rendering the archive UI for both states,
-when the archiver is "`Waiting`" and when it is "`Running`".  (We will handle the "`Complete`" state in a bit.)
+To do that, we want to reuse the `archive_ui` template to handle rendering the archive UI for both states,
+when the archiver is "`Waiting`" and when it is "`Running.`"  (We will handle the "`Complete`" state in a bit).
 
 
 This is a very common pattern: we put all the different potential UIs for a given chunk of the user interface into

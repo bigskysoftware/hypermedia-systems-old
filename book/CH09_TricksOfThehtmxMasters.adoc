@@ -513,17 +513,15 @@ layout.  Regardless, we always recommend at least thinking about this approach f
 
 === Out of Band Swaps
 
-A second option, which is a bit more complex, is to take advantage of "`Out Of Band`" content support in htmx.  When
-htmx receives a response, it will look for top-level content in that response that includes the `hx-swap-oob` attribute
-on it.  That content will be removed from the response, so it will not be swapped into the DOM in the normal manner.  Instead,
-it will be swapped in for the content that it matches, by its id.
+A second option, a bit more complex, is to take advantage of "`Out Of Band`" content support in htmx.  When
+htmx receives a response, it will inspect it for top-level content that includes the `hx-swap-oob` attribute.  That content will be removed from the response, so it will not be swapped into the DOM in the normal manner.  Instead,
+it will be swapped in for the content that it matches by id.
 
-Let's look at an example of this approach.  Let's consider the situation we had above, where a contacts table needs to be updated
-conditionally, based on if an integration pulls down any new contacts.  Previously we solved this by using events and
+Let's look at an example.  Consider the situation we had earlier, where a contacts table needs to be updated if an integration pulls down any new contacts.  Previously we solved this by using events and
 a server-triggered event via the `HX-Trigger` response header.
 
-In this case, instead of using an event, let's take advantage of the `hx-swap-oob` attribute in the response to the
-`POST` to `/integrations/1` to "`piggy back`" the new contacts table content on the response.
+This time, we'll use the `hx-swap-oob` attribute in the response to the
+`POST` to `/integrations/1`. The new contacts table content will "`piggyback`" on the response.
 
 .The Updated Contacts Table
 [source, html]
@@ -538,14 +536,14 @@ In this case, instead of using an event, let's take advantage of the `hx-swap-oo
       ...
     </table>
 ----
-<1> the button still issues a `POST` to `/integrations/1`
-<2> the table no longer listens for an event, but it now has an id
+<1> the button still issues a `POST` to `/integrations/1`.
+<2> the table no longer listens for an event, but it now has an id.
 
-Now let's look at a potential response to the `POST` to `/integrations/1`. This response will include the "`regular`"
+Next, the response to the `POST` to `/integrations/1` will include the
 content that needs to be swapped into the button, per the usual htmx mechanism.  But it will also include a new,
 updated version of the contacts table, which will be marked as `hx-swap-oob="true"`.  This content will be removed from
-the response, so it is not inserted into the button but will be instead swapped into the DOM in place of the existing
-table since it has the same id value.
+the response so it is not inserted into the button. Instead, it is swapped into the DOM in place of the existing
+table since it has a matching id.
 
 .A Response With Out-of-Band Content
 [source]
@@ -560,14 +558,14 @@ Pull Contacts From Integration <1>
   ...
 </table>
 ----
-<1> this content will be placed in the button
-<2> this content will be removed from the response and swapped by id
+<1> this content will be placed in the button.
+<2> this content will be removed from the response and swapped by id.
 
-Using this technique, you are able to piggyback content updates of other elements on top of requests by other elements.
+Using this piggybacking technique, you can update content wherever needed on a page.
 The `hx-swap-oob` attribute supports other additional features, all of which are https://htmx.org/attributes/hx-swap-oob/[documented].
 
 Depending on how exactly your server-side templating technology works, and what level of interactivity your application
-requires, out of band swapping can be a powerful mechanism for more flexible content updates.
+requires, out of band swapping can be a powerful mechanism for content updates.
 
 === Events
 

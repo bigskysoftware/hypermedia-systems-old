@@ -126,11 +126,9 @@ approach can be used for your web application, allowing you to specialize the AP
 of your application.  The Data API approach can be used for other, non-hypermedia clients like mobile, integration
 partners, etc.
 
-Note in particular that, by splitting these two APIs apart from one another, you reduce the pressure that running your web
-application through your general Data API produces to be constantly changing the API to address application needs.  Rather
-than being thrashed around with every feature change, your Data API can focus on remaining stable and reliable.
+Note that by splitting these two APIs apart, you reduce the pressure to constantly change a general Data API to address application needs.  Your Data API can focus on remaining stable and reliable, rather than requiring a new version with every added feature.
 
-This is the core strength of splitting your Data API from your Hypermedia API, in our opinion.
+This is the key advantage of splitting your Data API from your Hypermedia API.
 
 .JSON Data APIs vs JSON "`REST`" APIs
 ****
@@ -149,12 +147,12 @@ and cannot be a REST API. Period. Is there some broken manual somewhere that nee
 ____
 
 The story of how "`REST API`" came to mean "`JSON APIs`" in the industry is a long and sordid one, and beyond the
-scope of this book.  However, if you are interested, you can refer to an essay entitled "`How Did REST Come To Mean The Opposite of
-REST?`" on the htmx website:
+scope of this book.  However, if you are interested, you can refer to an essay by one of the authors of this book entitled "`How Did REST Come To Mean The Opposite of
+REST?`" on the https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/[htmx website].
 
-https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/
 
-In this book we will use the term "`Data API`" to describe these JSON APIs, while acknowledging that many people
+
+In this book we use the term "`Data API`" to describe these JSON APIs, while acknowledging that many people
 in the industry will continue to call them "`REST APIs`" for the foreseeable future.
 ****
 

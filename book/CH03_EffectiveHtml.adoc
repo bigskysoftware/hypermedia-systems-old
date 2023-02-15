@@ -5,6 +5,9 @@
 
 WARNING: This chapter is a work in progress.
 
+[quote, Marshall McLuhan]
+The medium is the message.
+
 If you're here, you can probably write some HTML.
 The web is the #1 hypermedia system after all, the one this book will spend the most time with,
 and HTML is its format.
@@ -38,7 +41,7 @@ and why HTML is something far cooler than a programming language.
 It won't be an HTML tutorial, as that would take a whole other book, but it can accompany you in your HTML re-learning journey.
 
 
-== The state of affairs
+== Why relearn HTML?
 
 Have you noticed that a lot of websites are bad?
 
@@ -58,7 +61,14 @@ So where does HTML and the s-word come in?
 
 Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by rewriting semantic HTML as opposed to heaping JavaScript and ARIA attributes over everything.
 
-Good HTML might not absolve you from doing your job, but it will make it easier.
+Knowing HTML well might not absolve you from doing your job, but it makes it a lot easier.
+
+"`But I already know HTML well.`"
+Maybe you do.
+But many people underestimate how sophisticated HTML is.
+Indeed, it's very easy (and sometimes acceptable) to produce mediocre HTML that _seems to_ work,
+and many websites settle with _seeming to_ work.
+But better websites are possible, and anyone can learn HTML to the level of making websites that _actually_ work.
 
 
 == `<div>` soup
@@ -73,6 +83,9 @@ or due to an excess of layers between the developer and the HTML.
 The best-known kind of messy HTML is `<div>` soup.
 When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
 we either degrade the quality of our websites or create more work for ourselves -- probably both.
+
+{blank}// TODO: present a more sophisticated div soup example, fix it with aria-js, then fix it with plain html
+
 For example, instead of adding a button using the dedicated `<button>` element,
 a `<div>` element might have a `click` event listener added to it.
 The developer would then (if they want to preserve the usability of their website) need to:
@@ -87,7 +100,7 @@ you've made your HTML less readable for little reason.
 The source code of pages with div soup is difficult to edit and debug.
 
 Furthermore, we often _don't_ remember these types of UX and accessibility issues.
-**F5-Driven Development** is the way most of us write HTML:
+[.dfn]_F5-Driven Development_ is the way most of us write HTML:
 write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
 It's a fast and enjoyable way to build things,
 but it means that during most of development,
@@ -101,10 +114,7 @@ There is a tendency to understate the sophistication of HTML.
 Instead, learn the meaning of every tag and consider each another tool in your tool chest.
 (With the 113 elements currently defined in the spec, it's more of a tool shed).
 
-
-=== Markdown soup
-
-Markdown soup is the lesser known sibling of `<div>` soup.
+[.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
 This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
 even when these elements are incorrect.
 Consider the following example of an IEEE-style citation:
@@ -165,6 +175,8 @@ Available: <https://hypermedia.systems/>
 [quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
 The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
 
+In order to avoid `<div>` soup (or Markdown soup, sub-par semantics in general), you need to constantly be aware what kind of markup you're producing and be able to change it.
+
 Web frameworks, particularly SPA frameworksfootnote:[
 This also applies to frameworks like Next and Remix that use SPA technologies like React to render static HTML.],
 can have a tall tower of abstraction between the code the developer writes and the generated markup.
@@ -190,6 +202,9 @@ For example, a code editor is a good candidate,
 since HTML already has `<textarea>` and `contenteditable` elements.
 In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
 By encapsulating these in a component, we are _extending_ HTML, rather than abstracting it away.
+
+However, don't reach for components for reuse without considering other options.
+Lower-level mechanisms usually (allow you to) produce better HTML.
 
 
 == HTML5 soup
@@ -241,9 +256,11 @@ The beginning of wisdom is to call things by their right names.
 
 The most authoritative (though not necessarily best) resource for learning about HTML is the HTML specification.
 The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
-The single-page version is too slow to load and render on most computers. There's also a developers' edition at /dev, though I haven't noticed much of a difference between the two.]
+The single-page version is too slow to load and render on most computers. 
+There's also a developers' edition at /dev, though there's little difference between the two.]
+There's no need to rely on hearsay to keep up with developments in HTML.
 
-Section 4 features a list of all tags in HTML.
+Section 4 features a list of all available elements.
 It includes what tags mean, where they can occur, and what they are allowed to contain.
 It even tells you when you're allowed to leave out closing tags!
 
@@ -292,11 +309,11 @@ The names in HTML are not _identifiers_ for behavior, but _words_ with well-unde
 Any hypermedia format which lets documents define their own elements is an infinite universe of "`fetch`"-es to make happen.
 
 This was a massive blind spot in the Semantic Web, which dominated hypermedia discourse for years:
-its semantics attempted to replace natural language.
+its semantics attempted to replace natural language, but also be pluggable with custom namespaces.
 
 The semantic web is considered a failure, and Schematamania will soon be over.
-Instead, when we talk about semantics, we refer to the simple act of using elements in accordance with their agreed-upon meaning.
-Our semantics do
+Instead, when we talk about semantics, we refer to simply using elements in accordance with their agreed-upon meaning to augment documents for humans.
+Our semantics don't try to replace natural language, they are dependent on natural language and natural understanding.
 
 Instead of being extensible through schemas or namespaces, or whatever DTDs are, HTML is extended in two ways:
 
@@ -319,7 +336,19 @@ Let's be real, after all -- out of all the sites using "`Open Graph`" tags, how 
 
 {blank}// TODO(dz4k): After dancing around accessibility, finally address the subject directly.
 
-{blank}// The following is supposed to be addressing the frustration many people experience trying to make accessible sites, how accessibility itself feels inaccessible to many developers.
+So far throughout this chapter, we've gestured at potential accessibility benefits to be had from effective HTML.
+
+[quote, Manuel Matuzović (Web accessibility consultant), 'https://alistapart.com/article/my-accessibility-journey-what-ive-learned-so-far/[My Accessibility Journey: What I’ve Learned So Far]']
+(Re)learning HTML and using it consciously prevents and fixes many accessibility issues.
+
+However, there is some more nuance to the relationship between HTML and accessibility.
+
+// Don't compromise UX just to avoid JS
+
+
+=== Screen reader rage
+
+{blank}// This section is supposed to be addressing the frustration many people experience trying to make accessible sites, how accessibility itself feels inaccessible to many developers.
 
 The purpose of writing good HTML is not to please the specification deities.
 It's to make good websites.
@@ -342,25 +371,25 @@ HTML is for humans.
 
 // Stick to the patterns
 
-// Don't compromise UX just to avoid JS
-
-// Consider using off the shelf components
+// There are ready-made libraries
 
 // WAI has a very friendly webpage
 
 
 == Machine-readable HTML
 
-==== Microformats
+=== Microformats
+
+Here's how the reference list example from earlier could be marked up with the `h-cite` microformat:
 
 [source,html]
 ----
 <ol class="reference-list">
-  <li id="h-cite cite-hypers2023">
+  <li class="h-cite" id="cite-hypers2023">
     <span class="p-author">C.&#8202;H. Gross</span>,
     <span class="p-author">A. Stepinski</span>,
     and <span class="p-author">D. Aksimsek</span>,
-    <cite>Hypermedia Systems</cite>,
+    <cite class="p-name">Hypermedia Systems</cite>,
     <span class="p-publisher h-card">
       <span class="p-adr h-adr">
         <span class="p-locality">Bozeman</span>,

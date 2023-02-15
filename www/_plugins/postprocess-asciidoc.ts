@@ -12,6 +12,8 @@ export default () => {
                 el.innerHTML = `<sub-title>Part ${num}<v-h>:</v-h></sub-title> ${title.join(":")}`
             });
 
+            $$(document, ".dfn").forEach((el) => el.tagName = "dfn");
+
             $$(document, ".listingblock, .imageblock").forEach((el) => {
                 el.tagName = "figure";
                 el.classList.add("contents"); // Don't draw box around images and code listings

@@ -403,15 +403,19 @@ Here is the code:
 def contacts_new_get():
     return render_template("new.html", contact=Contact()) <2>
 ----
-<1> Declare a route, explicitly handling `GET` requests to this path
-<2> Render the `new.html` template, passing in a new contact object
+<1> Declare a route, explicitly handling `GET` requests to this path.
+<2> Render the `new.html` template, passing in a new contact object.
 
 Simple enough. We just render a `new.html` template with a new Contact.  (`Contact()` is how you construct a new instance
 of the `Contact` class in Python, if you aren't familiar with it.)
 
-While the handler code for this route is very simple, the `new.html` template is more complicated.  For the
+While the handler code for this route is very simple, the `new.html` template is more complicated.  
+
+****
+For the
 remaining templates we are going to omit the layout directive and the content block declaration, but you
 can assume they are the same unless we say otherwise.  This will let us focus on the "meat" of the template.
+****
 
 If you are familiar with HTML you are probably expecting a form element here, and you will not be disappointed.  We are
 going to use the standard form hypermedia control for collecting contact information and submitting it to the server.

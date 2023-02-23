@@ -845,8 +845,8 @@ little contact app of ours is more RESTful than 99% of all JSON APIs ever built!
 Just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
 architecture.
 
-So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style
-applications people used to build?
+So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop web 1.0 style
+applications?
 
 Well, at some level, nothing is wrong with it.  Particularly for an application as simple as this one, the older
 way of building web apps might be a perfectly acceptable approach.
@@ -861,6 +861,6 @@ Is it time to reach for a JavaScript framework and JSON APIs to make our contact
 
 No.  No it isn't.
 
-It turns out that we can improve the user experience of this application _without_ abandoning the
+It turns out that we can improve the user experience of this application within the
 hypermedia architecture. In the next few chapters we will look at https://htmx.org[htmx], a hypermedia-oriented library
 that will let us improve our contact application _without_ abandoning the hypermedia approach we have used so far.

@@ -6,7 +6,7 @@
 To start our journey into Hypermedia-Driven Applications, we are going to create a simple contact management web
 application called Contact.app.  We will start with a basic, "`Web 1.0-style`" Multi-Page Application (MPA), in the grand
 CRUD (Create, Read, Update, Delete) tradition.  It will not be the best contact management application in the world.  But
-that's OK because it will be simple (a great virtue of web 1.0 applications!) and it will do its job.
+that's OK because it will be simple and it will do its job.
 
 This application will also be easy to incrementally improve in the coming chapter by utilizing the hypermedia-oriented
 library htmx.
@@ -55,13 +55,13 @@ Rendering`" or SSR is emerging as the way that people talk about this style of t
 as is common in SPA libraries.
 
 In Contact.app we will intentionally keep things as simple as possible to maximize the teaching value of our code: it
-won't be perfectly factored code, and it certainly won't be the most beautiful web application ever built, but it will
+won't be perfectly factored code, but it will
 be easy to follow for readers even if they have little Python experience, and it should be easy to translate the application
 and the techniques demonstrated into your preferred programming language and web framework.
 
 == Python
 
-Since this book is intended to teach how hypermedia can be used effectively, we aren't going to do deep dives into
+Since this book is intended to teach how hypermedia can be used effectively, we aren't going to do full tutorials for
 the various technologies we use _around_ that hypermedia.  This has some obvious drawbacks: if you aren't comfortable
 with Python, for example, some example python code in the book may be a bit confusing or mysterious at first.
 
@@ -72,24 +72,21 @@ books/websites:
 * https://learnpythonthehardway.org/python3/[Learn Python The Hard Way] by Zed Shaw
 * https://www.py4e.com/[Python For Everybody] by Dr. Charles R. Severance
 
-That being said, we think most web developers, even developers who are unfamiliar with Python, should be able to follow
-along in the code. Most of the authors hadn't written very much Python before writing this book, and we got the hang of
+We think most web developers, even developers who are unfamiliar with Python, should be able to follow
+along in the code. Most of the authors hadn't written much Python before writing this book, and we got the hang of
 it pretty quickly.
 
 == Introducing Flask: Our First Route
 
-Flask is a very simple but flexible web framework for Python.  Just like this book isn't a Python book, it isn't a Flask book
-either, so we will only go into as much detail about it as is necessary to show off hypermedia concepts.  However, unlike
-Python, which is similar in many ways to other programming languages, Flask might be a bit different than web frameworks
-you are familiar with, so we will need to do a bit more of an introduction to it in order to prepare you for the coming
-chapters.
+Flask is a very simple but flexible web framework for Python.  It might be different than web frameworks
+you are familiar with, so we will introduce its basic components.
 
-Thankfully, Flask is simple enough that most web developers shouldn't have a problem following along, so let's go over
-the core ideas.
+Thankfully, Flask is simple enough that most web developers shouldn't have a problem following along, so we'll just touch on its
+the core elements.
 
 A Flask application consists of a series of _routes_ tied to functions that execute when an HTTP request to a given path is
 made.  It uses a Python feature called "`decorators`" to declare the route that will be handled, which is then followed by
-a function to handle request to that route.  We will often use the term "`handler`" to refer to the functions associated
+a function to handle requests to that route.  We'll use the term "`handler`" to refer to the functions associated
 with a route.
 
 Let's create our first route definition, a simple "`Hello Flask`" route.  In the following python code you will see the
@@ -107,9 +104,9 @@ Here is what the code looks like:
 def index(): <2>
     return "Hello World!" <3>
 ----
-<1> Establishes we are mapping the `/` path as a route
-<2> The next method is the handler for that route
-<3> Returns the string "`Hello World!`" to the client
+<1> Establishes we are mapping the `/` path as a route.
+<2> The next method is the handler for that route.
+<3> Returns the string "`Hello World!`" to the client.
 
 The `route()` method on the Flask decorator takes an argument: the path you wish the route to handle.  Here we
 pass in the root or `/` path, as a string, to handle requests to the root path.
@@ -125,8 +122,8 @@ application.
 So we have the `index()` function immediately following our route definition for the root, and this will become the
 handler for the root URL in our web application.
 
-The handler in this case is dead simple, it just returns a string, "`Hello Flask!`", to the client.  This isn't even
-hypermedia yet, but, nonetheless, a browser will render it just fine:
+The handler in this case is dead simple, it just returns a string, "`Hello Flask!`", to the client.  This isn't
+hypermedia yet, but a browser will render it just fine:
 
 .Hello Flask!
 image::figure_2-1_hello_world.png[Browser window, large text: Hello World!]
@@ -155,39 +152,39 @@ def index():
 <1> Update to a call to `redirect()`
 
 
-Now the `index()` function simply returns the result of calling the Flask-supplied `redirect()` function with the path
-we with to redirect the user to.  In this case the path is `/contacts`, and we pass this path in as a string argument.
+Now the `index()` function returns the result of the Flask-supplied `redirect()` function with the path
+we've supplied. In this case the path is `/contacts`, passed in as a string argument.
 Now, if you navigate to the root path, `/`, our Flask application will forward you on to the `/contacts` path.
 
 == Contact.app Functionality
 
-OK, now that we have our feet under us with respect to defining routes, let's get down to specifying and then implementing
+Now that we have some understanding of how to define routes, let's get down to specifying and then implementing
 our web application.
 
 What will Contact.app do?
 
-Initially, it will provide the following functionality:
+Initially, it will allow users to:
 
-* Provide a list of contacts, including first name, last name, phone and email address
-* Provide the ability to search the list of contacts
-* Provide the ability to add a new contact to the list
-* Provide the ability to view the details of a contact on the list
-* Provide the ability to edit the details of a contact on the list
-* Provide the ability to delete a contact from the list
+* View a list of contacts, including first name, last name, phone and email address
+* Search the contacts
+* Add a new contact
+* View the details of a contact
+* Edit the details of a contact
+* Delete a contact
 
-So, as you can see, Contact.app is a fairly basic CRUD application, the sort of application that is perfect for an old-school
+So, as you can see, Contact.app is a CRUD application, the sort of application that is perfect for an old-school
 web 1.0 approach.
 
 Note that the source code of Contact.app is available on https://github.com/bigskysoftware/contact-app[GitHub].
 
 === Showing A Searchable List Of Contacts
 
-Let's look at our first real bit of functionality: the ability to show all the contacts in our system in a list (really,
+Let's add our first real bit of functionality: the ability to show all the contacts in our app in a list (really,
 in a table).
 
 This functionality is going to be found at the `/contacts` path, which is the path our previous route is redirecting to.
 
-We will use Flask to route the `/contacts` path to a handler function, `contacts()`. This function is going to do one of
+We will use Flask to route the `/contacts` path to a handler function, `contacts()`. This function will do one of
 two things:
 
 * If there is a search term found in the request, it will filter down to only contacts matching that term
@@ -211,16 +208,15 @@ def contacts():
         contacts_set = Contact.all() <3>
     return render_template("index.html", contacts=contacts_set) <4>
 ----
-<1> Look for the query parameter named `q`, which stands for "`query`"
-<2> If the parameter exists, call the `Contact.search()` function with it
-<3> If not, call the `Contact.all()` function
-<4> pass the result to the `index.html` template to render to the client
+<1> Look for the query parameter named `q`, which stands for "`query.`"
+<2> If the parameter exists, call the `Contact.search()` function with it.
+<3> If not, call the `Contact.all()` function.
+<4> Pass the result to the `index.html` template to render to the client.
 
 We see the same sort of routing code we saw in our first example, but we have a more elaborate handler function.
 First, we check to see if a search query parameter named `q` is part of the request.
 
-Query Strings:: A "`query string`" is  part of the URL specification, and you are probably familiar with this term, but
-for those who are not, let's review what it is.  Here is an example URL with a query string in it:
+Query Strings:: A "`query string`" is  part of the URL specification.  Here is an example URL with a query string in it:
 `https://example.com/contacts?q=joe`.  The query string is everything after the `?` and, you can see, it has a
 name-value pair format.  In this URL, the query parameter `q` is set to the string value `joe`.  In plain HTML, a
 query string can be included in a request either by being hardcoded in an anchor tag or, more dynamically, by
@@ -231,28 +227,23 @@ To return to our Flask route, if a query parameter named `q` is found, we call o
 
 If the query parameter is _not_ found, we simply get all contacts by invoking the `all()` method on the `Contact` object.
 
-Finally, we then render a template, `index.html` that displays the given contacts, passing in the results of whichever
-of these two functions we ended up calling.
+Finally, we render a template, `index.html` that displays the given contacts, passing in the results of whichever
+of these two functions we end up calling.
 
 .A Note On The Contact Class
 ****
-The `Contact` Python class being used above is obviously a very important part of our overall system.  It is the "`domain
+The `Contact` Python class we're using is the "`domain
 model`" or just "`model`" class for our application, providing the "`business logic`" around the management of Contacts.
-However, the _implementation_ of the `Contact` class is not relevant to Contact.app as a Hypermedia-Driven Application,
-so we will not be looking at the internals of the class.
 
-It could be working with a database (it isn't) or a simple flat file (it is), but it doesn't really matter.  We want
-to leave that part of the system aside, and treat it as a black box.  We will present contacts as a resource to our
-Hypermedia-Driven front end, but not concern ourselves with the internal details of the model.
+It could be working with a database (it isn't) or a simple flat file (it is), but we're going skip over the internal details of the model. Think of it as a "`normal`" domain model class, with methods on it that act in a "`normal`" manner.
 
-We ask you to simply accept that it is a "`normal`" domain model class, and the methods on it act in the "`normal`" manner.
-We will focus on `Contact` as a _resource_ and how to effectively provide hypermedia representations
+We will treat `Contact` as a _resource_, and focus on how to effectively provide hypermedia representations
 of that resource to clients.
 ****
 
 ==== The List & Search Templates
 
-Now that we have our handler logic written, we need to take a look at the templates that we are going to use to render
+Now that we have our handler logic written, we need to look at the templates that we are going to use to render
 HTML in our response to the client.  At a high level, our HTML response needs to have the following elements:
 
 * A list of any matching or all contacts
@@ -283,15 +274,15 @@ Let's look at the first few lines of code in the `index.html` template:
             <input type="submit" value="Search"/>
      </form>
 ----
-<1> Set the layout template for this template
-<2> Delimit the content to be inserted into the layout
-<3> Create a search form that will issue an HTTP `GET` to `/contacts`
-<4> Create an input that a query can be typed into to search contacts
+<1> Set the layout template for this template.
+<2> Delimit the content to be inserted into the layout.
+<3> Create a search form that will issue an HTTP `GET` to `/contacts`.
+<4> Create an input for a user to type search queries.
 
 The first line of code references a base template, `layout.html`, with the `extends` directive.  This layout
 template provides the layout for the page (again, sometimes called "`the chrome`"): it wraps the template content in an
 `<html>` tag, imports any necessary CSS and JavaScript in a `<head>` element, places a `<body>` tag around the main
-content and so forth.  All the common content that wrapped around the "`normal`" content for the entire application
+content and so forth.  All the common content wrapped around the "`normal`" content for the entire application
 is located in this file.
 
 The next line of code declares the `content` section of this template.  This content block is used by the `layout.html`
@@ -308,10 +299,10 @@ the search value when a user does a search, so that when the results of a search
 the term that was searched for.  This makes for a better user experience since the user can see exactly what the
 current results match, rather than having a blank text box at the top of the screen.
 
-Finally, we have a submit-type input.  This will render as a button and, when it is clicked on, it will trigger the
+Finally, we have a submit-type input.  This will render as a button and, when it is clicked, it will trigger the
 form to issue an HTTP request.
 
-This search UI forms the top of our contact page.  Following it is a table of contacts, either all contacts or the
+This search interface forms the top of our contact page.  Following it is a table of contacts, either all contacts or the
 contacts that match the search, if a search was done.
 
 Here is what the template code for the contact table looks like:
@@ -339,19 +330,19 @@ Here is what the template code for the contact table looks like:
         </tbody>
     </table>
 ----
-<1> Output some headers for our table
-<2> Iterate over the contacts that were passed in to the template
+<1> Output some headers for our table.
+<2> Iterate over the contacts that were passed in to the template.
 <3> Output the values of the current contact, first name, last name, etc.
-<4> An "operations" column, with links to edit or view the contact details
+<4> An "operations" column, with links to edit or view the contact details.
 
 This is the core of the page: we construct a table with appropriate headers matching the data we are going
 to show for each contact.  We iterate over the contacts that were passed into the template by the handler method using
 the `for` loop directive in Jinja2.  We then construct a series of rows, one for each contact, where we render the
 first and last name, phone and email of the contact as table cells in the row.
 
-Additionally, we have another table cell that includes two links:
+Additionally, we have a table cell that includes two links:
 
-* A link to the "Edit" page for the contact, located at `/contacts/{{ contact.id }}/edit` (e.g. For the contact with
+* A link to the "Edit" page for the contact, located at `/contacts/{{ contact.id }}/edit` (e.g., For the contact with
   id 42, the edit link will point to `/contacts/42/edit`)
 
 * A link to the "View" page for the contact `/contacts/{{ contact.id }}` (using our previous contact example, the view
@@ -369,8 +360,8 @@ Finally, we have a bit of end-matter: a link to add a new contact and a Jinja2 d
 
 {% endblock %} <2>
 ----
-<1>  Link to the page that allows you to create a new contact
-<2>  The closing element of the `content` block
+<1>  Link to the page that allows you to create a new contact.
+<2>  The closing element of the `content` block.
 
 And that's our complete template.  Using this simple server-side template, in combination with our handler method, we
 can respond with an HTML _representation_ of all the contacts requested.  So far, so hypermedia.
@@ -398,7 +389,7 @@ The next bit of functionality that we will add to our application is the ability
 are going to need to handle that `/contacts/new` URL referenced in the "`Add Contact`" link above.  Note that when a user
 clicks on that link, the browser will issue a `GET` request to the `/contacts/new` URL.
 
-All the other routes we have been looking at so far are using `GET` as well, but we are actually going to use two
+All the other routes we have so far use `GET` as well, but we are actually going to use two
 different HTTP methods for this bit of functionality: an HTTP `GET` to render a form for adding a new contact,
 and then an HTTP `POST` _to the same path_ to actually create the contact, so we are going to be explicit about the
 HTTP method we want to handle when we declare this route.
@@ -439,10 +430,10 @@ Here is what our HTML looks like:
             <span class="error">{{ contact.errors['email'] }}</span> <4>
         </p>
 ----
-<1> A form that submits to the `/contacts/new` path, using an HTTP `POST`
-<2> A label for the first form input
-<3> the first form input, of type email
-<4> Any error messages associated with this field
+<1> A form that submits to the `/contacts/new` path, using an HTTP `POST`.
+<2> A label for the first form input.
+<3> The first form input, of type email.
+<4> Any error messages associated with this field.
 
 In the first line of code we create a form that will submit back _to the same path_ that we are handling: `/contacts/new`.
 Rather than issuing an HTTP `GET` to this path, however, we will issue an HTTP `POST` to it.  Using a `POST` in this manner
@@ -488,19 +479,18 @@ Finally, we have a button that will submit the form, the end of the form tag, an
 </p>
 ----
 
-It is worth pointing out something that is easy to miss in this straight-forward example: we are seeing the flexibility
+Easy to miss in this straight-forward example: we are seeing the flexibility
 of hypermedia in action.
 
 If we add a new field, remove a field, or change the logic around how fields are validated or work with one another,
 this new state of affairs would be reflected in the new hypermedia representation given to users.  A user would see the
-updated new form, and be able to work with whatever new features is had, with no software update required.
+updated new form, and be able to work with new features, with no software update required.
 
 ==== Handling The Post to `/contacts/new`
 
 The next step in our application is to handle the `POST` that this form makes to `/contacts/new`.
 
-To do so, we need to add another route to our application that handles the `/contacts/new` path like our handler above,
-but that handles an HTTP `POST` method instead of an HTTP `GET`.  We will use the submitted form values to attempt to
+To do so, we need to add another route to our application that handles the `/contacts/new` path. The new route will handle an HTTP `POST` method instead of an HTTP `GET`.  We will use the submitted form values to attempt to
 create a new Contact.
 
 If we are successful in creating a Contact, we will redirect the user to the list of contacts and show a success message.
@@ -522,13 +512,13 @@ def contacts_new():
     else:
         return render_template("new.html", contact=c) <4>
 ----
-<1> We construct a new contact object with the values from the form
-<2> We try to save it
-<3> On success, "`flash`" a success message & redirect to the `/contacts` page
-<4> On failure, re-render the form, showing any errors to the user
+<1> We construct a new contact object with the values from the form.
+<2> We try to save it.
+<3> On success, "`flash`" a success message & redirect to the `/contacts` page.
+<4> On failure, re-render the form, showing any errors to the user.
 
 
-The logic in this handler is a bit more complex than other methods we have seen, but it isn't too bad.  The first thing
+The logic in this handler is a bit more complex than other methods we have seen.  The first thing
 we do is create a new Contact, again using the `Contact()` syntax in Python to construct the object.  We pass in the values
 that the user submitted in the form by using the `request.form` object, a feature provided by Flask.
 
@@ -537,14 +527,14 @@ name associated with the various inputs.
 
 We also pass in `None` as the first value to the `Contact` constructor.  This is the "`id`" parameter, and by passing in
 `None` we are signaling that it is a new contact, and needs to have an ID generated for it.    (Again, we are not
-going to dig deeply into the details of how this model object is implemented, our only concern is using it to generate
+going into the details of how this model object is implemented, our only concern is using it to generate
 hypermedia responses.)
 
 Next, we call the `save()` method on the Contact object.  This method returns `true` if the save is successful, and `false` if
-the save is unsuccessful (for example, a bad email was submitted by the user)
+the save is unsuccessful (for example, a bad email was submitted by the user).
 
 If we are able to save the contact (that is, there were no validation errors), we create a _flash_ message indicating
-success and redirect the browser back to the list page.  A "`flash`" is a common feature in web frameworks that allows
+success, and redirect the browser back to the list page.  A "`flash`" is a common feature in web frameworks that allows
 you to store a message that will be available on the _next_ request, typically in a cookie or in a session store.
 
 Finally, if we are unable to save the contact, we re-render the `new.html` template with the contact.  This will show the
@@ -553,7 +543,7 @@ fields will be rendered to feedback to the user as to what validation failed.
 
 .The Post/Redirect/Get Pattern
 ****
-This handler is implementing a very common strategy in web 1.0-style development called the
+This handler implements a common strategy in web 1.0-style development called the
 https://en.wikipedia.org/wiki/Post/Redirect/Get[Post/Redirect/Get] or PRG pattern.  By issuing an HTTP redirect once
 a contact has been created and forwarding the browser on to another location, we ensure that the `POST` does not
 end up in the browsers request cache.
@@ -566,8 +556,7 @@ We will use the PRG pattern in a few different places in this book.
 ****
 
 OK, so we have our server-side logic set up to save contacts.  And, believe it or not, this is about as complicated as
-our handler logic will get, even when we look at adding more sophisticated htmx-driven behaviors.  Simplicity is a great
-selling point for hypermedia!
+our handler logic will get, even when we look at adding more sophisticated htmx-driven behaviors. 
 
 === Viewing The Details Of A Contact
 
@@ -575,12 +564,12 @@ The next piece of functionality we will implement is the detail page for a Conta
 page by clicking the "`View`" link in one of the rows in the list of contacts.  This will take them to the path
 `/contact/<contact id>` (e.g. `/contacts/42`).
 
-Note that this is a common pattern in web development: Contacts are being treated as resources and the URLs around these
-resources are organized in a coherent manner:
+This is a common pattern in web development: contacts are treated as resources and the URLs around these
+resources are organized in a coherent manner.
 
-* If you wish to view all contacts, you issue a `GET` to `/contacts`
-* If you wish to get a hypermedia representation allowing you to create a new contact, you issue a `GET` to `/contacts/new`
-* If you wish to view a specific contact (with, say, an id of `42), you issue a `GET` to `/contacts/42`
+* If you wish to view all contacts, you issue a `GET` to `/contacts`.
+* If you want a hypermedia representation allowing you to create a new contact, you issue a `GET` to `/contacts/new`.
+* If you wish to view a specific contact (with, say, an id of `42), you issue a `GET` to `/contacts/42`.
 
 .The Eternal Bike Shed of URL Design
 ****
@@ -589,8 +578,8 @@ It is easy to quibble about the particulars of the path scheme you use for your 
 "`Should we `POST` to `/contacts/new` or to `/contacts`?`"
 
 We have seen many arguments online and in person advocating for one approach versus another.  We feel it is more
-important to understand the overarching idea of _resources_ and the _hypermedia representations_, rather than
-getting too worked up about the smaller details of your URL design.
+important to understand the overarching idea of _resources_ and _hypermedia representations_, rather than
+getting worked up about the smaller details of your URL design.
 
 We recommend you just pick a reasonable, resource-oriented URL layout you like and then stay consistent.  Remember,
 in a hypermedia system, you can always change your end-points later, because you are using hypermedia as the engine
@@ -611,16 +600,16 @@ def contacts_view(contact_id=0): <2>
     contact = Contact.find(contact_id) <3>
     return render_template("show.html", contact=contact) <4>
 ----
-<1> Map the path, with a path variable named `contact_id`
-<2> The handler takes the value of this path parameter
-<3> Look up the corresponding contact
-<4> Render the `show.html` template
+<1> Map the path, with a path variable named `contact_id`.
+<2> The handler takes the value of this path parameter.
+<3> Look up the corresponding contact.
+<4> Render the `show.html` template.
 
 You can see the syntax for extracting values from the path in the first line of code: you enclose the part of the
 path you wish to extract in `<>` and give it a name.  This component of the path will be extracted and then passed
 into the handler function, via the parameter with the same name.
 
-So, if you were to navigate to the path `/contacts/42` then the value `42` would be passed into the `contacts_view()`
+So, if you were to navigate to the path `/contacts/42`, the value `42` would be passed into the `contacts_view()`
 function for the value of `contact_id`.
 
 Once we have the id of the contact we want to look up, we load it up using the `find` method on the `Contact` object.  We
@@ -629,7 +618,7 @@ then pass this contact into the `show.html` template and render a response.
 === The Contact Detail Template
 
 Our `show.html` template is relatively simple, just showing the same information as the table but in a slightly different
-format (perhaps for printing).  If we add functionality like "`notes`" to the application later on, however, this will give
+format (perhaps for printing).  If we add functionality like "`notes`" to the application later on, this will give
 us a good place to do so.
 
 Again, we will omit the "`chrome`" of the template and focus on the meat:
@@ -650,7 +639,7 @@ Again, we will omit the "`chrome`" of the template and focus on the meat:
 </p>
 ----
 
-We simply render a nice First Name and Last Name header, with the additional contact information below it,
+We simply render a First Name and Last Name header, with the additional contact information below it,
 and a couple of links: a link to edit the contact and a link to navigate back to the full list of contacts.
 
 === Editing And Deleting A Contact
@@ -675,8 +664,8 @@ def contacts_edit_get(contact_id=0):
     return render_template("edit.html", contact=contact)
 ----
 
-As you can see this looks an awful lot like our "`Show Contact`" functionality.  In fact, it is nearly identical except
-for the template that we render: here we render `edit.html` rather than `show.html`.
+As you can see this looks a lot like our "`Show Contact`" functionality.  In fact, it is nearly identical except
+for the template: here we render `edit.html` rather than `show.html`.
 
 While our handler code looked similar to the "`Show Contact`" functionality, the `edit.html` template is going to look
 very similar to the template for the "`New Contact`" functionality: we will have a form that submits updated contact
@@ -697,14 +686,14 @@ Here is the first bit of the form:
                   <span class="error">{{ contact.errors['email'] }}</span>
               </p>
 ----
-<1> Issue a `POST` to the `/contacts/{{ contact.id }}/edit` path
-<2> As with the `new.html` page, the input is tied to the contact's email
+<1> Issue a `POST` to the `/contacts/{{ contact.id }}/edit` path.
+<2> As with the `new.html` page, the input is tied to the contact's email.
 
 This HTML is nearly identical to our `new.html` form, except that this form is going to submit a `POST` to a different
 path, based on the id of the contact that we want to update.  (It's worth mentioning here that, rather than `POST`, we
 would prefer to use a `PUT` or `PATCH`, but those are not available in plain HTML.)
 
-Following this we have the remainder of our form, again very similar to the `new.html` template, and our submit button
+Following this we have the remainder of our form, again very similar to the `new.html` template, and our button
 to submit the form.
 
 .The Edit Contact Form Body
@@ -769,16 +758,16 @@ refactored into a shared template between the edit and create templates, allowin
 Repeat Yourself) implementation.
 
 Note that factoring on the server-side tends to be coarser-grained than on the client-side: you tend to split out common
-_sections_ rather than create lots of individual components.  This has both benefits (it tends to be simple) as well as
-drawbacks (it is not nearly as isolated as client-side components) .
+_sections_ rather than create lots of individual components.  This has benefits (it tends to be simple) as well as
+drawbacks (it is not nearly as isolated as client-side components).
 
-Overall, however, a properly factored server-side hypermedia application can be extremely DRY!
+Overall, a properly factored server-side hypermedia application can be extremely DRY.
 ****
 
 ==== Handling The Post to `/contacts/<contact_id>`
 
 Next we need to handle the HTTP `POST` request that the form in our `edit.html` template submits.  We will declare
-another route that handles the path as the `GET` above.
+another route that handles the same path as the `GET` above.
 
 Here is the new handler code:
 
@@ -794,12 +783,12 @@ def contacts_edit_post(contact_id=0):
     else:
         return render_template("edit.html", contact=c) <6>
 ----
-<1> Handle a `POST` to `/contacts/<contact_id>/edit`
-<2> Look the contact up by id
-<3> update the contact with the new information from the form
-<4> Attempt to save it
-<5> On success, flash a success message & redirect to the detail page
-<6> On failure, re-render the edit template, showing any errors
+<1> Handle a `POST` to `/contacts/<contact_id>/edit`.
+<2> Look the contact up by id.
+<3> Update the contact with the new information from the form.
+<4> Attempt to save it.
+<5> On success, flash a success message & redirect to the detail page.
+<6> On failure, re-render the edit template, showing any errors.
 
 The logic in this handler is very similar to the logic in the handler for adding a new contact.  The only real difference
 is that, rather than creating a new Contact, we look the contact up by id and then call the `update()` method on it with
@@ -825,9 +814,9 @@ def contacts_delete(contact_id=0):
     flash("Deleted Contact!")
     return redirect("/contacts") <3>
 ----
-<1> Handle a `POST` the `/contacts/<contact_id>/delete` path
-<2> Look up and then invoke the `delete()` method on the contact
-<3> Flash a success message and redirect to the main list of contacts
+<1> Handle a `POST` the `/contacts/<contact_id>/delete` path.
+<2> Look up and then invoke the `delete()` method on the contact.
+<3> Flash a success message and redirect to the main list of contacts.
 
 The handler code is very simple since we don't need to do any validation or conditional logic: we simply look up the
 contact the same way we have been doing in our other handlers and invoke the `delete()` method on it, then redirect
@@ -837,12 +826,11 @@ No need for a template in this case, the contact is gone.
 
 === Contact.app... Implemented!
 
-And, well... believe it or not, that's our entire contact application!  The Flask and Jinja2 code should be simple enough
-that you are able to follow along, even if Python isn't your preferred language or Flask isn't your preferred web
-application framework.  Again, we don't expect you to be a Python or Flask experts (we aren't!) and you shouldn't need
-more than a basic understanding of how they work for the remainder of the book.
+And, well... believe it or not, that's our entire contact application! 
 
-Now, admittedly, this isn't a large or sophisticated application, but it does demonstrate many of the aspects of
+If you've struggled with parts of the code so far, don't worry: we don't expect you to be a Python or Flask expert (we aren't!). You just need a basic understanding of how they work to benefit from the remainder of the book.
+
+This is a small and simple application, but it does demonstrate many of the aspects of
 traditional, web 1.0 applications: CRUD, the Post/Redirect/Get pattern, working
 with domain logic in a controller, organizing our URLs in a coherent, resource-oriented manner.
 
@@ -850,20 +838,20 @@ And, furthermore, this is a deeply _Hypermedia-Driven_ web application.  Without
 been using REST, HATEOAS and all the other hypermedia concepts we discussed earlier.  We would bet that this simple
 little contact app of ours is more RESTful than 99% of all JSON APIs ever built!
 
-And it was all effortless: just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
+Just by virtue of using a _hypermedia_, HTML, we naturally fall into the RESTful network
 architecture.
 
 So that's great.  But what's the matter with this little web app?  Why not end here and go off to develop the old web 1.0 style
 applications people used to build?
 
-Well, at some level, nothing is wrong with it.  Particularly for an application that is as simple as this one it, the older
-way of building web apps might be a perfectly acceptable approach!
+Well, at some level, nothing is wrong with it.  Particularly for an application as simple as this one, the older
+way of building web apps might be a perfectly acceptable approach.
 
 However, our application does suffer from that "`clunkiness`" that we mentioned earlier when discussing web 1.0 applications:
 every request replaces the entire screen, introducing a noticeable flicker when navigating between pages.  You lose your
 scroll state.  You have to click around a bit more than you might in a more sophisticated web application.
 
-Contact.app, at this point, just doesn't feel like a "`modern`" web application, does it?
+Contact.app, at this point, just doesn't feel like a "`modern`" web application.
 
 Is it time to reach for a JavaScript framework and JSON APIs to make our contact application more interactive?
 

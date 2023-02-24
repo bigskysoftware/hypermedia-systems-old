@@ -137,8 +137,11 @@ Furthermore, even though this is a numbered list perfect for the `<ol>` element,
 Why could this be?
 The IEEE citation style requires that these numbers are presented in square brackets.
 This could be achieved on an `<ol>` with CSS,
-but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.footnote:[
-We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If we were using a style like APA in our reference list, where citations are not referenced by number, we would use an <ul>.]
+but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.
+
+****
+We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If we were using a style like APA in our reference list, where citations are not referenced by number, we would use an <ul>.
+****
 
 Don't shy away from using embedded HTML in Markdown.
 For larger sites, also consider Markdown extensions.
@@ -190,9 +193,9 @@ While encapsulating behavior is a good way to organize code,
 they also separate elements from their surrounding context,
 which can lead to wrong or inadequate semantics,
 and conceal the number of elements within.
-The result is what one might call **component soup**,
+The result is what one might call [.dfn]_component soup_,
 where information is hidden in component state,
-rather than being present in the HTML, which is now incomprehensible doe to missing context.
+rather than being present in the HTML, which is now incomprehensible due to missing context.
 In our Client Side Scripting chapter, we'll look at alternatives to component-based frameworks that can be used to avoid these shortcomings.
 
 We should clarify that components, when used for the right purpose, can actually _improve_ the clarity of your HTML.
@@ -341,7 +344,11 @@ So far throughout this chapter, we've gestured at potential accessibility benefi
 [quote, Manuel Matuzović (Web accessibility consultant), 'https://alistapart.com/article/my-accessibility-journey-what-ive-learned-so-far/[My Accessibility Journey: What I’ve Learned So Far]']
 (Re)learning HTML and using it consciously prevents and fixes many accessibility issues.
 
-However, there is some more nuance to the relationship between HTML and accessibility.
+It's true that all else being equal, an app that makes full use of HTML will be more accessible than one that is made of soup.
+However, HTML is not a panacea.
+Even the adage that HTML is "`accessible by default`" is misleading.
+
+The problems usually arise when we try to implement controls that aren't built into HTML.
 
 // Don't compromise UX just to avoid JS
 
@@ -354,7 +361,7 @@ The purpose of writing good HTML is not to please the specification deities.
 It's to make good websites.
 The spec is a good starting point when deciding how to mark something up,
 but when implementations don't conform,
-don't throw up your hands because you did what was specified.
+we shouldn't throw up our hands because we did what was specified.
 
 It is of course frustrating when browsers and other tools misbehave.
 It helps with the frustration is to recognize that hypermedia exchanges are not machine-to-machine communication.
@@ -388,7 +395,7 @@ Here's how the reference list example from earlier could be marked up with the `
   <li class="h-cite" id="cite-hypers2023">
     <span class="p-author">C.&#8202;H. Gross</span>,
     <span class="p-author">A. Stepinski</span>,
-    and <span class="p-author">D. Aksimsek</span>,
+    and <span class="p-author">D. Akşimşek</span>,
     <cite class="p-name">Hypermedia Systems</cite>,
     <span class="p-publisher h-card">
       <span class="p-adr h-adr">
@@ -405,6 +412,35 @@ Here's how the reference list example from earlier could be marked up with the `
     </a>
   </li>
 </ol>
+----
+
+This can be parsed into a JSON-like structure, as follows:
+
+[source,js]
+----
+{
+  "type": ["h-cite"],
+  "properties": {
+    "author": ["C.\u200aH. Gross", "A. Stepinski", "D. Akşimşek"],
+    "name": ["Hypermedia Systems"],
+    "url": ["https://hypermedia.systems/"],
+    "published": ["2023"],
+    "publisher": [{
+      "type": ["h-card"],
+      "properties": {
+        "name": ["Big Sky Software"],
+        "adr": [{
+          "type": ["h-adr"],
+          "properties": {
+            "locality": ["Bozeman"],
+            "region": ["MT"],
+            "country-name": ["USA"]
+          }
+        }]
+      }
+    }]
+  }
+}
 ----
 
 <https://microformats.org/>

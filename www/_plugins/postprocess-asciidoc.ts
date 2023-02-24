@@ -23,7 +23,9 @@ export default () => {
 
             $$(document, ".sidebarblock").forEach(el => {
                 el.tagName = "aside";
-                el.querySelector(".title")?.classList.add("titlebar");
+                const title = el.querySelector(".title")
+                title?.classList.add("bold");
+                title?.classList.add("secondary-font");
             })
 
             $$(document, ".attribution").forEach(el => {

@@ -487,11 +487,11 @@ In this section, Fielding says:
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
 ____
-> The central feature that distinguishes the REST architectural style from other network-based styles is its emphasis on
-> a uniform interface between components... In order to obtain a uniform interface, multiple architectural constraints
-> are needed to guide the behavior of components. REST is defined by four interface constraints: identification of
-> resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine
-> of application state
+The central feature that distinguishes the REST architectural style from other network-based styles is its emphasis on
+a uniform interface between components... In order to obtain a uniform interface, multiple architectural constraints
+are needed to guide the behavior of components. REST is defined by four interface constraints: identification of
+resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine
+of application state
 ____
 
 So we have four sub-constraints that, taken together, form the Uniform Interface constraint.

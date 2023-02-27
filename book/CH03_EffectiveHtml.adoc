@@ -337,11 +337,9 @@ Let's be real, after all -- out of all the sites using "`Open Graph`" tags, how 
 
 == The A word
 
-{blank}// TODO(dz4k): After dancing around accessibility, finally address the subject directly.
-
 So far throughout this chapter, we've gestured at potential accessibility benefits to be had from effective HTML.
 
-[quote, Manuel Matuzović (Web accessibility consultant), 'https://alistapart.com/article/my-accessibility-journey-what-ive-learned-so-far/[My Accessibility Journey: What I’ve Learned So Far]']
+[quote, Manuel Matuzović, 'https://alistapart.com/article/my-accessibility-journey-what-ive-learned-so-far/[My Accessibility Journey: What I’ve Learned So Far]']
 (Re)learning HTML and using it consciously prevents and fixes many accessibility issues.
 
 It's true that all else being equal, an app that makes full use of HTML will be more accessible than one that is made of soup.
@@ -349,6 +347,112 @@ However, HTML is not a panacea.
 Even the adage that HTML is "`accessible by default`" is misleading.
 
 The problems usually arise when we try to implement controls that aren't built into HTML.
+Sometimes, JavaScript is necessary to implement a UI control in an accessible manner
+(supporting all required keyboard interaction and presenting state to assistive tools).
+Clever "tricks" to implement controls like tabs in only HTML/CSS are fun, but often not practical.
+Take the following code, which uses radio buttons and CSS hacks to create something that resembles tabs:
+
+[source,html]
+----
+<input type="radio" name="tabs" id="tab1" checked>
+<label for="tab1">Tab 1</label> <1>
+<input type="radio" name="tabs" id="tab2">
+<label for="tab2">Tab 2</label>
+
+<div class="tabpanel" id="tabpanel1">Tab 1 contents</div>
+<div class="tabpanel" id="tabpanel2">Tab 2 contents</div>
+
+<style>
+  input[name="tabs"] { display: none; } <2>
+  .tabpanel { display: none; }
+  #tab1:checked ~ #tabpanel1 { display: block; } <3>
+  #tab2:checked ~ #tabpanel2 { display: block; } <3>
+</style>
+----
+<1> Each tab is an `<input>` and a `<label>`.
+<2> Hide the radio buttons. We can actuate them by clicking the associated labels.
+<3> A tabpanel will be visible when the associated tab is selected.
+
+This code will "`work`". 
+Clicking on the tabs will change the content displayed, and without a single line of JavaScript.
+Unfortunately, tabs have requirements beyond clicking to change content.
+This implementation has many missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
+From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Practices Guide on tabs]:
+
+* Keyboard interaction
+
+** The tabs can't be focused with the Tab key. Because the radio buttons are hidden with `display: none`, they are removed from the focus order, and label elements are not focusable.
+
+** "`[...] does not listen for Down Arrow or Up Arrow so those keys can provide their normal browser scrolling functions [...]`" 
+   Radio buttons listen to these events (since they're usually presented vertically). Thankfully, right and left arrow keys also work.
+
+* ARIA roles, states, and properties
+
+** "`[The element that contains the tabs] has role `tablist`.`" 
+   There is no such element in this implementation, as that would break the CSS.
+
+** "`Each [tab] has role `tab` [...]`"
+   The tab elements have role `label`. Furthermore, the elements they are labeling are hidden.
+
+** "`Each element that contains the content panel for a `tab` has role `tabpanel`.`"
+   No, though that could be added.
+
+** "`Each [tab] has the property `aria-controls` referring to its associated tabpanel element.`"
+   Nope.
+
+** "`The active `tab` element has the state `aria-selected` set to `true` and all other `tab` elements have it set to `false`.`"
+   Nope.
+
+** "`Each element with role `tabpanel` has the property `aria-labelledby` referring to its associated `tab` element.`"
+   No. The element that _is_ labelled by the tab element is a hidden radio button.
+
+****
+`display: none;` in CSS is not purely cosmetic -- it removes elements from the accessibility tree and keyboard focus. If you want to hide an element visually without hiding it from assistive technology, you can use this utility class:
+
+[source,css]
+----
+.vh {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	block-size: 1px;
+	inline-size: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+----
+
+`vh` is short for "`visually hidden`". This class uses multiple methods and workarounds to make sure no browser removes the element's function.
+****
+
+It turns out that fulfilling all of these requirements takes a lot of code. 
+Some of the ARIA attributes can be added directly in HTML,
+but they are repetitive
+and others (like `aria-selected`) need to be set through JavaScript since they are dynamic.
+The keyboard interactions can be error-prone too.
+It's not impossible to make a good tab set implementation.
+However, it's difficult to trust that a new implementation will work in all environments, since most of us have limited access to testing devices.
+This is why it's often recommended to use established libraries for UI interactions instead of rolling your own.
+
+Before adding a dependency, however, let's reconsider our design.
+Does the information really need to be presented as tabs?
+Sometimes the answer is yes
+(we used dummy text in our code example, so we can't tell),
+but if not, a sequence of details disclosures fulfills a very similar purpose.
+
+[source,html]
+----
+<details><summary>Disclosure 1</summary>
+  Disclosure 1 contents
+</details>
+<details><summary>Disclosure 2</summary>
+  Disclosure 2 contents
+</details>
+----
+
+Compromise UX just to avoid JavaScript is bad development.
+At the same time, the possibilities and constraints of the platform should be considered while designing interfaces.
+It might be possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
+But when it's not, we shouldn't try to stuff every problem into an HTML box.
 
 // Don't compromise UX just to avoid JS
 
@@ -372,15 +476,6 @@ So, instead of banging your head against a wall, focus on people, not the tools 
 Don't write HTML for browsers. or assistive tools, or validators.
 HTML is not _for_ them.
 HTML is for humans.
-
-
-=== ARIA is easy -- as long as you stick to the basics
-
-// Stick to the patterns
-
-// There are ready-made libraries
-
-// WAI has a very friendly webpage
 
 
 == Machine-readable HTML
@@ -416,7 +511,7 @@ Here's how the reference list example from earlier could be marked up with the `
 
 This can be parsed into a JSON-like structure, as follows:
 
-[source,js]
+[source,json]
 ----
 {
   "type": ["h-cite"],

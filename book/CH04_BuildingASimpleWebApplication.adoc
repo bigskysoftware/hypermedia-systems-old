@@ -18,7 +18,7 @@ slick features that most developers today would assume requires the use of a hea
 In order to demonstrate how web 1.0 applications works, we need to pick a server-side language and a library for
 handling HTTP requests.  Colloquially, this is called our "`Server-Side`" or "`Web`" stack, and there are literally hundreds
 of options to choose from, many with passionate followings.  You probably have a web framework that you prefer and, while
-we wish we could write this book for every possible stack out there, in the interest of simplicity (and sanity) we can only pick one.
+we wish we could write this book for every possible stack out there, in the interest of simplicity (and sanity) we can only pick one. 
 
 For this book we are going to use the following stack:
 
@@ -33,16 +33,18 @@ First, Python is the most popular programming language in the world, as of this 
 https://www.tiobe.com/tiobe-index/[TIOBE index], a respected measure of programming language popularity.
 Perhaps more importantly, Python is very easy to read even if you aren't very familiar with it.
 
-Flask was chosen as the web framework because it is very simple and does not impose a lot of structure on top of the
+We chose the Flask web framework because it is very simple and does not impose a lot of structure on top of the
 basics of HTTP request handling. This bare-bones approach isn't for everyone: in the Python community, for example, many people
 prefer the "`Batteries Included`" nature of Django, which supplies much more functionality out of the box than Flask does.
 
 For teaching purposes, and to minimize the conceptual burden for non-Python developers, we feel that an un-opinionated
 and lighter-weight library will make it easier for readers to follow along.  The focus of this book is on the _hypermedia
 exchanges_, rather than deeper server-side functionality like working with a database, and by using Flask we are able
-to keep the book focused on that aspect.
+to keep the book focused on that aspect. 
 
-Jinja2 templates were picked because they are the default templating language for Flask.  They are simple enough and
+So, even if this isn't your preferred stack, keep going: you will gain from the patterns we introduce here.
+
+We picked Jinja2 templates because they are the default templating language for Flask.  They are simple enough and
 similar enough to most other server-side templating languages that most people who are familiar with any server-side
 (or client-side) templating library should be able to understand them quickly and easily.
 

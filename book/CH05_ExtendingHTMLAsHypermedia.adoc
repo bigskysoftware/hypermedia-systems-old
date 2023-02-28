@@ -11,10 +11,9 @@ was built using nothing but forms and anchor tags, the traditional hypermedia co
 The application exchanges hypermedia (HTML) with the server over HTTP, issuing `GET` and `POST` HTTP requests and
 receiving back full HTML documents in response.
 
-It is a pretty basic web application, but it is also definitely a Hypermedia-Driven Application.
+It is a basic web application, but it is also definitely a Hypermedia-Driven Application. It is robust, it leverages the web's native technologies, and it is simple to understand.  
 
-The application, as it stands, is robust, it leverages the web's native technologies and is simple to understand.  So
-what's not to like about the application, then?
+So what's not to like about the application?
 
 Unfortunately, our application has a few issues common to web 1.0 style applications:
 
@@ -25,7 +24,7 @@ Unfortunately, our application has a few issues common to web 1.0 style applicat
 * From a technical perspective, all the updates are done with the `POST` HTTP method.  This, despite the fact that
   more logical actions and HTTP request types like `PUT` and `DELETE` exist and would make more sense for some
   of the operations we implemented.  After all, if we wanted to delete a resource, wouldn't it make more sense to use an HTTP `DELETE` request
-  to do so?  Somewhat ironically, since we are using pure HTML, we are unable to access the full expressive power
+  to do so?  Somewhat ironically, since we have used pure HTML, we are unable to access the full expressive power
   of HTTP, which was designed specifically _for_ HTML.
 
 The first point, in particular, is noticeable in Web 1.0 style applications like ours and is what is responsible for giving
@@ -54,18 +53,21 @@ In this style of application, communication with the server is typically done vi
 with the application sacrificing the advantages of hypermedia in order to provide a better, smoother user experience.
 
 Many web developers today would not even consider the hypermedia approach due to the perceived "`legacy`" feel of these
-Web 1.0 style applications.
+web 1.0 style applications.
 
-The second, technical point may strike you as a bit pedantic, and we am the first to admit that conversations around
-REST and which HTTP Action is right for a given operation can become very tedious.  But still, it's mildly infuriating that,
+The second, technical point may strike you as a bit pedantic, and we are the first to admit that conversations around
+REST and which HTTP Action is right for a given operation can become very tedious.  But still, it's odd that,
 when using plain HTML, it is impossible to use HTTP fully.
 
 == A Close Look At A Hyperlink
 
-It turns out that we can actually boost the interactivity of our application without resorting to the SPA approach, by
-using a library called https://htmx.org[htmx].  To understand how htmx allows us to improve the UX of our Web 1.0 style
+It turns out that we can boost the interactivity of our application without resorting to the SPA approach, by using one of several available hypermedia-oriented JavaScript libraries.
+We'll use the library that we've developed, https://htmx.org[htmx], not only because we know it inside and out, but because we built it purely to extend HTML as a hypermedia. 
+
+To understand how htmx allows us to improve the UX of our Web 1.0 style
 application without abandoning hypermedia, let's revisit the hyperlink/anchor tag from Chapter 1.  Recall, a hyperlink
-is what is known as a _hypermedia control_, a mechanism
+is what is known as a _hypermedia control_, a mechanism that describes some sort of interaction by encoding information about that interaction directly and completely within
+itself.
 
 Consider again this simple anchor tag which, when interpreted by a browser, creates a hyperlink to the website for
 this book:
@@ -78,7 +80,7 @@ this book:
 </a>
 ----
 
-Let's break down in painstaking detail exactly what happens with this link:
+Let's break down exactly what happens with this link:
 
 * The browser will render the text "`Hypermedia Systems`" to the screen, likely with a decoration indicating it is clickable.
 * Then, when a user clicks on the text...
@@ -92,25 +94,27 @@ Now, let's take a moment and think about how we can _generalize_ these last thre
 
 === Why Only Anchors & Forms?
 
-An initial observation is: what makes anchor tags (and forms) so special?
+Consider: what makes anchor tags (and forms) so special?
 
-Shouldn't other elements be able to issue HTTP requests as well?
+Why can't other elements issue HTTP requests as well?
 
-For example, why shouldn't `button` elements be able to issue HTTP requests?  It seemed kind of silly to have to wrap a
-form tag around a button just to make deleting contacts work in our application.  Maybe other elements should be able
+For example, why shouldn't `button` elements be able to issue HTTP requests?  It seems arbitrary to have to wrap a
+form tag around a button just to make deleting contacts work in our application.  
+
+Maybe: other elements should be able
 to issue HTTP requests as well, and act as hypermedia controls on their own.
 
-This is our first opportunity to generalize HTML as a hypermedia:
+This is our first opportunity to generalize HTML as a hypermedia.
 
 [IMPORTANT]
 .Opportunity 1
 ====
-HTML could be extended to allow _any_ element to issue a request to the server and act as a hypermedia control
+HTML could be extended to allow _any_ element to issue a request to the server and act as a hypermedia control.
 ====
 
 === Why Only Clicks & Submits?
 
-For our next observation, let's consider the event that triggers the request to the server on our link: a click event.
+Next, let's consider the event that triggers the request to the server on our link: a click event.
 
 Well, what's so special about clicking (in the case of anchors) or submitting (in the case of forms)?  Those are just two
 of many, many events that are fired by the DOM, after all.  Events like mouse down, or key up, or blur are all events
@@ -123,28 +127,28 @@ This gives us our second opportunity to expand the expressiveness of HTML:
 [IMPORTANT]
 .Opportunity 2
 ====
-HTML could be extended to allow _any_ event, not just a click, as in the case of our hyperlinks, to trigger HTTP requests
+HTML could be extended to allow _any_ event, not just a click, as in the case of hyperlinks, to trigger HTTP requests.
 ====
 
 === Why Only `GET` & `POST`?
 
 Getting a bit more technical in our thinking leads us to the problem we noted earlier: plain HTML only
-give us access to the `GET` and `POST` actions of HTTP?
+give us access to the `GET` and `POST` actions of HTTP.
 
 HTTP _stands_ for Hypertext Transfer Protocol, and yet the format it was explicitly designed for, HTML, only supports
-two of the five developer-facing request types!  You _have_ to use JavaScript and issue an AJAX request to get at the
+two of the five developer-facing request types.  You _have_ to use JavaScript and issue an AJAX request to get at the
 other three: `DELETE`, `PUT` and `PATCH`.
 
-Let's recall what are all of these different HTTP request types designed to represent?
+Let's recall what these different HTTP request types are designed to represent:
 
 * `GET` corresponds with "`getting`" a representation for a resource from a URL: it is a pure read, with no mutation of
-  the resource
-* `POST` submits an entity (or data) to the given resource, often creating or mutating the resource and causing a state change
-* `PUT` submits an entity (or data) to the given resource for update or replacement, again likely causing a state change
-* `PATCH` is similar to `PUT` but implies a partial update and state change rather than a complete replacement of the entity
-* `DELETE` deletes the given resource
+  the resource.
+* `POST` submits an entity (or data) to the given resource, often creating or mutating the resource and causing a state change.
+* `PUT` submits an entity (or data) to the given resource for update or replacement, again likely causing a state change.
+* `PATCH` is similar to `PUT` but implies a partial update and state change rather than a complete replacement of the entity.
+* `DELETE` deletes the given resource.
 
-These operations correspond closely to the CRUD operations we discussed in Chapter 2, and by only giving us access to two
+These operations correspond closely to the CRUD operations we discussed in Chapter 2. By giving us access to only two
 of the five, HTML hamstrings our ability to take full advantage of HTTP.
 
 This gives us our third opportunity to expand the expressiveness of HTML:
@@ -152,7 +156,7 @@ This gives us our third opportunity to expand the expressiveness of HTML:
 [IMPORTANT]
 .Opportunity 3
 ====
-HTML could be extended so that it could access these missing three HTTP methods, `PUT`, `PATCH` and `DELETE`.
+HTML could be extended so that it allows access to the missing three HTTP methods, `PUT`, `PATCH` and `DELETE`.
 ====
 
 === Why Only Replace The Entire Screen?
@@ -161,7 +165,7 @@ As a final observation, consider the last aspect of a hyperlink: it replaces  th
 
 It turns out that this technical detail is the primary culprit for poor user experience in Web 1.0 Applications.
 A full page refresh can cause a flash of unstyled content, it destroys the scroll state of the user by scrolling to the
-top of the page no matter what, and so forth.
+top of the page, and so forth.
 
 But there is no rule saying that hypermedia exchanges _must_ replace the entire document.
 
@@ -171,29 +175,29 @@ This gives us our fourth, final and perhaps most important opportunity to genera
 .Opportunity 4
 ====
 HTML could be extended to allow the responses to requests to replace elements _within_ the current document, rather than
-requiring that they replace the _entire_ document
+requiring that they replace the _entire_ document.
 ====
 
 This is actually a very old concept in hypermedia.  Ted Nelson, in his 1980 book "`Literary Machines`" coined the term
 _transclusion_ to capture this idea: the inclusion of content into an existing document via a hypermedia reference.
-If HTML supported this style of "`dynamic transclusion`", then Hypermedia Driven Applications could function much more like
+If HTML supported this style of "`dynamic transclusion,`" then Hypermedia Driven Applications could function much more like
 a Single Page Application, where only part of the DOM is updated by a given user interaction or network request.
 
 == Extending HTML as a Hypermedia with htmx
 
-These four opportunities present us a way to generalize HTML that would extend HTML well beyond its current abilities, but
+These four opportunities present us a way to extend HTML well beyond its current abilities, but
 in a way that is _entirely within_ the original hypermedia model of the web. The fundamentals of HTML, HTTP, the browser,
 and so on, won't be changed dramatically.  Rather, these generalizations of _existing functionality_ already found within
 HTML would simply let us accomplish _more_ using HTML.
 
-htmx is a JavaScript library that extends HTML in exactly this manner, and it will be the focus of the next few chapters
-of this book.  htmx is not the only JavaScript library that takes this hypermedia-oriented approach (other excellent
-examples are https://unpoly.com[Unpoly] and https://hotwire.dev[Hotwire]), but htmx is the purest of these libraries in
+Htmx is a JavaScript library that extends HTML in exactly this manner, and it will be the focus of the next few chapters
+of this book.  Again, htmx is not the only JavaScript library that takes this hypermedia-oriented approach (other excellent
+examples are https://unpoly.com[Unpoly] and https://hotwire.dev[Hotwire]), but htmx is the purest in
 its pursuit of extending HTML as a hypermedia.
 
 === Installing and Using htmx
 
-From a practical "`getting started`" perspective, Htmx is a simple, dependency-free and stand-alone JavaScript library that
+From a practical "`getting started`" perspective, htmx is a simple, dependency-free and stand-alone JavaScript library that
 can be added to a web application by simply including it via a `script` tag in your `head` element.
 
 Because of this simple installation model, you can take advantage of tools like public CDNs to install the library.
@@ -217,13 +221,12 @@ We also mark the script as `crossorigin="anonymous"` so no credentials will be s
 ----
 
 If you are used to modern JavaScript development, with complex build systems and large numbers of dependencies, it may
-be a bit shocking to find that that's all it takes to install htmx!
+be a pleasant surprise to find that that's all it takes to install htmx.
 
-This is in the spirit of the early web, when you could simply include a script tag and things would "`just work`".  To be honest,
-this still feels a bit like magic, even today!
+This is in the spirit of the early web, when you could simply include a script tag and things would "`just work.`"  
 
-Of course, you might not want to use a CDN. In that case you can download htmx to your local system and adjust the
-script tag to point to wherever you keep your static assets.  Or, you may have one of those more sophisticated build system
+If you don't want to use a CDN, you can download htmx to your local system and adjust the
+script tag to point to wherever you keep your static assets.  Or, you may have a build system
 that automatically installs dependencies.  In this case you can use the Node Package Manager (npm) name for the library:
 `htmx.org` and install it in the usual manner that your build system supports.
 
@@ -231,10 +234,10 @@ Once htmx has been installed, you can begin using it immediately.
 
 === No JavaScript Required...
 
-And here we get to the funny part of htmx: unlike the vast majority of JavaScript libraries, htmx does not require you,
+And here we get to the fun part of htmx: htmx does not require you,
 the user of htmx, to actually write any JavaScript.
 
-Instead, you will use _attributes_ placed directly on elements in your HTML to drive more dynamic behavior.  htmx extends
+Instead, you will use _attributes_ placed directly on elements in your HTML to drive more dynamic behavior.  Htmx extends
 HTML as a hypermedia, and it wants that extension to be as natural and consistent as possible with existing
 HTML concepts.  Just as an anchor tag uses an `href` attribute to specify the URL to retrieve, and forms use an `action`
 attribute to specify the URL to submit the form to, htmx uses HTML _attributes_ to specify the URL that an HTTP request
@@ -246,19 +249,19 @@ Let's look at the first feature of htmx: the ability for any element in a web pa
 core functionality provided by htmx, and it consists of five attributes that can be used to issue the five different
 developer-facing types of HTTP requests:
 
-* `hx-get` - issues an HTTP `GET` request
-* `hx-post` - issues an HTTP `POST` request
-* `hx-put` - issues an HTTP `PUT` request
-* `hx-patch` - issues an HTTP `PATCH` request
-* `hx-delete` - issues an HTTP `DELETE` request
+* `hx-get` - issues an HTTP `GET` request.
+* `hx-post` - issues an HTTP `POST` request.
+* `hx-put` - issues an HTTP `PUT` request.
+* `hx-patch` - issues an HTTP `PATCH` request.
+* `hx-delete` - issues an HTTP `DELETE` request.
 
-Each of these attributes, when placed on an element, tell the htmx library: "`When a user clicks (or whatever) this
+Each of these attributes, when placed on an element, tells the htmx library: "`When a user clicks (or whatever) this
 element, issue an HTTP request of the specified type`"
 
 The values of these attributes are similar to the values of both `href` on anchors and `action` on forms: you specify the
 URL you wish to issue the given HTTP request type to.  Typically, this is done via a server-relative path.
 
-As a first example, if we wanted a button to issue a `GET` request to `/contacts` then we would write the following
+For example, if we wanted a button to issue a `GET` request to `/contacts` then we would write the following
 HTML:
 
 .A Simple htmx-Powered Button
@@ -275,38 +278,35 @@ The htmx library will see the `hx-get` attribute on this button, and hook up som
 
 Very easy to understand and very consistent with the rest of HTML.
 
-=== It's All Just HTML!
+=== It's All Just HTML
 
-With this request being issued by the button above, we get to perhaps the most important thing to understand about htmx:
-it expects the response to this AJAX request _to be HTML_!  htmx is an extension of HTML.  A native hypermedia control
+With the request issued by the button above, we get to perhaps the most important thing to understand about htmx:
+it expects the response to this AJAX request _to be HTML_.  Htmx is an extension of HTML.  A native hypermedia control
 like an anchor tag will typically get an HTML response to a request it creates.  Similarly, htmx expects the server to
 respond to the requests that it makes with HTML.
 
-This may come as a bit of a shock to web developers who are used to responding to an AJAX request with JSON,
+This may surprise web developers who are used to responding to an AJAX request with JSON,
 which is far and away the most common response format for such requests.  But AJAX requests are just HTTP requests and
 there is no rule saying they must use JSON!  Recall again that AJAX stands for Asynchronous JavaScript & XML, so JSON
 is already a step away from the format originally envisioned for this API: XML.
 
-htmx simply goes another direction and expects HTML.
+Htmx simply goes another direction and expects HTML.
 
 .htmx vs. "`plain`" HTML responses
 ****
 
 There is an important difference between the HTTP responses to "`normal`" anchor and form driven HTTP requests and to
-htmx-powered requests like the one made by this button: in the case of htmx triggered requests, responses are often
-only _partial_ bits of HTML.
+htmx-powered requests like the one made by this button: in the case of htmx triggered requests, responses can be _partial_ bits of HTML.
 
 In htmx-powered interactions, as you will see, we are often not replacing the entire document.  Rather we are using
 "`transclusion`" to include content _within_ an existing document.  Because of this, it is often not necessary or desirable
 to transfer an entire HTML document from the server to the browser.
 
-This fact can be used to save bandwidth as well as resource loading time, since less overall content is transferred from
-the server to the client and since it isn't necessary to reprocess a `head` tag with style sheets, script tags, and so forth.
+This fact can be used to save bandwidth as well as resource loading time. Less overall content is transferred from
+the server to the client, and it isn't necessary to reprocess a `head` tag with style sheets, script tags, and so forth.
 ****
 
-Let's consider what a simple _partial_ HTML response to the "`Get Contacts`" button might be when it is clicked.
-
-It might look something like this:
+When the "`Get Contacts`" button is clicked, a _partial_ HTML response might look something like this:
 
 [#listing-3-3, reftext={chapter}.{counter:listing}]
 .A partial HTML Response to an htmx Request
@@ -319,19 +319,19 @@ It might look something like this:
 </ul>
 ----
 
-This is just a simple unordered list of contacts with some clickable elements in it.  Note that there is no opening
+This is just an unordered list of contacts with some clickable elements in it.  Note that there is no opening
 `html` tag, no `head` tag, and so forth: it is a _raw_ HTML list, without any decoration around it.  A response in a
-real application might of course contain more sophisticated HTML than this simple list, but even if it were more complicated
-it wouldn't need to be an entire page of HTML: it could be only the "`inner`" content of the HTML representation for
+real application might contain more sophisticated HTML than this simple list, but even if it were more complicated
+it wouldn't need to be an entire page of HTML: it could just be the "`inner`" content of the HTML representation for
 this resource.
 
-Now, this simple list response is perfect for htmx.  htmx will simply take the returned content and then swap it in to
+Now, this simple list response is perfect for htmx.  Htmx will simply take the returned content and then swap it in to
 the DOM in place of some element in the page.  (More on exactly where it will be placed in the DOM in a moment.)  Swapping
 in HTML content in this manner is fast and efficient because it leverages the existing native HTML parser in the browser,
 rather than requiring a significant amount of client-side JavaScript to be executed.
 
-This small HTML response might not look like much, but it shows how htmx stays within the hypermedia
-paradigm: just like in a "`normal`" hypermedia control in a "`normal`" web application, we see hypermedia being transferred
+This small HTML response shows how htmx stays within the hypermedia
+paradigm: just like a "`normal`" hypermedia control in a "`normal`" web application, we see hypermedia being transferred
 to the client in a stateless and uniform manner.
 
 This button just gives us a slightly more sophisticated mechanism for building a web application using hypermedia.
@@ -343,7 +343,7 @@ content into the existing page (rather than replacing the entire page), the ques
 content be placed?
 
 It turns out that the default htmx behavior is to simply put the returned content inside the element that triggered the
-request.  That's obviously _not_ a good thing in this situation: we will end up with a list of contacts awkwardly embedded within
+request.  That's obviously _not_ a good thing in the case of our button: we will end up with a list of contacts awkwardly embedded within
 the button element.  That will look pretty silly and is obviously not what we want.
 
 Fortunately htmx provides another attribute, `hx-target` which can be used to specify exactly where in the DOM the
@@ -364,13 +364,13 @@ Let's add a `div` tag that encloses the button with the id `main`.  We will then
 
 </div>
 ----
-<1> A `div` element that wraps the button
-<2> The `hx-target` attribute that specifies the target of the response
+<1> A `div` element that wraps the button.
+<2> The `hx-target` attribute that specifies the target of the response.
 
 We have added `hx-target="#main"` to our button, where `#main` is a CSS selector that says "`The thing with the ID '`main`'`".
 
-By using CSS selectors, htmx is once again building on top of familiar and standard HTML concepts.  This keeps the
-additional conceptual load beyond HTML required for working with htmx to a minimum.
+By using CSS selectors, htmx builds on top of familiar and standard HTML concepts.  This keeps the
+additional conceptual load for working with htmx to a minimum.
 
 Given this new configuration, what would the HTML on the client look like after a user clicks on this button and a
 response has been received and processed?
@@ -391,24 +391,24 @@ It would look something like this:
 ----
 
 The response HTML has been swapped into the `div`, replacing the button that triggered the request.  Transclusion!  And
-this has happened "`in the background`" via AJAX, without a large, clunky page refresh.
+this has happened "`in the background`" via AJAX, without a clunky page refresh.
 
 == Swap Styles
 
-Now, perhaps we don't want to simply load the content from the server response _into_ the div, as child elements.  Perhaps,
+Now, perhaps we don't want to load the content from the server response _into_ the div, as child elements.  Perhaps,
 for whatever reason, we wish to _replace_ the entire div with the response.  To handle this, htmx provides another
 attribute, `hx-swap`, that allows you to specify exactly _how_ the content should be swapped into  the DOM.
 
 The `hx-swap` attribute supports the following values:
 
-* `innerHTML` - The default, replace the inner html of the target element
-* `outerHTML` - Replace the entire target element with the response
-* `beforebegin` - Insert the response before the target element
-* `afterbegin` - Insert the response before the first child of the target element
-* `beforeend` - Insert the response after the last child of the target element
-* `afterend` - Insert the response after the target element
-* `delete` - Deletes the target element regardless of the response
-* `none` - No swap will be performed
+* `innerHTML` - The default, replace the inner html of the target element.
+* `outerHTML` - Replace the entire target element with the response.
+* `beforebegin` - Insert the response before the target element.
+* `afterbegin` - Insert the response before the first child of the target element.
+* `beforeend` - Insert the response after the last child of the target element.
+* `afterend` - Insert the response after the target element.
+* `delete` - Deletes the target element regardless of the response.
+* `none` - No swap will be performed.
 
 The first two values, `innerHTML` and `outerHTML`, are taken from the standard DOM properties that allow you to replace content
 within an element or in place of an entire element respectively.
@@ -420,8 +420,8 @@ The last two values, `delete` and `none` are specific to htmx.  The first option
 DOM, while the second option will do nothing (you may want to only work with response headers, an advanced technique we
 will look at later in the book.)
 
-Again, you can see htmx stays as close as possible to the existing web standards in order to keep the conceptual load
-necessary to use it to a minimum.
+Again, you can see htmx stays as close as possible to existing web standards in order to minimize the conceptual load
+necessary for its use.
 
 So let's consider that case where, rather than replacing the `innerHTML` content of the main div above, we want to
 replace the _entire div_ with the HTML response.
@@ -440,7 +440,7 @@ To do so would require only a small change to our button, adding a new `hx-swap`
 
 </div>
 ----
-<1> The `hx-swap` attribute specifies how to swap new content in
+<1> The `hx-swap` attribute specifies how to swap in new content.
 
 Now, when a response is received, the _entire_ div will be replaced with the hypermedia content:
 
@@ -464,19 +464,19 @@ contact management application.
 Note that with the `hx-get`, `hx-post`, `hx-put`, `hx-patch` and `hx-delete` attributes, we have addressed two of the
 four opportunities for improvement that we enumerated regarding plain HTML:
 
-* Opportunity 1: We can now issue an HTTP request with _any_ element (in this case we are using a button)
-* Opportunity 3: We can issue _any sort_ of HTTP request we want, `PUT`, `PATCH` and `DELETE`, in particular
+* Opportunity 1: We can now issue an HTTP request with _any_ element (in this case we are using a button).
+* Opportunity 3: We can issue _any sort_ of HTTP request we want, `PUT`, `PATCH` and `DELETE`, in particular.
 
 And, with `hx-target` and `hx-swap` we have addressed a third opportunity:
 the requirement that the entire page be replaced.
 
-* Opportunity 4: We can now replace any element we want in our page via transclusion, and we can do so in any manner want
+* Opportunity 4: We can now replace any element we want in our page via transclusion, and we can do so in any manner want.
 
 So, with only seven relatively simple additional attributes, we have addressed most of the shortcomings of HTML as a
 hypermedia that we identified earlier.
 
-There was one remaining shortcoming of HTML that we noted: the fact that only a `click` event (on an anchor) or a `submit` event
-(on a form) can trigger a HTTP request.  Let's look at how we can address that concern next.
+What's next? Recall the other shortcoming we noted: the fact that only a `click` event (on an anchor) or a `submit` event
+(on a form) can trigger a HTTP request.  Let's look at how we can address that limitation.
 
 == Using Events
 
@@ -492,14 +492,13 @@ However, htmx generalizes this notion of an event triggering a request by using,
 trigger an HTTP request.
 
 Often you don't need to use `hx-trigger` because the default triggering event will be what you want.
-The default triggering event depends on the element type, but should be fairly intuitive to anyone
-familiar with HTML:
+The default triggering event depends on the element type, and should be fairly intuitive:
 
-* Requests on `input`, `textarea` & `select` elements are triggered by the `change` event
-* Requests on `form` elements are triggered on the `submit` event
-* Requests on all other elements are triggered by the `click` event
+* Requests on `input`, `textarea` & `select` elements are triggered by the `change` event.
+* Requests on `form` elements are triggered on the `submit` event.
+* Requests on all other elements are triggered by the `click` event.
 
-In order to demonstrate how `hx-trigger` works, lets consider the following situation: we want to trigger the request
+To demonstrate how `hx-trigger` works, consider the following situation: we want to trigger the request
 on our button when the mouse enters it.  Now, this is certainly not a _good_ UX pattern, but bear with us: we are just
 using this an example.
 
@@ -517,13 +516,13 @@ To respond to a mouse entering the button, we would add the following attribute 
 
 </div>
 ----
-<1> Issue a request... on the `mouseenter` event?
+<1> Issue a request... on the `mouseenter` event.
 
-Now, with this `hx-trigger` attribute in place, whenever the mouse enters this button, a request will be triggered.  Silly,
+Now, with this `hx-trigger` attribute in place, whenever the mouse enters this button, a request will be triggered. Silly,
 but it works.
 
-Let's try something a bit more realistic and potentially useful: let's add some support for a keyboard shortcut for
-loading the contacts, `Ctrl-L` (for "`Load`").  To do this we will need to take advantage of some additional syntax that
+Let's try something a bit more realistic and potentially useful: let's add support for a keyboard shortcut for
+loading the contacts, `Ctrl-L` (for "`Load`").  To do this we will need to take advantage of additional syntax that
 the `hx-trigger` attribute supports: event filters and additional arguments.
 
 Event filters are a mechanism for determining if a given event should trigger a request or not.  They are applied to an
@@ -552,8 +551,8 @@ one potential triggering event.  We still want to respond to the `click` event a
 to handling the `Ctrl-L` keyboard shortcut.
 
 There are, unfortunately, two problems with our `keyup` addition:  As it stands, it will trigger requests on _any_ keyup
-event that occurs.  And, worse, it will only trigger when a keyup occurs _within_ this button.  This is highly unlikely (the
-user would need to tab onto the button to make it active and then begin typing!)
+event that occurs.  And, worse, it will only trigger when a keyup occurs _within_ this button.  This is highly unlikely; the
+user would need to tab onto the button to make it active and then begin typing.
 
 Let's fix these two issues. To fix the first one, we will use a trigger filter to test that Control key and the "`L`" key
 are pressed together:
@@ -570,7 +569,7 @@ are pressed together:
 
 </div>
 ----
-<1> `keyup` now has a filter, so the control key and L must be pressed
+<1> `keyup` now has a filter, so the control key and L must be pressed.
 
 The trigger filter in this case is `ctrlKey && key == 'l'`.  This can be read as "`A key up event, where the ctrlKey property
 is true and the key property is equal to l`".  Note that the properties `ctrlKey` and `key` are resolved against the event
@@ -605,16 +604,16 @@ Here is what our updated `hx-trigger` attribute looks like:
 
 </div>
 ----
-<1> Listen to the event on the `body` tag
+<1> Listen to the 'keyup' event on the `body` tag.
 
 Now, in addition to clicks, the button will listen for `keyup` events on the body of the page.  So it will now issue a
 request when it is clicked on and also whenever someone hits `Ctrl-L` within the body of the page.
 
-A nice keyboard shortcut for our Hypermedia-Driven Application.
+And now we have a nice keyboard shortcut for our Hypermedia-Driven Application.
 
 The `hx-trigger` attribute supports many more modifiers, and it is more elaborate than other htmx attributes. This is because
-events, in general, are complicated and require a lot of small details to get just right.  The default trigger will often
-suffice, however, and you shouldn't need to reach for complicated `hx-trigger` features too often when using htmx.
+events, in general, are complicated and require a lot of details to get just right.  The default trigger will often
+suffice, however, and you typically don't need to reach for complicated `hx-trigger` features when using htmx.
 
 Even with more sophisticated trigger specifications like the keyboard shortcut we just added, the overall feel of htmx is
 _declarative_ rather than _imperative_.  That keeps htmx-powered applications "`feeling like`" standard web 1.0 applications
@@ -625,13 +624,13 @@ in a way that adding significant amounts of JavaScript does not.
 And hey, check it out!  With `hx-trigger` we have addressed the final opportunity for improvement of HTML that we
 outlined at the start of this chapter:
 
-* Opportunity 2: We can use _any_ event to trigger an HTTP request
+* Opportunity 2: We can use _any_ event to trigger an HTTP request.
 
 That's a grand total of eight, count 'em, _eight_ attributes that all fall squarely within the same conceptual model as
 normal HTML and that, by extending HTML as a hypermedia, open up whole new world of user interaction possibilities
 within HTML.
 
-Here is a table summarizing those opportunities and which htmx attributes exactly address them:
+Here is a table summarizing those opportunities and which htmx attributes address them:
 
 .Opportunities For Improving HTML
 Any element should be able to make HTTP requests::
@@ -655,12 +654,12 @@ forms.  Forms are used to pass additional information beyond just a URL up to th
 This information is captured via input and input-like elements within the form via the various types of input tags
 available in HTML.
 
-htmx allows you include this additional information in a natural way that, as you should now expect, mirrors how HTML
+Htmx allows you include this additional information in a way that mirrors how HTML
 itself works.
 
 === Enclosing Forms
 
-The simplest way to pass input values up with a request in htmx is to enclose the element making a request within a form
+The simplest way to pass input values with a request in htmx is to enclose the element making a request within a form
 tag.
 
 Let's take our original button for retrieving contacts and repurpose it for searching contacts:
@@ -681,12 +680,12 @@ Let's take our original button for retrieving contacts and repurpose it for sear
 
 </div>
 ----
-<1> With an enclosing form tag, all inputs values will be submitted
-<2> A new input that users will be able to enter search text into
-<3> Our button has been converted to an `hx-post`
+<1> With an enclosing form tag, all input values will be submitted.
+<2> A new input for user search text entry.
+<3> Our button has been converted to an `hx-post`.
 
 Here we have added a form tag surrounding the button along with a search input that can be used to enter a term to
-search the contacts with.
+search contacts.
 
 Now, when a user clicks on the button, the value of the input with the id `search` will be included in the request.  This
 is by virtue of the fact that there is a form tag enclosing both the button and the input: when an htmx-driven request
@@ -703,13 +702,13 @@ uses a `GET` by using the `hx-include` attribute, discussed next.
 
 === Including inputs
 
-While enclosing all the inputs you want included in a request is the most common approach for including values from inputs
+While enclosing all the inputs you want included in a request is the most common approach for inputs
 in htmx requests, it isn't always possible or desirable: form tags can have layout consequences and simply cannot be
 placed in some spots in HTML documents.  A good example of the latter situation is in table row (`tr`) elements: the
-`form` tag is not a valid child or parent of table rows, so you can't place a form within or around an entire
+`form` tag is not a valid child or parent of table rows, so you can't place a form within or around a
 row of data in a table.
 
-To address this issue, htmx provides another mechanism for including input values in requests: the `hx-include` attribute.
+To address this issue, htmx provides a mechanism for including input values in requests: the `hx-include` attribute.
 The `hx-include` attribute allows you to select input values that you wish to include in a request via CSS selectors.
 
 Here is the above example reworked to include the input, dropping the form:
@@ -728,36 +727,35 @@ Here is the above example reworked to include the input, dropping the form:
 
 </div>
 ----
-<1> `hx-include` can be used to include values directly in a request
+<1> `hx-include` can be used to include values directly in a request.
 
 The `hx-include` attribute takes a CSS selector value and allows you to specify exactly which values to send along
-with the request.  This can be useful if it is difficult to colocate an element issuing a request with all the inputs
-that need to be submitted with it.
+with the request.  This can be useful if it is difficult to colocate an element issuing a request with all the desired inputs.
 
 It is also useful when you do, in fact, want to submit values with a `GET` request and overcome the default behavior of
-htmx with respect to `GET` requests.
+htmx.
 
 ==== Relative CSS Selectors
 
-The `hx-include` attribute and, in fact, most attributes that take a CSS selector, also support _relative_ CSS selectors,
-that allow you to specify a CSS selector _relative_ to the element it is declared on.  Here are some examples:
+The `hx-include` attribute and, in fact, most attributes that take a CSS selector, also support _relative_ CSS selectors.
+These allow you to specify a CSS selector _relative_ to the element it is declared on.  Here are some examples:
 
 `closest`::
-Find the closest parent element matching the given selector, e.g. `closest form`
+Find the closest parent element matching the given selector, e.g. `closest form`.
 
 `next`::
-Find the next element (scanning forward) matching the given selector, e.g. `next input`
+Find the next element (scanning forward) matching the given selector, e.g. `next input`.
 
 `previous`::
-Find the previous element (scanning backwards) matching the given selector, e.g. `previous input`
+Find the previous element (scanning backwards) matching the given selector, e.g. `previous input`.
 
 `find`::
-Find the next element within this element matching the given selector, e.g. `find input`
+Find the next element within this element matching the given selector, e.g. `find input`.
 
 `this`::
-the current element
+The current element.
 
-Using relative CSS selectors often allows you to avoid needing to generate ids for elements, since you can take advantage
+Using relative CSS selectors often allows you to avoid generating ids for elements, since you can take advantage
 of their local structural layout instead.
 
 === Inline Values
@@ -769,14 +767,14 @@ standard mechanism for including additional, hidden information in HTML.)
 
 Here is an example of `hx-vals`:
 
-.A Simple htmx-Powered Button
+.A simple htmx-powered button
 [source,html]
 ----
 <button hx-get="/contacts" hx-vals='{"state":"MT"}'> <1>
   Get The Contacts In Montana
 </button>
 ----
-<1> `hx-vals`, a JSON value to include in the request
+<1> `hx-vals`, a JSON value to include in the request.
 
 The parameter `state` with the value `MT` will be included in the `GET` request, resulting in a path and parameters that
 looks like this:  `/contacts?state=MT`.  One thing to note is that we switched the `hx-vals` attribute to use single quotes
@@ -797,7 +795,7 @@ requests like so:
   Get The Contacts In The Selected State
 </button>
 ----
-<1> With the `js:` prefix, this expression will evaluate at submit time
+<1> With the `js:` prefix, this expression will evaluate at submit time.
 
 These three mechanisms, using `form` tags, using the `hx-include` attribute and using the `hx-vals` attribute, allow you
 to include values in your hypermedia requests with htmx in a manner that should feel very familiar and in keeping with
@@ -805,14 +803,14 @@ the spirit of HTML, while also giving you the flexibility to achieve what you wa
 
 == History Support
 
-A final piece of functionality to discuss to close out our overview of htmx is browser history support.  When you use normal
+We have a final piece of functionality to close out our overview of htmx: browser history support.  When you use normal
 HTML links and forms, your browser will keep track of all the pages that you have visited.  You can then use the back button
 to navigate back to a previous page and, once you have done this, you can use a forward button to go forward to the
 original page you were on.
 
 This notion of history was one of the killer features of the early web.  Unfortunately it turns out that history becomes
 tricky when you move to the Single Page Application paradigm.  An AJAX request does not, by itself, register a web
-page in your browsers history, which is a good thing: an AJAX request may have nothing to do with the state of the
+page in your browser's history, which is a good thing: an AJAX request may have nothing to do with the state of the
 web page (perhaps it is just recording some activity in the browser), so it wouldn't be appropriate to create a new
 history entry for the interaction.
 
@@ -851,7 +849,7 @@ If we wanted it to create a history entry when this request happened, we would a
   Get The Contacts
 </button>
 ----
-<1> `hx-push-url` will create an entry in history when the button is clicked
+<1> `hx-push-url` will create an entry in history when the button is clicked.
 
 Now, when the button is clicked, the `/contacts` path will be put into the browser's navigation bar and a history entry
 will be created for it.  Furthermore, if the user clicks the back button, the original content for the page will be
@@ -862,7 +860,7 @@ Now, the name `hx-push-url` for this attribute might sound a little obscure, but
 so you are "`pushing`" new entries onto the top of the stack of history entries.
 
 With this relatively simple, declarative mechanism, htmx allows you to integrate with the back button in a way that mimics the
-"`normal`" behavior of HTML.  Not bad if you look at what other JavaScript libraries want you to do to make history work!
+"`normal`" behavior of HTML. 
 
 Now, there is one additional thing we need to handle to get history "`just right`": we have "`pushed`" the `/contacts` path
 into the browsers location bar successfully, and the back button works.  But what if someone refreshes their browser while
@@ -873,14 +871,13 @@ can do this using HTTP headers, a topic we will go into in detail later in the b
 
 == Conclusion
 
-So that's our whirlwind introduction to htmx.  We've only seen about ten attributes from the library, but we think you
-can probably see a hint of just how powerful these attributes can be: by adopting htmx you will be able to create a much
-more sophisticated web application than is possible in plain HTML, but your conceptual load will not be nearly as high
-as it is for most JavaScript-based approaches.
+So that's our whirlwind introduction to htmx.  We've only seen about ten attributes from the library, but you
+can see a hint of just how powerful these attributes can be. Htmx enaables a much
+more sophisticated web application than is possible in plain HTML, with minimal additional conceptual load compared to most JavaScript-based approaches.
 
-htmx is a very pure extension to HTML, aiming to incrementally improve the language as a hypermedia in a manner that is
+Htmx aims to incrementally improve HTML as a hypermedia in a manner that is
 conceptually coherent with the underlying markup language.  Like any technical choice, this is not without
-trade-offs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel
+trade-offs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel 
 should be there "`by default`".
 
 A good example is the concept of modal dialogs. Many web applications today make heavy use of modal dialogs, effectively
@@ -889,7 +886,7 @@ all just a web page: the web has no notion of "`modals`" in this regard.)
 
 A web developer might expect htmx, as a front end library, to provide some sort of modal dialog component out of the box.
 
-htmx, however, has no such notion of modals.  That's not to say you can't use modals with htmx, and we will look at how you
+Htmx, however, has no such notion of modals.  That's not to say you can't use modals with htmx, and we will look at how you
 can do so later.  But htmx, like HTML itself, won't give you an API specifically for creating modals.  You
 would need to use a 3rd party library or roll your own modal implementation and then integrate htmx into it if you want
 to use modals within an htmx-based application.

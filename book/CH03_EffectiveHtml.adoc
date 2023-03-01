@@ -139,6 +139,7 @@ The IEEE citation style requires that these numbers are presented in square brac
 This could be achieved on an `<ol>` with CSS,
 but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.
 
+[.info]
 ****
 We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If we were using a style like APA in our reference list, where citations are not referenced by number, we would use an <ul>.
 ****
@@ -245,9 +246,11 @@ Don't change your development habits in any other way and you have HTML5 soup:
 </main>
 ----
 
+Most HTML isn't this much of a mess,
+but `<section>` and `<article>` in particular are often used as a drop-in replacement `<div>` without considering its purpose.
 If you're experiencing HTML5 soup, there are two remedies:
-* Make sure you're using the meanings of elements defined in the spec.
-  Don't try to use advanced HTML without having learned it.
+
+* Check the spec. Don't try to use advanced HTML without learning it.
 * Don't try to be specific with your semantics when you can't or don't need to.
   Sometimes, `<div>` really is fine.
 
@@ -270,8 +273,14 @@ It even tells you when you're allowed to leave out closing tags!
 [source,html]
 ----
 <!doctype html>
+<html lang=en>
 This is a valid HTML document.
 ----
+
+[.info]
+****
+The `<html>` tags can be omitted but it's bad practice to leave out the opening tag since it holds the  `lang` attribute which specifies the language of the document.
+****
 
 This chapter in particular is a great piece of reference material and an useful read in general.
 Reading it through (skipping over the implementation details, like the several pages of algorithms)
@@ -406,6 +415,7 @@ From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Prac
 ** "`Each element with role `tabpanel` has the property `aria-labelledby` referring to its associated `tab` element.`"
    No. The element that _is_ labelled by the tab element is a hidden radio button.
 
+[.info]
 ****
 `display: none;` in CSS is not purely cosmetic -- it removes elements from the accessibility tree and keyboard focus. If you want to hide an element visually without hiding it from assistive technology, you can use this utility class:
 
@@ -548,10 +558,16 @@ This can be parsed into a JSON-like structure, as follows:
 
 == Relearning HTML
 
-* HTML specification: https://html.spec.whatwg.org/multipage
-* TODO link resources on alt text.
-* https://htmhell.dev
+If you're convinced that it's worth investing your time into HTML,
+here are some useful resources to have at hand.
 
-.referenced
-* Manuel Matuzović. _Lost in Translation_. https://www.youtube.com/watch?v=Wno1IhEBTxc
-* https://www.matuzo.at/blog/2023/single-page-applications-criticism/
+* Foundations
+* HTML specification: https://html.spec.whatwg.org/multipage
+
+* TODO link resources on alt text.
+
+* https://htmhell.dev: Along with sinister abuses of HTML, this website shares development tips that will help ypu keep up-to-date with best practice.
+
+* referenced
+** Manuel Matuzović, [.cite]_Lost in Translation_, https://www.youtube.com/watch?v=Wno1IhEBTxc.
+** https://www.matuzo.at/blog/2023/single-page-applications-criticism/

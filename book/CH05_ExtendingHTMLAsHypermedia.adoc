@@ -543,14 +543,14 @@ In the case of keyboard shortcuts, we want to catch the `keyup` event in additio
 
 </div>
 ----
-<1> A trigger with two events
+<1> A trigger with two events.
 
 Note that we have a comma separated list of events that can trigger this element, allowing us to respond to more than
 one potential triggering event.  We still want to respond to the `click` event and load the contacts, in addition
 to handling the `Ctrl-L` keyboard shortcut.
 
 There are, unfortunately, two problems with our `keyup` addition:  As it stands, it will trigger requests on _any_ keyup
-event that occurs.  And, worse, it will only trigger when a keyup occurs _within_ this button.  This is highly unlikely; the
+event that occurs.  And, worse, it will only trigger when a keyup occurs _within_ this button.  The
 user would need to tab onto the button to make it active and then begin typing.
 
 Let's fix these two issues. To fix the first one, we will use a trigger filter to test that Control key and the "`L`" key
@@ -626,7 +626,7 @@ outlined at the start of this chapter:
 * Opportunity 2: We can use _any_ event to trigger an HTTP request.
 
 That's a grand total of eight, count 'em, _eight_ attributes that all fall squarely within the same conceptual model as
-normal HTML and that, by extending HTML as a hypermedia, open up whole new world of user interaction possibilities
+normal HTML and that, by extending HTML as a hypermedia, open up a whole new world of user interaction possibilities
 within HTML.
 
 Here is a table summarizing those opportunities and which htmx attributes address them:

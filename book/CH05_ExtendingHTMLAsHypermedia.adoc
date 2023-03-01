@@ -504,7 +504,7 @@ using this an example.
 To respond to a mouse entering the button, we would add the following attribute to our button:
 
 [#listing-3-8, reftext={chapter}.{counter:listing}]
-.A Bad Idea, But It Demonstrates The Concept!
+.A Button that Triggers on Mouse Entry
 [source,html]
 ----
 <div id="main">

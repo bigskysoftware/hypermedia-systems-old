@@ -618,7 +618,7 @@ Even with more sophisticated trigger specifications like the keyboard shortcut w
 _declarative_ rather than _imperative_.  That keeps htmx-powered applications "`feeling like`" standard web 1.0 applications
 in a way that adding significant amounts of JavaScript does not.
 
-== htmx: HTML eXtended
+== Htmx: HTML eXtended
 
 And hey, check it out!  With `hx-trigger` we have addressed the final opportunity for improvement of HTML that we
 outlined at the start of this chapter:
@@ -695,7 +695,7 @@ You might have noticed that the button was switched from a `GET` request to a `P
 htmx does _not_ include the closest enclosing form for `GET` requests, but it _does_ include the form for all other types
 of requests.
 
-This may seem a little strange, but it avoids junking up URLs that are used within form when dealing with history
+This may seem a little strange, but it avoids junking up URLs that are used within forms when dealing with history
 entries, which we will discuss in a bit.  And you can always include an enclosing form's values with an element that
 uses a `GET` by using the `hx-include` attribute, discussed next.
 

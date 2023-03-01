@@ -256,7 +256,7 @@ developer-facing types of HTTP requests:
 * `hx-delete` - issues an HTTP `DELETE` request.
 
 Each of these attributes, when placed on an element, tells the htmx library: "`When a user clicks (or whatever) this
-element, issue an HTTP request of the specified type`"
+element, issue an HTTP request of the specified type.`"
 
 The values of these attributes are similar to the values of both `href` on anchors and `action` on forms: you specify the
 URL you wish to issue the given HTTP request type to.  Typically, this is done via a server-relative path.

@@ -305,7 +305,7 @@ Here are some of the most commonly used events in htmx:
 `htmx:abort`::
   A custom event that can be sent to an htmx-powered element to abort an open request
 
-=== Using The `htmx:configRequest` Event
+=== Using The htmx:configRequest Event
 
 Let's take a look at how you might use the `htmx:configRequest` event to configure an HTTP request.  Consider the following
 scenario: your server-side team has decided that they want you to include a token for extra validation on every request.
@@ -336,7 +336,7 @@ of the request, and so on.
 Full documentation for the `htmx:configRequest` event can be found
 https://htmx.org/events/#htmx:configRequest[on the htmx website].
 
-=== Canceling a Request Using `htmx:abort`
+=== Canceling a Request Using htmx:abort
 
 We can listen for any of the many useful events from htmx, and we can respond to those events using `hx-trigger`.  What
 else can we do with events?

@@ -45,7 +45,7 @@ To specify where in the DOM to swap the returned HTML content
 Let's dive into two of these attributes, `hx-swap` and `hx-trigger`, because they support a large number of
 options that might be useful when you are creating more advanced Hypermedia Driven Applications.
 
-=== `hx-swap`
+=== hx-swap
 
 The `hx-swap` attribute is often not included on elements that issue htmx-driven requests.  This is because, for many
 cases, the default behavior, `innerHTML`, which swaps the inner HTML of the element, is fine.  Of course, we have seen
@@ -76,7 +76,7 @@ Allows you to specify that htmx should scroll to the focused element when a requ
 So, for example, if we had a button that issued a `GET` request, and we wished to scroll to the top of the `body` element
 when the request had completed, we would write the following HTML:
 
-.Scrolling To The Top Of The Page
+.Scrolling to the top of the page
 [source, html]
 ----
 <button hx-get="/contacts" hx-target="#content-div"
@@ -84,11 +84,11 @@ when the request had completed, we would write the following HTML:
   Get Contacts
 </button>
 ----
-<1> This tells htmx to show the top of the body after the swap occurs
+<1> This tells htmx to show the top of the body after the swap occurs.
 
 More details and examples can be found online in the `hx-swap` https://htmx.org/attributes/hx-swap/[documentation].
 
-=== `hx-trigger`
+=== hx-trigger
 
 Like `hx-swap`, `hx-trigger` can often be omitted when you are using htmx, because the default behavior is typically
 what you want anyway.  Recall the default triggering events are determined by an element's type:
@@ -100,14 +100,14 @@ what you want anyway.  Recall the default triggering events are determined by an
 There are times, however, when you want a more elaborate trigger specification.  A classic example was the active
 search example we implemented in Contact.app:
 
-.The Active Search Input
+.The active search input
 [source,html]
 ----
     <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
            hx-get="/contacts"
            hx-trigger="search, keyup delay:200ms changed"/> <1>
 ----
-<1> An elaborate trigger specification
+<1> An elaborate trigger specification.
 
 This example took advantage of two modifiers available for the `hx-trigger` attribute:
 
@@ -220,7 +220,7 @@ hx-disable::
 Let's take a look at `hx-sync`, which allows us to synchronize AJAX requests between two or more elements.  Consider
 a simple case where we have two buttons that both target the same element on the screen:
 
-.Two Competing Buttons
+.Two competing buttons
 [source, html]
 ----
 <button hx-get="/contacts" hx-target="body"> <1>
@@ -247,7 +247,7 @@ both buttons in a `div` and eliminate the redundant `hx-target` specification by
 
 Here is our updated code:
 
-.Syncing Two Buttons
+.Syncing two buttons
 [source, html]
 ----
 <div hx-target="body"  <1>
@@ -260,8 +260,8 @@ Here is our updated code:
     </button>
 </div>
 ----
-<1> Hoist the duplicate `hx-target` attributes to the parent `div`
-<2> Synchronize on the parent `div`
+<1> Hoist the duplicate `hx-target` attributes to the parent `div`.
+<2> Synchronize on the parent `div`.
 
 By placing the `hx-sync` attribute on the `div` with the value `this`, we are saying "`Synchronize all htmx requests that
 occur within this `div` element with one another.`"  This means that if one button already has a request in flight, other
@@ -317,14 +317,14 @@ object with this token from `localStorage`.
 
 In VanillaJS, it would look something like this:
 
-.Adding the `X-SPECIAL-TOKEN` Header
+.Adding the `X-SPECIAL-TOKEN` header
 [source,js]
 ----
 document.body.addEventListener("htmx:configRequest", function(configEvent){
     configEvent.detail.headers['X-SPECIAL-TOKEN'] = localStorage['special-token']; <1>
 })
 ----
-<1> retrieve the value from local storage and set it into a header
+<1> Retrieve the value from local storage and set it into a header.
 
 As you can see, we add a new value to the `headers` property of the event's detail.  After the event handler executes,
 the `headers` property is read by htmx and used to construct the headers for an AJAX request.  So, with this bit of
@@ -477,7 +477,7 @@ Let's say that, rather than doing nothing when a `404` occurred, you wanted to a
 To do so, you want to invoke a JavaScript method, `showNotFoundError()`.  Let's add some code to use the `htmx:beforeSwap`
 event to make this happen:
 
-.Showing a 404 Dialog
+.Showing a 404 dialog
 [source,js]
 ----
 document.body.addEventListener('htmx:beforeSwap', function(evt) { <1>
@@ -486,8 +486,8 @@ document.body.addEventListener('htmx:beforeSwap', function(evt) { <1>
     }
 });
 ----
-<1> hook into the `htmx:beforeSwap` event
-<2> if the response code is a `404`, show the user a dialog
+<1> Hook into the `htmx:beforeSwap` event.
+<2> If the response code is a `404`, show the user a dialog.
 
 You can also use the `htmx:beforeSwap` event to configure if the response should be swapped into the DOM and what element
 the response should target.  This gives you quite a bit of flexibility in choosing how you want to use HTTP Response
@@ -523,7 +523,7 @@ a server-triggered event via the `HX-Trigger` response header.
 This time, we'll use the `hx-swap-oob` attribute in the response to the
 `POST` to `/integrations/1`. The new contacts table content will "`piggyback`" on the response.
 
-.The Updated Contacts Table
+.The updated contacts table
 [source, html]
 ----
    <button hx-post="/integrations/1"> <1>
@@ -536,8 +536,8 @@ This time, we'll use the `hx-swap-oob` attribute in the response to the
       ...
     </table>
 ----
-<1> the button still issues a `POST` to `/integrations/1`.
-<2> the table no longer listens for an event, but it now has an id.
+<1> The button still issues a `POST` to `/integrations/1`.
+<2> The table no longer listens for an event, but it now has an id.
 
 Next, the response to the `POST` to `/integrations/1` will include the
 content that needs to be swapped into the button, per the usual htmx mechanism.  But it will also include a new,
@@ -545,7 +545,7 @@ updated version of the contacts table, which will be marked as `hx-swap-oob="tru
 the response so it is not inserted into the button. Instead, it is swapped into the DOM in place of the existing
 table since it has a matching id.
 
-.A Response With Out-of-Band Content
+.A response with out-of-band content
 [source]
 ----
 HTTP/1.1 200 OK
@@ -558,8 +558,8 @@ Pull Contacts From Integration <1>
   ...
 </table>
 ----
-<1> this content will be placed in the button.
-<2> this content will be removed from the response and swapped by id.
+<1> This content will be placed in the button.
+<2> This content will be removed from the response and swapped by id.
 
 Using this piggybacking technique, you can update content wherever needed on a page.
 The `hx-swap-oob` attribute supports other additional features, all of which are https://htmx.org/attributes/hx-swap-oob/[documented].
@@ -682,7 +682,7 @@ This feature is available _only_ in the console, so you can't use it in code on 
 you are working with htmx in Chrome, and are curious why an event isn't triggering on an element, you can open the
 developers console and type the following:
 
-.htmx Logs
+.Htmx logs
 [source, javascript]
 ----
 monitorEvents(document.getElementById("some-element"));
@@ -739,7 +739,7 @@ Htmx is typically configured via a `meta` tag, found in the header of a page.  T
 `htmx-config`, and the content attribute should contain the configuration overrides, formatted as JSON.  Here is
 an example:
 
-.An htmx configuration via a `meta` tag
+.An htmx configuration via `meta` tag
 [source, javascript]
 ----
 <meta name="htmx-config" content='{"defaultSwapStyle":"outerHTML"}'>

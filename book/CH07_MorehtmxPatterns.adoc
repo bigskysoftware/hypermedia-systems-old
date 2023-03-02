@@ -1,5 +1,5 @@
 
-= More htmx Patterns
+= More Htmx Patterns
 :chapter: 07
 :url: ./more-htmx-patterns/
 
@@ -7,8 +7,8 @@
 
 So far so good with Contact.app: we have a nice little web application with some significant improvements over a plain
 HTML-based application. We've added a proper "`Delete Contact`" button, done some dynamic validation of input and looked
-as some different approaches to add paging to the application.  As we have said, many web developers would expect that
-we would have needed to add a lot of JavaScript-based scripting to get these features, but we've done it all in relatively
+at different approaches to add paging to the application.  As we have said, many web developers would expect that
+a lot of JavaScript-based scripting would be required to get these features, but we've done it all in relatively
 pure HTML, using only htmx attributes.
 
 We _will_ eventually add some client-side scripting to our application: hypermedia is powerful, but it isn't _all powerful_ and
@@ -160,7 +160,7 @@ So we could add this to our input:
 However, that isn't the only fix for this problem, and, in this case, it isn't the most efficient one.  Instead, let's
 change the _server-side_ of our Hypermedia-Driven Application to serve _only the HTML content needed_.
 
-=== HTTP Request Headers In htmx
+=== HTTP Request Headers In Htmx
 
 In this section, we'll look at another, more advanced technique for dealing with a situation where we only want a _partial
 bit_ of HTML, rather than a full document. Currently, we are letting the server create the full HTML document as response
@@ -507,7 +507,7 @@ When an htmx request is triggered that points to this indicator, another class, 
 which transitions its opacity to 1.  So you can use just about anything as an indicator, and it will be hidden by default,
 and then, when a request is in flight, will be shown.  This is all done via standard CSS classes, allowing you to control
 the transitions and even the mechanism by which the indicator is shown (e.g. you might use `display` rather than
-`opacity`).  htmx is flexible in this regard.
+`opacity`).  Htmx is flexible in this regard.
 
 .Use Request Indicators!
 ****
@@ -606,7 +606,7 @@ This leaves us with two options:
 Let's assume that we can't remove the feature, and therefore look at how we can mitigate this performance issue by
 using htmx instead.
 
-=== Pulling The Expensive Code Out
+=== Pulling Out The Expensive Code
 
 The first step in implementing the Lazy Load pattern is to pull the expensive code, that is, the call to `Contacts.count()`
 out of the request handler for the `/contacts` endpoint.
@@ -1061,7 +1061,7 @@ with the name of the input if and only if it is checked.  So if, for example, yo
 7 and 9, then those three values would all be submitted to the server.  Since all the checkboxes in this case have
 the same name, `selected_contact_ids`, all three values would be submitted with the name `selected_contact_ids`.
 
-=== The "`Delete Selected Contacts`" button
+=== The "`Delete Selected Contacts`" Button
 
 The next step is to add a button below the table that will delete all the selected contacts.  We want this button, like
 our delete links in each row, to issue an HTTP `DELETE`, but rather than issuing it to the URL for a given contact, like

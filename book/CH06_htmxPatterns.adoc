@@ -68,12 +68,12 @@ Because it has `hx-boost="true"` on it, htmx will halt the normal link behavior 
 the entire page with the response.  Instead, htmx will issue an AJAX request to `/settings`, taking the result and replacing
 the `body` element with the new content.
 
-.A Boosted Link
+.A boosted link
 [source,html]
 ----
 <a href="/settings" hx-boost="true">Settings</a> <1>
 ----
-<1> A simple attribute makes this link AJAX-powered
+<1> The `hx-boost` attribute makes this link AJAX-powered.
 
 You might reasonably ask: what's the advantage here?  We are issuing an AJAX request and simply replacing the entire body.
 
@@ -106,7 +106,7 @@ Here is an example of a form that posts messages to the `/messages` end point us
 `hx-boost` to it, those requests will be done in AJAX, rather than the normal browser behavior.
 
 [#listing-4-2, reftext={chapter}.{counter:listing}]
-.A Boosted Form
+.A boosted form
 [source,html]
 ----
 <form action="/messages" method="post" hx-boost="true"><1>
@@ -114,7 +114,7 @@ Here is an example of a form that posts messages to the `/messages` end point us
   <button>Post Your Message</button>
 </form>
 ----
-<1> As with the link, a simple attribute makes this form AJAX-powered
+<1> As with the link, `hx-boost` makes this form AJAX-powered.
 
 A big advantage of the AJAX-based request that `hx-boost` uses (and the lack of head processing that occurs) is that it
 avoids what is known as a _flash of unstyled content_:
@@ -137,7 +137,7 @@ This feels a little redundant, doesn't it?  It seems silly to annotate all three
 right next to one another.
 
 [#listing-4-3, reftext={chapter}.{counter:listing}]
-.A Set of Boosted Links
+.A set of boosted links
 [source,html]
 ----
 <a href="/contacts" hx-boost="true">Contacts</a>
@@ -145,7 +145,7 @@ right next to one another.
 <a href="/help" hx-boost="true">Help</a>
 ----
 
-htmx offers a feature to help reduce this redundancy: attribute inheritance.  With most attributes in htmx, if you
+Htmx offers a feature to help reduce this redundancy: attribute inheritance.  With most attributes in htmx, if you
 place it on a parent, the attribute will also apply to children elements.  This is how Cascading Style Sheets work, and
 that idea inspired htmx to adopt a similar "`cascading htmx attributes`" feature.
 
@@ -155,7 +155,7 @@ still boosted, inheriting that functionality from the parent `div`.
 
 Note that any legal HTML element could be used here, we just use a `div` out of habit.
 
-.Boosting Links Via The Parent
+.Boosting links via the parent
 [source,html]
 ----
 <div hx-boost="true"> <1>
@@ -164,7 +164,7 @@ Note that any legal HTML element could be used here, we just use a `div` out of 
     <a href="/help">Help</a>
 </div>
 ----
-<1> The `hx-boost` has been moved to the parent div
+<1> The `hx-boost` has been moved to the parent div.
 
 Now we don't have to put an `hx-boost="true"` on every link and, in fact, we can add more links alongside the
 existing ones, and they, too, will be boosted, without us needing to explicitly annotate them.
@@ -177,7 +177,7 @@ page request for the PDF, which the browser will then offer to save as a file on
 To handle this situation, you would simply override the parent `hx-boost` value with `hx-boost="false"` on the
 anchor tag that you didn't want to be boosted:
 
-.Disabling Boosting
+.Disabling boosting
 [source,html]
 ----
 <div hx-boost="true"> <1>
@@ -187,8 +187,8 @@ anchor tag that you didn't want to be boosted:
     <a href="/help/documentation.pdf" hx-boost="false">Download Docs</a> <2>
 </div>
 ----
-<1> The `hx-boost` is still on the parent div
-<2> The boosting behavior is overridden for this link
+<1> The `hx-boost` is still on the parent div.
+<2> The boosting behavior is overridden for this link.
 
 Here we have a new link to a documentation PDF that we wish to function like a regular link.  We have added
 `hx-boost="false"` to the link and this declaration will override the `hx-boost="true"` on the parent `div`, reverting
@@ -232,7 +232,7 @@ How could we accomplish that?
 Well, it's pretty darned easy (and pretty common in htmx-powered web applications): we can just add `hx-boost` on the
 `body` tag of our `layout.html` template, and we are done.
 
-.Boosting The Entire Contact.app
+.Boosting the entire contact.app
 [source,html]
 ----
 <html>
@@ -247,7 +247,7 @@ Well, it's pretty darned easy (and pretty common in htmx-powered web application
 Now every link and form in our application will use AJAX by default, making it feel much snappier.  Consider the
 "`New Contact`" link that we created on the main page:
 
-.A Newly Boosted "`Add Contact`" Link
+.A newly boosted "`Add Contact`" link
 [source,html]
 ----
   <a href="/contacts/new">Add Contact</a>
@@ -257,7 +257,7 @@ Even though we haven't touched anything on this link or on the server-side handl
 now "`just work`" as a boosted link, using AJAX for a snappier user experience, including updating history, back button
 support and so on.  And, if JavaScript isn't enabled, it will fall back to the normal link behavior.
 
-All this with one, single htmx attribute.
+All this with one htmx attribute.
 
 `hx-boost` is more "`magic`" than other attributes in htmx, which generally are lower level and require a bit more explicit
 annotation work, in order to specify exactly what you want htmx to do.  In general, this is the design philosophy of htmx:
@@ -270,7 +270,7 @@ For our next step with htmx, recall that Contact.app has a small form on the edi
 used to delete the contact:
 
 [source, html]
-.Plain HTML Form To Delete A Contact
+.Plain HTML form to delete a contact
 ----
     <form action="/contacts/{{ contact.id }}/delete" method="post">
         <button>Delete Contact</button>
@@ -539,7 +539,7 @@ alongside the inputs.
 Let's take a look at the HTML for the email input:
 
 [source, html]
-.Validation Error Messages
+.Validation error messages
 ----
 <p>
     <label for="email">Email</label>

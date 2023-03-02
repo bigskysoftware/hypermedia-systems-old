@@ -557,7 +557,7 @@ Let's fix these two issues. To fix the first one, we will use a trigger filter t
 are pressed together:
 
 [#listing-3-10, reftext={chapter}.{counter:listing}]
-.Better!
+.Getting better with filter on keyup
 [source,html]
 ----
 <div id="main">
@@ -592,7 +592,7 @@ In this case, we want to listen to the `body` element, which is the parent eleme
 Here is what our updated `hx-trigger` attribute looks like:
 
 [#listing-3-11, reftext={chapter}.{counter:listing}]
-.Better!
+.Even better, listen for keyup on the body
 [source,html]
 ----
 <div id="main">
@@ -653,8 +653,8 @@ forms.  Forms are used to pass additional information beyond just a URL up to th
 This information is captured via input and input-like elements within the form via the various types of input tags
 available in HTML.
 
-Htmx allows you include this additional information in a way that mirrors how HTML
-itself works.
+Htmx allows you include this additional information in a way that mirrors HTML
+itself.
 
 === Enclosing Forms
 

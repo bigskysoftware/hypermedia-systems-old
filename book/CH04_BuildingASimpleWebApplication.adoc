@@ -98,7 +98,7 @@ invoke it.
 
 Here is what the code looks like:
 
-.A Simple "`Hello World`" Route
+.A simple "`Hello World`" route
 [source,python]
 ----
 @app.route("/") <1>
@@ -143,7 +143,7 @@ application.
 
 To change our "`Hello World`" route to a redirect, we only need to change one line of code:
 
-.Changing "`Hello World`" to a Redirect
+.Changing "`Hello World`" to a redirect
 [source,python]
 ----
 @app.route("/")
@@ -197,7 +197,7 @@ display that is common to both types of request.
 
 Here is what the code looks like for this handler:
 
-.Server Side Search
+.Server-side search
 [source,python]
 ----
 @app.route("/contacts")
@@ -308,7 +308,7 @@ contacts that match the search, if a search was done.
 
 Here is what the template code for the contact table looks like:
 
-.The Contacts Table
+.The contacts table
 [source, html]
 ----
     <table>
@@ -352,7 +352,7 @@ Additionally, we have a table cell that includes two links:
 
 Finally, we have a bit of end-matter: a link to add a new contact and a Jinja2 directive to end the `content` block:
 
-.The Add Contact Link
+.The "`add contact`" link
 [source, html]
 ----
     <p>
@@ -397,7 +397,7 @@ HTTP method we want to handle when we declare this route.
 
 Here is the code:
 
-.The New Contact GET Route
+.The "`new contact`" GET route
 [source,python]
 ----
 @app.route("/contacts/new", methods=['GET']) <1>
@@ -423,7 +423,7 @@ going to use the standard form hypermedia control for collecting contact informa
 
 Here is what our HTML looks like:
 
-.The New Contact Form
+.The "`new contact`" form
 [source, html]
 ----
 <form action="/contacts/new" method="post"> <1>
@@ -450,7 +450,7 @@ will be submitted in the `POST` request, associated with the `email` key.
 
 Next we have inputs for the other fields for contacts:
 
-.Inputs And Labels For The New Contact Form
+.Inputs and labels for the "`new contact`" form
 [source, html]
 ----
         <p>
@@ -472,7 +472,7 @@ Next we have inputs for the other fields for contacts:
 
 Finally, we have a button that will submit the form, the end of the form tag, and a link back to the main contacts table:
 
-.The Submit Button For The New Contact Form
+.The submit button for the "`new contact`" form
 [source, html]
 ----
         <button>Save</button>
@@ -504,7 +504,7 @@ render error messages about what issues need to be fixed so that the user can co
 
 Here is our new request handler:
 
-.The New Contact Controller Code
+.The "`new contact`" controller code
 [source, python]
 ----
 @app.route("/contacts/new", methods=['POST'])
@@ -628,7 +628,7 @@ us a good place to do so.
 
 Again, we will omit the "`chrome`" of the template and focus on the meat:
 
-.The Contact Details Template
+.The "`contact details`" template
 [source, html]
 ----
 <h1>{{contact.first}} {{contact.last}}</h1>
@@ -660,7 +660,7 @@ will need to handle a `POST` to `/contacts/<contact_id>/delete`.
 Let's look at the code to handle the `GET`, which, again, will return an HTML representation of an editing interface
 for the given resource:
 
-.The Edit Contact Controller Code
+.The "`edit contact`" controller code
 [source, python]
 ----
 @app.route("/contacts/<contact_id>/edit", methods=["GET"])
@@ -679,7 +679,7 @@ messages.
 
 Here is the first bit of the form:
 
-.The Edit Contact Form Start
+.The "`edit contact`" form start
 [source, html]
 ----
     <form action="/contacts/{{ contact.id }}/edit" method="post"> <1>
@@ -701,7 +701,7 @@ would prefer to use a `PUT` or `PATCH`, but those are not available in plain HTM
 Following this we have the remainder of our form, again very similar to the `new.html` template, and our button
 to submit the form.
 
-.The Edit Contact Form Body
+.The "`edit contact`" form body
 [source, html]
 ----
               <p>
@@ -733,7 +733,7 @@ much rather use an HTTP `DELETE` request to delete one.  Unfortunately that also
 
 To finish up the page, there is a simple hyperlink back to the list of contacts.
 
-.The Edit Contact Form Footer
+.The "`edit contact`" form footer
 [source, html]
 ----
     <form action="/contacts/{{ contact.id }}/delete" method="post">
@@ -809,7 +809,7 @@ an HTTP `POST` to `/contacts/<contact_id>/delete`, and we will need to create a 
 
 Here is what the controller looks like:
 
-.The Delete Contact Controller Code
+.The "`delete contact`" controller code
 [source, python]
 ----
 @app.route("/contacts/<contact_id>/delete", methods=["POST"]) <1>

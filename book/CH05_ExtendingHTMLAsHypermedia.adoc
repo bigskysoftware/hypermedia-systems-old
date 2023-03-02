@@ -72,7 +72,7 @@ itself.
 Consider again this simple anchor tag which, when interpreted by a browser, creates a hyperlink to the website for
 this book:
 
-.A Simple Hyperlink, Again
+.A simple hyperlink, again
 [source,html]
 ----
 <a href="https://hypermedia.systems/">
@@ -264,7 +264,7 @@ URL you wish to issue the given HTTP request type to.  Typically, this is done v
 For example, if we wanted a button to issue a `GET` request to `/contacts` then we would write the following
 HTML:
 
-.A Simple htmx-Powered Button
+.A simple htmx-powered button
 [source,html]
 ----
 <button hx-get="/contacts"> <1>
@@ -308,7 +308,7 @@ the server to the client, and it isn't necessary to reprocess a `head` tag with 
 When the "`Get Contacts`" button is clicked, a _partial_ HTML response might look something like this:
 
 [#listing-3-3, reftext={chapter}.{counter:listing}]
-.A partial HTML Response to an htmx Request
+.A partial HTML response to an htmx request
 [source,html]
 ----
 <ul>
@@ -352,7 +352,7 @@ allows you to specify the element to put the new hypermedia content into.
 Let's add a `div` tag that encloses the button with the id `main`.  We will then target this `div` with the response:
 
 [#listing-3-4, reftext={chapter}.{counter:listing}]
-.A Simple htmx-Powered Button
+.A simple htmx-powered button
 [source,html]
 ----
 <div id="main"> <1>
@@ -377,7 +377,7 @@ response has been received and processed?
 It would look something like this:
 
 [#listing-3-5, reftext={chapter}.{counter:listing}]
-.Our HTML After the htmx Request Finishes
+.Our HTML after the htmx request finishes
 [source,html]
 ----
 <div id="main">
@@ -428,7 +428,7 @@ replace the _entire div_ with the HTML response.
 To do so would require only a small change to our button, adding a new `hx-swap` attribute:
 
 [#listing-3-6, reftext={chapter}.{counter:listing}]
-.Replacing the Entire div
+.Replacing the entire div
 [source,html]
 ----
 <div id="main">
@@ -444,7 +444,7 @@ To do so would require only a small change to our button, adding a new `hx-swap`
 Now, when a response is received, the _entire_ div will be replaced with the hypermedia content:
 
 [#listing-3-7, reftext={chapter}.{counter:listing}]
-.Our HTML After the htmx Request Finishes
+.Our HTML after the htmx request finishes
 [source,html]
 ----
 <ul>
@@ -504,7 +504,7 @@ using this an example.
 To respond to a mouse entering the button, we would add the following attribute to our button:
 
 [#listing-3-8, reftext={chapter}.{counter:listing}]
-.A Button that Triggers on Mouse Entry
+.A (bad?) button that triggers on mouse entry
 [source,html]
 ----
 <div id="main">
@@ -532,7 +532,7 @@ request.  If not, the request will not be triggered.
 In the case of keyboard shortcuts, we want to catch the `keyup` event in addition to the click event:
 
 [#listing-3-9, reftext={chapter}.{counter:listing}]
-.A Start
+.A start, trigger on keyup
 [source,html]
 ----
 <div id="main">
@@ -605,7 +605,7 @@ Here is what our updated `hx-trigger` attribute looks like:
 ----
 <1> Listen to the 'keyup' event on the `body` tag.
 
-Now, in addition to clicks, the button will listen for `keyup` events on the body of the page.  So it will now issue a
+Now, in addition to clicks, the button will listen for `keyup` events on the body of the page.  So it will issue a
 request when it is clicked on and also whenever someone hits `Ctrl-L` within the body of the page.
 
 And now we have a nice keyboard shortcut for our Hypermedia-Driven Application.
@@ -631,7 +631,7 @@ within HTML.
 
 Here is a table summarizing those opportunities and which htmx attributes address them:
 
-.Opportunities For Improving HTML
+.Opportunities for improving HTML
 Any element should be able to make HTTP requests::
   `hx-get`, `hx-post`, `hx-put`, `hx-patch`, `hx-delete`
 
@@ -664,7 +664,7 @@ tag.
 Let's take our original button for retrieving contacts and repurpose it for searching contacts:
 
 [#listing-3-12, reftext={chapter}.{counter:listing}]
-.A Simple htmx-Powered Button
+.An htmx-powered search button
 [source,html]
 ----
 <div id="main">
@@ -713,7 +713,7 @@ The `hx-include` attribute allows you to select input values that you wish to in
 Here is the above example reworked to include the input, dropping the form:
 
 [#listing-3-13, reftext={chapter}.{counter:listing}]
-.A Simple htmx-Powered Button
+.An htmx-powered search button with `hx-include`
 [source,html]
 ----
 <div id="main">
@@ -766,7 +766,7 @@ standard mechanism for including additional, hidden information in HTML.)
 
 Here is an example of `hx-vals`:
 
-.A simple htmx-powered button
+.An htmx-powered button with `hx-vals`
 [source,html]
 ----
 <button hx-get="/contacts" hx-vals='{"state":"MT"}'> <1>
@@ -776,7 +776,7 @@ Here is an example of `hx-vals`:
 <1> `hx-vals`, a JSON value to include in the request.
 
 The parameter `state` with the value `MT` will be included in the `GET` request, resulting in a path and parameters that
-looks like this:  `/contacts?state=MT`.  One thing to note is that we switched the `hx-vals` attribute to use single quotes
+looks like this:  `/contacts?state=MT`.  Note that we switched the `hx-vals` attribute to use single quotes
 around its value.  This is because JSON strictly requires double quotes and, therefore, to avoid escaping we needed to
 use the single-quote form for the attribute value.
 
@@ -787,7 +787,7 @@ For example, if the `state` variable were maintained dynamically, via some JavaS
 function, `getCurrentState()`, that returned the currently selected state, it could be included dynamically in htmx
 requests like so:
 
-.A Dynamic Value
+.A dynamic value
 [source,html]
 ----
 <button hx-get="/contacts" hx-vals='js:{"state":getCurrentState()}'> <1>
@@ -814,8 +814,7 @@ web page (perhaps it is just recording some activity in the browser), so it woul
 history entry for the interaction.
 
 However, there are likely to be a lot of AJAX driven interactions in a Single Page Application where it _is_ appropriate
-to create a history entry.  And, it turns out, there is a JavaScript API for working with the history of a browser.
-Unfortunately, this API is deeply annoying and difficult to work with and, thus, is often ignored by JavaScript developers.
+to create a history entry.  There is a JavaScript API to work with browser history, but this API is deeply annoying and difficult to work with, and thus often ignored by JavaScript developers.
 
 If you have ever used a Single Page Application and accidentally clicked the back button, only to lose your entire
 application state and have to start over, you have seen this problem in action.
@@ -871,7 +870,7 @@ can do this using HTTP headers, a topic we will go into in detail later in the b
 == Conclusion
 
 So that's our whirlwind introduction to htmx.  We've only seen about ten attributes from the library, but you
-can see a hint of just how powerful these attributes can be. Htmx enaables a much
+can see a hint of just how powerful these attributes can be. Htmx enables a much
 more sophisticated web application than is possible in plain HTML, with minimal additional conceptual load compared to most JavaScript-based approaches.
 
 Htmx aims to incrementally improve HTML as a hypermedia in a manner that is

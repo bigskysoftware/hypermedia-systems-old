@@ -167,7 +167,7 @@ of hyperlinks to get our minds in the right place for developing a deeper unders
 
 Consider a simple anchor tag, embedded within a larger HTML document:
 
-.A Simple Hyperlink
+.A simple hyperlink
 [source,html]
 ----
 <a href="https://hypermedia.systems/">
@@ -212,7 +212,7 @@ falls to the form tag.
 Here is a simple example of a form in HTML:
 
 [#listing-1-2, reftext={chapter}.{counter:listing}]
-.A Simple Form
+.A simple form
 [source,html]
 ----
 <form action="/signup" method="post">
@@ -565,7 +565,7 @@ So, what does an HDA look like up close?
 Let's look at an htmx-powered implementation of the simple JavaScript-powered button above:
 
 [#listing-1-4, reftext={chapter}.{counter:listing}]
-.An Htmx Implementation
+.An htmx implementation
 [source,html]
 ----
 <button hx-get="/contacts/1" hx-target="#contact-ui"> <1>

@@ -122,7 +122,7 @@ Hyperview is an open-source framework that provides:
 - A hypermedia client for HXML that can be embedded in an app binary on iOS and Android
 - Extension points in HXML and the client to customize the framework for a given app
 
-==== The Format
+==== The format
 HXML was designed to feel familiar to web developers, used to working with HTML.
 Thus the choice of XML for the base format.
 In addition to familiar ergonomics, XML is compatible with server-side rendering libraries.
@@ -760,7 +760,7 @@ Behavior actions in Hyperview fall into four general categories:
 - System actions, which interact with OS-level capabilities.
 - Custom actions, which can execute any code you add to the client.
 
-===== Navigation Actions
+===== Navigation actions
 We've already seen the simplest type of action, `push`.
 We classify `push` as a "`navigation action`", since it's related to navigating screens in the mobile app.
 Pushing a screen onto the navigation stack is just one of several navigation actions supported in Hyperview.
@@ -832,7 +832,7 @@ It's on the app developers to handle this themselves.
 Navigation actions in HXML provide an easy but powerful way for developers to build an architecture that makes sense for their app.
 
 
-===== Update Actions
+===== Update actions
 
 Behavior actions are not just limited to navigating between screens.
 They can also be used to change the content on the current screen.
@@ -1019,7 +1019,7 @@ We won't cover them in detail, but I'll mention them briefly here:
 - `set-value`: this action can set the value of an input element such as `<text-field>`, `<switch>`, `<select-single>`, etc.
 - `select-all` and `unselect-all` work with the `<select-multiple>` element to select/deselect all options.
 
-===== System Actions
+===== System actions
 
 Some standard Hyperview actions don't interact with the HXML at all.
 Instead, they expose functionality provided by the mobile OS.
@@ -1041,8 +1041,8 @@ It involves a custom namespace, and share-specific attributes.
 ----
 <1> Defines the namespace for the share action.
 <2> The action of this behavior will bring up the share sheet.
-<3> URL to be shared
-<4> Message to be shared
+<3> URL to be shared.
+<4> Message to be shared.
 
 We've seen XML namespaces when talking about custom elements.
 Here, we are using a namespace for the `url` and `message` attributes on the `<behavior>`.
@@ -1095,7 +1095,7 @@ We could even open a share sheet, or a second dialog box.
 But please don't do that in a real app!
 With great power comes great responsibility.
 
-===== Custom Actions
+===== Custom actions
 
 You can build a lot of mobile UIs with Hyperview's standard navigation, update, and system actions.
 But the standard set may not cover all interactions you will need for your mobile app.
@@ -1126,8 +1126,8 @@ This is done using multiple `<behavior>` elements on the same UI element.
   Press (or long-press) me!
 </text>
 ----
-<1> Normal press will open the next screen
-<2> Long press will open a different screen
+<1> Normal press will open the next screen.
+<2> Long press will open a different screen.
 
 In this example, a normal press will open a new screen and request content from `/next-screen`.
 However, a long press will open a new screen with content from `/secret-screen`.
@@ -1199,7 +1199,7 @@ For example, when the user types in a username and then blurs the field, a behav
 If the entered username is not unique, the response could include an error message letting the user know they need to pick a different username.
 
 
-==== Using Multiple Behaviors
+==== Using multiple behaviors
 Most of the examples shown above attach a single `<behavior>` to an element.
 But there's no such limitation in Hyperview; elements can define multiple behaviors.
 We already saw an example where a single element had different actions triggered on `press` and `longPress`.
@@ -1226,8 +1226,8 @@ But, we can trigger two behaviors at the same time, each one executing a "`hide`
   </body>
 </screen>
 ----
-<1> Hide element with ID "`area1`" when pressed
-<2> Hide element with ID "`area2`" when pressed
+<1> Hide element with ID "`area1`" when pressed.
+<2> Hide element with ID "`area2`" when pressed.
 
 Hyperview processes behaviors in the order they appear in the markup.
 In this case, the element with ID "`area1`" will be hidden first, followed by the element with ID "`area2`".

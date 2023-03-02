@@ -185,7 +185,7 @@ when the request will be made.  Common situations that call for an event trigger
 
 Using event filters, you can use whatever logic you'd like to filter requests by htmx.
 
-==== Synthetic Events
+==== Synthetic events
 
 In addition to these modifiers, `hx-trigger` offers a few "`synthetic`" events, that is events that are not part of the
 regular DOM API.  We have already seen `load` and `revealed` in our lazy loading and infinite scroll examples, but

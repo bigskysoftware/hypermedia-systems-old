@@ -419,7 +419,7 @@ also _authorization_, determining if they have the right to perform the request.
 
 We will set authorization aside for now and consider only authentication.
 
-==== Authentication in Web Applications
+==== Authentication in web applications
 
 In the HTML web application world, authentication has traditionally been done via a login page that asks a user for
 their username (often their email) and a password.  This password is then checked against a database of (hashed)

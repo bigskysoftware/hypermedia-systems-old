@@ -242,15 +242,15 @@ We will treat `Contact` as a _resource_, and focus on how to effectively provide
 of that resource to clients.
 ****
 
-==== The List & Search Templates
+==== The list & search templates
 
 Now that we have our handler logic written, we need to look at the templates that we are going to use to render
 HTML in our response to the client.  At a high level, our HTML response needs to have the following elements:
 
-* A list of any matching or all contacts
-* A search box that a user may type a search term into and then submit for searches
+* A list of any matching or all contacts.
+* A search box that a user may type a search term into and then submit for searches.
 * A bit of surrounding "`chrome`": a header and footer for the website that will be the same regardless of the page you
-  are on
+  are on.
 
 We are using the Jinja2 templating language, which has the following features:
 
@@ -491,7 +491,7 @@ If we add a new field, remove a field, or change the logic around how fields are
 this new state of affairs would be reflected in the new hypermedia representation given to users.  A user would see the
 updated new form, and be able to work with new features, with no software update required.
 
-==== Handling The Post to `/contacts/new`
+==== Handling the post to `/contacts/new`
 
 The next step in our application is to handle the `POST` that this form makes to `/contacts/new`.
 
@@ -769,7 +769,7 @@ drawbacks (it is not nearly as isolated as client-side components).
 Overall, a properly factored server-side hypermedia application can be extremely DRY.
 ****
 
-==== Handling The Post to `/contacts/<contact_id>`
+==== Handling the post to `/contacts/<contact_id>`
 
 Next we need to handle the HTTP `POST` request that the form in our `edit.html` template submits.  We will declare
 another route that handles the same path as the `GET` above.

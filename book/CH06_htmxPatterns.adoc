@@ -354,7 +354,7 @@ def contacts_delete(contact_id=0):
 
 Pretty simple, and much cleaner.
 
-==== A Response Code Gotcha
+==== A response code gotcha
 
 Unfortunately, there is a problem with our updated handler: by default, in Flask the `redirect()` method responds with
 a `302 Found` HTTP Response Code.

@@ -196,7 +196,7 @@ With vanilla JavaScript, there are no rules!
 This isn't all bad. It presents a great opportunity to take a small journey through various styles that people have
 developed for writing their JavaScript.
 
-==== An Inline Implementation
+==== An inline implementation
 
 To begin, let's start with the simplest thing imaginable: all of our JavaScript will be written inline, directly in the
 HTML.  When the button is clicked, we will look up the `output` element holding the number, and increment the number
@@ -215,10 +215,10 @@ contained within it.
   >Increment</button>
 </section>
 ----
-<1> Our output element has an ID to help us find it
-<2> We use the `onclick` attribute to add an event listener
-<3> Find the output via a querySelector() call
-<4> JavaScript allows us use the `++` operator on strings
+<1> Our output element has an ID to help us find it.
+<2> We use the `onclick` attribute to add an event listener.
+<3> Find the output via a querySelector() call.
+<4> JavaScript allows us use the `++` operator on strings.
 
 Not too bad.
 
@@ -231,7 +231,7 @@ But it works. It's also easy enough to understand, and crucially it doesn't requ
 
 So that's the simple, inline approach with VanillaJS.
 
-==== Separating Our Scripting Out
+==== Separating our scripting out
 
 While the inline implementation is simple in some sense, a more standard way to write this code would be to move the code
 into a separate JavaScript file. This JavaScript file would then either be linked to via a `<script src>` tag or
@@ -356,7 +356,7 @@ having code look up elements in a document through CSS selectors in order to add
 In a Hypermedia Driven Application, we feel that the Locality of Behaviour design principle is often more important than
 the more traditional Separation of Concerns design principle.
 
-==== What To Do With Our Counter?
+==== What to do with our counter?
 
 So, should we go back to the `onclick` attribute way of doing things? That approach certainly wins in Locality of
 Behavior, and has the additional benefit that it is baked into HTML.
@@ -894,7 +894,7 @@ With this code written, we can make the toolbar appear and disappear, based on w
 
 Very slick.
 
-==== Implementing Actions
+==== Implementing actions
 
 Now that we have the mechanics of showing and hiding the toolbar, let's look at how to implement the buttons within
 the toolbar.
@@ -1178,7 +1178,7 @@ and returns a boolean (`true` if the user confirmed, `false` otherwise), SweetAl
 is a JavaScript mechanism for hooking in a callback once an asynchronous action (such as waiting for a user to confirm
 or deny an action) completes.
 
-==== Integrating Using Callbacks
+==== Integrating using callbacks
 
 With SweetAlert2 installed as a library, you have access to the `Swal` object, which has a `fire()` function on it to
 trigger showing an alert.  You can pass in arguments to the `fire()` method to configure exactly what the buttons
@@ -1223,7 +1223,7 @@ trigger the request via events.
 
 So let's take a different approach and see how that looks.
 
-==== Integrating Using Events
+==== Integrating using events
 
 To clean this code up, we will pull the `Swal.fire()` code out to a custom JavaScript function we will create called
 `sweetConfirm()`.  `sweetConfirm()` will take the dialog options that are passed into the `fire()` method, as well as
@@ -1245,8 +1245,8 @@ function sweetConfirm(elt, config) {
           });
 }
 ----
-<1> Pass the config through to the `fire()` function
-<2> If the user confirmed the action, trigger a `confirmed` event
+<1> Pass the config through to the `fire()` function.
+<2> If the user confirmed the action, trigger a `confirmed` event.
 
 With this method available, we can now tighten up our delete button quite a bit.  We can remove all the SweetAlert2
 code that we had in the `@click` Alpine attribute, and simply call this new `sweetConfirm()` method, passing in the
@@ -1270,9 +1270,9 @@ Here is what our code looks like:
                   showCancelButton: true,
                   confirmButtonText: 'Delete'})">
 ----
-<1> htmx attributes are back
-<2> We pass the button in to the function, so an event can be triggered on it
-<3> We pass through the SweetAlert2 configuration information
+<1> htmx attributes are back.
+<2> We pass the button in to the function, so an event can be triggered on it.
+<3> We pass through the SweetAlert2 configuration information.
 
 As you can see, this event-based code is much cleaner and certainly more "`HTML-ish`".  The key to this cleaner
 implementation is that our new `sweetConfirm()` function fires an event that htmx is able to listen for.

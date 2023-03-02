@@ -160,7 +160,7 @@ the better you understand the core tags and concepts of HTML, the more you will 
 Let us consider these two defining hypermedia elements (that is the two defining _hypermedia controls_) of HTML,
 the anchor tag and the form tag, in a bit of detail.
 
-==== Anchor Tags
+==== Anchor tags
 
 Anchor tags are so familiar as to be boring but, as the original hypermedia control, it is worth reviewing the mechanics
 of hyperlinks to get our minds in the right place for developing a deeper understanding of hypermedia.
@@ -204,7 +204,7 @@ The _hypermedia server_ then responds to this request with a _hypermedia respons
 This may seem like a small and obvious point, but it is an absolutely crucial aspect of a truly RESTful _hypermedia
 system_: the client and server must communicate via hypermedia!
 
-==== Form Tags
+==== Form tags
 
 Anchor tags provide _navigation_ between documents or resources, but don't allow you to update those resources.  That functionality
 falls to the form tag.
@@ -258,7 +258,7 @@ Here is a diagram of the interaction:
 .An HTTP POST In Action
 image::diagram/http-post-in-action.svg[When submitting a sign up form, browser sends POST request with form data. Server responds creates account and responds with a thank you page.]
 
-==== Web 1.0 Applications
+==== Web 1.0 applications
 
 As someone interested in web development, the above diagrams and discussion are probably very familiar to you.  You may
 even find this content boring.  But take a step back and consider the fact that these two hypermedia controls,

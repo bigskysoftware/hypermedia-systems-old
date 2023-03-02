@@ -734,7 +734,7 @@ with the request.  This can be useful if it is difficult to colocate an element 
 It is also useful when you do, in fact, want to submit values with a `GET` request and overcome the default behavior of
 htmx.
 
-==== Relative CSS Selectors
+==== Relative CSS selectors
 
 The `hx-include` attribute and, in fact, most attributes that take a CSS selector, also support _relative_ CSS selectors.
 These allow you to specify a CSS selector _relative_ to the element it is declared on.  Here are some examples:

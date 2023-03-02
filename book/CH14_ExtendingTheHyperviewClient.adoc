@@ -565,7 +565,7 @@ export default class HyperviewScreen extends PureComponent {
 
 We're now ready to update our HXML templates to make use of the new swipeable row component!
 
-==== Using The Component
+==== Using the component
 Currently, the HXML for a contact item in the list consists of a `<behavior>` and `<text>` element:
 
 .Snippet of `hv/rows.xml`
@@ -599,8 +599,8 @@ So let's start by adding `<row>` and `<main>` as parent elements.
 </item>
 ----
 <1> Added `<swipe:row>` parent element, with namespace alias for `swipe`.
-<2> Added `<swipe:main>` element to define the main content
-<3> Wrapped the existing `<behavior>` and `<text>` elements in a `<view>`
+<2> Added `<swipe:main>` element to define the main content.
+<3> Wrapped the existing `<behavior>` and `<text>` elements in a `<view>`.
 
 Previously, the `contact-item` style was set on the `<item>` element.
 That made sense when the `<item>` element was the container for the main content of the list item.

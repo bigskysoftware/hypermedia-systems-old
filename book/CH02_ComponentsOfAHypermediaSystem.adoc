@@ -143,7 +143,7 @@ Finally, we see some new HTML content.  This content is the HTML _representation
 case a table of contents of a book.  The browser will use this HTML to replace the entire content in its display window,
 showing the user this new page, and updating the address bar to reflect the new URL.
 
-==== HTTP Methods
+==== HTTP methods
 
 The anchor tag above issued an HTTP `GET`, where `GET` is the _method_ of the request.  The particular method
 being used in an HTTP request is perhaps the most important piece of information about it, after the actual resource that
@@ -207,7 +207,7 @@ applications.
 This is an obvious shortcoming of HTML as a hypermedia; it would be wonderful to see this fixed in the
 HTML specification. For now, we'll discuss ways to get around this in Chapter 5.
 
-==== HTTP Response Codes
+==== HTTP response codes
 
 HTTP request methods allow a client to tell a server _what_ to do to a given resource.  HTTP responses contain
 _response codes_, which tell a client what the result of the request was.  HTTP response codes are numeric
@@ -278,7 +278,7 @@ with `200 OK` for every response.  Some JSON Data APIs built on top of HTTP do e
 When building a Hypermedia-Driven Application, you want, instead, to go "`with the grain`" of the web and use HTTP methods
 and response codes as they were designed to be used.
 
-==== Caching HTTP Responses
+==== Caching HTTP responses
 
 A constraint of REST (and, therefore, a feature of HTTP) is the notion of caching responses: a server can indicate to
 a client (as well as intermediary HTTP servers) that a given response can be cached for future requests to the same
@@ -496,7 +496,7 @@ ____
 
 So we have four sub-constraints that, taken together, form the Uniform Interface constraint.
 
-==== Identification of Resources
+==== Identification of resources
 
 In a RESTful system, resources should have a unique identifier.  Today the concept of Universal Resource Locators (URLs) is
 common, but at the time of Fielding's writing they were still relatively new and novel.
@@ -505,7 +505,7 @@ What might be more interesting today is the notion of a _resource_, thus being i
 data that can be referenced, that is, the target of a hypermedia reference, is considered a resource.  URLs, though common
 enough today, end up solving the very complex problem of uniquely identifying any and every resource on the internet.
 
-==== Manipulation of Resources Through Representations
+==== Manipulation of resources through representations
 
 In a RESTful system, _representations_ of the resource are transferred between clients and servers.  These
 representations can contain both data and metadata about the request (such as "`control data`" like an HTTP
@@ -514,7 +514,7 @@ and that media type can be negotiated between the client and the server.
 
 We saw this latter aspect of the uniform interface in the `Accept` header in the requests above.
 
-==== Self-Descriptive Messages
+==== Self-descriptive messages
 
 The Self-Descriptive Messages constraint, combined with the next one, HATEOAS, form what we consider to be the core of
 the Uniform Interface, of REST and why hypermedia provides such a powerful system architecture.
@@ -670,7 +670,7 @@ response: it simply knows how to render HTML.
 Because a hypermedia client doesn't need to know anything about the server model beyond how to render hypermedia to
 a client, it is incredibly flexible with respect to the representations it receives and displays to users.
 
-==== HATEOAS & API Churn
+==== HATEOAS & API churn
 
 This last point is critical to understanding the flexibility of hypermedia, so let's look
 at a practical example of it in action. Consider a situation where a new feature has been added to the web application with these

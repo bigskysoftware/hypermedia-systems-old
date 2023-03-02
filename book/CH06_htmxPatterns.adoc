@@ -247,7 +247,7 @@ Well, it's pretty darned easy (and pretty common in htmx-powered web application
 Now every link and form in our application will use AJAX by default, making it feel much snappier.  Consider the
 "`New Contact`" link that we created on the main page:
 
-.A newly boosted "`Add Contact`" link
+.A newly boosted "`add contact`" link
 [source,html]
 ----
   <a href="/contacts/new">Add Contact</a>
@@ -292,7 +292,7 @@ a resource.  The URL for that resource is `/contacts/42`.  So the ideal is a `DE
 Let's update our application to do this by adding the htmx `hx-delete` attribute to the "`Delete Contact`" button:
 
 [source, html]
-.An htmx Powered Button For Deleting A Contact
+.An htmx-powered button for deleting a contact
 ----
   <button hx-delete="/contacts/{{ contact.id }}">Delete Contact</button>
 ----
@@ -350,7 +350,7 @@ def contacts_delete(contact_id=0):
     flash("Deleted Contact!")
     return redirect("/contacts")
 ----
-<1> An update path and method for the handler
+<1> An update path and method for the handler.
 
 Pretty simple, and much cleaner.
 
@@ -389,8 +389,8 @@ def contacts_delete(contact_id=0):
     flash("Deleted Contact!")
     return redirect("/contacts", 303) <2>
 ----
-<1> A slightly different path and method for the handler
-<2> The response code is now a 303
+<1> A slightly different path and method for the handler.
+<2> The response code is now a 303.
 
 Now, when you want to remove a given contact, you can simply issue a `DELETE` to the same URL as you used to access the
 contact in the first place.
@@ -411,7 +411,7 @@ Mis-targeting like this comes up from time to time when you are working with htm
 The fix for this is easy: add an explicit target to the button, and target the `body` element with the response:
 
 [source, html]
-.A fixed htmx Powered Button For Deleting A Contact
+.A fixed htmx-powered button for deleting a contact
 ----
   <button hx-delete="/contacts/{{ contact.id }}"
           hx-target="body"> <1>
@@ -439,7 +439,7 @@ need to let htmx know that we want the resulting URL from this request "`pushed`
 We can achieve this by adding the `hx-push-url` attribute with the value `true` to our button:
 
 [source, html]
-.Deleting A Contact, Now With Proper Location Information
+.Deleting a contact, now with proper location information
 ----
   <button hx-delete="/contacts/{{ contact.id }}"
           hx-push-url="true" <1>
@@ -447,7 +447,7 @@ We can achieve this by adding the `hx-push-url` attribute with the value `true` 
     Delete Contact
   </button>
 ----
-<1> We tell htmx to push the redirected URL up into the location bar
+<1> We tell htmx to push the redirected URL up into the location bar.
 
 _Now_ we are done.
 
@@ -473,7 +473,7 @@ asking them to confirm the action. Very easy and a great way to prevent accident
 Here is how we would add confirmation of the contact delete operation:
 
 [source, html]
-.Confirming Deletion
+.Confirming deletion
 ----
   <button hx-delete="/contacts/{{ contact.id }}"
           hx-push-url="true"
@@ -482,7 +482,7 @@ Here is how we would add confirmation of the contact delete operation:
     Delete Contact
   </button>
 ----
-<1> This message will be shown to the user, asking them to confirm the delete
+<1> This message will be shown to the user, asking them to confirm the delete.
 
 Now, when someone clicks on the "`Delete Contact`" button, they will be presented with a prompt that asks "`Are you sure
 you want to delete this contact?`" and they will have an opportunity to cancel if they clicked the button in error.  Very
@@ -517,7 +517,7 @@ We are not going to go into the details of how validation works in the model obj
 the code for updating a contact looks like from Chapter 4:
 
 [source, python]
-.Server Side Validation On Contact Update
+.Server-side validation on contact update
 ----
 def contacts_edit_post(contact_id=0):
     c = Contact.find(contact_id)
@@ -528,8 +528,8 @@ def contacts_edit_post(contact_id=0):
     else:
         return render_template("edit.html", contact=c) <2>
 ----
-<1> We attempt to save the contact
-<2> If the save does not succeed we re-render the form to display error messages
+<1> We attempt to save the contact.
+<2> If the save does not succeed we re-render the form to display error messages.
 
 So we attempt to save the contact, and, if the `save()` method returns true, we redirect to the contact's detail page.
 If the `save()` method does not return true, that indicates that there was a validation error and so, instead of redirecting
@@ -589,7 +589,7 @@ type `email`.  All we need to do is switch our input from type `text` to type `e
 enforce that the value entered properly matches the email format:
 
 [source, html]
-.Changing The Input To Type `email`
+.Changing the input to type `email`
 ----
 <p>
     <label for="email">Email</label>
@@ -597,7 +597,7 @@ enforce that the value entered properly matches the email format:
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
-<1> A simple change of the `type` attribute to `email` ensures that values entered are valid emails
+<1> A simple change of the `type` attribute to `email` ensures that values entered are valid emails.
 
 With this change, when the user enters a value that isn't a valid email, the browser will display an
 error message asking for a properly formed email in that field.
@@ -632,7 +632,7 @@ issue a request to the server and validate that email, and render an error messa
 Recall the current HTML for our email input:
 
 [source, html]
-.The Initial Email Configuration
+.The initial email configuration
 ----
 <p>
     <label for="email">Email</label>
@@ -640,8 +640,8 @@ Recall the current HTML for our email input:
     <span class="error">{{ contact.errors['email'] }}</span> <2>
 </p>
 ----
-<1> This is the input that we want to have drive an HTTP request to validate the email
-<2> This is the span we want to put the error message, if any, into
+<1> This is the input that we want to have drive an HTTP request to validate the email.
+<2> This is the span we want to put the error message, if any, into.
 
 So we want to add an `hx-get` attribute to this input.  This will cause the input to issue an HTTP `GET` request to a
 given URL to validate the email.  We then want to target the error span following the input with any error message
@@ -650,7 +650,7 @@ returned from the server.
 Let's make those changes to our HTML:
 
 [source, html]
-.Our Updated HTML
+.Our updated HTML
 ----
 <p>
     <label for="email">Email</label>
@@ -661,8 +661,8 @@ Let's make those changes to our HTML:
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
-<1> Issue an HTTP `GET` to the `email` endpoint for the contact
-<2> Target the next element with the class `error` on it
+<1> Issue an HTTP `GET` to the `email` endpoint for the contact.
+<2> Target the next element with the class `error` on it.
 
 Note that in the `hx-target` attribute we are using a _relative positional_ selector.  This is a feature of htmx and
 an extension to normal CSS.  htmx supports prefixes that will find targets _relative_ to the current element.  Here
@@ -703,7 +703,7 @@ email directly, or the empty string if none exist.
 Here is the code:
 
 [source, python]
-.Our Email Validation End-Point
+.Our email validation endpoint
 ----
 @app.route("/contacts/<contact_id>/email", methods=["GET"])
 def contacts_email_get(contact_id=0):
@@ -712,10 +712,10 @@ def contacts_email_get(contact_id=0):
     c.validate() <3>
     return c.errors.get('email') or "" <4>
 ----
-<1> Look up the contact by id
-<2> Update its email (note that since this is a `GET`, we use the `args` property rather than the `form` property)
-<3> Validate the contact
-<4> Return a string, either the errors associated with the email field or, if there are none, the empty string
+<1> Look up the contact by id.
+<2> Update its email (note that since this is a `GET`, we use the `args` property rather than the `form` property).
+<3> Validate the contact.
+<4> Return a string, either the errors associated with the email field or, if there are none, the empty string.
 
 With this small bit of server-side code in place, we now have the following user experience: when a user enters an email
 and tabs to the next input field, they are immediately notified if the email is already taken.
@@ -749,7 +749,7 @@ In fact, all we need to do is to change our trigger.  Currently, we are using th
 `change` event.  To validate as the user types, we would want to capture the `keyup` event as well:
 
 [source, html]
-.Triggering With `keyup` Events
+.Triggering With `keyup` events
 ----
 <p>
     <label for="email">Email</label>
@@ -761,9 +761,9 @@ In fact, all we need to do is to change our trigger.  Currently, we are using th
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
-<1> An explicit trigger has been declared, and it triggers on both the `change` and `keyup` events
+<1> An explicit trigger has been declared, and it triggers on both the `change` and `keyup` events.
 
-With this tiny change, every time a user types a character we will issue a request and validate the email.  Simple as.
+With this tiny change, every time a user types a character we will issue a request and validate the email.  Simple.
 
 === Debouncing Our Validation Requests
 
@@ -782,7 +782,7 @@ Let's add a delay of 200 milliseconds to the `keyup` trigger, which is long enou
 typing.:
 
 [source, html]
-.Debouncing the `keyup` Event
+.Debouncing the `keyup` event
 ----
 <p>
     <label for="email">Email</label>
@@ -794,7 +794,7 @@ typing.:
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
-<1> We debounce the `keyup` event by adding a `delay` modifier
+<1> We debounce the `keyup` event by adding a `delay` modifier.
 
 Now we no longer issue a stream of validation requests as the user types.  Instead, we wait until the user pauses for
 a bit and then issue the request.  Much better for our server, and still a great user experience.
@@ -812,7 +812,7 @@ By adding `changed` to our `keyup` trigger, the input will not issue validation 
 updates the inputs value:
 
 [source, html]
-.Only Sending Requests When The Input Value Changes
+.Only sending requests when the input value changes
 ----
 <p>
     <label for="email">Email</label>
@@ -824,13 +824,13 @@ updates the inputs value:
     <span class="error">{{ contact.errors['email'] }}</span>
 </p>
 ----
-<1> We do away with pointless requests by only issuing them when the input's value has actually changed
+<1> We do away with pointless requests by only issuing them when the input's value has actually changed.
 
 That's some pretty good-looking and powerful HTML, providing an experience that most developers would think requires
 a complicated client-side solution.
 
-With a total of three attributes and a simple new server-side end point, we have added a fairly sophisticated user
-experience to our web application.   Even better, any email validation rules we add on the server side will
+With a total of three attributes and a simple new server-side endpoint, we have added a fairly sophisticated user
+experience to our web application.  Even better, any email validation rules we add on the server side will
 _automatically_ just work using this model: because we are using hypermedia as our communication mechanism there is no
 need to keep a client-side and server-side model in sync with one another.
 
@@ -863,7 +863,7 @@ we aren't checking the total results count, but it will do for now for our simpl
 Let's look at the jinja template code for this in `index.html`
 
 [source, html]
-.Adding Paging Widgets To Our List of Contacts
+.Adding paging widgets to our list of contacts
 ----
 <div>
     <span style="float: right"> <1>
@@ -876,9 +876,9 @@ Let's look at the jinja template code for this in `index.html`
     </span>
 </div>
 ----
-<1> Include a new div under the table to hold our navigation links
-<2> If we are beyond page 1, include an anchor tag with the page decremented by one
-<3> If there are 10 contacts in the current page, include an anchor tag linking to the next page by incrementing it by one
+<1> Include a new div under the table to hold our navigation links.
+<2> If we are beyond page 1, include an anchor tag with the page decremented by one.
+<3> If there are 10 contacts in the current page, include an anchor tag linking to the next page by incrementing it by one.
 
 Note that here we are using a special jinja filter syntax `contacts|length` to compute the length of the contacts
 list.  The details of this filter syntax is beyond the scope of this book, but in this case you can think of it as
@@ -890,7 +890,7 @@ We are using the `page` request parameter to encode the paging state of the UI. 
 that `page` parameter and pass that through to our model, as an integer, so the model knows which page of contacts to return:
 
 [source, python]
-.Adding Paging To Our Request Handler
+.Adding paging to our request handler
 ----
 @app.route("/contacts")
 def contacts():
@@ -902,9 +902,9 @@ def contacts():
         contacts_set = Contact.all(page) <2>
     return render_template("index.html", contacts=contacts_set, page=page)
 ----
-<1> Resolve the page parameter, defaulting to page 1 if no page is passed in
+<1> Resolve the page parameter, defaulting to page 1 if no page is passed in.
 <2> Pass the page through to the model when loading all contacts so it knows which page of 10 contacts to
-    return
+    return.
 
 This is fairly straightforward: we just need to get another parameter, like the `q` parameter we passed in for
 searching contacts earlier, convert it to an integer and then pass it through to the `Contact` model, so it
@@ -943,7 +943,7 @@ exiting table, rather than re-rendering the whole table.  This can be achieved b
 that has just such a button in it:
 
 [source, html]
-.Changing To "`Click To Load`"
+.Changing to "`click to load`"
 ----
         <tbody>
         {% for contact in contacts %}
@@ -969,10 +969,10 @@ that has just such a button in it:
         {% endif %}
         </tbody>
 ----
-<1> Only show "`Load More`" if there are 10 contact results in the current page
-<2> Target the closest enclosing row
-<3> Replace the entire row with the response from the server
-<4> Select out the table rows from the response
+<1> Only show "`Load More`" if there are 10 contact results in the current page.
+<2> Target the closest enclosing row.
+<3> Replace the entire row with the response from the server.
+<4> Select out the table rows from the response.
 
 Let's go through each attribute in detail here.
 
@@ -1013,12 +1013,12 @@ with the `hx-trigger` attribute, to trigger a request when, well, when an elemen
 So let's convert our button to a span and take advantage of this event:
 
 [source, html]
-.Changing To "`Infinite Scroll`"
+.Changing to "`infinite scroll`"
 ----
 {% if contacts|length == 10 %} <1>
     <tr>
         <td colspan="5" style="text-align: center">
-            <span<1>hx-target="closest tr"
+            <span>hx-target="closest tr" <1>
                     hx-trigger="revealed" <2>
                     hx-swap="outerHTML"
                     hx-select="tbody > tr"
@@ -1027,8 +1027,8 @@ So let's convert our button to a span and take advantage of this event:
     </tr>
 {% endif %}
 ----
-<1> We have converted our element from a button to a span, since the user will not be clicking on it
-<2> We trigger the request when the element is revealed, that is when it comes into view in the portal
+<1> We have converted our element from a button to a span, since the user will not be clicking on it.
+<2> We trigger the request when the element is revealed, that is when it comes into view in the portal.
 
 All we needed to do to convert from "`Click to Load`" to "`Infinite Scroll`" was to update our element to be
 a span and then add the `revealed` event trigger.

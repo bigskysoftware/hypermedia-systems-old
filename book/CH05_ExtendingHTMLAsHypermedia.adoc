@@ -292,10 +292,10 @@ is already a step away from the format originally envisioned for this API: XML.
 
 Htmx simply goes another direction and expects HTML.
 
-.Htmx vs. "`plain`" HTML responses
-****
-There is an important difference between the HTTP responses to "`normal`" anchor and form driven HTTP requests and to
-htmx-powered requests like the one made by this button: in the case of htmx triggered requests, responses can be _partial_ bits of HTML.
+=== Htmx vs. "`Plain`" HTML Responses
+
+There is an important difference between the HTTP responses to "`normal`" anchor or form driven HTTP requests and to
+htmx-powered requests: in the case of htmx triggered requests, responses can be _partial_ bits of HTML.
 
 In htmx-powered interactions, as you will see, we are often not replacing the entire document.  Rather we are using
 "`transclusion`" to include content _within_ an existing document.  Because of this, it is often not necessary or desirable
@@ -303,7 +303,6 @@ to transfer an entire HTML document from the server to the browser.
 
 This fact can be used to save bandwidth as well as resource loading time. Less overall content is transferred from
 the server to the client, and it isn't necessary to reprocess a `head` tag with style sheets, script tags, and so forth.
-****
 
 When the "`Get Contacts`" button is clicked, a _partial_ HTML response might look something like this:
 
@@ -699,7 +698,7 @@ This may seem a little strange, but it avoids junking up URLs that are used with
 entries, which we will discuss in a bit.  And you can always include an enclosing form's values with an element that
 uses a `GET` by using the `hx-include` attribute, discussed next.
 
-=== Including inputs
+=== Including Inputs
 
 While enclosing all the inputs you want included in a request is the most common approach for inputs
 in htmx requests, it isn't always possible or desirable: form tags can have layout consequences and simply cannot be

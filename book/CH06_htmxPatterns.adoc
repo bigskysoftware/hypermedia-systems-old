@@ -11,7 +11,7 @@ This will allow us to address user experience issues, such as long feedback cycl
 needing to write much, if any, JavaScript, and without creating a JSON API.  Everything will be implemented in hypermedia,
 using the core concepts of the original web.
 
-== Installing htmx
+== Installing Htmx
 
 The first thing we need to do is install htmx in our web application.  We are going to do this by downloading the
 source and saving it locally in our application, so we aren't dependent on any external systems.  This is known as "`vendoring`"
@@ -264,7 +264,7 @@ annotation work, in order to specify exactly what you want htmx to do.  In gener
 prefer explicit to implicit and obvious to "`magic`".  However, the `hx-boost` attribute is too useful to allow dogma to
 override practicality, and so it is included as a feature in the library.
 
-== A Second Step: Deleting Contacts With an HTTP DELETE
+== A Second Step: Deleting Contacts With HTTP DELETE
 
 For our next step with htmx, recall that Contact.app has a small form on the edit page of a contact that is
 used to delete the contact:

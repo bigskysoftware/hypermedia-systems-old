@@ -1,11 +1,11 @@
 
-= Tricks Of The htmx Masters
+= Tricks Of The Htmx Masters
 :chapter: 09
 :url: ./deep-htmx/
 
 
 [partintro]
-== Advanced htmx
+== Advanced Htmx
 
 In this chapter we are going to look more deeply into htmx.  We've accomplished quite a bit with what we've learned
 so far, but, when you are developing Hypermedia-Driven Applications, there are likely to be situations that arise
@@ -25,7 +25,7 @@ the behavior of htmx.
 By understanding all the features and techniques in this chapter, you will be able to pull off extremely
 sophisticated user interfaces using only htmx and perhaps a small bit of hypermedia-friendly client-side scripting.
 
-== htmx Attributes
+== Htmx Attributes
 
 Thus far we have used about fifteen different attributes from htmx in our application.  The most important ones
 have been:
@@ -42,7 +42,7 @@ To specify how to swap the returned HTML content into the DOM
 `hx-target`::
 To specify where in the DOM to swap the returned HTML content
 
-Let's do a deep dive on two of these attributes, `hx-swap` and `hx-trigger`, because they support a large number of
+Let's dive into two of these attributes, `hx-swap` and `hx-trigger`, because they support a large number of
 options that might be useful when you are creating more advanced Hypermedia Driven Applications.
 
 === `hx-swap`
@@ -161,7 +161,7 @@ a JavaScript function, `contactRetrievalEnabled()` that returns a boolean, `true
 `false` otherwise.  You want to gate a button that issues a request to `/contacts` on this function.  To do this using
 an event filter in htmx, you would write the following HTML:
 
-.The Active Search Input
+.The active search input
 [source,html]
 ----
 <script>
@@ -286,7 +286,7 @@ DOM acting as a sophisticated "event bus" for our application.  We really can't 
 building an advanced Hypermedia-Driven Application, and we encourage you to learn them
 https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events[in depth].
 
-=== htmx-generated Events
+=== Htmx-Generated Events
 
 In addition to making it easy to _respond_ to events, htmx also _emits_ many useful events.  You
 can use these events to add more functionality to your application, either via htmx itself, or by way of scripting.
@@ -336,7 +336,7 @@ of the request, and so on.
 Full documentation for the `htmx:configRequest` event can be found
 https://htmx.org/events/#htmx:configRequest[on the htmx website].
 
-=== Canceling a Request using `htmx:abort`
+=== Canceling a Request Using `htmx:abort`
 
 We can listen for any of the many useful events from htmx, and we can respond to those events using `hx-trigger`.  What
 else can we do with events?
@@ -609,7 +609,7 @@ The answer, as of right now, is: you can't.
 There are two techniques that can help in this regard, one provided by htmx, the other provided by Chrome, the browser
 by Google.
 
-=== Logging htmx Events
+=== Logging Htmx Events
 
 The first technique, provided by htmx itself, is to call the `htmx.logAll()` method.  When you do this, htmx will log
 all the internal events that occur as it goes about its business, loading up content, responding to events and so forth.
@@ -617,7 +617,7 @@ all the internal events that occur as it goes about its business, loading up con
 This can be overwhelming, but with judicious filtering can help you zero in on a problem.  Here are what (a bit of) the logs
 look like when clicking on the "`docs`" link on https://htmx.org, with `logAll()` enabled:
 
-.htmx Logs
+.Htmx logs
 [source, text]
 ----
 htmx:configRequest
@@ -711,7 +711,7 @@ provide functionality for handling this situation.  But there is always a risk t
 In order to help you sleep better at night, htmx provides the `hx-disable` attribute.  When this attribute is placed
 on an element, all htmx attributes within that element will be ignored.
 
-=== Content Security Policies & htmx
+=== Content Security Policies & Htmx
 
 A Content Security Policy (CSP) is a browser technology that allows you to detect and prevent certain types of
 content injection-based attacks.  A full discussion of CSPs is beyond the scope of this book, but we refer you to

@@ -553,7 +553,7 @@ We have a label for the input, an input of type `text` and then a bit of HTML to
 with the email.  When the template is rendered on the server, if there are errors associated with the contact's email, they will
 be displayed in this span, which will be highlighted red.
 
-.Server Side Validation Logic
+.Server-Side Validation Logic
 ****
 Right now there is a bit of logic in the contact class that checks if there are any other contacts with
 the same email address, and adds an error to the contact model if so, since we do not want to have duplicate emails in the
@@ -568,7 +568,7 @@ Web 1.0 server-side frameworks.
 
 The error message shown when a user attempts to save a contact with a duplicate email is "Email Must Be Unique":
 
-.Email Validation Error
+.Email validation error
 image::screenshot_validation_error.png[Red text next to email input in form: Email Must Be Unique]
 
 All of this is done using plain HTML and using Web 1.0 techniques, and it works well.
@@ -605,18 +605,17 @@ error message asking for a properly formed email in that field.
 So a simple single-attribute change done in pure HTML improves our validation and addresses the first problem
 we noted.
 
-.Server Side vs. Client Side Validations
+.Server-Side vs. Client-Side Validations
 ****
-More experienced web developers might be grinding their teeth a bit at the code above: this validation
-is done on _the client side_.  That is, we are relying on the browser to detect the malformed
-email and correct the user.  Unfortunately, the client side is not trustworthy: a browser may have a
+Experienced web developers might be grinding their teeth at the code above: this validation
+is done on _the client-side_.  That is, we are relying on the browser to detect the malformed
+email and correct the user.  Unfortunately, the client-side is not trustworthy: a browser may have a
 bug in it that allows the user to circumvent this validation code.  Or, worse, the user may be malicious
 and figure out a mechanism around our validation entirely, such as using the developer console to edit the HTML.
 
-This is a perpetual danger in web development: all validations done on the client side cannot be trusted
-and, if the validation is important, _must be redone_ on the server side.  This is less of a problem in
-Hypermedia-Driven Applications than in Single Page Applications, because the focus of HDAs is the server
-side, but it is worth bearing in mind as you build your application.
+This is a perpetual danger in web development: all validations done on the client-side cannot be trusted
+and, if the validation is important, _must be redone_ on the server-side.  This is less of a problem in
+Hypermedia-Driven Applications than in Single Page Applications, because the focus of HDAs is the server-side, but it is worth bearing in mind as you build your application.
 ****
 
 === Inline Validation

@@ -29,7 +29,7 @@ a request on an event and replace something on the screen`" approach that htmx t
 
 Let's recall what the current search field in our application currently looks like:
 
-.Our Search Form
+.Our search form
 [source,html]
 ----
 <form action="/contacts" method="get" class="tool-bar">
@@ -38,7 +38,7 @@ Let's recall what the current search field in our application currently looks li
     <input type="submit" value="Search"/>
 </form>
 ----
-<1> The `q` or "`query`" parameter our client-side code uses to search
+<1> The `q` or "`query`" parameter our client-side code uses to search.
 
 Recall that we have some server-side code that looks for the `q` parameter and, if it is present, searches the contacts
 for that term.
@@ -66,7 +66,7 @@ user to stop typing before a request is triggered.
 
 Again, a great example of how common patterns come up again and again when you are using htmx.
 
-.Adding Active Search Behavior
+.Adding active search behavior
 [source,html]
 ----
 <form action="/contacts" method="get" class="tool-bar">
@@ -77,9 +77,9 @@ Again, a great example of how common patterns come up again and again when you a
     <input type="submit" value="Search"/>
 </form>
 ----
-<1> Keep the original attributes, so search will work if JavaScript is not available
-<2> Issue a `GET` to the same URL as the form
-<3> Nearly the same `hx-trigger` specification as for the email input validation
+<1> Keep the original attributes, so search will work if JavaScript is not available.
+<2> Issue a `GET` to the same URL as the form.
+<3> Nearly the same `hx-trigger` specification as for the email input validation.
 
 We did make a small change to the `hx-trigger` attribute: we switched out the `change` event for the `search` event.
 The `search` event is triggered when someone clears the search or hits the enter key.  It is a non-standard event, but
@@ -106,7 +106,7 @@ around.
 The `hx-target` attribute allows us to do exactly that.  Let's use it to target the results body, the `tbody` element in
 the table of contacts:
 
-.Adding Active Search Behavior
+.Adding active search behavior
 [source,html]
 ----
 <form action="/contacts" method="get" class="tool-bar">
@@ -124,7 +124,7 @@ the table of contacts:
     </tbody>
 </table>
 ----
-<1> Target the `tbody` tag on the page
+<1> Target the `tbody` tag on the page.
 
 Because there is only one `tbody` on the page, we can use the general CSS selector `tbody` and htmx will target the
 body of the table on the page.
@@ -146,7 +146,7 @@ a CSS selector.
 
 So we could add this to our input:
 
-.Using `hx-select` for Active Search
+.Using "`hx-select`" for active search
 [source, html]
 ----
 <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
@@ -155,7 +155,7 @@ So we could add this to our input:
        hx-target="tbody"
        hx-select="tbody tr"/> <1>
 ----
-<1> Adding an `hx-select` that picks out the table rows in the `tbody` of the response
+<1> Adding an `hx-select` that picks out the table rows in the `tbody` of the response.
 
 However, that isn't the only fix for this problem, and, in this case, it isn't the most efficient one.  Instead, let's
 change the _server-side_ of our Hypermedia-Driven Application to serve _only the HTML content needed_.
@@ -177,7 +177,7 @@ different HTML content based on the context information that htmx provides with 
 
 Here's a look again at the current server-side code for our search logic:
 
-.Server Side Search
+.Server-side search
 [source,python]
 ----
 @app.route("/contacts")
@@ -189,8 +189,8 @@ def contacts():
         contacts_set = Contact.all()
     return render_template("index.html", contacts=contacts_set) <2>
 ----
-<1> This is where the search logic happens
-<2> We simply re-render the `index.html` template every time, no matter what
+<1> This is where the search logic happens.
+<2> We simply re-render the `index.html` template every time, no matter what.
 
 How do we want to change this?  We want to render two different bits of HTML content _conditionally_:
 
@@ -208,7 +208,7 @@ of metadata associated with requests to help the server understand what the clie
 
 Here is an example of (some of) the headers the FireFox browser issues when requesting `https://manning.com`:
 
-.HTTP Headers
+.HTTP headers
 [source,http]
 ----
 GET / HTTP/2
@@ -267,7 +267,7 @@ has the id `search`.
 Let's add some conditional logic to our controller to look for that header and, if the value is `search`, we render
 only the rows rather than the whole `index.html` template:
 
-.Updating Our Server Side Search
+.Updating our server side search
 [source,python]
 ----
 @app.route("/contacts")
@@ -281,8 +281,8 @@ def contacts():
         contacts_set = Contact.all()
     return render_template("index.html", contacts=contacts_set) <2>
 ----
-<1> If the request header `HX-Trigger` is equal to "`search`", we want to do something different
-<2> We need to learn how to render just the table rows
+<1> If the request header `HX-Trigger` is equal to "`search`", we want to do something different.
+<2> We need to learn how to render just the table rows.
 
 OK, so how do we render only the result rows?
 
@@ -296,7 +296,7 @@ rows for Active Search requests.
 
 Here's what the table in our `index.html` file currently looks like:
 
-.The Contacts Table
+.The contacts table
 [source, html]
 ----
     <table>
@@ -326,7 +326,7 @@ only that small bit of HTML can be rendered independently from `index.html`.
 
 Again, let's call this new template `rows.html`:
 
-.Our New `rows.html` file
+.Our new `rows.html` file
 [source, html]
 ----
 {% for contact in contacts %} <2>
@@ -348,7 +348,7 @@ rendering the entire page, and sometimes only rendering the rows.  In order to k
 properly, we can include the `rows.html` template by using the jinja `include` directive at the position we want the content
 from `rows.html` inserted:
 
-.Including The New File
+.Including the new file
 [source, html]
 ----
     <table>
@@ -366,7 +366,7 @@ from `rows.html` inserted:
         </tbody>
     </table>
 ----
-<1> This directive "`includes`" the `rows.html` file, inserting its content into the current template
+<1> This directive "`includes`" the `rows.html` file, inserting its content into the current template.
 
 So far, so good: our `/contacts` page is still rendering properly, just as it did before we split the rows out of the
 `index.html` template.
@@ -380,7 +380,7 @@ Since `rows.html` is just another template, just like `index.html`, all we need 
 function with `rows.html` rather than `index.html`, and we will render _only_ the row content rather than the entire
 page:
 
-.Updating Our Server Side Search
+.Updating our server side search
 [source,python]
 ----
 @app.route("/contacts")
@@ -394,7 +394,7 @@ def contacts():
         contacts_set = Contact.all()
     return render_template("index.html", contacts=contacts_set)
 ----
-<1> Render the new template in the case of an active search
+<1> Render the new template in the case of an active search.
 
 Now, when an Active Search request is made, rather than getting an entire HTML document back, we only get a partial
 bit of HTML, the table rows for the contacts that match the search.  These rows are then inserted into the `tbody` on
@@ -448,7 +448,7 @@ the history stack.
 So, to get proper history support for our Active Search, all we need to do is to set the `hx-push-url` attribute to
 `true`.  Let's update our search input:
 
-.Updating The URL During Active Search
+.Updating the URL during active search
 [source, html]
 ----
 <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
@@ -457,7 +457,7 @@ So, to get proper history support for our Active Search, all we need to do is to
        hx-target="tbody"
        hx-push-url="true"/> <1>
 ----
-<1> By adding the `hx-push-url` attribute with the value `true`, htmx will update the URL when it makes a request
+<1> By adding the `hx-push-url` attribute with the value `true`, htmx will update the URL when it makes a request.
 
 Now, as Active Search requests are sent, the URL in the browser's navigation bar is updated to have the proper query in
 it, just like when the form is submitted.
@@ -482,7 +482,7 @@ is happening`".
 
 Let's add a spinner after our search input:
 
-.Updating The URL During Active Search
+.Updating the URL during active search
 [source, html]
 ----
 <input id="search" type="search" name="q" value="{{ request.args.get('q') or '' }}"
@@ -493,8 +493,8 @@ Let's add a spinner after our search input:
        hx-indicator="#spinner"/> <1>
 <img id="spinner" class="htmx-indicator" src="/static/img/spinning-circles.svg" alt="Request In Flight..."/> <2>
 ----
-<1> The `hx-indicator` attribute points to the indicator image after the input
-<2> The indicator is a spinning circle svg file, and has the `htmx-indicator` class on it
+<1> The `hx-indicator` attribute points to the indicator image after the input.
+<2> The indicator is a spinning circle svg file, and has the `htmx-indicator` class on it.
 
 We have added the spinner right after the input.  This visually co-locates the request indicator with the element
 making the request, and makes it easy for a user to see that something is in fact happening.
@@ -541,7 +541,7 @@ application with htmx.
 First let's update our server code in the `/contacts` request handler to get a count of the total number of contacts.
 We will pass that count through to the template to render some new HTML.
 
-.Adding A Count To The UI
+.Adding a count to the UI
 [source,python]
 ----
 @app.route("/contacts")
@@ -557,8 +557,8 @@ def contacts():
         contacts_set = Contact.all(page)
     return render_template("index.html", contacts=contacts_set, page=page, count=count) <2>
 ----
-<1> Get the total count of contacts from the Contact model
-<2> Pass the count out to the `index.html` template to use when rendering
+<1> Get the total count of contacts from the Contact model.
+<2> Pass the count out to the `index.html` template to use when rendering.
 
 As with the rest of the application, in the interest of staying focused on the _hypermedia_ part of Contact.app, we are
 not going to look into the details of how `Contact.count()` works.  We just need to know that:
@@ -569,7 +569,7 @@ not going to look into the details of how `Contact.count()` works.  We just need
 Next lets add some HTML to our `index.html` that takes advantage of this new bit of data, showing a message next
 to the "Add Contact" link with the total count of users.  Here is what our HTML looks like:
 
-.Adding A Contact Count Element To The Application
+.Adding a contact count element to the application
 [source, html]
 ----
 <p>
@@ -584,7 +584,7 @@ joys of developing web applications the old way.
 
 Here is what the feature looks like in our application:
 
-.Total Contact Count Display
+.Total contact count display
 image::screenshot_total_contacts.png[(22 total Contacts)]
 
 Beautiful.
@@ -598,10 +598,10 @@ It turns out, surprisingly, that the problem is that innocent looking `Contacts.
 a second and a half to complete.  Unfortunately, for reasons beyond the scope of this book, it is not possible to improve
 that load time, nor is possible to cache the result.
 
-This leaves us with two choices:
+This leaves us with two options:
 
-* Remove the feature
-* Come up with some other way to mitigate the performance issue
+* Remove the feature.
+* Come up with some other way to mitigate the performance issue.
 
 Let's assume that we can't remove the feature, and therefore look at how we can mitigate this performance issue by
 using htmx instead.
@@ -609,15 +609,15 @@ using htmx instead.
 === Pulling The Expensive Code Out
 
 The first step in implementing the Lazy Load pattern is to pull the expensive code, that is, the call to `Contacts.count()`
-out of request handler for the `/contacts` end point.
+out of the request handler for the `/contacts` endpoint.
 
-Let's pull this function call into its own HTTP request handler as a new HTTP end point that we will put at `/contacts/count`.
-For this new end point, we won't need to render a template at all: its sole job is going to be to render that small bit of text
-that is in the span, "`(22 total Contacts)`"
+Let's put this function call into its own HTTP request handler as a new HTTP endpoint that we will put at `/contacts/count`.
+For this new endpoint, we won't need to render a template at all: its sole job is going to be to render that small bit of text
+that is in the span, "`(22 total Contacts).`"
 
 Here is what the new code will look like:
 
-.Pulling The Expensive Code Out
+.Pulling the expensive code out
 [source,python]
 ----
 @app.route("/contacts")
@@ -638,10 +638,10 @@ def contacts_count():
     return "(" + str(count) + " total Contacts)" <4>
 
 ----
-<1> We no longer call `Contacts.count()` in this handler
-<2> `count` is no longer passed out to the template to render in the `/contacts` handler
-<3> We create a new handler at the `/contacts/count` path that does the expensive calculation
-<4> Return the string with the total number of contacts in it
+<1> We no longer call `Contacts.count()` in this handler.
+<2> `Count` is no longer passed out to the template to render in the `/contacts` handler.
+<3> We create a new handler at the `/contacts/count` path that does the expensive calculation.
+<4> Return the string with the total number of contacts.
 
 So now we have moved the performance issue out of the `/contacts` handler code, which renders the main contacts table,
 and created a new HTTP end point that will produce this expensive-to-create count string for us.
@@ -662,14 +662,14 @@ to `load`, we will cause htmx to issue the `GET` request when the `span` element
 
 Here is our updated template code:
 
-.Adding A Contact Count Element To The Application
+.Adding a contact count element to the application
 [source, html]
 ----
 <p>
     <a href="/contacts/new">Add Contact</a> <span hx-get="/contacts/count" hx-trigger="load"></span><1>
 </p>
 ----
-<1> Issue a `GET` to `/contacts/count` when the `load` event occurs
+<1> Issue a `GET` to `/contacts/count` when the `load` event occurs.
 
 Note that the `span` starts empty: we have removed the content from it, and we are allowing the request to `/contacts/count`
 to populate it instead.
@@ -712,14 +712,14 @@ when a request is in flight.
 
 So let's add that spinner from the active search example as the initial content in our span:
 
-.Adding An Indicator To Our Lazily Loaded Content
+.Adding an indicator to our lazily loaded content
 [source, html]
 ----
 <span hx-get="/contacts/count" hx-trigger="load">
   <img id="spinner" class="htmx-indicator" src="/static/img/spinning-circles.svg"/><1>
 </span>
 ----
-<1> Yep, that's it
+<1> Yep, that's it.
 
 Now when the user loads the page, rather than having the total contact count sprung on them like a surprise,
 there is a nice spinner indicating that something is coming.  Much better.
@@ -741,14 +741,14 @@ all we want here, right?  When the element is revealed we issue the request?
 Yep, that's it.  Once again, we can mix and match concepts across various UX patterns to come up with solutions to
 new problems in htmx.
 
-.Making It Lazy Lazy
+.Making it truly lazy
 [source, html]
 ----
 <span hx-get="/contacts/count" hx-trigger="revealed"> <1>
   <img id="spinner" class="htmx-indicator" src="/static/img/spinning-circles.svg"/>
 </span>
 ----
-<1> Change the `hx-trigger` to `revealed`
+<1> Change the `hx-trigger` to `revealed`.
 
 Now we have a truly lazy implementation, deferring the expensive computation until we are absolutely sure we need it. A
 pretty cool trick, and, again, a simple one-attribute change demonstrates the flexibility of both htmx and the hypermedia
@@ -762,7 +762,7 @@ of particular contact, in order to access the "`Delete Contact`" button we added
 
 Recall that we already have "`Edit`" and "`View`" links for each row, in the `rows.html` template:
 
-.The Existing Row Actions
+.The existing row actions
 [source, html]
 ----
 <td>
@@ -777,7 +777,7 @@ contact and we want a confirmation dialog to ensure the user doesn't accidentall
 
 Here is the "`Delete Contact`" button html:
 
-.The Existing Row Actions
+.The existing row actions
 [source, html]
 ----
 <button hx-delete="/contacts/{{ contact.id }}"
@@ -797,7 +797,7 @@ we can omit the `hx-push-url` attribute.
 
 Here is the code for our inline "`Delete`" link:
 
-.The Existing Row Actions
+.The existing row actions
 [source, html]
 ----
 <td>
@@ -808,7 +808,7 @@ Here is the code for our inline "`Delete`" link:
         hx-target="body">Delete</a> <1>
 </td>
 ----
-<1> Almost a straight copy of the "`Delete Contact`" button
+<1> Almost a straight copy of the "`Delete Contact`" button.
 
 As you can see, we have added a new anchor tag and given it a blank target (the `#` value in its `href` attribute) to
 retain the correct mouse-over styling behavior of the link.  We've also copied the `hx-delete`, `hx-confirm` and
@@ -822,14 +822,14 @@ row will disappear from the UI as the entire page is re-rendered.
 ****
 One side effect of adding this delete link is that we are starting to pile up the actions in a contact row:
 
-.That's a Lot of Actions
+.That's a lot of actions
 image::screenshot_stacked_actions.png["All 3 table rows have Edit, View, Delete links at the end"]
 
 It would be nice if we didn't show the actions all in a row, and, additionally, it would be nice if we only showed the
 actions when the user indicated interest in a given row.  We will return to this problem after we look at the relationship
 between scripting and a Hypermedia Driven Application in a later chapter.
 
-For now, let's just tolerate this less-than-ideal user interface, knowing that we will fix it up later.
+For now, let's just tolerate this less-than-ideal user interface, knowing that we will fix it later.
 ****
 
 === Narrowing Our Target
@@ -839,16 +839,16 @@ for the contact?  The user is looking at the row anyway, so is there really a ne
 
 To do this, we'll need to do a couple of things:
 
-* We'll need to update this link to target the row that it is in
-* We'll need to change the swap to `outerHTML`, since we want to replace (really, remove) the entire row
+* We'll need to update this link to target the row that it is in.
+* We'll need to change the swap to `outerHTML`, since we want to replace (really, remove) the entire row.
 * We'll need to update the server side to render empty content when the `DELETE` is issued from a "`Delete`" link rather
-  than from the "`Delete Contact`" button on the contact edit page
+  than from the "`Delete Contact`" button on the contact edit page.
 
 First things first, update the target of our "`Delete`" link to be the row that the link is in, rather than the entire
 body.  We can once again take advantage of the relative positional `closest` feature to target the closest `tr`, like
 we did in our "`Click To Load`" and "`Infinite Scroll`" features:
 
-.The Existing Row Actions
+.The existing row actions
 [source, html]
 ----
 <td>
@@ -860,7 +860,7 @@ we did in our "`Click To Load`" and "`Infinite Scroll`" features:
         hx-target="closest tr">Delete</a> <1>
 </td>
 ----
-<1> Updated to target the closest enclosing `tr` (table row) of the link
+<1> Updated to target the closest enclosing `tr` (table row) of the link.
 
 === Updating The Server Side
 
@@ -872,7 +872,7 @@ The cleanest way to do this is to add an `id` attribute to the "`Delete Contact`
 `HX-Trigger` HTTP Request header to determine if the delete button was the cause of the request.  This is a simple
 change to the existing HTML:
 
-.Adding an `id` to the "`Delete Contact`" button
+.Adding an `id` to the "`delete contact`" button
 [source, html]
 ----
     <button id="delete-btn" <1>
@@ -883,7 +883,7 @@ change to the existing HTML:
         Delete Contact
     </button>
 ----
-<1> An `id` attribute has been added to the button
+<1> An `id` attribute has been added to the button.
 
 By giving this button an id attribute, we now have a mechanism for differentiating between the delete button in the
 `edit.html` template and the delete links in the `rows.html` template.  When this button issues a request, it will now
@@ -909,7 +909,7 @@ will replace the target, in this case the row for the given contact, thereby rem
 
 Let's refactor our server-side code to do this:
 
-.Updating Our Server Code To Handle Two Different Delete Patterns
+.Updating our server code to handle two different delete patterns
 [source, python]
 ----
 @app.route("/contacts/<contact_id>", methods=["DELETE"])
@@ -922,45 +922,45 @@ def contacts_delete(contact_id=0):
     else:
         return "" <2>
 ----
-<1> If the delete button on the edit page submitted this request, then continue to do the logic we had previous
-<2> If not, simply return an empty string, which will delete the row
+<1> If the delete button on the edit page submitted this request, then continue to do the previous logic.
+<2> If not, simply return an empty string, which will delete the row.
 
 And that's our server-side implementation:  when a user clicks "`Delete`" on a contact row and confirms the delete, the row will
 disappear from the UI.  Once again, we have a situation where just changing a few lines of simple code gives us a
 dramatically different behavior.  Hypermedia is very powerful in this manner.
 
-=== The htmx Swapping Model
+=== The Htmx Swapping Model
 
 This is pretty cool, but there is another improvement we can make if we take some time to understand the htmx content
-swapping model: it sure would be exciting if, rather than just instantly deleting the row, we faded it out before we removed
+swapping model: it would nice if, rather than just instantly deleting the row, we faded it out before we removed
 it.  That easement makes it more obvious that the row is being removed, giving the user some nice visual feedback on the
 deletion.
 
 It turns out we can do this pretty easily with htmx, but to do so we'll need to dig in to exactly how htmx swaps content.
 
-.The htmx Swapping Model
-****
 You might think that htmx simply puts the new content into the DOM, but that's not in fact how it works.  Instead, content
 goes through a series of steps as it is added to the DOM:
 
 * When content is received and about to be swapped into the DOM, the `htmx-swapping` CSS class is added to the target
-  element
-* A small delay then occurs (we will discuss why this delay exists in a moment)
-* Next, the `htmx-swapping` class is removed from the target and the `htmx-settling` class is added
-* The new content is swapped into the DOM
-* Another small delay occurs
-* Finally, the `htmx-settling` class is removed from the target
+  element.
+* A small delay then occurs (we will discuss why this delay exists in a moment).
+* Next, the `htmx-swapping` class is removed from the target and the `htmx-settling` class is added.
+* The new content is swapped into the DOM.
+* Another small delay occurs.
+* Finally, the `htmx-settling` class is removed from the target.
 
 There is more to the swap mechanic (settling, for example, is a more advanced topic that we will discuss in a later chapter)
-but for now this is all you need to know about it.
+but this is enough for now.
 
 Now, there are small delays in the process here, typically on the order of a few milliseconds.  Why so?  It turns out
 that these small delays allow _CSS transitions_ to occur.
 
+.CSS Transitions
+****
 CSS transitions are a technology that allow you to animate a transition from one style to another.  So, for example, if
 you changed the height of something from 10 pixels to 20 pixels, by using a CSS transition you can make the element
 smoothly animate to the new height.  These sorts of animations are fun, often increase application usability, and are
-a great mechanism to add polish and fit-and-finish to your web application.
+a great mechanism to add polish to your web application.
 
 Unfortunately, CSS transitions are difficult to access in plain HTML: you usually have to use JavaScript and add or remove classes
 to get them to trigger.  This is why the htmx swap model is more complicated than you might initially think: by swapping
@@ -968,14 +968,14 @@ in classes and adding small delays, you can access CSS transitions purely within
 JavaScript!
 ****
 
-=== Taking Advantage of `htmx-swapping`
+=== Taking Advantage of "`htmx-swapping`"
 
 OK, so, let's go back and look at our inline delete mechanic:  we click an htmx enhanced link which deletes the contact
 and then swaps some empty content in for the row.  We know that, before the `tr` element is removed, it will have the
 `htmx-swapping` class added to it.  We can take advantage of that to write a CSS transition that fades the opacity of
 the row to 0.  Here is what that CSS looks like:
 
-.Adding A Fade Out Transition
+.Adding a fade out transition
 [source, css]
 ----
 tr.htmx-swapping { <1>
@@ -983,9 +983,9 @@ tr.htmx-swapping { <1>
   transition: opacity 1s ease-out; <3>
 }
 ----
-<1> We want this style to apply to `tr` elements with the `htmx-swapping` class on them
-<2> The `opacity` will be 0, making it invisible
-<3> The `opacity` will transition to 0 over a 1 second time period, using the `ease-out` function
+<1> We want this style to apply to `tr` elements with the `htmx-swapping` class on them.
+<2> The `opacity` will be 0, making it invisible.
+<3> The `opacity` will transition to 0 over a 1 second time period, using the `ease-out` function.
 
 Again, this is not a CSS book and we are not going to go deeply into the details of CSS transitions, but hopefully the
 above makes sense to you, even if this is the first time you've seen CSS transitions.
@@ -1003,7 +1003,7 @@ Fortunately htmx has an option for the `hx-swap` annotation that allows you to s
 type you can add `swap:` followed by a timing value to tell htmx to wait a specific amount of time before it swaps.  Let's
 update our HTML to allow a one second delay before the swap is done for the delete action:
 
-.The Existing Row Actions
+.The existing row actions
 [source, html]
 ----
 <td>
@@ -1015,7 +1015,7 @@ update our HTML to allow a one second delay before the swap is done for the dele
         hx-target="closest tr">Delete</a>
 </td>
 ----
-<1> A swap delay changes how long htmx waits before it swaps in new content
+<1> A swap delay changes how long htmx waits before it swaps in new content.
 
 With this modification, the existing row will stay in the DOM for an additional second, with the `htmx-swapping` class
 on it.  This will give the row time to transition to an opacity of zero, giving the fade out effect we want.
@@ -1027,7 +1027,7 @@ any JavaScript to implement the feature.)
 
 == Bulk Delete
 
-The final feature we are going to implement in this chapter is a "`Bulk Delete`".  The current mechanism for deleting users
+The final feature we are going to implement in this chapter is a "`Bulk Delete.`"  The current mechanism for deleting users
 is nice, but it would be annoying if a user wanted to delete five or ten contacts at a time, wouldn't it?  For the bulk
 delete feature, we want to add the ability to select rows via a checkbox input and delete them all in a single go by clicking
 a "`Delete Selected Contacts`" button.
@@ -1037,7 +1037,7 @@ will have the name `selected_contact_ids` and its value will be the `id` of the 
 
 Here is what the updated code for `rows.html` looks like:
 
-.Adding A Checkbox To Each Row
+.Adding a checkbox to each row
 [source, html]
 ----
 {% for contact in contacts %}
@@ -1048,12 +1048,12 @@ Here is what the updated code for `rows.html` looks like:
 </tr>
 {% endfor %}
 ----
-<1> A new cell with the checkbox input whose value is set to the current contact's id
+<1> A new cell with the checkbox input whose value is set to the current contact's id.
 
 We'll also need to add an empty column in the header for the table to accommodate the checkbox column.  With that
 done we now get a series of check boxes, one for each row, a pattern no doubt familiar to you from the web:
 
-.Checkboxes For Our Contact Rows
+.Checkboxes for our contact rows
 image::screenshot_checkboxes.png[Table rows each have a checkbox in the first column]
 
 If you are not familiar with or have forgotten the way checkboxes work in HTML: a checkbox will submit its value associated
@@ -1073,7 +1073,7 @@ and, for this case, we are going to target the body of page, since we are going 
 
 Here is what the button code looks like:
 
-.The Delete Selected Contacts Button.
+.The "`delete selected contacts`" button
 [source, html]
 ----
 <button hx-delete="/contacts" <1>
@@ -1082,9 +1082,9 @@ Here is what the button code looks like:
     Delete Selected Contacts
 </button>
 ----
-<1> Issue a `DELETE` to `/contacts`
-<2> Confirm that the user wants to delete the selected contacts
-<3> Target the body
+<1> Issue a `DELETE` to `/contacts`.
+<2> Confirm that the user wants to delete the selected contacts.
+<3> Target the body.
 
 Pretty easy.  One question though: how are we going to include the values of all the selected checkboxes in the
 request?  As it stands right now, this is just a stand-alone button, and it doesn't have any information indicating that
@@ -1102,7 +1102,7 @@ the whole table in a form tag, so that it is easy to add buttons that operate on
 
 Let's add that form tag around the form, and be sure to enclose the button in it as well:
 
-.The Delete Selected Contacts Button.
+.The "`delete selected contacts`" button
 [source, html]
 ----
     <form> <1>
@@ -1117,8 +1117,8 @@ Let's add that form tag around the form, and be sure to enclose the button in it
     </form> <2>
 
 ----
-<1> The form tag encloses the entire table
-<2> And also encloses the button
+<1> The form tag encloses the entire table.
+<2> The form tag also encloses the button.
 
 Now, when the button issues a `DELETE`, it will include all the contact ids that have been selected as the
 `selected_contact_ids` request variable.
@@ -1134,7 +1134,7 @@ In fact, once again, we can just copy and paste, and fix a bit of stuff up:
 
 Those are really the only changes we need to make!  Here is what the server-side code looks like:
 
-.The Delete Selected Contacts Button.
+.The "`delete selected contacts`" button
 [source, python]
 ----
 @app.route("/contacts/", methods=["DELETE"]) <1>
@@ -1147,16 +1147,16 @@ def contacts_delete_all():
     contacts_set = Contact.all()
     return render_template("index.html", contacts=contacts_set)
 ----
-<1> We handle a `DELETE` request to the `/contacts/` path
-<2> We convert the `selected_contact_ids` values submitted to the server from a list of strings to a list integers
-<3> We iterate over all of the ids
-<4> And delete the given contact with each id
-<5> Beyond that, it's the same code as our original delete handler: flash a message and render the `index.html` template
+<1> We handle a `DELETE` request to the `/contacts/` path.
+<2> Convert the `selected_contact_ids` values submitted to the server from a list of strings to a list integers.
+<3> Iterate over all of the ids.
+<4> Delete the given contact with each id.
+<5> Beyond that, it's the same code as our original delete handler: flash a message and render the `index.html` template.
 
 So, as you can see, we just took the original delete logic and slightly modified it to deal with an array of ids, rather
 than a single id.
 
-Readers with sharp eyes might notice one other small change: we did away with the redirect that was  in the original
+Readers with sharp eyes might notice one other small change: we did away with the redirect that was in the original
 delete code.  We did so because we are already on the page we want to re-render, so there is no reason
 to redirect and have the URL update to something new.  We can just re-render the page, and the new list of contacts (sans the
 contacts that were deleted) will be re-rendered.

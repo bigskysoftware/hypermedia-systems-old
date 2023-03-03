@@ -79,11 +79,7 @@ it pretty quickly.
 
 == Introducing Flask: Our First Route
 
-Flask is a very simple but flexible web framework for Python.  It might be different than web frameworks
-you are familiar with, so we will introduce its basic components.
-
-Thankfully, Flask is simple enough that most web developers shouldn't have a problem following along, so we'll just touch on its
-the core elements.
+Flask is a very simple but flexible web framework for Python. Thankfully, Flask is simple enough that most web developers should be able to follow the code, so we'll just touch on its core elements.
 
 A Flask application consists of a series of _routes_ tied to functions that execute when an HTTP request to a given path is
 made.  It uses a Python feature called "`decorators`" to declare the route that will be handled, which is then followed by

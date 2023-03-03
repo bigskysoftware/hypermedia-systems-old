@@ -130,7 +130,7 @@ This gives us our second opportunity to expand the expressiveness of HTML:
 HTML could be extended to allow _any_ event, not just a click, as in the case of hyperlinks, to trigger HTTP requests.
 ====
 
-=== Why Only `GET` & `POST`?
+=== Why Only GET & POST?
 
 Getting a bit more technical in our thinking leads us to the problem we noted earlier: plain HTML only
 give us access to the `GET` and `POST` actions of HTTP.
@@ -195,7 +195,7 @@ of this book.  Again, htmx is not the only JavaScript library that takes this hy
 examples are https://unpoly.com[Unpoly] and https://hotwire.dev[Hotwire]), but htmx is the purest in
 its pursuit of extending HTML as a hypermedia.
 
-=== Installing and Using htmx
+=== Installing and Using Htmx
 
 From a practical "`getting started`" perspective, htmx is a simple, dependency-free and stand-alone JavaScript library that
 can be added to a web application by simply including it via a `script` tag in your `head` element.

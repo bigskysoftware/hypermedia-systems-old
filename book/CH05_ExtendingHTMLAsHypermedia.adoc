@@ -1,7 +1,7 @@
 
 = Extending HTML As Hypermedia
 :chapter: 05
-:part: Hypermedia-Driven Web Applications with htmx
+:part: Hypermedia-Driven Web Applications with Htmx
 :part_url: ./part/htmx/
 :url: ./extending-html-as-hypermedia/
 
@@ -183,7 +183,7 @@ _transclusion_ to capture this idea: the inclusion of content into an existing d
 If HTML supported this style of "`dynamic transclusion,`" then Hypermedia Driven Applications could function much more like
 a Single Page Application, where only part of the DOM is updated by a given user interaction or network request.
 
-== Extending HTML as a Hypermedia with htmx
+== Extending HTML as a Hypermedia with Htmx
 
 These four opportunities present us a way to extend HTML well beyond its current abilities, but
 in a way that is _entirely within_ the original hypermedia model of the web. The fundamentals of HTML, HTTP, the browser,

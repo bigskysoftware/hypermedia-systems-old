@@ -1,5 +1,5 @@
 
-= Client Side Scripting
+= Client-Side Scripting
 :chapter: 10
 :url: ./client-side-scripting/
 
@@ -99,7 +99,7 @@ The important takeaway in the implementation of each of these features is that, 
 the client-side using scripting, they _don't exchange information with the server_ via a non-hypermedia format, such
 as JSON, and that they don't store a significant amount of state outside of the DOM itself.
 
-== Scripting tools for the Web
+== Scripting Tools for the Web
 
 The primary scripting language for the web is, of course, JavaScript, which is ubiquitous in web development today.
 
@@ -448,7 +448,7 @@ the DOM, this is perfectly compatible with the HDA approach.
 
 Let's next take a look at implementing a feature in Contact.app using the RSJS/vanilla JavaScript approach.
 
-=== VanillaJS in action: an overflow menu
+=== VanillaJS in Action: An Overflow Menu
 
 Our homepage has "`Edit`", "`View`" and "`Delete`" links for every contact in our table. This uses a lot of space and creates
 visual clutter.  Let's fix that by placing these actions inside a drop-down menu with a button to open it.
@@ -952,26 +952,25 @@ visual clutter and the toolbar can be extended with more options without creatin
 
 == _hyperscript
 
-The final scripting technology we are going to look at is a bit further afield:  https://hyperscript.org[+_hyperscript+].
+The final scripting technology we are going to look at is a bit further afield:  https://hyperscript.org[+_hyperscript+]. The authors of this book initially created +_hyperscript+ as a sibling project to htmx. We felt that JavaScript wasn't
+event-oriented enough, which made adding small scripting enhancements to htmx applications cumbersome. 
 
-While the previous two examples are JavaScript-oriented, +_hyperscript+ is an _entirely new_ scripting language for front-end
-development. +_hyperscript+ has a completely different syntax than JavaScript, based on an older language called HyperTalk.
+While the previous two examples are JavaScript-oriented, +_hyperscript+ has a completely different syntax than JavaScript, based on an older language called HyperTalk.
 HyperTalk was the scripting language for a technology called HyperCard, an old hypermedia system available on early
 Macintosh Computers.
 
 The most noticeable thing about +_hyperscript+ is that it resembles English prose more than it resembles other programming
-languages. +_hyperscript+ was initially created as a sibling project to htmx, because we felt that JavaScript wasn't
-event-oriented enough, which made adding small scripting enhancements to htmx applications cumbersome.  Like Alpine,
-+_hyperscript+ is a modern jQuery replacement.
+languages.  
 
-Also like Alpine, +_hyperscript+ allows you to write your scripting inline, in HTML.
+Like Alpine,
++_hyperscript+ is a modern jQuery replacement. Also like Alpine, +_hyperscript+ allows you to write your scripting inline, in HTML.
 
-Unlike Alpine, however, +_hyperscript+ is _not_ reactive.  It instead focuses on making DOM manipulations in response to events,
+Unlike Alpine, however, +_hyperscript+ is _not_ reactive.  It instead focuses on making DOM manipulations in response to events
 easy to write and easy to read. It has built-in language constructs for many DOM operations, preventing you from needing
 to navigate the sometimes-verbose JavaScript DOM APIs.
 
-We will not be doing a deep dive on the language, but again just want to give you a flavor of what scripting in
-+_hyperscript+ is like, so you can pursue the language in more depth later if you find it interesting.
+We will give a small taste of what scripting in the
++_hyperscript+ language is like, so you can pursue the language in more depth later if you find it interesting.
 
 Like htmx and AlpineJS, +_hyperscript+ can be installed via a CDN or from npm (package name `hyperscript.org`):
 
@@ -988,9 +987,7 @@ Let's look at how to implement the simple counter component we have been looking
  an `output` element and a `button` inside of a `div`.  To implement the counter, we will need to add a small bit of
 +_hyperscript+ to the button.  On a click, the button should increment the text of the previous `output` tag.
 
-It turns out that that last sentence is nearly valid +_hyperscript+!
-
-Here is our code:
+As you'll see, that last sentence is close to the actual +_hyperscript+ code:
 
 [source,html]
 ----
@@ -999,20 +996,20 @@ Here is our code:
   <button _="on click increment the textContent of the previous <output/>">Increment</button> <1>
 </div>
 ----
-<1> This is what +_hyperscript+ looks like, believe it or not
+<1> The +_hyperscript+ added inline to the button
 
 Let's go through each component of this script:
 
 * `on click` This is an event listener, telling the button to listen for a `click` event and then executing
-  the remaining code
+  the remaining code.
 
-* `increment` This is a "`command`" in +_hyperscript+ that "`increments`" things, similar to the `++` operator in JavaScript
-* the "`the`" doesn't have any semantic meaning +_hyperscript+, but can used to make scripts more readable
+* `increment` This is a "`command`" in +_hyperscript+ that "`increments`" things, similar to the `++` operator in JavaScript.
+* the "`the`" doesn't have any semantic meaning +_hyperscript+, but can used to make scripts more readable.
 * `textContent of` -  This one form of _property access_ in +_hyperscript+.  You are probably familiar with the JavaScript
    syntax `a.b`, meaning "Get the property `b` on object `a`".  +_hyperscript+ supports this syntax, but _also_ supports
    the forms `b of a` and `a's b`.  Which one you use should depend on which one is most readable.
-*  `the previous` The `previous` expression in +_hyperscript+ finds the previous element in the DOM that matches some condition
-*  `<output />` This is a _query literal_, which is a CSS selector wrapped between `<` and `/>`
+*  `the previous` The `previous` expression in +_hyperscript+ finds the previous element in the DOM that matches some condition.
+*  `<output />` This is a _query literal_, which is a CSS selector wrapped between `<` and `/>`.
 
 In this code, the `previous` keyword (and the accompanying `next` keyword) is an example of how +_hyperscript+ makes DOM operations
 easier: there is no such native functionality to be found in the standard DOM API, and implementing this in VanillaJS is trickier
@@ -1065,7 +1062,7 @@ it is `"KeyS"`) of the event to achieve this.
 
 So far our +_hyperscript+ looks like this:
 
-.A Start On Our Keyboard Shortcut
+.A start on our keyboard shortcut
 [source, hyperscript]
 ----
   on keydown[shiftKey and code is 'KeyS'] ...
@@ -1078,7 +1075,7 @@ we want!  We want to have this key work _globally_, no matter which element has 
 Not a problem!  We can listen for the `keyDown` event elsewhere by using a `from` clause in our event handler.  In this
 case we want to listen for the `keyDown` from the window, and our code ends up looking, naturally, like this:
 
-.Listening Globally
+.Listening globally
 [source, hyperscript]
 ----
   on keydown[shiftKey and code is 'KeyS'] from window ...
@@ -1090,7 +1087,7 @@ element it logically relates to.
 Now that we've picked out the event we want to use to focus the search box, let's implement the actual focusing by
 calling the standard `.focus()` method.
 
-Here is the entire script, embedded in HTML
+Here is the entire script, embedded in HTML:
 
 .Our Final Script
 [source,html]
@@ -1104,7 +1101,7 @@ Here is the entire script, embedded in HTML
 Given all the functionality, this is surprisingly terse, and, as an English-like programming language, pretty easy to
 read.
 
-=== Why a new programming language?
+=== Why a New Programming Language?
 
 This is all well and good, but you may be thinking "`An entirely new scripting language?  That seems excessive.`"  And,
 at some level, you are right: JavaScript is a decent scripting language, is very well optimized and is widely understood
@@ -1139,9 +1136,9 @@ Additionally, since +_hyperscript+ embeds so well in HTML, it keeps the focus _o
 scripting logic.
 
 Taken all together, given a certain style of scripting and certain scripting needs, +_hyperscript+ can provide an
-excellent scripting experience for your Hypermedia Driven Application.  Of course, it is a small and obscure programming
-language, so we won't blame you if you decide to pass on it, but it is at least worth a look to understand what it
-is trying to achieve, if only out of intellectual interest.
+excellent scripting experience for your Hypermedia Driven Application.  It is a small and obscure programming
+language, so we won't blame you if you decide to pass on it, but it is worth a look to understand what it
+is trying to achieve.
 
 == Using Off-the-shelf Components
 
@@ -1153,7 +1150,7 @@ some sort of functionality, such as showing modal dialogs.
 Components have become very popular in the web development works, with libraries like  https://datatables.net/[DataTables]
 providing rich user experiences with very little JavaScript code on the part of a user.  Unfortunately, if these libraries
 aren't integrated well into a website, they can begin to make an application feel "`patched together`".  Furthermore, some
-libraries go beyond simple DOM manipulation, and require that you integrate with a server end point, almost invariably
+libraries go beyond simple DOM manipulation, and require that you integrate with a server endpoint, almost invariably
 with a JSON data API.  This means you are no longer building a Hypermedia Driven Application, simply because a particular
 widget demands something different.  A shame!
 
@@ -1193,7 +1190,7 @@ a user confirms or denies the action.  If the user confirmed the action, then th
 
 Given all that, our updated code will look like this:
 
-.A Callback-based Confirmation Dialog
+.A callback-based confirmation dialog
 [source,html]
 ----
 <button type="button" class="bad bg color border"
@@ -1233,7 +1230,7 @@ button when the user confirms they wish to delete.
 
 Here is what our JavaScript function looks like:
 
-.An Event-based Confirmation Dialog
+.An event-based confirmation dialog
 [source,javascript]
 ----
 function sweetConfirm(elt, config) {
@@ -1309,13 +1306,13 @@ at hand might be the best approach.
 
 In general, we encourage a _pragmatic_ approach to scripting: whatever feels right is probably right (or, at least,
 right _enough_) for you.  Rather than being concerned about which particular approach is taken for your scripting,
-we would focus with these more general concerns:
+we would focus on these more general concerns:
 
-* Avoiding communicating with the server via JSON data APIs
-* Avoiding storing large amounts of state outside of the DOM
-* Favoring using events, rather than hard-coded callbacks or method calls
+* Avoid communicating with the server via JSON data APIs
+* Avoid storing large amounts of state outside of the DOM
+* Favor using events, rather than hard-coded callbacks or method calls
 
-But even on these topics, sometimes a web developer has to do what a web developer has to do.  If the perfect widget
-for your application exists but, darn it, it uses a JSON data API, that's OK.
+And even on these topics, sometimes a web developer has to do what a web developer has to do.  If the perfect widget
+for your application exists but uses a JSON data API?  That's OK.
 
 Just don't make it a habit.

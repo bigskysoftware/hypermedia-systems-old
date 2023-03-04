@@ -798,7 +798,7 @@ code will look like:
 
 And that's all it takes.  A simple component like a counter should be simple, and Alpine delivers.
 
-=== `x-on:click` vs. `onclick`
+=== "`x-on:click`" vs. "`onclick`"
 
 As we said, the Alpine `x-on:click` attribute (or its shorthand, the `@click` attribute) is similar to the built-in
 `onclick` attribute.   However, it has additional features that make it significantly more useful:

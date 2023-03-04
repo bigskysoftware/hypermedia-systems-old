@@ -62,7 +62,7 @@ and the techniques demonstrated into your preferred programming language and web
 
 == Python
 
-Since this book is intended to teach how hypermedia can be used effectively, we aren't going to do full tutorials for
+Since this book is for learning how to use hypermedia effectively, we'll just briefly introduce
 the various technologies we use _around_ that hypermedia.  This has some obvious drawbacks: if you aren't comfortable
 with Python, for example, some example python code in the book may be a bit confusing or mysterious at first.
 
@@ -74,12 +74,12 @@ books/websites:
 * https://www.py4e.com/[Python For Everybody] by Dr. Charles R. Severance
 
 We think most web developers, even developers who are unfamiliar with Python, should be able to follow
-along in the code. Most of the authors hadn't written much Python before writing this book, and we got the hang of
+along. Most of the authors hadn't written much Python before writing this book, and we got the hang of
 it pretty quickly.
 
 == Introducing Flask: Our First Route
 
-Flask is a very simple but flexible web framework for Python. Thankfully, Flask is simple enough that most web developers should be able to follow the code, so we'll just touch on its core elements.
+Flask is a simple but flexible web framework for Python. We'll ease into it by touching on its core elements.
 
 A Flask application consists of a series of _routes_ tied to functions that execute when an HTTP request to a given path is
 made.  It uses a Python feature called "`decorators`" to declare the route that will be handled, which is then followed by
@@ -89,10 +89,8 @@ with a route.
 Let's create our first route definition, a simple "`Hello Flask`" route.  In the following python code you will see the
 `@app` symbol.  This is the flask decorator that allows us to set up our routes.  Don't worry too much about
 how decorators work in Python, just know that this feature allows us to map a given _path_ to a particular function
-(i.e. handler).  The flask application, when started, will take HTTP requests and look up the matching handler and
+(i.e. handler).  The Flask application, when started, will take HTTP requests and look up the matching handler and
 invoke it.
-
-Here is what the code looks like:
 
 .A simple "`Hello World`" route
 [source,python]
@@ -193,7 +191,7 @@ display that is common to both types of request.
 
 Here is what the code looks like for this handler:
 
-.Server-side search
+.A handler for server-side search
 [source,python]
 ----
 @app.route("/contacts")
@@ -214,7 +212,7 @@ We see the same sort of routing code we saw in our first example, but we have a 
 First, we check to see if a search query parameter named `q` is part of the request.
 
 Query Strings:: A "`query string`" is  part of the URL specification.  Here is an example URL with a query string in it:
-`https://example.com/contacts?q=joe`.  The query string is everything after the `?` and, you can see, it has a
+`https://example.com/contacts?q=joe`.  The query string is everything after the `?`, and has a
 name-value pair format.  In this URL, the query parameter `q` is set to the string value `joe`.  In plain HTML, a
 query string can be included in a request either by being hardcoded in an anchor tag or, more dynamically, by
 using a form tag with a `GET` request.
@@ -240,11 +238,11 @@ of that resource to clients.
 
 ==== The list & search templates
 
-Now that we have our handler logic written, we need to look at the templates that we are going to use to render
+Now that we have our handler logic written, we'll create a template to render
 HTML in our response to the client.  At a high level, our HTML response needs to have the following elements:
 
 * A list of any matching or all contacts.
-* A search box that a user may type a search term into and then submit for searches.
+* A search box where a user may type and submit search terms.
 * A bit of surrounding "`chrome`": a header and footer for the website that will be the same regardless of the page you
   are on.
 

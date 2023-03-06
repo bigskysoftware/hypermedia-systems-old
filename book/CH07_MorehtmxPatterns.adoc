@@ -267,7 +267,7 @@ has the id `search`.
 Let's add some conditional logic to our controller to look for that header and, if the value is `search`, we render
 only the rows rather than the whole `index.html` template:
 
-.Updating our server side search
+.Updating our server-side search
 [source,python]
 ----
 @app.route("/contacts")
@@ -842,7 +842,7 @@ To do this, we'll need to do a couple of things:
 * We'll need to update this link to target the row that it is in.
 * We'll need to change the swap to `outerHTML`, since we want to replace (really, remove) the entire row.
 * We'll need to update the server side to render empty content when the `DELETE` is issued from a "`Delete`" link rather
-  than from the "`Delete Contact`" button on the contact edit page.
+than from the "`Delete Contact`" button on the contact edit page.
 
 First things first, update the target of our "`Delete`" link to be the row that the link is in, rather than the entire
 body.  We can once again take advantage of the relative positional `closest` feature to target the closest `tr`, like

@@ -221,7 +221,7 @@ into this category.  We will note when a feature is progressive enhancement frie
 Ultimately, it is up to you, the developer, to decide if the trade-offs of progressive enhancement (a more basic UX,
 limited improvements over plain HTML) are worth the benefits for your application users.
 
-=== Adding `hx-boost` to Contact.app
+=== Adding "`hx-boost`" to Contact.app
 
 For the contact app we are building, we want this htmx "`boost`" behavior... well, everywhere.
 

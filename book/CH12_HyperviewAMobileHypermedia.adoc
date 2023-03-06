@@ -21,7 +21,7 @@ It requires different trade-offs and design decisions.
 Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly applied to build delightful mobile applications!
 
 
-== The state of mobile app development
+== The State of Mobile App Development
 Before we can discuss how to apply hypermedia to mobile platforms, we need to understand how native mobile apps are commonly built.
 I'm using the word "`native`" to refer to code written against an SDK provided by the phone's operating system (typically Android or iOS).
 This code is packaged into an executable binary, and uploaded & approved through app stores controlled by Google and Apple.
@@ -74,7 +74,7 @@ There are two approaches employing hypermedia to build & ship native mobile apps
 - Hyperview, a new hypermedia format we designed specifically for mobile apps
 
 
-=== Web views
+=== Web Views
 The simplest way to use hypermedia architecture on mobile is by leveraging web technologies.
 Both Android and iOS SDKs provide "`web views`": chromeless web browsers that can be embedded in native apps.
 Tools like Apache Cordova make it easy to take the URL of a website, and spit out native iOS and Android apps based on web views.
@@ -212,7 +212,7 @@ HXML responses remain pure, with UI and interactions represented in declarative 
 ****
 
 
-=== Which Hypermedia architecture should you use?
+=== Which Hypermedia Architecture Should You Use?
 
 We've discussed two approaches for creating mobile apps using Hypermedia architecture:
 
@@ -225,10 +225,10 @@ Both approaches solve the fundamental issues with traditional, SPA-like mobile a
 
 - The backend controls the full state of the app.
 - Our app's logic is all in one place.
-- The app always runs the latest version, there's no API churn to worry about
+- The app always runs the latest version, there's no API churn to worry about.
 
 So which approach should you use for a Hypermedia-driven mobile app?
-Based on my experience building both types of apps, we strongly believe the Hyperview approach results in a better user experience.
+Based on our experience building both types of apps, we strongly believe the Hyperview approach results in a better user experience.
 The web-view will always feel out-of-place on iOS and Android; there's just no good way to replicate the patterns of navigation and interaction that mobile users expect.
 Hyperview was created specifically to address the limitations of thick-client and web view approaches.
 After the initial investment to learn Hyperview, you'll get all of the benefits of the Hypermedia architecture, without the downsides of a degraded user experience.
@@ -1028,7 +1028,7 @@ This UI allows sharing URLs and messages from one app to another app.
 Hyperview has a `share` action to support this interaction.
 It involves a custom namespace, and share-specific attributes.
 
-.System Share action
+.System share action
 [source,xml]
 ----
 <behavior
@@ -1110,7 +1110,7 @@ In the next chapter, we will create a custom behavior action to enhance our mobi
 
 We've already seen the simplest type of trigger, a `press` on an element. Hyperview supports many other common triggers used in mobile apps.
 
-===== longPress
+===== Long-press
 Closely related to a press is a long-press.
 A behavior with `trigger="longPress"` will trigger when the user presses and holds on the element.
 "`Long-press`" interactions are often used for shortcuts and power features.
@@ -1135,7 +1135,7 @@ This is a contrived example for the sake of brevity.
 A better UX would be for the long-press to bring up a contextual menu of shortcuts and advanced options.
 This could be achieved by using `action="alert"` and opening a system dialog box with the shortcuts.
 
-===== load
+===== Load
 Sometimes we want an action to trigger as soon as the screen loads.
 `trigger="load"` does exactly this.
 One use case is to quickly load a shell of the screen, and then fill in the main content on the screen with a second update action.
@@ -1163,13 +1163,13 @@ As soon as this screen loads, the behavior with `trigger="`load`"` fires off the
 It requests content from the `/content` path and replaces the container view with the response.
 
 
-===== visible
+===== Visible
 Unlike `load`, the `visible` trigger will only execute the behavior when the element with the behavior is scrolled into the viewport on the mobile device.
 The `visible` action is commonly used to implement an infinite-scroll interaction on a `<list>` of `<item>` elements.
 The last item in the list includes a behavior with `trigger="visible"`.
 The `append` action will fetch the next page of items and append them to the list.
 
-===== refresh
+===== Refresh
 This trigger captures a "`pull to refresh`" action on `<list>` and `<view>` items.
 This interaction is associated with fetching up-to-date content from the backend.
 Thus, it's typically paired with an update or reload action to show the latest data on the screen.
@@ -1184,12 +1184,12 @@ Thus, it's typically paired with an update or reload action to show the latest d
   </view>
 </body>
 ----
-<1> When the view is pulled down to refresh, reload the screen
+<1> When the view is pulled down to refresh, reload the screen.
 
 Note that adding a behavior with `trigger="refresh"` to a `<view>` or `<list>` will add the pull-to-refresh interaction to the element, including showing a spinner as the element is pulled down.
 
 
-===== `focus`, `blur`, and `change`
+===== Focus, blur, and change
 These triggers are related to interactions with input elements.
 Thus, they will only trigger behaviors attached to elements like `<text-field>`.
 `focus` and `blur` will trigger when the user focuses and blurs the input element, respectively.
@@ -1242,13 +1242,9 @@ These concepts can be mixed together too.
 It's not unusual for a production Hyperview app to contain several behaviors, some triggering together and others triggering on different interactions.
 Using multiple behaviors with custom actions keeps HXML declarative, without sacrificing functionality.
 
+=== Quick Sketch: Elements of Hyperview
+We've covered a lot of new material, so here is a quick summary of the key aspects of Hyperview:
 
-== Summary
-
-- Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web.
-- Using the hypermedia architecture for mobile apps solves the problems with thick-client apps.
-- HTML web views are one way to implement the hypermedia architecture for mobile apps. But HTML is not designed for mobile UIs, so this approach does not deliver a great user experience.
-- Hyperview is an alternative approach to build mobile apps using the hypermedia architecture. Hyperview introduces a new format called HXML. It also provides an open-source mobile thin-client to render HXML.
 - HXML looks similar to HTML, but it uses elements that correspond to mobile UIs, like `<screen>`, `<header>`, `<list>` and more.
 - HXML also includes input elements that implement common patterns in mobile apps, such as `<switch>`, `<select-single>`, and `<select-multiple>`.
 - New UI components can be added to HXML using namespaced elements. The Hyperview client can be easily extended to render these new elements.
@@ -1257,4 +1253,14 @@ Using multiple behaviors with custom actions keeps HXML declarative, without sac
 - Updates to screens in Hyperview are defined using behaviors with update actions, such as `replace` and `append`.
 - System interactions in Hyperview are defined using behaviors with system actions, such as `alert` and `share`.
 - New actions can be added to HXML using namespaced attributes. The Hyperview client can be easily extended to interpret the new actions.
-- The extensibility of HXML and the Hyperview client make it easy for developers to define custom elements and behaviors. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture.
+
+
+== Summary
+
+Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web. Using the hypermedia architecture for mobile apps can solve these problems.
+
+One way to implement the hypermedia architecture for mobile apps is with HTML web views. But HTML is not designed for mobile UIs, so this approach does not deliver a great user experience. 
+ 
+Hyperview offers an alternative approach using the hypermedia architecture, based on a new format called HXML. It also provides an open-source mobile thin-client to render HXML. Again, HXML looks similar to HTML, but it uses elements and patterns that correspond to mobile UIs.
+
+The extensibility of HXML and the Hyperview client make it easy to define custom elements and behaviors. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture.

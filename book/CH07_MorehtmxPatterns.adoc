@@ -418,13 +418,13 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[MDN article on the top
 documentation] discusses this issue as well.
 ****
 
-=== Updating The Navigation Bar With `hx-push-url`
+=== Updating the Navigation Bar With "`hx-push-url`"
 
 One shortcoming of our current Active Search implementation, when compared with the normal form submission, is that when
 you submit the form version it updates the navigation bar of the browser to include the search term.  So, for example, if
 you search for "`joe`" in the search box, you will end up with a url that looks like this in your browser's nav bar:
 
-.The Updated Location After A Form Search
+.The updated location after a form search
 ----
 https://example.com/contacts?q=joe
 ----

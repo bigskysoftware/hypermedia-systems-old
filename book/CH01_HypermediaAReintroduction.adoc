@@ -275,7 +275,7 @@ and are often perfectly happy with the results.
 
 These two tags give a tremendous amount of expressive power to HTML.
 
-=== So What _Isn't_ Hypermedia?
+=== So What Isn't Hypermedia?
 
 So links and forms are the two main hypermedia-based mechanisms for interacting with a server available in HTML.
 

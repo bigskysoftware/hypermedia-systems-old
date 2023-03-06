@@ -501,7 +501,7 @@ bar appears.  When the progress bar reaches 100%, it disappears and a link to do
 can then click on that link and download their archive.  A nice, polished user experience when compared with the common
 click-and-wait experience of many websites.
 
-== Smoothing Things Out: Animations in htmx
+== Smoothing Things Out: Animations in Htmx
 
 As nice as this UI is, there is one minor annoyance with it: as the progress bar updates it "`jumps`" from one position
 to the next.  This looks jerky and is reminiscent of the feel of a full page refresh in web 1.0 style applications.  It
@@ -523,7 +523,7 @@ with their SPA counterparts: it is hard to use CSS transitions without using som
 
 This is unfortunate, but htmx rectifies this situation with its swapping model.  Let's look at how.
 
-=== The "`Settling`" Step in htmx
+=== The "`Settling`" Step in Htmx
 
 When we discussed the htmx swap model in Chapter 5, we focused on the classes that htmx adds and removes, but we skipped
 over the idea of "`settling`".  What is "`settling`" in htmx terms?  Settling is the following process:  when htmx is
@@ -542,14 +542,14 @@ So, in our case, all we need to do is to add a stable ID to our `progress-bar` e
 on every update, the progress bar should smoothly move across the screen as it is updating, using the CSS transition
 defined in our style sheet:
 
-.Smoothing Things Out
+.Smoothing things out
 [source, html]
 ----
 <div class="progress" >
     <div id="archive-progress" class="progress-bar" style="width:{{ archiver.progress() * 100 }}%"></div> <1>
 </div>
 ----
-<1> The progress bar div now has a stable id across requests
+<1> The progress bar div now has a stable id across requests.
 
 So, despite all the complicated mechanics going on behind the scenes in htmx, all we have to do, as an htmx user,
 is add a stable `id` attribute to the element we want to animate.

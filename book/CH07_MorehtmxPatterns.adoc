@@ -827,7 +827,7 @@ image::screenshot_stacked_actions.png["All 3 table rows have Edit, View, Delete 
 
 It would be nice if we didn't show the actions all in a row, and, additionally, it would be nice if we only showed the
 actions when the user indicated interest in a given row.  We will return to this problem after we look at the relationship
-between scripting and a Hypermedia Driven Application in a later chapter.
+between scripting and a Hypermedia-Driven Application in a later chapter.
 
 For now, let's just tolerate this less-than-ideal user interface, knowing that we will fix it later.
 ****

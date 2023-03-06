@@ -22,7 +22,7 @@ and interactive experiences, including scripting.
 
 It is true in many ways that HTML, as specified and implemented, lacks affordances needed to build the kinds of applications
 that were implemented within those older systems. None of this means, however, that hypermedia's _purpose_ is "`documents`"
-over "`applications`".
+over "`applications.`"
 
 Rather, while the theoretical foundation is there, the implementation is underdeveloped. With JavaScript being the
 only extension point and hypermedia controls not being well integrated to JavaScript (why can't one click a link without
@@ -33,19 +33,19 @@ A goal of this book is to show that it is possible to build sophisticated web ap
 of the web, hypermedia, without the application developer needing to reach for the abstractions provided by the large,
 popular JavaScript frameworks.
 
-htmx itself is, of course, written in JavaScript, and one of its advantages is that hypermedia interactions that go
+Htmx itself is, of course, written in JavaScript, and one of its advantages is that hypermedia interactions that go
 through htmx expose a rich interface to JavaScript code with configuration, events, and htmx's own extension support.
 
 Because htmx expands the expressiveness of HTML so much it removes the need for scripting in many situations.
 This makes htmx attractive to people who don't want to write JavaScript, and there are many of those sorts of developers,
-sick to death of the complexity of Single Page Application frameworks.
+wary of the complexity of Single Page Application frameworks.
 
 However, dunking on JavaScript is not the aim of the htmx project.
 
 The goal of htmx is not less JavaScript, per se, but rather less code.
 
 Scripting has been a massive force multiplier for the web. Using scripting, web application developers are not only able
-to enhance their HTML websites, but also create fully-fledged client-side applications that can often compete with
+to enhance their HTML websites, but also create full-fledged client-side applications that can often compete with
 native, thick client applications.
 
 This JavaScript-centric approach to building web applications is a testament to the power of the web and to the sophistication
@@ -77,7 +77,7 @@ other concerns of our application.
 
 Note also that, especially in web development parlance, the humble "`server`" is usually a whole fleet of racks, virtual
 machines, containers and more. Even a worldwide network of datacenters is reduced to "`the server`" when discussing
-the server-side of a Hypermedia Driven-Application.
+the server-side of a Hypermedia-Driven Application.
 ****
 
 Satisfying these two constraints sometimes requires us to diverge from what is typically considered best practice for
@@ -168,7 +168,7 @@ You can just start writing JavaScript in your web application, and it will simpl
 
 That's the good news. The bad news is that, despite improvements over the last decade, JavaScript has some significant
 limitations as a scripting language that can make it a less than ideal as a stand-alone scripting technology for
-Hypermedia Driven Applications:
+Hypermedia-Driven Applications:
 
 * Being as established as it is, it has accreted a lot of features and warts.
 * It has a complicated and confusing set of features for working with asynchronous code.
@@ -353,7 +353,7 @@ All of these tools achieve Locality of Behaviour by having you embed attributes 
 having code look up elements in a document through CSS selectors in order to add event listeners onto them.
 ****
 
-In a Hypermedia Driven Application, we feel that the Locality of Behaviour design principle is often more important than
+In a Hypermedia-Driven Application, we feel that the Locality of Behaviour design principle is often more important than
 the more traditional Separation of Concerns design principle.
 
 ==== What to do with our counter?
@@ -442,7 +442,7 @@ split out to a separate file:
 * Reuse is _easy_ -- you can create another counter component on the page and it will just work.
 * The code is _well-organized_ -- one behavior per file.
 
-All in all, RSJS is a good way to structure your vanilla JavaScript in a Hypermedia Driven Application.  So long as the
+All in all, RSJS is a good way to structure your vanilla JavaScript in a Hypermedia-Driven Application.  So long as the
 JavaScript isn't communicating with a server via a plain data JSON API, or holding a bunch of internal state outside of
 the DOM, this is perfectly compatible with the HDA approach.
 
@@ -941,7 +941,7 @@ the element that has the `x-data` attribute declared on it.  In this case, it wi
 contacts. The `target`, or where the response HTML will be placed, is just the entire document's body, since the
 `DELETE` handler returns a whole page when it completes.
 
-Note that we are using Alpine here in a Hypermedia Driven Application compatible manner.  We _could_ have issued an
+Note that we are using Alpine here in a Hypermedia-Driven Application compatible manner.  We _could_ have issued an
 AJAX request directly from Alpine and perhaps updated an `x-data` property depending on the results of that request.
 But, instead, we delegated to htmx's JavaScript API, which made a _hypermedia exchange_ with the server.
 
@@ -1136,14 +1136,14 @@ Additionally, since +_hyperscript+ embeds so well in HTML, it keeps the focus _o
 scripting logic.
 
 Taken all together, given a certain style of scripting and certain scripting needs, +_hyperscript+ can provide an
-excellent scripting experience for your Hypermedia Driven Application.  It is a small and obscure programming
+excellent scripting experience for your Hypermedia-Driven Application.  It is a small and obscure programming
 language, so we won't blame you if you decide to pass on it, but it is worth a look to understand what it
 is trying to achieve.
 
 == Using Off-the-Shelf Components
 
 That concludes our look at three different options for _your_ scripting infrastructure, that is, the code that _you_ write
-to enhance your Hypermedia Driven Application.  However, there is another major area to consider when discussing client
+to enhance your Hypermedia-Driven Application.  However, there is another major area to consider when discussing client
 side scripting: "`off the shelf`" components.  That is, JavaScript libraries that other people have created that offer
 some sort of functionality, such as showing modal dialogs.
 
@@ -1151,12 +1151,12 @@ Components have become very popular in the web development works, with libraries
 providing rich user experiences with very little JavaScript code on the part of a user.  Unfortunately, if these libraries
 aren't integrated well into a website, they can begin to make an application feel "`patched together`".  Furthermore, some
 libraries go beyond simple DOM manipulation, and require that you integrate with a server endpoint, almost invariably
-with a JSON data API.  This means you are no longer building a Hypermedia Driven Application, simply because a particular
+with a JSON data API.  This means you are no longer building a Hypermedia-Driven Application, simply because a particular
 widget demands something different.  A shame!
 
 === Integration Options
 
-The best JavaScript libraries to work with when you are building a Hypermedia Driven Application are ones that:
+The best JavaScript libraries to work with when you are building a Hypermedia-Driven Application are ones that:
 
 * Mutate the DOM but don't communicate with a server over JSON
 * Respect HTML norms (e.g. using `input` elements to store values)
@@ -1289,7 +1289,7 @@ ____
 In case of conflict, consider users over authors over implementors over specifiers over theoretical purity.
 ____
 
-We have shown you quite a few tools and techniques for scripting in a Hypermedia Driven Application.  How should you
+We have shown you quite a few tools and techniques for scripting in a Hypermedia-Driven Application.  How should you
 pick between them?  The sad truth is that there will never be a single, always correct answer to this question.
 
 Are you committed to vanilla JavaScript-only, perhaps due to company policy?  Well, you can use vanilla JavaScript effectively

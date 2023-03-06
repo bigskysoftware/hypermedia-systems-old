@@ -43,7 +43,7 @@ To specify how to swap the returned HTML content into the DOM
 To specify where in the DOM to swap the returned HTML content
 
 Let's dive into two of these attributes, `hx-swap` and `hx-trigger`, because they support a large number of
-options that might be useful when you are creating more advanced Hypermedia Driven Applications.
+options that might be useful when you are creating more advanced Hypermedia-Driven Applications.
 
 === hx-swap
 
@@ -201,7 +201,7 @@ The `hx-trigger` attribute certainly is the most complex in htmx. More details a
 
 === Other Attributes
 
-Htmx offers many other less commonly used attributes for fine-tuning the behavior of your Hypermedia Driven Application.
+Htmx offers many other less commonly used attributes for fine-tuning the behavior of your Hypermedia-Driven Application.
 
 Here are some of the most useful ones:
 
@@ -271,7 +271,7 @@ The `hx-sync` attribute supports a few different strategies that allow you to, f
 in flight, or queue requests with a particular queuing strategy.  You can find complete documentation, as well as
 examples, at the https://htmx.org/attributes/hx-sync/[documentation page] for `hx-sync`.
 
-As you can see, htmx offers a lot of attribute-driven functionality for more advanced Hypermedia Driven Applications.
+As you can see, htmx offers a lot of attribute-driven functionality for more advanced Hypermedia-Driven Applications.
 A complete reference for all htmx attributes can be found https://htmx.org/reference/#attributes[on the htmx website].
 
 == Events
@@ -497,7 +497,7 @@ codes in your application.  Full documentation on the `htmx:beforeSwap` event ca
 
 Above we saw how to use a server-triggered event, via the `HX-Trigger` HTTP response header, to update a piece of the
 DOM based on the response to another part of the DOM.  This technique addresses the general problem that comes up
-in Hypermedia Driven Applications: "`How do I update other content?`"  After all, in normal HTTP requests, there is only
+in Hypermedia-Driven Applications: "`How do I update other content?`"  After all, in normal HTTP requests, there is only
 one "`target`", the entire screen, and, similarly, in htmx-based requests, there is only one target: either the explicit
 or implicit target of the element.
 

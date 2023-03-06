@@ -527,7 +527,7 @@ without compromising your user interface. You might even be able to use the hype
 needs.
 
 Rather than having an SPA with a bit of hypermedia around the edges, or some mix of the two approaches, you can often create
-a web application that is _primarily_ or _entirely_ hypermedia driven, and that still satisfies the interactivity that your
+a web application that is _primarily_ or _entirely_ hypermedia-driven, and that still satisfies the interactivity that your
 users require.
 
 This can _tremendously_ simplify your web application and produce a much more coherent and understandable piece of

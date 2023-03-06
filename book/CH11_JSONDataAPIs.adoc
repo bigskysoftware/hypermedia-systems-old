@@ -1,5 +1,5 @@
 
-= JSON Data APIs & Hypermedia Driven Applications
+= JSON Data APIs & Hypermedia-Driven Applications
 :chapter: 11
 :url: ./json-data-apis/
 
@@ -468,7 +468,7 @@ Maybe, but maybe not.  This was a pretty specific need for our web application, 
 our JSON API, it doesn't make sense to include it for JSON consumers.
 
 And what if, by some miracle, the performance issues with `Contact.count()` that we were addressing with the Lazy Load
-pattern goes away?  Well, in our Hypermedia Driven Application we can simply revert to the old code and include the
+pattern goes away?  Well, in our Hypermedia-Driven Application we can simply revert to the old code and include the
 count directly in the request to `/contacts`.  We can remove the `contacts/count` end point and all the logic associated
 with it.  Because of the uniform interface of hypermedia, the system will continue to work just fine.
 

@@ -37,15 +37,15 @@ JavaScript library.
 In these applications HTML becomes a (somewhat awkward) graphical interface description language that is used
 because, for historical reasons, that's what happens to be there, in the browser.
 
-Applications built in this style are not _hypermedia driven_: they do not take advantage of the underlying hypermedia
+Applications built in this style are not _hypermedia-driven_: they do not take advantage of the underlying hypermedia
 system of the web.
 
-To explain what a hypermedia driven application looks like, and to contrast it with the popular SPA approach of today,
+To explain what a hypermedia-driven application looks like, and to contrast it with the popular SPA approach of today,
 we need to first explore the entire _hypermedia system_ of the web, beyond just discussing HTML.  We need to look at the
 _network architecture_ of the original web, including how a web server delivers a hypermedia API, and how to effectively
 use the hypermedia features available in the hypermedia _client_ (e.g. the browser).
 
-Each of these are important aspects of building an effective hypermedia driven application, and it is the entire
+Each of these are important aspects of building an effective hypermedia-driven application, and it is the entire
 _hypermedia system_ that comes together to make hypermedia such a powerful architecture.
 
 == What is a Hypermedia System?

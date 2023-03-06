@@ -180,7 +180,7 @@ requiring that they replace the _entire_ document.
 
 This is actually a very old concept in hypermedia.  Ted Nelson, in his 1980 book "`Literary Machines`" coined the term
 _transclusion_ to capture this idea: the inclusion of content into an existing document via a hypermedia reference.
-If HTML supported this style of "`dynamic transclusion,`" then Hypermedia Driven Applications could function much more like
+If HTML supported this style of "`dynamic transclusion,`" then Hypermedia-Driven Applications could function much more like
 a Single Page Application, where only part of the DOM is updated by a given user interaction or network request.
 
 == Extending HTML as a Hypermedia with Htmx

@@ -1021,7 +1021,7 @@ to be shorter and easier to read.
 
 .Natural Language Programming?
 ****
-Seasoned programmers are often suspicious of +_hyperscript+: There have been many "natural language programming" (NLP)
+Seasoned programmers may be suspicious of +_hyperscript+: There have been many "natural language programming" (NLP)
 projects that target non-programmers and beginner programmers, assuming that being able to read code in their
 "natural language" will give them the ability to write it as well.  This has lead to some badly written and
 structured code and has failed to live up to the (often over the top) hype.
@@ -1035,7 +1035,7 @@ As you can see in the above example, with the use of a _query reference_, `<outp
 from using DOM-specific, non-natural language when appropriate.
 ****
 
-=== _hyperscript in action: a keyboard shortcut
+=== _hyperscript in Action: A Keyboard Shortcut
 
 // TODO: alt-S instead?  shift-S too aggressive?
 
@@ -1089,7 +1089,7 @@ calling the standard `.focus()` method.
 
 Here is the entire script, embedded in HTML:
 
-.Our Final Script
+.Our final script
 [source,html]
 ----
 <input id="search" name="q" type="search" placeholder="Search Contacts"
@@ -1140,7 +1140,7 @@ excellent scripting experience for your Hypermedia Driven Application.  It is a 
 language, so we won't blame you if you decide to pass on it, but it is worth a look to understand what it
 is trying to achieve.
 
-== Using Off-the-shelf Components
+== Using Off-the-Shelf Components
 
 That concludes our look at three different options for _your_ scripting infrastructure, that is, the code that _you_ write
 to enhance your Hypermedia Driven Application.  However, there is another major area to consider when discussing client
@@ -1214,7 +1214,7 @@ And now, when this button is clicked, we get a nice looking dialog in our web ap
 image::screenshot_sweet_alert.png[Modal dialog: "Delete these contacts?" with a colorful delete button and gray cancel button.]
 
 Much nicer than the system confirmation dialog.  Still, this feels a little wrong.  This is a lot of code to write
-just to trigger a slightly nicer `confirm()`, isn't it?  And the htmx JavaScript code we are using here feels a little
+just to trigger a slightly nicer `confirm()`, isn't it?  And the htmx JavaScript code we are using here feels
 awkward.  It would be more natural to move the htmx out to attributes on the button, as we have been doing, and then
 trigger the request via events.
 

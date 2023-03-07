@@ -23,7 +23,17 @@
         --rhythm: 1.6rem;
 
         font-size: calc((18 / 16) * 100%);
-        hyphens: auto;
+    }
+
+    @media (max-width: calc(
+        3 * /* arbitrary coefficient */
+        14ch + /* longest word: programmatically*/
+        2 * 1.6rem /* page margins */
+    )) {
+        :root {
+            hyphens: auto;
+            -webkit-hyphens: auto; /* safari :( */
+        }
     }
 
     h1, h2, h3, h4, h5, h6 {

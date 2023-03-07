@@ -505,7 +505,7 @@ If you want to update other content in htmx, you have a few options:
 
 === Expanding Your Selection
 
-The first option, and the simplest, is to "`expand the target`".  That is, rather than simply replacing a small part
+The first option, and the simplest, is to "`expand the target.`" That is, rather than simply replacing a small part
 of the screen, expand the target of your htmx-driven request until it is large enough to enclose all the elements that
 need to updated on a screen.  This has the tremendous advantage of being simple and reliable.  The downside is that
 it may not provide the user experience that you want, and it may not play well with a particular server-side template

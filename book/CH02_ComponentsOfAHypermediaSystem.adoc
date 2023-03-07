@@ -605,7 +605,7 @@ to the system itself.
 ==== Hypermedia As The Engine of Application State (HATEOAS)
 
 The final sub-constraint on the Uniform Interface is that, in a RESTful system, hypermedia should be "`the engine of
-application state`".  This is sometimes abbreviated as "`HATEOAS`", although Fielding prefers to use the terminology
+application state.`" This is sometimes abbreviated as "`HATEOAS`", although Fielding prefers to use the terminology
 "`the hypermedia constraint`" when discussing it.
 
 This constraint is closely related to the previous self-describing message constraint.  Let us consider again the two different

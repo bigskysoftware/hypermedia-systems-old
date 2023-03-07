@@ -285,7 +285,7 @@ template to inject the content of `index.html` within its HTML.
 
 Next we have our first bit of actual HTML, rather than just Jinja directives.  We have a simple HTML form that allows
 you to search contacts by issuing a `GET` request to the `/contacts` path.  The form itself contains a label and
-an input with the name "`q`".  This input's value will be submitted with the `GET` request to the `/contacts` path,
+an input with the name "`q.`" This input's value will be submitted with the `GET` request to the `/contacts` path,
 as a query string (since this is a `GET` request.)
 
 Note that the value of this input is set to the Jinja expression `{{ request.args.get('q') or '' }}`.  This expression

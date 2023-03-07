@@ -619,8 +619,8 @@ This is exactly what the web was designed to do!
 
 By adopting the hypermedia approach for these applications, you will save yourself a huge amount of client-side complexity
 that comes with adopting the Single Page Application approach: there is no need for client-side routing, for managing
-a client-side model, for hand-wiring in JavaScript logic, and so forth.  The back button will "`just work`".  Deep linking
-will "`just work`".  You will be able to focus your efforts on your server, where your application is actually adding value.
+a client-side model, for hand-wiring in JavaScript logic, and so forth.  The back button will "`just work.`" Deep linking
+will "`just work.`" You will be able to focus your efforts on your server, where your application is actually adding value.
 
 And, by layering htmx or another hypermedia-oriented library on top of this approach, you can address many of the usability
 issues that come with vanilla HTML and take advantage of finer-grained hypermedia transfers.  This opens up a whole slew of new

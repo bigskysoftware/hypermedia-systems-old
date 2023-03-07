@@ -46,7 +46,7 @@ Believe it or not, that's it!  This simple script tag will make htmx's functiona
 
 == AJAX-ifying Our Application
 
-To get our feet wet with htmx, the first feature we are going to take advantage of, is what is known as "`boosting`".  This is
+To get our feet wet with htmx, the first feature we are going to take advantage of, is what is known as "`boosting.`" This is
 a bit of a "`cheater`" feature of htmx in that we don't need to do much beyond adding a single attribute, `hx-boost`, to the
 application.  This `hx-boost` attribute is unlike most other attributes in htmx: whereas other htmx attributes tend to be
 very focused on one aspect of improving HTML (e.g. `hx-trigger` focuses on the events that trigger a request, `hx-swap` focuses on how responses
@@ -261,7 +261,7 @@ All this with one htmx attribute.
 
 `hx-boost` is more "`magic`" than other attributes in htmx, which generally are lower level and require a bit more explicit
 annotation work, in order to specify exactly what you want htmx to do.  In general, this is the design philosophy of htmx:
-prefer explicit to implicit and obvious to "`magic`".  However, the `hx-boost` attribute is too useful to allow dogma to
+prefer explicit to implicit and obvious to "`magic.`" However, the `hx-boost` attribute is too useful to allow dogma to
 override practicality, and so it is included as a feature in the library.
 
 == A Second Step: Deleting Contacts With HTTP DELETE
@@ -689,10 +689,10 @@ So, with these two attributes in place, whenever someone changes the value of th
 _default_ trigger for inputs in htmx) an HTTP `GET` request will be issued to the given URL and, if there are any errors, they
 will be loaded into the error span.
 
-=== Validating Emails Server Side
+=== Validating Emails Server-Side
 
-Next, let's look at the server-side implementation.  We are going to add another end point, similar to our edit
-end point in some ways: it is going to look up the contact based on the ID encoded in the URL.  In this case, however,
+Next, let's look at the server-side implementation.  We are going to add another endpoint, similar to our edit
+endpoint in some ways: it is going to look up the contact based on the ID encoded in the URL.  In this case, however,
 we only want to update the email of the contact, and we obviously don't want to save it!  Instead, we will call the
 `validate()` method on it.
 

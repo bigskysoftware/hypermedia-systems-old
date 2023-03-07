@@ -570,7 +570,7 @@ are pressed together:
 <1> `keyup` now has a filter, so the control key and L must be pressed.
 
 The trigger filter in this case is `ctrlKey && key == 'l'`.  This can be read as "`A key up event, where the ctrlKey property
-is true and the key property is equal to l`".  Note that the properties `ctrlKey` and `key` are resolved against the event
+is true and the key property is equal to l.`" Note that the properties `ctrlKey` and `key` are resolved against the event
 rather than the global name space, so you can easily filter on the properties of a given event.  You can use any expression
 you like for a filter, however: calling a global JavaScript function, for example, is perfectly acceptable.
 

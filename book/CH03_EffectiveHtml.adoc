@@ -382,7 +382,7 @@ Take the following code, which uses radio buttons and CSS hacks to create someth
 <2> Hide the radio buttons. We can actuate them by clicking the associated labels.
 <3> A tabpanel will be visible when the associated tab is selected.
 
-This code will "`work`". 
+This code will "`work.`"
 Clicking on the tabs will change the content displayed, and without a single line of JavaScript.
 Unfortunately, tabs have requirements beyond clicking to change content.
 This implementation has many missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
@@ -431,7 +431,7 @@ From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Prac
 }
 ----
 
-`vh` is short for "`visually hidden`". This class uses multiple methods and workarounds to make sure no browser removes the element's function.
+`vh` is short for "`visually hidden.`"This class uses multiple methods and workarounds to make sure no browser removes the element's function.
 ****
 
 It turns out that fulfilling all of these requirements takes a lot of code. 

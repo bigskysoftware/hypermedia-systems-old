@@ -387,7 +387,7 @@ reasonable system for structuring our JavaScript.
 === RSJS
 
 RSJS (the "`Reasonable System for JavaScript Structure`", https://ricostacruz.com/rsjs/) is a set of guidelines for
-JavaScript architecture targeted at "`a typical non-SPA website`". RSJS provides a solution to the lack of a standard code
+JavaScript architecture targeted at "`a typical non-SPA website.`"RSJS provides a solution to the lack of a standard code
 style for vanilla JavaScript that we mentioned earlier.
 
 We won't reproduce all the RSJS guidelines here, but here are the ones most relevant for our counter widget:
@@ -1005,9 +1005,8 @@ Let's go through each component of this script:
 
 * `increment` This is a "`command`" in +_hyperscript+ that "`increments`" things, similar to the `++` operator in JavaScript.
 * the "`the`" doesn't have any semantic meaning +_hyperscript+, but can used to make scripts more readable.
-* `textContent of` -  This one form of _property access_ in +_hyperscript+.  You are probably familiar with the JavaScript
-   syntax `a.b`, meaning "Get the property `b` on object `a`".  +_hyperscript+ supports this syntax, but _also_ supports
-   the forms `b of a` and `a's b`.  Which one you use should depend on which one is most readable.
+* `textContent of` -  This one form of _property access_ in +_hyperscript+.  You are probably familiar with the JavaScript syntax `a.b`, meaning "Get the property `b` on object `a.`" +_hyperscript+ supports this syntax, but _also_ supports
+the forms `b of a` and `a's b`.  Which one you use should depend on which one is most readable.
 *  `the previous` The `previous` expression in +_hyperscript+ finds the previous element in the DOM that matches some condition.
 *  `<output />` This is a _query literal_, which is a CSS selector wrapped between `<` and `/>`.
 
@@ -1149,7 +1148,7 @@ some sort of functionality, such as showing modal dialogs.
 
 Components have become very popular in the web development works, with libraries like  https://datatables.net/[DataTables]
 providing rich user experiences with very little JavaScript code on the part of a user.  Unfortunately, if these libraries
-aren't integrated well into a website, they can begin to make an application feel "`patched together`".  Furthermore, some
+aren't integrated well into a website, they can begin to make an application feel "`patched together.`" Furthermore, some
 libraries go beyond simple DOM manipulation, and require that you integrate with a server endpoint, almost invariably
 with a JSON data API.  This means you are no longer building a Hypermedia-Driven Application, simply because a particular
 widget demands something different.  A shame!
@@ -1271,7 +1270,7 @@ Here is what our code looks like:
 <2> We pass the button in to the function, so an event can be triggered on it.
 <3> We pass through the SweetAlert2 configuration information.
 
-As you can see, this event-based code is much cleaner and certainly more "`HTML-ish`".  The key to this cleaner
+As you can see, this event-based code is much cleaner and certainly more "`HTML-ish.`" The key to this cleaner
 implementation is that our new `sweetConfirm()` function fires an event that htmx is able to listen for.
 
 This is why a rich event model is important to look for when choosing a library to work with, both with htmx and with

@@ -590,7 +590,7 @@ image::screenshot_total_contacts.png[(22 total Contacts)]
 Beautiful.
 
 Of course, as you probably suspected, all is not perfect.  Unfortunately, upon shipping this feature to production, we
-start getting some complaints from the users that the application "`feels slow`".  Like all good developers faced with
+start getting some complaints from the users that the application "`feels slow.`" Like all good developers faced with
 a performance issue, rather than guessing what the issue might be, we try to get a performance profile of the application
 to see what exactly is causing the problem.
 

@@ -45,7 +45,7 @@ layout: layout.njk
                 {% macro toc(block, level=0) %}
                     {% set isPart = level == 0 and is_whole_book %}
                     {% set isChapter = level == 1 and is_whole_book %}
-                    <ul>
+                    <ul class="nested-list">
                         {% for sect in block.getSections() %}
                         <li>
                             <a href="#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">

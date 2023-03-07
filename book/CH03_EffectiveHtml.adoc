@@ -32,8 +32,8 @@ HTML is a hypermedium.
 An HTML file is not a program that produces a human-readable document.
 It _is_ the document.
 
-Unfortunately, HTML isn't often discussed in its own right.
-As a result, its development in terms of hypermedia controls has stagnated.
+Unfortunately, HTML's development in terms of hypermedia controls has stagnated
+and what little there is often not put to full use.
 
 This chapter looks at HTML as something worth studying in its own right, even in this day and age.
 It covers our best practices for writing/generating HTML,
@@ -252,7 +252,6 @@ See how we're _extending_ HTML, rather than abstracting it away.
 
 .Web Components
 ****
-// TODO get on a soapbox about custom elements, why they're good and disappointing
 Web Components is the collective name of a few standards;
 Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
 
@@ -519,7 +518,7 @@ This is why it's often recommended to use established libraries for UI interacti
 Before adding a dependency, however, let's reconsider our design.
 Does the information really need to be presented as tabs?
 Sometimes the answer is yes
-(we used dummy text in our code example, so we can't tell),
+-- we used dummy text in our code example, so we can't tell --
 but if not, a sequence of details disclosures fulfills a very similar purpose.
 
 [source,html]
@@ -537,12 +536,10 @@ At the same time, the possibilities and constraints of the platform should be co
 It might be possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
 But when it's not, we shouldn't try to stuff every problem into an HTML box.
 
-// Don't compromise UX just to avoid JS
-
 
 === Screen reader rage
 
-{blank}// This section is supposed to be addressing the frustration many people experience trying to make accessible sites, how accessibility itself feels inaccessible to many developers.
+{blank}// TODO: This section is supposed to be addressing the frustration many people experience trying to make accessible sites, how accessibility itself feels inaccessible to many developers.
 
 The purpose of writing good HTML is not to please the specification deities.
 It's to make good websites.
@@ -561,10 +558,14 @@ HTML is not _for_ them.
 HTML is for humans.
 
 
-== Machine-readable HTML
+== The Scrapeable Web
+
+// Machine-readable HTML
 
 Hypermedia systems perform best with human-operated clients.
 However, machine-readable information can be embedded into HTML pages through a variety of extension mechanisms
+
+ // TODO: this
 
 === Microformats
 
@@ -627,10 +628,9 @@ This can be parsed into a JSON-like structure, as follows:
 <https://microformats.org/>
 
 
-== Relearning HTML
+== Where to next
 
-If you're convinced that it's worth investing your time into HTML,
-here are some useful resources to have at hand.
+Here are some resources you can use to get better at HTML:
 
 * Foundations
 * HTML specification: https://html.spec.whatwg.org/multipage

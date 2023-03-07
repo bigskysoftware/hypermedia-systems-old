@@ -62,7 +62,7 @@ we want for this archiving feature.
 === UI Requirements
 
 Before we dive into the implementation, let's discuss in broad terms what our new UI should look like:  we want a button
-in the application labeled "`Download Contact Archive`".  When a user clicks on that button, we want to replace that
+in the application labeled "`Download Contact Archive.`" When a user clicks on that button, we want to replace that
 button with a UI that shows the progress of the archiving process, ideally with a progress bar.  As the archive job makes
 progress, we want to move the progress bar along towards completion.  Then, when the archive job is done, we want to
 show a link to the user to download the contact archive file.
@@ -113,7 +113,7 @@ wrap the entire UI in a `div` tag, and then use that `div` as the target for all
 
 Here is the start of the template content for our new archive user interface:
 
-.Our Initial Archive UI Template
+.Our initial archive UI template
 [source, html]
 ----
 <div id="archive-ui"
@@ -121,13 +121,13 @@ Here is the start of the template content for our new archive user interface:
     hx-swap="outerHTML"> <2>
 </div>
 ----
-<1> This div will be the target for all elements within it
-<2> Replace the entire div every time using `outerHTML`
+<1> This div will be the target for all elements within it.
+<2> Replace the entire div every time using `outerHTML`.
 
 Next, lets add the "`Download Contact Archive`" button to the `div` that will kick off the archive-then-download
 process.  We'll use a `POST` to the path `/contacts/archive` to trigger the start of the archiving process:
 
-.Adding The Archive Button
+.Adding the archive button
 [source, html]
 ----
 <div id="archive-ui" hx-target="this" hx-swap="outerHTML">
@@ -136,11 +136,11 @@ process.  We'll use a `POST` to the path `/contacts/archive` to trigger the star
   </button>
 </div>
 ----
-<1> This button will issue a `POST` to `/contacts/archive`
+<1> This button will issue a `POST` to `/contacts/archive`.
 
 Finally, let's include this new template in our main `index.html` template, above the contacts table:
 
-.Our Initial Archive UI Template
+.Our initial archive UI template
 [source, html]
 ----
 {% block content %}
@@ -149,7 +149,7 @@ Finally, let's include this new template in our main `index.html` template, abov
 
     <form action="/contacts" method="get" class="tool-bar">
 ----
-<1> This template will now be included in the main template
+<1> This template will now be included in the main template.
 
 With that done, we now have a button showing up in our web application to get the download going.  Since the enclosing
 `div` has an `hx-target="this"` on it, the button will inherit that target and replace that enclosing `div` with whatever HTML
@@ -177,7 +177,7 @@ status of the archive process.
 
 Here is what the code looks like:
 
-.Server Side Code To Start The Archive Process
+.Server-side code to start the archive process
 [source, python]
 ----
 @app.route("/contacts/archive", methods=["POST"]) <1>
@@ -202,7 +202,7 @@ We want to render the "`Download Contact Archive`" button if the archiver has th
 some sort of message indicating that progress is happening if the status is `Running`.  Let's update our template code
 to do just that:
 
-.Adding Conditional Rendering
+.Adding conditional rendering
 [source, html]
 ----
 <div id="archive-ui" hx-target="this" hx-swap="outerHTML">
@@ -238,7 +238,7 @@ it can conditionally render the correct UI.
 
 That's an easy fix: we just need to pass the archiver through when we render the `index.html` template as well:
 
-.Including The Archiver When We Render index.html
+.Including the archiver when we render index.html
 [source, python]
 ----
 @app.route("/contacts")
@@ -275,17 +275,17 @@ on the new state of the server.
 Polling has a bit of a bad rap, and it isn't the sexiest technique in the world: today
 developers might look at a more advanced technique like WebSockets or Server Sent Events (SSE) to address this situation.
 
-But, say what one will, polling _works_ and it is drop-dead simple.  You need to be careful to make sure you don't overwhelm
-you system with polling requests, but, with a bit of care, you can create a reliable, passively updated component in
+But, say what one will, polling _works_ and it is drop-dead simple.  You need to be careful not to overwhelm
+your system with polling requests, but, with a bit of care, you can create a reliable, passively updated component in
 your UI using it.
 ****
 
-htmx offers two types of polling.  The first is "`fixed rate polling`", which uses a special `hx-trigger` syntax to indicate
+Htmx offers two types of polling.  The first is "`fixed rate polling`", which uses a special `hx-trigger` syntax to indicate
 that something should be polled on a fixed interval.
 
 Here is an example:
 
-.Fixed Interval Polling
+.Fixed interval polling
 [source, html]
 ----
 <div hx-get="/messages" hx-trigger="every 3s"> <1>
@@ -314,7 +314,7 @@ how close the archive process is to completion.
 
 Here is the snippet of HTML we will use:
 
-.A CSS-based Progress Bar
+.A CSS-based progress bar
 [source, html]
 ----
 <div class="progress" >
@@ -330,7 +330,7 @@ indicator the appropriate width within the parent div.
 
 As we have mentioned before, this is not a book on CSS, but, for completeness, here is the CSS for this progress bar:
 
-.The CSS For Our Progress Bar
+.The CSS for our progress bar
 [source, css]
 ----
 .progress {
@@ -364,7 +364,7 @@ image::screenshot_progress_bar.png[A blue progress bar that's a little under hal
 Let's add the code for our progress bar into our `archive_ui.html` template for the case when the archiver is
 running, and let's update the copy to say "`Creating Archive...`":
 
-.Adding The Progress Bar
+.Adding the progress bar
 [source, html]
 ----
 <div id="archive-ui" hx-target="this" hx-swap="outerHTML">
@@ -393,7 +393,7 @@ wrapping around the "`Creating Archive...`" text and the progress bar.
 
 Let's make it poll by issuing an HTTP `GET` to the same path that the `POST` was issued too: `/contacts/archive`.
 
-.Implementing Load Polling
+.Implementing load polling
 [source, html]
 ----
 <div id="archive-ui" hx-target="this" hx-swap="outerHTML">
@@ -411,7 +411,7 @@ Let's make it poll by issuing an HTTP `GET` to the same path that the `POST` was
     {% endif %}
 </div>
 ----
-<1> Issue a `GET` to `/contacts/archive` 500 milliseconds after the content loads
+<1> Issue a `GET` to `/contacts/archive` 500 milliseconds after the content loads.
 
 Again, it is important to realize that, when this `GET` is issued to `/contacts/archive`, it is going to replace
 the `div` with the id `archive-ui`, not just itself.  The `hx-target` attribute on the `div` with the id `archive-ui` is
@@ -421,7 +421,7 @@ _inherited_ by all child elements within that `div`, so the children will all ta
 Now we need to handle the `GET` to `/contacts/archive` on the server.  Thankfully, this is quite easy: all we
 want to do is re-render `archive_ui.html` with the archiver:
 
-.Handling Progress Updates
+.Handling progress updates
 [source, python]
 ----
 @app.route("/contacts/archive", methods=["GET"]) <1>
@@ -501,7 +501,7 @@ bar appears.  When the progress bar reaches 100%, it disappears and a link to do
 can then click on that link and download their archive.  A nice, polished user experience when compared with the common
 click-and-wait experience of many websites.
 
-== Smoothing Things Out: Animations in htmx
+== Smoothing Things Out: Animations in Htmx
 
 As nice as this UI is, there is one minor annoyance with it: as the progress bar updates it "`jumps`" from one position
 to the next.  This looks jerky and is reminiscent of the feel of a full page refresh in web 1.0 style applications.  It
@@ -523,10 +523,10 @@ with their SPA counterparts: it is hard to use CSS transitions without using som
 
 This is unfortunate, but htmx rectifies this situation with its swapping model.  Let's look at how.
 
-=== The "`Settling`" Step in htmx
+=== The "`Settling`" Step in Htmx
 
 When we discussed the htmx swap model in Chapter 5, we focused on the classes that htmx adds and removes, but we skipped
-over the idea of "`settling`".  What is "`settling`" in htmx terms?  Settling is the following process:  when htmx is
+over the idea of "`settling.`" What is "`settling`" in htmx terms?  Settling is the following process:  when htmx is
 about to replace a chunk of content, it looks through the new content and finds all elements with an `id` on it.  It then
 looks in the _existing_ content for elements with the same `id`.  If there is one, it does the following shuffle:
 
@@ -542,14 +542,14 @@ So, in our case, all we need to do is to add a stable ID to our `progress-bar` e
 on every update, the progress bar should smoothly move across the screen as it is updating, using the CSS transition
 defined in our style sheet:
 
-.Smoothing Things Out
+.Smoothing things out
 [source, html]
 ----
 <div class="progress" >
     <div id="archive-progress" class="progress-bar" style="width:{{ archiver.progress() * 100 }}%"></div> <1>
 </div>
 ----
-<1> The progress bar div now has a stable id across requests
+<1> The progress bar div now has a stable id across requests.
 
 So, despite all the complicated mechanics going on behind the scenes in htmx, all we have to do, as an htmx user,
 is add a stable `id` attribute to the element we want to animate.
@@ -566,7 +566,7 @@ can be removed or cleaned up.
 
 We'll add it after the download link, like so:
 
-.Clearing The Download
+.Clearing the download
 [source, html]
 ----
     <a hx-boost="false" href="/contacts/archive/file" _="on load click() me">Archive Ready!  Click here to download. &downarrow;</a>
@@ -582,7 +582,7 @@ Since this button is picking up the same `hx-target` and `hx-swap` configuration
 
 Here is the server-side code:
 
-.Resetting The Download
+.Resetting the download
 [source, python]
 ----
 @app.route("/contacts/archive", methods=["DELETE"])
@@ -614,7 +614,7 @@ All we need to do to implement the auto-download feature is the following: when 
 
 The +_hyperscript+ code reads almost the same as the previous sentence (which is why we love hyperscript):
 
-.Auto-Downloading
+.Auto-downloading
 [source, html]
 ----
   <a hx-boost="false" href="/contacts/archive/file"

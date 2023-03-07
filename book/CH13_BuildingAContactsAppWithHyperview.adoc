@@ -65,7 +65,7 @@ Select an option based on which developer SDK you have installed.
 (The screenshots in this chapter will be taken from the iOS simulator.)
 With any luck, you will see the Expo mobile app installed in the simulator.
 The mobile app will automatically launch and show a screen saying "`Network request failed.`"
-That's because by default, this app is configured to make a request to `http://0.0.0.0:8085/index.xml`, but our backend is listening on port 5000.
+That's because by default, this app is configured to make a request to \http://0.0.0.0:8085/index.xml, but our backend is listening on port 5000.
 To fix this, we can make a simple configuration change in the `demo/src/constants.js` file:
 
 [source,js]
@@ -77,7 +77,7 @@ export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/'; <2>
 <2> Setting the URL to point to our contacts app
 
 We're not up and running yet.
-With our Hyperview client now pointing to the right endpoint, we see a different error, a "`ParseError`".
+With our Hyperview client now pointing to the right endpoint, we see a different error, a "`ParseError.`"
 That's because the backend is responding to requests with HTML content, but the Hyperview client expects an XML response (specifically, HXML).
 So it's time to turn our attention to our Flask backend.
 We will go through the Flask views, and replace the HTML templates with HXML templates.
@@ -100,7 +100,7 @@ Every other action the user can take will be declared in the HXML of that first 
 This minimal configuration is one elegant aspect of the Hypermedia-driven architecture!
 
 Of course, you may want to write more on-device code to support more features in your mobile app.
-We will demonstrate how to do that later in this chapter, in the section called "`Extending the Client`".
+We will demonstrate how to do that later in this chapter, in the section called "`Extending the Client.`"
 ****
 
 

@@ -63,7 +63,7 @@ Unfortunately, today, you probably associate the term "`REST`" with JSON APIs, s
 used in industry.  This is a misapplied use of the term REST because JSON is not a _natural_ hypermedia due to the absence of
 hypermedia controls. The exchange of hypermedia is an explicit requirement for a system to be considered "`RESTful.`"
 It is a long story how we got here, using the term REST so incorrectly, and we will go into the details later in this book.
-But, for now, if you currently think "`REST == JSON`", please try to set that understanding aside while reading this book,
+But, for now, if you think REST implies JSON, please try to set that understanding aside while reading this book,
 and come to the concept with fresh eyes.
 
 It is important to understand that, in his dissertation, Fielding was describing The World Wide Web as it existed in the

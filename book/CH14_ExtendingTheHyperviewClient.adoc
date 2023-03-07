@@ -294,7 +294,7 @@ export default class HyperviewScreen extends PureComponent {
   // ... omitted for brevity
 }
 ----
-<1> Import the show-toast action
+<1> Import the show-toast action.
 <2> Pass the action to the `Hyperview` component, as a prop called `behaviors`.
 
 All that's left to do is trigger the `show-toast` action from our HXML.
@@ -369,7 +369,7 @@ By using a custom action, the toast UI remains visible even while the screens ch
 image::screenshot_hyperview_toast.png["Small gray box shows at top of screen: 'Deleted Contact!'"]
 
 
-== Swipe gesture on Contacts
+== Swipe Gesture on Contacts
 To add communication capabilities and the toast UI, we extended the client with custom behavior actions.
 But the Hyperview client can also be extended with custom UI components that render on the screen.
 Custom components are implemented as React Native components.

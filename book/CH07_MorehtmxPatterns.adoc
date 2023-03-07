@@ -267,7 +267,7 @@ has the id `search`.
 Let's add some conditional logic to our controller to look for that header and, if the value is `search`, we render
 only the rows rather than the whole `index.html` template:
 
-.Updating our server side search
+.Updating our server-side search
 [source,python]
 ----
 @app.route("/contacts")
@@ -418,13 +418,13 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching[MDN article on the top
 documentation] discusses this issue as well.
 ****
 
-=== Updating The Navigation Bar With `hx-push-url`
+=== Updating the Navigation Bar With "`hx-push-url`"
 
 One shortcoming of our current Active Search implementation, when compared with the normal form submission, is that when
 you submit the form version it updates the navigation bar of the browser to include the search term.  So, for example, if
 you search for "`joe`" in the search box, you will end up with a url that looks like this in your browser's nav bar:
 
-.The Updated Location After A Form Search
+.The updated location after a form search
 ----
 https://example.com/contacts?q=joe
 ----
@@ -590,7 +590,7 @@ image::screenshot_total_contacts.png[(22 total Contacts)]
 Beautiful.
 
 Of course, as you probably suspected, all is not perfect.  Unfortunately, upon shipping this feature to production, we
-start getting some complaints from the users that the application "`feels slow`".  Like all good developers faced with
+start getting some complaints from the users that the application "`feels slow.`" Like all good developers faced with
 a performance issue, rather than guessing what the issue might be, we try to get a performance profile of the application
 to see what exactly is causing the problem.
 
@@ -842,7 +842,7 @@ To do this, we'll need to do a couple of things:
 * We'll need to update this link to target the row that it is in.
 * We'll need to change the swap to `outerHTML`, since we want to replace (really, remove) the entire row.
 * We'll need to update the server side to render empty content when the `DELETE` is issued from a "`Delete`" link rather
-  than from the "`Delete Contact`" button on the contact edit page.
+than from the "`Delete Contact`" button on the contact edit page.
 
 First things first, update the target of our "`Delete`" link to be the row that the link is in, rather than the entire
 body.  We can once again take advantage of the relative positional `closest` feature to target the closest `tr`, like

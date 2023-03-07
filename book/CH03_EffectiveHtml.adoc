@@ -84,22 +84,50 @@ The best-known kind of messy HTML is `<div>` soup.
 When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
 we either degrade the quality of our websites or create more work for ourselves -- probably both.
 
-{blank}// TODO: present a more sophisticated div soup example, fix it with aria-js, then fix it with plain html
-
 For example, instead of adding a button using the dedicated `<button>` element,
 a `<div>` element might have a `click` event listener added to it.
-The developer would then (if they want to preserve the usability of their website) need to:
 
-* Make the div keyboard-focusable, using `tabindex="1"`
-* Expose it to assistive technologies as a button with `role="button"`
+[source,html]
+----
+<div class="bg-accent padding-4 rounded-2" onclick="doStuff()">Do stuff</div>
+----
 
-Of course, these are both easy fixes, but why bother?
-Even if you always remember to add the correct attributes and JavaScript
-(and yes, if you're making anything bigger than a button with a div, you will need JavaScript),
+Why might a developer do this, when the `<button>` element is right there?
+There could be a few reasons:
+
+ * *Styling.* The `<button>` element might have been harder to style.
+ * *Confusion.* The button might have some other interactive features, which could lead to the developer not realizing it was a button.
+ * *Apathy.* The developer doesn't care, and uses `<div>` except when he has to.
+
+It's absolutely possible to implement this button, and indeed most kinds of UI, using nothing but `<div>`.
+However, it makes the job harder.
+
+There are two main issues with this button:
+
+* It's not focusable -- the Tab key won't get you to it.
+* There's no way for assistive tools to tell that it's a button.
+
+Let's fix that:
+
+[source,html]
+----
+<div class="bg-accent padding-4 rounded-2"
+  role="button" <1>
+  tabindex="0" <2>
+  onclick="doStuff()">Do stuff</div>
+----
+<1> Expose this element as a button.
+<2> Make this element focusable.
+
+Of course, these are both easy fixes but they're things you have to _remember_.
+It's not obvious from the HTML source that this is a button,
+making the source harder to read and the absence of these attributes harder to spot.
+Furthermore, even if you always remember to add the correct attributes and JavaScript
+-- and yes, if you're making almost anything more complex than a button, you will need a lot of JavaScript --
 you've made your HTML less readable for little reason.
 The source code of pages with div soup is difficult to edit and debug.
 
-Furthermore, we often _don't_ remember these types of UX and accessibility issues.
+We often _don't_ remember these types of UX and accessibility issues.
 [.dfn]_F5-Driven Development_ is the way most of us write HTML:
 write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
 It's a fast and enjoyable way to build things,
@@ -141,7 +169,7 @@ but Markdown doesn't have a way to add a class to elements meaning the square br
 
 [.info]
 ****
-We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If we were using a style like APA in our reference list, where citations are not referenced by number, we would use an <ul>.
+We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If we were using a style like APA in our reference list, where citations are not referenced by number, we would use an `<ul>`.
 ****
 
 Don't shy away from using embedded HTML in Markdown.
@@ -199,19 +227,64 @@ where information is hidden in component state,
 rather than being present in the HTML, which is now incomprehensible due to missing context.
 In our Client Side Scripting chapter, we'll look at alternatives to component-based frameworks that can be used to avoid these shortcomings.
 
-We should clarify that components, when used for the right purpose, can actually _improve_ the clarity of your HTML.
+To be abundantly clear, components aren't the cause of all div soup.
+Not even most of it.
+The root cause is the fact that HTML is falsely believed to be very simple,
+and as a result, developers and organizations don't invest in learning and applying HTML skills.
+However, don't reach for components for reuse without considering other options.
+Lower-level mechanisms usually (allow you to) produce better HTML.
+
+Components, when used well, can actually _improve_ the clarity of your HTML.
 To decide if a component is appropriate for your use case, a good rule of thumb is to ask:
 "`Could this reasonably be a built-in HTML element?`"
 For example, a code editor is a good candidate,
 since HTML already has `<textarea>` and `contenteditable` elements.
 In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
-By encapsulating these in a component, we are _extending_ HTML, rather than abstracting it away.
+We can use features like
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
+to encapsulate these elementsfootnote:[
+Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
+In particular, there are some accessibility issues that may occur when elements inside and outside the shadow root interact.].
+We can create a
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
+`<code-area>`, that we can drop into our page whenever we want.
+See how we're _extending_ HTML, rather than abstracting it away.
 
-However, don't reach for components for reuse without considering other options.
-Lower-level mechanisms usually (allow you to) produce better HTML.
+.Web Components
+****
+// TODO get on a soapbox about custom elements, why they're good and disappointing
+Web Components is the collective name of a few standards;
+Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
 
+All of these standards bring useful capabilities to the table.
+`<template>` elements remove their contents from the document, while still parsing them as HTML (unlike comments) and making them accessible to JavaScript.
+Custom Elements let us initialize and tear down behaviors when elements are added or removed, which would previously require manual work or MutationObservers.
+Shadow DOM lets us encapsulate elements, leaving the "light" (non-shadow) DOM clean and semantic.
+
+However, trying to actually reap these benefits is often frustrating.
+Some of these are simply growing pains of new standards
+(like the many accessibility problems of Shadow DOM)
+that are actively being worked on.
+Others are the result of Web Components trying to be too many things at the same time:
+
+ * An extension mechanism for HTML. To this end, each custom element is a tag we add to the language.
+ * A lifecycle mechanism for behaviors. Methods like `createdCallback`, `connectedCallback`, etc. allow behavior to be added to elements without needing to be manually invoked when those elements are added.
+ * A unit of encapsulation. Shadow DOM insulates elements from their surroundings.
+
+The result is that if you want any one of these things,
+the others come along for the ride.
+If you want to attach some behaviors to some elements using lifecycle callbacks,
+you need to create a new tag,
+which means you can't have multiple behaviors on one element,
+and you isolate elements you add from elements already in the page,
+which is a problem if they need to have ARIA relationships.
+****
 
 == HTML5 soup
+
+Yeah! Down with `<div>`! It's time to use *Semantic HTML!*
+
+Carefully.
 
 A particular set of elements introduced with HTML5 have become a symbol of semantic markup:
 `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` and more.
@@ -355,10 +428,10 @@ It's true that all else being equal, an app that makes full use of HTML will be 
 However, HTML is not a panacea.
 Even the adage that HTML is "`accessible by default`" is misleading.
 
-The problems usually arise when we try to implement controls that aren't built into HTML.
+Problems often arise when we try to implement controls that aren't built into HTML.
 Sometimes, JavaScript is necessary to implement a UI control in an accessible manner
-(supporting all required keyboard interaction and presenting state to assistive tools).
-Clever "tricks" to implement controls like tabs in only HTML/CSS are fun, but often not practical.
+(i.e. supporting all required keyboard interaction and presenting state to assistive tools).
+Clever "tricks" to implement controls in only HTML/CSS are fun, but often not practical.
 Take the following code, which uses radio buttons and CSS hacks to create something that resembles tabs:
 
 [source,html]
@@ -459,7 +532,7 @@ but if not, a sequence of details disclosures fulfills a very similar purpose.
 </details>
 ----
 
-Compromise UX just to avoid JavaScript is bad development.
+Compromising UX just to avoid JavaScript is bad development.
 At the same time, the possibilities and constraints of the platform should be considered while designing interfaces.
 It might be possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
 But when it's not, we shouldn't try to stuff every problem into an HTML box.
@@ -489,6 +562,9 @@ HTML is for humans.
 
 
 == Machine-readable HTML
+
+Hypermedia systems perform best with human-operated clients.
+However, machine-readable information can be embedded into HTML pages through a variety of extension mechanisms
 
 === Microformats
 
@@ -549,11 +625,6 @@ This can be parsed into a JSON-like structure, as follows:
 ----
 
 <https://microformats.org/>
-
-
-== Custom elements
-
-// TODO get on a soapbox about custom elements, why they're good and disappointing
 
 
 == Relearning HTML

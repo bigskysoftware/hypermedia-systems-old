@@ -59,7 +59,7 @@ Test with screenreaders, test with a keyboard, test on different browsers and ha
 
 So where does HTML and the s-word come in?
 
-Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by rewriting semantic HTML as opposed to heaping JavaScript and ARIA attributes over everything.
+Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
 
 Knowing HTML well might not absolve you from doing your job, but it makes it a lot easier.
 
@@ -77,7 +77,7 @@ While programming code is described as spaghetti when it's not well organized,
 the food of choice for messy markup is soupfootnote:[hence BeautifulSoup, the web scraping library.].
 
 HTML can turn into soup in a variety of ways,
-usually due to a disregard for or misunderstanding of semantics
+usually due to a disregard for or misunderstanding of best practice
 or due to an excess of layers between the developer and the HTML.
 
 The best-known kind of messy HTML is `<div>` soup.
@@ -127,7 +127,7 @@ Furthermore, even if you always remember to add the correct attributes and JavaS
 you've made your HTML less readable for little reason.
 The source code of pages with div soup is difficult to edit and debug.
 
-We often _don't_ remember these types of UX and accessibility issues.
+We often _don't_ remember to look out for these types of UX and accessibility bugs.
 [.dfn]_F5-Driven Development_ is the way most of us write HTML:
 write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
 It's a fast and enjoyable way to build things,
@@ -184,7 +184,7 @@ For larger sites, also consider Markdown extensions.
    Available: <https://hypermedia.systems/>
 ----
 <1> Many Markdown dialects let us add ids, classes and attributes using curly braces.
-<2> We can now use the <ol> element.
+<2> We can now use the <ol> element, and create the brackets in CSS.
 <3> We use `<cite>` to mark the title of the work being cited (not the whole citation!)
 
 You can also use custom processors to produce extra-detailed HTML instead of writing it by hand:
@@ -198,7 +198,7 @@ Bozeman, MT, USA: Big Sky Software, 2023.
 Available: <https://hypermedia.systems/>
 {% end %}
 ----
-<1> `reference_list` is a macro that will transform the plain text to semantic HTML.
+<1> `reference_list` is a macro that will transform the plain text to highly-detailed HTML.
 <2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
 
 
@@ -207,21 +207,20 @@ Available: <https://hypermedia.systems/>
 [quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
 The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
 
-In order to avoid `<div>` soup (or Markdown soup, sub-par semantics in general), you need to constantly be aware what kind of markup you're producing and be able to change it.
+In order to avoid `<div>` soup (or Markdown soup, or similar), you need to constantly be aware what kind of markup you're producing and be able to change it.
 
 Web frameworks, particularly SPA frameworksfootnote:[
 This also applies to frameworks like Next and Remix that use SPA technologies like React to render static HTML.],
 can have a tall tower of abstraction between the code the developer writes and the generated markup.
 While these abstractions can allow developers to create richer UI or work faster,
 their pervasiveness means that they can lose sight of the actual HTML (and JavaScript) being sent to clients.
-Without diligent testing, this leads to poor semantics, inaccessibility, and bloat.
+Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
 
 For example, a popular concept found in many frameworks is *components*.
 Components encapsulate a section of a page along with its dynamic behavior.
 While encapsulating behavior is a good way to organize code,
 they also separate elements from their surrounding context,
-which can lead to wrong or inadequate semantics,
-and conceal the number of elements within.
+which can lead to wrong or inadequate relationships between elements.
 The result is what one might call [.dfn]_component soup_,
 where information is hidden in component state,
 rather than being present in the HTML, which is now incomprehensible due to missing context.
@@ -244,7 +243,7 @@ We can use features like
 link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
 to encapsulate these elementsfootnote:[
 Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
-In particular, there are some accessibility issues that may occur when elements inside and outside the shadow root interact.].
+In particular, there are some accessibility bugs that may occur when elements inside and outside the shadow root interact.].
 We can create a
 link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
 `<code-area>`, that we can drop into our page whenever we want.
@@ -258,7 +257,7 @@ Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
 All of these standards bring useful capabilities to the table.
 `<template>` elements remove their contents from the document, while still parsing them as HTML (unlike comments) and making them accessible to JavaScript.
 Custom Elements let us initialize and tear down behaviors when elements are added or removed, which would previously require manual work or MutationObservers.
-Shadow DOM lets us encapsulate elements, leaving the "light" (non-shadow) DOM clean and semantic.
+Shadow DOM lets us encapsulate elements, leaving the "light" (non-shadow) DOM clean.
 
 However, trying to actually reap these benefits is often frustrating.
 Some of these are simply growing pains of new standards
@@ -281,14 +280,14 @@ which is a problem if they need to have ARIA relationships.
 
 == HTML5 soup
 
-Yeah! Down with `<div>`! It's time to use *Semantic HTML!*
+"`Yeah! Down with `<div>`! It's time to use the full power of *HTML5!*`"
 
-Carefully.
+Be careful.
 
-A particular set of elements introduced with HTML5 have become a symbol of semantic markup:
-`<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` and more.
-To make HTML5 soup, convince yourself that the more of these elements there are in a page, the more semantic it is.
-Don't change your development habits in any other way and you have HTML5 soup:
+Elements like `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` have become a sort of shorthand for HTML.
+Developers may sprinkle them generously and haphazardly over `<div>` soup.
+This is not an improvement, and can in fact make a website worse.
+By using these elements, a page makes false promises, like `<article>` elements being self-contained, reusable entities, to clients like browsers, search engines and scrapers that can't know better.
 
 .HTMHell, [.cite]##10 <section> is no replacement for <div>#, https://www.htmhell.dev/10-section-is-no-replacement-for-div/
 [source,html]
@@ -319,15 +318,15 @@ Don't change your development habits in any other way and you have HTML5 soup:
 ----
 
 Most HTML isn't this much of a mess,
-but `<section>` and `<article>` in particular are often used as a drop-in replacement `<div>` without considering its purpose.
-If you're experiencing HTML5 soup, there are two remedies:
+but it's far too common for `<section>` and `<article>` to be used as a drop-in replacement `<div>` instead of adding useful information.
+To avoid this:
 
-* Check the spec. Don't try to use advanced HTML without learning it.
-* Don't try to be specific with your semantics when you can't or don't need to.
-  Sometimes, `<div>` really is fine.
+* Check the HTML spec. Make sure that the element you're using fits your use case.
+* Don't try to be specific when you can't or don't need to.
+  Sometimes, `<div>` is fine.
 
 
-=== Remedy: Keep the spec on hand
+=== Keep the spec on hand
 
 [quote,Confucius]
 The beginning of wisdom is to call things by their right names.
@@ -335,11 +334,11 @@ The beginning of wisdom is to call things by their right names.
 The most authoritative (though not necessarily best) resource for learning about HTML is the HTML specification.
 The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
 The single-page version is too slow to load and render on most computers. 
-There's also a developers' edition at /dev, though there's little difference between the two.]
+There's also a developers' edition at /dev, but I prefer the styling of the standard version.]
 There's no need to rely on hearsay to keep up with developments in HTML.
 
-Section 4 features a list of all available elements.
-It includes what tags mean, where they can occur, and what they are allowed to contain.
+Section 4 features a list of all available elements,
+including what they represent, where they can occur, and what they are allowed to contain.
 It even tells you when you're allowed to leave out closing tags!
 
 [source,html]
@@ -351,10 +350,10 @@ This is a valid HTML document.
 
 [.info]
 ****
-The `<html>` tags can be omitted but it's bad practice to leave out the opening tag since it holds the  `lang` attribute which specifies the language of the document.
+The `<html>` tag can also be omitted (since it's obvious that an HTML document with an HTML doctype is HTML) but it's bad practice to leave out the opening tag since it holds the `lang` attribute which specifies the natural language of the document.
 ****
 
-This chapter in particular is a great piece of reference material and an useful read in general.
+Section 4 in particular is a great piece of reference material and an useful read in general.
 Reading it through (skipping over the implementation details, like the several pages of algorithms)
 will give you a sense of how HTML is intended to be written.
 
@@ -371,12 +370,12 @@ As a result, having markup tailored to content, which is often necessary for adv
 Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
 Dishearteningly, but understandably, it's an expense few organizations can spare.
 
-Thus, we don't demand that every site contains the "most semantic" HTML.
+Thus, we don't demand that every site contains the most conformant HTML it can.
 What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
 The kinds of defects caused by _inadequate_ HTML can usually be caught through testing.
 
 If you have the resources, however, putting more care in your HTML will produce a more polished site.
-Much like style guides, well-written semantic HTML gives an air of quality and prestige to a document, even if few notice it.
+Much like style guides, well-written HTML gives an air of quality and prestige to a document, even if few notice it.
 When it comes to HTML, you get what you pay for.
 
 
@@ -385,48 +384,71 @@ When it comes to HTML, you get what you pay for.
 [quote, '_Mean Girls_ (2004)']
 Gretchen, stop trying to make fetch happen! It's not going to happen!
 
-In natural language, a word can only have a certain meaning if some group of people know it to have that meaning.
-Whereas in programming, we are used to defining functions and variables, creating names for them at a break-neck pace.
-This is possible because the computer doesn't need to understand the names of functions to execute them.
-However, hypermedia formats are not programming languages.
-The names in HTML are not _identifiers_ for behavior, but _words_ with well-understood meanings.
-Any hypermedia format which lets documents define their own elements is an infinite universe of "`fetch`"-es to make happen.
+You might have noticed how we've avoided the use of the word "`semantic`" so far, partly because many people associate it with annoying pedantic colleagues (couldn't be us!), and partly because it has multiple meanings, only one of which we care about.
 
-This was a massive blind spot in the Semantic Web, which dominated hypermedia discourse for years:
-its semantics attempted to replace natural language, but also be pluggable with custom namespaces.
+We're not really about the "`Semantic Web`".
 
-The semantic web is considered a failure, and Schematamania will soon be over.
-Instead, when we talk about semantics, we refer to simply using elements in accordance with their agreed-upon meaning to augment documents for humans.
-Our semantics don't try to replace natural language, they are dependent on natural language and natural understanding.
+The "Semantic Web" was a vision of a system that could both express any kind of human knowledge, and be useful for computing.
+It planned to achieve this using _ontologies_, repositories of schemas like "person", "movie" and "species" and relations like "named", "part of" and "created by".
 
-Instead of being extensible through schemas or namespaces, or whatever DTDs are, HTML is extended in two ways:
+The problem with this vision is that information on the Web rarely fits into neat categories.
+Because no single ontology can be defined that encapsulates all kinds of information one might wish to publish on the Web,
+Semantic Web systems need to be pluggable with different schemas.
+In turn, a Semantic Web client, in order to do something useful with an arbitrary piece of HTML, needs to be able to parse these schemas, which means we need to define a standard machine-readable format for ontologies.
+But a single format couldn't express every kind of object and relation...
+It's turtles all the way down.
 
- - **Ad-hoc extensibility.** HTML is a fault-tolerant language, choosing to ignore things it doesn't recognize instead of throwing errors.
-   This means you can use unspecified attributes.
-   htmx relies on this heavily.
-   If extensions see common acceptance, they might even be incorporated into specifications! (We can dream.)
- - **Specified extension points.** Things like classes, `<meta>` tags, custom elements and `data-` attributes are made for custom data.
-   They can be used to build meta-languages embedded in HTML.
+In practice, most implementations stop at the topmost turtle.
+Ontologies are defined in natural language,
+and clients are hardcoded to support a fixed set of schemas.
+The requirement for prior agreement between server and client means this technology does not have the generality of the Web,
+and for most use cases, you might as well define a JSON API.
 
-This might seem like a downgrade, and an anxiety-inducing one at that.
-Think of the name collisions!
-Indeed, it has some significant compromises, but it also correctly acknowledges that defining custom semantics without prior agreement between all parties is a fiction.
+Instead of extensibility through custom namespaces,
+HTML is extensible through its flexibility --
+both its tolerance for errors and its well-defined extension points like classes and `data-` attributes.
+These affordances let us embed metadata in it without native support.
+They all have the possibility of name collisions,
+but fragility and messiness is ultimately unavoidable for a generalized human information exchange language.
+Tag and attribute names in such a language are not _identifiers_ for behavior -- like function names in a programing language -- but _words_ with well-understood meanings.
+No amount of namespacing can make fetch happen,
+and developers should be able to deal with that.
+Embrace the mess and let go of your schemas.
 A flexible format -- not an infinity of namespaces with URLs pointing to nothing -- is "`software design on the scale of decades`".
 
-Let's be real, after all -- out of all the sites using "`Open Graph`" tags, how many use the appropriate `prefix` attribute? How many of their developers even know the `prefix` attribute exists?
+***
+
+This is a necessarily reductive explanation of the Semantic Web, a field that we've described in past tense even though it continues to have some practical use.
+The reason it doesn't matter to us is because *the Semantic Web has nothing to do with semantic HTML.*
+
+Semantic HTML has no ambitions of robotic agents navigating information and helping us make connections and discoveries.
+It's actually quite mundane: _don't break the web._
+
+[quote,https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/]
+I think being asked to write _meaningful_ HTML better lights the path to realizing that it isn't about what the text means to humans--it's about using tags for the purpose outlined in the specs to meet the needs of software like browsers, assistive technologies, and search engines.
+
+Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
+
+I think even "`meaningful`" is too lofty.
+Instead, I recommend talking about, and writing, **conformant** HTML.
+Use the elements to the full extent provided by the HTML specification,
+and let the software take from it whatever meaning they can.
+
+Speaking of assistive technologies, by the way...
 
 
 == The A word
 
-So far throughout this chapter, we've gestured at potential accessibility benefits to be had from effective HTML.
+Throughout this chapter, we've gestured at potential accessibility benefits to be had from effective HTML.
 
 [quote, Manuel Matuzović, 'https://alistapart.com/article/my-accessibility-journey-what-ive-learned-so-far/[My Accessibility Journey: What I’ve Learned So Far]']
 (Re)learning HTML and using it consciously prevents and fixes many accessibility issues.
 
 It's true that all else being equal, an app that makes full use of HTML will be more accessible than one that is made of soup.
 However, HTML is not a panacea.
-Even the adage that HTML is "`accessible by default`" is misleading.
+Even the adage that HTML is "`accessible by default`" is a bit misleading.
 
+If you use simple HTML strictly as recommended by the spec, you are unlikely to run into accessibility bugs (though it does happen, because this is web development).
 Problems often arise when we try to implement controls that aren't built into HTML.
 Sometimes, JavaScript is necessary to implement a UI control in an accessible manner
 (i.e. supporting all required keyboard interaction and presenting state to assistive tools).
@@ -539,15 +561,18 @@ But when it's not, we shouldn't try to stuff every problem into an HTML box.
 
 === Screen reader rage
 
-{blank}// TODO: This section is supposed to be addressing the frustration many people experience trying to make accessible sites, how accessibility itself feels inaccessible to many developers.
-
 The purpose of writing good HTML is not to please the specification deities.
 It's to make good websites.
 The spec is a good starting point when deciding how to mark something up,
-but when implementations don't conform,
+but when browser implementations don't conform,
 we shouldn't throw up our hands because we did what was specified.
 
+****
+After all, browser implementers do a _lot_ of work to deal with developers' broken HTML -- is it such a burden to return the favor?
+****
+
 It is of course frustrating when browsers and other tools misbehave.
+Accessibility itself feels inaccessible sometimes.
 It helps with the frustration is to recognize that hypermedia exchanges are not machine-to-machine communication.
 An HTML file is not a program that produces a human-readable document.
 It _is_ the document.
@@ -560,16 +585,59 @@ HTML is for humans.
 
 == The Scrapeable Web
 
-// Machine-readable HTML
-
 Hypermedia systems perform best with human-operated clients.
-However, machine-readable information can be embedded into HTML pages through a variety of extension mechanisms
+However, machine-readable information can be embedded into HTML pages through a variety of extension mechanisms:
 
- // TODO: this
+* Classes
 
-=== Microformats
+* `data-` attributes
 
-Here's how the reference list example from earlier could be marked up with the `h-cite` microformat:
+* `<meta>` tags
+
+* Link relations (`rel`)
+
+* Microdata (`itemscope`, `itemtype`, `itemprop`)
+
+These mechanisms are fairly unstructured (as per earlier discussion on Semantic Web schematamania),
+but structure can be imposed upon them if needed.
+One standard for including structured data in HTML is https://microformats.org/[microformats].
+Microformats use classes to mark certain elements as containing information to be extracted.
+The microformats2 standard uses five kinds of classes:
+
+* `h-` classes denote that an element represents a machine-readable entity, e.g. `h-entry`, `h-resume`
+* The other prefixes denote that an element represents properties of an enclosing entity:
+** `p-` classes are plain text properties, from an element's inner text or `alt` attribute, e.g. `p-name`, `p-category`
+** `u-` classes are URL properties, from an element's `href` or `src`, e.g. `u-url`, `u-email`, `u-photo`
+** `dt-` classes are date/time properties, from `<time>` elements, e.g. `dt-published`, `dt-updated`
+** `e-` classes are embedded markup properties, from an element's inner HTML, e.g. `e-content`, `e-description`
+
+There are also conventions for extracting common properties like name, URL and photo without needing classes for each property.
+
+By adding these classes into the HTML representation of an object, we allow the properties of the object to be recovered from the HTML. For example, this simple HTML:
+
+[source,html]
+----
+<a class="h-card" href="https://john.example">
+  <img src="john.jpg" alt=""> John Doe
+</a>
+----
+
+can be parsed into this JSON-like structure:
+
+[source,json]
+----
+{
+  "type": ["h-card"],
+  "properties": {
+    "name": ["John Doe"],
+    "photo": ["john.jpg"],
+    "url": ["https://john.example"]
+  }
+}
+----
+
+We can see microformats in action by looking back at how we can mark up the reference list we mentioned earlier in this example.
+Using a variety of properties and nested objects, we can mark up every bit of information about the work being cited in a machine-readable way:
 
 [source,html]
 ----
@@ -625,12 +693,16 @@ This can be parsed into a JSON-like structure, as follows:
 }
 ----
 
-<https://microformats.org/>
+In this example, Microformats and the extensibility of HTML proved quite useful.
+However, embedding data in HTML is hardly appropriate for every use case.
+Your human-facing and machine-facing interfaces may end up being limited by each other.
+It's often the best option to define a JSON data API separate from your HTML, which will be discussed later in this book.
 
 
 == Where to next
 
-Here are some resources you can use to get better at HTML:
+Unfortunately, a full HTML tutorial is way out of scope for one chapter of this book.
+Here are some resources you can check out if you'd like to invest in your HTML knowledge:
 
 * Foundations
 * HTML specification: https://html.spec.whatwg.org/multipage
@@ -639,6 +711,10 @@ Here are some resources you can use to get better at HTML:
 
 * https://htmhell.dev: Along with sinister abuses of HTML, this website shares development tips that will help ypu keep up-to-date with best practice.
 
-* referenced
+* Referenced
+
 ** Manuel Matuzović, [.cite]_Lost in Translation_, https://www.youtube.com/watch?v=Wno1IhEBTxc.
-** https://www.matuzo.at/blog/2023/single-page-applications-criticism/
+
+** Manuel Matuzović, [.cite]_Why I'm not the biggest fan of Single Page Applications_, https://www.matuzo.at/blog/2023/single-page-applications-criticism/
+
+** [.cite]_semantic: the 8 letter s-word_, https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/

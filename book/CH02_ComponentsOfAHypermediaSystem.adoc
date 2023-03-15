@@ -306,7 +306,7 @@ this means that nearly any programming language can be used to build a hypermedi
 libraries available for building HTTP-based hypermedia servers in nearly every programming language imaginable.
 
 This is one of the best aspects of adopting hypermedia as your primary technology for building a web application: it removes
-the pressure of adopting JavaScript as a back-end technology.  In contrast, if you decide to adopt a JavaScript-heavy
+the pressure of adopting JavaScript as a backend technology.  In contrast, if you decide to adopt a JavaScript-heavy
 Single Page Application-based front end, and you use JSON Data APIs, you will feel significant pressure to adopt
 JavaScript on the back end.
 

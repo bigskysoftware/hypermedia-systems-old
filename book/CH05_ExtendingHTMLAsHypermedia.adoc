@@ -888,6 +888,6 @@ would need to use a 3rd party library or roll your own modal implementation and 
 to use modals within an htmx-based application.
 
 By staying closer to the original model of the web, htmx aims to strike a balance between simplicity and functionality,
-deferring to other libraries for more elaborate front-end extensions on top of the existing web platform.  The good news
+deferring to other libraries for more elaborate frontend extensions on top of the existing web platform.  The good news
 is that htmx plays well with others, so when these needs arise it is often easy enough to bring in another library to handle
 them.

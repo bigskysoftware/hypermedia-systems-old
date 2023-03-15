@@ -31,7 +31,7 @@
         --mono-font: "Berkeley Mono", "Input Mono", "Iosevka", "Liberation Mono", "Victor Mono", "Consolas", monospace, monospace;
 
         --rhythm: 1.5rem;
-        --line-length: 70ch;
+        --line-length: 41em;
 
         font-size: calc((18 / 16) * 100%);
     }
@@ -76,10 +76,12 @@
 
     figure>* { --density: .5 }
     figcaption { font-size: .8em }
+    figcaption:first-child { border-block-end: 1px solid var(--faded-fg) }
+    figcaption:last-child { border-block-start: 1px solid var(--faded-fg) }
 
     /* #endregion */
 
-    header, footer, summary, button, input, small, .\<small\>, aside, figcaption { font-variation-settings: "opsz" 8 }
+    header, footer, summary, button, input, small, .\<small\>, aside, figcaption, .secondary-font { font-variation-settings: "opsz" 7 }
     
     @media (prefers-color-scheme: dark) {
         img[src*="/images/diagram"] { filter: invert(1) }
@@ -90,6 +92,7 @@
     .colist {
         counter-reset: colist;
         font-size: .8em;
+        font-variation-settings: "opsz" 8;
     }
 
     .colist li {

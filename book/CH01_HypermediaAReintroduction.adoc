@@ -51,15 +51,15 @@ via, for example, hyperlinks embedded in the media. The prefix "`hyper-`" derive
 means "`beyond`" or "`over`", indicating that hypermedia _goes beyond_ normal, passively consumed media like magazines and
 newspapers.
 
-Hyperlinks are a canonical example of what is called a _hypermedia control_:
+Hyperlinks are a canonical example of what is called a [.dfn]_hypermedia control_:
 
-Hypermedia Control:: A _hypermedia control_ is an element in a hypermedia that describes (or controls) some sort of
+Hypermedia Control:: A hypermedia control is an element in a hypermedia that describes (or controls) some sort of
 interaction, often with a remote server, by encoding information about that interaction directly and completely within
 itself.
 
 Hypermedia controls are what differentiate hypermedia from other sorts of media.
 
-You may be more familiar with the term _hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
+You may be more familiar with the term [.dfn]_hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-category of hypermedia and much of this book is going to discuss how to build modern applications using
 hypertexts such as  HTML, the Hypertext Markup Language, or HXML, a hypertext used by the Hyperview mobile hypermedia
 system.

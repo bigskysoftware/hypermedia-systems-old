@@ -6,7 +6,7 @@ renderOrder: 1
 
 <style>
     .Chapter-Num {
-        font-variant-numeric: tabular-nums;
+        font-family: var(--display-font);
         min-width: 2ch;
     }
 </style>
@@ -36,26 +36,28 @@ renderOrder: 1
         {% set partnumber = 0 %}
         {% for chapter in search.pages("chapter!=undefined", "chapter") | data %}
             {% if chapter.part %}
-            <h2 class="<h4> italic" style="margin-block:var(--gap)">
+            <h2 class="<h4> display-font" style="margin-block:var(--gap)">
                 <a href="/book/{{ chapter.part_url }}">{{ chapter.part }}</a>
             </h2>
             {% endif %}
-        <article class="f-row hoverable" style="break-inside: avoid-column; font-family: var(--secondary-font);">
-            {% if chapter.chapter != 0 %}
-            <data class="Chapter-Num">{{ chapter.chapter }}</data>
-            {% else %}
-            <data class="Chapter-Num">☛&#xFE0E;</data>
-            {% endif %}
+        <ul role="list">
+            <li class="f-row hoverable" style="break-inside: avoid-column;">
+                {% if chapter.chapter != 0 %}
+                <data class="Chapter-Num">{{ chapter.chapter }}</data>
+                {% else %}
+                <data class="Chapter-Num">=></data>
+                {% endif %}
 
-            <div class="f-col packed align-items:start">
-                <a class="bold" href="{{ chapter.url }}">{{ chapter.title | safe }}</a>
+                <div class="f-col packed align-items:start">
+                    <a href="{{ chapter.url }}">{{ chapter.title | safe }}</a>
 
-                {% from "chapter.njk" import toc with context %}
-                <div hidden data-toc class="dense">
-                    {{ toc(chapter.asciidoc) }}
-                </dialog>
-            </div>
-        </article>
+                    {% from "chapter.njk" import toc with context %}
+                    <div hidden data-toc class="dense">
+                        {{ toc(chapter.asciidoc) }}
+                    </dialog>
+                </div>
+            </li>
+        </ul>
         {% endfor %}
     </div>
 

@@ -8,33 +8,20 @@ layout: layout.njk
         <sub-title>Part {{ partNumber }}</sub-title>
         {{ part }}
     </h1>
-
-    <ul class="flow-gap list-of-links padding-block">
-        {% for chapter in chapters %}
-        <li style="list-style: {{ "'☛ '" if loop.first else "none" }}">
-            <a class="bold" href="{{ chapter.data.url }}">{{ chapter.data.title | safe }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <hr>
-
-    <div style="font-family: var(--secondary-font);">
-        {% if nextPart %}
+    
+    <div class="airy">
         <p>
-            Next part:
-            <a  class="bold italic" href="{{ nextPart.url }}">{{ nextPart.part }}</a>
+            <strong>
+                Next:
+                <a href="{{ chapters[0].data.url }}">{{ chapters[0].data.title }}</a>
+            </strong>
         </p>
-        {% endif %}
+
         {% if previousPart %}
-        <p>
-            Previous part:
-            <a  class="bold italic" href="{{ previousPart.url }}">{{ previousPart.part }}</a>
-        </p>
         {% set previousChapter = previousPart.chapters | last %}
         <p>
-            Previous chapter:
-            <a  class="bold" href="{{ previousChapter.data.url }}">{{ previousChapter.data.title | safe }}</a>
+            Previous:
+            <a href="{{ previousChapter.data.url }}">{{ previousChapter.data.title | safe }}</a>
         </p>
         {% endif %}
     </div>

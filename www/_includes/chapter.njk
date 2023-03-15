@@ -3,8 +3,11 @@ layout: layout.njk
 ---
 
 <header>
-    {% macro nav(show_toc=false) %}
-    <nav aria-label="Chapters navigation">
+    {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
+    {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
+
+    <nav aria-label="Chapters navigation" class="<small>">
+        {% macro nav(show_toc=false) %}
         <div class="f-row flex-wrap:wrap justify-content:space-between">
             {% if prev or part %}
             <p>
@@ -12,27 +15,24 @@ layout: layout.njk
                 {% if part %}
                 <a class="italic" href="/book/{{ part_url }}">{{ part }}</a>
                 {% else %}
-                <a class="bold" href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
+                <a href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
                 {% endif %}
             {% endif %}
             {% if next %}
             <p>
-                Next:
-                {% if next.data.part %}
-                <a class="italic" href="/book/{{ next.data.part_url }}">{{ next.data.part }}</a>
-                {% else %}
-                <a class="bold" href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
-                {% endif %}
+                <strong>
+                    Next:
+                    {% if next.data.part %}
+                    <a class="italic" href="/book/{{ next.data.part_url }}">{{ next.data.part }}</a>
+                    {% else %}
+                    <a href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+                    {% endif %}
+                </strong>
             {% endif %}
         </div>
-
-    </nav>
-    {% endmacro %}
-
-    {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
-    {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
-
+        {% endmacro %}
     {{ nav(show_toc=true) }}
+    </nav>
 
     <h1>
         {% if chapter > 0 %}
@@ -69,7 +69,7 @@ layout: layout.njk
 
 <main>{{ content | safe }}</main>
 
-<div class="container">
+<div class="container secondary-font">
     {{ nav() }}
 </div>
 

@@ -211,7 +211,7 @@ def contacts():
 We see the same sort of routing code we saw in our first example, but we have a more elaborate handler function.
 First, we check to see if a search query parameter named `q` is part of the request.
 
-Query Strings:: A "`query string`" is  part of the URL specification.  Here is an example URL with a query string in it:
+Query Strings:: A [.dfn]"`query string`" is  part of the URL specification.  Here is an example URL with a query string in it:
 `https://example.com/contacts?q=joe`.  The query string is everything after the `?`, and has a
 name-value pair format.  In this URL, the query parameter `q` is set to the string value `joe`.  In plain HTML, a
 query string can be included in a request either by being hardcoded in an anchor tag or, more dynamically, by

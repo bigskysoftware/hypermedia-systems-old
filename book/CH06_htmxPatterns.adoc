@@ -115,7 +115,7 @@ Here is an example of a form that posts messages to the `/messages` endpoint usi
 <1> As with the link, `hx-boost` makes this form AJAX-powered.
 
 A big advantage of the AJAX-based request that `hx-boost` uses (and the lack of head processing that occurs) is that it
-avoids what is known as a _flash of unstyled content_:
+avoids what is known as a [.dfn]_flash of unstyled content_:
 
 Flash Of Unstyled Content (FOUC):: A situation where a browser renders a web page before all the styling information is
 available for the page.  A FOUC causes a disconcerting momentary "`flash`" of the unstyled content, which is then restyled
@@ -194,7 +194,7 @@ it to regular link behavior and, thus, allowing for the file download behavior t
 
 === Progressive Enhancement
 
-A nice aspect of `hx-boost` is that it is an example of _progressive enhancement_:
+A nice aspect of `hx-boost` is that it is an example of [.dfn]_progressive enhancement_:
 
 Progressive Enhancement:: A software design philosophy that aims to provide as much essential content and functionality
 to as many users as possible, while delivering a better experience to users with more advanced web browsers.

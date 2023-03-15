@@ -34,8 +34,8 @@ simply reading from start to end.
 We have already mentioned the two primary hypermedia controls in HTML, anchors and forms, which allow a browser to
 present links and operations to a user through a browser.
 
-In the case of HTML, these links and forms typically specify the target of their operations using Uniform Resource
-Locators (URLs):
+In the case of HTML, these links and forms typically specify the target of their operations using [.dfn]_Uniform Resource
+Locators (URLs)_:
 
 Uniform Resource Locator:: A uniform resource locator is a textual string that refers to, or _points to_ a location
 on a network where a _resource_ can be retrieved from, as well as the mechanism by which the resource can be retrieved.

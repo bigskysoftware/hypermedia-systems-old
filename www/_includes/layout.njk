@@ -81,6 +81,10 @@
     header, footer, summary, button, input, small, .\<small\>, aside { font-variation-settings: "opsz" 8 }
 
     /* #endregion */
+    
+    @media (prefers-color-scheme: dark) {
+        img[src*="/images/diagram"] { filter: invert(1) }
+    }
 
     /* #region Asciidoc */
     

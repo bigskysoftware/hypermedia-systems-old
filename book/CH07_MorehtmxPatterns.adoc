@@ -22,7 +22,7 @@ when Google adopted it for search results, and many applications now implement i
 To implement Active Search, we are going to use techniques closely related to the way we did email validation in the
 previous chapter.  If you think about it, the two features are similar in many ways: in both cases we want to issue
 a request as the user types into an input and then update some other element with a response.  The server-side implementations
-will, of course, be very different, but the front-end code will look fairly similar due to htmx's general approach of "`issue
+will, of course, be very different, but the frontend code will look fairly similar due to htmx's general approach of "`issue
 a request on an event and replace something on the screen.`"
 
 === Our Current Search UI
@@ -165,7 +165,7 @@ bit_ of HTML, rather than a full document. Currently, we are letting the server 
 and then, on the client side, we filter the HTML down to the bits that we want.  This is easy to do, and, in fact, might
 be necessary if we don't control the server side or can't easily modify responses.
 
-In our application, however, since we are doing "`Full Stack`" development (that is: we control both front-end _and_ back-end
+In our application, however, since we are doing "`Full Stack`" development (that is: we control both frontend _and_ backend
 code, and can easily modify either) we have another option: we can modify our server responses to return only the content
 necessary, and remove the need to do client-side filtering.
 

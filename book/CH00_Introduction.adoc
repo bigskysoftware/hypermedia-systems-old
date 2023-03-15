@@ -31,7 +31,7 @@ This JavaScript runtime is so powerful, in fact, that today many developers igno
 browser, in favor of building their web applications entirely in JavaScript.  Applications built in this manner have come
 to be called Single Page Applications (SPAs).  Rather than navigating between pages, these web applications use
 JavaScript for updating the user interface directly.  When they communicate with a server, these applications
-typically use JSON API calls via AJAX.  And they often update the user interface using a "`reactive`" style front-end
+typically use JSON API calls via AJAX.  And they often update the user interface using a "`reactive`" style frontend
 JavaScript library.
 
 In these applications HTML becomes a (somewhat awkward) graphical interface description language that is used

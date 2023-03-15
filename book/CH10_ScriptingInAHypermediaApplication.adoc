@@ -1127,7 +1127,7 @@ or rate limiting events.  +_hyperscript+ also provides declarative mechanisms fo
 and across multiple elements.
 
 Again we wish to stress that, in this example, we are not stepping outside the lines of a Hypermedia-Driven
-Application: we are only adding front-end, client-side functionality with our scripting.  We are not creating and
+Application: we are only adding frontend, client-side functionality with our scripting.  We are not creating and
 managing a large amount of state outside of the DOM itself, or communicating with the server in a non-hypermedia
 exchange.
 

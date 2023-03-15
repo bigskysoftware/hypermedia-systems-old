@@ -491,8 +491,8 @@ should be "`thin`", with the model containing the majority of the logic in the s
 .The Model View Controller Pattern
 ****
 The Model View Controller design pattern is a classic architectural pattern in software development, and was a major
-influence in early web development.  It is no longer emphasized as heavily, as web development has split into front-end
-and back-end camps, but most web developers are still familiar with the idea.
+influence in early web development.  It is no longer emphasized as heavily, as web development has split into frontend
+and backend camps, but most web developers are still familiar with the idea.
 
 Traditionally, the MVC pattern mapped into web development like so:
 

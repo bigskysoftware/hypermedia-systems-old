@@ -299,7 +299,7 @@ which, perhaps inadvertently, tended to encourage this style of JavaScript.
 So, you can see that the notion of Separation of Concerns doesn't always work out as well as promised: our concerns
 end up intertwined or coupled pretty deeply, even when we separate them into different files.
 
-image::images/diagram/separation-of-concerns.svg["Expectation: HTML concern, CSS concern, JS concern. Reality: HTML Co co co CSS nc nc nc JS ern ern ern"]
+image::diagram/separation-of-concerns.svg["Expectation: HTML concern, CSS concern, JS concern. Reality: HTML Co co co CSS nc nc nc JS ern ern ern"]
 
 To show that it isn't just naming between concerns that can get you into trouble, consider another small change to our HTML
 that demonstrates the problems with our separation of concerns: imagine that we decide to change the number field from
@@ -1288,7 +1288,7 @@ ____
 In case of conflict, consider users over authors over implementors over specifiers over theoretical purity.
 ____
 
-We have shown you quite a few tools and techniques for scripting in a Hypermedia-Driven Application.  How should you
+We have looked at several tools and techniques for scripting in a Hypermedia-Driven Application.  How should you
 pick between them?  The sad truth is that there will never be a single, always correct answer to this question.
 
 Are you committed to vanilla JavaScript-only, perhaps due to company policy?  Well, you can use vanilla JavaScript effectively
@@ -1307,9 +1307,9 @@ In general, we encourage a _pragmatic_ approach to scripting: whatever feels rig
 right _enough_) for you.  Rather than being concerned about which particular approach is taken for your scripting,
 we would focus on these more general concerns:
 
-* Avoid communicating with the server via JSON data APIs
-* Avoid storing large amounts of state outside of the DOM
-* Favor using events, rather than hard-coded callbacks or method calls
+* Avoid communicating with the server via JSON data APIs.
+* Avoid storing large amounts of state outside of the DOM.
+* Favor using events, rather than hard-coded callbacks or method calls.
 
 And even on these topics, sometimes a web developer has to do what a web developer has to do.  If the perfect widget
 for your application exists but uses a JSON data API?  That's OK.

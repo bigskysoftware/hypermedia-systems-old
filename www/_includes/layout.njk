@@ -74,9 +74,12 @@
     body > header { border-block-end: 1px dotted var(--muted-fg) }
     body > footer { border-block-start: none }
 
-    header, footer, summary, button, input, small, .\<small\>, aside { font-variation-settings: "opsz" 8 }
+    figure>* { --density: .5 }
+    figcaption { font-size: .8em }
 
     /* #endregion */
+
+    header, footer, summary, button, input, small, .\<small\>, aside, figcaption { font-variation-settings: "opsz" 8 }
     
     @media (prefers-color-scheme: dark) {
         img[src*="/images/diagram"] { filter: invert(1) }
@@ -86,6 +89,7 @@
     
     .colist {
         counter-reset: colist;
+        font-size: .8em;
     }
 
     .colist li {
@@ -96,8 +100,6 @@
     .colist li::marker {
         content: "(" counter(colist) ") ";
         font-family: var(--mono-font);
-        font-size: .9em;
-        font-weight: bold;
     }
     /* #endregion */
     </style>

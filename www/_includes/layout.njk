@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hypermedia Systems</title>
+    <title>{{ title + "—Hypermedia Systems" if title else "Hypermedia Systems" }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=literata:400,400i,700,700i|merriweather-sans:400,400i,700,700i" rel="stylesheet" />
+    {# <link href="https://fonts.bunny.net/css?family=literata:400,400i,700,700i|merriweather-sans:400,400i,700,700i" rel="stylesheet" /> #}
     <link rel="stylesheet" href="https://unpkg.com/missing.css@1.0.12/dist/missing.min.css">
     <link rel="stylesheet" href="https://unpkg.com/missing.css@1.0.12/dist/missing-prism.min.css">
     <style>
@@ -14,13 +14,24 @@
         src: url("/fonts/ChicagoFLF.ttf") format("truetype");
     }
 
+    @font-face {
+        font-family: "Literata";
+        src: url("/fonts/Literata[opsz,wght].ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "Literata";
+        font-style: italic;
+        src: url("/fonts/Literata-Italic[opsz,wght].ttf") format("truetype");
+    }
+
     :root {
         --main-font: "Literata", serif;
-        --secondary-font: "Merriweather Sans", sans-serif;
         --display-font: "Chicago FLF", "Impact", "Oswald", sans-serif;
         --mono-font: "Berkeley Mono", "Input Mono", "Iosevka", "Liberation Mono", "Victor Mono", "Consolas", monospace, monospace;
 
-        --rhythm: 1.6rem;
+        --rhythm: 1.5rem;
+        --line-length: 70ch;
 
         font-size: calc((18 / 16) * 100%);
     }
@@ -36,8 +47,8 @@
         }
     }
 
-    pre {
-    font-size: 1em;
+    pre, code {
+        font-size: 1em;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -57,8 +68,19 @@
         line-height: 1;
     }
 
+    /* #region should be added to missingcss native */
+
     /*temp missing.css fix*/
     :is(small, .\<small\>) > *, aside > *, footer > * { --rhythm: inherit }
+
+    h1 { font-size: 2.5em }
+
+    body > header { border-block-end: 1px dotted var(--muted-fg) }
+    body > footer { border-block-start: none }
+
+    header, footer, summary, button, input, small, .\<small\>, aside { font-variation-settings: "opsz" 8 }
+
+    /* #endregion */
 
     /* #region Asciidoc */
     

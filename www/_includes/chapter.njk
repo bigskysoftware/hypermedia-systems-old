@@ -3,18 +3,6 @@ layout: layout.njk
 ---
 
 <header>
-    <h1>
-        {% if chapter > 0 %}
-        <sub-title>
-            Chapter {{ chapter }}
-        </sub-title>
-        {% endif %}
-        {{ title | safe }}
-    </h1>
-
-    {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
-    {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
-
     {% macro nav(show_toc=false) %}
     <nav aria-label="Chapters navigation">
         <div class="f-row flex-wrap:wrap justify-content:space-between">
@@ -38,39 +26,54 @@ layout: layout.njk
             {% endif %}
         </div>
 
-        {% if show_toc %}
-            <details>
-                <summary>Contents</summary>
-
-                {% macro toc(block, level=0) %}
-                    {% set isPart = level == 0 and is_whole_book %}
-                    {% set isChapter = level == 1 and is_whole_book %}
-                    <ul class="nested-list">
-                        {% for sect in block.getSections() %}
-                        <li>
-                            <a href="#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">
-                                {{ 'Part ' + loop.index + ':' if isPart }}
-                                {{ sect.getTitle() | safe }}
-                            </a>
-                            {{ toc(sect, level + 1) if level < 2 and sect.getSections().length > 0 }}
-                        </li>
-                        {% endfor %}
-                    </ul>
-                {% endmacro %}
-                {{ asciidoc and toc(asciidoc, 0) }}
-            </details>
-        {% endif %}
     </nav>
     {% endmacro %}
 
+    {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
+    {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
+
     {{ nav(show_toc=true) }}
 
+    <h1>
+        {% if chapter > 0 %}
+        <sub-title>
+            Chapter {{ chapter }}
+        </sub-title>
+        {% endif %}
+        {{ title | safe }}
+    </h1>
 </header>
+
+<div class="container">
+    <details class="contents">
+        <summary>Contents</summary>
+
+        {% macro toc(block, level=0) %}
+            {% set isPart = level == 0 and is_whole_book %}
+            {% set isChapter = level == 1 and is_whole_book %}
+            <ul class="nested-list">
+                {% for sect in block.getSections() %}
+                <li>
+                    <a href="#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">
+                        {{ 'Part ' + loop.index + ':' if isPart }}
+                        {{ sect.getTitle() | safe }}
+                    </a>
+                    {{ toc(sect, level + 1) if level < 2 and sect.getSections().length > 0 }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endmacro %}
+        {{ asciidoc and toc(asciidoc, 0) }}
+    </details>
+</div>
 
 <main>{{ content | safe }}</main>
 
-<footer>
+<div class="container">
     {{ nav() }}
+</div>
+
+<footer>
     <p>
     {% include "global-footer.njk" %}
     </p>

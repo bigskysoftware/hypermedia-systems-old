@@ -2,5 +2,6 @@
 layout: layout.njk
 ---
 
+<header><h1>{{ title | safe }}</h1></header>
 <main>{{ content | safe }}</main>
 <footer>{% include "global-footer.njk" %}</footer>

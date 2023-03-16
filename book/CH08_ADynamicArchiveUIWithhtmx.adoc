@@ -5,17 +5,17 @@
 
 == A Dynamic Archive UI
 
-Contact.app has come a long way from the traditional web 1.0-style web application it started life as, at this point:
-we've added active search, bulk delete (with some nice animations) and a slew of other features.  We have reached a level
+Contact.app has come a long way from a traditional web 1.0-style web application:
+we've added active search, bulk delete, some nice animations, and a slew of other features.  We have reached a level
 of interactivity that most web developers would assume requires some sort of Single-Page Application JavaScript framework,
-but we've done nearly all of it using htmx-powered hypermedia instead.
+but we've done it using htmx-powered hypermedia instead.
 
 Let's look at how we can add a final significant feature to Contact.app: downloading an archive of all the contacts.
 
 From a hypermedia perspective, downloading a file isn't exactly rocket science: using the HTTP `Content-Disposition`
 response header, we can easily tell the browser to download and save a file to the local computer.
 
-However, let's make this problem a bit more interesting: let's add in the fact that the export can take a bit of time,
+However, let's make this problem more interesting: let's add in the fact that the export can take a bit of time,
 from five to ten seconds, or sometimes even longer, to complete.
 
 This means that if we implemented the download as a "`normal`" HTTP request, driven by a link or a button, the user might
@@ -26,8 +26,8 @@ request.  Not good.
 This turns out to be a classic problem in web app development.  When faced with potentially long-running process like this,
 we ultimately have two options:
 
-* When the user triggers the action, block until it is complete and then respond with the result
-* Begin the action and return immediately, showing some sort of UI indicating that things are in progress
+* When the user triggers the action, block until it is complete and then respond with the result.
+* Begin the action and return immediately, showing some sort of UI indicating that things are in progress.
 
 Blocking and waiting for the action to complete is certainly the simpler way to handle it, but it can be a bad user
 experience, especially if the action takes a while to complete.  If you've ever clicked on something in a web 1.0-style
@@ -44,10 +44,10 @@ to the results.
 We have seen a few different "`simple`" approaches in this scenario in various web applications:
 
 * Let the user know that the process has started and that they will be emailed a link to the completed process
-  results when it is finished
+  results when it is finished.
 * Let the user know that the process has started and recommend that they should manually refresh the page to see the
-  status of the process
-* Let the user know that the process has started and automatically refresh the page every few seconds using some JavaScript
+  status of the process.
+* Let the user know that the process has started and automatically refresh the page every few seconds using some JavaScript.
 
 All of these will work, but none of them is a great user experience.
 
@@ -68,8 +68,7 @@ progress, we want to move the progress bar along towards completion.  Then, when
 show a link to the user to download the contact archive file.
 
 In order to actually do the archiving, we are going to use a python class, `Archiver`, that implements all the
-functionality that we need.  As with the `Contact` class, we aren't going to go into the implementation details of `Archiver`
-, because that's beyond the scope of this book.  All you, the reader, need to know is that it provides all the server-side
+functionality that we need.  As with the `Contact` class, we aren't going to go into the implementation details of `Archiver`, because that's beyond the scope of this book.  For now you just need to know is that it provides all the server-side
 behavior necessary to start a contact archive process and get the results when that process is done.
 
 `Archiver` gives us the following methods to work with:
@@ -81,7 +80,7 @@ behavior necessary to start a contact archive process and get the results when t
 * `archive_file()` - The path to the archive file that has been created on the server, so we can send it to the client
 * `get()` - A class method that lets us get the Archiver for the current user
 
-Not a terribly sophisticated API.
+A fairly uncomplicated API.
 
 The only somewhat tricky aspect to the whole API is that the `run()` method
 is _non-blocking_. This means that it does not _immediately_ create the archive file, but rather it starts a background job
@@ -95,23 +94,23 @@ archive progress UI.
 We now have everything we need to begin implementing our UI: a reasonable outline of what it is going to look like, and
 the domain logic to support it.
 
-So, in getting down to building the UI, the first thing we want to note is that this UI is largely self-contained: we
+So, to start, note that this UI is largely self-contained: we
 want to replace the button with the download progress bar, and then the progress bar with a link to download the results
 of the completed archive process.
 
 The fact that our archive user interface is all going to be within a specific part of the UI is a strong hint
 that we will want to create a new template to handle it.  Let's call this template `archive_ui.html`.
 
-Another thing that jumps out at us is that we are going to want to replace the entire download UI in multiple cases:
+Also note that we are going to want to replace the entire download UI in multiple cases:
 
-* When we start the download, we will want to replace the button with a progress bar
-* As the archive process proceeds, we will want to replace/update the progress bar
-* When the archive process completes, we will want to replace the progress bar with a download link
+* When we start the download, we will want to replace the button with a progress bar.
+* As the archive process proceeds, we will want to replace/update the progress bar.
+* When the archive process completes, we will want to replace the progress bar with a download link.
 
-Given we are going to be updating the UI in this way, it makes sense to have a good target for the updates.  So, let's
+To update the UI in this way, we need to set a good target for the updates.  So, let's
 wrap the entire UI in a `div` tag, and then use that `div` as the target for all our operations.
 
-Here is the start of the template content for our new archive user interface:
+Here is the start of the template for our new archive user interface:
 
 .Our initial archive UI template
 [source, html]
@@ -164,7 +163,6 @@ we will render some new content indicating that the process is running.
 To do that, we want to reuse the `archive_ui` template to handle rendering the archive UI for both states,
 when the archiver is "`Waiting`" and when it is "`Running.`"  (We will handle the "`Complete`" state in a bit).
 
-
 This is a very common pattern: we put all the different potential UIs for a given chunk of the user interface into
 a single template, and conditionally render the appropriate interface.  By keeping everything in one file, it makes
 it much easier for other developers (or for us, if we come back after a while!) to understand exactly how the UI
@@ -186,20 +184,21 @@ def start_archive():
     archiver.run() <3>
     return render_template("archive_ui.html", archiver=archiver) <4>
 ----
-<1> Handle `POST` to `/contacts/archive`
-<2> Look up the Archiver
-<3> Invoke the non-blocking `run()` method on it
-<4> Render the `archive_ui.html` template, passing in the archiver
+<1> Handle `POST` to `/contacts/archive`.
+<2> Look up the Archiver.
+<3> Invoke the non-blocking `run()` method on it.
+<4> Render the `archive_ui.html` template, passing in the archiver.
 
 === Conditionally Rendering A Progress UI
 
-Now let's turn our attention to updating our archiving UI by setting `archive_ui.html` to conditionally render different
-content depending on the state of the archive process.  We are passing the archiver through
-as a variable to the template, and recall that the archiver has a `status()` method that we can consult to see what
-the status of the archive process is.
+Now let's turn our attention to updating our archiving UI by setting `archive_ui.html` to conditionally render different content depending on the state of the archive process.  
 
-We want to render the "`Download Contact Archive`" button if the archiver has the status `Waiting`, and we want to render
-some sort of message indicating that progress is happening if the status is `Running`.  Let's update our template code
+Recall that the archiver has a `status()` method. When we pass the archiver through
+as a variable to the template, we can consult this `status()` method to see
+the status of the archive process.
+
+If the archiver has the status `Waiting`, we want to render the "`Download Contact Archive`" button. If the status is `Running`, we want to render
+a message indicating that progress is happening. Let's update our template code
 to do just that:
 
 .Adding conditional rendering
@@ -213,12 +212,11 @@ to do just that:
     {% elif archiver.status() == "Running" %}<2>
        Running...<3>
     {% end %}
-
 </div>
 ----
-<1> Only render button if the status is "`Waiting`"
-<2> Render different content when status is "`Running`"
-<3> For now, just some text saying things are Running
+<1> Only render the archive button if the status is "`Waiting.`"
+<2> Render different content when status is "`Running.`"
+<3> For now, just some text saying the process is running.
 
 OK, great, we have some conditional logic in our template view, and the server-side logic to support kicking off the
 archive process.  We don't have a progress bar yet, but we'll get there!  Let's see how this works as it stands, and
@@ -232,7 +230,7 @@ jinja2.exceptions.UndefinedError: 'archiver' is undefined
 
 Ouch!
 
-We get an error message right out of the box.  Why?  Ah, of course, we are including the `archive_ui.html` in the
+We get an error message right out of the box.  Why?  Ah, we are including the `archive_ui.html` in the
 `index.html` template, but now the `archive_ui.html` template expects the archiver to be passed through to it, so
 it can conditionally render the correct UI.
 
@@ -264,7 +262,7 @@ on the server-side that the job is indeed getting kicked off properly.
 That's definitely progress, but we don't exactly have the best progress indicator here: just some static text telling
 the user that the process is running.
 
-Next we want to make the content update as the process makes progress and, ideally, show a progress bar indicating
+We want to make the content update as the process makes progress and, ideally, show a progress bar indicating
 how far along it is.  How can we do that in htmx using plain old hypermedia?
 
 The technique we want to use here is called "`polling`", where we issue a request on an interval and update the UI based
@@ -291,19 +289,18 @@ Here is an example:
 <div hx-get="/messages" hx-trigger="every 3s"> <1>
 </div>
 ----
-<1> trigger a `GET` to `/messages` every three seconds
+<1> Trigger a `GET` to `/messages` every three seconds.
 
 This works great in situations when you want to poll indefinitely, for example if you want to constantly poll for new
 messages to display to the user.  However, fixed rate polling isn't ideal when you have a definite process after which
 you want to stop polling: it keeps polling forever, until the element it is on is removed from the DOM.
 
-In our case, we have a definite process with an ending to it.  So, in our case, it will be better to use the second polling
-technique, known as "load polling".  In load polling, you take advantage of the fact that htmx triggers a `load` event
-when content is loaded into the DOM.  So you can create a trigger on the `load` event, but then add a bit of a delay so that
+In our case, we have a definite process with an ending to it.  So, it will be better to use the second polling
+technique, known as "`load polling.`"  In load polling, we take advantage of the fact that htmx triggers a `load` event
+when content is loaded into the DOM.  We can create a trigger on this `load` event, and add a bit of a delay so that
 the request doesn't trigger immediately.
 
-When you do this, then you can conditionally render the `hx-trigger` on every request: when a process has completed you
-can simply not include the `load` trigger and the load polling stops.  A nice and simple way to poll until a definite
+With this, we can conditionally render the `hx-trigger` on every request: when a process has completed we simply do not include the `load` trigger, and the load polling stops.  This offers a nice and simple way to poll until a definite
 process finishes.
 
 === Using Polling To Update The Archive UI
@@ -317,18 +314,18 @@ Here is the snippet of HTML we will use:
 .A CSS-based progress bar
 [source, html]
 ----
-<div class="progress" >
+<div class="progress">
     <div class="progress-bar" style="width:{{ archiver.progress() * 100 }}%"></div> <1>
 </div>
 ----
-<1> The width of the inner element corresponds to the progress
+<1> The width of the inner element corresponds to the progress.
 
 This CSS-based progress bar has two components: an outer `div` that provides the wire frame for the progress bar,
  and an inner `div` that is the actual progress bar indicator.  We set the width of the inner progress bar to some percentage
 (note we need to multiply the `progress()` result by 100 to get a percentage) and that will make the progress
 indicator the appropriate width within the parent div.
 
-As we have mentioned before, this is not a book on CSS, but, for completeness, here is the CSS for this progress bar:
+For completeness, here is the CSS we'll use for this progress bar:
 
 .The CSS for our progress bar
 [source, css]
@@ -391,7 +388,7 @@ To get the progress bar updating dynamically, we'll need to implement load polli
 to pretty much any element inside the conditional block for when the archiver is running, so let's add it to that `div` that is
 wrapping around the "`Creating Archive...`" text and the progress bar.
 
-Let's make it poll by issuing an HTTP `GET` to the same path that the `POST` was issued too: `/contacts/archive`.
+Let's make it poll by issuing an HTTP `GET` to the same path as the `POST`: `/contacts/archive`.
 
 .Implementing load polling
 [source, html]
@@ -413,7 +410,7 @@ Let's make it poll by issuing an HTTP `GET` to the same path that the `POST` was
 ----
 <1> Issue a `GET` to `/contacts/archive` 500 milliseconds after the content loads.
 
-Again, it is important to realize that, when this `GET` is issued to `/contacts/archive`, it is going to replace
+When this `GET` is issued to `/contacts/archive`, it is going to replace
 the `div` with the id `archive-ui`, not just itself.  The `hx-target` attribute on the `div` with the id `archive-ui` is
 _inherited_ by all child elements within that `div`, so the children will all target that outermost `div` in the
 `archive_ui.html` file.
@@ -432,15 +429,15 @@ def archive_status():
 <1> handle `GET` to the `/contacts/archive` path
 <2> just re-render the `archive_ui.html` template
 
-Simple, like so much else with hypermedia.
+Like much else with hypermedia, the code is readable and not overly complicated.
 
 Now, when we click the "`Download Contact Archive`", sure enough, we get a progress bar that updates every 500
-milliseconds.  And, as the result of the call to `archiver.progress()` incrementally updates from 0 to 1, the
+milliseconds.  As the result of the call to `archiver.progress()` incrementally updates from 0 to 1, the
 progress bar moves across the screen for us.  Very cool.
 
 === Downloading The Result
 
-We have one final state to handle, the case when `achiver.status()` is set to "`Complete`", and there is a JSON
+We have one final state to handle, the case when `archiver.status()` is set to "`Complete`", and there is a JSON
 archive of the data ready to download.  When the archiver is complete, we can get the local JSON file on the server
 from the archiver via the `archive_file()` call.
 
@@ -468,23 +465,23 @@ the new code:
     {% endif %}
 </div>
 ----
-<1> If the status is "`Complete`", render a download link
-<2> The link will issue a `GET` to `/contacts/archive/file`
+<1> If the status is "`Complete`", render a download link.
+<2> The link will issue a `GET` to `/contacts/archive/file`.
 
-Note that the link has a `hx-boost` set to `false`.  It has this so that the link will not inherit the boost behavior
+Note that the link has `hx-boost` set to `false`.  It has this so that the link will not inherit the boost behavior
 that is present for other links and, thus, will not be issued via AJAX.  We want this "`normal`" link behavior because an
 AJAX request cannot download a file directly, whereas a plain anchor tag can.
 
 === Downloading The Completed Archive
 
 The final step is to handle the `GET` request to `/contacts/archive/file`.  We want to send the file that the
-archiver created down to the client.  We are in luck: Flask has a very simple mechanism for sending a file as
-a downloaded response: the `send_file()` method.
+archiver created down to the client.  We are in luck: Flask has a mechanism for sending a file as
+a downloaded response, the `send_file()` method.
 
-We can pass this method the path to the archive file that the archiver
-created, the name of the file that we want the browser to create, and if we want it sent "`as an attachment`".
-This last argument will which will tell Flask to set the  HTTP response header `Content-Disposition` to `attachment`
-with the given filename, which will trigger the browsers file-downloading behavior.
+As you see in the code that follows, we pass three arguments to `send_file()`:
+the path to the archive file that the archiver
+created, the name of the file that we want the browser to create, and if we want it sent "`as an attachment.`"
+This last argument tells Flask to set the HTTP response header `Content-Disposition` to `attachment` with the given filename; this is what triggers the browser's file-downloading behavior.
 
 .Sending A File To The Client
 [source, python]
@@ -494,53 +491,55 @@ def archive_content():
     manager = Archiver.get()
     return send_file(manager.archive_file(), "archive.json", as_attachment=True) <1>
 ----
-<1> send the file to the client
+<1> Send the file to the client via Flask's `send_file()` method.
 
 Perfect.  Now we have an archive UI that is very slick.  You click the "`Download Contacts Archive`" button and a progress
 bar appears.  When the progress bar reaches 100%, it disappears and a link to download the archive file appears.  The user
-can then click on that link and download their archive.  A nice, polished user experience when compared with the common
+can then click on that link and download their archive.  
+
+We're offering a user experience that is much more user-friendly than the common
 click-and-wait experience of many websites.
 
 == Smoothing Things Out: Animations in Htmx
 
-As nice as this UI is, there is one minor annoyance with it: as the progress bar updates it "`jumps`" from one position
-to the next.  This looks jerky and is reminiscent of the feel of a full page refresh in web 1.0 style applications.  It
-turns out that there is a native HTML technology for smoothing out changes on an element from one state to another
-that we discussed in Chapter 5: the CSS Transitions API.
+As nice as this UI is, there is one minor annoyance: as the progress bar updates it "`jumps`" from one position to the next.  This feels a bit like a full page refresh in web 1.0 style applications. Can we fix this? 
 
-Using CSS Transitions, you can smoothly animate an element between different styling by using the `transition` property.
+Let's think through the cause of the problem. If you're in a hurry to get to an answer, feel free to jump ahead to "`our solution.`" 
 
-If you look back at our CSS definition of the `.progress-bar` class, you will see the following transition definition
-in it: `transition: width .6s ease;`.  This means that when the width of the progress bar is changed from, say 20% to
+It turns out that there is a native HTML technology for smoothing out changes on an element from one state to another: the CSS Transitions API, the same that we discussed in Chapter 5. Using CSS Transitions, you can smoothly animate an element between different styling by using the `transition` property.
+
+If you look back at our CSS definition of the `.progress-bar` class, you will see the following transition definition: `transition: width .6s ease;`. This means that when the width of the progress bar is changed from, say 20% to
 30%, the browser will animate over a period of .6 seconds using the "`ease`" function (which has a nice accelerate/decelerate
 effect).
 
-Unfortunately that nice transition isn't being applied in our current UI.  This is because, in our example, htmx is
-_replacing_ the progress bar with new one every time it polls.  It isn't updating the width
+So why isn't that transition being applied in our current UI?  Because, in our example, htmx is
+_replacing_ the progress bar with a new one every time it polls.  It isn't updating the width
 of the _existing_ element.  CSS transitions, unfortunately, only apply when the properties of an existing element change,
 not when the element is replaced.  This is a reason why pure HTML-based applications can feel jerky and unpolished when compared
-with their SPA counterparts: it is hard to use CSS transitions without using some JavaScript.
+with their SPA counterparts: it is hard to use CSS transitions without some JavaScript.
 
-This is unfortunate, but htmx rectifies this situation with its swapping model.  Let's look at how.
+The good news: htmx has a way to rectify this situation. 
 
 === The "`Settling`" Step in Htmx
 
 When we discussed the htmx swap model in Chapter 5, we focused on the classes that htmx adds and removes, but we skipped
-over the idea of "`settling.`" What is "`settling`" in htmx terms?  Settling is the following process:  when htmx is
+over the process of "`settling.`" In htmx, settling involves several steps:  when htmx is
 about to replace a chunk of content, it looks through the new content and finds all elements with an `id` on it.  It then
 looks in the _existing_ content for elements with the same `id`.  If there is one, it does the following shuffle:
 
-* The _new_ content gets the attributes of the _old_ content temporarily
-* The new content is inserted
-* After a small delay, the new content has its attributes reverted to their actual values
+* The _new_ content gets the attributes of the _old_ content temporarily.
+* The new content is inserted.
+* After a small delay, the new content has its attributes reverted to their actual values.
 
-So, what is this strange little dance supposed to achieve?  Well, what this ends up meaning is that, if an element
+So, what is this strange little dance supposed to achieve?  Well, if an element
 has a stable id between swaps, you _can_ write CSS transitions between various states.  Since the new content briefly
 has the _old_ attributes, the normal CSS mechanism will kick in when the actual values are restored.
 
-So, in our case, all we need to do is to add a stable ID to our `progress-bar` element, and, rather than jumping
-on every update, the progress bar should smoothly move across the screen as it is updating, using the CSS transition
-defined in our style sheet:
+=== Our Smoothing Solution
+
+So, we arrive at our fix. 
+
+All we need to do is add a stable ID to our `progress-bar` element. 
 
 .Smoothing things out
 [source, html]
@@ -551,16 +550,16 @@ defined in our style sheet:
 ----
 <1> The progress bar div now has a stable id across requests.
 
-So, despite all the complicated mechanics going on behind the scenes in htmx, all we have to do, as an htmx user,
-is add a stable `id` attribute to the element we want to animate.
+Despite the complicated mechanics going on behind the scenes in htmx, the solution is as simple as adding a stable `id` attribute to the element we want to animate.
 
-With that done, voila: we get a nice, smooth progress bar as the contact archiving process proceeds.  Because of
-the htmx swapping model, we get this nice animation even though we are replacing the content with new HTML.  So we get
-the simplicity of the HTML-based approach, but the look and feel of a more sophisticated JavaScript-based approach.
+Now, rather than jumping on every update, the progress bar should smoothly move across the screen as it is updating, using the CSS transition
+defined in our style sheet. The htmx swapping model allows us to achieve this even though we are replacing the content with new HTML. 
+
+And voila: we have a nice, smoothly animated progress bar for our contact archiving feature. The result has the look and feel of a JavaScript-based solution, but we did it with the simplicity of an HTML-based approach.
 
 == Dismissing The Download UI
 
-Next, let's make it possible for the user to dismiss the download link and return to the original export UI state.  To
+Next, let's make it possible for the user to dismiss the download link and return to the original export UI state. To
 do this, we'll add a button that issues a `DELETE` to the path `/contacts/archive`, indicating that the current archive
 can be removed or cleaned up.
 
@@ -569,20 +568,20 @@ We'll add it after the download link, like so:
 .Clearing the download
 [source, html]
 ----
-    <a hx-boost="false" href="/contacts/archive/file" _="on load click() me">Archive Ready!  Click here to download. &downarrow;</a>
+    <a hx-boost="false" href="/contacts/archive/file">Archive Ready!  Click here to download. &downarrow;</a>
     <button hx-delete="/contacts/archive">Clear Download</button> <1>
 ----
-<1> A simple button that issues a `DELETE` to `/contacts/archive`
+<1> A simple button that issues a `DELETE` to `/contacts/archive`.
 
 Now the user has a button that they can click on to dismiss the archive download link.  But we will need to hook it up
-on the server side.  As usual, this is pretty straight forward: we simply create a new handler for the `DELETE` HTTP Action,
+on the server side.  As usual, this is pretty straightforward: we create a new handler for the `DELETE` HTTP Action,
 invoke the `reset()` method on the archiver, and re-render the `archive_ui.html` template.
 
-Since this button is picking up the same `hx-target` and `hx-swap` configuration as everything else, it "`just works`".
+Since this button is picking up the same `hx-target` and `hx-swap` configuration as everything else, it "`just works.`"
 
 Here is the server-side code:
 
-.Resetting the download
+.The handler to reset the download
 [source, python]
 ----
 @app.route("/contacts/archive", methods=["DELETE"])
@@ -597,20 +596,17 @@ This looks pretty similar to our other handlers, doesn't it?  Yep, that's the id
 
 == An Alternative UX: Auto-Download
 
-While we prefer the current user experience for archiving contacts, where a progress bar shows the progress of
-the process and, when it completes, the user is presented with a link to actually download the file, there are other
-alternatives to it.  Another pattern that we see on the web is "auto-downloading", where the file downloads immediately
-without the user needing to click a link.
+While we prefer the current user experience for archiving contacts, there are other
+alternatives. Currently, a progress bar shows the progress of
+the process and, when it completes, the user is presented with a link to actually download the file. Another pattern that we see on the web is "auto-downloading", where the file downloads immediately without the user needing to click a link.
 
 We can add this functionality quite easily to our application with just a bit of scripting.  We will discuss scripting
-in a Hypermedia-Driven Application in more depth in a few chapters, but as a quick introduction: scripting is perfectly
-acceptable in an HDA, as long as it doesn't replace the core hypermedia mechanics of the application.
+in a Hypermedia-Driven Application in more depth in chapter 10, but, put briefly: scripting is perfectly
+acceptable in a HDA, as long as it doesn't replace the core hypermedia mechanics of the application.
 
-For our auto-download feature we will use https://hyperscript.org[+_hyperscript+] , our preferred scripting option, but the
-equivalent JavaScript would be nearly as simple.
+For our auto-download feature we will use https://hyperscript.org[+_hyperscript+], our preferred scripting option. JavaScript would also work here, and would be nearly as simple; again, we'll discuss scripting options in Chapter 10.
 
-All we need to do to implement the auto-download feature is the following: when the download link renders,
- automatically click on the link for the user.
+All we need to do to implement the auto-download feature is the following: when the download link renders, automatically click on the link for the user.
 
 The +_hyperscript+ code reads almost the same as the previous sentence (which is why we love hyperscript):
 
@@ -619,20 +615,18 @@ The +_hyperscript+ code reads almost the same as the previous sentence (which is
 ----
   <a hx-boost="false" href="/contacts/archive/file"
      _="on load click() me"> <1>
-    Archive Downloading!  Click here if the download does not start.
+    Archive Downloading! Click here if the download does not start.
   </a>
 ----
-<1> a bit of +_hyperscript+ to make the file auto-download
-
-Have we mentioned that we love +_hyperscript+?
+<1> A bit of +_hyperscript+ to make the file auto-download.
 
 Crucially, the scripting here is simply _enhancing_ the existing hypermedia, rather than replacing it with
-a non-hypermedia request.  This is hypermedia-friendly scripting, as we will cover in more depth in a bit.
+a non-hypermedia request. This is hypermedia-friendly scripting, as we will cover in more depth in a bit.
 
 == A Dynamic Archive UI: Complete
 
-In this chapter we've managed to create a very dynamic UI for our contact archive functionality, with a progress bar and
-auto-downloading, and we've done nearly all of it (with the exception of a small bit of scripting for auto-download) in
-pure hypermedia. And it only took about 16 lines of front end code and 16 lines of backend code to build the whole thing.
+In this chapter we've managed to create a dynamic UI for our contact archive functionality, with a progress bar and
+auto-downloading, and we've done nearly all of it -- with the exception of a small bit of scripting for auto-download -- in
+pure hypermedia. It took about 16 lines of front end code and 16 lines of backend code to build the whole thing.
 
-This shows once again that HTML, with a bit of help from htmx, can in fact be extremely powerful and expressive.
+HTML, with a bit of help from a hypermedia-oriented JavaScript library such as htmx, can in fact be extremely powerful and expressive.

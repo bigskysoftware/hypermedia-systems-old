@@ -75,7 +75,7 @@
     body > footer { border-block-start: none }
 
     figure>* { --density: .5 }
-    figcaption { font-size: .8em }
+    figcaption { font-size: .8em; line-height: calc(var(--rhythm) * 2 / 3); }
     figcaption:first-child { border-block-end: 1px solid var(--faded-fg) }
     figcaption:last-child { border-block-start: 1px solid var(--faded-fg) }
 
@@ -92,6 +92,7 @@
     .colist {
         counter-reset: colist;
         font-size: .8em;
+        line-height: calc(var(--rhythm) * 2 / 3);
         font-variation-settings: "opsz" 8;
     }
 

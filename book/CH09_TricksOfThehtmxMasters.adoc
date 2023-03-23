@@ -7,12 +7,9 @@
 [partintro]
 == Advanced Htmx
 
-In this chapter we are going to look more deeply into htmx.  We've accomplished quite a bit with what we've learned
-so far, but, when you are developing Hypermedia-Driven Applications, there are likely to be situations that arise
-that require additional functionality to address cleanly.
+In this chapter we are going to look deeper into the htmx toolkit.  We've accomplished quite a bit with what we've learned so far. Still, when you are developing Hypermedia-Driven Applications, there will be times when you need to reach for additional options and techniques.
 
-We will go over some of the more advanced attributes in htmx, as well as expand on the advanced details of some attributes we
-have already used.
+We will go over the more advanced attributes in htmx, as well as expand on the advanced details of attributes we have already used.
 
 Additionally, we will look at functionality that htmx offers beyond simple HTML attributes:  how htmx extends
 standard HTTP request and responses, how htmx works with (and produces) events, and how to approach situations where
@@ -22,13 +19,12 @@ Finally, we will take a look at practical considerations when doing htmx develop
 effectively, security considerations you will need to take into account when working with htmx, and how to configure
 the behavior of htmx.
 
-By understanding all the features and techniques in this chapter, you will be able to pull off extremely
+With the features and techniques in this chapter, you will be able to pull off extremely
 sophisticated user interfaces using only htmx and perhaps a small bit of hypermedia-friendly client-side scripting.
 
 == Htmx Attributes
 
-Thus far we have used about fifteen different attributes from htmx in our application.  The most important ones
-have been:
+Thus far we have used about fifteen different attributes from htmx in our application.  The most important ones have been:
 
 `hx-get`, `hx-post`, etc.::
 To specify the AJAX request an element should make
@@ -42,39 +38,35 @@ To specify how to swap the returned HTML content into the DOM
 `hx-target`::
 To specify where in the DOM to swap the returned HTML content
 
-Let's dive into two of these attributes, `hx-swap` and `hx-trigger`, because they support a large number of
-options that might be useful when you are creating more advanced Hypermedia-Driven Applications.
+Two of these attributes, `hx-swap` and `hx-trigger`, support a number of useful
+options for creating more advanced Hypermedia-Driven Applications.
 
 === hx-swap
 
-The `hx-swap` attribute is often not included on elements that issue htmx-driven requests.  This is because, for many
-cases, the default behavior, `innerHTML`, which swaps the inner HTML of the element, is fine.  Of course, we have seen
-cases where we wanted to override this behavior and use `outerHTML`, for example.  And, in chapter 3, we discussed some
+We'll start with the hx-swap attribute. This is often not included on elements that issue htmx-driven requests because its default behavior -- `innerHTML`, which swaps the inner HTML of the element -- tends to cover most use cases.  
+
+We earlier saw situations where we wanted to override the default behavior and use `outerHTML`, for example.  And, in chapter 3, we discussed some
 other swap options beyond these two, `beforebegin`, `afterend`, etc.
 
-In chapter 6, we also looked at the `swap` delay modifier for `hx-swap`, which allowed us to fade some content out before
-it was removed from the DOM.
+In chapter 6, we also looked at the `swap` delay modifier for `hx-swap`, which allowed us to fade some content out before it was removed from the DOM.
 
-In addition to these, `hx-swap` also supports the following modifiers:
+In addition to these, `hx-swap` offers further control with the following modifiers:
 
 `settle`::
-Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and
-  when its attributes are "`settled`", that is, updated from their old values (if any) to their new values.
+Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and when its attributes are "`settled`", that is, updated from their old values (if any) to their new values. 
+//This gives you fine control of css-transitions, for example.//
 
 `show`::
-Allows you to specify an element that should be shown (that is, scrolled into the viewport of the browser if necessary)
- when a request is completed
+Allows you to specify an element that should be shown -- that is, scrolled into the viewport of the browser if necessary -- when a request is completed.
 
 `scroll`::
-Allows you to specify a scrollable element (that is, an element with scrollbars), that should be scrolled to the top
-  or bottom when a request is completed
+Allows you to specify a scrollable element (that is, an element with scrollbars), that should be scrolled to the top or bottom when a request is completed.
 
 `focus-scroll`::
-Allows you to specify that htmx should scroll to the focused element when a request completes.  (This defaults to
-  false)
+Allows you to specify that htmx should scroll to the focused element when a request completes. The default for this modifier is "`false.`"
 
 So, for example, if we had a button that issued a `GET` request, and we wished to scroll to the top of the `body` element
-when the request had completed, we would write the following HTML:
+when the request completed, we would write the following HTML:
 
 .Scrolling to the top of the page
 [source, html]
@@ -91,14 +83,13 @@ More details and examples can be found online in the `hx-swap` https://htmx.org/
 === hx-trigger
 
 Like `hx-swap`, `hx-trigger` can often be omitted when you are using htmx, because the default behavior is typically
-what you want anyway.  Recall the default triggering events are determined by an element's type:
+what you want.  Recall the default triggering events are determined by an element's type:
 
-* Requests on `input`, `textarea` & `select` elements are triggered by the `change` event
-* Requests on `form` elements are triggered on the `submit` event
-* Requests on all other elements are triggered by the `click` event
+* Requests on `input`, `textarea` & `select` elements are triggered by the `change` event.
+* Requests on `form` elements are triggered on the `submit` event.
+* Requests on all other elements are triggered by the `click` event.
 
-There are times, however, when you want a more elaborate trigger specification.  A classic example was the active
-search example we implemented in Contact.app:
+There are times, however, when you want a more elaborate trigger specification.  A classic example is the active search example we implemented in Contact.app:
 
 .The active search input
 [source,html]
@@ -112,24 +103,22 @@ search example we implemented in Contact.app:
 This example took advantage of two modifiers available for the `hx-trigger` attribute:
 
 `delay`::
-Allows you to specify a delay to wait before a request is issued.  If the event occurs again, the first event is
-  discarded and the timer resets.  This allows you to "`debounce`" requests.
+Allows you to specify a delay to wait before a request is issued.  If the event occurs again, the first event is discarded and the timer resets.  This allows you to "`debounce`" requests.
 
 `changed`::
-Allows you to specify that a request should only be issued when the `value` property of the given element has changed
+Allows you to specify that a request should only be issued when the `value` property of the given element has changed.
 
-`hx-trigger` has quite a few additional modifiers.  This makes sense, because events are fairly complex and we want to
-be able to take advantage of all the power they offer.  (We will discuss events in more detail below.)
+`hx-trigger` has several additional modifiers.  This makes sense, because events are fairly complex and we want to be able to take advantage of all the power they offer.  We will discuss events in more detail below.
 
 Here are the other modifiers available on `hx-trigger`:
 
 `once`::
-  The given event will only trigger a request once
+  The given event will only trigger a request once.
 
 `throttle`::
   Allows you to throttle events, only issuing them once every certain interval.  This is different than `delay` in that
   the first event will trigger immediately, but any following events will not trigger until the throttle time period
-  has elapsed
+  has elapsed.
 
 `from`::
   A CSS selector that allows you to pick another element to listen for events on.  We will see an example of this used
@@ -151,14 +140,13 @@ Here are the other modifiers available on `hx-trigger`:
   event it receives, but you can modify that behavior using this option: for example, you can set it to `none` and ignore
   all triggering events that occur during a request.
 
-==== Filters
+==== Trigger filters
 
-The `hx-trigger` attribute allows you to specify a _filter_ for events by using square brackets enclosing a JavaScript
-expression after the event name.
+The `hx-trigger` attribute also allows you to specify a _filter_ for events by using square brackets enclosing a JavaScript expression after the event name. 
 
-Let's say you have a complex situation where contacts should only be retrievable in certain situations, and you have
+Let's say you have a complex situation where contacts should only be retrievable in certain situations. You have
 a JavaScript function, `contactRetrievalEnabled()` that returns a boolean, `true` if contacts can be retrieved and
-`false` otherwise.  You want to gate a button that issues a request to `/contacts` on this function.  To do this using
+`false` otherwise.  How could you use this function to place a gate on a button that issues a request to `/contacts`?  To do this using
 an event filter in htmx, you would write the following HTML:
 
 .The active search input
@@ -174,14 +162,14 @@ an event filter in htmx, you would write the following HTML:
   Get Contacts
 </button>
 ----
-<1> A request is issued on click only when `contactRetrievalEnabled()` returns `true`
+<1> A request is issued on click only when `contactRetrievalEnabled()` returns `true`.
 
 The button will not issue a request if `contactRetrievalEnabled()` returns false, allowing you to dynamically control
-when the request will be made.  Common situations that call for an event trigger are:
+when the request will be made.  There are common situations that call for an event trigger, when you only want to issue a request under specific circumstances:
 
-* Only issue a request when a certain element has focus
-* Only issue a request when a given form is valid
-* Only issue a request when a set of inputs have specific values
+* if a certain element has focus
+* if a given form is valid
+* if a set of inputs have specific values
 
 Using event filters, you can use whatever logic you'd like to filter requests by htmx.
 
@@ -206,16 +194,16 @@ Htmx offers many other less commonly used attributes for fine-tuning the behavio
 Here are some of the most useful ones:
 
 hx-push-url::
-  "`Pushes`" the request URL (or some other value) into the navigation bar
+  "`Pushes`" the request URL (or some other value) into the navigation bar.
 
 hx-preserve::
-  Preserves a bit of the DOM between requests (the original content will be kept, regardless of what is returned)
+  Preserves a bit of the DOM between requests; the original content will be kept, regardless of what is returned.
 
 hx-sync::
-  Synchronized requests between two or more elements
+  Synchronized requests between two or more elements.
 
 hx-disable::
-  Disables htmx behavior on this element and any children.  We will discuss this more below in the security section.
+  Disables htmx behavior on this element and any children.  We will come back to this when we discuss the topic of security.
 
 Let's take a look at `hx-sync`, which allows us to synchronize AJAX requests between two or more elements.  Consider
 a simple case where we have two buttons that both target the same element on the screen:
@@ -269,54 +257,54 @@ buttons within the `div` will not issue requests until that has finished.
 
 The `hx-sync` attribute supports a few different strategies that allow you to, for example, replace an existing request
 in flight, or queue requests with a particular queuing strategy.  You can find complete documentation, as well as
-examples, at the https://htmx.org/attributes/hx-sync/[documentation page] for `hx-sync`.
+examples, at the htmx.org page for https://htmx.org/attributes/hx-sync/[`hx-sync`].
 
 As you can see, htmx offers a lot of attribute-driven functionality for more advanced Hypermedia-Driven Applications.
 A complete reference for all htmx attributes can be found https://htmx.org/reference/#attributes[on the htmx website].
 
 == Events
 
-We have been working with JavaScript events in htmx primarily via the `hx-trigger` attribute.  This simple (well, not
-so simple) attribute has proven to be a powerful mechanism for driving our application using a declarative, HTML-friendly
-syntax.
+Thus far we have worked with JavaScript events in htmx primarily via the `hx-trigger` attribute.  This attribute has proven to be a powerful mechanism for driving our application using a declarative, HTML-friendly syntax.
 
-Events turn out to be a crucial component of both the extension of HTML as a hypermedia, as well as a crucial component
-of hypermedia-friendly scripting.  Events are the "`glue`" that brings the DOM, HTML, htmx and scripting together, with the
-DOM acting as a sophisticated "event bus" for our application.  We really can't stress how important Events are for
-building an advanced Hypermedia-Driven Application, and we encourage you to learn them
+There is much more we can do with events. Events play a crucial role both in the extension of HTML as a hypermedia, and, as we'll see,
+in hypermedia-friendly scripting. Events are the "`glue`" that brings the DOM, HTML, htmx and scripting together. You might think of the DOM as a sophisticated "event bus" for applications.  We can't emphasize enough: to build advanced Hypermedia-Driven Applications, it is worth the effort to learn about events
 https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events[in depth].
 
 === Htmx-Generated Events
 
-In addition to making it easy to _respond_ to events, htmx also _emits_ many useful events.  You
-can use these events to add more functionality to your application, either via htmx itself, or by way of scripting.
+In addition to making it easy to _respond_ to events, htmx also _emits_ many useful events.  You can use these events to add more functionality to your application, either via htmx itself, or by way of scripting.
 
 Here are some of the most commonly used events in htmx:
 
 `htmx:load`::
-  Triggered when new content is loaded into the DOM by htmx
+  Triggered when new content is loaded into the DOM by htmx.
 
 `htmx:configRequest`::
-  Triggered before a request is issued, allowing you to programmatically configure the request (or cancel it entirely)
+  Triggered before a request is issued, allowing you to programmatically configure the request or cancel it entirely.
 
 `htmx:afterRequest`::
-  Triggered after a request has responded
+  Triggered after a request has responded.
 
 `htmx:abort`::
-  A custom event that can be sent to an htmx-powered element to abort an open request
+  A custom event that can be sent to an htmx-powered element to abort an open request.
 
-=== Using The htmx:configRequest Event
+=== Using the htmx:configRequest Event
 
-Let's take a look at how you might use the `htmx:configRequest` event to configure an HTTP request.  Consider the following
+Let's look at an example of how to work with htmx-emitted events.
+We'll use the `htmx:configRequest` event to configure an HTTP request.  
+
+Consider the following
 scenario: your server-side team has decided that they want you to include a token for extra validation on every request.
 The token is going to be stored in `localStorage` in the browser, in the slot `special-token`.  The server-side team
 wants you to include this special token on every request made by htmx, as the `X-SPECIAL-TOKEN` header.
-
+// maybe: briefly show how to set the value in local storage
 How could you achieve this?  One way would be to catch the `htmx:configRequest` event and update the `detail.headers`
 object with this token from `localStorage`.
 
 In VanillaJS, it would look something like this:
 
+// In our Contact.app, for example, we would put this code (where?) 
+// Show htmx helper for adding listeners like this? 
 .Adding the `X-SPECIAL-TOKEN` header
 [source,js]
 ----
@@ -327,12 +315,16 @@ document.body.addEventListener("htmx:configRequest", function(configEvent){
 <1> Retrieve the value from local storage and set it into a header.
 
 As you can see, we add a new value to the `headers` property of the event's detail.  After the event handler executes,
-the `headers` property is read by htmx and used to construct the headers for an AJAX request.  So, with this bit of
+the `headers` property is read by htmx and used to construct the headers for an AJAX request.  
+// maybe: add basic info, is configEvent.detail.headers an htmx function? 
+// maybe explain what a header 'detail' refers to
+So, with this bit of
 JavaScript code, we have added a new custom header to every AJAX request that htmx makes.  Slick!
-
+// optional: explain something like 'this pattern of passing and checking tokens
+// is sometimes used for security' 
 You can also update the `parameters` property to change the parameters submitted by the request, change the target
 of the request, and so on.
-
+// an example parameter might be...
 Full documentation for the `htmx:configRequest` event can be found
 https://htmx.org/events/#htmx:configRequest[on the htmx website].
 
@@ -350,7 +342,7 @@ another button that will send an `htmx:abort` event to the first one.
 
 Here is what the code might look like:
 
-.A Button With An Abort
+.A button with an abort
 [source, html]
 ----
 <button id="contacts-btn" hx-get="/contacts" hx-target="body"> <1>
@@ -405,11 +397,11 @@ a `POST` to the `/integrations/1` path, it will trigger a synchronization with t
 Now, this synchronization may or may not result in new contacts being created.  In the case where new contacts _are_
 created, we want to refresh our contacts table.  In the case where no contacts are created, we don't want to refresh
 the table.
-
-How could we implement this using the `HX-Trigger` response header?  Well, we could conditionally add an `HX-Trigger`
-response header with the value `contacts-updated`, which would trigger the `contacts-updated` event on the button that
-made the AJAX request to `/integrations/1`.  And we can then take advantage of the `from:` modifier of the `hx-trigger`
-attribute to listen for that event.  Now we can effectively trigger htmx requests from the server side.
+// maybe: show brief code, how to conditionally add HX-Trigger
+To implement this we could conditionally add an `HX-Trigger`
+response header with the value `contacts-updated`. This value would trigger the `contacts-updated` event on the button that
+made the AJAX request to `/integrations/1`.  We can then take advantage of the `from:` modifier of the `hx-trigger`
+attribute to listen for that event. With this pattern we can effectively trigger htmx requests from the server side.
 
 Here is what the client-side code might look like:
 
@@ -570,9 +562,9 @@ requires, out of band swapping can be a powerful mechanism for content updates.
 === Events
 
 Finally, the most complex mechanism for updating content is the one we saw back in the events section: using server-triggered
-events to update elements.  This approach can be very clean, but also requires a lot deeper conceptual knowledge of HTML
-and events, and a commitment to the event-driven approach.  While we like this style of development, it isn't for everyone
-and we typically recommend this only if the htmx philosophy of event-driven hypermedia really speaks to you.
+events to update elements.  This approach can be very clean, but also requires a deeper conceptual knowledge of HTML
+and events, and a commitment to the event-driven approach.  While we like this style of development, it isn't for everyone.
+We typically recommend this pattern only if the htmx philosophy of event-driven hypermedia really speaks to you.
 
 If it _does_ speak to you, however, we say: go for it.  We've created some very complex and flexible user interfaces using
 this approach, and we are quite fond of it.
@@ -587,17 +579,17 @@ online spreadsheet: it is simply too complex a user interface, with too many int
 exchanges of hypermedia with a server.
 
 In cases like this, and any time you feel like an htmx-based solution is proving to be more complex than another approach
-might be, we can gladly recommend that you consider a different technology: use the right tool for the job!  You can always
+might be, we recommend that you consider a different technology. Be pragmatic, and use the right tool for the job.  You can always
 use htmx for the parts of your application that aren't as complex and don't need the full complexity of a reactive framework,
 and save that complexity budget for the parts that do.
 
-We are not hypermedia puritans and encourage you to learn many different web technologies, with an eye to the strengths
+We encourage you to learn many different web technologies, with an eye to the strengths
 and weaknesses of each one.  This will give you a deep tool chest to reach into when problems present themselves. Our
-hope is that, with htmx, hypermedia might be a tool you reach for more frequently!
+experience is that, with htmx, hypermedia is a tool you can reach for frequently.
 
 == Debugging
 
-We have been talking a lot about events in this chapter and we are not ashamed to admit: we are big fans of events.  They
+We are not ashamed to admit: we are big fans of events.  They
 are the underlying technology of almost any interesting user interface, and are particularly useful in the DOM once they
 have been unlocked for general use in HTML.  They let you build nicely decoupled software while often preserving
 the locality of behavior we like so much.

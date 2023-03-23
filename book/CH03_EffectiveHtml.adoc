@@ -451,7 +451,7 @@ Even the adage that HTML is "`accessible by default`" is a bit misleading.
 If you use simple HTML strictly as recommended by the spec, you are unlikely to run into accessibility bugs (though it does happen, because this is web development).
 Problems often arise when we try to implement controls that aren't built into HTML.
 Sometimes, JavaScript is necessary to implement a UI control in an accessible manner
-(i.e. supporting all required keyboard interaction and presenting state to assistive tools).
+(that is, in a way that supports all required keyboard interaction and presenting state to assistive tools).
 Clever "tricks" to implement controls in only HTML/CSS are fun, but often not practical.
 Take the following code, which uses radio buttons and CSS hacks to create something that resembles tabs:
 
@@ -604,12 +604,12 @@ One standard for including structured data in HTML is https://microformats.org/[
 Microformats use classes to mark certain elements as containing information to be extracted.
 The microformats2 standard uses five kinds of classes:
 
-* `h-` classes denote that an element represents a machine-readable entity, e.g. `h-entry`, `h-resume`
+* `h-` classes denote that an element represents a machine-readable entity, e.g., `h-entry`, `h-resume`
 * The other prefixes denote that an element represents properties of an enclosing entity:
-** `p-` classes are plain text properties, from an element's inner text or `alt` attribute, e.g. `p-name`, `p-category`
-** `u-` classes are URL properties, from an element's `href` or `src`, e.g. `u-url`, `u-email`, `u-photo`
-** `dt-` classes are date/time properties, from `<time>` elements, e.g. `dt-published`, `dt-updated`
-** `e-` classes are embedded markup properties, from an element's inner HTML, e.g. `e-content`, `e-description`
+** `p-` classes are plain text properties, from an element's inner text or `alt` attribute, e.g., `p-name`, `p-category`
+** `u-` classes are URL properties, from an element's `href` or `src`, e.g., `u-url`, `u-email`, `u-photo`
+** `dt-` classes are date/time properties, from `<time>` elements, e.g., `dt-published`, `dt-updated`
+** `e-` classes are embedded markup properties, from an element's inner HTML, e.g., `e-content`, `e-description`
 
 There are also conventions for extracting common properties like name, URL and photo without needing classes for each property.
 

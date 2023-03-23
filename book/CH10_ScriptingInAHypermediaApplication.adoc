@@ -26,7 +26,7 @@ over "`applications.`"
 
 Rather, while the theoretical foundation is there, the implementation is underdeveloped. With JavaScript being the
 only extension point and hypermedia controls not being well integrated to JavaScript (why can't one click a link without
-halting the program?), developers have not internalized hypermedia and have instead used the Web as a dumb pipe for apps
+halting the program?), developers have not internalized hypermedia and have instead used the web as a dumb pipe for apps
 that imitate "`native`" ones.
 
 A goal of this book is to show that it is possible to build sophisticated web applications using the original technology
@@ -36,12 +36,12 @@ popular JavaScript frameworks.
 Htmx itself is, of course, written in JavaScript, and one of its advantages is that hypermedia interactions that go
 through htmx expose a rich interface to JavaScript code with configuration, events, and htmx's own extension support.
 
-Because htmx expands the expressiveness of HTML so much it removes the need for scripting in many situations.
+Htmx expands the expressiveness of HTML enough that it removes the need for scripting in many situations.
 This makes htmx attractive to people who don't want to write JavaScript, and there are many of those sorts of developers,
 wary of the complexity of Single Page Application frameworks.
 
 However, dunking on JavaScript is not the aim of the htmx project.
-
+// also more readable code, more efficient code?
 The goal of htmx is not less JavaScript, per se, but rather less code.
 
 Scripting has been a massive force multiplier for the web. Using scripting, web application developers are not only able
@@ -83,19 +83,19 @@ the server-side of a Hypermedia-Driven Application.
 Satisfying these two constraints sometimes requires us to diverge from what is typically considered best practice for
 JavaScript. Keep in mind that the cultural wisdom of JavaScript was largely developed in JavaScript-centric SPA applications.
 
-The Hypermedia-driven Application cannot as comfortably fall back on this tradition. This chapter is our contribution to the
+The Hypermedia-Driven Application cannot as comfortably fall back on this tradition. This chapter is our contribution to the
 development of a new style and best practices for what we are calling Hypermedia-Driven Applications.
 
 Unfortunately, simply listing "`best practices`" is rarely convincing or edifying. To be honest, it's boring.
 
-Instead, we will demonstrate these best practices by implementing client-side features in Contact.app.  We will
-implement three different features, each showing different aspects of hypermedia-friendly scripting:
+Instead, we will demonstrate these best practices by implementing client-side features in Contact.app.  To show different aspects of hypermedia-friendly scripting, we will
+implement three different features:
 
-* We will add an overflow menu to hold the _Edit_, _View_ and _Delete_ actions, to clean up visual clutter in our list of contacts
-* We will add an improved interface for bulk deletion
-* We will add a keyboard shortcut for focusing the search box
+* An overflow menu to hold the _Edit_, _View_ and _Delete_ actions, to clean up visual clutter in our list of contacts.
+* An improved interface for bulk deletion.
+* A keyboard shortcut for focusing the search box.
 
-The important takeaway in the implementation of each of these features is that, while they are implemented entirely in
+The important takeaway in the implementation of each of these features is that, while they are implemented entirely on
 the client-side using scripting, they _don't exchange information with the server_ via a non-hypermedia format, such
 as JSON, and that they don't store a significant amount of state outside of the DOM itself.
 
@@ -126,8 +126,7 @@ We will instead focus on three client-side scripting technologies that _are_ hyp
 
 Let's take a quick look at each of these scripting options, so we know what we are dealing with.
 
-Note that, as with CSS, we are not going to do a deep dive into any of these options.  Instead, we are going to show you
-just enough to give you a flavor of how they work and, we hope, spark your interest in looking into any of them more extensively.
+Note that, as with CSS, we are going to show you just enough of each of these options to give  a flavor of how they work and, we hope, spark your interest in looking into any of them more extensively.
 
 == Vanilla JavaScript
 
@@ -149,15 +148,15 @@ captures the situation well:
 [quote,http://vanilla-js.com]
 VanillaJS is the lowest-overhead, most comprehensive framework I've ever used.
 
-With JavaScript having  matured as a scripting language, this is certainly the case for many applications. It is
+With JavaScript having matured as a scripting language, this is certainly the case for many applications. It is
 especially true in the case of HDAs, since, by using hypermedia, your application will not need many of the features
 typically provided by more elaborate Single Page Application JavaScript frameworks:
 
 * Client-side routing
-* An abstraction over DOM manipulation, i.e.: templates that automatically update when referenced variables change
+* An abstraction over DOM manipulation  (i.e., templates that automatically update when referenced variables change)
 * Server side rendering footnote:[Rendering here refers to HTML generation. Framework support for server-side rendering
   is not needed in a HDA because generating HTML on the server is the default.]
-* Attaching dynamic behavior to server-rendered tags on load, i.e. "`hydration`"
+* Attaching dynamic behavior to server-rendered tags on load (i.e., "`hydration`")
 * Network requests
 
 Without all this complexity being handled in JavaScript, your framework needs are dramatically reduced.
@@ -489,7 +488,7 @@ As we have seen, using CSS and JavaScript, we can endow existing elements with e
 those of native controls.
 
 However, there is one thing web apps used to be unable to replicate. While these widgets are similar enough in appearance
-for most users to operate, assistive technology (e.g. screen readers) can only report the underlying HTML elements.
+for most users to operate, assistive technology (e.g., screen readers) can only report the underlying HTML elements.
 
 Even if you take the time to get all the keyboard interactions right, some users often are unable to work with these custom
 elements easily.
@@ -1107,7 +1106,7 @@ at some level, you are right: JavaScript is a decent scripting language, is very
 in web development.  On the other hand, by creating an entirely new front end scripting language, we had the freedom
 to address some problems that we saw generating ugly and verbose code in JavaScript:
 
-Async transparency:: In +_hyperscript+, asynchronous functions (i.e. functions that return `Promise` instances) can be
+Async transparency:: In +_hyperscript+, asynchronous functions (i.e., functions that return `Promise` instances) can be
 invoked _as if they were synchronous_. Changing a function from sync to async does not break any +_hyperscript+ code that
 calls it.  This is achieved by checking for a Promise when evaluating any expression, and suspending the running script
 if one exists (only the current event handler is suspended and the main thread is not blocked). JavaScript, instead, requires
@@ -1158,7 +1157,7 @@ widget demands something different.  A shame!
 The best JavaScript libraries to work with when you are building a Hypermedia-Driven Application are ones that:
 
 * Mutate the DOM but don't communicate with a server over JSON
-* Respect HTML norms (e.g. using `input` elements to store values)
+* Respect HTML norms (e.g., using `input` elements to store values)
 * Trigger many custom events, as the library updates things
 
 The last point, triggering many custom events (over the alternative of using lots of methods and callbacks) is especially

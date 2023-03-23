@@ -304,7 +304,7 @@ object with this token from `localStorage`.
 In VanillaJS, it would look something like this:
 
 // In our Contact.app, for example, we would put this code (where?) 
-// Show htmx helper for adding listeners like this? 
+// Mention htmx helper for adding listeners like this? 
 .Adding the `X-SPECIAL-TOKEN` header
 [source,js]
 ----
@@ -317,11 +317,11 @@ document.body.addEventListener("htmx:configRequest", function(configEvent){
 As you can see, we add a new value to the `headers` property of the event's detail.  After the event handler executes,
 the `headers` property is read by htmx and used to construct the headers for an AJAX request.  
 // maybe: add basic info, is configEvent.detail.headers an htmx function? 
-// maybe explain what a header 'detail' refers to
+// maybe: briefly explain what a header 'detail' refers to
 So, with this bit of
 JavaScript code, we have added a new custom header to every AJAX request that htmx makes.  Slick!
-// optional: explain something like 'this pattern of passing and checking tokens
-// is sometimes used for security' 
+// optional: explain the use case, something like 'this pattern of passing 
+// and checking tokens is sometimes used for security' 
 You can also update the `parameters` property to change the parameters submitted by the request, change the target
 of the request, and so on.
 // an example parameter might be...

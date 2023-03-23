@@ -663,16 +663,16 @@ an extension to normal CSS.  Htmx supports prefixes that will find targets _rela
 .Relative Positional Expressions in Htmx
 ****
 `next`::
-Scan forward in the DOM for the next matching element, e.g. `next .error`
+Scan forward in the DOM for the next matching element, e.g., `next .error`
 
 `previous`::
-Scan backwards in the DOM for the closest previous matching element, e.g. `previous .alert`
+Scan backwards in the DOM for the closest previous matching element, e.g., `previous .alert`
 
 `closest`::
-Scan the parents of this element for matching element, e.g. `closest table`
+Scan the parents of this element for matching element, e.g., `closest table`
 
 `find`::
-Scan the children of this element for matching element, e.g. `find span`
+Scan the children of this element for matching element, e.g., `find span`
 
 `this`::
  the current element is the target (default)

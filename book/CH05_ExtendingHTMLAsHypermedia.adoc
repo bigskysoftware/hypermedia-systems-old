@@ -738,16 +738,16 @@ The `hx-include` attribute and, in fact, most attributes that take a CSS selecto
 These allow you to specify a CSS selector _relative_ to the element it is declared on.  Here are some examples:
 
 `closest`::
-Find the closest parent element matching the given selector, e.g. `closest form`.
+Find the closest parent element matching the given selector, e.g., `closest form`.
 
 `next`::
-Find the next element (scanning forward) matching the given selector, e.g. `next input`.
+Find the next element (scanning forward) matching the given selector, e.g., `next input`.
 
 `previous`::
-Find the previous element (scanning backwards) matching the given selector, e.g. `previous input`.
+Find the previous element (scanning backwards) matching the given selector, e.g., `previous input`.
 
 `find`::
-Find the next element within this element matching the given selector, e.g. `find input`.
+Find the next element within this element matching the given selector, e.g., `find input`.
 
 `this`::
 The current element.

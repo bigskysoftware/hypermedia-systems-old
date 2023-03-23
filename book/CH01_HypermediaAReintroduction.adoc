@@ -65,8 +65,8 @@ hypertexts such as  HTML, the Hypertext Markup Language, or HXML, a hypertext us
 system.
 
 Hypertexts like HTML function alongside other technologies crucial for making an entire hypermedia system work: network
-protocols like HTTP, other media types such as images, videos, hypermedia servers (i.e. servers providing hypermedia APIs),
-sophisticated hypermedia clients (e.g. web browsers), and so on.
+protocols like HTTP, other media types such as images, videos, hypermedia servers (i.e., servers providing hypermedia APIs),
+sophisticated hypermedia clients (e.g., web browsers), and so on.
 
 Because of this, we prefer the broader term _hypermedia systems_ when describing the underlying architecture of
 applications built using hypertext, to emphasize the system architecture over the particular hypermedia being used.
@@ -144,7 +144,7 @@ The system that Berners-Lee, Fielding and many others had created revolved aroun
 hypermedia, used to publish (at first) academic documents.  These documents were linked together via anchor tags which
 created _hyperlinks_ between them, allowing users to quickly navigate between documents.
 
-When HTML 2.0 was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e. hyperlink) as a
+When HTML 2.0 was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e., hyperlink) as a
 second hypermedia control.  The introduction of the form tag made building _applications_ on the web viable by providing
 a mechanism for _updating_ resources, rather than just reading them.
 

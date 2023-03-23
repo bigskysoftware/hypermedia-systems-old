@@ -43,7 +43,7 @@ system of the web.
 To explain what a hypermedia-driven application looks like, and to contrast it with the popular SPA approach of today,
 we need to first explore the entire _hypermedia system_ of the web, beyond just discussing HTML.  We need to look at the
 _network architecture_ of the original web, including how a web server delivers a hypermedia API, and how to effectively
-use the hypermedia features available in the hypermedia _client_ (e.g. the browser).
+use the hypermedia features available in the hypermedia _client_ (e.g., the browser).
 
 Each of these are important aspects of building an effective hypermedia-driven application, and it is the entire
 _hypermedia system_ that comes together to make hypermedia such a powerful architecture.

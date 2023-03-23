@@ -89,7 +89,7 @@ with a route.
 Let's create our first route definition, a simple "`Hello Flask`" route.  In the following python code you will see the
 `@app` symbol.  This is the flask decorator that allows us to set up our routes.  Don't worry too much about
 how decorators work in Python, just know that this feature allows us to map a given _path_ to a particular function
-(i.e. handler).  The Flask application, when started, will take HTTP requests and look up the matching handler and
+(i.e., handler).  The Flask application, when started, will take HTTP requests and look up the matching handler and
 invoke it.
 
 .A simple "`Hello World`" route
@@ -561,7 +561,7 @@ our handler logic will get, even when we look at adding more sophisticated htmx-
 
 The next piece of functionality we will implement is the detail page for a Contact.  The user will navigate to this
 page by clicking the "`View`" link in one of the rows in the list of contacts.  This will take them to the path
-`/contact/<contact id>` (e.g. `/contacts/42`).
+`/contact/<contact id>` (e.g., `/contacts/42`).
 
 This is a common pattern in web development: contacts are treated as resources and the URLs around these
 resources are organized in a coherent manner.

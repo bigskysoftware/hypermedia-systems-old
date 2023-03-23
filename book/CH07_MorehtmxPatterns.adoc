@@ -201,7 +201,7 @@ So we need some way to determine exactly which of these two different types of r
 made, in order to know exactly which content we want to render.
 
 It turns out that htmx helps us distinguish between these two cases by including a number of HTTP _Request Headers_ when
-it makes requests.  Request Headers are a feature of HTTP, allowing clients (e.g. web browsers) to include name/value pairs
+it makes requests.  Request Headers are a feature of HTTP, allowing clients (e.g., web browsers) to include name/value pairs
 of metadata associated with requests to help the server understand what the client is requesting.
 
 Here is an example of (some of) the headers the FireFox browser issues when requesting `https://manning.com`:
@@ -406,7 +406,7 @@ application.
 One subtle aspect of the approach we are taking here, using headers to determine the content of what we return, is
 a feature baked into HTTP: caching.  In our request handler, we are now returning different content depending on the
 value of the `HX-Trigger` header.  If we were to use HTTP Caching, we might get into a situation where someone makes
-a _non-htmx_ request (e.g. refreshing a page) and yet the _htmx_ content is returned from the HTTP cache, resulting
+a _non-htmx_ request (e.g., refreshing a page) and yet the _htmx_ content is returned from the HTTP cache, resulting
 in a partial page of content for the user.
 
 The solution to this problem is to use the HTTP Response `Vary` header and call out the htmx headers that you are using
@@ -500,7 +500,7 @@ the element from view, while at the same time not disrupting the layout of the p
 
 When an htmx request is triggered that points to this indicator, another class, `htmx-request` is added to the indicator
 which transitions its opacity to 1.  So you can use just about anything as an indicator, and it will be hidden by default. Then, when a request is in flight, it will be shown.  This is all done via standard CSS classes, allowing you to control
-the transitions and even the mechanism by which the indicator is shown (e.g. you might use `display` rather than
+the transitions and even the mechanism by which the indicator is shown (e.g., you might use `display` rather than
 `opacity`). 
 
 .Use Request Indicators!

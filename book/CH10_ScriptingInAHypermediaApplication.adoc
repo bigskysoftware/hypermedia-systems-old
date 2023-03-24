@@ -16,12 +16,10 @@ scripting within the context of a Hypermedia-Driven Application.
 A common criticism of the web is that it's being misused.  There is a narrative that WWW was created as a delivery system
 for "`documents`", and only came to be used for "`applications`" by way of an accident or bizarre circumstances.
 
-However, the concept of hypermedia challenges the split of document and application, the distinction of code and data, of
-operator and operand. Hypermedia systems like HyperCard, which preceded the web, featured rich capabilities for active
+However, the concept of hypermedia challenges the split of document and application. Hypermedia systems like HyperCard, which preceded the web, featured rich capabilities for active
 and interactive experiences, including scripting.
 
-It is true in many ways that HTML, as specified and implemented, lacks affordances needed to build the kinds of applications
-that were implemented within those older systems. None of this means, however, that hypermedia's _purpose_ is "`documents`"
+HTML, as specified and implemented, does lack affordances needed to build highly interactive applications. This doesn't mean, however, that hypermedia's _purpose_ is "`documents`"
 over "`applications.`"
 
 Rather, while the theoretical foundation is there, the implementation is underdeveloped. With JavaScript being the
@@ -41,8 +39,8 @@ This makes htmx attractive to people who don't want to write JavaScript, and the
 wary of the complexity of Single Page Application frameworks.
 
 However, dunking on JavaScript is not the aim of the htmx project.
-// also more readable code, more efficient code?
-The goal of htmx is not less JavaScript, per se, but rather less code.
+
+The goal of htmx is not less JavaScript, but more readable and hypermedia-friendly code.
 
 Scripting has been a massive force multiplier for the web. Using scripting, web application developers are not only able
 to enhance their HTML websites, but also create full-fledged client-side applications that can often compete with

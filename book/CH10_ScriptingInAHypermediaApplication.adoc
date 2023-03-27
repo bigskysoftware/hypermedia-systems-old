@@ -39,8 +39,8 @@ This makes htmx attractive to people who don't want to write JavaScript, and the
 wary of the complexity of Single Page Application frameworks.
 
 However, dunking on JavaScript is not the aim of the htmx project.
-
-The goal of htmx is not less JavaScript, but more readable and hypermedia-friendly code.
+// adds okay here?
+The goal of htmx is not less JavaScript, but less code, more readable and hypermedia-friendly code.
 
 Scripting has been a massive force multiplier for the web. Using scripting, web application developers are not only able
 to enhance their HTML websites, but also create full-fledged client-side applications that can often compete with
@@ -86,7 +86,7 @@ development of a new style and best practices for what we are calling Hypermedia
 
 Unfortunately, simply listing "`best practices`" is rarely convincing or edifying. To be honest, it's boring.
 
-Instead, we will demonstrate these best practices by implementing client-side features in Contact.app.  To show different aspects of hypermedia-friendly scripting, we will
+Instead, we will demonstrate these best practices by implementing client-side features in Contact.app.  To cover different aspects of hypermedia-friendly scripting, we will
 implement three different features:
 
 * An overflow menu to hold the _Edit_, _View_ and _Delete_ actions, to clean up visual clutter in our list of contacts.
@@ -164,7 +164,7 @@ One of the best things about VanillaJS is how you install it: you don't have to!
 You can just start writing JavaScript in your web application, and it will simply work.
 
 That's the good news. The bad news is that, despite improvements over the last decade, JavaScript has some significant
-limitations as a scripting language that can make it a less than ideal as a stand-alone scripting technology for
+limitations as a scripting language that can make it less than ideal as a stand-alone scripting technology for
 Hypermedia-Driven Applications:
 
 * Being as established as it is, it has accreted a lot of features and warts.

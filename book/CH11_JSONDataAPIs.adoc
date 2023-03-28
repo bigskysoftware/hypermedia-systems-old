@@ -216,7 +216,7 @@ hypermedia route `/contacts`: we will load all the contacts from the contacts da
 as a response.
 
 We are also going to take advantage of a nice feature of Flask: if you simply return an object from a handler, it will
-serialized (that is, convert) that object into a JSON response.  This makes it very easy to build simple JSON APIs
+serialize (that is, convert) that object into a JSON response.  This makes it very easy to build simple JSON APIs
 in flask!
 
 Here is our code:

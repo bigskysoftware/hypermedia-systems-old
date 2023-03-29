@@ -886,11 +886,9 @@ known as a _two-way_ binding.
 With this code written, we can make the toolbar appear and disappear, based on whether contact checkboxes are selected.
 
 Very slick.
+
 // useful? or cut css?
-****
-.About those class references...
-Our code here includes some "`class=`" references. These are for css styling, and are not part of Alpine.js. We've included them only as a reminder that the menu bar we're building will require some css styling to work well. The classes in the code above refer to a minimal css library called Missing.css. If you use other css libraries, such as Bootstrap, Tailwind, Bulma, Pico.css, etc., your styling classes will be different. 
-****
+By the way, you may have noticed our code here includes some "`class=`" references. These are for css styling, and are not part of Alpine.js. We've included them only as a reminder that the menu bar we're building will require some css styling to work well. The classes in the code above refer to a minimal css library called Missing.css. If you use other css libraries, such as Bootstrap, Tailwind, Bulma, Pico.css, etc., your styling classes will be different. 
 
 ==== Implementing actions
 

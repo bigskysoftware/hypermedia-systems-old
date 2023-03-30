@@ -12,6 +12,7 @@ We hope to have convinced you that hypermedia, rather than being a "`legacy`" te
 or a technology only appropriate for "`documents`" of links, text and pictures, is, in fact, a powerful technology for
 building _applications_.  In this book you have seen how to build sophisticated user interfaces -- for both the web, with htmx,
 and for mobile applications, using Hyperview -- using hypermedia as a core underlying application technology.
+
 // check edits
 Many web developers view the links and forms of "`plain`" HTML as bygone tools
 from a less sophisticated age.  And, in some ways, they are right: there were definite usability issues with the

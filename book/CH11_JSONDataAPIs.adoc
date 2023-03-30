@@ -96,9 +96,8 @@ By supporting both of these types of APIs separately you can get the strengths o
 styles of code and infrastructure needs cleanly split out.
 
 Let's contrast the needs of JSON APIs with Hypermedia APIs:
-// check: row borders?
+// check: row spacing?
 [cols="a,a"]
-[grid=rows]
 |===
 |JSON API Needs |Hypermedia API
 
@@ -131,7 +130,7 @@ This is the key advantage of splitting your Data API from your Hypermedia API.
 
 .JSON Data APIs vs JSON "`REST`" APIs
 ****
-Unfortunately, today, for historical reasons, what we are calling JSON Data APIs are often referred to
+Unfortunately, today, for historical reasons, what we are calling JSON Data APIs are often referred to as
 "`REST APIs`" in the industry.  This is ironic, because, by any reasonable reading of Roy Fielding's work defining what REST
 means, the vast majority of JSON APIs are _not_ RESTful.  Not even close.
 
@@ -165,7 +164,7 @@ server: JSON, HTML, text and so on.
 
 So, if the client wanted a JSON representation of all contacts, they might issue a `GET` request that looks like this:
 
-.A Request for a JSON Representation of All Contacts
+.A request for a JSON representation of all contacts
 [source, http]
 ----
 Accept: application/json
@@ -181,8 +180,7 @@ Unfortunately, our experience with this pattern has not been great, for reasons 
 differences we outlined between Data and hypermedia APIs: they have different needs and often take on very different
 "`shapes`", and trying to pound them into the same set of URLs ends up creating a lot of tension in the application code.
 
-Given the different needs of the two APIs and our experience managing multiple APIs like this, we think separating the two
- from one another, and, therefore, breaking the JSON Data API out to its own set of URLs is the right choice.  This will
+Given the different needs of the two APIs and our experience managing multiple APIs like this, we think separating the two, and, therefore, breaking the JSON Data API out to its own set of URLs is the right choice.  This will
 allow us to evolve the two APIs separately from one another, and give us room to improve each independently, in a manner
 consistent with their own individual strengths.
 
@@ -209,18 +207,16 @@ a large team of API developers.  :)
 
 === Our First JSON Endpoint: Listing All Contacts
 
-Let's add our first Data API end point.  It will handle an HTTP `GET` request to `/api/v1/contacts`, and return
+Let's add our first Data API endpoint.  It will handle an HTTP `GET` request to `/api/v1/contacts`, and return
 a JSON list of all contacts in the system.  In some ways it will look quite a bit like our initial code for the
 hypermedia route `/contacts`: we will load all the contacts from the contacts database and then render some text
 as a response.
 
 We are also going to take advantage of a nice feature of Flask: if you simply return an object from a handler, it will
-serialized (that is, convert) that object into a JSON response.  This makes it very easy to build simple JSON APIs
+serialize (that is, convert) that object into a JSON response.  This makes it very easy to build simple JSON APIs
 in flask!
 
-Here is our code:
-
-.A JSON Data API To Return All Contacts
+.A JSON data API to return all contacts
 [source, python]
 ----
 @app.route("/api/v1/contacts", methods=["GET"]) <1>
@@ -229,9 +225,9 @@ def json_contacts():
     contacts_dicts = [c.__dict__ for c in contacts_set] <2>
     return {"contacts": contacts_dicts} <3>
 ----
-<1> JSON API gets its own path, starting with `/api`
-<2> Convert the contacts array into an array of simple dictionary (map) objects
-<3> Return a dictionary that contains a `contacts` property of all the contacts
+<1> JSON API gets its own path, starting with `/api`.
+<2> Convert the contacts array into an array of simple dictionary (map) objects.
+<3> Return a dictionary that contains a `contacts` property of all the contacts.
 
 This Python code might look a little foreign to you if you are not a Python developer, but all we are doing is converting
 our contacts into an array of simple name/value pairs and returning that array in an enclosing object as the `contacts`
@@ -240,7 +236,7 @@ property.  This object will be serialized into a JSON response automatically by 
 With this in place, if we make an HTTP `GET` request to `/api/v1/contacts`, we will see a response that looks something
 like this:
 
-.Some Sample Data From Our API
+.Some sample data from our API
 [source, json]
 ----
 {
@@ -267,21 +263,19 @@ like this:
 ----
 
 So, you can see, we now have a way to get a relatively simple JSON representation of our contacts via an HTTP request.
-Not perfect, but good enough for the purposes of this book!  It's certainly good enough to write some basic automated
-scripts against.
+Not perfect, but it's a good start. It's certainly good enough to write some basic automated
+scripts against. For example, you could use this Data API to:
 
-For example:
-
-* You could move your contacts to another system on a nightly basis
-* You could back your contacts up to a local file
-* You could automate an email blast to your contacts
+* Move your contacts to another system on a nightly basis
+* Back your contacts up to a local file
+* Automate an email blast to your contacts
 
 Having this small JSON Data API opens up a lot of automation possibilities that would be messier to achieve with our existing
 hypermedia API.
 
 === Adding Contacts
 
-Let's move on the next piece of functionality: adding a new contact to the system.  Once again, our code is going
+Let's move on to the next piece of functionality: the ability to add a new contact.  Once again, our code is going
 to look similar in some ways to the code that we wrote for our normal web application.  However, here we are also
 going to see the JSON API and the hypermedia API for our web application begin to obviously diverge.
 
@@ -289,8 +283,7 @@ In the web application, we needed a separate path, `/contacts/new` to host the H
 the web application we made the decision to issue a `POST` to that same path to keep things consistent.
 
 In the case of the JSON API, there is no such path needed: the JSON API "`just is`": it doesn't need to provide any
-hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to, to create a contact,
-likely through some documentation provided about the API, and that's it.
+hypermedia representation for creating a new contact.  You simply know where to issue a `POST` to create a contact -- likely through some documentation provided about the API -- and that's it.
 
 Because of that fact, we can put the "`create`" handler on the same path as the "`list`" handler: `/api/v1/contacts`, but
 have it respond only to HTTP `POST` requests.
@@ -298,7 +291,7 @@ have it respond only to HTTP `POST` requests.
 The code here is relatively straightforward: populate a new contact with the information from the `POST` request,
 attempt to save it, and -- if it is not successful -- show error messages.  Here is the code:
 
-.Adding Contacts With Our JSON API
+.Adding contacts with our JSON API
 [source, python]
 ----
 @app.route("/api/v1/contacts", methods=["POST"]) <1>
@@ -321,7 +314,7 @@ to save it. In other ways it is very different:
 * There is no redirection happening here on a successful creation, because we are not dealing with a hypermedia client
   like the browser.
 * In the case of a bad request, we simply return an error response code, `400 (Bad Request)`.  This is in contrast with
-   the web application, where we simply re-render the form with error messages in it.
+   the web application, where we re-render the form with error messages in it.
 
 These sorts of differences, over time, build up and make the idea of keeping your JSON and hypermedia APIs
 on the same set of URLs less and less appealing.
@@ -335,7 +328,7 @@ id `42`, you would issue an HTTP `GET` to `/api/v1/contacts/42`.
 
 This code is quite simple:
 
-.Getting the Details of a Contact in JSON
+.Getting the details of a contact in JSON
 [source, python]
 ----
 @app.route("/api/v1/contacts/<contact_id>", methods=["GET"]) <1>
@@ -347,14 +340,14 @@ def json_contacts_view(contact_id=0):
 <2> Look the contact up via the id passed in through the path
 <3> Convert the contact to a dictionary, so it can be rendered as JSON response
 
-Nothing too complicated: we look the contact up by ID, provided in the path to the controller, and look that contact up.
+Nothing too complicated: we look the contact up by the ID provided in the path to the controller.
 We then render it as JSON.  You have to appreciate the simplicity of this code!
 
 Next, let's add updating and deleting a contact as well.
 
 === Updating & Deleting Contacts
 
-As with the create contact API end point, because there is no HTML UI to produce for them, we can reuse the
+As with the create contact API endpoint, because there is no HTML UI to produce for them, we can reuse the
 `/api/v1/contacts/<contact id>` path.  We will use the `PUT` HTTP method for updating a contact and the `DELETE`
 method for deleting one.
 
@@ -362,7 +355,7 @@ Our update code is going to look nearly identical to the create handler, except 
 we will look up the contact by ID and update its fields.  In this sense we are just combining the code of the create
 handler and the detail view handler.
 
-.Updating A Contact With Our JSON API
+.Updating a contact with our JSON API
 [source, python]
 ----
 @app.route("/api/v1/contacts/<contact_id>", methods=["PUT"]) <1>
@@ -374,18 +367,18 @@ def json_contacts_edit(contact_id):
     else:
         return {"errors": c.errors}, 400
 ----
-<1> We handle `PUT` requests to the URL for a given contact
-<2> Look the contact up via the id passed in through the path
-<3> We update the contact's data from the values included in the request
-<4> From here on the logic is identical to the `json_contacts_create()` handler
+<1> We handle `PUT` requests to the URL for a given contact.
+<2> Look the contact up via the id passed in through the path.
+<3> We update the contact's data from the values included in the request.
+<4> From here on the logic is identical to the `json_contacts_create()` handler.
 
-Once again, very regular and, thanks to the built-in functionality in Flask, simple to implement.
+Once again, thanks to the built-in functionality in Flask, simple to implement.
 
 Let's look at deleting a contact now.  This turns out to be even simpler: as with the update handler we are going to
 look up the contact by id, and then, well, delete it.  At that point we can return a simple JSON object indicating
 success.
 
-.Deleting A Contact With Our JSON API
+.Deleting a contact with our JSON API
 [source, python]
 ----
 @app.route("/api/v1/contacts/<contact_id>", methods=["DELETE"]) <1>
@@ -394,24 +387,24 @@ def json_contacts_delete(contact_id=0):
     contact.delete() <2>
     return jsonify({"success": True}) <3>
 ----
-<1> We handle `DELETE` requests to the URL for a given contact
-<2> Look the contact up and invoke the `delete()` method on it
-<3> Return a simple JSON object indicating that the contact was successfully deleted
+<1> We handle `DELETE` requests to the URL for a given contact.
+<2> Look the contact up and invoke the `delete()` method on it.
+<3> Return a simple JSON object indicating that the contact was successfully deleted.
 
 And, with that, we have our simple little JSON Data API to live alongside our regular web application, nicely separated
 out from the main web application, so it can evolve separately as needed.
 
 === Additional Data API Considerations
 
-Now, we obviously have a lot more to do if we want to make this a production ready JSON API:
+Now, we would have a lot more to do if we wanted to make this a production ready JSON API. At minimum would need to add:
 
-* We don't have any rate limiting, which is important for any publicly facing Data API to avoid abusive clients.
-* Even more crucially, there is currently no authentication mechanism.  (We don't have one for our web application either!)
-* We currently don't support paging of our contact data.
-* Lots of small issues that we aren't addressing, such as rendering a proper `404 (Not Found)` response if someone makes
+* Rate limiting, important for any public-facing Data API to avoid abusive clients.
+* An authentication mechanism.  (We don't have one for our web application either!)
+* Support for pagination of our contact data.
+* Several small items, such as rendering a proper `404 (Not Found)` response if someone makes
   a request with a contact id that doesn't exist.
 
-A full discussion around all of these topics is beyond the scope of this book, but we'd like to focus in on one in
+These topics are beyond the scope of this book, but we'd like to focus on one in
 particular, authentication, in order to show the difference between our hypermedia and JSON API.  In order to secure
 our application we need to add _authentication_, some mechanism for determining who a request is coming from, and
 also _authorization_, determining if they have the right to perform the request.
@@ -437,18 +430,18 @@ Nonetheless, cookies have proven extremely useful and so people tend not to comp
 web development.
 ****
 
-In comparison with the typical web application approach to authentication, a JSON API will typically use some sort of
+In comparison with the standard web application approach to authentication, a JSON API will typically use some sort of
 _token based_ authentication: an authentication token will be established via a mechanism like OAuth, and that authentication
 token will then be passed, often as an HTTP Header, with every request that a client makes.
 
 At a high level this is similar to what happens in normal web application authentication: a token is established somehow
-and then then token is part of every request.  However, in practice, the mechanics tend to be wildly different:
+and then that token is part of every request.  However, in practice, the mechanics tend to be wildly different:
 
-* Cookies are part of the HTTP specification and can be easily _set_ by an HTTP Server
-* JSON Authentication tokens, in contrast, often require elaborate exchange mechanics like OAuth to be established
+* Cookies are part of the HTTP specification and can be easily _set_ by an HTTP Server.
+* JSON Authentication tokens, in contrast, often require elaborate exchange mechanics like OAuth to be established.
 
-These differing mechanics for establishing authentication are yet another good reason for splitting our JSON and hypermedia
-APIs up.
+These differing mechanics for establishing authentication are yet another good reason for splitting up our JSON and hypermedia
+APIs.
 
 === The "`Shape`" of Our Two APIs
 
@@ -457,11 +450,11 @@ hypermedia API did: we didn't need a `/contacts/new` handler, for example, to pr
 creating contacts.
 
 Another aspect of our hypermedia API to consider was the performance improvement we made: we pulled the total contact count
-out to a separate end point and implemented the "`Lazy Load`" pattern, to improve the perceived performance of our
+out to a separate endpoint and implemented the "`Lazy Load`" pattern, to improve the perceived performance of our
 application.
 
 Now, if we had both our hypermedia and JSON API sharing the same paths, would we want to publish this API as a JSON
-end point as well?
+endpoint as well?
 
 Maybe, but maybe not.  This was a pretty specific need for our web application, and, absent a request from a user of
 our JSON API, it doesn't make sense to include it for JSON consumers.
@@ -487,7 +480,7 @@ connectors that provide a go-between the HTTP requests and the model.
 This is the ideal controller of the Model-View-Controller (MVC) paradigm that was so popular in the early web: a controller
 should be "`thin`", with the model containing the majority of the logic in the system.
 
-.The Model View Controller Pattern
+.The Model View Controller pattern
 ****
 The Model View Controller design pattern is a classic architectural pattern in software development, and was a major
 influence in early web development.  It is no longer emphasized as heavily, as web development has split into frontend
@@ -496,10 +489,10 @@ and backend camps, but most web developers are still familiar with the idea.
 Traditionally, the MVC pattern mapped into web development like so:
 
 * Model - A collection of "`domain`" classes that implement all the logic and rules for the particular domain your application
-  is designed for.  The model typically provides "`resources`" that are then presented to clients as HTML "`representations`".
+  is designed for.  The model typically provides "`resources`" that are then presented to clients as HTML "`representations.`"
 * View - Typically views would be some sort of client-side templating system, and would render the aforementioned HTML representation
   for a given Model instance.
-* Controller - The controllers job is to take HTTP requests, convert them into sensible requests to the Model and forward
+* Controller - The controller's job is to take HTTP requests, convert them into sensible requests to the Model and forward
   those requests on to the appropriate Model objects.  It then passes the HTML representation back to the client as an
   HTTP response.
 ****
@@ -509,4 +502,4 @@ model that is shared by both.  This allows you to evolve both separately, while 
 another.
 
 With properly built "`thin`" controllers and "`fat`" models, keeping two separate APIs both in sync and yet
-still evolving separately is not as difficult or as crazy as it might sound at first.
+still evolving separately is not as difficult or as crazy as it might sound.

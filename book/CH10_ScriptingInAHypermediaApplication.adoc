@@ -394,7 +394,7 @@ that is, HTML attributes that begin with `data-`, a standard feature of HTML, to
 component.  We will then update our JavaScript to use an attribute selector that looks for the `data-counter` attribute
 as the root element in our counter component and wires in the appropriate event handlers and logic.  Additionally, let's
 rework the code to use `querySelectorAll()` and add the counter functionality to _all_ counter components found on the
-page.  (You never know how many counter's you might want!)
+page.  (You never know how many counters you might want!)
 
 Here is what our code looks like now:
 

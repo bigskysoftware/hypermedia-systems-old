@@ -283,7 +283,7 @@ As you can see, this helper function uses `render_template()` under the hood.
 `render_template()` returns a string.
 This helper function uses that string to create an explicit `Response` object.
 The response object has a `headers` attribute, allowing us to set and change the response headers.
-Specifically, `render_to_response()` sets `Content-Type` to `application/xml` so that the Hyperview client recognizes the content.
+Specifically, `render_to_response()` sets `Content-Type` to `application/vnd.hyperview+xml` so that the Hyperview client recognizes the content.
 This helper is a drop-in replacement for `render_template` in our views.
 So all we need to do is update the last line of the `contacts()` function.
 

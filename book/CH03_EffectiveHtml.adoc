@@ -9,8 +9,7 @@ WARNING: This chapter is a work in progress.
 The medium is the message.
 
 If you're here, you can probably write some HTML.
-The web is the #1 hypermedia system after all, the one this book will spend the most time with,
-and HTML is its format.
+The web is the #1 hypermedia system after all, and HTML is its format.
 
 As with every aspect of the web, it has been exapted and reinterpreted by web developers in myriad ways.
 Is it a document format?
@@ -33,31 +32,31 @@ An HTML file is not a program that produces a human-readable document.
 It _is_ the document.
 
 Unfortunately, HTML's development in terms of hypermedia controls has stagnated
-and what little there is often not put to full use.
+and, what little there is, is often not put to full use.
 
-This chapter looks at HTML as something worth studying in its own right, even in this day and age.
+This chapter looks at HTML as something worth studying in its own right.
 It covers our best practices for writing/generating HTML,
 and why HTML is something far cooler than a programming language.
-It won't be an HTML tutorial, as that would take a whole other book, but it can accompany you in your HTML re-learning journey.
+It won't be an HTML tutorial, but it can accompany you in your HTML re-learning journey.
 
 
-== Why relearn HTML?
+== Why Relearn HTML?
 
 Have you noticed that a lot of websites are bad?
 
- - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times.footnote:[https://almanac.httparchive.org/en/2020/markup] Other than `<div>` being the most common element, the HTTP Archive Web Almanac found that 0.06% of pages surveyed in 2020 contained the nonexistent `<h7>` element. 0.0015% used `<h8>`.
+ - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times.footnote:[https://almanac.httparchive.org/en/2020/markup] 
  - So-called MVPs (minimum viable product) are released in open beta while being completely unusable by vast swathes of people -- UX not just buggy, but nonexistent.footnote:[https://adrianroselli.com/2022/11/accessibility-gaps-in-mvps.html] Is an inaccessible product "`viable`"?
  - Websites, including websites containing public data or results of publicly-funded research, are impossible to scrape programmatically.
  - Search engines have a hard time extracting useful information from a page, and rank that page lower as a result. 
 
-In the rest of the chapter, we'll look at these issues in more detail and see how effective HTML can help us develop better websites.
-However, we should first note that HTML is not a panacea.
-If you care about machine readability, or human readability, or page weight, the most important thing to do is **testing**.
+We'll look at these issues in more detail and see how effective HTML can help us develop better websites.
+However, we should first note that even good HTML is not a panacea.
+If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
 Test manually.
 Test automatically.
 Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI).
 
-So where does HTML and the s-word come in?
+So why concern ourselves with effective html?
 
 Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
 
@@ -71,7 +70,7 @@ and many websites settle with _seeming to_ work.
 But better websites are possible, and anyone can learn HTML to the level of making websites that _actually_ work.
 
 
-== `<div>` soup
+== <div> Soup
 
 While programming code is described as spaghetti when it's not well organized,
 the food of choice for messy markup is soupfootnote:[hence BeautifulSoup, the web scraping library.].
@@ -97,7 +96,7 @@ There could be a few reasons:
 
  * *Styling.* The `<button>` element might have been harder to style.
  * *Confusion.* The button might have some other interactive features, which could lead to the developer not realizing it was a button.
- * *Apathy.* The developer doesn't care, and uses `<div>` except when he has to.
+ * *Apathy.* The developer doesn't care, and uses `<div>` except when they have to.
 
 It's absolutely possible to implement this button, and indeed most kinds of UI, using nothing but `<div>`.
 However, it makes the job harder.
@@ -127,6 +126,7 @@ Furthermore, even if you always remember to add the correct attributes and JavaS
 you've made your HTML less readable for little reason.
 The source code of pages with div soup is difficult to edit and debug.
 
+// maybe: point to an example from contact.app code. e.g., progress bar
 We often _don't_ remember to look out for these types of UX and accessibility bugs.
 [.dfn]_F5-Driven Development_ is the way most of us write HTML:
 write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
@@ -136,12 +136,12 @@ developers are biased towards their own UI needs,
 and users (who might use websites differently) become an afterthought.
 However, if we use HTML effectively, we can catch many of these issues before they ever occur, even before testing.
 
-Given all this, why are so many developers writing div soup?
-There is a tendency to understate the sophistication of HTML.
+So why are so many developers writing div soup?
+There is a tendency to overlook the sophistication of HTML. 
 
-Instead, learn the meaning of every tag and consider each another tool in your tool chest.
-(With the 113 elements currently defined in the spec, it's more of a tool shed).
+Instead, learn the meaning of every tag and consider each another tool in your tool chest. (With the 113 elements currently defined in the spec, it's more of a tool shed).
 
+// check: add Markdown Soup heading?
 [.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
 This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
 even when these elements are incorrect.
@@ -202,7 +202,7 @@ Available: <https://hypermedia.systems/>
 <2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
 
 
-=== Remedy: Stay close to the output
+=== Remedy: Stay Close to the Output
 
 [quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
 The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
@@ -216,7 +216,7 @@ While these abstractions can allow developers to create richer UI or work faster
 their pervasiveness means that they can lose sight of the actual HTML (and JavaScript) being sent to clients.
 Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
 
-For example, a popular concept found in many frameworks is *components*.
+For example, a popular concept found in many frameworks is _components_.
 Components encapsulate a section of a page along with its dynamic behavior.
 While encapsulating behavior is a good way to organize code,
 they also separate elements from their surrounding context,
@@ -278,7 +278,7 @@ and you isolate elements you add from elements already in the page,
 which is a problem if they need to have ARIA relationships.
 ****
 
-== HTML5 soup
+== HTML5 Soup
 
 "`Yeah! Down with `<div>`! It's time to use the full power of *HTML5!*`"
 
@@ -326,7 +326,7 @@ To avoid this:
   Sometimes, `<div>` is fine.
 
 
-=== Keep the spec on hand
+=== Keep the Spec on Hand
 
 [quote,Confucius]
 The beginning of wisdom is to call things by their right names.
@@ -358,7 +358,7 @@ Reading it through (skipping over the implementation details, like the several p
 will give you a sense of how HTML is intended to be written.
 
 
-=== Remedy: Know your budget
+=== Remedy: Know Your Budget
 
 The close relationship between the content and the markup means that
 good HTML is actually quite labor-intensive, often across a whole organization.
@@ -379,7 +379,8 @@ Much like style guides, well-written HTML gives an air of quality and prestige t
 When it comes to HTML, you get what you pay for.
 
 
-== The S word
+// check: more useful table of contents
+== "`Semantic`" HTML
 
 [quote, '_Mean Girls_ (2004)']
 Gretchen, stop trying to make fetch happen! It's not going to happen!
@@ -419,7 +420,7 @@ A flexible format -- not an infinity of namespaces with URLs pointing to nothing
 ***
 
 This is a necessarily reductive explanation of the Semantic Web, a field that we've described in past tense even though it continues to have some practical use.
-The reason it doesn't matter to us is because *the Semantic Web has nothing to do with semantic HTML.*
+The reason it doesn't matter to us is because _the Semantic Web has nothing to do with semantic HTML_.
 
 Semantic HTML has no ambitions of robotic agents navigating information and helping us make connections and discoveries.
 It's actually quite mundane: _don't break the web._
@@ -430,23 +431,22 @@ I think being asked to write _meaningful_ HTML better lights the path to realizi
 Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
 
 I think even "`meaningful`" is too lofty.
-Instead, I recommend talking about, and writing, **conformant** HTML.
+Instead, I recommend talking about, and writing, _conformant_ HTML.
 Use the elements to the full extent provided by the HTML specification,
 and let the software take from it whatever meaning they can.
 
 Speaking of assistive technologies, by the way...
 
 
-== The A word
+== The "`Accessible`" Web
 
-Throughout this chapter, we've gestured at potential accessibility benefits to be had from effective HTML.
+We've gestured at potential accessibility benefits to be had from effective HTML.
 
 [quote, Manuel Matuzović, 'https://alistapart.com/article/my-accessibility-journey-what-ive-learned-so-far/[My Accessibility Journey: What I’ve Learned So Far]']
 (Re)learning HTML and using it consciously prevents and fixes many accessibility issues.
 
 It's true that all else being equal, an app that makes full use of HTML will be more accessible than one that is made of soup.
-However, HTML is not a panacea.
-Even the adage that HTML is "`accessible by default`" is a bit misleading.
+However, even the adage that HTML is "`accessible by default`" is a bit misleading.
 
 If you use simple HTML strictly as recommended by the spec, you are unlikely to run into accessibility bugs (though it does happen, because this is web development).
 Problems often arise when we try to implement controls that aren't built into HTML.
@@ -525,7 +525,7 @@ From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Prac
 }
 ----
 
-`vh` is short for "`visually hidden.`"This class uses multiple methods and workarounds to make sure no browser removes the element's function.
+`vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
 ****
 
 It turns out that fulfilling all of these requirements takes a lot of code. 
@@ -559,7 +559,7 @@ It might be possible to achieve an equal (or better!) quality of UX while allowi
 But when it's not, we shouldn't try to stuff every problem into an HTML box.
 
 
-=== Screen reader rage
+=== Screen Reader Rage
 
 The purpose of writing good HTML is not to please the specification deities.
 It's to make good websites.
@@ -573,7 +573,7 @@ After all, browser implementers do a _lot_ of work to deal with developers' brok
 
 It is of course frustrating when browsers and other tools misbehave.
 Accessibility itself feels inaccessible sometimes.
-It helps with the frustration is to recognize that hypermedia exchanges are not machine-to-machine communication.
+To reduce the frustration it may help to recognize that hypermedia exchanges are not machine-to-machine communication.
 An HTML file is not a program that produces a human-readable document.
 It _is_ the document.
 So, instead of banging your head against a wall, focus on people, not the tools they use.
@@ -693,16 +693,18 @@ This can be parsed into a JSON-like structure, as follows:
 }
 ----
 
+//maybe: try to suggest a rule of thumb for when to use a microformat,
+// versus creating a json api.
+// Would this be helpful for contact.app?
 In this example, Microformats and the extensibility of HTML proved quite useful.
 However, embedding data in HTML is hardly appropriate for every use case.
 Your human-facing and machine-facing interfaces may end up being limited by each other.
 It's often the best option to define a JSON data API separate from your HTML, which will be discussed later in this book.
 
 
-== Where to next
+== Where To Next
 
-Unfortunately, a full HTML tutorial is way out of scope for one chapter of this book.
-Here are some resources you can check out if you'd like to invest in your HTML knowledge:
+We've touched on some of the main challenges of writing good HTML. To continue to invest in your HTML knowledge, here are some resources we recommend:
 
 * Foundations
 * HTML specification: https://html.spec.whatwg.org/multipage

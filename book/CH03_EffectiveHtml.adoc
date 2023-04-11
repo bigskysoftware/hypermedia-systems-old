@@ -37,12 +37,12 @@ and, what little there is, is often not put to full use.
 This chapter looks at HTML as something worth studying in its own right.
 It covers our best practices for writing/generating HTML,
 and why HTML is something far cooler than a programming language.
-It won't be an HTML tutorial, but it can accompany you in your HTML re-learning journey.
+It won't be a full HTML tutorial, but it can accompany you in your HTML re-learning journey.
 
 
 == Why Relearn HTML?
 
-Have you noticed that a lot of websites are bad?
+You may have noticed that a lot of websites have problems.
 
  - Pages are bloated with `<div>` soup, and stylesheets are big as a result of trying to select elements in that mess. The result is slow loading times.footnote:[https://almanac.httparchive.org/en/2020/markup] 
  - So-called MVPs (minimum viable product) are released in open beta while being completely unusable by vast swathes of people -- UX not just buggy, but nonexistent.footnote:[https://adrianroselli.com/2022/11/accessibility-gaps-in-mvps.html] Is an inaccessible product "`viable`"?
@@ -50,15 +50,8 @@ Have you noticed that a lot of websites are bad?
  - Search engines have a hard time extracting useful information from a page, and rank that page lower as a result. 
 
 We'll look at these issues in more detail and see how effective HTML can help us develop better websites.
-However, we should first note that even good HTML is not a panacea.
-If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
-Test manually.
-Test automatically.
-Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI).
 
-So why concern ourselves with effective html?
-
-Easy. Writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
+It turns out that writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
 
 Knowing HTML well might not absolve you from doing your job, but it makes it a lot easier.
 
@@ -69,6 +62,15 @@ Indeed, it's very easy (and sometimes acceptable) to produce mediocre HTML that 
 and many websites settle with _seeming to_ work.
 But better websites are possible, and anyone can learn HTML to the level of making websites that _actually_ work.
 
+Before we start, we should note that even writing good HTML will not solve all problems.
+If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
+Test manually.
+Test automatically.
+Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI).
+
+// TODO: ?
+So, let's make that hypermedia best practice no. 1. 
+Test.
 
 == <div> Soup
 
@@ -126,7 +128,7 @@ Furthermore, even if you always remember to add the correct attributes and JavaS
 you've made your HTML less readable for little reason.
 The source code of pages with div soup is difficult to edit and debug.
 
-// maybe: point to an example from contact.app code. e.g., progress bar
+// TODO: maybe point to an example from contact.app code. ch8 progress bar?
 We often _don't_ remember to look out for these types of UX and accessibility bugs.
 [.dfn]_F5-Driven Development_ is the way most of us write HTML:
 write something, _Alt-Tab_ to the browser to see if it works, and go back to edit.
@@ -140,6 +142,11 @@ So why are so many developers writing div soup?
 There is a tendency to overlook the sophistication of HTML. 
 
 Instead, learn the meaning of every tag and consider each another tool in your tool chest. (With the 113 elements currently defined in the spec, it's more of a tool shed).
+
+// TODO: maybe?
+So, let's call these hypermedia best practices no. 2 & 3. 
+Make the full tool shed of available tags your own.
+Aim for good tag fit, where tag specs match your use case.
 
 // check: add Markdown Soup heading?
 [.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
@@ -249,6 +256,10 @@ link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_el
 `<code-area>`, that we can drop into our page whenever we want.
 See how we're _extending_ HTML, rather than abstracting it away.
 
+// TODO:
+Hypermedia best practice no. 4:
+Stay aware of HTML markup you're producing and be able to change it.
+
 .Web Components
 ****
 Web Components is the collective name of a few standards;
@@ -325,6 +336,10 @@ To avoid this:
 * Don't try to be specific when you can't or don't need to.
   Sometimes, `<div>` is fine.
 
+// TODO: ?
+This might be best practice no. 5: 
+If more specific tags don't fit, <div> may suit.
+
 
 === Keep the Spec on Hand
 
@@ -378,14 +393,18 @@ If you have the resources, however, putting more care in your HTML will produce 
 Much like style guides, well-written HTML gives an air of quality and prestige to a document, even if few notice it.
 When it comes to HTML, you get what you pay for.
 
+// TODO:
+Let's call that best practice no. 6:
+A generic loose fit is better than a specific incorrect fit.
 
-// check: more useful table of contents
+
+// TODO: suggesting this instead of 'S word', for table of contents
 == "`Semantic`" HTML
 
 [quote, '_Mean Girls_ (2004)']
 Gretchen, stop trying to make fetch happen! It's not going to happen!
 
-You might have noticed how we've avoided the use of the word "`semantic`" so far, partly because many people associate it with annoying pedantic colleagues (couldn't be us!), and partly because it has multiple meanings, only one of which we care about.
+We're wary of the word "`semantic,`" partly because many people associate it with annoying pedantic colleagues (couldn't be us!), and partly because it has multiple meanings, only one of which we care about.
 
 We're not really about the "`Semantic Web`".
 
@@ -537,7 +556,11 @@ It's not impossible to make a good tab set implementation.
 However, it's difficult to trust that a new implementation will work in all environments, since most of us have limited access to testing devices.
 This is why it's often recommended to use established libraries for UI interactions instead of rolling your own.
 
-Before adding a dependency, however, let's reconsider our design.
+// TODO: ?
+We could even call that best practice no. 7:
+Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility. 
+
+So, before adding a dependency, let's reconsider our design.
 Does the information really need to be presented as tabs?
 Sometimes the answer is yes
 -- we used dummy text in our code example, so we can't tell --
@@ -583,6 +606,8 @@ HTML is not _for_ them.
 HTML is for humans.
 
 
+// TODO: maybe integrate the following section with ch. 11, data options?
+// discuss whether this would be a good idea for Contact.app
 == The Scrapeable Web
 
 Hypermedia systems perform best with human-operated clients.
@@ -693,18 +718,18 @@ This can be parsed into a JSON-like structure, as follows:
 }
 ----
 
-//maybe: try to suggest a rule of thumb for when to use a microformat,
-// versus creating a json api.
-// Would this be helpful for contact.app?
 In this example, Microformats and the extensibility of HTML proved quite useful.
 However, embedding data in HTML is hardly appropriate for every use case.
 Your human-facing and machine-facing interfaces may end up being limited by each other.
 It's often the best option to define a JSON data API separate from your HTML, which will be discussed later in this book.
 
+// TODO: ?
+Is there a best practice lurking here? Oh yes, no. 8:
+When appropriate, mark up HTML with machine readable data attributes. 
+
 
 == Where To Next
 
-//maybe: summarize key points or best practices
 We've touched on some of the main challenges of writing good HTML. To continue to invest in your HTML knowledge, here are some resources we recommend:
 
 * Foundations

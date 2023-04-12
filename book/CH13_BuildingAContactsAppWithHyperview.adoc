@@ -12,7 +12,7 @@ This chapter covers:
 
 Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
 These benefits were demonstrated by building a robust Contacts web application.
-Then, Chapter 13 argued that hypermedia concepts can and should be applied to platforms other than the Web.
+Then, Chapter 12 argued that hypermedia concepts can and should be applied to platforms other than the Web.
 We introduced Hyperview as an example of a hypermedia format and client specifically designed for building mobile apps.
 
 But you may still be wondering: what is it like to create a fully-featured, production-ready mobile app using Hyperview?

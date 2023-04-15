@@ -13,23 +13,6 @@ Note: I used [.design-note] to flag for formatting.
 which... may not be useful
 //// 
 
-[.design-note]
-.Why Effective HTML?
-****
-Sprinkled throughout this book you will find tips and best practices for writing effective HTML.
-
-It's very easy (and sometimes acceptable) to produce mediocre HTML that _seems to_ work,
-and many websites settle with _seeming to_ work.
-
-But writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
-
-Effective HTML typically loads faster, is easier to read and debug, performs better both with search engine ranking and screen reader accessibility, and can be scraped programatically. 
-// TODO: check last sentence here; pulled together from various paragraphs
-****
-
-
-
-
 
 [.design-note]
 .Test, and Test Again

@@ -130,7 +130,7 @@ network model using the term _REpresentational State Transfer (REST)_.
 Fielding's work became a major touchstone for early web developers, giving them a language to discuss the new technical
 medium they were building applications in.
 
-We will discuss Fielding's key ideas in depth in Chapter 3, and try to correct the record with respect to REST,
+We will discuss Fielding's key ideas in depth in Chapter 2, and try to correct the record with respect to REST,
 HATEOAS and hypermedia.
 
 == The World's Most Successful Hypertext: HTML
@@ -198,7 +198,7 @@ When the link is clicked the browser (or, as we sometimes refer to it, the _hype
 `GET` request to the URL encoded in the link's `href` attribute.
 
 Note that the HTTP request includes additional data (i.e., _metadata_) on what, exactly, the browser wants from the server,
-in the form of headers.  We will discuss these headers, and HTTP in more depth in Chapter 3.
+in the form of headers.  We will discuss these headers, and HTTP in more depth in Chapter 2.
 
 The _hypermedia server_ then responds to this request with a _hypermedia response_ -- the HTML -- for the new page.
 This may seem like a small and obvious point, but it is an absolutely crucial aspect of a truly RESTful _hypermedia

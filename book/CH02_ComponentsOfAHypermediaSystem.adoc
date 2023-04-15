@@ -205,7 +205,7 @@ HTTP (which is the Hypertext Transfer Protocol, after all!): if you wish to issu
 applications.
 
 This is an obvious shortcoming of HTML as a hypermedia; it would be wonderful to see this fixed in the
-HTML specification. For now, we'll discuss ways to get around this in Chapter 5.
+HTML specification. For now, we'll discuss ways to get around this in Chapter 4.
 
 ==== HTTP response codes
 
@@ -779,7 +779,7 @@ should of course be allowed in a Hypermedia-Driven Application.
 
 However, in a Hypermedia-Driven Application the presence of scripting should _not_ change the fundamental networking
 model: hypermedia should still be the engine of application state, server communication should still consist of
-hypermedia exchanges rather than, for example, JSON data exchanges, and so on. (JSON Data API's certainly have their place; in Chapter 11 we'll discuss when and how to use them).
+hypermedia exchanges rather than, for example, JSON data exchanges, and so on. (JSON Data API's certainly have their place; in Chapter 10 we'll discuss when and how to use them).
 
 Today, unfortunately, the scripting layer of the web, JavaScript, is quite often used to _replace_, rather than augment
 the hypermedia model.  We will elaborate in a later chapter what scripting that does not replace the underlying hypermedia

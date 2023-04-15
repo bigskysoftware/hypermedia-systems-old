@@ -438,7 +438,7 @@ In the first line of code we create a form that will submit back _to the same pa
 Rather than issuing an HTTP `GET` to this path, however, we will issue an HTTP `POST` to it.  Using a `POST` in this manner
 will signal to the server that we want to create a new Contact, rather than get a form.
 
-We then have a label (always a good practice, as mentioned in the last chapter!) and an input that captures the email of
+We then have a label (always a good practice!) and an input that captures the email of
 the contact being created.  The name of the input is `email` and, when this form is submitted, the value of this input
 will be submitted in the `POST` request, associated with the `email` key.
 

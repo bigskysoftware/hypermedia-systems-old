@@ -509,7 +509,7 @@ Currently, our application has a small amount of validation that is done entirel
 message when an error is detected.
 
 We are not going to go into the details of how validation works in the model objects, but recall what
-the code for updating a contact looks like from Chapter 4:
+the code for updating a contact looks like from Chapter 3:
 
 [source, python]
 .Server-side validation on contact update

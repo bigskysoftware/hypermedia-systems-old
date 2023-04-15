@@ -726,11 +726,28 @@ And importantly, this evolution preserves the Hypermedia, server-driven architec
 
 
 [.design-note]
-.HTML Note: Test, and Test Again
+.HTML Note: "'Display: none'"
 ****
 Sadly, not even good HTML-- or HXML -- can cure all ills.
 If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
 Test manually.
 Test automatically.
 Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
+
+// TODO: okay here? not sure where to put this
+One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. If you want to hide an element visually without hiding it from assistive technology, you can use this utility class:
+
+[source,css]
+----
+.vh {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	block-size: 1px;
+	inline-size: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+----
+
+`vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
 ****

@@ -22,29 +22,8 @@ We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ord
 ****
 
 
-// TODO: format as info gem
-.HTML Notes: "'Display: none'"
-****
-One problem with `display: none;` in CSS is that it is not purely cosmetic -- it removes elements from the accessibility tree and keyboard focus. If you want to hide an element visually without hiding it from assistive technology, you can use this utility class:
 
-[source,css]
-----
-.vh {
-	clip: rect(0 0 0 0);
-	clip-path: inset(50%);
-	block-size: 1px;
-	inline-size: 1px;
-	overflow: hidden;
-	white-space: nowrap;
-}
-----
-
-`vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
-****
-
-
-
-// TODO: Some readers may want more specific advice. Are there rules of thumb for writing HTML for humans? 
+// TODO: Some readers may want more specific advice on how to write HTML for humans. 
 .Screen Reader Rage
 ****
 The spec is a good starting point when deciding how to mark something up,

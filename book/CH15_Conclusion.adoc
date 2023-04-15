@@ -84,7 +84,7 @@ Throughout the book we discuss a number of best practices for writing effective 
 * Prefer components that extend HTML, rather than abstracting it away.
 * Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
 
-// TODO: Placement?
+// TODO: Finish or cut. Placement okay?
 .Helpful Resources
 
 * Foundations

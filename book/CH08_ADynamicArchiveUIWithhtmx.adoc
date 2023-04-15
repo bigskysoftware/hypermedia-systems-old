@@ -634,7 +634,7 @@ pure hypermedia. It took about 16 lines of front end code and 16 lines of backen
 HTML, with a bit of help from a hypermedia-oriented JavaScript library such as htmx, can in fact be extremely powerful and expressive.
 
 
-// TODO: this might work best as a vanilla pullout
+// TODO: work here? better as a vanilla pullout? 
 [.design-note]
 .HTML Notes: On Web Components
 ****

@@ -507,7 +507,8 @@ still evolving separately is not as difficult or as crazy as it might sound.
 
 // TODO: does some version of this fit here?
 // or, cut if you don't recommend using
-.Microformats
+[.design-note]
+.HTML Notes: Microformats
 ****
 In some cases you may want to include machine-readable structured data in HTML. 
 https://microformats.org/[Microformats] is one standard for doing so.

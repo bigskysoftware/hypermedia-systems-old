@@ -1319,7 +1319,7 @@ Since our HXML templates don't expose any entrypoints to the Archive functionali
 
 
 
-// TODO: better as info gem?
+// TODO: okay, or better as integrated info gem?
 .HTML Notes: Remember <details>
 ****
 Does the information need to be presented as tabs?

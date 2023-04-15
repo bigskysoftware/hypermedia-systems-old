@@ -794,3 +794,43 @@ systems so flexible.
 If you were not aware of the full significance of REST and HATEOAS before now, don't feel bad: it took some of us over a decade of
 working in web development, and building a hypermedia-oriented library to boot, to understand the
 special nature of HTML, hypermedia and the web!
+
+
+[.design-note]
+.HTML Note: <div> Soup
+****
+The best-known kind of messy HTML is `<div>` soup. 
+
+When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
+we either degrade the quality of our websites or create more work for ourselves -- probably both.
+
+For example, instead of adding a button using the dedicated `<button>` element,
+a `<div>` element might have a `click` event listener added to it.
+
+[source,html]
+----
+<div class="bg-accent padding-4 rounded-2" onclick="doStuff()">Do stuff</div>
+----
+
+There are two main issues with this button:
+
+* It's not focusable -- the Tab key won't get you to it.
+* There's no way for assistive tools to tell that it's a button.
+
+Yes, we can fix that by adding `role="button"`` and `tabindex="0"`:
+
+[source,html]
+----
+<div class="bg-accent padding-4 rounded-2"
+  role="button" 
+  tabindex="0" 
+  onclick="doStuff()">Do stuff</div>
+----
+
+These are easy fixes, but they're things you have to _remember_.
+It's not obvious from the HTML source that this is a button,
+making the source harder to read and the absence of these attributes harder to spot.
+The source code of pages with div soup is difficult to edit and debug.
+
+To avoid div soup, learn the meaning of available tags and consider each another tool in your tool chest. (With the 113 elements currently defined in the spec, it's more of a tool shed).
+****

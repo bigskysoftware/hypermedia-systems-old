@@ -1152,3 +1152,29 @@ contacts that were deleted) will be re-rendered.
 And there we go, we now have a bulk delete feature for our application.  Once again, not a huge amount of code, and we
 are implementing these features entirely by exchanging hypermedia with a server in the traditional, RESTful manner of
 the web.
+
+
+[.design-note]
+.HTML Note: HTML5 Soup
+****
+[quote,Confucius]
+The beginning of wisdom is to call things by their right names.
+
+Elements like `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` have become a sort of shorthand for HTML.
+
+By using these elements, a page can make false promises, like `<article>` elements being self-contained, reusable entities, to clients like browsers, search engines and scrapers that can't know better. To avoid this:
+
+* Make sure that the element you're using fits your use case. Check the HTML spec.
+* Don't try to be specific when you can't or don't need to.
+  Sometimes, `<div>` is fine.
+
+The most authoritative resource for learning about HTML is the HTML specification.
+The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
+The single-page version is too slow to load and render on most computers. 
+There's also a developers' edition at /dev, but I prefer the styling of the standard version.]
+There's no need to rely on hearsay to keep up with developments in HTML.
+
+Section 4 features a list of all available elements,
+including what they represent, where they can occur, and what they are allowed to contain.
+It even tells you when you're allowed to leave out closing tags!
+****

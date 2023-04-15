@@ -10,7 +10,7 @@ This is just an option to consider.
 I we go this route, it would useful to index or add a ToC entry for 'HTML Topics'
 
 Note: I used [.design-note] to flag for formatting. 
-As far as I know, it means nothing to Asciidoc
+which... may not be useful
 //// 
 
 [.design-note]
@@ -28,22 +28,7 @@ Effective HTML typically loads faster, is easier to read and debug, performs bet
 ****
 
 
-[.design-note]
-.Stay Close to the Output
-****
-[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
-The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
 
-In order to avoid `<div>` soup (or Markdown soup, or Component soup), you need to be aware of the markup you're producing and be able to change it.
-
-Some SPA frameworks, and some web components, make this more difficult by putting layers of abstraction between the code the developer writes and the generated markup.
-
-While these abstractions can allow developers to create richer UI or work faster,
-their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
-Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
-
-Hypermedia best practice no. 1: Stay aware of HTML markup you’re producing and be able to change it.
-****
 
 
 [.design-note]
@@ -53,54 +38,12 @@ Even good HTML is not a cure-all.
 If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
 Test manually.
 Test automatically.
-Test with screenreaders, test with a keyboard, test on different browsers and hardware, run linters (while coding and/or in CI).
 
-So, let’s make that hypermedia best practice no. 1. Test.
+Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
 ****
 
 
-[.design-note]
-.<div> Soup
-****
-The best-known kind of messy HTML is `<div>` soup. 
 
-When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
-we either degrade the quality of our websites or create more work for ourselves -- probably both.
-
-For example, instead of adding a button using the dedicated `<button>` element,
-a `<div>` element might have a `click` event listener added to it.
-
-[source,html]
-----
-<div class="bg-accent padding-4 rounded-2" onclick="doStuff()">Do stuff</div>
-----
-
-There are two main issues with this button:
-
-* It's not focusable -- the Tab key won't get you to it.
-* There's no way for assistive tools to tell that it's a button.
-
-Yes, we can fix that by adding `role="button"`` and `tabindex="0"`:
-
-[source,html]
-----
-<div class="bg-accent padding-4 rounded-2"
-  role="button" 
-  tabindex="0" 
-  onclick="doStuff()">Do stuff</div>
-----
-
-These are easy fixes, but they're things you have to _remember_.
-It's not obvious from the HTML source that this is a button,
-making the source harder to read and the absence of these attributes harder to spot.
-The source code of pages with div soup is difficult to edit and debug.
-
-To avoid div soup, learn the meaning of available tags and consider each another tool in your tool chest. (With the 113 elements currently defined in the spec, it's more of a tool shed).
-
-So, let's call these hypermedia best practices no. 2 & 3: 
-2. Make the full tool shed of available tags your own. 
-3. Aim for good tag fit, where tag specs match your use case.
-****
 
 
 [.design-note]
@@ -133,11 +76,11 @@ but Markdown doesn't have a way to add a class to elements meaning the square br
 ****
 
 
-// maybe an info gem?
+// TODO: maybe an info gem?
 [.design-note]
 .On Lists 
 ****
-We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If items in our  list are not referenced by number, we would use an `<ul>`.
+We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ordered, however, and the difference is whether the place of a particular element is significant. For instance, instructions should usually be marked up with `<ol>` since it may contain references like "Repeat steps 3 to 5". If items in our list are not referenced by number, we would use an `<ul>`.
 ****
 
 
@@ -175,103 +118,15 @@ Available: <https://hypermedia.systems/>
 ****
 
 
+
+
+
+
+
+
+
+
 [.design-note]
-.Component Soup?
-****
-Components encapsulate a section of a page along with its dynamic behavior.
-While encapsulating behavior is a good way to organize code,
-it can also separate elements from their surrounding context,
-which can lead to wrong or inadequate relationships between elements.
-The result is what one might call [.dfn]_component soup_,
-where information is hidden in component state,
-rather than being present in the HTML, which is now incomprehensible due to missing context.
-
-Before you reach for components for reuse, consider your options.
-Lower-level mechanisms often (allow you to) produce better HTML.
-In some cases, components can actually _improve_ the clarity of your HTML.
-
-To decide if a component is appropriate for your use case, a good rule of thumb is to ask:
-"`Could this reasonably be a built-in HTML element?`"
-For example, a code editor is a good candidate,
-since HTML already has `<textarea>` and `contenteditable` elements.
-In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
-We can use features like
-link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
-to encapsulate these elementsfootnote:[
-Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
-In particular, there are some accessibility bugs that may occur when elements inside and outside the shadow root interact.].
-We can create a
-link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
-`<code-area>`, that we can drop into our page whenever we want.
-
-// TODO: maybe?
-There might be a hypermedia best practice here: Prefer components that extend HTML, rather than abstracting it away.
-****
-
-
-// this might work best as a vanilla pullout
-.On Web Components
-****
-Web Components is the collective name of a few standards;
-Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
-
-All of these standards bring useful capabilities to the table.
-`<template>` elements remove their contents from the document, while still parsing them as HTML (unlike comments) and making them accessible to JavaScript.
-Custom Elements let us initialize and tear down behaviors when elements are added or removed, which would previously require manual work or MutationObservers.
-Shadow DOM lets us encapsulate elements, leaving the "light" (non-shadow) DOM clean.
-
-However, trying to reap these benefits is often frustrating.
-Some difficulties are simply growing pains of new standards
-(like the accessibility problems of Shadow DOM)
-that are actively being worked on.
-Others are the result of Web Components trying to be too many things at the same time:
-
- * An extension mechanism for HTML. To this end, each custom element is a tag we add to the language.
- * A lifecycle mechanism for behaviors. Methods like `createdCallback`, `connectedCallback`, etc. allow behavior to be added to elements without needing to be manually invoked when those elements are added.
- * A unit of encapsulation. Shadow DOM insulates elements from their surroundings.
-
-The result is that if you want any one of these things,
-the others come along for the ride.
-If you want to attach some behaviors to some elements using lifecycle callbacks,
-you need to create a new tag,
-which means you can't have multiple behaviors on one element,
-and you isolate elements you add from elements already in the page,
-which is a problem if they need to have ARIA relationships.
-****
-
-
-
-.HTML5 Soup
-****
-Elements like `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` have become a sort of shorthand for HTML.
-
-By using these elements, a page can make false promises, like `<article>` elements being self-contained, reusable entities, to clients like browsers, search engines and scrapers that can't know better. To avoid this:
-
-* Make sure that the element you're using fits your use case. Check the HTML spec.
-* Don't try to be specific when you can't or don't need to.
-  Sometimes, `<div>` is fine.
-
-This might be best practice no. 5: If more specific tags don’t fit, <div> may suit.  
-****
-
-.Keep the Spec on Hand
-****
-[quote,Confucius]
-The beginning of wisdom is to call things by their right names.
-
-The most authoritative resource for learning about HTML is the HTML specification.
-The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
-The single-page version is too slow to load and render on most computers. 
-There's also a developers' edition at /dev, but I prefer the styling of the standard version.]
-There's no need to rely on hearsay to keep up with developments in HTML.
-
-Section 4 features a list of all available elements,
-including what they represent, where they can occur, and what they are allowed to contain.
-It even tells you when you're allowed to leave out closing tags!
-
-Best practice: keep the HTML spec on hand.
-****
-
 .Know Your HTML Budget
 ****
 The close relationship between content and markup means that
@@ -289,102 +144,25 @@ Thus, we don't expect every site to contain perfectly conformant HTML.
 What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
 
 If you have the resources, however, putting more care in your HTML will produce a more polished site.
-
-Let’s call that best practice no. 6: A generic loose fit is better than a specific incorrect fit.
 ****
 
 
-// TODO: format as pullout, like Web Components, ARIA
-.The "`Semantic Web`"
-****
-[quote, '_Mean Girls_ (2004)']
-Gretchen, stop trying to make fetch happen! It's not going to happen!
-
-The "Semantic Web" was a vision of a system that could both express any kind of human knowledge, and be useful for computing.
-It planned to achieve this using _ontologies_, repositories of schemas like "person", "movie" and "species" and relations like "named", "part of" and "created by".
-
-The problem with this vision is that information on the Web rarely fits into neat categories.
-Because no single ontology can be defined that encapsulates all kinds of information one might wish to publish on the Web,
-Semantic Web systems need to be pluggable with different schemas.
-In turn, a Semantic Web client, in order to do something useful with an arbitrary piece of HTML, needs to be able to parse these schemas, which means we need to define a standard machine-readable format for ontologies.
-But a single format couldn't express every kind of object and relation...
-It's turtles all the way down.
-
-In practice, most implementations stop at the topmost turtle.
-Ontologies are defined in natural language,
-and clients are hardcoded to support a fixed set of schemas.
-The requirement for prior agreement between server and client means this technology does not have the generality of the Web,
-and for most use cases, you might as well define a JSON API.
-
-_The Semantic Web has nothing to do with semantic HTML_.
-****
-
-
-.Semantic HTML
-****
-[quote,https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/]
-I think being asked to write _meaningful_ HTML better lights the path to realizing that it isn't about what the text means to humans--it's about using tags for the purpose outlined in the specs to meet the needs of software like browsers, assistive technologies, and search engines.
-
-Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
-
-We recommend talking about, and writing, _conformant_ HTML.
-Use the elements to the full extent provided by the HTML specification,
-and let the software take from it whatever meaning they can.
-****
-
-
-[.design-note]
-.Caution: Improvised UI Elements
-****
-Accessibility problems can arise when we try to implement controls that aren't built into HTML.
-
-For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? 
-
-The problem here is that tabs have requirements beyond clicking to change content.
-Your improvised tabs may be missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
-From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Practices Guide on tabs]:
-
-* Keyboard interaction
-
-** Can the tabs be focused with the Tab key?
-
-* ARIA roles, states, and properties
-
-** "`[The element that contains the tabs] has role `tablist`.`" 
-
-** "`Each [tab] has role `tab` [...]`"
-
-** "`Each element that contains the content panel for a `tab` has role `tabpanel`.`"
-
-** "`Each [tab] has the property `aria-controls` referring to its associated tabpanel element.`"
-
-** "`The active `tab` element has the state `aria-selected` set to `true` and all other `tab` elements have it set to `false`.`"
-
-** "`Each element with role `tabpanel` has the property `aria-labelledby` referring to its associated `tab` element.`"
-
-You would need to write a lot of code to make your improvised tabs fulfill all of these requirements. Some of the ARIA attributes can be added directly in HTML,
-but they are repetitive
-and others (like `aria-selected`) need to be set through JavaScript since they are dynamic.
-The keyboard interactions can be error-prone too.
-
-It's not impossible to make your own tab set implementation.
-However, it's difficult to trust that a new implementation will work in all environments, since most of us have limited access to testing devices.
-
-Hence, hypermedia best practice no. 7: Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
-****
 
 
 // TODO: check. Does this list accurately condense the work of ch.3?
 [.design-note]
-.Best Practices for Effective HTML
+.Toward Effective HTML
 ****
-1. Stay close to the HTML markup you’re producing and be able to change it.
-2. Make the full tool shed of available tags your own; keep the HTML spec on hand. 
-3. Aim for good tag fit, where tag specs match your use case.
-4. If more specific tags don’t fit, <div> may suit. A generic loose fit is better than a specific incorrect fit. 
-5. Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
-6. Prefer components that extend HTML, rather than abstracting it away.
-7. Test, and test with screenreaders, with a keyboard, with different browsers and hardware.
+Throughout the book we discuss a number of best practices for writing effective HTML. Here's a nutshell version: 
+
+* Stay close to the HTML markup you’re producing and be able to change it. Prefer frameworks and components that help you do this. 
+// TODO: maybe add. Aim for 'locality of behavior' in your markup, so that you or another developer can understand what each part of the page is doing just by looking at that part of the page.  
+* Make the full range of available tags part of your toolkit. 
+* Aim for good fit between tag specs and your use case; check the HTML specs when in doubt. 
+* When more specific tags don’t fit, it is okay -- and usually better -- to step back to <div> than to use a tag incorrectly. 
+* Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
+* Prefer components that extend HTML, rather than abstracting it away.
+* Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
 ****
 
 
@@ -408,6 +186,7 @@ Some resources we recommend:
 
 ** [.cite]_semantic: the 8 letter s-word_, https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/
 ****
+
 
 // TODO: format as info gem
 .About Display: none
@@ -451,7 +230,7 @@ But sometimes it's possible to achieve an equal (or better!) quality of UX while
 ****
 
 
-// TODO: Nice writing here. Some readers may want more specific advice: what does it mean to write HTML for humans? 
+// TODO: Some readers may want more specific advice: what does it mean to write HTML for humans? 
 .Screen Reader Rage
 ****
 The spec is a good starting point when deciding how to mark something up,
@@ -471,61 +250,6 @@ Don't write HTML for browsers. or assistive tools, or validators.
 HTML is not _for_ them.
 HTML is for humans.
 ****
-
-
-// maybe: discuss data options as part of Data API chapter
-// or, cut if you don't recommend using
-.Microformats
-****
-In some cases you may want to include machine-readable structured data in HTML. 
-https://microformats.org/[Microformats] is one standard for doing so.
-It uses classes to mark certain elements as containing information to be extracted.
-The microformats2 standard uses five kinds of classes:
-
-* `h-` classes denote that an element represents a machine-readable entity, e.g., `h-entry`, `h-resume`
-* The other prefixes denote that an element represents properties of an enclosing entity:
-** `p-` classes are plain text properties, from an element's inner text or `alt` attribute, e.g., `p-name`, `p-category`
-** `u-` classes are URL properties, from an element's `href` or `src`, e.g., `u-url`, `u-email`, `u-photo`
-** `dt-` classes are date/time properties, from `<time>` elements, e.g., `dt-published`, `dt-updated`
-** `e-` classes are embedded markup properties, from an element's inner HTML, e.g., `e-content`, `e-description`
-
-There are also conventions for extracting common properties like name, URL and photo without needing classes for each property.
-
-By adding these classes into the HTML representation of an object, we allow the properties of the object to be recovered from the HTML. For example, this simple HTML:
-
-[source,html]
-----
-<a class="h-card" href="https://john.example">
-  <img src="john.jpg" alt=""> John Doe
-</a>
-----
-
-can be parsed into this JSON-like structure:
-// maybe: briefly describe how
-
-
-[source,json]
-----
-{
-  "type": ["h-card"],
-  "properties": {
-    "name": ["John Doe"],
-    "photo": ["john.jpg"],
-    ""
-    "url": ["https://john.example"]
-  }
-}
-----
-
-Using a variety of properties and nested objects, we could mark up every bit of information about a contact, for example, in a machine-readable way.
-
-// maybe: rule of thumb for when to use a microformat
-// Would this be worthwhile for contact.app?
-Microformats and the extensibility of HTML can prove useful, but embedding data in HTML is not appropriate for every use case.
-Your human-facing and machine-facing interfaces may end up being limited by each other.
-It's often the best option to define a JSON data API separate from your HTML.
-****
-
 
 
 // maybe move to ch1, The Essence of HTML as a Hypermedia
@@ -550,4 +274,30 @@ HTML is a hypermedium.
 
 An HTML file is not a program that produces a human-readable document.
 It _is_ the document.
+****
+
+
+// TODO: keep? format as pullout, like Web Components, ARIA
+.The "`Semantic Web`"
+****
+[quote, '_Mean Girls_ (2004)']
+Gretchen, stop trying to make fetch happen! It's not going to happen!
+
+The "Semantic Web" was a vision of a system that could both express any kind of human knowledge, and be useful for computing.
+It planned to achieve this using _ontologies_, repositories of schemas like "person", "movie" and "species" and relations like "named", "part of" and "created by".
+
+The problem with this vision is that information on the Web rarely fits into neat categories.
+Because no single ontology can be defined that encapsulates all kinds of information one might wish to publish on the Web,
+Semantic Web systems need to be pluggable with different schemas.
+In turn, a Semantic Web client, in order to do something useful with an arbitrary piece of HTML, needs to be able to parse these schemas, which means we need to define a standard machine-readable format for ontologies.
+But a single format couldn't express every kind of object and relation...
+It's turtles all the way down.
+
+In practice, most implementations stop at the topmost turtle.
+Ontologies are defined in natural language,
+and clients are hardcoded to support a fixed set of schemas.
+The requirement for prior agreement between server and client means this technology does not have the generality of the Web,
+and for most use cases, you might as well define a JSON API.
+
+_The Semantic Web has nothing to do with semantic HTML_.
 ****

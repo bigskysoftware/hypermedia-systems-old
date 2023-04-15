@@ -695,3 +695,20 @@ We hope that, in addition, you will also become as passionate about it as we are
 This book is, in part, a plea that we "`let the web be the web`", that we take the original architecture of the web
 seriously, and that we consider the entire _hypermedia system_ it makes available to us when we build applications
 with it.
+
+
+[.design-note]
+.HTML Note: Stay Close to the Output
+****
+[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
+The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
+
+In order to avoid `<div>` soup (or Markdown soup, or Component soup), you need to be aware of the markup you're producing and be able to change it.
+
+Some SPA frameworks, and some web components, make this more difficult by putting layers of abstraction between the code the developer writes and the generated markup.
+
+While these abstractions can allow developers to create richer UI or work faster,
+their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
+Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
+****
+

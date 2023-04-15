@@ -4,59 +4,14 @@
 WARNING: test of key ideas as pullouts to be sprinkled throughout the book
 ////
 Many pieces of the chapter read like little gems; these might work well as pullouts.
-The following attempts to break the chapter into pieces for use throughout the book.
+Pieces have been moved to end of chapter "'html notes'" (or similar).
 This is just an option to consider.
 
-I we go this route, it would useful to index or add a ToC entry for 'HTML Topics'
+I we go this route, it would be useful to index or add a ToC entry for 'HTML Topics'
 
 Note: I used [.design-note] to flag for formatting. 
 which... may not be useful
 //// 
-
-
-[.design-note]
-.Test, and Test Again
-****
-Even good HTML is not a cure-all.
-If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
-Test manually.
-Test automatically.
-
-Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
-****
-
-
-
-
-
-[.design-note]
-.Markdown soup
-****
-[.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
-This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
-even when these elements are incorrect.
-Consider the following example of an IEEE-style citation:
-
-[source,markdown]
-----
-[1] C.H. Gross, A. Stepinski, and D. Akşimşek, <1>
-_Hypermedia Systems_, <2>
-Bozeman, MT, USA: Big Sky Software.
-Available: <https://hypermedia.systems/>
-----
-<1> The reference number is written in brackets.
-<2> Underscores around the book title creates an <em> element.
-
-Here, <em> is used because it's the only Markdown element that is presented in italics by default.
-This indicates that the book title is being stressed, but the purpose is to mark it as the title of a work.
-HTML has the `<cite>` element that's intended for this exact purpose.
-
-Furthermore, even though this is a numbered list perfect for the `<ol>` element, which Markdown supports, plain text is used for the reference numbers instead.
-Why could this be?
-The IEEE citation style requires that these numbers are presented in square brackets.
-This could be achieved on an `<ol>` with CSS,
-but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.
-****
 
 
 // TODO: maybe an info gem?
@@ -67,114 +22,10 @@ We call `<ol>` and `<ul>` "ordered" and "unordered" lists. Both are actually ord
 ****
 
 
-[.design-note]
-.Embedding HTML in Markdown
-****
-Don't shy away from using embedded HTML in Markdown.
-For larger sites, also consider Markdown extensions.
-
-[source,markdown]
-----
-{.ieee-reference-list} <1>
-1. C.H. Gross, A. Stepinski, and D. Akşimşek, <2>
-   <cite>Hypermedia Systems</cite>, <3>
-   Bozeman, MT, USA: Big Sky Software.
-   Available: <https://hypermedia.systems/>
-----
-<1> Many Markdown dialects let us add ids, classes and attributes using curly braces.
-<2> We can now use the <ol> element, and create the brackets in CSS.
-<3> We use `<cite>` to mark the title of the work being cited (not the whole citation!)
-
-You can also use custom processors to produce extra-detailed HTML instead of writing it by hand:
-
-[source,markdown]
-----
-{% reference_list %} <1>
-[hypers2023]: <2>
-C.H. Gross, A. Stepinski, and D. Akşimşek, _Hypermedia Systems_,
-Bozeman, MT, USA: Big Sky Software, 2023.
-Available: <https://hypermedia.systems/>
-{% end %}
-----
-<1> `reference_list` is a macro that will transform the plain text to highly-detailed HTML.
-<2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
-****
-
-
-
-
-
-
-
-
-
-
-[.design-note]
-.Know Your HTML Budget
-****
-The close relationship between content and markup means that
-good HTML is labor-intensive.
-Most sites have a separation between the authors,
-who are rarely familiar with HTML,
-and the developers, who need to develop a generic system able to handle any content that's thrown at it --
-this separation usually taking the form of a CMS.
-As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
-
-Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
-It's an expense few organizations can spare.
-
-Thus, we don't expect every site to contain perfectly conformant HTML.
-What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
-
-If you have the resources, however, putting more care in your HTML will produce a more polished site.
-****
-
-
-
-
-// TODO: check. Does this list accurately condense the work of ch.3?
-[.design-note]
-.Toward Effective HTML
-****
-Throughout the book we discuss a number of best practices for writing effective HTML. Here's a nutshell version: 
-
-* Stay close to the HTML markup you’re producing and be able to change it. Prefer frameworks and components that help you do this. 
-// TODO: maybe add. Aim for 'locality of behavior' in your markup, so that you or another developer can understand what each part of the page is doing just by looking at that part of the page.  
-* Make the full range of available tags part of your toolkit. 
-* Aim for good fit between tag specs and your use case; check the HTML specs when in doubt. 
-* When more specific tags don’t fit, it is okay -- and usually better -- to step back to <div> than to use a tag incorrectly. 
-* Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
-* Prefer components that extend HTML, rather than abstracting it away.
-* Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
-****
-
-
-[.design-note]
-.Resources for Effective HTML
-****
-Some resources we recommend:
-
-* Foundations
-* HTML specification: https://html.spec.whatwg.org/multipage
-
-* TODO link resources on alt text.
-
-* https://htmhell.dev: Along with sinister abuses of HTML, this website shares development tips that will help ypu keep up-to-date with best practice.
-
-* Referenced
-
-** Manuel Matuzović, [.cite]_Lost in Translation_, https://www.youtube.com/watch?v=Wno1IhEBTxc.
-
-** Manuel Matuzović, [.cite]_Why I'm not the biggest fan of Single Page Applications_, https://www.matuzo.at/blog/2023/single-page-applications-criticism/
-
-** [.cite]_semantic: the 8 letter s-word_, https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/
-****
-
-
 // TODO: format as info gem
-.About Display: none
+.HTML Notes: "'Display: none'"
 ****
-`display: none;` in CSS is not purely cosmetic -- it removes elements from the accessibility tree and keyboard focus. If you want to hide an element visually without hiding it from assistive technology, you can use this utility class:
+One problem with `display: none;` in CSS is that it is not purely cosmetic -- it removes elements from the accessibility tree and keyboard focus. If you want to hide an element visually without hiding it from assistive technology, you can use this utility class:
 
 [source,css]
 ----
@@ -192,28 +43,8 @@ Some resources we recommend:
 ****
 
 
-// TODO: format as info gem
-.Remember <details>
-****
-Does the information need to be presented as tabs?
-Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
 
-[source,html]
-----
-<details><summary>Disclosure 1</summary>
-  Disclosure 1 contents
-</details>
-<details><summary>Disclosure 2</summary>
-  Disclosure 2 contents
-</details>
-----
-
-Compromising UX just to avoid JavaScript is bad development.
-But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
-****
-
-
-// TODO: Some readers may want more specific advice: what does it mean to write HTML for humans? 
+// TODO: Some readers may want more specific advice. Are there rules of thumb for writing HTML for humans? 
 .Screen Reader Rage
 ****
 The spec is a good starting point when deciding how to mark something up,
@@ -235,7 +66,7 @@ HTML is for humans.
 ****
 
 
-// maybe move to ch1, The Essence of HTML as a Hypermedia
+// maybe move to ch1? The Essence of HTML as a Hypermedia
 .What is HTML?
 ****
 [quote, Marshall McLuhan]
@@ -260,7 +91,8 @@ It _is_ the document.
 ****
 
 
-// TODO: keep? format as pullout, like Web Components, ARIA
+// TODO: keep? some readers will love it, others may wonder how it fits
+format as pullout, like Web Components, ARIA
 .The "`Semantic Web`"
 ****
 [quote, '_Mean Girls_ (2004)']

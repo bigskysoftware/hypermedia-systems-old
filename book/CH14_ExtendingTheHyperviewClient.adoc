@@ -722,3 +722,15 @@ And importantly, this evolution preserves the Hypermedia, server-driven architec
 - Support for customized screen elements (like swipeable items in lists) can be added with Hyperview custom components.
 - The standard behaviors and components that come with the Hyperview client are implemented the same way as custom behavior actions and components.
 - By customizing the Hyperview client, developers can build a mobile app that suits their specific needs while retaining the benefits of a thin-client, hypermedia architecture.
+
+
+
+[.design-note]
+.HTML Note: Test, and Test Again
+****
+Sadly, not even good HTML-- or HXML -- can cure all ills.
+If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
+Test manually.
+Test automatically.
+Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
+****

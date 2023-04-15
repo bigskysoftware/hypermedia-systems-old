@@ -13,7 +13,7 @@ or a technology only appropriate for "`documents`" of links, text and pictures, 
 building _applications_.  In this book you have seen how to build sophisticated user interfaces -- for both the web, with htmx,
 and for mobile applications, using Hyperview -- using hypermedia as a core underlying application technology.
 
-// check edits
+// check: edits
 Many web developers view the links and forms of "`plain`" HTML as bygone tools
 from a less sophisticated age.  And, in some ways, they are right: there were definite usability issues with the
 original web. However, there are now JavaScript libraries that extend HTML by addressing its core limitations. Htmx, for example, allowed us to:
@@ -66,3 +66,39 @@ put the endless swirl of the "`new new`" aside, look back on where the web came 
 
 // check: suggest this as the stronger concluding line
 Perhaps it's time to give hypermedia a chance.
+
+
+
+// TODO: check. Does this list accurately condense the work?
+[.design-note]
+.HTML Notes: Toward Effective HTML
+****
+Throughout the book we discuss a number of best practices for writing effective HTML. They are, in a nutshell: 
+
+* Stay close to the HTML markup you’re producing and be able to change it. Prefer frameworks and components that help you do this. 
+// TODO: maybe add. Aim for 'locality of behavior' in your markup, so that you or another developer can understand what each part of the page is doing just by looking at that part of the page.  
+* Make the full range of available tags part of your toolkit. 
+* Aim for good fit between tag specs and your use case; check the HTML specs when in doubt. 
+* When more specific tags don’t fit, it is usually better to step back to <div> than to use a tag incorrectly. 
+* Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
+* Prefer components that extend HTML, rather than abstracting it away.
+* Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
+
+// TODO: Placement?
+.Helpful Resources
+
+* Foundations
+* HTML specification: https://html.spec.whatwg.org/multipage
+
+* TODO link resources on alt text.
+
+* https://htmhell.dev: Along with sinister abuses of HTML, this website shares development tips that will help ypu keep up-to-date with best practice.
+
+* Referenced
+
+** Manuel Matuzović, [.cite]_Lost in Translation_, https://www.youtube.com/watch?v=Wno1IhEBTxc.
+
+** Manuel Matuzović, [.cite]_Why I'm not the biggest fan of Single Page Applications_, https://www.matuzo.at/blog/2023/single-page-applications-criticism/
+
+** [.cite]_semantic: the 8 letter s-word_, https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/
+****

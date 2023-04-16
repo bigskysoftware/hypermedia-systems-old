@@ -143,7 +143,7 @@ There is a tendency to overlook the sophistication of HTML.
 
 Instead, learn the meaning of every tag and consider each another tool in your tool chest. (With the 113 elements currently defined in the spec, it's more of a tool shed).
 
-// TODO: maybe?
+// TODO: having 2nd thoughts about this. design-notes concept better?
 So, let's call these hypermedia best practices no. 2 & 3. 
 Make the full tool shed of available tags your own.
 Aim for good tag fit, where tag specs match your use case.

@@ -1,6 +1,6 @@
 
 = Htmx Patterns
-:chapter: 06
+:chapter: 05
 :url: ./htmx-in-action/
 
 Now that we've seen how htmx extends HTML as a hypermedia, it's time to put it into action.  As we use htmx, we will still

@@ -3,12 +3,6 @@
 :chapter: 12
 :url: ./building-a-contacts-app-with-hyperview/
 
-This chapter covers:
-
-* Transforming the existing Contacts web app into a native mobile app using Hyperview
-* Using Hyperview behaviors to navigate between screens using stacks and modals
-* Communicating between screens using the Events system
-* Using the same backend to power both the web app and mobile app
 
 Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
 These benefits were demonstrated by building a robust Contacts web application.

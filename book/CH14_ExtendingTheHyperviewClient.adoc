@@ -3,12 +3,6 @@
 :chapter: 14
 :url: ./extending-the-hypermedia-client/
 
-This chapter covers:
-
-* Adding phone call and email integration with a custom behavior action
-* Showing confirmation toast messages with a custom behavior action
-* Supporting a "`swipeable row`" UI with a custom Hyperview component
-
 In the previous chapter, we created a fully-featured native mobile version of our Contacts app.
 Aside from customizing the entrypoint URL, we didn't need to touch any code that runs on the mobile device.
 We defined our mobile app's UI and logic completely in the backend code, using Flask and HXML templates.

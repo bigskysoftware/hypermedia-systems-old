@@ -30,11 +30,11 @@ We can directly port web app features implemented with htmx (search, infinite lo
 
 Essentially, we can re-use almost everything from the web app backend, but we will need to replace the HTML templates with HXML templates.
 Most of the sections in this chapter will assume we have the web contacts app running locally and listening on port 5000.
-The focus will be on creating new HXML templates for our mobile app's UI.
+Ready? Let's create new HXML templates for our mobile app's UI.
 
 == Creating a mobile app
 
-But before we dive into HXML, there's one pesky requirement: the Hyperview client.
+To get started with HXML, there's one pesky requirement: the Hyperview client.
 When developing web applications, you only need to worry about the server because the client (web browser) is universally available.
 There's no equivalent Hyperview client installed on every mobile device.
 Instead, we will create our own Hyperview client, customized to only talk to our server.
@@ -75,7 +75,7 @@ With our Hyperview client now pointing to the right endpoint, we see a different
 That's because the backend is responding to requests with HTML content, but the Hyperview client expects an XML response (specifically, HXML).
 So it's time to turn our attention to our Flask backend.
 We will go through the Flask views, and replace the HTML templates with HXML templates.
-Specifically, let's support the following features to our mobile app:
+Specifically, let's support the following features in our mobile app:
 
 - A searchable list of contacts
 - Viewing the details of a contact

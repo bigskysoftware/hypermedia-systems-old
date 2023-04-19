@@ -1242,28 +1242,27 @@ These concepts can be mixed together too.
 It's not unusual for a production Hyperview app to contain several behaviors, some triggering together and others triggering on different interactions.
 Using multiple behaviors with custom actions keeps HXML declarative, without sacrificing functionality.
 
-=== Quick Sketch: Elements of Hyperview
-We've covered a lot of new material, so here is a quick summary of the key aspects of Hyperview:
-
+// TODO: keep? reformat?
+.HXML and Hyperview in Brief
+****
 - HXML looks similar to HTML, but it uses elements that correspond to mobile UIs, like `<screen>`, `<header>`, `<list>` and more.
-- HXML also includes input elements that implement common patterns in mobile apps, such as `<switch>`, `<select-single>`, and `<select-multiple>`.
+- HXML includes input elements that implement common patterns in mobile apps, such as `<switch>`, `<select-single>`, and `<select-multiple>`.
 - New UI components can be added to HXML using namespaced elements. The Hyperview client can be easily extended to render these new elements.
 - Interactions in HXML are defined using `<behavior>` elements. Inspired by htmx, `<behavior>` elements decouple user interactions (triggers) from the resulting actions.
 - Navigation between screens in Hyperview is done using behaviors with navigation actions, like `push`, `back`, `new`, and `close`.
 - Updates to screens in Hyperview are defined using behaviors with update actions, such as `replace` and `append`.
 - System interactions in Hyperview are defined using behaviors with system actions, such as `alert` and `share`.
 - New actions can be added to HXML using namespaced attributes. The Hyperview client can be easily extended to interpret the new actions.
+****
 
+// TODO: suggested conclusion, transition
+== Hypermedia, for Mobile
 
-== Summary
+There is a story for Hypermedia-Driven Applications on mobile. Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web. Using the hypermedia architecture for mobile apps can solve these problems.
 
-Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web. Using the hypermedia architecture for mobile apps can solve these problems.
+Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin-client to render HXML. And HXML opens a took-kit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
 
-One way to implement the hypermedia architecture for mobile apps is with HTML web views. But HTML is not designed for mobile UIs, so this approach does not deliver a great user experience. 
- 
-Hyperview offers an alternative approach using the hypermedia architecture, based on a new format called HXML. It also provides an open-source mobile thin-client to render HXML. Again, HXML looks similar to HTML, but it uses elements and patterns that correspond to mobile UIs.
-
-The extensibility of HXML and the Hyperview client make it easy to define custom elements and behaviors. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture.
+Yes, hypermedia works for mobile, too. In the next two chapters we'll show how by moving Contact.app to mobile. 
 
 
 

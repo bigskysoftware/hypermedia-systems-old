@@ -698,26 +698,36 @@ If we wanted to, we could have the action buttons trigger our custom actions, li
 Custom components and actions can be mixed freely with the standard components and actions that come standard with the Hyperview framework.
 This makes the extensions to the Hyperview client feel like first-class features.
 
-In fact, I'll let you in on a secret.
+In fact, we'll let you in on a secret.
 Within the Hyperview client, standard components and actions are implemented the same way as custom components and actions!
 The rendering code does not treat `<view>` differently from `<swipe:row>`.
 The behavior code does not treat `alert` differently from `open-phone`.
 They are both implemented using the same techniques described in this section.
 Standard components and actions are just the ones that are universally needed by all mobile apps.
 But they are just the starting point.
+
 Most mobile apps will require some extensions to the Hyperview client to deliver a great user experience.
-Extensions evolve the client from being a generic "`Hyperview client`", to being a purpose-built client for your app.
+Extensions evolve the client from being a generic "`Hyperview client,`" to being a purpose-built client for your app.
 And importantly, this evolution preserves the Hypermedia, server-driven architecture and all of its benefits.
 
 
-== Conclusion
+.HXML and Hyperview in Brief, Part Three
+****
 - With custom components and behaviors, Hyperview apps can do anything a native app can do.
 - Support for system actions (like SMS and email) can be added with a Hyperview behavior action.
 - Support for high-level UIs (like confirmation toasts) can also be added with a Hyperview behavior action.
 - Support for customized screen elements (like swipeable items in lists) can be added with Hyperview custom components.
 - The standard behaviors and components that come with the Hyperview client are implemented the same way as custom behavior actions and components.
 - By customizing the Hyperview client, developers can build a mobile app that suits their specific needs while retaining the benefits of a thin-client, hypermedia architecture.
+****
 
+
+//TODO: conclusion okay? add?
+=== Hypermedia-Driven Mobile Applications
+
+That concludes our build of mobile Contact.app. Step back from the code details and consider the broader pattern: the Hypermedia-Driven Application architecture allowed for signicant code reuse, and led to a manageable stack for ongoing app updates and maintenance for both web and mobile. 
+
+Yes, there is a story for hypermedia on mobile.
 
 
 [.design-note]

@@ -746,7 +746,7 @@ To get a flavor of AlpineJS, let's look at how to implement our counter example 
 
 For the counter, the only state we need to keep track of is the current number, so let's declare a JavaScript object
 with one property, `count`, in an `x-data` attribute on the div for our counter:
-// check: removed class="counter" to avoid confusion
+// TODO: check: removed class="counter" to avoid confusion
 .Counter with Alpine, line 1
 [source,html]
 ----

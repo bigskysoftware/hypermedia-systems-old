@@ -235,6 +235,9 @@ But as we will show at the end of this chapter, it doesn't take a lot of work to
 But before we get there, we need to introduce the concepts of elements and behaviors in Hyperview.
 Then, we'll re-build our contacts app in Hyperview.
 
+//TODO: consider advice to web developers wanting to go mobile
+// i.e., beyond the hypermedia concept, is this a path you recommend
+// when compared to alternatives? Avoid any sense of promotion
 
 == Introduction to HXML
 

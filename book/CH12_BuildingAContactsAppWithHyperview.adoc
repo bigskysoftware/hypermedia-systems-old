@@ -841,6 +841,7 @@ Luckily, there's a solution to this problem in Hyperview: events.
 Events are built into the behavior system, and allow lightweight communication between different parts of the UI.
 
 
+// TODO: consider an intro to events as 'html note' topic, earlier chapters
 .Event Behaviors
 ****
 Events are a client-side feature of Hyperview.
@@ -1116,7 +1117,7 @@ Any time you make a change in the HXML, just reload the screen to see the UI upd
 So we have the app running on a physical device, but it's still not production ready.
 To get the app into the hands of our users, there's a few things we need to do:
 
-// TODO: mention presentation here?
+// TODO: mention UI, presentation here?
 1. Deploy our backend in production.
 We need to use a production-grade web server like Gunicorn instead of the Flask development server.
 And we should run our app on a machine reachable on the Internet, most likely using a cloud provider like AWS or Heroku.

@@ -5,21 +5,17 @@
 :part_url: ./part/hyperview/
 :url: ./hyperview-a-mobile-hypermedia/
 
-This chapter covers
-
-* Shortcomings with the current state of mobile app development
-* How a hypermedia architecture can address these problems
-* Hyperview as a mobile app framework that uses the hypermedia architecture
-* An overview of HXML, the hypermedia format used by Hyperview
-
 You may be forgiven for thinking the hypermedia architecture is synonymous with the Web, web browsers, and HTML.
 No doubt, the Web is the largest hypermedia system, and web browsers are the most popular hypermedia client.
 The dominance of the Web in discussions about hypermedia make it easy to forget that hypermedia is a general concept, and can be applied to all types of platforms and applications.
 In this chapter, we will see the hypermedia architecture applied to a non-web platform: native mobile applications.
+
 Mobile as a platform has different constraints than the Web.
 It requires different trade-offs and design decisions.
-Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly applied to build delightful mobile applications!
+Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly applied to build delightful mobile applications.
 
+// TODO: chapter overview changed to fit other chapters. okay?
+In this chapter we will cover shortcomings with the current state of mobile app development, and how a hypermedia architecture can address these problems. We will then look at a path toward hypermedia on mobile: Hyperview, a mobile app framework that uses the hypermedia architecture. We'll conclude with an overview of HXML, the hypermedia format used by Hyperview.
 
 == The State of Mobile App Development
 Before we can discuss how to apply hypermedia to mobile platforms, we need to understand how native mobile apps are commonly built.
@@ -1243,7 +1239,9 @@ It's not unusual for a production Hyperview app to contain several behaviors, so
 Using multiple behaviors with custom actions keeps HXML declarative, without sacrificing functionality.
 
 // TODO: keep? reformat?
-.HXML and Hyperview in Brief
+We're covering a lot of new material, so we'll add brief summaries to our sprint through Hyperview and HXML. 
+
+.Summary
 ****
 - HXML looks similar to HTML, but it uses elements that correspond to mobile UIs, like `<screen>`, `<header>`, `<list>` and more.
 - HXML includes input elements that implement common patterns in mobile apps, such as `<switch>`, `<select-single>`, and `<select-multiple>`.
@@ -1262,7 +1260,7 @@ There is a story for Hypermedia-Driven Applications on mobile. Mobile app platfo
 
 Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin-client to render HXML. And HXML opens a took-kit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
 
-Yes, hypermedia works for mobile, too. In the next two chapters we'll show how by moving Contact.app to mobile. 
+Yes, hypermedia can work for mobile apps, too. In the next two chapters we'll show how by moving Contact.app to mobile. 
 
 
 

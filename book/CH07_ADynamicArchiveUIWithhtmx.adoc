@@ -561,7 +561,7 @@ Now that, dear reader, does spark joy.
 
 == Dismissing The Download UI
 
-Some users may change their mind, and decide not to download the archive. They may never witness our progress bar, but that's okay. We're going to give these users a button to dismiss the download link and return to the original export UI state.
+Some users may change their mind, and decide not to download the archive. They may never witness our progress bar, but that's OK. We're going to give these users a button to dismiss the download link and return to the original export UI state.
 
 To do this, we'll add a button that issues a `DELETE` to the path `/contacts/archive`, indicating that the current archive can be removed or cleaned up.
 

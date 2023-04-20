@@ -1,13 +1,13 @@
 
 = Building a Contacts App With Hyperview
-:chapter: 13
+:chapter: 12
 :url: ./building-a-contacts-app-with-hyperview/
+
 
 Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
 These benefits were demonstrated by building a robust Contacts web application.
-Then, Chapter 12 argued that hypermedia concepts can and should be applied to platforms other than the Web.
+Then, Chapter 11 argued that hypermedia concepts can and should be applied to platforms other than the Web.
 We introduced Hyperview as an example of a hypermedia format and client specifically designed for building mobile apps.
-
 But you may still be wondering: what is it like to create a fully-featured, production-ready mobile app using Hyperview?
 Do we have to learn a whole new language and framework?
 In this chapter, we will show Hyperview in action by porting the Contacts web app to a native mobile app.
@@ -75,7 +75,7 @@ With our Hyperview client now pointing to the right endpoint, we see a different
 That's because the backend is responding to requests with HTML content, but the Hyperview client expects an XML response (specifically, HXML).
 So it's time to turn our attention to our Flask backend.
 We will go through the Flask views, and replace the HTML templates with HXML templates.
-Specifically, let's support the following features with our mobile app:
+Specifically, let's support the following features in our mobile app:
 
 - A searchable list of contacts
 - Viewing the details of a contact
@@ -91,7 +91,7 @@ Think of the entrypoint URL as the address you type into a web browser to open a
 Except in Hyperview, there is no address bar, and the browser is hard-coded to only open one URL.
 This URL will load the first screen when a user launches the app.
 Every other action the user can take will be declared in the HXML of that first screen.
-This minimal configuration is one elegant aspect of the Hypermedia-driven architecture!
+This minimal configuration is one of the benefits of the Hypermedia-driven architecture.
 
 Of course, you may want to write more on-device code to support more features in your mobile app.
 We will demonstrate how to do that later in this chapter, in the section called "`Extending the Client.`"
@@ -110,7 +110,7 @@ Additionally, we will add a "`pull-to-refresh`" interaction on the list, since u
 
 If you recall, all of the pages in the Contacts web app extended a common base template, `layout.html`.
 We need a similar base template for the screens of the mobile app.
-This base template will contain the style rules or our UI, and a basic structure common to all screens.
+This base template will contain the style rules of our UI, and a basic structure common to all screens.
 Let's call it `layout.xml`.
 
 .Base template `hv/layout.xml`
@@ -133,10 +133,10 @@ Let's call it `layout.xml`.
   </screen>
 </doc>
 ----
-<1> The header section of the template, with a default title
+<1> The header section of the template, with a default title.
 <2> The content section of the template, to be provided by other templates.
 
-We covered the HXML tags and attributes in the previous chapter.
+We're using the HXML tags and attributes covered in the previous chapter.
 This template sets up a basic screen layout using `<doc>`, `<screen>`, `<body>`, `<header>`, and `<view>` tags.
 Note that the HXML syntax plays well with the Jinja templating library.
 Here, we're using Jinja's blocks to define two sections (`header` and `content`) that will hold the unique content of a screen.
@@ -188,8 +188,8 @@ It also allows the server to respond with just the `rows.xml` template for inter
   {% endfor %}
 </items>
 ----
-<1> An HXML element that groups a set of `<item>` elements in a common parent
-<2> Iterate over the contacts that were passed in to the template
+<1> An HXML element that groups a set of `<item>` elements in a common parent.
+<2> Iterate over the contacts that were passed in to the template.
 <3> Render an `<item>` for each contact, showing the name, phone number, or email.
 
 In the web app, each row in the list showed the contact's name, phone number, and email address.
@@ -249,8 +249,8 @@ def contacts():
     template_name = "hv/rows.xml" if rows_only else "hv/index.xml" <2>
     return render_template(template_name, contacts=contacts_set, page=page)
 ----
-<1> Check for a new `rows_only` query param
-<2> Render the appropriate HXML template based on `rows_only`
+<1> Check for a new `rows_only` query param.
+<2> Render the appropriate HXML template based on `rows_only`.
 
 There's one more change we have to make.
 Flask assumes that most views will respond with HTML.
@@ -270,7 +270,7 @@ def render_to_response(template_name, *args, **kwargs):
     return response
 ----
 <1> Renders the given template with the supplied arguments and keyword arguments.
-<2> Create an explicit response object with the rendered template
+<2> Create an explicit response object with the rendered template.
 <3> Sets the response `Content-Type` header to XML.
 
 As you can see, this helper function uses `render_template()` under the hood.
@@ -316,7 +316,7 @@ This requires expanding `<text-field>` to add a `<behavior>` element.
   />
 </text-field>
 ----
-<1> This behavior will trigger when the value of the text field changes
+<1> This behavior will trigger when the value of the text field changes.
 <2> When the behavior triggers, the action will replace the content inside the target element.
 <3> The target of the action is the element with ID `contacts-list`.
 <4> The replacement content will be fetched from this URL path.
@@ -324,16 +324,17 @@ This requires expanding `<text-field>` to add a `<behavior>` element.
 
 The first thing you'll notice is that we changed the text field from using a self-closing tag (`<text-field />`) to using opening and closing tags (`<text-field>...</text-field>`).
 This allows us to add a child `<behavior>` element to define an interaction.
+
 The `trigger="change"` attribute tells Hyperview that a change to the value of the text field will trigger an action.
 Any time the user edits the content of the text field by adding or deleting characters, an action will trigger.
+
 The remaining attributes on the `<behavior>` element define the action.
 `action="replace-inner"` means the action will update content on the screen, by replacing the HXML content of an element with new content.
 For `replace-inner` to do its thing, we need to know two things: the current element on the screen that will be targeted by the action, and the content that will used for the replacement.
 `target="contacts-list"` tells us the ID of the current element.
 Note that we set `id="contacts-list"` on the `<list>` element in `index.xml`.
 So when the user enters a search query into the text field, Hyperview will replace the content of `<list>` (a bunch of `<item>` elements)
-with new content (`<item>` elements that match the search query) received in the relative href response
-(the domain is inferred from the domain used to fetch the screen).
+with new content (`<item>` elements that match the search query) received in the relative href response. The domain here is inferred from the domain used to fetch the screen.
 Note that `href` includes our `rows_only` query param; we want the response to only include the rows and not the entire screen.
 
 .Searching for Contacts
@@ -350,11 +351,11 @@ So the value of the `<text-field>` will be included in our HTTP request for the 
 Since we are making a `GET` request, the name and value of the text field will be serialized as a query param.
 Any existing query params on the `href` will be preserved.
 This means the actual HTTP request to our backend looks like `GET /contacts?rows_only=true&q=Car`.
-Our backend already supports the `q` param for searching, so the response will include rows that match the string "`Car`".
+Our backend already supports the `q` param for searching, so the response will include rows that match the string "`Car.`"
 
 === Infinite scroll
 If the user has hundreds or thousands of contacts, loading them all at once may result in poor app performance.
-That's why most mobile apps with long lists implement an interaction known as "`infinite scroll`".
+That's why most mobile apps with long lists implement an interaction known as "`infinite scroll.`"
 The app loads a fixed number of initial items in the list, let's say 100 items.
 If the user scrolls to the bottom of the list, they see a spinner indicating more content is loading.
 Once the content is available, the spinner is replaced with the next page of 100 items.
@@ -394,23 +395,25 @@ To do this, let's edit `rows.xml` to add a new `<item>` below the Jinja for-loop
   {% endif %}
 </items>
 ----
-<1> Include an extra `<item>` in the list to show the spinner
-<2> The item behavior triggers when visible in the viewport
-<3> When triggered, the behavior will replace an element on the screen
-<4> The element to be replaced is the item itself (ID `load-more`)
-<5> Replace the item with the next page of content
-<6> The spinner element
+<1> Include an extra `<item>` in the list to show the spinner.
+<2> The item behavior triggers when visible in the viewport.
+<3> When triggered, the behavior will replace an element on the screen.
+<4> The element to be replaced is the item itself (ID `load-more`).
+<5> Replace the item with the next page of content.
+<6> The spinner element.
 
 If the current list of contacts passed to the template is empty, we can assume there's no more contacts to fetch from the backend.
 So we use a Jinja conditional to only include this new `<item>` if the list of contacts is non-empty.
 This new `<item>` element gets an ID and a behavior.
 The behavior defines the infinite scroll interaction.
+
 Up until now, we've seen `trigger` values of `change` and `refresh`.
 But to implement infinite scroll, we need a way to trigger the action when the user scrolls to the bottom of the list.
 The `visible` trigger can be used for this exact purpose.
 It will trigger the action when the element with the behavior is visible in the device viewport.
 In this case, the new `<item>` element is the last item in the list, so the action will trigger when the user scrolls down far enough for the item to enter the viewport.
 As soon as the item is visible, the action will make an HTTP GET request, and replace the loading `<item>` element with the response content.
+
 Note that our href must include the `rows_only=true` query param, so that our response will only include HXML for the contact items, and not the entire screen.
 Also, we're passing the `page` query param, incrementing the current page number to ensure we load the next page.
 
@@ -460,6 +463,7 @@ Let's add pull-to-refresh to our list of contacts to see it in action.
 You'll notice something unusual in the snippet above: rather than adding a `<behavior>` element to the `<list>`, we added the behavior attributes directly to the `<list>` element.
 This is a shorthand notation that's sometimes useful for specifying single behaviors on an element.
 It is equivalent to adding a `<behavior>` element to the `<list>` with the same attributes.
+
 So why did we use the shorthand syntax here?
 It has to do with the action, `replace-inner`.
 Remember, this action replaces all child elements of the target with the new content.
@@ -468,7 +472,7 @@ Let's say our `<list>` did contain a `<behavior>`.
 If the user did a search or pull-to-refresh, we would replace the content of `<list>` with the content from `rows.xml`.
 The `<behavior>` would no longer be defined on the `<list>`, and subsequent attempts to pull-to-refresh would not work.
 By defining the behavior as attributes of `<list>`, the behavior will persist even when replacing the items in the list.
-Generally, we prefer to use explicit `<behavior>` elements in my HXML.
+Generally, we prefer to use explicit `<behavior>` elements in HXML.
 It makes it easier to define multiple behaviors, and to move the behavior around while refactoring.
 But the shorthand syntax is good to apply in situations like this.
 
@@ -511,7 +515,7 @@ def contacts_view(contact_id=0):
 ----
 <1> Generate an XML response from a new template file.
 
-Just like with the `contacts()` view, `contacts_view()` uses `render_to_response()` to set the `Content-Type` header on the response.
+Just like the `contacts()` view, `contacts_view()` uses `render_to_response()` to set the `Content-Type` header on the response.
 We're also generating the response from a new HXML template, which we can create now:
 
 .`hv/show.xml`
@@ -542,20 +546,21 @@ We're also generating the response from a new HXML template, which we can create
 </view>
 {% endblock %}
 ----
-<1> Extend the base layout template
-<2> Override the `header` block of the layout template to include a "Back" button
-<3> Behavior to navigate to the previous screen when pressed
+<1> Extend the base layout template.
+<2> Override the `header` block of the layout template to include a "Back" button.
+<3> Behavior to navigate to the previous screen when pressed.
 <4> Override the `content` block to show the full details of the selected contact.
 
 The contacts detail screen extends the base `layout.xml` template, just like we did in `index.xml`.
 This time, we're overriding content in both the `header` block and `content` block.
 Overriding the header block lets us add a "Back" button with a behavior.
 When pressed, the Hyperview client will unwind the navigation stack and return the user to the contacts list.
+
 Note that triggering this behavior is not the only way to navigate back.
 The Hyperview client respects navigation conventions on different platforms.
 On iOS, users can also navigate to the previous screen by swiping right from the left edge of the device.
 On Android, users can also navigate to the previous screen by pressing the hardware back button.
-We don't need to specify anything extra in the HXML to get these interactions!
+We don't need to specify anything extra in the HXML to get these interactions.
 
 .Contact Details Screen
 image::screenshot_hyperview_detail_cropped.png[Contact detail shows phone number and email as well as back and edit buttons in navbar]
@@ -596,12 +601,12 @@ This button can be added to the header of the contact details screen.
   </text>
 {% endblock %}
 ----
-<1> The new "`Edit`" button
-<2> Behavior to reload the current screen with the edit screen when pressed
+<1> The new "`Edit`" button.
+<2> Behavior to reload the current screen with the edit screen when pressed.
 
 Once again, we're reusing an existing Flask route (`/contacts/<contact_id>/edit`) for the edit UI, and filling in the contact ID using data passed to the Jinja template.
 We also need to update the `contacts_edit_get()` view to return an XML response based on an HXML template (`hv/edit.xml`).
-I'll skip the code sample because the needed changes are identical to what we applied to `contacts_view()` in the previous section.
+We'll skip the code sample because the needed changes are identical to what we applied to `contacts_view()` in the previous section.
 Instead, let's focus on the template for the edit screen.
 
 .`hv/edit.xml`
@@ -635,10 +640,10 @@ Instead, let's focus on the template for the edit screen.
 </form>
 {% endblock %}
 ----
-<1> Form wrapping the input fields and buttons
-<2> Container with ID, containing the input fields
-<3> Template include to render the input fields
-<4> Button to submit the form data and update the input fields container
+<1> Form wrapping the input fields and buttons.
+<2> Container with ID, containing the input fields.
+<3> Template include to render the input fields.
+<4> Button to submit the form data and update the input fields container.
 
 Since the edit screen needs to send data to the backend, we wrap the entire content section in a `<form>` element.
 This ensures the form field data will be included in the HTTP requests to our backend.
@@ -662,11 +667,11 @@ The actual form fields are defined in a separate template (`form_fields.xml`) an
   <!-- same markup for contact.email and contact.phone -->
 </view>
 ----
-<1> Text input holding the current value for the contact's first name
-<2> Text element that could display errors from the contact model
-<3> Another text field, this time for the contact's last name
+<1> Text input holding the current value for the contact's first name.
+<2> Text element that could display errors from the contact model.
+<3> Another text field, this time for the contact's last name.
 
-I omitted the code for the contact's phone number and email address, because they follow the same pattern as the first and last name.
+We omitted the code for the contact's phone number and email address, because they follow the same pattern as the first and last name.
 Each contact field has its own `<text-field>`, and a `<text>` element below it to display possible errors.
 The `<text-field>` has two important attributes:
 
@@ -683,7 +688,7 @@ The HXML response will replace the contents of form field container (ID `form-fi
 But what should that response be?
 That depends on the validity of the form data:
 
-1. If the data is invalid (eg duplicate email address), our UI will remain in the editing mode and show error messages on the invalid fields.
+1. If the data is invalid (e.g., duplicate email address), our UI will remain in the editing mode and show error messages on the invalid fields.
 This allows the user to correct the errors and try saving again.
 2. If the data is valid, our backend will persist the edits, and our UI will switch back to a display mode (the contact details UI).
 
@@ -736,19 +741,20 @@ We will update the template to use this flag to implement our desired UI: switch
 </view>
 ----
 <1> Only include this behavior after successfully saving a contact.
-<2> Trigger the behavior immediately
-<3> The behavior will reload the entire screen
+<2> Trigger the behavior immediately.
+<3> The behavior will reload the entire screen.
 <4> The screen will be reloaded with the contact details screen.
 
 The Jinja template conditional ensures that our behavior only renders on successful saves, and not when the screen first opens (or the user submits invalid data).
 On success, the template includes a behavior that triggers immediately thanks to `trigger="load"`.
 The action reloads the current screen with the Contact Details screen (from the `/contacts/<contact_id>` route).
+
 The result?
 When the user hits "`Save`", our backend persists the new contact data, and the screen switches back to the Details screen.
 Since the app will make a new HTTP request to get the contact details, it's guaranteed to show the freshly saved edits.
 
 
-.Why not use a redirect?
+.Why Not Redirect?
 ****
 You may remember the web app version of this code behaved a little differently.
 On a successful save, the view returned `redirect("/contacts/" + str(contact_id))`.
@@ -762,6 +768,7 @@ Mobile apps use a nested hierarchy of navigation stacks, modals, and tabs.
 All screens in this hierarchy are active, and may be displayed instantly in response to user actions.
 In this world, how would the Hyperview client interpret an HTTP redirect?
 Should it reload the current screen, push a new one, or navigate to a screen in the stack with the same URL?
+
 Instead of making a choice that would be suboptimal for many scenarios, Hyperview takes a different approach.
 Server-controlled redirects are not possible, but the backend can render navigation behaviors into the HXML.
 This is what we do to switch from the Edit UI to the Details UI in the code above.
@@ -796,12 +803,12 @@ We can add this as a new button below the "`Save`" button.
   <text style="button-label">Cancel</text>
 </view>
 ----
-<1> New Cancel button on the edit screen
-<2> When pressed, reload the entire screen
+<1> A new Cancel button on the edit screen.
+<2> When pressed, reload the entire screen.
 <3> The screen will be reloaded with the contact details screen.
 
 This is the same technique we used to switch from the edit UI to the details UI upon successfully editing the contact.
-But pressing "`Cancel`" will update the UI faster than pressing "`Save`".
+But pressing "`Cancel`" will update the UI faster than pressing "`Save.`"
 On save, the app will first make a `POST` request to save the data, and then a `GET` request for the details screen.
 Cancelling skips the `POST`, and immediately makes the `GET` request.
 
@@ -819,16 +826,17 @@ Let's walk through this series of interactions:
 
 1. Launch the app to the Contacts List.
 2. Press on the contact "`Joe Blow`" to load his Contact Details.
-3. Press Edit to switch to the edit mode, and change the contact's first name to "`Joseph`".
-4. Press Save to switch back to viewing mode. The contact's name is now "`Joseph Blow`".
+3. Press Edit to switch to the edit mode, and change the contact's first name to "`Joseph.`"
+4. Press Save to switch back to viewing mode. The contact's name is now "`Joseph Blow.`"
 5. Hit the back button to return to the Contacts List.
 
 Did you catch the issue?
 Our Contacts list is still showing the same list of names as when we launched the app.
-The contact we just renamed to "`Joseph`" is still showing up in the list as "`Joe`".
-This is a general problem in Hypermedia applications.
+The contact we just renamed to "`Joseph`" is still showing up in the list as "`Joe.`"
+This is a general problem in hypermedia applications.
 The client does not have a notion of shared data across different parts of the UI.
 Updates in one part of the app will not automatically update other parts of the app.
+
 Luckily, there's a solution to this problem in Hyperview: events.
 Events are built into the behavior system, and allow lightweight communication between different parts of the UI.
 
@@ -836,9 +844,12 @@ Events are built into the behavior system, and allow lightweight communication b
 .Event Behaviors
 ****
 Events are a client-side feature of Hyperview.
-You are probably familiar with events from working with HTML and the DOM.
+Earlier chapter discussed events while working with HTML, htmx and the DOM.
 DOM Elements will dispatch events as a result of user interactions.
 Scripts can listen for these events, and respond to them by running arbitrary JavaScript code.
+We saw some examples in chapter 9.  
+// TODO: optional, add link to an example
+
 Events in Hyperview are a good deal simpler, but they don't require any scripting and can be defined declaratively in the HXML.
 This is done through the behavior system.
 Events require adding a new behavior attribute, action type, and trigger type:
@@ -870,7 +881,7 @@ The second behavior (on Screen B) will trigger on an event with this name, and t
 Events have plenty of uses, but the most common is to inform different screens about backend state changes that require the UI to be re-fetched.
 ****
 
-We know enough about Hyperview's event system to solve the bug in our app.
+We now know enough about Hyperview's event system to solve the bug in our app.
 When the user saves a change to a contact, we need to dispatch an event from the Details screen.
 And the Contacts screen needs to listen to that event, and reload itself to reflect the edits.
 Since the `form_fields.xml` template already gets the `saved` flag when the backend successfully saves a contact, it's a good place to dispatch the event:
@@ -891,9 +902,9 @@ Since the `form_fields.xml` template already gets the `saved` flag when the back
   />
 {% endif %}
 ----
-<1> Trigger the behavior immediately
-<2> The behavior will dispatch an event
-<3> The event name is "contact-updated"
+<1> Trigger the behavior immediately.
+<2> The behavior will dispatch an event.
+<3> The event name is "contact-updated".
 <4> The existing behavior to show the Details UI.
 
 Now, we just need the contacts list to listen for the `contact-updated` event, and reload itself:
@@ -916,16 +927,16 @@ Now, we just need the contacts list to listen for the `contact-updated` event, a
   </list>
 </form>
 ----
-<1> Trigger the behavior on event dispatch
-<2> Trigger the behavior for dispatched events with the name "`contact-updated`"
-<3> When triggered, replace the contents of the `<list>` element with rows from the backend
+<1> Trigger the behavior on event dispatch.
+<2> Trigger the behavior for dispatched events with the name "`contact-updated`".
+<3> When triggered, replace the contents of the `<list>` element with rows from the backend.
 
 Any time the user edits a contact, the Contacts List screen will update to reflect the edits.
-The addition of these two `<behavior>` elements fixes the bug: the Contacts List screen will correctly show "`Joseph Blow`" in the list.
-Note that we intentionally added the new behavior inside the `<form>` element.
+The addition of these two `<behavior>` elements fixes the bug: the Contacts List screen will correctly show "`Joseph Blow`" in the list. Note that we intentionally added the new behavior inside the `<form>` element.
 The ensures the triggered request will preserve any search query.
+
 To show what we mean, let's revisit the set of steps that demonstrated the buggy behavior.
-Assume that before pressing on "`Joe Blow`", the user had searched the contacts by typing "`Joe`" in the search field.
+Assume that before pressing on "`Joe Blow,`" the user had searched the contacts by typing "`Joe`" in the search field.
 When the user later updates the contact to "`Joseph Blow`", our template dispatches the "`contact-updated`" event, which triggers the `replace-inner` behavior on the contact list screen.
 Due to the parent `<form>` element, the search query "`Joe`" will be serialized with the request: `GET /contacts?rows_only=true&q=Joe`.
 Since the name "`Joseph`" doesn't match the query "`Joe`", the contact we edited will not appear in the list (until the user clears out the query).
@@ -935,6 +946,7 @@ Events introduce a level of abstraction to behaviors.
 So far, we've seen that editing a contact will cause the list of contacts to refresh.
 But the list of contacts should also refresh after other actions, such as deleting a contact or adding a new contact.
 As long as our HXML responses for deletion or creation include a behavior to dispatch a `contact-updated` event, then we will get the desired refresh behavior on the contacts list screen.
+
 The screen doesn't care what causes the `contact-updated` event to be dispatched.
 It just knows what it needs to do when it happens.
 
@@ -966,9 +978,9 @@ So let's add a new button to `edit.xml`.
   <text style="button-label button-label-delete">Delete Contact</text>
 </view>
 ----
-<1> New Delete Contact button on the edit screen
-<2> When pressed, append HXML to a container on the screen
-<3> The HXML will be fetched by making a `POST /contacts/<contact_id>/delete` request
+<1> New Delete Contact button on the edit screen.
+<2> When pressed, append HXML to a container on the screen.
+<3> The HXML will be fetched by making a `POST /contacts/<contact_id>/delete` request.
 
 The HXML for the Delete button is pretty similar to the Save button, but there are a few subtle differences.
 Remember, pressing the Save button results in one of two expected outcomes: failing and showing validation errors on the form, or succeeding and switching to the contact details screen.
@@ -990,20 +1002,21 @@ Therefore, using the `append` action will preserve the current UI while Hypervie
   <behavior trigger="load" action="back" /> <2>
 </view>
 ----
-<1> On load, dispatch the `contact-updated` event to update the contact lists screen
+<1> On load, dispatch the `contact-updated` event to update the contact lists screen.
 <2> Navigate back to the contacts list screen.
 
 Note that in addition to behavior to navigate back, this template also includes a behavior to dispatch the `contact-updated` event.
 In the previous chapter section, we added a behavior to `index.xml` to refresh the list when that event is dispatched.
 By dispatching the event after a deletion, we will make sure the deleted contact gets removed from the list.
 
-Once again, I'm going to skip over the changes to the Flask backend.
+Once again, we'll skip over the changes to the Flask backend.
 Suffice it to say, we will need to update the `contacts_delete()` view to respond with the `hv/deleted.xml` template.
 And we need to update the route to support `POST` in addition to `DELETE`, since the Hyperview client only understands `GET` and `POST`.
 
 We now have a fully functioning deletion feature!
 But it's not the most user-friendly: it takes one accidental tap to permanently delete a contact.
 For destructive actions like deleting a contact, it's always a good idea to ask the user for confirmation.
+
 We can add a confirmation to the delete behavior by using the `alert` system action described in the previous chapter.
 As you recall, the `alert` action will show a system dialog box with buttons that can trigger other behaviors.
 All we have to do is wrap the delete `<behavior>` in a behavior that uses `action="alert"`.
@@ -1034,8 +1047,8 @@ All we have to do is wrap the delete `<behavior>` in a behavior that uses `actio
 </view>
 ----
 <1> Pressing "Delete" triggers an action to show the system dialog with the given title and message.
-<2> The first pressable option in the system dialog
-<3> Pressing the first option will trigger contact deletion
+<2> The first pressable option in the system dialog.
+<3> Pressing the first option will trigger contact deletion.
 <4> The second pressable option has no behavior, so it only closes the dialog.
 
 Unlike before, pressing the delete button will not have an immediate effect.
@@ -1053,13 +1066,12 @@ We can reuse the concepts (and even some templates) from features we've already 
 In particular, adding a new contact is very similar to editing an existing contact.
 Both features need to:
 
-- Show a form to collect information about the contact
-- Have a way to save the entered information
-- Show validation errors on the form
-- Persist the contact when there are no validation errors
+- Show a form to collect information about the contact.
+- Have a way to save the entered information.
+- Show validation errors on the form.
+- Persist the contact when there are no validation errors.
 
-Since the functionality is so similar, I'm going to summarize the changes here without showing the code.
-Hopefully, you can follow along:
+Since the functionality is so similar, we'll summarize the changes here without showing the code.
 
 1. Update `index.xml`.
   - Override the `header` block to add a new "`Add`" button.
@@ -1082,7 +1094,7 @@ The screen will reload itself to show the Contact Details.
 image::screenshot_hyperview_add.png[Form to enter contact details pops up from bottom of screen]
 
 == Deploying the App
-With the completion of the contact creation UI, we have a fully implemented mobile app!
+With the completion of the contact creation UI, we have a fully implemented mobile app.
 It supports searching a list of contacts, viewing the details of a contact, editing and deleting a contact, and adding a new contact.
 But so far, we've been developing the app using a simulator on our desktop computer.
 How can we see it running on a mobile device?
@@ -1096,7 +1108,7 @@ This might look something like `flask run --host 192.168.7.229`, where the host 
 3. Update the Hyperview client code so that `ENTRY_POINT_URL` (in `demo/src/constants.js`) points to the IP and port that the Flask server is bound to.
 4. After running `yarn start` in the Hyperview demo app, you will see a QR code printed in the console, with instructions on how to scan it on Android and iOS.
 
-Once you scan the QR code, the full app will run on the device!
+Once you scan the QR code, the full app will run on the device.
 As you interact with the app, you will see HTTP requests made to the Flask server.
 You can even use the physical device during development.
 Any time you make a change in the HXML, just reload the screen to see the UI updates.
@@ -1104,6 +1116,7 @@ Any time you make a change in the HXML, just reload the screen to see the UI upd
 So we have the app running on a physical device, but it's still not production ready.
 To get the app into the hands of our users, there's a few things we need to do:
 
+// TODO: mention presentation here?
 1. Deploy our backend in production.
 We need to use a production-grade web server like Gunicorn instead of the Flask development server.
 And we should run our app on a machine reachable on the Internet, most likely using a cloud provider like AWS or Heroku.
@@ -1145,11 +1158,11 @@ They will see the Google home page localized in German and Japanese, respectivel
 How does Google know to return a different version of the homepage based on the user's preferred language?
 The answer lies in the REST architecture, and how it separates the concepts of resources and representations.
 
-In the REST architecture, the Google homepage is considered to be a single "`resource`", represented by a unique URL.
-However, that single resource can have multiple "`representations`".
+In the REST architecture, the Google homepage is considered to be a single "`resource,`" represented by a unique URL.
+However, that single resource can have multiple "`representations.`"
 Representations are variations on how the content of the resource is presented to the client.
 The German and Japanese versions of the Google homepage are two representations of the same resource.
-To determine the best representation of a resource to return, HTTP clients and servers engage in a process called "`content negotiation`".
+To determine the best representation of a resource to return, HTTP clients and servers engage in a process called "`content negotiation.`"
 It works like this:
 
 - Clients specify the preferred representation through `Accept-*` request headers.
@@ -1166,7 +1179,8 @@ Content negotiation over content type is done using the `Accept` request header 
 Web browsers set `text/html` as the preferred content type in the `Accept` header.
 The Hyperview client sets `application/vnd.hyperview+xml` as the preferred content type.
 This gives our backend a way to distinguish requests coming from a web browser or Hyperview client, and serve the appropriate content to each.
-There are two main approaches: fine-grained and global.
+
+There are two main approaches to content negotiation: fine-grained and global.
 
 === Approach 1: Template Switching
 When we ported the Contacts app from the web to mobile, we kept all of the Flask views but made some minor changes.
@@ -1201,10 +1215,10 @@ def render_to_response(html_template_name, hxml_template_name, *args, **kwargs):
     response.headers['Content-Type'] = response_type <4>
     return response
 ----
-<1> Function signature takes two templates, one for HTML and one for HXML
-<2> Determine whether the client wants HTML or HXML
-<3> Select the template based on the best match for the client
-<4> Set the `Content-Type` header based on the best match for the client
+<1> Function signature takes two templates, one for HTML and one for HXML.
+<2> Determine whether the client wants HTML or HXML.
+<3> Select the template based on the best match for the client.
+<4> Set the `Content-Type` header based on the best match for the client.
 
 Flask's request object exposes an `accept_mimetypes` property to help with content negotiation.
 We pass our two content MIME types to `request.accept_mimetypes.best_match()` and get back the MIME type that works for our client.
@@ -1225,7 +1239,8 @@ def contacts_view(contact_id=0):
 After updating all of the Flask views to support both templates, our backend will support both web browsers and our mobile app!
 This technique works well for the Contacts app because the screens in the mobile app map directly to pages of the web application.
 Each app has a dedicated page (or screen) for listing contacts, showing and editing details, and creating a new contact.
-This meant the Flask views could be as-is without major changes.
+This meant the Flask views could be kept as-is without major changes.
+
 But what if we wanted to re-imagine the Contacts app UI for our mobile app?
 Perhaps we want the mobile app to use a single screen, with rows that expanded in-line to support viewing and editing the information?
 In situations where the UI diverges between platforms, Template Switching becomes cumbersome or impossible.
@@ -1263,9 +1278,9 @@ def index():
     else:
       return redirect("/web/contacts") <3>
 ----
-<1> Determine whether the client wants HTML or HXML
-<2> If the client wants HXML, redirect them to `/mobile/contacts`
-<3> If the client wants HTML, redirect them to `/web/contacts`
+<1> Determine whether the client wants HTML or HXML.
+<2> If the client wants HXML, redirect them to `/mobile/contacts`.
+<3> If the client wants HTML, redirect them to `/web/contacts`.
 
 The entrypoint is a fork in the road: if the client wants HTML, we redirect them to one path.
 If the client wants HXML, we redirect them to a different path.
@@ -1294,6 +1309,7 @@ After all, we need to write double the number of views: one set for the web appl
 That is true, which is why the Redirect Fork is only preferred if the two platforms require a disjointed set of view logic.
 If the apps are similar on both platforms, Template Switching will save a lot of time and keep the apps consistent.
 Even if we need to use the Redirect Fork, the bulk of the logic in our models can be shared by both sets of views.
+
 In practice, you may start out using Template Switching, but then realize you need to implement a fork for platform-specific features.
 In fact, we're already doing that in the Contacts app.
 When porting the app from web to mobile, we didn't bring over certain features like archiving functionality.
@@ -1301,12 +1317,39 @@ The dynamic archive UI is a power feature that wouldn't make sense on a mobile d
 Since our HXML templates don't expose any entrypoints to the Archive functionality, we can treat it as "`web-only`" and not worry about supporting it in Hyperview.
 
 
-== Summary
-
-- Creating a Hyperview-powered mobile app is as simple as cloning a Git repo and configuring a single entrypoint URL.
+.Summary
+****
+- It is possible to create a Hyperview-powered mobile app by simply as cloning a Git repo and configuring a single entrypoint URL.
 - Flask is perfectly suited for serving a Hyperview mobile app. The Jinja templating system can generate dynamic HXML based on the context from a view.
 - Using elements like `<view>`, `<text>`, `<list>`, and `<item>`, we can create native-feeling screens in HXML.
 - Using behaviors, we can implement interactions on the contacts list such as infinite scroll, search-as-you-type, and pull-to-refresh.
 - Events are a client-side feature of Hyperview that allows triggering behaviors across screens. They are useful to keep state in sync throughout the app, such as after editing or deleting a contact.
 - A Hyperview-powered mobile app can be bundled and released through the iOS and Android app stores. New screens and features can be added to the app just by updating the backend!
 - The same Flask backend can support both web and mobile apps. Using HTTP content negotiation, a server can render either HTML or HXML responses from the same view. More complex apps may require the use of redirects and platform-specific views.
+****
+
+We've covered a lot of ground in this chapter. Take a breath and take stock of how far we've come: we ported the core functionality of the Contact.app web application to mobile. And we did it by re-using much of our Flask backend and while sticking with Jinja templating. We again saw the utility of events for connecting different aspects of an application. 
+
+We're not done yet. In the next chapter we'll implement custom behaviors and UI elements to finish our mobile Contact.app.
+
+
+// TODO: okay, or better as integrated info gem?
+[.design-note]
+.HTML Notes: Remember <details>
+****
+Does the information need to be presented as tabs?
+Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
+
+[source,html]
+----
+<details><summary>Disclosure 1</summary>
+  Disclosure 1 contents
+</details>
+<details><summary>Disclosure 2</summary>
+  Disclosure 2 contents
+</details>
+----
+
+Compromising UX just to avoid JavaScript is bad development.
+But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
+****

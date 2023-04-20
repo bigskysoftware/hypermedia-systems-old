@@ -1,6 +1,6 @@
 
 = Htmx Patterns
-:chapter: 06
+:chapter: 05
 :url: ./htmx-in-action/
 
 Now that we've seen how htmx extends HTML as a hypermedia, it's time to put it into action.  As we use htmx, we will still
@@ -509,7 +509,7 @@ Currently, our application has a small amount of validation that is done entirel
 message when an error is detected.
 
 We are not going to go into the details of how validation works in the model objects, but recall what
-the code for updating a contact looks like from Chapter 4:
+the code for updating a contact looks like from Chapter 3:
 
 [source, python]
 .Server-side validation on contact update
@@ -1032,3 +1032,34 @@ And, again, we are doing all this within the original, RESTful model of the web.
 behavior, we are still exchanging hypermedia with the server, with no JSON API response to be seen.
 
 As the web was designed.
+
+
+[.design-note]
+.Component Soup?
+****
+Components encapsulate a section of a page along with its dynamic behavior.
+While encapsulating behavior is a good way to organize code,
+it can also separate elements from their surrounding context,
+which can lead to wrong or inadequate relationships between elements.
+The result is what one might call [.dfn]_component soup_,
+where information is hidden in component state,
+rather than being present in the HTML, which is now incomprehensible due to missing context.
+
+Before you reach for components for reuse, consider your options.
+Lower-level mechanisms often (allow you to) produce better HTML.
+In some cases, components can actually _improve_ the clarity of your HTML.
+
+To decide if a component is appropriate for your use case, a good rule of thumb is to ask:
+"`Could this reasonably be a built-in HTML element?`"
+For example, a code editor is a good candidate,
+since HTML already has `<textarea>` and `contenteditable` elements.
+In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
+We can use features like
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
+to encapsulate these elementsfootnote:[
+Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
+In particular, there are some accessibility bugs that may occur when elements inside and outside the shadow root interact.].
+We can create a
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
+`<code-area>`, that we can drop into our page whenever we want.
+****

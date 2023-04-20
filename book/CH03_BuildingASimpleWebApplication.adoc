@@ -1,6 +1,6 @@
 
 = A Web 1.0 Application
-:chapter: 04
+:chapter: 03
 :url: ./a-web-1-0-application/
 
 To start our journey into Hypermedia-Driven Applications, we are going to create a simple contact management web
@@ -438,7 +438,7 @@ In the first line of code we create a form that will submit back _to the same pa
 Rather than issuing an HTTP `GET` to this path, however, we will issue an HTTP `POST` to it.  Using a `POST` in this manner
 will signal to the server that we want to create a new Contact, rather than get a form.
 
-We then have a label (always a good practice, as mentioned in the last chapter!) and an input that captures the email of
+We then have a label (always a good practice!) and an input that captures the email of
 the contact being created.  The name of the input is `email` and, when this form is submitted, the value of this input
 will be submitted in the `POST` request, associated with the `email` key.
 
@@ -859,3 +859,17 @@ No.  No it isn't.
 It turns out that we can improve the user experience of this application within the
 hypermedia architecture. In the next few chapters we will look at https://htmx.org[htmx], a hypermedia-oriented library
 that will let us improve our contact application _without_ abandoning the hypermedia approach we have used so far.
+
+
+[.design-note]
+.HTML Note: Semantic HTML
+****
+[quote,https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/]
+I think being asked to write _meaningful_ HTML better lights the path to realizing that it isn't about what the text means to humans--it's about using tags for the purpose outlined in the specs to meet the needs of software like browsers, assistive technologies, and search engines.
+
+Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
+
+We recommend talking about, and writing, _conformant_ HTML.
+Use the elements to the full extent provided by the HTML specification,
+and let the software take from it whatever meaning they can.
+****

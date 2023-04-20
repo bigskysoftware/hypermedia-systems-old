@@ -1,6 +1,6 @@
 
 = A Dynamic Archive UI
-:chapter: 08
+:chapter: 07
 :url: ./a-dynamic-archive-ui/
 
 == A Dynamic Archive UI
@@ -506,7 +506,7 @@ As nice as this UI is, there is one minor annoyance: as the progress bar updates
 
 Let's think through the cause of the problem. If you're in a hurry to get to an answer, feel free to jump ahead to "`our solution.`" 
 
-It turns out that there is a native HTML technology for smoothing out changes on an element from one state to another: the CSS Transitions API, the same that we discussed in Chapter 5. Using CSS Transitions, you can smoothly animate an element between different styling by using the `transition` property.
+It turns out that there is a native HTML technology for smoothing out changes on an element from one state to another: the CSS Transitions API, the same that we discussed in Chapter 4. Using CSS Transitions, you can smoothly animate an element between different styling by using the `transition` property.
 
 If you look back at our CSS definition of the `.progress-bar` class, you will see the following transition definition: `transition: width .6s ease;`. This means that when the width of the progress bar is changed from, say 20% to
 30%, the browser will animate over a period of .6 seconds using the "`ease`" function (which has a nice accelerate/decelerate
@@ -522,7 +522,7 @@ The good news: htmx has a way to rectify this situation.
 
 === The "`Settling`" Step in Htmx
 
-When we discussed the htmx swap model in Chapter 5, we focused on the classes that htmx adds and removes, but we skipped
+When we discussed the htmx swap model in Chapter 4, we focused on the classes that htmx adds and removes, but we skipped
 over the process of "`settling.`" In htmx, settling involves several steps:  when htmx is
 about to replace a chunk of content, it looks through the new content and finds all elements with an `id` on it.  It then
 looks in the _existing_ content for elements with the same `id`.  If there is one, it does the following shuffle:
@@ -561,7 +561,7 @@ Now that, dear reader, does spark joy.
 
 == Dismissing The Download UI
 
-Some users may change their mind, and decide not to download the archive. They may never witness our progress bar, but that's okay. We're going to give these users a button to dismiss the download link and return to the original export UI state.
+Some users may change their mind, and decide not to download the archive. They may never witness our progress bar, but that's OK. We're going to give these users a button to dismiss the download link and return to the original export UI state.
 
 To do this, we'll add a button that issues a `DELETE` to the path `/contacts/archive`, indicating that the current archive can be removed or cleaned up.
 
@@ -603,10 +603,10 @@ alternatives. Currently, a progress bar shows the progress of
 the process and, when it completes, the user is presented with a link to actually download the file. Another pattern that we see on the web is "auto-downloading", where the file downloads immediately without the user needing to click a link.
 
 We can add this functionality quite easily to our application with just a bit of scripting.  We will discuss scripting
-in a Hypermedia-Driven Application in more depth in chapter 10, but, put briefly: scripting is perfectly
+in a Hypermedia-Driven Application in more depth in chapter 9, but, put briefly: scripting is perfectly
 acceptable in a HDA, as long as it doesn't replace the core hypermedia mechanics of the application.
 
-For our auto-download feature we will use https://hyperscript.org[+_hyperscript+], our preferred scripting option. JavaScript would also work here, and would be nearly as simple; again, we'll discuss scripting options in Chapter 10.
+For our auto-download feature we will use https://hyperscript.org[+_hyperscript+], our preferred scripting option. JavaScript would also work here, and would be nearly as simple; again, we'll discuss scripting options in Chapter 9.
 
 All we need to do to implement the auto-download feature is the following: when the download link renders, automatically click on the link for the user.
 
@@ -632,3 +632,35 @@ auto-downloading, and we've done nearly all of it -- with the exception of a sma
 pure hypermedia. It took about 16 lines of front end code and 16 lines of backend code to build the whole thing.
 
 HTML, with a bit of help from a hypermedia-oriented JavaScript library such as htmx, can in fact be extremely powerful and expressive.
+
+
+// TODO: work here? better as a vanilla pullout? 
+[.design-note]
+.HTML Notes: On Web Components
+****
+Web Components is the collective name of a few standards;
+Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
+
+All of these standards bring useful capabilities to the table.
+`<template>` elements remove their contents from the document, while still parsing them as HTML (unlike comments) and making them accessible to JavaScript.
+Custom Elements let us initialize and tear down behaviors when elements are added or removed, which would previously require manual work or MutationObservers.
+Shadow DOM lets us encapsulate elements, leaving the "light" (non-shadow) DOM clean.
+
+However, trying to reap these benefits is often frustrating.
+Some difficulties are simply growing pains of new standards
+(like the accessibility problems of Shadow DOM)
+that are actively being worked on.
+Others are the result of Web Components trying to be too many things at the same time:
+
+ * An extension mechanism for HTML. To this end, each custom element is a tag we add to the language.
+ * A lifecycle mechanism for behaviors. Methods like `createdCallback`, `connectedCallback`, etc. allow behavior to be added to elements without needing to be manually invoked when those elements are added.
+ * A unit of encapsulation. Shadow DOM insulates elements from their surroundings.
+
+The result is that if you want any one of these things,
+the others come along for the ride.
+If you want to attach some behaviors to some elements using lifecycle callbacks,
+you need to create a new tag,
+which means you can't have multiple behaviors on one element,
+and you isolate elements you add from elements already in the page,
+which is a problem if they need to have ARIA relationships.
+****

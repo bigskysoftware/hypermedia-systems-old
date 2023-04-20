@@ -1,6 +1,6 @@
 
 = Client-Side Scripting
-:chapter: 10
+:chapter: 09
 :url: ./client-side-scripting/
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
@@ -1302,3 +1302,33 @@ we would focus on these more general concerns:
 And even on these topics, sometimes a web developer has to do what a web developer has to do.  If the perfect widget for your application exists but uses a JSON data API?  That's OK.
 
 Just don't make it a habit.
+
+
+[.design-note]
+.HTML Notes: Markdown soup
+****
+[.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
+This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
+even when these elements are incorrect.
+Consider the following example of an IEEE-style citation:
+
+[source,markdown]
+----
+[1] C.H. Gross, A. Stepinski, and D. Akşimşek, <1>
+_Hypermedia Systems_, <2>
+Bozeman, MT, USA: Big Sky Software.
+Available: <https://hypermedia.systems/>
+----
+<1> The reference number is written in brackets.
+<2> Underscores around the book title creates an <em> element.
+
+Here, <em> is used because it's the only Markdown element that is presented in italics by default.
+This indicates that the book title is being stressed, but the purpose is to mark it as the title of a work.
+HTML has the `<cite>` element that's intended for this exact purpose.
+
+Furthermore, even though this is a numbered list perfect for the `<ol>` element, which Markdown supports, plain text is used for the reference numbers instead.
+Why could this be?
+The IEEE citation style requires that these numbers are presented in square brackets.
+This could be achieved on an `<ol>` with CSS,
+but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.
+****

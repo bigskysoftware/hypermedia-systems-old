@@ -1,6 +1,6 @@
 
 = Tricks Of The Htmx Masters
-:chapter: 09
+:chapter: 08
 :url: ./deep-htmx/
 
 
@@ -45,10 +45,10 @@ options for creating more advanced Hypermedia-Driven Applications.
 
 We'll start with the hx-swap attribute. This is often not included on elements that issue htmx-driven requests because its default behavior -- `innerHTML`, which swaps the inner HTML of the element -- tends to cover most use cases.  
 
-We earlier saw situations where we wanted to override the default behavior and use `outerHTML`, for example.  And, in chapter 3, we discussed some
+We earlier saw situations where we wanted to override the default behavior and use `outerHTML`, for example.  And, in chapter 2, we discussed some
 other swap options beyond these two, `beforebegin`, `afterend`, etc.
 
-In chapter 6, we also looked at the `swap` delay modifier for `hx-swap`, which allowed us to fade some content out before it was removed from the DOM.
+In chapter 5, we also looked at the `swap` delay modifier for `hx-swap`, which allowed us to fade some content out before it was removed from the DOM.
 
 In addition to these, `hx-swap` offers further control with the following modifiers:
 
@@ -433,7 +433,7 @@ an idea of how the `HX-Trigger` response header can be used to coordinate sophis
 == HTTP Requests & Responses
 
 We have just seen an advanced feature of HTTP responses supported by htmx, the `HX-Trigger` response header,
-but htmx supports quite a few more headers for both requests and responses.  In chapter 5 we discussed the
+but htmx supports quite a few more headers for both requests and responses.  In chapter 4 we discussed the
 headers present in HTTP Requests.  Here are some of the more important headers you can use to change htmx behavior with
 HTTP responses:
 
@@ -454,7 +454,7 @@ You can find a reference for all requests and response headers in the https://ht
 === HTTP Response Codes
 
 Even more important than response headers, in terms of information conveyed to the client, is the _HTTP Response Code_.
-We discussed HTTP Response Codes in Chapter 4.  By and large htmx handles various response codes in the manner that
+We discussed HTTP Response Codes in Chapter 3.  By and large htmx handles various response codes in the manner that
 you would expect: it swaps content for all 200-level response codes and does nothing for others.  There are, however,
 two "`special`" 200-level response codes:
 
@@ -740,3 +740,25 @@ an example:
 In this case, we are overriding the default swap style from the usual `innerHTML` to `outerHTML`.  This might be useful
 if you find yourself using `outerHTML` more frequently than `innerHTML` and want to avoid having to explicitly set that
 swap value throughout your application.
+
+
+
+[.design-note]
+.HTML Notes: Know Your HTML Budget
+****
+The close relationship between content and markup means that
+good HTML is labor-intensive.
+Most sites have a separation between the authors,
+who are rarely familiar with HTML,
+and the developers, who need to develop a generic system able to handle any content that's thrown at it --
+this separation usually taking the form of a CMS.
+As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
+
+Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
+It's an expense few organizations can spare.
+
+Thus, we don't expect every site to contain perfectly conformant HTML.
+What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
+
+If you have the resources, however, putting more care in your HTML will produce a more polished site.
+****

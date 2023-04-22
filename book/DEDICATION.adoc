@@ -1,0 +1,13 @@
+= Dedication
+:url: /book/dedication/
+:layout: frontmatter.njk
+:chapter: -2
+
+[.big]_To ..._ -- Carson Gross
+
+[.big]_To ..._ -- Adam Stepinski
+
+[.big]_To lorem ipsum dolor sit amet._ -- Deniz Akşimşek
+
+[.secondary-font.f-row,role="justify-content:end"]
+*Next:* link:/book/contents[Table of Contents]

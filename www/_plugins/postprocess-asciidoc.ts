@@ -13,6 +13,7 @@ export default () => {
             });
 
             $$(document, ".dfn").forEach((el) => el.tagName = "dfn");
+            $$(document, ".cite").forEach((el) => el.tagName = "cite");
 
             $$(document, ".listingblock, .imageblock").forEach((el) => {
                 el.tagName = "figure";

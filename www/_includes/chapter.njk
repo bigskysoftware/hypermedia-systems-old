@@ -48,13 +48,13 @@ layout: layout.njk
     <details class="contents">
         <summary>Contents</summary>
 
-        {% macro toc(block, level=0) %}
+        {% macro toc(block, level=0, url="") %}
             {% set isPart = level == 0 and is_whole_book %}
             {% set isChapter = level == 1 and is_whole_book %}
             <ul class="nested-list">
                 {% for sect in block.getSections() %}
                 <li>
-                    <a href="#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">
+                    <a href="{{ url }}#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">
                         {{ 'Part ' + loop.index + ':' if isPart }}
                         {{ sect.getTitle() | safe }}
                     </a>

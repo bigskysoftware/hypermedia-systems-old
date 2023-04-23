@@ -53,7 +53,7 @@ renderOrder: 1
 
                     {% from "chapter.njk" import toc with context %}
                     <div hidden data-toc class="dense">
-                        {{ toc(chapter.asciidoc) }}
+                        {{ toc(chapter.asciidoc, url=chapter.url) }}
                     </dialog>
                 </div>
             </li>

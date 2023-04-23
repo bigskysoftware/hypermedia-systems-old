@@ -1,0 +1,18 @@
+= Foreword
+
+The history of hypermedia systems is varied and circuitous. While there have been many books on the topic of hypermedia, there is a select number of publications that chronicle important advances in the field of hypermedia and this book is one of them. From the starting 
+
+In 1974, Ted Nelson's _"Computer Lib/Machine Dreams"_ marked the start of the modern hypermedia era with a book that Steven Leby (author of _"Hackers"_) described as "the epic of the computer revolution." Nelson is credited with coining the terms HyperText, HyperLink, HyperMedia, and HyperData as well as "Intertwingluarity" -- that notion that all information is connected -- both intertwined and intermingled. Almost half a century ago, he foretold a future where any person could publish anything anytime without the need for permission from any central controlling source. And his hyperlinks were the engine of that future.
+
+It took two decades before Nelson's idea of intertwingled computing became widespread. Along the way, Douglas Engelbart created the _oN-Line System_ or NLS, Wendy Hall built the _Microcosm_, and, eventually Tim Beneres-Lee defined the World Wide Web (WWW) in the late 1980s. It was Berners-Lee's iteration that has become the backbone and the "standard" for the intertingularity we all experience today. 
+
+By the year 2000, the technical foundations of the "web" were documented in Roy Fielding's PhD dissertation (_"Architectural Styles and the Design of Network-based Software Architectures"_). In that work, Fielding defined the architectural model of _REpresentational State Transfer_ or REST. This set of system properties and implemenation constraints have proven -- even a quarter-cenruty later -- to be a reliable model for designing and building the intertwingled machines that today affects billions of people around the globe.
+
+Even though Fielding's work as important, it wasn't until Leonard Richardson and Sam Ruby published _"RESTful Web Services"_ in 2008 that the REST model became well-known to the world of software architecture and development. Backed by the Ruby programming platform, the ideas behind Fielding's REST model became _de rigueur_ for the creation of web-based services and client applications.
+
+One of the reasons Richardson and Ruby's work was so important was that, unlike dissertations and futuristic predictions, the _RESTful Web Services_ book outlined a practical working framework for building powerful applications for the Web. It described not only the power of REST but also provied step-by-step instructions on how to build them. Richard and Ruby brought together the hypermedia scholarship of the previous twenty years all in one place. 
+
+And that is what this book does, too. 
+
+
+Finally, to quote the authors of this book. "Hypermedia was a great idea!  It still is!"

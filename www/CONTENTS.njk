@@ -42,10 +42,10 @@ renderOrder: 1
             {% endif %}
         <ul role="list">
             <li class="f-row hoverable" style="break-inside: avoid-column;">
-                {% if chapter.chapter != 0 %}
-                <data class="Chapter-Num">{{ chapter.chapter }}</data>
-                {% else %}
+                {% if chapter.chapter == 0 %}
                 <data class="Chapter-Num">=></data>
+                {% elseif (chapter.chapter | int) > 0 %}
+                <data class="Chapter-Num">{{ chapter.chapter }}</data>
                 {% endif %}
 
                 <div class="f-col packed align-items:start">

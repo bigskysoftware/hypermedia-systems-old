@@ -2,6 +2,9 @@
 layout: layout.njk
 ---
 
+<meta property="og:title" content="{{ title }}">
+<meta property="og:site_name" content="Hypermedia Systems">
+
 <header>
     {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
     {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}
@@ -44,28 +47,30 @@ layout: layout.njk
     </h1>
 </header>
 
+{% macro toc(block, level=0, url="") %}
+    {% set isPart = level == 0 and is_whole_book %}
+    {% set isChapter = level == 1 and is_whole_book %}
+    <ul class="nested-list">
+        {% for sect in block.getSections() %}
+        <li>
+            <a href="{{ url }}#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">
+                {{ 'Part ' + loop.index + ':' if isPart }}
+                {{ sect.getTitle() | safe }}
+            </a>
+            {{ toc(sect, level + 1) if level < 2 and sect.getSections().length > 0 }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+{% if asciidoc and asciidoc.getSections().length %}
 <div class="container">
     <details class="contents">
         <summary>Contents</summary>
 
-        {% macro toc(block, level=0, url="") %}
-            {% set isPart = level == 0 and is_whole_book %}
-            {% set isChapter = level == 1 and is_whole_book %}
-            <ul class="nested-list">
-                {% for sect in block.getSections() %}
-                <li>
-                    <a href="{{ url }}#{{ sect.getId() }}" class="{{ 'bold' if isPart or isChapter }}">
-                        {{ 'Part ' + loop.index + ':' if isPart }}
-                        {{ sect.getTitle() | safe }}
-                    </a>
-                    {{ toc(sect, level + 1) if level < 2 and sect.getSections().length > 0 }}
-                </li>
-                {% endfor %}
-            </ul>
-        {% endmacro %}
         {{ asciidoc and toc(asciidoc, 0) }}
     </details>
 </div>
+{% endif %}
 
 <main>{{ content | safe }}</main>
 

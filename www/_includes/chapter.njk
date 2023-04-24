@@ -2,6 +2,9 @@
 layout: layout.njk
 ---
 
+<meta property="og:title" content="{{ title }}">
+<meta property="og:site_name" content="Hypermedia Systems">
+
 <header>
     {% set prev = search.previousPage(url, "chapter!=undefined", "chapter") %}
     {% set next = search.nextPage(url, "chapter!=undefined", "chapter") %}

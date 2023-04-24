@@ -1320,7 +1320,7 @@ Since our HXML templates don't expose any entrypoints to the Archive functionali
 
 .Summary
 ****
-- It is possible to create a Hyperview-powered mobile app by simply as cloning a Git repo and configuring a single entrypoint URL.
+- It is possible to create a Hyperview-powered mobile app by cloning a Git repo and configuring a single entrypoint URL.
 - Flask is perfectly suited for serving a Hyperview mobile app. The Jinja templating system can generate dynamic HXML based on the context from a view.
 - Using elements like `<view>`, `<text>`, `<list>`, and `<item>`, we can create native-feeling screens in HXML.
 - Using behaviors, we can implement interactions on the contacts list such as infinite scroll, search-as-you-type, and pull-to-refresh.

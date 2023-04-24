@@ -1171,7 +1171,7 @@ By using these elements, a page can make false promises, like `<article>` elemen
 The most authoritative resource for learning about HTML is the HTML specification.
 The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
 The single-page version is too slow to load and render on most computers. 
-There's also a developers' edition at /dev, but I prefer the styling of the standard version.]
+There's also a developers' edition at /dev, but the standard version has nicer styling.]
 There's no need to rely on hearsay to keep up with developments in HTML.
 
 Section 4 features a list of all available elements,

@@ -663,4 +663,19 @@ you need to create a new tag,
 which means you can't have multiple behaviors on one element,
 and you isolate elements you add from elements already in the page,
 which is a problem if they need to have ARIA relationships.
+
+When should we use Web Components?
+A good rule of thumb is to ask yourself:
+"`Could this reasonably be a built-in HTML element?`"
+For example, a code editor is a good candidate,
+since HTML already has `<textarea>` and `contenteditable` elements.
+In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
+We can use features like
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
+to encapsulate these elementsfootnote:[
+Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
+In particular, there are some accessibility bugs that may occur when elements inside and outside the shadow root interact.].
+We can create a
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
+`<code-area>`, that we can drop into our page whenever we want.
 ****

@@ -1033,9 +1033,9 @@ behavior, we are still exchanging hypermedia with the server, with no JSON API r
 
 As the web was designed.
 
-
+// TODO rewrite
 [.design-note]
-.Component Soup?
+.HTML Notes: Framework Soup
 ****
 Components encapsulate a section of a page along with its dynamic behavior.
 While encapsulating behavior is a good way to organize code,
@@ -1049,17 +1049,14 @@ Before you reach for components for reuse, consider your options.
 Lower-level mechanisms often (allow you to) produce better HTML.
 In some cases, components can actually _improve_ the clarity of your HTML.
 
-To decide if a component is appropriate for your use case, a good rule of thumb is to ask:
-"`Could this reasonably be a built-in HTML element?`"
-For example, a code editor is a good candidate,
-since HTML already has `<textarea>` and `contenteditable` elements.
-In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
-We can use features like
-link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
-to encapsulate these elementsfootnote:[
-Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
-In particular, there are some accessibility bugs that may occur when elements inside and outside the shadow root interact.].
-We can create a
-link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
-`<code-area>`, that we can drop into our page whenever we want.
+[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
+The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
+
+In order to avoid `<div>` soup (or Markdown soup, or Component soup), you need to be aware of the markup you're producing and be able to change it.
+
+Some SPA frameworks, and some web components, make this more difficult by putting layers of abstraction between the code the developer writes and the generated markup.
+
+While these abstractions can allow developers to create richer UI or work faster,
+their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
+Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
 ****

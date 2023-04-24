@@ -796,10 +796,13 @@ working in web development, and building a hypermedia-oriented library to boot, 
 special nature of HTML, hypermedia and the web!
 
 
-[.design-note]
-.HTML Note: <div> Soup
+[.html-note]
+.HTML Notes: <div> Soup
 ****
-The best-known kind of messy HTML is `<div>` soup. 
+The best-known kind of messy HTML is `<div>` soup.
+
+Advances in CSS and JavaScript technology have mostly obviated the need to add extraneous "wrapper" elements to out documents.
+However, while the number of elements can fall, the quality of usage does not necessatily improve.
 
 When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
 we either degrade the quality of our websites or create more work for ourselves -- probably both.
@@ -832,5 +835,15 @@ It's not obvious from the HTML source that this is a button,
 making the source harder to read and the absence of these attributes harder to spot.
 The source code of pages with div soup is difficult to edit and debug.
 
-To avoid div soup, learn the meaning of available tags and consider each another tool in your tool chest. (With the 113 elements currently defined in the spec, it's more of a tool shed).
+"`This is silly,`" you might be thinking.
+Who uses a div as a button?
+Ignoring the answer (more people than you'd think), not every UI pattern has a designated HTML element.
+We often need to compose elements and augment them with attributes.
+Do you know, off the top of your head, the best elements and attributes to use for...
+
+* A "command palette" menu?
+* A play-pause button?
+* A search field with a search button next to it? (Check the HTML spec -- there might be things on there you don't remember from before!)
+
+To avoid div soup, learn the meaning of available tags and consider each another tool in your tool chest. (With the 113 elements currently defined in the spec, it's more of a whole shed). 
 ****

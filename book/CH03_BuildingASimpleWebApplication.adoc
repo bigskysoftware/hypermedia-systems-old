@@ -864,12 +864,13 @@ that will let us improve our contact application _without_ abandoning the hyperm
 [.design-note]
 .HTML Note: Semantic HTML
 ****
+Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
+
 [quote,https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/]
 I think being asked to write _meaningful_ HTML better lights the path to realizing that it isn't about what the text means to humans--it's about using tags for the purpose outlined in the specs to meet the needs of software like browsers, assistive technologies, and search engines.
 
-Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
-
 We recommend talking about, and writing, _conformant_ HTML.
+(We can always bikeshed further).
 Use the elements to the full extent provided by the HTML specification,
 and let the software take from it whatever meaning they can.
 ****

@@ -732,7 +732,7 @@ Htmx is typically configured via a `meta` tag, found in the header of a page.  T
 an example:
 
 .An htmx configuration via `meta` tag
-[source, javascript]
+[source, html]
 ----
 <meta name="htmx-config" content='{"defaultSwapStyle":"outerHTML"}'>
 ----
@@ -741,10 +741,8 @@ In this case, we are overriding the default swap style from the usual `innerHTML
 if you find yourself using `outerHTML` more frequently than `innerHTML` and want to avoid having to explicitly set that
 swap value throughout your application.
 
-
-
 [.design-note]
-.HTML Notes: Know Your HTML Budget
+.HTML Notes: Budgeting For HTML
 ****
 The close relationship between content and markup means that
 good HTML is labor-intensive.

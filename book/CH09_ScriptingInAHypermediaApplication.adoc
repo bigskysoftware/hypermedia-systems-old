@@ -746,12 +746,15 @@ To get a flavor of AlpineJS, let's look at how to implement our counter example 
 
 For the counter, the only state we need to keep track of is the current number, so let's declare a JavaScript object
 with one property, `count`, in an `x-data` attribute on the div for our counter:
+
 // TODO: check: removed class="counter" to avoid confusion
+
 .Counter with Alpine, line 1
 [source,html]
 ----
 <div x-data="{ count: 0 }">
----- 
+----
+
 This defines our state, that is, the data we are going to be using to drive dynamic updates to the DOM.  With the state
 declared like this, we can now use it _within_ the div element it is declared on.  Let's add an `output` element with
 an `x-text` attribute.

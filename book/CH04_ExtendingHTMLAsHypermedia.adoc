@@ -894,11 +894,11 @@ them.
 
 
 [.design-note]
-.HTML Note: Caution with Improvised UI Elements
+.HTML Note: Don't Roll Your Own
 ****
 Accessibility problems can arise when we try to implement controls that aren't built into HTML.
 
-For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? 
+For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? It's a neat hack that makes the rounds in web development communities from time to time.
 
 The problem here is that tabs have requirements beyond clicking to change content.
 Your improvised tabs may be missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
@@ -927,8 +927,8 @@ but they are repetitive
 and others (like `aria-selected`) need to be set through JavaScript since they are dynamic.
 The keyboard interactions can be error-prone too.
 
-It's not impossible to make your own tab set implementation.
-However, it's difficult to trust that a new implementation will work in all environments, since most of us have limited access to testing devices.
+It's not impossible, not even that hard, to make your own tab set implementation.
+However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
 
-Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
+Stick with established libraries for UI interactions. If a use case requires a bespoke solution, test exhaustively for keyboard interaction and accessibility.
 ****

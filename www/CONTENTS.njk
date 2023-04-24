@@ -44,8 +44,7 @@ renderOrder: 1
             <li class="f-row hoverable" style="break-inside: avoid-column;">
                 {% if chapter.chapter == 0 %}
                 <data class="Chapter-Num">=></data>
-                {% elseif (chapter.chapter | int) < 0 %}
-                {% else %}
+                {% elseif (chapter.chapter | int) > 0 %}
                 <data class="Chapter-Num">{{ chapter.chapter }}</data>
                 {% endif %}
 
@@ -54,7 +53,7 @@ renderOrder: 1
 
                     {% from "chapter.njk" import toc with context %}
                     <div hidden data-toc class="dense">
-                        {{ toc(chapter.asciidoc) }}
+                        {{ toc(chapter.asciidoc, url=chapter.url) }}
                     </dialog>
                 </div>
             </li>

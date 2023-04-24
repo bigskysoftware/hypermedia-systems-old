@@ -47,6 +47,7 @@ layout: layout.njk
     </h1>
 </header>
 
+{% if asciidoc.getSections().length %}
 <div class="container">
     <details class="contents">
         <summary>Contents</summary>
@@ -69,6 +70,7 @@ layout: layout.njk
         {{ asciidoc and toc(asciidoc, 0) }}
     </details>
 </div>
+{% endif %}
 
 <main>{{ content | safe }}</main>
 

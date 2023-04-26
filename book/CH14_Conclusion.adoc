@@ -86,8 +86,8 @@ Throughout the book we discuss a number of best practices for writing effective 
 * Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
 
 // TODO: Finish or cut. Placement okay?
-.Helpful Resources
-
+.HTML Notes: Helpful Resources
+****
 * Foundations
 * HTML specification: https://html.spec.whatwg.org/multipage
 

@@ -1144,6 +1144,50 @@ libraries go beyond simple DOM manipulation, and require that you integrate with
 with a JSON data API.  This means you are no longer building a Hypermedia-Driven Application, simply because a particular
 widget demands something different.  A shame!
 
+.Web Components/Custom Elements
+****
+Web Components is the collective name of a few standards;
+Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
+
+All of these standards bring useful capabilities to the table.
+`<template>` elements remove their contents from the document, while still parsing them as HTML (unlike comments) and making them accessible to JavaScript.
+Custom Elements let us initialize and tear down behaviors when elements are added or removed, which would previously require manual work or MutationObservers.
+Shadow DOM lets us encapsulate elements, leaving the "light" (non-shadow) DOM clean.
+
+However, trying to reap these benefits is often frustrating.
+Some difficulties are simply growing pains of new standards
+(like the accessibility problems of Shadow DOM)
+that are actively being worked on.
+Others are the result of Web Components trying to be too many things at the same time:
+
+ * An extension mechanism for HTML. To this end, each custom element is a tag we add to the language.
+ * A lifecycle mechanism for behaviors. Methods like `createdCallback`, `connectedCallback`, etc. allow behavior to be added to elements without needing to be manually invoked when those elements are added.
+ * A unit of encapsulation. Shadow DOM insulates elements from their surroundings.
+
+The result is that if you want any one of these things,
+the others come along for the ride.
+If you want to attach some behaviors to some elements using lifecycle callbacks,
+you need to create a new tag,
+which means you can't have multiple behaviors on one element,
+and you isolate elements you add from elements already in the page,
+which is a problem if they need to have ARIA relationships.
+
+When should we use Web Components?
+A good rule of thumb is to ask yourself:
+"`Could this reasonably be a built-in HTML element?`"
+For example, a code editor is a good candidate,
+since HTML already has `<textarea>` and `contenteditable` elements.
+In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
+We can use features like
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
+to encapsulate these elementsfootnote:[
+Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
+In particular, there are some accessibility bugs that may occur when elements inside and outside the shadow root interact.].
+We can create a
+link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
+`<code-area>`, that we can drop into our page whenever we want.
+****
+
 === Integration Options
 
 The best JavaScript libraries to work with when you are building a Hypermedia-Driven Application are ones that:
@@ -1306,32 +1350,58 @@ And even on these topics, sometimes a web developer has to do what a web develop
 
 Just don't make it a habit.
 
-
 [.design-note]
-.HTML Notes: Markdown soup
+.HTML Notes: Accessible by Default?
 ****
-[.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
-This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
-even when these elements are incorrect.
-Consider the following example of an IEEE-style citation:
+Accessibility problems can arise when we try to implement controls that aren't built into HTML.
 
-[source,markdown]
+For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? It's a neat hack that makes the rounds in web development communities from time to time.
+
+The problem here is that tabs have requirements beyond clicking to change content.
+Your improvised tabs may be missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
+From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Practices Guide on tabs]:
+
+* Keyboard interaction
+
+** Can the tabs be focused with the Tab key?
+
+* ARIA roles, states, and properties
+
+** "`[The element that contains the tabs] has role `tablist`.`" 
+
+** "`Each [tab] has role `tab` [...]`"
+
+** "`Each element that contains the content panel for a `tab` has role `tabpanel`.`"
+
+** "`Each [tab] has the property `aria-controls` referring to its associated tabpanel element.`"
+
+** "`The active `tab` element has the state `aria-selected` set to `true` and all other `tab` elements have it set to `false`.`"
+
+** "`Each element with role `tabpanel` has the property `aria-labelledby` referring to its associated `tab` element.`"
+
+You would need to write a lot of code to make your improvised tabs fulfill all of these requirements. Some of the ARIA attributes can be added directly in HTML,
+but they are repetitive
+and others (like `aria-selected`) need to be set through JavaScript since they are dynamic.
+The keyboard interactions can be error-prone too.
+
+It's not impossible, not even that hard, to make your own tab set implementation.
+However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
+
+*Stick with established libraries* for UI interactions. If a use case requires a bespoke solution, *test exhaustively* for keyboard interaction and accessibility.
+
+Also consider: Does the information need to be presented as tabs?
+Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
+
+[source,html]
 ----
-[1] C.H. Gross, A. Stepinski, and D. Akşimşek, <1>
-_Hypermedia Systems_, <2>
-Bozeman, MT, USA: Big Sky Software.
-Available: <https://hypermedia.systems/>
+<details><summary>Disclosure 1</summary>
+  Disclosure 1 contents
+</details>
+<details><summary>Disclosure 2</summary>
+  Disclosure 2 contents
+</details>
 ----
-<1> The reference number is written in brackets.
-<2> Underscores around the book title creates an <em> element.
 
-Here, <em> is used because it's the only Markdown element that is presented in italics by default.
-This indicates that the book title is being stressed, but the purpose is to mark it as the title of a work.
-HTML has the `<cite>` element that's intended for this exact purpose.
-
-Furthermore, even though this is a numbered list perfect for the `<ol>` element, which Markdown supports, plain text is used for the reference numbers instead.
-Why could this be?
-The IEEE citation style requires that these numbers are presented in square brackets.
-This could be achieved on an `<ol>` with CSS,
-but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.
+Compromising UX just to avoid JavaScript is bad development.
+But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
 ****

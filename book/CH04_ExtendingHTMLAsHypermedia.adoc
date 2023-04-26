@@ -876,59 +876,7 @@ conceptually coherent with the underlying markup language.  Like any technical c
 trade-offs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel 
 should be there "`by default`".
 
-A good example is the concept of modal dialogs. Many web applications today make heavy use of modal dialogs, effectively
-in-page pop-ups that sit "`on top`" of the existing page.  (Of course, in reality, this is an optical illusion and it is
-all just a web page: the web has no notion of "`modals`" in this regard.)
-
-A web developer might expect htmx, as a front end library, to provide some sort of modal dialog component out of the box.
-
-Htmx, however, has no such notion of modals.  That's not to say you can't use modals with htmx, and we will look at how you
-can do so later.  But htmx, like HTML itself, won't give you an API specifically for creating modals.  You
-would need to use a 3rd party library or roll your own modal implementation and then integrate htmx into it if you want
-to use modals within an htmx-based application.
-
 By staying closer to the original model of the web, htmx aims to strike a balance between simplicity and functionality,
 deferring to other libraries for more elaborate frontend extensions on top of the existing web platform.  The good news
 is that htmx plays well with others, so when these needs arise it is often easy enough to bring in another library to handle
 them.
-
-
-[.design-note]
-.HTML Note: Don't Roll Your Own
-****
-Accessibility problems can arise when we try to implement controls that aren't built into HTML.
-
-For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? It's a neat hack that makes the rounds in web development communities from time to time.
-
-The problem here is that tabs have requirements beyond clicking to change content.
-Your improvised tabs may be missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
-From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Practices Guide on tabs]:
-
-* Keyboard interaction
-
-** Can the tabs be focused with the Tab key?
-
-* ARIA roles, states, and properties
-
-** "`[The element that contains the tabs] has role `tablist`.`" 
-
-** "`Each [tab] has role `tab` [...]`"
-
-** "`Each element that contains the content panel for a `tab` has role `tabpanel`.`"
-
-** "`Each [tab] has the property `aria-controls` referring to its associated tabpanel element.`"
-
-** "`The active `tab` element has the state `aria-selected` set to `true` and all other `tab` elements have it set to `false`.`"
-
-** "`Each element with role `tabpanel` has the property `aria-labelledby` referring to its associated `tab` element.`"
-
-You would need to write a lot of code to make your improvised tabs fulfill all of these requirements. Some of the ARIA attributes can be added directly in HTML,
-but they are repetitive
-and others (like `aria-selected`) need to be set through JavaScript since they are dynamic.
-The keyboard interactions can be error-prone too.
-
-It's not impossible, not even that hard, to make your own tab set implementation.
-However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
-
-Stick with established libraries for UI interactions. If a use case requires a bespoke solution, test exhaustively for keyboard interaction and accessibility.
-****

@@ -1264,38 +1264,3 @@ There is a story for Hypermedia-Driven Applications on mobile. Mobile app platfo
 Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin-client to render HXML. And HXML opens a took-kit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
 
 Yes, hypermedia can work for mobile apps, too. In the next two chapters we'll show how by moving Contact.app to mobile. 
-
-
-
-[.design-note]
-.HTML Notes: Embedding HTML in Markdown
-****
-Don't shy away from using embedded HTML in Markdown.
-For larger sites, also consider Markdown extensions.
-
-[source,markdown]
-----
-{.ieee-reference-list} <1>
-1. C.H. Gross, A. Stepinski, and D. Akşimşek, <2>
-   <cite>Hypermedia Systems</cite>, <3>
-   Bozeman, MT, USA: Big Sky Software.
-   Available: <https://hypermedia.systems/>
-----
-<1> Many Markdown dialects let us add ids, classes and attributes using curly braces.
-<2> We can now use the <ol> element, and create the brackets in CSS.
-<3> We use `<cite>` to mark the title of the work being cited (not the whole citation!)
-
-You can also use custom processors to produce extra-detailed HTML instead of writing it by hand:
-
-[source,markdown]
-----
-{% reference_list %} <1>
-[hypers2023]: <2>
-C.H. Gross, A. Stepinski, and D. Akşimşek, _Hypermedia Systems_,
-Bozeman, MT, USA: Big Sky Software, 2023.
-Available: <https://hypermedia.systems/>
-{% end %}
-----
-<1> `reference_list` is a macro that will transform the plain text to highly-detailed HTML.
-<2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
-****

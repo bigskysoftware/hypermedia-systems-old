@@ -1332,25 +1332,3 @@ Since our HXML templates don't expose any entrypoints to the Archive functionali
 We've covered a lot of ground in this chapter. Take a breath and take stock of how far we've come: we ported the core functionality of the Contact.app web application to mobile. And we did it by re-using much of our Flask backend and while sticking with Jinja templating. We again saw the utility of events for connecting different aspects of an application. 
 
 We're not done yet. In the next chapter we'll implement custom behaviors and UI elements to finish our mobile Contact.app.
-
-
-// TODO: okay, or better as integrated info gem?
-[.design-note]
-.HTML Notes: Remember <details>
-****
-Does the information need to be presented as tabs?
-Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
-
-[source,html]
-----
-<details><summary>Disclosure 1</summary>
-  Disclosure 1 contents
-</details>
-<details><summary>Disclosure 2</summary>
-  Disclosure 2 contents
-</details>
-----
-
-Compromising UX just to avoid JavaScript is bad development.
-But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
-****

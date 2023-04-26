@@ -862,7 +862,7 @@ that will let us improve our contact application _without_ abandoning the hyperm
 
 
 [.design-note]
-.HTML Note: Semantic HTML
+.HTML Notes: Semantic HTML
 ****
 Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
 

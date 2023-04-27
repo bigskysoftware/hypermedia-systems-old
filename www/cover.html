@@ -50,15 +50,34 @@ Enhancing web applications without using SPA frameworks.">
         <span>Adam&nbsp;Stepinski</span>
         <span lang="tr">Deniz&nbsp;Akşimşek</span>
     </p>
+
+    <p class="text-align:center italic">
+        With a foreword by 
+        <a href="https://training.amundsen.com/#h.p_6AntBa6tTn_J">Mike Amundsen</a>
+    </p>
 </header>
 
 <main class="">
 
-    <div class="box warn crowded color">
-        <p>
-        <strong class="color margin-inline-end allcaps secondary-font">Note</strong>
-        Hypermedia Systems is a rewrite of a book that fell out of contract with
-        a publisher and is currently a <strong>work in progress</strong>.</p>
+    <script>{
+        const me = document.currentScript.nextElementSibling;
+        if (localStorage.dismissedNote) me.remove();
+    }</script>
+    <div class="box warn crowded color <small>" data-note>
+        <div>
+            <button class="iconbutton float:right"
+                onclick="
+                    localStorage.dismissedNote = true;
+                    this.closest(`[data-note]`).remove();
+                ">
+                <span aria-hidden="true">×</span>
+                <v-h>Dismiss</v-h>
+            </button>
+            <p style="margin: 0"> 
+                <strong class="allcaps margin-inline-end">Note</strong>
+            Hypermedia Systems is a rewrite of a book that fell out of contract with
+            a publisher and is currently a <strong>work in progress</strong>.</p>
+        </div>
     </div>
 
     <div class="grid margin-block">

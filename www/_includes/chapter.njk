@@ -57,7 +57,7 @@ layout: layout.njk
                 {{ 'Part ' + loop.index + ':' if isPart }}
                 {{ sect.getTitle() | safe }}
             </a>
-            {{ toc(sect, level + 1) if level < 2 and sect.getSections().length > 0 }}
+            {{ toc(sect, level + 1, url=url) if level < 2 and sect.getSections().length > 0 }}
         </li>
         {% endfor %}
     </ul>

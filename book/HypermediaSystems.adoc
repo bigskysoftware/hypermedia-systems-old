@@ -30,25 +30,24 @@ endif::[]
 include::book/CH00_Introduction.adoc[leveloffset=1]
 include::book/CH01_HypermediaAReintroduction.adoc[leveloffset=1]
 include::book/CH02_ComponentsOfAHypermediaSystem.adoc[leveloffset=1]
-include::book/CH03_EffectiveHtml.adoc[leveloffset=1]
-include::book/CH04_BuildingASimpleWebApplication.adoc[leveloffset=1]
+include::book/CH03_BuildingASimpleWebApplication.adoc[leveloffset=1]
 
 = Hypermedia-Driven Web Applications With htmx
 
 include::book/CH05_ExtendingHTMLAsHypermedia.adoc[leveloffset=1]
-include::book/CH06_htmxPatterns.adoc[leveloffset=1]
-include::book/CH07_MorehtmxPatterns.adoc[leveloffset=1]
-include::book/CH08_ADynamicArchiveUIWithhtmx.adoc[leveloffset=1]
-include::book/CH09_TricksOfThehtmxMasters.adoc[leveloffset=1]
-include::book/CH10_ScriptingInAHypermediaApplication.adoc[leveloffset=1]
-include::book/CH11_JSONDataAPIs.adoc[leveloffset=1]
+include::book/CH05_htmxPatterns.adoc[leveloffset=1]
+include::book/CH06_MorehtmxPatterns.adoc[leveloffset=1]
+include::book/CH07_ADynamicArchiveUIWithhtmx.adoc[leveloffset=1]
+include::book/CH08_TricksOfThehtmxMasters.adoc[leveloffset=1]
+include::book/CH09_ScriptingInAHypermediaApplication.adoc[leveloffset=1]
+include::book/CH10_JSONDataAPIs.adoc[leveloffset=1]
 
 = Bringing Hypermedia To Mobile
 
-include::book/CH12_HyperviewAMobileHypermedia.adoc[leveloffset=1]
-include::book/CH13_BuildingAContactsAppWithHyperview.adoc[leveloffset=1]
-include::book/CH14_ExtendingTheHyperviewClient.adoc[leveloffset=1]
+include::book/CH11_HyperviewAMobileHypermedia.adoc[leveloffset=1]
+include::book/CH12_BuildingAContactsAppWithHyperview.adoc[leveloffset=1]
+include::book/CH13_ExtendingTheHyperviewClient.adoc[leveloffset=1]
 
 = Conclusion
 
-include::book/CH15_Conclusion.adoc[leveloffset=1]
+include::book/CH14_Conclusion.adoc[leveloffset=1]

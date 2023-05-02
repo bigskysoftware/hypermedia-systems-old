@@ -11,7 +11,7 @@ layout: layout.njk
 
     <nav aria-label="Chapters navigation" class="<small>">
         {% macro nav(show_toc=false) %}
-        <div class="f-row flex-wrap:wrap justify-content:space-between">
+        <div class="grid">
             {% if prev or part %}
             <p>
                 Previous:
@@ -22,7 +22,7 @@ layout: layout.njk
                 {% endif %}
             {% endif %}
             {% if next %}
-            <p>
+            <p class="text-align:end" data-cols="2" data-cols@s="1">
                 <strong>
                     Next:
                     {% if next.data.part %}

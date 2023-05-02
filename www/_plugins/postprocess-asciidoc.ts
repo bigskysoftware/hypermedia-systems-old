@@ -1,4 +1,4 @@
-import { Document, Element } from "lume/deps/dom.ts";
+import { Document, Element, Text } from "lume/deps/dom.ts";
 import { Site } from "lume/core.ts";
 
 export default () => {
@@ -92,6 +92,20 @@ export default () => {
 
             $$(document, "li>p:only-child").forEach(el => {
                 el.replaceWith(...el.childNodes);
+            })
+
+            $$(document, "#footnotes").forEach(fns => {
+                fns.classList.add("<small>");
+                fns.firstElementChild!.remove(); // remove hr
+                fns.tagName = "ol";
+                [...fns.children].forEach(fn => {
+                    fn.tagName = "li";
+                    const backlink = fn.firstElementChild!;
+                    backlink.textContent = "↵";
+                    fn.append(backlink);
+                    const tn = fn.childNodes[1] as Text;
+                    tn.data = tn.data.slice(2); // remove dot
+                });
             })
         })
     }

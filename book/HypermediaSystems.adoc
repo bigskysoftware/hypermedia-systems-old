@@ -34,7 +34,7 @@ include::book/CH03_BuildingASimpleWebApplication.adoc[leveloffset=1]
 
 = Hypermedia-Driven Web Applications With htmx
 
-include::book/CH05_ExtendingHTMLAsHypermedia.adoc[leveloffset=1]
+include::book/CH04_ExtendingHTMLAsHypermedia.adoc[leveloffset=1]
 include::book/CH05_htmxPatterns.adoc[leveloffset=1]
 include::book/CH06_MorehtmxPatterns.adoc[leveloffset=1]
 include::book/CH07_ADynamicArchiveUIWithhtmx.adoc[leveloffset=1]

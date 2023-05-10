@@ -53,8 +53,9 @@ In chapter 5, we also looked at the `swap` delay modifier for `hx-swap`, which a
 In addition to these, `hx-swap` offers further control with the following modifiers:
 
 `settle`::
-Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and when its attributes are "`settled`", that is, updated from their old values (if any) to their new values. 
-// TODO: check: This gives you fine control of css-transitions, for example.
+Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and when
+its attributes are "`settled`", that is, updated from their old values (if any) to their new values. This can give you
+fine-grained control over CSS transitions.
 
 `show`::
 Allows you to specify an element that should be shown -- that is, scrolled into the viewport of the browser if necessary -- when a request is completed.
@@ -297,14 +298,12 @@ Consider the following
 scenario: your server-side team has decided that they want you to include a token for extra validation on every request.
 The token is going to be stored in `localStorage` in the browser, in the slot `special-token`.  The server-side team
 wants you to include this special token on every request made by htmx, as the `X-SPECIAL-TOKEN` header.
-// TODO: check: maybe, briefly show how to set the value in local storage
+// TODO 1cg: check: maybe, briefly show how to set the value in local storage
 How could you achieve this?  One way would be to catch the `htmx:configRequest` event and update the `detail.headers`
 object with this token from `localStorage`.
 
-In VanillaJS, it would look something like this:
+In VanillaJS, it would look something like this, placed in a `<script>` tag in the `<head>` of our HTML document:
 
-// TODO: check: In our Contact.app, for example, we would put this code... (where?) 
-// Mention htmx helper for adding listeners like this? 
 .Adding the `X-SPECIAL-TOKEN` header
 [source,js]
 ----
@@ -316,15 +315,15 @@ document.body.addEventListener("htmx:configRequest", function(configEvent){
 
 As you can see, we add a new value to the `headers` property of the event's detail.  After the event handler executes,
 the `headers` property is read by htmx and used to construct the headers for an AJAX request.  
-// TODO: check: add basic info, is configEvent.detail.headers an htmx function? 
-// TODO: check: briefly explain what a header 'detail' refers to
+// TODO 1cg: check: add basic info, is configEvent.detail.headers an htmx function?
+// TODO 1cg: check: briefly explain what a header 'detail' refers to
 So, with this bit of
 JavaScript code, we have added a new custom header to every AJAX request that htmx makes.  Slick!
-// TODO: check: explain the use case, something like 'this pattern of passing 
+// TODO 1cg: check: explain the use case, something like 'this pattern of passing
 // and checking tokens is sometimes used for security' 
 You can also update the `parameters` property to change the parameters submitted by the request, change the target
 of the request, and so on.
-// TODO: check: an example parameter might be...
+// TODO 1cg: check: an example parameter might be...
 Full documentation for the `htmx:configRequest` event can be found
 https://htmx.org/events/#htmx:configRequest[on the htmx website].
 
@@ -397,9 +396,12 @@ a `POST` to the `/integrations/1` path, it will trigger a synchronization with t
 Now, this synchronization may or may not result in new contacts being created.  In the case where new contacts _are_
 created, we want to refresh our contacts table.  In the case where no contacts are created, we don't want to refresh
 the table.
-// TODO: check: show brief code, how to conditionally add HX-Trigger
-To implement this we could conditionally add an `HX-Trigger`
-response header with the value `contacts-updated`. This value would trigger the `contacts-updated` event on the button that
+
+To implement this we could conditionally add an `HX-Trigger` response header with the value `contacts-updated`:
+
+// TODO 1cg: check: show brief code, how to conditionally add HX-Trigger
+
+This value would trigger the `contacts-updated` event on the button that
 made the AJAX request to `/integrations/1`.  We can then take advantage of the `from:` modifier of the `hx-trigger`
 attribute to listen for that event. With this pattern we can effectively trigger htmx requests from the server side.
 

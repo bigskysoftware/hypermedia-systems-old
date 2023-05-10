@@ -747,7 +747,7 @@ To get a flavor of AlpineJS, let's look at how to implement our counter example 
 For the counter, the only state we need to keep track of is the current number, so let's declare a JavaScript object
 with one property, `count`, in an `x-data` attribute on the div for our counter:
 
-// TODO: check: removed class="counter" to avoid confusion
+// TODO wt (please restore, used in scripting): check: removed class="counter" to avoid confusion
 
 .Counter with Alpine, line 1
 [source,html]
@@ -851,7 +851,7 @@ Recall that we want to show the toolbar if and only if one or more contacts are 
 have the ids of the selected contacts in the `selected` property.  Therefore, we can check the _length_ of that array
 to see if there are any selected contacts, quite easily:
 
-// TODO: were we going to have a selected count in the toolbar too?
+// TODO dz4k: were we going to have a selected count in the toolbar too?
 [source,html]
 ----
 <template x-if="selected.length > 0"> <1>
@@ -1030,7 +1030,7 @@ from using DOM-specific, non-natural language when appropriate.
 
 === +_hyperscript+ in Action: A Keyboard Shortcut
 
-// TODO: alt-S instead?  shift-S too aggressive?
+// TODO dz4k: alt-S instead?  shift-S too aggressive?
 
 While the counter demo is a good way to compare various approaches to scripting, the rubber meets the road when
 you try to actually implement a useful feature with an approach.  For +_hyperscript+, let's add a keyboard shortcut

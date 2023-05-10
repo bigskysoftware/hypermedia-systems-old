@@ -96,7 +96,7 @@ By supporting both of these types of APIs separately you can get the strengths o
 styles of code and infrastructure needs cleanly split out.
 
 Let's contrast the needs of JSON APIs with Hypermedia APIs:
-// TODO: check: row spacing?
+// TODO dz4k: check: row spacing?
 [cols="a,a"]
 |===
 |JSON API Needs |Hypermedia API
@@ -505,7 +505,7 @@ With properly built "`thin`" controllers and "`fat`" models, keeping two separat
 still evolving separately is not as difficult or as crazy as it might sound.
 
 
-// TODO: does some version of this fit here?
+// TODO dz4k: does this content fit here?
 // or, cut if you don't recommend using
 [.design-note]
 .HTML Notes: Microformats

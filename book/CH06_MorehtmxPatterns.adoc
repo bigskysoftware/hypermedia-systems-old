@@ -273,7 +273,7 @@ def contacts():
     if search is not None:
         contacts_set = Contact.search(search)
         if request.headers.get('HX-Trigger') == 'search': <1>
-          # TODO: render only the rows here <2>
+          # TODO 1cg (is this a real TODO or not): render only the rows here <2>
     else:
         contacts_set = Contact.all()
     return render_template("index.html", contacts=contacts_set) <2>

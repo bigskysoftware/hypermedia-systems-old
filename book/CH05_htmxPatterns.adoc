@@ -1033,7 +1033,7 @@ behavior, we are still exchanging hypermedia with the server, with no JSON API r
 
 As the web was designed.
 
-// TODO rewrite
+// TODO dz4k rewrite
 [.design-note]
 .HTML Notes: Framework Soup
 ****

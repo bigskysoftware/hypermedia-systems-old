@@ -655,7 +655,7 @@ are available on an "`Archived`" contact, to appropriately display them to an en
 API documentation.
 
 Furthermore, in the majority of front end SPA frameworks today, this contact information would live _in memory_ in a
-JavaScript object representing a model of the contact.  The DOM would be updated based on changes to this model, that
+JavaScript object representing a model of the contact, while the page data is held in the browser's https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model[Document Object Model] (DOM).  The DOM would be updated based on changes to this model, that
 is, the DOM would "`react`" to changes to this backing JavaScript model.
 
 This approach is certainly _not_ using Hypermedia As The Engine Of Application State: rather, it is using a JavaScript

@@ -67,19 +67,20 @@ put the endless swirl of the "`new new`" aside, look back on where the web came 
 // TODO 1cg: check: suggest this as the stronger concluding line
 Perhaps it's time to give hypermedia a chance.
 
-// TODO dz4k: check. Does this list accurately condense the work?
+// DONE dz4k: check. Does this list accurately condense the work?
 // detract from the conclusion?
 [.design-note]
 .HTML Notes: Toward Effective HTML
 ****
 Throughout the book we discuss a number of best practices for writing effective HTML. They are, in a nutshell: 
 
-* Stay close to the HTML markup you’re producing and be able to change it. Prefer frameworks and components that help you do this. 
-// TODO dz4k: maybe add. Aim for 'locality of behavior' in your markup, so that you or another developer can understand what each part of the page is doing just by looking at that part of the page.
-* Make the full range of available tags part of your toolkit. 
-* Aim for good fit between tag specs and your use case; check the HTML specs when in doubt. 
+* Stay close to the HTML markup you’re producing and be able to change it. Prefer frameworks and components that help you do this.
+* Apply the Locality of Behavior principle to HTML.
+* Familiarize yourself with the full range of available tags and attributes and make them part of your toolkit. Don't restrict yourself to what Markdown can do.
+// we should be able to say the s word by now
+* Aim for good fit between tag semantics and your use case; make frequent use of the HTML specs. 
 * When more specific tags don't fit, it is usually better to step back to <div> than to use a tag incorrectly. 
-* Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
+* Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard and touch interaction and accessibility.
 * Prefer components that extend HTML, rather than abstracting it away.
-* Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
+* To the extent possible, test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
 ****

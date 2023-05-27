@@ -96,7 +96,7 @@ By supporting both of these types of APIs separately you can get the strengths o
 styles of code and infrastructure needs cleanly split out.
 
 Let's contrast the needs of JSON APIs with Hypermedia APIs:
-// TODO dz4k: check: row spacing?
+
 [cols="a,a"]
 |===
 |JSON API Needs |Hypermedia API

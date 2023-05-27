@@ -851,7 +851,8 @@ Recall that we want to show the toolbar if and only if one or more contacts are 
 have the ids of the selected contacts in the `selected` property.  Therefore, we can check the _length_ of that array
 to see if there are any selected contacts, quite easily:
 
-// TODO dz4k: were we going to have a selected count in the toolbar too?
+// DONE dz4k: were we going to have a selected count in the toolbar too?
+// yes? -- dz4k
 [source,html]
 ----
 <template x-if="selected.length > 0"> <1>

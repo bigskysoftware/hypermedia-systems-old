@@ -82,3 +82,4 @@ Throughout the book we discuss a number of best practices for writing effective 
 * Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
 * Prefer components that extend HTML, rather than abstracting it away.
 * Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
+****

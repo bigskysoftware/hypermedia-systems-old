@@ -82,22 +82,3 @@ Throughout the book we discuss a number of best practices for writing effective 
 * Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard interaction and accessibility.
 * Prefer components that extend HTML, rather than abstracting it away.
 * Test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
-
-// TODO dz4k: Finish or cut. Placement okay?
-.HTML Notes: Helpful Resources
-****
-* Foundations
-* HTML specification: https://html.spec.whatwg.org/multipage
-
-* TODO link resources on alt text.
-
-* https://htmhell.dev: Along with sinister abuses of HTML, this website shares development tips that will help ypu keep up-to-date with best practice.
-
-* Referenced
-
-** Manuel Matuzović, [.cite]_Lost in Translation_, https://www.youtube.com/watch?v=Wno1IhEBTxc.
-
-** Manuel Matuzović, [.cite]_Why I'm not the biggest fan of Single Page Applications_, https://www.matuzo.at/blog/2023/single-page-applications-criticism/
-
-** [.cite]_semantic: the 8 letter s-word_, https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/
-****

@@ -1030,11 +1030,9 @@ from using DOM-specific, non-natural language when appropriate.
 
 === +_hyperscript+ in Action: A Keyboard Shortcut
 
-// TODO dz4k: alt-S instead?  shift-S too aggressive?
-
 While the counter demo is a good way to compare various approaches to scripting, the rubber meets the road when
 you try to actually implement a useful feature with an approach.  For +_hyperscript+, let's add a keyboard shortcut
-to Contact.app: when a user hits Shift-S in our app, we will focus the search field.
+to Contact.app: when a user hits Alt+S in our app, we will focus the search field.
 
 Since our keyboard shortcut focuses the search input, let's put the code for it on that search input, satisfying
 locality.
@@ -1049,8 +1047,8 @@ Here is the original HTML for the search input:
 We will add an event listener using the `on keydown` syntax, which will fire whenever a keydown occurs.  Further, we
 can use an _event filter_ syntax in +_hyperscript+ using square brackets after the event.  In the square brackets we
 can place a _filter expression_ that will filter out `keydown` events we aren't interested in.  In our case, we only
-want to consider events where the shift key is held down and where the "`S`" key is being pressed.  We can create a
-boolean expression that inspects the `shiftKey` property (to see if it is `true`) and the `code` property (to see if
+want to consider events where the Alt key is held down and where the "`S`" key is being pressed.  We can create a
+boolean expression that inspects the `altKey` property (to see if it is `true`) and the `code` property (to see if
 it is `"KeyS"`) of the event to achieve this.
 
 So far our +_hyperscript+ looks like this:
@@ -1058,7 +1056,7 @@ So far our +_hyperscript+ looks like this:
 .A start on our keyboard shortcut
 [source, hyperscript]
 ----
-  on keydown[shiftKey and code is 'KeyS'] ...
+  on keydown[altKey and code is 'KeyS'] ...
 ----
 
 Now, by default, +_hyperscript+ will listen for a given event _on the element where it is declared_.  So, with the script we have, we would only get `keydown` events if the search box is already focused.  That's not what
@@ -1070,7 +1068,7 @@ case we want to listen for the `keyDown` from the window, and our code ends up l
 .Listening globally
 [source, hyperscript]
 ----
-  on keydown[shiftKey and code is 'KeyS'] from window ...
+  on keydown[altKey and code is 'KeyS'] from window ...
 ----
 
 Using the `from` clause, we can attach the listener to the window while, at the same time, keeping the code on the
@@ -1085,7 +1083,7 @@ Here is the entire script, embedded in HTML:
 [source,html]
 ----
 <input id="search" name="q" type="search" placeholder="Search Contacts"
-  _="on keydown[shiftKey and code is 'KeyS'] from the window
+  _="on keydown[altKey and code is 'KeyS'] from the window
        me.focus()"> <1>
 ----
 <1> "`me`" refers to the element that the script is written on.

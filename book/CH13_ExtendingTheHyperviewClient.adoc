@@ -1,7 +1,7 @@
 
 = Extending the Hyperview Client
 :chapter: 13
-:url: ./extending-the-hypermedia-client/
+:url: /extending-the-hypermedia-client/
 
 
 In the previous chapter, we created a fully-featured native mobile version of our Contacts app.

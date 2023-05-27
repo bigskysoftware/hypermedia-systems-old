@@ -2,8 +2,8 @@
 = Introduction
 :chapter: 00
 :part: Hypermedia Concepts
-:part_url: ./part/hypermedia-concepts/
-:url: ./introduction/
+:part_url: /part/hypermedia-concepts/
+:url: /introduction/
 
 This is a book about building applications using hypermedia systems.  _Hypermedia systems_ might seem like a strange phrase:
 how is hypermedia a _system_? Isn't hypermedia just a way to link documents together?

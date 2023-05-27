@@ -1,7 +1,7 @@
 
 = Client-Side Scripting
 :chapter: 09
-:url: ./client-side-scripting/
+:url: /client-side-scripting/
 
 [quote, Roy Fielding, Architectural Styles and the Design of Network-based Software Architectures]
 REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts.

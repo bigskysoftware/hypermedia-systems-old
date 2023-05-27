@@ -2,8 +2,8 @@
 = Hyperview: A Mobile Hypermedia
 :chapter: 11
 :part: Bringing Hypermedia To Mobile
-:part_url: ./part/hyperview/
-:url: ./hyperview-a-mobile-hypermedia/
+:part_url: /part/hyperview/
+:url: /hyperview-a-mobile-hypermedia/
 
 You may be forgiven for thinking the hypermedia architecture is synonymous with the Web, web browsers, and HTML.
 No doubt, the Web is the largest hypermedia system, and web browsers are the most popular hypermedia client.

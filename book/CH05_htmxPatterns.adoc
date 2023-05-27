@@ -1,7 +1,7 @@
 
 = Htmx Patterns
 :chapter: 05
-:url: ./htmx-in-action/
+:url: /htmx-in-action/
 
 Now that we've seen how htmx extends HTML as a hypermedia, it's time to put it into action.  As we use htmx, we will still
 be using hypermedia: we will issue HTTP requests and get back HTML.  But, with the additional functionality that htmx provides,

@@ -1,7 +1,7 @@
 
 = A Web 1.0 Application
 :chapter: 03
-:url: ./a-web-1-0-application/
+:url: /a-web-1-0-application/
 
 To start our journey into Hypermedia-Driven Applications, we are going to create a simple contact management web
 application called Contact.app.  We will start with a basic, "`Web 1.0-style`" Multi-Page Application (MPA), in the grand

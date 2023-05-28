@@ -70,7 +70,8 @@ It is important to understand that, in his dissertation, Fielding was describing
 late 1990s.  The web, at that point, was simply web browsers exchanging hypermedia.  That system, with its simple links
 and forms, was what Fielding was calling RESTful.
 
-JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _the Web 1.0_.
+JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and the 1.0
+version of The Web.
 
 == Hypermedia-Driven Applications
 
@@ -171,7 +172,7 @@ The executive summary:
 Well-written HTML is easier to read and debug, more accessible to all, ranked higher by search engines (not out of bias, but because they have an easier time scraping it).
 
 An important caveat:
-The mantra that HTML is "accesible by default" is misleading and shunning other technologies like JavaScript is misguided.
+The mantra that HTML is "accessible by default" is misleading and shunning other technologies like JavaScript is misguided.
 Doing everything with "pure", "semantic" HTML is not a panacea, and testing is the ultimate indicator of quality over spec adherence.
 But writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
 ****

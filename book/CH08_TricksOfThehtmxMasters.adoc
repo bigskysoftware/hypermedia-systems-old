@@ -744,21 +744,27 @@ if you find yourself using `outerHTML` more frequently than `innerHTML` and want
 swap value throughout your application.
 
 [.design-note]
-.HTML Notes: Budgeting For HTML
+.HTML Notes: "'Display: none'"
 ****
-The close relationship between content and markup means that
-good HTML is labor-intensive.
-Most sites have a separation between the authors,
-who are rarely familiar with HTML,
-and the developers, who need to develop a generic system able to handle any content that's thrown at it --
-this separation usually taking the form of a CMS.
-As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
+Sadly, not even good HTML-- or HXML -- can cure all ills.
+If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
+Test manually.
+Test automatically.
+Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
 
-Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
-It's an expense few organizations can spare.
+One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is often desirable to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
 
-Thus, we don't expect every site to contain perfectly conformant HTML.
-What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
+[source,css]
+----
+.vh {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	block-size: 1px;
+	inline-size: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+----
 
-If you have the resources, however, putting more care in your HTML will produce a more polished site.
+`vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
 ****

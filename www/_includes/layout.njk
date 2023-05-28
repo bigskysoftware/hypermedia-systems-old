@@ -86,6 +86,10 @@
     figcaption:first-child { border-block-end: 1px solid var(--faded-fg) }
     figcaption:last-child { border-block-start: 1px solid var(--faded-fg) }
 
+    table tr:not(:last-child) > * {
+        padding-bottom: var(--rhythm);
+    }
+
     .iconbutton { box-shadow: none !important; }
 
     .text-align\:end { text-align: end }
@@ -113,8 +117,13 @@
     .colist {
         counter-reset: colist;
         font-size: .8em;
-        line-height: calc(var(--rhythm) * 2 / 3);
+        line-height: calc(var(--rhythm) * 3 / 4);
         font-variation-settings: "opsz" 8;
+    }
+
+    aside .colist {
+        font-size: inherit;
+        line-height: inherit;
     }
 
     .colist li {

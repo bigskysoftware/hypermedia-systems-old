@@ -5,13 +5,14 @@
 
 To start our journey into Hypermedia-Driven Applications, we are going to create a simple contact management web
 application called Contact.app.  We will start with a basic, "`Web 1.0-style`" Multi-Page Application (MPA), in the grand
-CRUD (Create, Read, Update, Delete) tradition.  It will not be the best contact management application in the world; it will be simple and it will do its job.
+CRUD (Create, Read, Update, Delete) tradition.  It will not be the best contact management application in the world, but
+it will be simple and it will do its job.
 
 This application will also be easy to incrementally improve in the coming chapters by utilizing the hypermedia-oriented
 library htmx.
 
 By the time we are finished building and enhancing the application, over the next few chapters, it will have some very
-slick features that most developers today would assume requires the use of a heavy JavaScript framework.
+slick features that most developers today would assume requires the use of a SPA JavaScript framework.
 
 == Picking A "`Web Stack`"
 
@@ -36,29 +37,31 @@ More importantly, Python is easy to read even if you aren't familiar with it.
 We chose the Flask web framework because it is simple and does not impose a lot of structure on top of the
 basics of HTTP request handling. 
 
-This bare-bones approach is a good match for our needs: in other cases you might consider a more full-featured Python framework, such as https://www.djangoproject.com/[Django], which supplies much more functionality out of the box than Flask does.
+This bare-bones approach is a good match for our needs: in other cases you might consider a more full-featured Python
+framework, such as https://www.djangoproject.com/[Django], which supplies much more functionality out of the box than
+Flask does.
 
-By using Flask we are able
-to keep the book focused on _hypermedia
-exchanges_. 
-
-So, even if this isn't your preferred stack, keep going: you will gain from the patterns we introduce here.
+By using Flask for our book, we will be able to keep our code focused on _hypermedia exchanges_.
 
 We picked Jinja2 templates because they are the default templating language for Flask.  They are simple enough and
 similar enough to most other server-side templating languages that most people who are familiar with any server-side
 (or client-side) templating library should be able to understand them quickly and easily.
 
+Even if this combination of technologies isn't your preferred stack, please, keep reading: you will learn quite a bit from
+the patterns we introduce in the coming chapters and it shouldn't be hard to map them into your preferred language and
+frameworks.
+
 With this stack we will be rendering HTML _on the server-side_ to return to clients, rather than producing JSON.  This
-is the traditional approach to building web applications, but, with the rise of SPAs, is not as widely used a technique
-as it once was.  Today, as people are rediscovering this approach to building web applications, the term "`Server-Side
-Rendering`" or SSR is emerging as the way that people talk about this style of templating.  This is in contrast with
+is the traditional approach to building web applications.  However, with the rise of SPAs, this approach is not as
+widely used a technique as it once was.  Today, as people are rediscovering this style of web applications, the term
+"`Server-Side Rendering`" or SSR is emerging as the way that people talk about it.  This contrasted with
 "`Client-Side Rendering`", that is, rendering templates in the browser with data retrieved in JSON form from the server,
 as is common in SPA libraries.
 
 In Contact.app we will intentionally keep things as simple as possible to maximize the teaching value of our code: it
-won't be perfectly factored code, but it will
-be easy to follow for readers even if they have little Python experience, and it should be easy to translate the application
-and the techniques demonstrated into your preferred programming language and web framework.
+won't be perfectly factored code, but it will be easy to follow for readers, even if they have little Python experience,
+and it should be easy to translate both the application and the techniques demonstrated into your preferred programming
+environment.
 
 == Python
 
@@ -67,15 +70,15 @@ the various technologies we use _around_ that hypermedia.  This has some obvious
 with Python, for example, some example python code in the book may be a bit confusing or mysterious at first.
 
 If you feel like you need a quick introduction to the language before diving into the code, we recommend the following
-books/websites:
+books and websites:
 
 * https://nostarch.com/python-crash-course-3rd-edition[Python Crash Course] from No Starch Press
 * https://learnpythonthehardway.org/python3/[Learn Python The Hard Way] by Zed Shaw
 * https://www.py4e.com/[Python For Everybody] by Dr. Charles R. Severance
 
 We think most web developers, even developers who are unfamiliar with Python, should be able to follow
-along. Most of the authors hadn't written much Python before writing this book, and we got the hang of
-it pretty quickly.
+along with our examples. Most of the authors of this book hadn't written much Python before writing it, and we got the
+hang of it pretty quickly.
 
 == Introducing Flask: Our First Route
 
@@ -407,8 +410,7 @@ of the `Contact` class in Python, if you aren't familiar with it.)
 While the handler code for this route is very simple, the `new.html` template is more complicated.  
 
 ****
-For the
-remaining templates we are going to omit the layout directive and the content block declaration, but you
+For the remaining templates we are going to omit the layout directive and the content block declaration, but you
 can assume they are the same unless we say otherwise.  This will let us focus on the "meat" of the template.
 ****
 
@@ -436,7 +438,7 @@ Here is what our HTML looks like:
 
 In the first line of code we create a form that will submit back _to the same path_ that we are handling: `/contacts/new`.
 Rather than issuing an HTTP `GET` to this path, however, we will issue an HTTP `POST` to it.  Using a `POST` in this manner
-will signal to the server that we want to create a new Contact, rather than get a form.
+will signal to the server that we want to create a new Contact, rather than get a form for creating one.
 
 We then have a label (always a good practice!) and an input that captures the email of
 the contact being created.  The name of the input is `email` and, when this form is submitted, the value of this input
@@ -478,12 +480,11 @@ Finally, we have a button that will submit the form, the end of the form tag, an
 </p>
 ----
 
-Easy to miss in this straight-forward example: we are seeing the flexibility
-of hypermedia in action.
+It is easy to miss in this straight-forward example: we are seeing the flexibility of hypermedia in action.
 
 If we add a new field, remove a field, or change the logic around how fields are validated or work with one another,
 this new state of affairs would be reflected in the new hypermedia representation given to users.  A user would see the
-updated new form, and be able to work with new features, with no software update required.
+updated new form and be able to work with these new features, with no software update required.
 
 ==== Handling the post to /contacts/new
 
@@ -856,10 +857,11 @@ Is it time to reach for a JavaScript framework and JSON APIs to make our contact
 
 No.  No it isn't.
 
-It turns out that we can improve the user experience of this application within the
-hypermedia architecture. In the next few chapters we will look at https://htmx.org[htmx], a hypermedia-oriented library
-that will let us improve our contact application _without_ abandoning the hypermedia approach we have used so far.
+It turns out that we can improve the user experience of this application while retaining its fundamental hypermedia
+architecture.
 
+In the next few chapters we will look at https://htmx.org[htmx], a hypermedia-oriented library
+that will let us improve our contact application _without_ abandoning the hypermedia approach we have used so far.
 
 [.design-note]
 .HTML Notes: Semantic HTML

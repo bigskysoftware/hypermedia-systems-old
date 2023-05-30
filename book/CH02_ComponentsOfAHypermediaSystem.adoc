@@ -855,6 +855,7 @@ Ignoring the answer (more people than you'd think), not every UI pattern has a d
 We often need to compose elements and augment them with attributes.
 Do you know, off the top of your head, the best elements and attributes to use for...
 
+// TODO dzk (maybe give the correct elements here?  I don't know them... :)
 * A "command palette" menu?
 * A play-pause button?
 * A search field with a search button next to it? (Check the HTML spec -- there might be things on there you don't remember from before!)

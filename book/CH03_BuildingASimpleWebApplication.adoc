@@ -134,7 +134,7 @@ we are going to redirect to another path, the `/contacts` path.  Redirects are a
 redirect a client to another location with an HTTP response.
 
 We are going to display a list of contacts as our root page, and, arguably, redirecting to the `/contacts` path to
-display this information is a bit more consistent with notion of resources with REST.  This is a judgement call on our
+display this information is a bit more consistent with the notion of resources with REST.  This is a judgement call on our
 part, and not something we feel is too important, but it makes sense in terms of routes we will set up later in the
 application.
 

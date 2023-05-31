@@ -11,7 +11,8 @@ was built using nothing but forms and anchor tags, the traditional hypermedia co
 The application exchanges hypermedia (HTML) with the server over HTTP, issuing `GET` and `POST` HTTP requests and
 receiving back full HTML documents in response.
 
-It is a basic web application, but it is also definitely a Hypermedia-Driven Application. It is robust, it leverages the web's native technologies, and it is simple to understand.  
+It is a basic web application, but it is also definitely a Hypermedia-Driven Application. It is robust, it leverages the
+web's native technologies, and it is simple to understand.
 
 So what's not to like about the application?
 
@@ -33,7 +34,8 @@ cousins.
 
 We could address this issue by adopting a Single Page Application framework, and updating our server-side to
 provide JSON-based responses.  Single Page Applications eliminate the clunkiness of web 1.0 applications by updating a
-web page directly: they mutate the Document Object Model (DOM) directly, without doing a full page refresh.
+web page without refreshing it: they can mutate parts of the Document Object Model (DOM) of the existing page without
+needing to replace (and re-render) the entire page.
 
 .The DOM
 ****
@@ -55,19 +57,24 @@ with the application sacrificing the advantages of hypermedia in order to provid
 Many web developers today would not even consider the hypermedia approach due to the perceived "`legacy`" feel of these
 web 1.0 style applications.
 
-The second, technical point may strike you as a bit pedantic, and we are the first to admit that conversations around
-REST and which HTTP Action is right for a given operation can become very tedious.  But still, it's odd that,
-when using plain HTML, it is impossible to use HTTP fully.
+Now, the second more technical issue we mentioned may strike you as a bit pedantic, and we are the first to admit that
+conversations around REST and which HTTP Action is right for a given operation can become very tedious.  But still, it's
+odd that, when using plain HTML, it is impossible to use all the functionality of HTTP!
+
+Just seems wrong, doesn't it?
 
 == A Close Look At A Hyperlink
 
-It turns out that we can boost the interactivity of our application without resorting to the SPA approach, by using one of several available hypermedia-oriented JavaScript libraries.
-We'll use the library that we've developed, https://htmx.org[htmx], not only because we know it inside and out, but because we built it purely to extend HTML as a hypermedia. 
+It turns out that we can boost the interactivity of our application and address both of these issues _without_ resorting
+to the SPA approach.  We can do so by using one of several available _hypermedia-oriented_ JavaScript libraries.
+In this book, naturally, we will use the library that we've developed, https://htmx.org[htmx].  We will use it not only
+because we know it inside and out, but also because we built it to extend HTML as a hypermedia and address the issues
+with legacy HTML applications we mentioned above (as well as few others.)
 
-To understand how htmx allows us to improve the UX of our Web 1.0 style
-application without abandoning hypermedia, let's revisit the hyperlink/anchor tag from Chapter 1.  Recall, a hyperlink
-is what is known as a _hypermedia control_, a mechanism that describes some sort of interaction by encoding information about that interaction directly and completely within
-itself.
+Before we get into how htmx allows us to improve the UX of our Web 1.0 style application, let's revisit the
+hyperlink/anchor tag from Chapter 1.  Recall, a hyperlink is what is known as a _hypermedia control_, a mechanism that
+describes some sort of interaction with a server by encoding information about that interaction directly and completely
+within the control itself.
 
 Consider again this simple anchor tag which, when interpreted by a browser, creates a hyperlink to the website for
 this book:
@@ -87,8 +94,8 @@ Let's break down exactly what happens with this link:
 * The browser will issue an HTTP `GET` to `https://hypermedia.systems`...
 * The browser will load the HTML body of the HTTP response into the browser window, replacing the current document.
 
-So we have four aspects of a simple hypermedia link like this, with the last three aspects supplying the mechanism that distinguishes
-a hyperlink from "`normal`" text and makes this a hypermedia control.
+So we have four aspects of a simple hypermedia link like this, with the last three aspects supplying the mechanism that
+distinguishes a hyperlink from "`normal`" text and, thus, makes this a hypermedia control.
 
 Now, let's take a moment and think about how we can _generalize_ these last three aspects of a hyperlink.
 
@@ -99,10 +106,10 @@ Consider: what makes anchor tags (and forms) so special?
 Why can't other elements issue HTTP requests as well?
 
 For example, why shouldn't `button` elements be able to issue HTTP requests?  It seems arbitrary to have to wrap a
-form tag around a button just to make deleting contacts work in our application.  
+form tag around a button just to make deleting contacts work in our application, for example.
 
-Maybe: other elements should be able
-to issue HTTP requests as well, and act as hypermedia controls on their own.
+Maybe: other elements should be able to issue HTTP requests as well.  Maybe other elements should be able to act as
+hypermedia controls on their own.
 
 This is our first opportunity to generalize HTML as a hypermedia.
 
@@ -112,13 +119,13 @@ This is our first opportunity to generalize HTML as a hypermedia.
 HTML could be extended to allow _any_ element to issue a request to the server and act as a hypermedia control.
 ====
 
-=== Why Only Clicks & Submits?
+=== Why Only Click & Submit Events?
 
 Next, let's consider the event that triggers the request to the server on our link: a click event.
 
-Well, what's so special about clicking (in the case of anchors) or submitting (in the case of forms)?  Those are just two
-of many, many events that are fired by the DOM, after all.  Events like mouse down, or key up, or blur are all events
-you might want to use to issue an HTTP request.
+Well, what's so special about clicking (in the case of anchors) or submitting (in the case of forms) things?  Those are
+just two of many, many events that are fired by the DOM, after all.  Events like mouse down, or key up, or blur are all
+events you might want to use to issue an HTTP request.
 
 Why shouldn't these other events be able to trigger requests as well?
 
@@ -164,10 +171,11 @@ HTML could be extended so that it allows access to the missing three HTTP method
 As a final observation, consider the last aspect of a hyperlink: it replaces  the _entire_ screen when a user clicks on it.
 
 It turns out that this technical detail is the primary culprit for poor user experience in Web 1.0 Applications.
-A full page refresh can cause a flash of unstyled content, it destroys the scroll state of the user by scrolling to the
-top of the page, and so forth.
+A full page refresh can cause a flash of unstyled content, where content "jumps" on the screen as it transitions from
+its initial to its styled final form.  It also destroys the scroll state of the user by scrolling to the
+top of the page, removes focus from a focused element and so forth.
 
-But there is no rule saying that hypermedia exchanges _must_ replace the entire document.
+But, if you think about it, there is no rule saying that hypermedia exchanges _must_ replace the entire document.
 
 This gives us our fourth, final and perhaps most important opportunity to generalize HTML:
 
@@ -202,7 +210,7 @@ can be added to a web application by simply including it via a `script` tag in y
 
 Because of this simple installation model, you can take advantage of tools like public CDNs to install the library.
 
-Below is an example using the popular https://unpkg.com[unpkg] Content Delivery Network (CDN) to install version `1.7.0`
+Below is an example using the popular https://unpkg.com[unpkg] Content Delivery Network (CDN) to install version `1.9.2`
 of the library.  We use an integrity hash to ensure that the delivered JavaScript content matches what we expect.  This
 SHA can be found on the htmx website.
 
@@ -213,9 +221,9 @@ We also mark the script as `crossorigin="anonymous"` so no credentials will be s
 [source,html]
 ----
 <head>
-  <script src="https://unpkg.com/htmx.org@1.7.0"
-          integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo"
-          crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.9.2"
+        integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h"
+        crossorigin="anonymous"></script>
 
 </head>
 ----
@@ -234,11 +242,10 @@ Once htmx has been installed, you can begin using it immediately.
 
 === No JavaScript Required...
 
-And here we get to the fun part of htmx: htmx does not require you,
-the user of htmx, to actually write any JavaScript.
+And here we get to the interesting part of htmx: htmx does not require you, the user of htmx, to actually write any JavaScript.
 
 Instead, you will use _attributes_ placed directly on elements in your HTML to drive more dynamic behavior.  Htmx extends
-HTML as a hypermedia, and it wants that extension to be as natural and consistent as possible with existing
+HTML as a hypermedia, and it is designed so that extension is as natural and consistent as possible with existing
 HTML concepts.  Just as an anchor tag uses an `href` attribute to specify the URL to retrieve, and forms use an `action`
 attribute to specify the URL to submit the form to, htmx uses HTML _attributes_ to specify the URL that an HTTP request
 should be issued to.
@@ -282,8 +289,8 @@ Very easy to understand and very consistent with the rest of HTML.
 
 With the request issued by the button above, we get to perhaps the most important thing to understand about htmx:
 it expects the response to this AJAX request _to be HTML_.  Htmx is an extension of HTML.  A native hypermedia control
-like an anchor tag will typically get an HTML response to a request it creates.  Similarly, htmx expects the server to
-respond to the requests that it makes with HTML.
+like an anchor tag will typically get an HTML response to an HTTP request it creates.  Similarly, htmx expects the server to
+respond to the requests that _it_ makes with HTML.
 
 This may surprise web developers who are used to responding to an AJAX request with JSON,
 which is far and away the most common response format for such requests.  But AJAX requests are just HTTP requests and
@@ -341,10 +348,10 @@ content into the existing page (rather than replacing the entire page), the ques
 content be placed?
 
 It turns out that the default htmx behavior is to simply put the returned content inside the element that triggered the
-request.  That's obviously _not_ a good thing in the case of our button: we will end up with a list of contacts awkwardly embedded within
+request.  That's _not_ a good thing in the case of our button: we will end up with a list of contacts awkwardly embedded within
 the button element.  That will look pretty silly and is obviously not what we want.
 
-Fortunately htmx provides another attribute, `hx-target` which can be used to specify exactly where in the DOM the
+Fortunately htmx provides another attribute, `hx-target` which can be used to specify exactly _where_ in the DOM the
 new content should be placed.  The value of the `hx-target` attribute is a Cascading Style Sheet (CSS) _selector_ that
 allows you to specify the element to put the new hypermedia content into.
 
@@ -465,15 +472,14 @@ four opportunities for improvement that we enumerated regarding plain HTML:
 * Opportunity 1: We can now issue an HTTP request with _any_ element (in this case we are using a button).
 * Opportunity 3: We can issue _any sort_ of HTTP request we want, `PUT`, `PATCH` and `DELETE`, in particular.
 
-And, with `hx-target` and `hx-swap` we have addressed a third shortcoming:
-the requirement that the entire page be replaced.
+And, with `hx-target` and `hx-swap` we have addressed a third shortcoming: the requirement that the entire page be replaced.
 
 * Opportunity 4: We can now replace any element we want in our page via transclusion, and we can do so in any manner want.
 
 So, with only seven relatively simple additional attributes, we have addressed most of the shortcomings of HTML as a
 hypermedia that we identified earlier.
 
-What's next? Recall the other shortcoming we noted: the fact that only a `click` event (on an anchor) or a `submit` event
+What's next? Recall the one other opportunity we noted: the fact that only a `click` event (on an anchor) or a `submit` event
 (on a form) can trigger a HTTP request. Let's look at how we can address that limitation.
 
 == Using Events
@@ -547,7 +553,7 @@ Note that we have a comma separated list of events that can trigger this element
 one potential triggering event.  We still want to respond to the `click` event and load the contacts, in addition
 to handling the `Ctrl-L` keyboard shortcut.
 
-There are, unfortunately, two problems with our `keyup` addition:  As it stands, it will trigger requests on _any_ keyup
+Unfortunately there are two problems with our `keyup` addition:  As it stands, it will trigger requests on _any_ keyup
 event that occurs.  And, worse, it will only trigger when a keyup occurs _within_ this button.  The
 user would need to tab onto the button to make it active and then begin typing.
 
@@ -625,7 +631,7 @@ outlined at the start of this chapter:
 
 That's a grand total of eight, count 'em, _eight_ attributes that all fall squarely within the same conceptual model as
 normal HTML and that, by extending HTML as a hypermedia, open up a whole new world of user interaction possibilities
-within HTML.
+within it.
 
 Here is a table summarizing those opportunities and which htmx attributes address them:
 

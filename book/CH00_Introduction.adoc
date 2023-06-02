@@ -2,8 +2,8 @@
 = Introduction
 :chapter: 00
 :part: Hypermedia Concepts
-:part_url: ./part/hypermedia-concepts/
-:url: ./introduction/
+:part_url: /part/hypermedia-concepts/
+:url: /introduction/
 
 This is a book about building applications using hypermedia systems.  _Hypermedia systems_ might seem like a strange phrase:
 how is hypermedia a _system_? Isn't hypermedia just a way to link documents together?
@@ -70,7 +70,8 @@ It is important to understand that, in his dissertation, Fielding was describing
 late 1990s.  The web, at that point, was simply web browsers exchanging hypermedia.  That system, with its simple links
 and forms, was what Fielding was calling RESTful.
 
-JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and _the Web 1.0_.
+JSON APIs were a decade away from becoming a common tool in web development: REST was about _hypermedia_ and the 1.0
+version of The Web.
 
 == Hypermedia-Driven Applications
 
@@ -147,16 +148,31 @@ ____
 
 
 
-[.design-note]
-.HTML Notes: Why Effective HTML?
+[.html-note]
+.HTML Notes: Hypermedia In Practice
 ****
-At the end of each chapter you will find tips and best practices for writing effective HTML.
+At the end of each chapter you will find tips and best practices for writing HTML well.
 
-It's very easy (and sometimes acceptable) to produce mediocre HTML that _seems to_ work,
-and many websites settle with _seeming to_ work.
+It's very easy (and sometimes acceptable) to produce mediocre HTML that, within a purview limited to one particular application, works -- this seems to be enough for most websites.
+But our websites, like men, are not islands.
+That is, they are not applications of a _platform_,
+but constituents of a _system_.
 
+In a systems view of the web, the purpose of writing HTML is not just to develop a particular application, but also to play along with other members of the Web.
+Thankfully for us hypermedia advocates, a few components, most prominently search engines and assistive technologies, have enough sway to keep people caring about HTML.
+Less fortunately, lack of awareness around hypermedia means that these components are seen as annoyances to get out of the way, demons to appease, or worse, legacy leftovers to ignore.
+
+After all, web development is so much easier without all this Web stuff.
+
+So why resist the tide? Why shouldn't we discard hypermedia and rewrite the web into the application platform it can clearly be?
+That's what the rest of this book will try to answer, in a practical, non theory-addled way.
+And at the ends of chapters, these HTML Notes will connect the concepts of hypermedia we discuss and the code samples we present to day-to-day web development.
+
+The executive summary:
+Well-written HTML is easier to read and debug, more accessible to all, ranked higher by search engines (not out of bias, but because they have an easier time scraping it).
+
+An important caveat:
+The mantra that HTML is "accessible by default" is misleading and shunning other technologies like JavaScript is misguided.
+Doing everything with "pure", "semantic" HTML is not a panacea, and testing is the ultimate indicator of quality over spec adherence.
 But writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
-
-// TODO: check last sentence here; pulled together from various paragraphs
-Effective HTML typically loads faster, is easier to read and debug, performs better both with search engine ranking and screen reader accessibility, and can be scraped programatically. 
 ****

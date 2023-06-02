@@ -1,7 +1,7 @@
 
 = Hypermedia: A Reintroduction
 :chapter: 01
-:url: ./hypermedia-reintroduction/
+:url: /hypermedia-reintroduction/
 
 Hypermedia is a universal technology today, almost as common as electricity.
 
@@ -290,7 +290,7 @@ issuing an "`Asynchronous JavaScript and XML,`" or AJAX request, available in al
 <button onclick="fetch('/api/v1/contacts/1') <1>
                  .then(response => response.json()) <2>
                  .then(data => updateUI(data))"> <3>
-    Fetch Contacts
+    Fetch Contact
 </button>
 ----
 <1> Issue the request.
@@ -351,7 +351,7 @@ It needs to know:
 In short, the logic in `updateUI()` needs to have intimate knowledge of the API endpoint at `/api/v1/contact/1`, knowledge provided
 via some side-channel beyond the response itself.  As a result, the `updateUI()` code and the
 API have a strong relationship, known as _tight coupling_: if the format of the JSON response changes, then the code for `updateUI()` will almost certainly
-also need to be changed.
+also need to be changed as well.
 
 ==== Single Page Applications
 
@@ -376,8 +376,8 @@ are updated via JavaScript code and the framework then "`reacts`" to these chang
 When the user interface is updated by a user these changes also flow _into_ the model objects, establishing a "`two-way`"
 binding mechanism: the model can update the UI, and the UI can update the model.
 
-This is all very sophisticated and, today, very popular.  But the fact is that developers that adopt this approach to building
-web applications have largely abandoned the web's underlying hypermedia system.
+This is all very sophisticated and, today, very popular.  However, web developers that adopt this approach to building
+their web applications are abandoning the web's underlying hypermedia system.
 
 HTML is still used to build user interfaces, but the _hypermedia_ aspect of the two major hypermedia controls,
 anchors and forms, are ignored.  Neither tag interacts with a server via their native _hypermedia_ mechanism.  Rather,
@@ -388,8 +388,8 @@ So, as with our simple button above, the Single Page Application approach is _no
 It does not take advantage of the existing RESTful architecture of the web, nor does it utilize the built-in functionality
 found in HTML's native hypermedia controls.
 
-SPAs are somewhat like _thick client applications_ like the client-server applications of the
-1980s -- an architecture popular _before_ the web came along.
+SPAs are more much like _thick client applications_, that is, like the client-server applications of the
+1980s -- an architecture popular _before_ the web came along and that the web was, in many ways, a reaction to.
 
 This approach _isn't necessarily wrong_, but it is worth thinking about _why_ web developers so frequently take it and
 if there are reasons _not_ to go down this path.
@@ -408,24 +408,25 @@ This idea has really swept the internet. It started with a few major popular web
 marketing sites and blogs.
 ____
 
-The JavaScript-based Single Page Application approach has taken the web development world by storm, and there was one
-major and very good reason for its success: The Single Page Application offers a far more interactive and immersive experience
-than the old, gronky, Web 1.0 hypermedia-based applications could.  It had the ability to smoothly update elements inline on
-a page without a dramatic reload of the entire document, the ability to use CSS transitions to create nice visual effects,
-the ability to hook into arbitrary events like mouse movements. All of these gave JavaScript-based applications a huge advantage
-in building sophisticated user experiences.
+The JavaScript-based Single Page Application approach has taken the web development world by storm, and if there was one
+major for its wild success it was this: The Single Page Application offers a far more interactive and immersive experience
+than the old, gronky, Web 1.0 hypermedia-based applications could.  SPAs had the ability to smoothly update elements inline on
+a page without a dramatic reload of the entire document, they had the ability to use CSS transitions to create nice visual effects,
+and the ability to hook into arbitrary events like mouse movements.
 
-So why on earth would you abandon this popular and modern approach for an older and much less discussed
-approach such as hypermedia?
+All of these gave JavaScript-based applications a huge advantage in building sophisticated user experiences.
+
+So, given this success, why on earth would you set aside this popular and modern approach to consider an older and
+less popular approach like hypermedia?
 
 === JavaScript Fatigue
 
-Well, we are glad you asked.
+We are glad you asked!
 
 It turns out that the hypermedia architecture, even in its original Web 1.0 form, has a number of advantages when compared with
-the Single Page Application + JSON Data API approach:
+the Single Page Application + JSON Data API approach.  Three of the biggest are:
 
-* It is an extremely simple approach to building web applications.
+* It is an extremely _simple_ approach to building web applications.
 
 * It is extremely tolerant of content and API changes. In fact, it thrives on them!
 
@@ -438,15 +439,17 @@ The first two advantages, in particular, address major pain points in modern web
 * JSON API churn -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
   many application teams.
 
-The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon known as "`JavaScript Fatigue.`" This refers to a general sense of exhaustion with all the hoops that are necessary to jump through to
-get anything done in modern-day web applications.
+The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon
+known as "`JavaScript Fatigue.`" This refers to a general sense of exhaustion with all the hoops that are necessary to
+jump through to get anything done in modern-day web applications.
 
-We believe that a hypermedia architecture can help cure JavaScript Fatigue for many developers and teams.  But if hypermedia is so great, and if it addresses so many of the problems that beset the web
-development industry, why was it abandoned in the first place?  After all, hypermedia was there first.
+We believe that a hypermedia architecture can help cure JavaScript Fatigue for many developers and teams.
 
-Why didn't web developers just stick with it?
+But if hypermedia is so great, and if it addresses so many of the problems that beset the web
+development industry, why was it abandoned in the first place?  After all, hypermedia was there first.  Why didn't web
+developers just stick with it?
 
-We believe that hypermedia hasn't made a comeback yet for two reasons.
+There are two major reasons hypermedia hasn't made a comeback in web development.
 
 The first is this: the expressiveness of HTML _as a hypermedia_ hasn't changed much, if at all, since HTML 2.0, which
 was released _in the mid 1990s_.  Many new _features_ have been added to HTML, of course, but there haven't been _any_
@@ -460,7 +463,8 @@ HTML-as-hypermedia has fallen on hard times: as the interactivity and expressive
 demands of web users have continued to increase, calling for more and more interactive web applications.
 
 JavaScript-based applications coupled to data-oriented JSON APIs have stepped in as a way to provide these more
-sophisticated user interfaces. It was the _user experience_ that you could achieve in JavaScript, and that you couldn't achieve in plain HTML, that drove the web development community to the JavaScript-based
+sophisticated user interfaces. It was the _user experience_ that you could achieve in JavaScript, and that you couldn't
+achieve in plain HTML, that drove the web development community to the JavaScript-based
 Single Page Application approach. The shift was not driven by any inherent superiority of the Single Page Application as a system
 architecture.
 
@@ -474,9 +478,9 @@ understandable move to a more familiar model for building rich applications.
 Not everyone abandoned hypermedia, of course. There have been heroic efforts to continue to advance hypermedia outside of
 HTML, efforts like HyTime, VoiceXML, and HAL.
 
-But HTML, the most widely used hypermedia in the world, stopped making progress as a hypermedia. The web development
-world moved on, solving the interactivity problems with HTML and adopting a completely different
-system architecture along the way.
+But HTML, the most widely used hypermedia in the world, mostly stopped making progress as a hypermedia. The web development
+world moved on, solving the interactivity problems with HTML by adopting JavaScript-based SPAs and, inadvertently,
+a completely different system architecture.
 
 == A Hypermedia Resurgence?
 
@@ -504,14 +508,16 @@ links and forms located on multiple web pages, submitting HTTP requests and gett
 MPA applications, by their nature, are Hypermedia-Driven Applications: after all, they are exactly what Roy Fielding
 was describing in his dissertation.
 
-These applications tend to be clunky, but they work reasonably well.  Many web developers and teams choose to accept the limitations of plain HTML in the interest of simplicity and reliability.
+These applications tend to be clunky, but they work reasonably well.  Many web developers and teams choose to accept the
+limitations of plain HTML in the interest of simplicity and reliability.
 
 Rich Harris, creator of Svelte.js, a popular SPA library, and a thought-leader on the SPA side of the debate, has proposed a mix
 of this older MPA style and the newer SPA style.  Harris calls this approach to building web applications "`transitional,`" in that
 it attempts to blend the MPA approach and the newer SPA approach into a coherent whole.  (This is somewhat
 similar to the "`transitional`" trend in architecture, which combines traditional and modern architectural styles.)
 
-"`Transitional`" is a fitting term for mixed-style applications, and it offers a reasonable compromise between the two approaches, using either one as appropriate on a case-by-case basis.
+"`Transitional`" is a fitting term for mixed-style applications, and it offers a reasonable compromise between the two
+approaches, using either one as appropriate on a case-by-case basis.
 
 But this compromise still feels unsatisfactory.
 
@@ -523,7 +529,7 @@ of a "`transitional`" application -- for a particular feature.
 
 It turns out that by adopting a hypermedia-oriented library, the interactivity gap between the MPA and the SPA approach
 closes dramatically.  You can use the MPA approach, that is, the hypermedia approach, for much more of your application
-without compromising your user interface. You might even be able to use the hypermedia approach for all your application
+without compromising your user interface. You might even be able to use the hypermedia approach for _all_ your application
 needs.
 
 Rather than having an SPA with a bit of hypermedia around the edges, or some mix of the two approaches, you can often create
@@ -535,7 +541,7 @@ software.  While there are still times and places for the more complex SPA appro
 by adopting a hypermedia-first approach and using a hypermedia-oriented library to push HTML as far as possible,
 your web application can be powerful, interactive _and_ simple.
 
-One such hypermedia oriented library is https://htmx.org[htmx].  Htmx will be the focus of Part Two.
+One such hypermedia oriented library is https://htmx.org[htmx].  Htmx will be the focus of Part Two of this book.
 We show that you can, in fact, create many common "`modern`" UI features found in sophisticated Single
 Page Applications by instead using the hypermedia model.
 
@@ -575,7 +581,7 @@ Let's look at an htmx-powered implementation of the simple JavaScript-powered bu
 <1> issues a `GET` request to `/contacts/1`, replacing the `contact-ui`.
 
 As with the JavaScript powered button, this button has been annotated with some attributes.  However, in
-this case we do not have any JavaScript scripting.
+this case we do not have any (explicit) JavaScript scripting.
 
 Instead, we have _declarative_ attributes much like the `href` attribute on anchor tags and the `action` attribute on
 form tags.  The `hx-get` attribute tells htmx: "`When the user clicks this button, issue a `GET` request to `/contacts/1`.`"
@@ -586,7 +592,24 @@ Here we get to the crux of htmx and how it allows you to build Hypermedia-Driven
 
 _The HTTP response from the server is expected to be in HTML format, not JSON_.
 
-This htmx-powered button is exchanging _hypermedia_ with the server, just like an anchor tag or form
+An HTTP response to this htmx-driven request might look something like this:
+
+.JSON
+[source,html]
+----
+<details>
+  <div>
+    Contact: HTML Example
+  </div>
+  <div>
+    <a href="mailto:html-example@example.com">Email</a>
+  </div>
+</details>
+----
+
+This small bit of HTML would be placed into the element in the DOM with the id `contact-ui`.
+
+Thus, this htmx-powered button is exchanging _hypermedia_ with the server, just like an anchor tag or form
 might, and thus the interaction is still within the original hypermedia model of the web.  Htmx _is_ adding functionality
 to this button (via JavaScript), but that functionality is _augmenting_ HTML as a hypermedia. Htmx extends the hypermedia
 system of the web, rather than _replacing_ that hypermedia system with a totally different architecture.
@@ -661,7 +684,7 @@ Any software project has a complexity budget, explicit or not: there is only so 
 team can tolerate and every new feature and implementation choice adds at least a bit more to the overall complexity
 of the system.
 
-What is particularly nasty about complexity is that it appears to grow exponentially: one day you can keep the entire
+What is particularly nasty about complexity is that it tends to grow exponentially: one day you can keep the entire
 system in your head and understand the ramifications of a particular change, and a week later the whole system seems
 intractable.  Even worse, efforts to help control complexity, such as introducing abstractions or infrastructure to
 manage the complexity, often end up making things even more complex.  Truly, the job of the good software engineer
@@ -695,20 +718,3 @@ We hope that, in addition, you will also become as passionate about it as we are
 This book is, in part, a plea that we "`let the web be the web`", that we take the original architecture of the web
 seriously, and that we consider the entire _hypermedia system_ it makes available to us when we build applications
 with it.
-
-
-[.design-note]
-.HTML Note: Stay Close to the Output
-****
-[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
-The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
-
-In order to avoid `<div>` soup (or Markdown soup, or Component soup), you need to be aware of the markup you're producing and be able to change it.
-
-Some SPA frameworks, and some web components, make this more difficult by putting layers of abstraction between the code the developer writes and the generated markup.
-
-While these abstractions can allow developers to create richer UI or work faster,
-their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
-Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
-****
-

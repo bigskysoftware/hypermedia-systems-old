@@ -1,7 +1,7 @@
 
 = Htmx Patterns
 :chapter: 05
-:url: ./htmx-in-action/
+:url: /htmx-in-action/
 
 Now that we've seen how htmx extends HTML as a hypermedia, it's time to put it into action.  As we use htmx, we will still
 be using hypermedia: we will issue HTTP requests and get back HTML.  But, with the additional functionality that htmx provides,
@@ -255,10 +255,14 @@ support and so on.  And, if JavaScript isn't enabled, it will fall back to the n
 
 All this with one htmx attribute.
 
-The `hx-boost` attribute is more "`magic`" than others. Htmx attributes generally are lower level and require more explicit
-annotation in order to specify exactly what you want htmx to do.  In general, this is the design philosophy of htmx:
-prefer explicit to implicit and obvious to "`magic.`" However, the `hx-boost` attribute is too useful to allow dogma to
-override practicality, and so it is included as a feature in the library.
+The `hx-boost` attribute is neat, but is different than other htmx attributes in that it is pretty "`magical`": by
+making one small change you modify the behavior of a large number of elements on the page, turning them into
+AJAX-powered elements.  Most other htmx attributes are generally lower level and require more explicit annotations in
+order to specify exactly what you want htmx to do.  In general, this is the design philosophy of htmx: prefer explicit
+over implicit and obvious over "`magic.`"
+
+However, the `hx-boost` attribute was too useful to allow dogma to override practicality, and so it is included as a
+feature in the library.
 
 == A Second Step: Deleting Contacts With HTTP DELETE
 
@@ -308,9 +312,9 @@ A couple of things to notice:
 Note that we have done something pretty magical here: we have turned this button into a _hypermedia control_.  It is no
 longer necessary that this button be placed within a larger `form` tag in order to trigger an HTTP request: it is a
 stand-alone, and fully featured hypermedia control on its own.  This is at the heart of htmx, allowing any element to become
-a hypermedia control and fully participate in the Hypermedia-Driven Application.
+a hypermedia control and fully participate in a Hypermedia-Driven Application.
 
-We should note that, unlike with the `hx-boost` examples above, this solution will _not_ degrade gracefully.  To make
+We should also note that, unlike with the `hx-boost` examples above, this solution will _not_ degrade gracefully.  To make
 this solution degrade gracefully, we would need to wrap the button in a form element and handle a `POST` on the server
 side as well.
 
@@ -489,9 +493,9 @@ all while using declarative attributes in our HTML and staying firmly within the
 
 === Progressive Enhancement?
 
-One thing to note about this solution, however, is that it is _not_ a progressive enhancement to our web application: if
-someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We could do additional work to keep
-the older mechanism working in a JavaScript-disabled environment.
+As we noted earlier about this solution: it is _not_ a progressive enhancement to our web application: if
+someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We would need to do additional
+work to keep the older form-based mechanism working in a JavaScript-disabled environment.
 
 Progressive Enhancement can be a hot-button topic in web development, with lots of passionate opinions and perspectives.
 Like nearly all JavaScript libraries, htmx makes it possible to create applications that do not function in the absence of
@@ -826,7 +830,7 @@ experience to our web application.  Even better, any email validation rules we a
 _automatically_ just work using this model: because we are using hypermedia as our communication mechanism there is no
 need to keep a client-side and server-side model in sync with one another.
 
-A great demonstration of the power of the hypermedia architecture.
+A great demonstration of the power of the hypermedia architecture!
 
 == Another Application Improvement: Paging
 
@@ -838,7 +842,7 @@ all 10,000 contacts on the root page.  Showing so much data can bog a browser (a
 adopt a concept of "`paging`" to deal with data sets this large, where only one "`page`" of a smaller number of items is
 shown, with the ability to navigate around the pages in the data set.
 
-Let's fix our application, so that we only show ten contacts at a time with a "`Next`" and "`Previous`" link if there are more
+Let's fix our application so that we only show ten contacts at a time with a "`Next`" and "`Previous`" link if there are more
 than 10 contacts in the contact database.
 
 The first change we will make is to add a simple paging widget to our `index.html` template.
@@ -904,7 +908,7 @@ knows which page to return.
 
 And, with that small change, we are done: we now have a very basic paging mechanism for our web application.
 
-And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost` in the application.  Easy.
+And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost` in the application.  Easy!
 
 === Click To Load
 
@@ -1033,9 +1037,9 @@ behavior, we are still exchanging hypermedia with the server, with no JSON API r
 
 As the web was designed.
 
-
+// TODO dz4k rewrite
 [.design-note]
-.Component Soup?
+.HTML Notes: Framework Soup
 ****
 Components encapsulate a section of a page along with its dynamic behavior.
 While encapsulating behavior is a good way to organize code,
@@ -1049,17 +1053,14 @@ Before you reach for components for reuse, consider your options.
 Lower-level mechanisms often (allow you to) produce better HTML.
 In some cases, components can actually _improve_ the clarity of your HTML.
 
-To decide if a component is appropriate for your use case, a good rule of thumb is to ask:
-"`Could this reasonably be a built-in HTML element?`"
-For example, a code editor is a good candidate,
-since HTML already has `<textarea>` and `contenteditable` elements.
-In addition, a fully-featured code editor will have many child elements that won't provide much information anyway.
-We can use features like
-link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM[Shadow DOM]
-to encapsulate these elementsfootnote:[
-Beware that Shadow DOM is a newer web platform feature that's still in development at the time of writing.
-In particular, there are some accessibility bugs that may occur when elements inside and outside the shadow root interact.].
-We can create a
-link:https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[custom element],
-`<code-area>`, that we can drop into our page whenever we want.
+[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
+The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
+
+In order to avoid `<div>` soup (or Markdown soup, or Component soup), you need to be aware of the markup you're producing and be able to change it.
+
+Some SPA frameworks, and some web components, make this more difficult by putting layers of abstraction between the code the developer writes and the generated markup.
+
+While these abstractions can allow developers to create richer UI or work faster,
+their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
+Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
 ****

@@ -1,7 +1,7 @@
 
 = A Dynamic Archive UI
 :chapter: 07
-:url: ./a-dynamic-archive-ui/
+:url: /a-dynamic-archive-ui/
 
 == A Dynamic Archive UI
 
@@ -634,33 +634,81 @@ pure hypermedia. It took about 16 lines of front end code and 16 lines of backen
 HTML, with a bit of help from a hypermedia-oriented JavaScript library such as htmx, can in fact be extremely powerful and expressive.
 
 
-// TODO: work here? better as a vanilla pullout? 
 [.design-note]
-.HTML Notes: On Web Components
+.HTML Notes: Markdown soup
 ****
-Web Components is the collective name of a few standards;
-Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
+[.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
+This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
+even when these elements are incorrect.
+More seriously, it's important to be aware of the full power of our tools, including HTML.
+Consider the following example of an IEEE-style citation:
 
-All of these standards bring useful capabilities to the table.
-`<template>` elements remove their contents from the document, while still parsing them as HTML (unlike comments) and making them accessible to JavaScript.
-Custom Elements let us initialize and tear down behaviors when elements are added or removed, which would previously require manual work or MutationObservers.
-Shadow DOM lets us encapsulate elements, leaving the "light" (non-shadow) DOM clean.
+[source,markdown]
+----
+[1] C.H. Gross, A. Stepinski, and D. Akşimşek, <1>
+_Hypermedia Systems_, <2>
+Bozeman, MT, USA: Big Sky Software.
+Available: <https://hypermedia.systems/>
+----
+<1> The reference number is written in brackets.
+<2> Underscores around the book title creates an <em> element.
 
-However, trying to reap these benefits is often frustrating.
-Some difficulties are simply growing pains of new standards
-(like the accessibility problems of Shadow DOM)
-that are actively being worked on.
-Others are the result of Web Components trying to be too many things at the same time:
+Here, <em> is used because it's the only Markdown element that is presented in italics by default.
+This indicates that the book title is being stressed, but the purpose is to mark it as the title of a work.
+HTML has the `<cite>` element that's intended for this exact purpose.
 
- * An extension mechanism for HTML. To this end, each custom element is a tag we add to the language.
- * A lifecycle mechanism for behaviors. Methods like `createdCallback`, `connectedCallback`, etc. allow behavior to be added to elements without needing to be manually invoked when those elements are added.
- * A unit of encapsulation. Shadow DOM insulates elements from their surroundings.
+Furthermore, even though this is a numbered list perfect for the `<ol>` element, which Markdown supports, plain text is used for the reference numbers instead.
+Why could this be?
+The IEEE citation style requires that these numbers are presented in square brackets.
+This could be achieved on an `<ol>` with CSS,
+but Markdown doesn't have a way to add a class to elements meaning the square brackets would apply to all ordered lists.
 
-The result is that if you want any one of these things,
-the others come along for the ride.
-If you want to attach some behaviors to some elements using lifecycle callbacks,
-you need to create a new tag,
-which means you can't have multiple behaviors on one element,
-and you isolate elements you add from elements already in the page,
-which is a problem if they need to have ARIA relationships.
+Don't shy away from using embedded HTML in Markdown.
+For larger sites, also consider Markdown extensions.
+
+[source,markdown]
+----
+{.ieee-reference-list} <1>
+1. C.H. Gross, A. Stepinski, and D. Akşimşek, <2>
+   <cite>Hypermedia Systems</cite>, <3>
+   Bozeman, MT, USA: Big Sky Software.
+   Available: <https://hypermedia.systems/>
+----
+<1> Many Markdown dialects let us add ids, classes and attributes using curly braces.
+<2> We can now use the <ol> element, and create the brackets in CSS.
+<3> We use `<cite>` to mark the title of the work being cited (not the whole citation!)
+
+You can also use custom processors to produce extra-detailed HTML instead of writing it by hand:
+
+[source,markdown]
+----
+{% reference_list %} <1>
+[hypers2023]: <2>
+C.H. Gross, A. Stepinski, and D. Akşimşek, _Hypermedia Systems_,
+Bozeman, MT, USA: Big Sky Software, 2023.
+Available: <https://hypermedia.systems/>
+{% end %}
+----
+<1> `reference_list` is a macro that will transform the plain text to highly-detailed HTML.
+<2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
+****
+
+[.design-note]
+.HTML Notes: Budgeting For HTML
+****
+The close relationship between content and markup means that
+good HTML is labor-intensive.
+Most sites have a separation between the authors,
+who are rarely familiar with HTML,
+and the developers, who need to develop a generic system able to handle any content that's thrown at it --
+this separation usually taking the form of a CMS.
+As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
+
+Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
+It's an expense few organizations can spare.
+
+Thus, we don't expect every site to contain perfectly conformant HTML.
+What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
+
+If you have the resources, however, putting more care in your HTML will produce a more polished site.
 ****

@@ -1,7 +1,7 @@
 
 = More Htmx Patterns
 :chapter: 06
-:url: ./more-htmx-patterns/
+:url: /more-htmx-patterns/
 
 == Active Search
 
@@ -204,27 +204,21 @@ It turns out that htmx helps us distinguish between these two cases by including
 it makes requests.  Request Headers are a feature of HTTP, allowing clients (e.g., web browsers) to include name/value pairs
 of metadata associated with requests to help the server understand what the client is requesting.
 
-Here is an example of (some of) the headers the FireFox browser issues when requesting `https://manning.com`:
+Here is an example of (some of) the headers the FireFox browser issues when requesting `https://hypermedia.systems`:
 
 .HTTP headers
 [source,http]
 ----
 GET / HTTP/2
-Host: www.manning.com
+Host: hypermedia.systems
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
+Accept:	text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 Accept-Encoding: gzip, deflate, br
-DNT: 1
+Accept-Language: en-US,en;q=0.5
+Cache-Control: no-cache
 Connection: keep-alive
-Cookie: ...
-Upgrade-Insecure-Requests: 1
-Sec-Fetch-Dest: document
-Sec-Fetch-Mode: navigate
-Sec-Fetch-Site: none
-Sec-Fetch-User: ?1
-Sec-GPC: 1
-TE: trailers
+DNT: 1
+Pragma: no-cache
 ----
 
 Htmx takes advantage of this feature of HTTP and adds additional headers and, therefore, additional _context_ to the
@@ -921,7 +915,7 @@ dramatically different behavior. Hypermedia is powerful in this manner.
 === The Htmx Swapping Model
 
 This is pretty cool, but there is another improvement we can make if we take some time to understand the htmx content
-swapping model: it would nice if, rather than just instantly deleting the row, we faded it out before we removed
+swapping model: it would be nice if, rather than just instantly deleting the row, we faded it out before we removed
 it.  The fade would make it clear that the row is being removed, giving the user some nice visual feedback on the
 deletion.
 
@@ -1089,7 +1083,7 @@ By default, if an element is a child of a `form` element and makes a non-`GET` r
 inputs within that form.  In situations like this, where there is a bulk operation for a table, it is common to enclose
 the whole table in a form tag, so that it is easy to add buttons that operate on the selected items.
 
-Let's add that form tag around the form, and be sure to enclose the button in it as well:
+Let's add that form tag around the table, and be sure to enclose the button in it as well:
 
 .The "`delete selected contacts`" button
 [source, html]
@@ -1171,7 +1165,7 @@ By using these elements, a page can make false promises, like `<article>` elemen
 The most authoritative resource for learning about HTML is the HTML specification.
 The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
 The single-page version is too slow to load and render on most computers. 
-There's also a developers' edition at /dev, but I prefer the styling of the standard version.]
+There's also a developers' edition at /dev, but the standard version has nicer styling.]
 There's no need to rely on hearsay to keep up with developments in HTML.
 
 Section 4 features a list of all available elements,

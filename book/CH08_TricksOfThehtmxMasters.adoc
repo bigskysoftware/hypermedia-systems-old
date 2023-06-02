@@ -1,7 +1,7 @@
 
 = Tricks Of The Htmx Masters
 :chapter: 08
-:url: ./deep-htmx/
+:url: /deep-htmx/
 
 
 [partintro]
@@ -53,8 +53,9 @@ In chapter 5, we also looked at the `swap` delay modifier for `hx-swap`, which a
 In addition to these, `hx-swap` offers further control with the following modifiers:
 
 `settle`::
-Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and when its attributes are "`settled`", that is, updated from their old values (if any) to their new values. 
-// TODO: check: This gives you fine control of css-transitions, for example.
+Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and when
+its attributes are "`settled`", that is, updated from their old values (if any) to their new values. This can give you
+fine-grained control over CSS transitions.
 
 `show`::
 Allows you to specify an element that should be shown -- that is, scrolled into the viewport of the browser if necessary -- when a request is completed.
@@ -297,14 +298,12 @@ Consider the following
 scenario: your server-side team has decided that they want you to include a token for extra validation on every request.
 The token is going to be stored in `localStorage` in the browser, in the slot `special-token`.  The server-side team
 wants you to include this special token on every request made by htmx, as the `X-SPECIAL-TOKEN` header.
-// TODO: check: maybe, briefly show how to set the value in local storage
+// TODO 1cg: check: maybe, briefly show how to set the value in local storage
 How could you achieve this?  One way would be to catch the `htmx:configRequest` event and update the `detail.headers`
 object with this token from `localStorage`.
 
-In VanillaJS, it would look something like this:
+In VanillaJS, it would look something like this, placed in a `<script>` tag in the `<head>` of our HTML document:
 
-// TODO: check: In our Contact.app, for example, we would put this code... (where?) 
-// Mention htmx helper for adding listeners like this? 
 .Adding the `X-SPECIAL-TOKEN` header
 [source,js]
 ----
@@ -316,15 +315,15 @@ document.body.addEventListener("htmx:configRequest", function(configEvent){
 
 As you can see, we add a new value to the `headers` property of the event's detail.  After the event handler executes,
 the `headers` property is read by htmx and used to construct the headers for an AJAX request.  
-// TODO: check: add basic info, is configEvent.detail.headers an htmx function? 
-// TODO: check: briefly explain what a header 'detail' refers to
+// TODO 1cg: check: add basic info, is configEvent.detail.headers an htmx function?
+// TODO 1cg: check: briefly explain what a header 'detail' refers to
 So, with this bit of
 JavaScript code, we have added a new custom header to every AJAX request that htmx makes.  Slick!
-// TODO: check: explain the use case, something like 'this pattern of passing 
+// TODO 1cg: check: explain the use case, something like 'this pattern of passing
 // and checking tokens is sometimes used for security' 
 You can also update the `parameters` property to change the parameters submitted by the request, change the target
 of the request, and so on.
-// TODO: check: an example parameter might be...
+// TODO 1cg: check: an example parameter might be...
 Full documentation for the `htmx:configRequest` event can be found
 https://htmx.org/events/#htmx:configRequest[on the htmx website].
 
@@ -397,9 +396,12 @@ a `POST` to the `/integrations/1` path, it will trigger a synchronization with t
 Now, this synchronization may or may not result in new contacts being created.  In the case where new contacts _are_
 created, we want to refresh our contacts table.  In the case where no contacts are created, we don't want to refresh
 the table.
-// TODO: check: show brief code, how to conditionally add HX-Trigger
-To implement this we could conditionally add an `HX-Trigger`
-response header with the value `contacts-updated`. This value would trigger the `contacts-updated` event on the button that
+
+To implement this we could conditionally add an `HX-Trigger` response header with the value `contacts-updated`:
+
+// TODO 1cg: check: show brief code, how to conditionally add HX-Trigger
+
+This value would trigger the `contacts-updated` event on the button that
 made the AJAX request to `/integrations/1`.  We can then take advantage of the `from:` modifier of the `hx-trigger`
 attribute to listen for that event. With this pattern we can effectively trigger htmx requests from the server side.
 
@@ -732,7 +734,7 @@ Htmx is typically configured via a `meta` tag, found in the header of a page.  T
 an example:
 
 .An htmx configuration via `meta` tag
-[source, javascript]
+[source, html]
 ----
 <meta name="htmx-config" content='{"defaultSwapStyle":"outerHTML"}'>
 ----
@@ -741,24 +743,28 @@ In this case, we are overriding the default swap style from the usual `innerHTML
 if you find yourself using `outerHTML` more frequently than `innerHTML` and want to avoid having to explicitly set that
 swap value throughout your application.
 
-
-
 [.design-note]
-.HTML Notes: Know Your HTML Budget
+.HTML Notes: "'Display: none'"
 ****
-The close relationship between content and markup means that
-good HTML is labor-intensive.
-Most sites have a separation between the authors,
-who are rarely familiar with HTML,
-and the developers, who need to develop a generic system able to handle any content that's thrown at it --
-this separation usually taking the form of a CMS.
-As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
+Sadly, not even good HTML-- or HXML -- can cure all ills.
+If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
+Test manually.
+Test automatically.
+Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
 
-Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
-It's an expense few organizations can spare.
+One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is often desirable to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
 
-Thus, we don't expect every site to contain perfectly conformant HTML.
-What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
+[source,css]
+----
+.vh {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	block-size: 1px;
+	inline-size: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+----
 
-If you have the resources, however, putting more care in your HTML will produce a more polished site.
+`vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
 ****

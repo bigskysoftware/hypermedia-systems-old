@@ -24,7 +24,7 @@ we wish we could write this book for every possible stack out there, in the inte
 For this book we are going to use the following stack:
 
 * https://www.python.org/[Python] as our programming language.
-* https://palletsprojects.com/p/flask/[Flask] as our web framework, allowing us to connect HTTP requests to python logic.
+* https://palletsprojects.com/p/flask/[Flask] as our web framework, allowing us to connect HTTP requests to Python logic.
 * https://palletsprojects.com/p/jinja/[Jinja2] for our server-side templating language, allowing us to render HTML responses using a familiar
   and intuitive syntax.
 
@@ -67,7 +67,7 @@ environment.
 
 Since this book is for learning how to use hypermedia effectively, we'll just briefly introduce
 the various technologies we use _around_ that hypermedia.  This has some obvious drawbacks: if you aren't comfortable
-with Python, for example, some example python code in the book may be a bit confusing or mysterious at first.
+with Python, for example, some example Python code in the book may be a bit confusing or mysterious at first.
 
 If you feel like you need a quick introduction to the language before diving into the code, we recommend the following
 books and websites:
@@ -89,7 +89,7 @@ made.  It uses a Python feature called "`decorators`" to declare the route that 
 a function to handle requests to that route.  We'll use the term "`handler`" to refer to the functions associated
 with a route.
 
-Let's create our first route definition, a simple "`Hello Flask`" route.  In the following python code you will see the
+Let's create our first route definition, a simple "`Hello Flask`" route.  In the following Python code you will see the
 `@app` symbol.  This is the flask decorator that allows us to set up our routes.  Don't worry too much about
 how decorators work in Python, just know that this feature allows us to map a given _path_ to a particular function
 (i.e., handler).  The Flask application, when started, will take HTTP requests and look up the matching handler and

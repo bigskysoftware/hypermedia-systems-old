@@ -1014,11 +1014,11 @@ So let's convert our button to a span and take advantage of this event:
 {% if contacts|length == 10 %} <1>
     <tr>
         <td colspan="5" style="text-align: center">
-            <span>hx-target="closest tr" <1>
-                    hx-trigger="revealed" <2>
-                    hx-swap="outerHTML"
-                    hx-select="tbody > tr"
-                    hx-get="/contacts?page={{ page + 1 }}">Loading More...</span>
+            <span hx-target="closest tr" <1>
+                  hx-trigger="revealed" <2>
+                  hx-swap="outerHTML"
+                  hx-select="tbody > tr"
+                  hx-get="/contacts?page={{ page + 1 }}">Loading More...</span>
         </td>
     </tr>
 {% endif %}

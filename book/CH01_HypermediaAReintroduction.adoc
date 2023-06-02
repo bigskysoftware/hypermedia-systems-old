@@ -65,7 +65,7 @@ hypertexts such as  HTML, the Hypertext Markup Language, or HXML, a hypertext us
 system.
 
 Hypertexts like HTML function alongside other technologies crucial for making an entire hypermedia system work: network
-protocols like HTTP, other media types such as images, videos, hypermedia servers (i.e., servers providing hypermedia APIs),
+protocols like HTTP, other media types such as images and videos, hypermedia servers (i.e., servers providing hypermedia APIs),
 sophisticated hypermedia clients (e.g., web browsers), and so on.
 
 Because of this, we prefer the broader term _hypermedia systems_ when describing the underlying architecture of

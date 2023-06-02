@@ -75,14 +75,38 @@
     body > header { border-block-end: 1px dotted var(--muted-fg) }
     body > footer { border-block-start: none }
 
+    figure {
+        display: block;
+        background: none;
+        border: none;
+        padding: 0 var(--gap);
+    }
     figure>* { --density: .5 }
-    figcaption { font-size: .8em; line-height: calc(var(--rhythm) * 2 / 3); }
+    figcaption { font-size: .8em; line-height: calc(var(--rhythm) * 3 / 4); }
     figcaption:first-child { border-block-end: 1px solid var(--faded-fg) }
     figcaption:last-child { border-block-start: 1px solid var(--faded-fg) }
+
+    table tr:not(:last-child) > * {
+        padding-bottom: var(--rhythm);
+    }
+
+    .iconbutton { box-shadow: none !important; }
+
+    .text-align\:end { text-align: end }
+
+    aside {
+        font-size: .8em;
+        line-height: calc(var(--rhythm)*3/4);
+        --gap: calc(var(--rhythm) * var(--density) * 3 / 4);
+        border-block: 1px solid var(--graphical-fg);
+        padding-block: var(--gap);
+        margin-block: calc(var(--gap)*4/3);
+    }
 
     /* #endregion */
 
     header, footer, summary, button, input, small, .\<small\>, aside, figcaption, .secondary-font { font-variation-settings: "opsz" 7 }
+    pre { line-height: calc(var(--rhythm) * 3 / 4) }
     
     @media (prefers-color-scheme: dark) {
         img[src*="/images/diagram"] { filter: invert(1) }
@@ -93,8 +117,13 @@
     .colist {
         counter-reset: colist;
         font-size: .8em;
-        line-height: calc(var(--rhythm) * 2 / 3);
+        line-height: calc(var(--rhythm) * 3 / 4);
         font-variation-settings: "opsz" 8;
+    }
+
+    aside .colist {
+        font-size: inherit;
+        line-height: inherit;
     }
 
     .colist li {

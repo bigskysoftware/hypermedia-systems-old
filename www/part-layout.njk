@@ -3,27 +3,25 @@ layout: layout.njk
 ---
 
 {# See ./parts.tmpl.ts #}
-<main>
-    <h1>
+<main class="airy">
+    <h1 style="margin-block-end: 50vh">
         <sub-title>Part {{ partNumber }}</sub-title>
         {{ part }}
     </h1>
-    
-    <div class="airy">
-        <p>
-            <strong>
-                Next:
-                <a href="{{ chapters[0].data.url }}">{{ chapters[0].data.title }}</a>
-            </strong>
-        </p>
 
-        {% if previousPart %}
-        {% set previousChapter = previousPart.chapters | last %}
+    {% set prev = previousPart and previousPart.chapters | last %}
+    {% set next = chapters[0] %}
+    <div class="grid margin-block">
+        {% if prev %}
         <p>
             Previous:
-            <a href="{{ previousChapter.data.url }}">{{ previousChapter.data.title | safe }}</a>
-        </p>
+            <a href="{{ prev.data.url }}">{{ prev.data.title | safe }}</a>
         {% endif %}
+        <p class="text-align:end" data-cols="2" data-cols@s="1">
+            <strong>
+                Next:
+                <a href="{{ next.data.url }}">{{ next.data.title | safe }}</a>
+            </strong>
     </div>
 </main>
 

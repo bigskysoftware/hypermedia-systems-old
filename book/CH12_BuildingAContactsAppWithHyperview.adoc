@@ -1,7 +1,7 @@
 
 = Building a Contacts App With Hyperview
 :chapter: 12
-:url: ./building-a-contacts-app-with-hyperview/
+:url: /building-a-contacts-app-with-hyperview/
 
 
 Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
@@ -841,7 +841,7 @@ Luckily, there's a solution to this problem in Hyperview: events.
 Events are built into the behavior system, and allow lightweight communication between different parts of the UI.
 
 
-// TODO: consider an intro to events as 'html note' topic, earlier chapters
+// TODO 1cg: consider an intro to events as 'html note' topic, earlier chapters
 .Event Behaviors
 ****
 Events are a client-side feature of Hyperview.
@@ -849,7 +849,7 @@ Earlier chapter discussed events while working with HTML, htmx and the DOM.
 DOM Elements will dispatch events as a result of user interactions.
 Scripts can listen for these events, and respond to them by running arbitrary JavaScript code.
 We saw some examples in chapter 9.  
-// TODO: optional, add link to an example
+// TODO astep: optional, add link to an example
 
 Events in Hyperview are a good deal simpler, but they don't require any scripting and can be defined declaratively in the HXML.
 This is done through the behavior system.
@@ -1117,7 +1117,7 @@ Any time you make a change in the HXML, just reload the screen to see the UI upd
 So we have the app running on a physical device, but it's still not production ready.
 To get the app into the hands of our users, there's a few things we need to do:
 
-// TODO: mention UI, presentation here?
+// TODO astep: optional mention UI, presentation in this list (e.g. styling, etc)?
 1. Deploy our backend in production.
 We need to use a production-grade web server like Gunicorn instead of the Flask development server.
 And we should run our app on a machine reachable on the Internet, most likely using a cloud provider like AWS or Heroku.
@@ -1332,25 +1332,3 @@ Since our HXML templates don't expose any entrypoints to the Archive functionali
 We've covered a lot of ground in this chapter. Take a breath and take stock of how far we've come: we ported the core functionality of the Contact.app web application to mobile. And we did it by re-using much of our Flask backend and while sticking with Jinja templating. We again saw the utility of events for connecting different aspects of an application. 
 
 We're not done yet. In the next chapter we'll implement custom behaviors and UI elements to finish our mobile Contact.app.
-
-
-// TODO: okay, or better as integrated info gem?
-[.design-note]
-.HTML Notes: Remember <details>
-****
-Does the information need to be presented as tabs?
-Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
-
-[source,html]
-----
-<details><summary>Disclosure 1</summary>
-  Disclosure 1 contents
-</details>
-<details><summary>Disclosure 2</summary>
-  Disclosure 2 contents
-</details>
-----
-
-Compromising UX just to avoid JavaScript is bad development.
-But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
-****

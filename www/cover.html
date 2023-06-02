@@ -26,6 +26,7 @@ Enhancing web applications without using SPA frameworks.">
 .Cover-Header::before {
   content: "";
   position: absolute;
+  z-index: -1;
   top: 0; left: 0; width: 100%; height: 100%;
   background-image: url(/images/radialbugpattern-spine-black-realsize.png);
   background-position: center calc(var(--bgh) - 28em);
@@ -42,7 +43,7 @@ Enhancing web applications without using SPA frameworks.">
 </style>
 
 <header class="Cover-Header">
-    <h1 class="massivetext italic allcaps text-align:center fullbleed"
+    <h1 class="massivetext italic allcaps text-align:center fullbleed padding-inline"
         >Hypermedia Systems</h1>
 
     <p class="allcaps text-align:center f-row dense justify-content:center flex-wrap:wrap" style="row-gap: 0">
@@ -50,13 +51,30 @@ Enhancing web applications without using SPA frameworks.">
         <span>Adam&nbsp;Stepinski</span>
         <span lang="tr">Deniz&nbsp;Akşimşek</span>
     </p>
+
+    <p class="text-align:center italic">
+        With a foreword by 
+        <a href="https://training.amundsen.com/#h.p_6AntBa6tTn_J">Mike Amundsen</a>
+    </p>
 </header>
 
 <main class="">
 
-    <div class="box warn crowded color">
-        <p>
-        <strong class="color margin-inline-end allcaps secondary-font">Note</strong>
+    <div class="box warn crowded color <small>" data-note>
+        <script>{
+            const me = document.currentScript.parentElement;
+            if (localStorage.dismissedNote) me.remove();
+        }</script>
+        <button class="iconbutton float:right"
+            onclick="
+                localStorage.dismissedNote = true;
+                this.closest(`[data-note]`).remove();
+            ">
+            <span aria-hidden="true">×</span>
+            <v-h>Dismiss</v-h>
+        </button>
+        <p style="margin: 0"> 
+        <strong class="allcaps margin-inline-end">Note</strong>
         Hypermedia Systems is a rewrite of a book that fell out of contract with
         a publisher and is currently a <strong>work in progress</strong>.</p>
     </div>

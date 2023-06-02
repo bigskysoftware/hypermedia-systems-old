@@ -1,7 +1,7 @@
 
 = Htmx Patterns
 :chapter: 05
-:url: ./htmx-in-action/
+:url: /htmx-in-action/
 
 Now that we've seen how htmx extends HTML as a hypermedia, it's time to put it into action.  As we use htmx, we will still
 be using hypermedia: we will issue HTTP requests and get back HTML.  But, with the additional functionality that htmx provides,
@@ -255,10 +255,14 @@ support and so on.  And, if JavaScript isn't enabled, it will fall back to the n
 
 All this with one htmx attribute.
 
-The `hx-boost` attribute is more "`magic`" than others. Htmx attributes generally are lower level and require more explicit
-annotation in order to specify exactly what you want htmx to do.  In general, this is the design philosophy of htmx:
-prefer explicit to implicit and obvious to "`magic.`" However, the `hx-boost` attribute is too useful to allow dogma to
-override practicality, and so it is included as a feature in the library.
+The `hx-boost` attribute is neat, but is different than other htmx attributes in that it is pretty "`magical`": by
+making one small change you modify the behavior of a large number of elements on the page, turning them into
+AJAX-powered elements.  Most other htmx attributes are generally lower level and require more explicit annotations in
+order to specify exactly what you want htmx to do.  In general, this is the design philosophy of htmx: prefer explicit
+over implicit and obvious over "`magic.`"
+
+However, the `hx-boost` attribute was too useful to allow dogma to override practicality, and so it is included as a
+feature in the library.
 
 == A Second Step: Deleting Contacts With HTTP DELETE
 
@@ -308,9 +312,9 @@ A couple of things to notice:
 Note that we have done something pretty magical here: we have turned this button into a _hypermedia control_.  It is no
 longer necessary that this button be placed within a larger `form` tag in order to trigger an HTTP request: it is a
 stand-alone, and fully featured hypermedia control on its own.  This is at the heart of htmx, allowing any element to become
-a hypermedia control and fully participate in the Hypermedia-Driven Application.
+a hypermedia control and fully participate in a Hypermedia-Driven Application.
 
-We should note that, unlike with the `hx-boost` examples above, this solution will _not_ degrade gracefully.  To make
+We should also note that, unlike with the `hx-boost` examples above, this solution will _not_ degrade gracefully.  To make
 this solution degrade gracefully, we would need to wrap the button in a form element and handle a `POST` on the server
 side as well.
 
@@ -489,9 +493,9 @@ all while using declarative attributes in our HTML and staying firmly within the
 
 === Progressive Enhancement?
 
-One thing to note about this solution, however, is that it is _not_ a progressive enhancement to our web application: if
-someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We could do additional work to keep
-the older mechanism working in a JavaScript-disabled environment.
+As we noted earlier about this solution: it is _not_ a progressive enhancement to our web application: if
+someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We would need to do additional
+work to keep the older form-based mechanism working in a JavaScript-disabled environment.
 
 Progressive Enhancement can be a hot-button topic in web development, with lots of passionate opinions and perspectives.
 Like nearly all JavaScript libraries, htmx makes it possible to create applications that do not function in the absence of
@@ -826,7 +830,7 @@ experience to our web application.  Even better, any email validation rules we a
 _automatically_ just work using this model: because we are using hypermedia as our communication mechanism there is no
 need to keep a client-side and server-side model in sync with one another.
 
-A great demonstration of the power of the hypermedia architecture.
+A great demonstration of the power of the hypermedia architecture!
 
 == Another Application Improvement: Paging
 
@@ -838,7 +842,7 @@ all 10,000 contacts on the root page.  Showing so much data can bog a browser (a
 adopt a concept of "`paging`" to deal with data sets this large, where only one "`page`" of a smaller number of items is
 shown, with the ability to navigate around the pages in the data set.
 
-Let's fix our application, so that we only show ten contacts at a time with a "`Next`" and "`Previous`" link if there are more
+Let's fix our application so that we only show ten contacts at a time with a "`Next`" and "`Previous`" link if there are more
 than 10 contacts in the contact database.
 
 The first change we will make is to add a simple paging widget to our `index.html` template.
@@ -904,7 +908,7 @@ knows which page to return.
 
 And, with that small change, we are done: we now have a very basic paging mechanism for our web application.
 
-And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost` in the application.  Easy.
+And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost` in the application.  Easy!
 
 === Click To Load
 
@@ -1010,11 +1014,11 @@ So let's convert our button to a span and take advantage of this event:
 {% if contacts|length == 10 %} <1>
     <tr>
         <td colspan="5" style="text-align: center">
-            <span>hx-target="closest tr" <1>
-                    hx-trigger="revealed" <2>
-                    hx-swap="outerHTML"
-                    hx-select="tbody > tr"
-                    hx-get="/contacts?page={{ page + 1 }}">Loading More...</span>
+            <span hx-target="closest tr" <1>
+                  hx-trigger="revealed" <2>
+                  hx-swap="outerHTML"
+                  hx-select="tbody > tr"
+                  hx-get="/contacts?page={{ page + 1 }}">Loading More...</span>
         </td>
     </tr>
 {% endif %}
@@ -1033,7 +1037,7 @@ behavior, we are still exchanging hypermedia with the server, with no JSON API r
 
 As the web was designed.
 
-// TODO rewrite
+// TODO dz4k rewrite
 [.design-note]
 .HTML Notes: Framework Soup
 ****

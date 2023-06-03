@@ -666,7 +666,8 @@ in a Hypermedia-Driven Application in more depth in chapter 9, but, put briefly:
 acceptable in a HDA, as long as it doesn't replace the core hypermedia mechanics of the application.
 
 For our auto-download feature we will use https://hyperscript.org[+_hyperscript+], our preferred scripting option.
-JavaScript would also work here, and would be nearly as simple; again, we'll discuss scripting options in Chapter 9.
+JavaScript would also work here, and would be nearly as simple; again, we'll discuss scripting options in detail
+in Chapter 9.
 
 All we need to do to implement the auto-download feature is the following: when the download link renders, automatically
 click on the link for the user.

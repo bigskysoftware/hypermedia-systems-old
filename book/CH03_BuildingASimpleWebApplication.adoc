@@ -634,8 +634,8 @@ Again, we will omit the "`chrome`" of the template and focus on the meat:
 </div>
 
 <p>
-<a href="/contacts/{{contact.id}}/edit">Edit</a>
-<a href="/contacts">Back</a>
+  <a href="/contacts/{{contact.id}}/edit">Edit</a>
+  <a href="/contacts">Back</a>
 </p>
 ----
 

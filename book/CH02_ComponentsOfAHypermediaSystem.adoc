@@ -123,9 +123,9 @@ Date: Sat, 23 Apr 2022 18:27:55 GMT
 
 <html lang="en">
 <body>
-<body>
-<header>
+  <header>
     <h1>HYPERMEDIA SYSTEMS</h1>
+  </header>
   ...
 </body>
 </html>
@@ -546,7 +546,7 @@ The first implementation returns an HTML representation:
 [source,html]
 ----
 <html lang="en">
-<head>
+<body>
 <h1>Joe Smith</h1>
 <div>
     <div>Email: joe@example.bar</div>
@@ -555,7 +555,6 @@ The first implementation returns an HTML representation:
 <p>
     <a href="/contacts/42/archive">Archive</a>
 </p>
-</main>
 </body>
 </html>
 ----
@@ -630,7 +629,7 @@ The first implementation returns the following HTML:
 [source,html]
 ----
 <html lang="en">
-<head>
+<body>
 <h1>Joe Smith</h1>
 <div>
     <div>Email: joe@example.bar</div>
@@ -639,7 +638,6 @@ The first implementation returns the following HTML:
 <p>
     <a href="/contacts/42/unarchive">Unarchive</a>
 </p>
-</main>
 </body>
 </html>
 ----
@@ -695,7 +693,7 @@ The HTML representation might now look like this:
 [source,html]
 ----
 <html lang="en">
-<head>
+<body>
 <h1>Joe Smith</h1>
 <div>
     <div>Email: joe@example.bar</div>
@@ -705,7 +703,6 @@ The HTML representation might now look like this:
     <a href="/contacts/42/archive">Archive</a>
     <a href="/contacts/42/message">Message</a>
 </p>
-</main>
 </body>
 </html>
 ----

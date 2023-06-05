@@ -808,7 +808,7 @@ Test manually.
 Test automatically.
 Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
 
-One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is often desirable to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
+One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is sometimes done to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
 
 [source,css]
 ----

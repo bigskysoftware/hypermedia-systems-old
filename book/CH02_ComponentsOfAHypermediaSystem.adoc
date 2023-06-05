@@ -815,8 +815,8 @@ special nature of HTML, hypermedia and the web!
 ****
 The best-known kind of messy HTML is `<div>` soup.
 
-Advances in CSS and JavaScript technology have mostly obviated the need to add extraneous "wrapper" elements to out documents.
-However, while the number of elements can fall, the quality of usage does not necessatily improve.
+Advances in CSS and JavaScript technology have mostly obviated the need to add extraneous "wrapper" elements to our documents.
+However, while the number of elements can fall, the quality of usage does not necessarily improve.
 
 When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
 we either degrade the quality of our websites or create more work for ourselves -- probably both.

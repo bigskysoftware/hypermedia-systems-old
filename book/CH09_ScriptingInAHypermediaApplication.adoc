@@ -747,12 +747,10 @@ To get a flavor of AlpineJS, let's look at how to implement our counter example 
 For the counter, the only state we need to keep track of is the current number, so let's declare a JavaScript object
 with one property, `count`, in an `x-data` attribute on the div for our counter:
 
-// TODO wt (please restore, used in scripting): check: removed class="counter" to avoid confusion
-
 .Counter with Alpine, line 1
 [source,html]
 ----
-<div x-data="{ count: 0 }">
+<div class="counter" x-data="{ count: 0 }">
 ----
 
 This defines our state, that is, the data we are going to be using to drive dynamic updates to the DOM.  With the state
@@ -1386,7 +1384,7 @@ The keyboard interactions can be error-prone too.
 It's not impossible, not even that hard, to make your own tab set implementation.
 However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
 
-*Stick with established libraries* for UI interactions. If a use case requires a bespoke solution, *test exhaustively* for keyboard interaction and accessibility.
+_Stick with established libraries_ for UI interactions. If a use case requires a bespoke solution, _test exhaustively_ for keyboard interaction and accessibility.
 
 Also consider: Does the information need to be presented as tabs?
 Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.

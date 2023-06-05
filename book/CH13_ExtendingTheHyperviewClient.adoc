@@ -49,7 +49,7 @@ So let's define two new actions, "`open-phone`" and "`open-email`".
 .Phone and Email actions
 [source,xml]
 ----
-<view xmlns:comms="https://manning.com/hyperview/communications"> <1>
+<view xmlns:comms="https://hypermedia.systems/hyperview/communications"> <1>
   <text>
     <behavior action="open-phone" comms:phone-number="555-555-5555" /> <2>
     Call
@@ -92,7 +92,7 @@ Next, we'll create a new file, `phone.js`, that will implement the code associat
 ----
 import { phonecall } from 'react-native-communications'; <1>
 
-const namespace = "https://manning.com/hyperview/communications";
+const namespace = "https://hypermedia.systems/hyperview/communications";
 
 export default {
   action: "open-phone", <2>
@@ -165,7 +165,7 @@ In fact, let's do that now by updating the `show.xml` template in our Flask app:
 
   <view style="contact-section">
     <behavior <1>
-      xmlns:comms="https://manning.com/hyperview/communications"
+      xmlns:comms="https://hypermedia.systems/hyperview/communications"
       trigger="press"
       action="open-phone" <2>
       comms:phone-number="{{contact.phone}}" <3>
@@ -176,7 +176,7 @@ In fact, let's do that now by updating the `show.xml` template in our Flask app:
 
   <view style="contact-section">
     <behavior <4>
-      xmlns:comms="https://manning.com/hyperview/communications"
+      xmlns:comms="https://hypermedia.systems/hyperview/communications"
       trigger="press"
       action="open-email"
       comms:email-address="{{contact.email}}"
@@ -248,7 +248,7 @@ Now, we can write the code to implement the toast UI as a custom action.
 ----
 import Toast from 'react-native-root-toast'; <1>
 
-const namespace = "https://manning.com/hyperview/toast";
+const namespace = "https://hypermedia.systems/hyperview/toast";
 
 export default {
   action: "show-toast", <2>
@@ -312,7 +312,7 @@ Since the actual behaviors will be the same in both templates, let's create a sh
 ----
 {% for message in get_flashed_messages() %}
   <behavior <1>
-    xmlns:toast="https://manning.com/hyperview/toast"
+    xmlns:toast="https://hypermedia.systems/hyperview/toast"
     trigger="load" <2>
     action="show-toast" <3>
     toast:message="{{ message }}" <4>
@@ -407,7 +407,7 @@ For the swipeable row, we need a way to represent the entire component, the main
 
 [source,xml]
 ----
-<swipe:row xmlns:swipe="https://manning.com/hyperview/swipeable"> <1>
+<swipe:row xmlns:swipe="https://hypermedia.systems/hyperview/swipeable"> <1>
   <swipe:main> <2>
     <!-- main content shown here -->
   </swipe:main>
@@ -461,7 +461,7 @@ import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
 import Swipeable from 'react-native-swipeable';
 
-const NAMESPACE_URI = 'https://manning.com/hyperview/swipeable';
+const NAMESPACE_URI = 'https://hypermedia.systems/hyperview/swipeable';
 
 export default class SwipeableRow extends PureComponent { <1>
   static namespaceURI = NAMESPACE_URI; <2>
@@ -585,7 +585,7 @@ So let's start by adding `<row>` and `<main>` as parent elements.
 [source,xml]
 ----
 <item key="{{ contact.id }}">
-  <swipe:row xmlns:swipe="https://manning.com/hyperview/swipeable"> <1>
+  <swipe:row xmlns:swipe="https://hypermedia.systems/hyperview/swipeable"> <1>
     <swipe:main> <2>
       <view style="contact-item"> <3>
         <behavior trigger="press" action="push" href="/contacts/{{ contact.id }}" /> <1>
@@ -613,7 +613,7 @@ Let's add two buttons to the swipeable row.
 [source,xml]
 ----
 <item key="{{ contact.id }}">
-  <swipe:row xmlns:swipe="https://manning.com/hyperview/swipeable"> <1>
+  <swipe:row xmlns:swipe="https://hypermedia.systems/hyperview/swipeable"> <1>
     <swipe:main>
       <!-- omitted for brevity -->
     </swipe:main>

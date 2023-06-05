@@ -1386,7 +1386,7 @@ The keyboard interactions can be error-prone too.
 It's not impossible, not even that hard, to make your own tab set implementation.
 However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
 
-*Stick with established libraries* for UI interactions. If a use case requires a bespoke solution, *test exhaustively* for keyboard interaction and accessibility.
+_Stick with established libraries_ for UI interactions. If a use case requires a bespoke solution, _test exhaustively_ for keyboard interaction and accessibility.
 
 Also consider: Does the information need to be presented as tabs?
 Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.

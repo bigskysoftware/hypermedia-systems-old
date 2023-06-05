@@ -160,7 +160,7 @@ Martin Fowler's writing.  Note that the data here is "plain": we don't see any a
 properties and their values.
 
 This approach was disdainfully referred to as "The Swamp of POX", or Plain Old XML.  Fowler made the point that,
-in adopting this technique for exchanging information with a remote system, engineers were abandoning the hypermedia
+in adopting this technique for exchanging information with a remote system, engineers were leaving the hypermedia
 model entirely and were really using HTTP to implement their own Remote Procedure Call (RPC) mechanism.
 
 ===== Level 1: Resources

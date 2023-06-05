@@ -9,7 +9,7 @@ we will have a more _powerful hypermedia_ to work with, allowing us to accomplis
 
 This will allow us to address user experience issues, such as long feedback cycles or painful page refreshes, without
 needing to write much, if any, JavaScript, and without creating a JSON API.  Everything will be implemented in hypermedia,
-using the core concepts of the original web.
+using the core hypermedia concepts of the early web.
 
 == Installing Htmx
 
@@ -1032,7 +1032,7 @@ a span and then add the `revealed` event trigger.
 The fact that switching to infinite scroll was so easy shows how well htmx generalizes HTML: just a few attributes allow
 us to dramatically expand what we can achieve in the hypermedia.
 
-And, again, we are doing all this within the original, RESTful model of the web. Despite all this new
+And, again, we are doing all this within the native, RESTful model of the web. Despite all this new
 behavior, we are still exchanging hypermedia with the server, with no JSON API response to be seen.
 
 As the web was designed.

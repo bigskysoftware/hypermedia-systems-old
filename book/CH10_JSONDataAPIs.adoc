@@ -7,7 +7,7 @@
 == JSON Data APIs
 
 So far we have been focusing on using hypermedia to build Hypermedia-Driven Applications.  In doing so we are
-following the original networking architecture of the web, and building a RESTful system, in the original sense
+following the native network architecture of the web, and building a RESTful system, in the original sense
 of that term.
 
 However, today, we should acknowledge that many web applications are often _not_ built using this approach.  Instead, they use a

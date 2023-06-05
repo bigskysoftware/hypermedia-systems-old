@@ -861,7 +861,7 @@ It turns out that we can improve the user experience of this application while r
 architecture.
 
 In the next few chapters we will look at https://htmx.org[htmx], a hypermedia-oriented library
-that will let us improve our contact application _without_ abandoning the hypermedia approach we have used so far.
+that will let us improve our contact application while retaining the hypermedia-based approach we have used so far.
 
 [.design-note]
 .HTML Notes: Semantic HTML

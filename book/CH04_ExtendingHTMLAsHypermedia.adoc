@@ -194,7 +194,7 @@ a Single Page Application, where only part of the DOM is updated by a given user
 == Extending HTML as a Hypermedia with Htmx
 
 These four opportunities present us a way to extend HTML well beyond its current abilities, but
-in a way that is _entirely within_ the original hypermedia model of the web. The fundamentals of HTML, HTTP, the browser,
+in a way that is _entirely within_ the hypermedia model of the web. The fundamentals of HTML, HTTP, the browser,
 and so on, won't be changed dramatically.  Rather, these generalizations of _existing functionality_ already found within
 HTML would simply let us accomplish _more_ using HTML.
 
@@ -824,7 +824,7 @@ If you have ever used a Single Page Application and accidentally clicked the bac
 application state and have to start over, you have seen this problem in action.
 
 In htmx, as with Single Page Application frameworks, you will often need to explicitly work with the history API.
-Fortunately, since htmx sticks so close to the original model of the web and since it is declarative, getting web history
+Fortunately, since htmx sticks so close to the native model of the web and since it is declarative, getting web history
 right is typically much easier to do in an htmx-based application.
 
 Consider the button we have been looking at to load contacts:
@@ -882,7 +882,7 @@ conceptually coherent with the underlying markup language.  Like any technical c
 trade-offs: by staying so close to HTML, htmx does not give developers a lot of infrastructure that many might feel 
 should be there "`by default`".
 
-By staying closer to the original model of the web, htmx aims to strike a balance between simplicity and functionality,
+By staying closer to the native model of the web, htmx aims to strike a balance between simplicity and functionality,
 deferring to other libraries for more elaborate frontend extensions on top of the existing web platform.  The good news
 is that htmx plays well with others, so when these needs arise it is often easy enough to bring in another library to handle
 them.

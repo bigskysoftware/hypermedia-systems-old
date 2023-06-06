@@ -107,7 +107,7 @@ The book is broken into three parts:
   application that many developers would expect to require a large, sophisticated front end library, such as React.
   Thanks to htmx, we will be able to do this using hypermedia as our system architecture.
 
-* Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system, related to, but distinct from the web and created by one of the authors of this book -- Adam Stepinski.  It supports _mobile specific_ features by providing not only a mobile specific hypermedia, but also a mobile hypermedia client. These novel components, combined with any HTTP server, provide a full _mobile hypermedia system_ for you to build your mobile application. In doing so, makes it possible to build mobile Hypermedia-Driven Applications.
+* Finally, we will look at a completely different hypermedia system, Hyperview.  Hyperview is a _mobile_ hypermedia system, related to, but distinct from the web and created by one of the authors of this book -- Adam Stepinski.  It supports _mobile specific_ features by providing not only a mobile specific hypermedia, but also a mobile hypermedia client. These novel components, combined with any HTTP server, make it possible to build mobile Hypermedia-Driven Applications.
 
 Note that each section is _somewhat_ independent of the others.  If you already know hypermedia in-depth and how basic Web
 1.0 applications function, you may want to skip ahead to the second section on htmx and how to build modern web applications

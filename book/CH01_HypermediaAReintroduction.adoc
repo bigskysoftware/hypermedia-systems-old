@@ -410,7 +410,7 @@ marketing sites and blogs.
 ____
 
 The JavaScript-based Single Page Application approach has taken the web development world by storm, and if there was one
-single for its wild success it was this: The Single Page Application offers a far more interactive and immersive experience
+single reason for its wild success it was this: The Single Page Application offers a far more interactive and immersive experience
 than the old, gronky, Web 1.0 hypermedia-based applications could.  SPAs had the ability to smoothly update elements inline on
 a page without a dramatic reload of the entire document, they had the ability to use CSS transitions to create nice visual effects,
 and the ability to hook into arbitrary events like mouse movements.

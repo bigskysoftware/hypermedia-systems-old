@@ -295,7 +295,7 @@ export default class HyperviewScreen extends PureComponent {
 <2> Pass the action to the `Hyperview` component, as a prop called `behaviors`.
 
 All that's left to do is trigger the `show-message` action from our HXML.
-There are three user actions that result in showing a message message:
+There are three user actions that result in showing a message:
 
 1. Creating a new contact
 2. Updating an existing contact
@@ -320,7 +320,7 @@ Since the actual behaviors will be the same in both templates, let's create a sh
 {% endfor %}
 ----
 <1> Define a behavior for each message to display.
-<2> Trigger this behavior as soon as the screen loads.
+<2> Trigger this behavior as soon as the element loads.
 <3> Trigger the new "`show-message`" action.
 <4> The "`show-message`" action will display the flashed message in its UI.
 

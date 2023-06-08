@@ -52,6 +52,8 @@ _hypermedia system_ that comes together to make hypermedia such a powerful archi
 
 == What is a Hypermedia System?
 
+((("Fielding, Roy")))
+(((REST)))
 To understand what a hypermedia system is we'll first take an in-depth look at _the_ canonical hypermedia system: the
 World Wide Web.  Roy Fielding, an engineer who helped create specifications and build the
 implementations of many early pieces of the web, gave us the term REpresentational State Transfer, or REST.

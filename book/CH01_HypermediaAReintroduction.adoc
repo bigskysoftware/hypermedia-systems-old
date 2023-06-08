@@ -46,6 +46,7 @@ ____
 
 Let us begin at the beginning: what is hypermedia?
 
+(((hypermedia)))
 Hypermedia is a media, for example a text, that includes _non-linear branching_ from one location in the media to another,
 via, for example, hyperlinks embedded in the media. The prefix "`hyper-`" derives from the Greek prefix "`ὑπερ-`" which
 means "`beyond`" or "`over`", indicating that hypermedia _goes beyond_ normal, passively consumed media like magazines and
@@ -53,12 +54,13 @@ newspapers.
 
 Hyperlinks are a canonical example of what is called a [.dfn]_hypermedia control_:
 
-Hypermedia Control:: A hypermedia control is an element in a hypermedia that describes (or controls) some sort of
+Hypermedia Control:: A ((hypermedia control)) is an element in a hypermedia that describes (or controls) some sort of
 interaction, often with a remote server, by encoding information about that interaction directly and completely within
 itself.
 
 Hypermedia controls are what differentiate hypermedia from other sorts of media.
 
+(((hypertext)))
 You may be more familiar with the term [.dfn]_hypertext_, from whose Wikipedia page the above quote is taken.  Hypertext
 is a sub-category of hypermedia and much of this book is going to discuss how to build modern applications using
 hypertexts such as  HTML, the Hypertext Markup Language, or HXML, a hypertext used by the Hyperview mobile hypermedia
@@ -68,6 +70,7 @@ Hypertexts like HTML function alongside other technologies crucial for making an
 protocols like HTTP, other media types such as images and videos, hypermedia servers (i.e., servers providing hypermedia APIs),
 sophisticated hypermedia clients (e.g., web browsers), and so on.
 
+(((hypermedia system)))
 Because of this, we prefer the broader term _hypermedia systems_ when describing the underlying architecture of
 applications built using hypertext, to emphasize the system architecture over the particular hypermedia being used.
 
@@ -77,18 +80,22 @@ It is the entire hypermedia _system architecture_ that is underappreciated and i
 
 Where did the idea of hypermedia come from?
 
+((("Bush, Vannevar")))
 While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
 to the 1945 article _As We May Think_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
 has become modern hypermedia.
 
-In this article Bush described a device called a Memex, which, using a complex mechanical system of reels and microfilm,
+In this article Bush described a device called a ((Memex)), which, using a complex mechanical system of reels and microfilm,
 along with an encoding system, would allow users to jump between related frames of content.  The Memex was never actually
 implemented, but it was an inspiration for later work on the idea of hypermedia.
 
+((("Nelson, Ted")))
+(((FRESS)))
 The terms "`hypertext`" and "`hypermedia`" were coined in 1963 by Ted Nelson, who would go on to work on the _Hypertext Editing
 System_ at Brown University and who later created the _File Retrieval and Editing System (FRESS)_, a shockingly advanced
 hypermedia system for its time.  (This was perhaps the first digital system to have a notion of "`undo`".)
 
+((("Englebart, Douglas")))
 While Nelson was working on his ideas, Douglas Engelbart was busy at work at the Stanford Research Institute, explicitly
 attempting to make Vannevar Bush's Memex a reality.  In 1968, Englebart gave "`The Mother of All Demos`" in San Francisco,
 California.
@@ -105,6 +112,8 @@ Englebart demonstrated became mainstream.
 
 === Modern Implementation
 
+((("Berners-Lee, Tim")))
+(((World Wide Web, creation)))
 In 1990, Tim Berners-Lee, working at CERN, published the first website.  He had been working on the idea of hypertext
 for a decade and had finally, out of desperation at the fact it was so hard for researchers to share their research,
 found the right moment and institutional support to create the World Wide Web:
@@ -117,10 +126,12 @@ been designed already. I just had to put them together. It was a step of general
 thinking about all the documentation systems out there as being possibly part of a larger imaginary documentation system.
 ____
 
-By 1994 his creation was taking off so quickly that Berners-Lee founded the W3C, a working group of companies and researchers
+By 1994 his creation was taking off so quickly that Berners-Lee founded the ((W3C)), a working group of companies and researchers
 tasked with improving the web.  All standards created by the W3C were royalty-free and could be adopted and implemented
 by anyone, cementing the open, collaborative nature of the web.
 
+((("Fielding, Roy")))
+(((REST)))
 In 2000, Roy Fielding, then at U.C. Irvine, published a seminal PhD dissertation on the web: "`Architectural Styles and the
 Design of Network-based Software Architectures.`"  Fielding had been working on the open source Apache HTTP Server and
 his thesis was a description of what he felt was a _new and distinct networking architecture_ that had emerged in the early
@@ -140,11 +151,12 @@ ____
 In the beginning was the hyperlink, and the hyperlink was with the web, and the hyperlink was the web.  And it was good.
 ____
 
+(((HTML, history)))
 The system that Berners-Lee, Fielding and many others had created revolved around a hypermedia: HTML.  HTML started as a read-only
 hypermedia, used to publish (at first) academic documents.  These documents were linked together via anchor tags which
 created _hyperlinks_ between them, allowing users to quickly navigate between documents.
 
-When HTML 2.0 was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e., hyperlink) as a
+When ((HTML 2.0)) was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e., hyperlink) as a
 second hypermedia control.  The introduction of the form tag made building _applications_ on the web viable by providing
 a mechanism for _updating_ resources, rather than just reading them.
 
@@ -162,10 +174,11 @@ the anchor tag and the form tag, in a bit of detail.
 
 ==== Anchor tags
 
+(((hyperlink)))
 Anchor tags are so familiar as to be boring but, as the original hypermedia control, it is worth reviewing the mechanics
 of hyperlinks to get our minds in the right place for developing a deeper understanding of hypermedia.
 
-Consider a simple anchor tag, embedded within a larger HTML document:
+Consider a simple ((anchor tag)), embedded within a larger HTML document:
 
 .A simple hyperlink
 [source,html]
@@ -194,6 +207,7 @@ Here is what a user interaction with an anchor tag/hyperlink looks like in visua
 .An HTTP GET In Action
 image::diagram/http-get-in-action.svg[Browser sends GET request to the server with the path and hostname, server responds with page]
 
+(((GET request)))
 When the link is clicked the browser (or, as we sometimes refer to it, the _hypermedia client_) initiates an HTTP
 `GET` request to the URL encoded in the link's `href` attribute.
 
@@ -206,6 +220,7 @@ system_: the client and server must communicate via hypermedia!
 
 ==== Form tags
 
+(((form tag)))
 Anchor tags provide _navigation_ between documents or resources, but don't allow you to update those resources.  That functionality
 falls to the form tag.
 
@@ -225,6 +240,7 @@ Like an anchor tag, a form tag consists of the tag itself, `<form></form>`, comb
 content within the tag.  Note that the form tag does not have an `href` attribute, but rather has an `action` attribute
 that specifies where to issue an HTTP request.
 
+(((POST request)))
 Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`method`" to use.  In this example
 the form is asking the browser to issue a `POST` request.
 
@@ -279,9 +295,10 @@ These two tags give a tremendous amount of expressive power to HTML.
 
 So links and forms are the two main hypermedia-based mechanisms for interacting with a server available in HTML.
 
-Now let's consider a different approach: let's interact with a server by issuing an HTTP request via JavaScript.  To
+(((Fetch API)))
+Now let's consider a different approach: let's interact with a server by issuing an HTTP request via ((JavaScript)).  To
 do this, we will use the https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API[`fetch()`] API, a popular API for
-issuing an "`Asynchronous JavaScript and XML,`" or AJAX request, available in all modern web browsers:
+issuing an "`Asynchronous JavaScript and XML,`" or ((AJAX)) request, available in all modern web browsers:
 
 [#listing-1-3, reftext={chapter}.{counter:listing}]
 .JavaScript
@@ -304,6 +321,7 @@ The JavaScript will issue an AJAX HTTP `GET` request to `/api/v1/contacts/1` usi
 request indicator from the browser as they would with normal links and forms. Additionally, unlike requests issued by those
 hypermedia controls, it is up to the JavaScript code to handle the response from the server.
 
+(((JSON)))
 Despite AJAX having XML as part of its acronym, today the HTTP response to this request would almost certainly be in the
 JavaScript Object Notation (JSON) format rather than XML.
 
@@ -321,6 +339,7 @@ An HTTP response to this request might look something like this:
 <2> A property, in this case with the name `id` and the value `42`.
 <3> Another property, the email of the contact with this id.
 
+(((updateUI method)))
 The JavaScript code above converts the JSON text received from the server into a JavaScript object by calling the
 `json()` method on it.  This new JavaScript object is then handed off to the `updateUI()` method.
 
@@ -330,9 +349,10 @@ perhaps by displaying the contact in a bit of HTML generated via a client-side t
 The details of exactly what the `updateUI()` function does aren't important for our discussion.
 
 What _is_ important, what is the _crucial_ aspect of this JSON-based server interaction is that it is _not_ using
-hypermedia.  The JSON API being used here does not return a hypermedia response.  There are no _hyperlinks_ or other
+hypermedia.  The ((JSON API)) being used here does not return a hypermedia response.  There are no _hyperlinks_ or other
 hypermedia-style controls in it.
 
+(((Data API)))
 This JSON API is, rather, a _Data API_.
 
 Because the response is in JSON and is _not_ hypermedia, the JavaScript `updateUI()` method must understand how to turn
@@ -348,6 +368,7 @@ It needs to know:
 - How to render this data to the browser.
 - What additional actions/API end points can be called with this data.
 
+(((tight coupling)))
 In short, the logic in `updateUI()` needs to have intimate knowledge of the API endpoint at `/api/v1/contact/1`, knowledge provided
 via some side-channel beyond the response itself.  As a result, the `updateUI()` code and the
 API have a strong relationship, known as _tight coupling_: if the format of the JSON response changes, then the code for `updateUI()` will almost certainly
@@ -355,6 +376,8 @@ also need to be changed as well.
 
 ==== Single Page Applications
 
+(((Single Page Application)))
+(((SPA)))
 This bit of JavaScript, while very modest, is the organic beginnings of a much larger conceptual approach to building
 web applications.  This is the beginning of a _Single Page Application (SPA)_.  The web application is no longer
 navigating _between_ pages using hypermedia controls as was the case with links and forms.
@@ -367,7 +390,7 @@ thus the application becomes a "`Single Page Application.`"
 The Single Page Application architecture is extremely popular today and has been the dominant approach to building web applications for the last decade. This can be observed by the high level of mind-share and discussion it has received in the industry.
 
 Today the vast majority of Single Page Applications adopt far more sophisticated frameworks for managing their
-user interface than this simple example shows.  Popular libraries such as React, Angular, Vue.js, etc. are now the common -- indeed, the standard -- way to build web applications.
+user interface than this simple example shows.  Popular libraries such as ((React)), ((Angular)), ((Vue.js)), etc. are now the common -- indeed, the standard -- way to build web applications.
 
 With these more complex frameworks developers typically work with an elaborate client-side model -- that is, with JavaScript objects
 stored locally in the browser's memory that represent the "`model`" or "`domain`" of your application.  These JavaScript objects
@@ -388,6 +411,7 @@ So, as with our simple button above, the Single Page Application approach forego
 It leaves aside the advantages of the existing RESTful architecture of the web and the built-in functionality
 found in HTML's native hypermedia controls in favor of JavaScript driven behaviors.
 
+(((thick client application)))
 SPAs are more much like _thick client applications_, that is, like the client-server applications of the
 1980s -- an architecture popular _before_ the web came along and that the web was, in many ways, a reaction to.
 
@@ -397,6 +421,7 @@ considering other alternatives, and if there are reasons _not_ to go down this p
 
 == Why Use Hypermedia?
 
+((("MacWright, Tom")))
 [quote, Tom MacWright, https://macwright.com/2020/05/10/spa-fatigue.html]
 ____
 The emerging norm for web development is to build a React single-page application, with server rendering. The two key
@@ -433,11 +458,12 @@ the Single Page Application + JSON Data API approach.  Three of the biggest are:
 
 * It leverages tried and true features of web browsers, such as caching.
 
+(((Javascript Fatigue)))
 The first two advantages, in particular, address major pain points in modern web development:
 
 * Single Page Application infrastructure has become extremely complex, often requiring an entire team to manage.
 
-* JSON API churn -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
+* ((JSON API churn)) -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
   many application teams.
 
 The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon
@@ -477,7 +503,7 @@ Instead, building thick-client style applications within web browsers became the
 understandable move to a more familiar model for building rich applications.
 
 Not everyone set aside hypermedia, of course. There have been heroic efforts to continue to advance hypermedia outside of
-HTML, efforts like HyTime, VoiceXML, and HAL.
+HTML, efforts like ((HyTime)), ((VoiceXML)), and ((HAL)).
 
 But HTML, the most widely used hypermedia in the world, stopped making progress as a hypermedia. The web development
 world moved on, solving the interactivity problems with HTML by adopting JavaScript-based SPAs and, mostly inadvertently,
@@ -502,6 +528,8 @@ These _hypermedia-oriented_ libraries re-center hypermedia as the core technolog
 
 === Hypermedia-Oriented JavaScript Libraries
 
+(((Multi-Page Application)))
+(((MPA)))
 In the web development world there is an ongoing debate between the Single Page Application (SPA) approach and what is now being called the
 "`Multi-Page Application`" (MPA) approach.  MPA is a modern name for the old, Web 1.0 way of building web applications, using
 links and forms located on multiple web pages, submitting HTTP requests and getting HTML responses.

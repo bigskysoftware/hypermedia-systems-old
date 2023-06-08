@@ -18,6 +18,8 @@ with it: caching, various headers, response codes, and so forth.
 
 And then, of course, there are _hypermedia servers_, which present _hypermedia APIs_ (yes, _APIs_) to clients over the network.
 
+(((hypermedia client)))
+(((web browser)))
 And, finally, there is the all-important _hypermedia client_: a software client that understands how to render a _hypermedia
 response_ intelligibly to a human, so that a human can interact with the remote system.  The most widely known and used
 hypermedia clients are, of course, web browsers.
@@ -56,6 +58,7 @@ implementations of many early pieces of the web, gave us the term REpresentation
 In his PhD dissertation he described REST as a _network architecture_, and he contrasted it with earlier approaches to building
 distributed software.
 
+(((hypermedia system)))
 We define a _hypermedia system_ as a system that adheres to the RESTful network architecture in Fielding's _original_
 sense of this term.
 
@@ -75,6 +78,8 @@ version of the web.
 
 == Hypermedia-Driven Applications
 
+(((HDA)))
+(((Hypermedia-Driven Application)))
 In this book we are going to take a look at hypermedia as a _system architecture_ and then explore some practical,
 _modern_ approaches to building web applications using it.  We will call applications built in this style
 _Hypermedia-Driven Applications_, or HDAs, and we contrast them with a popular style in use today, the Single Page

@@ -355,7 +355,7 @@ Let's update our progress bar to have the proper ARIA roles and values:
 <1> This element will act as a progress bar
 <2> The progress will be the percentage completeness of the archiver, with 100 indicating fully complete
 
-Finaly, for completeness, here is the CSS we'll use for this progress bar:
+Finally, for completeness, here is the CSS we'll use for this progress bar:
 
 .The CSS for our progress bar
 [source, css]

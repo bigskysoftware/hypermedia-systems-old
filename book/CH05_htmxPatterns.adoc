@@ -493,7 +493,7 @@ all while using declarative attributes in our HTML and staying firmly within the
 
 === Progressive Enhancement?
 
-As we noted earlier about this solution: it is _not_ a progressive enhancement to our web application: if
+As we noted earlier about this solution: it is _not_ a progressive enhancement to our web application. If
 someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We would need to do additional
 work to keep the older form-based mechanism working in a JavaScript-disabled environment.
 

@@ -66,10 +66,8 @@ Just seems wrong, doesn't it?
 == A Close Look At A Hyperlink
 
 It turns out that we can boost the interactivity of our application and address both of these issues _without_ resorting
-to the SPA approach.  We can do so by using one of several available _hypermedia-oriented_ JavaScript libraries.
-In this book, naturally, we will use the library that we've developed, https://htmx.org[htmx].  We will use it not only
-because we know it inside and out, but also because we built it to extend HTML as a hypermedia and address the issues
-with legacy HTML applications we mentioned above (as well as few others.)
+to the SPA approach.  We can do so by using a _hypermedia-oriented_ JavaScript library, https://htmx.org[htmx]. The authors of this book built htmx specifically to extend HTML as a hypermedia and address the issues
+with legacy HTML applications we mentioned above (as well as a few others.) 
 
 Before we get into how htmx allows us to improve the UX of our Web 1.0 style application, let's revisit the
 hyperlink/anchor tag from Chapter 1.  Recall, a hyperlink is what is known as a _hypermedia control_, a mechanism that
@@ -245,7 +243,7 @@ Once htmx has been installed, you can begin using it immediately.
 And here we get to the interesting part of htmx: htmx does not require you, the user of htmx, to actually write any JavaScript.
 
 Instead, you will use _attributes_ placed directly on elements in your HTML to drive more dynamic behavior.  Htmx extends
-HTML as a hypermedia, and it is designed so that extension is as natural and consistent as possible with existing
+HTML as a hypermedia, and it is designed to make that extension feel as natural and consistent as possible with existing
 HTML concepts.  Just as an anchor tag uses an `href` attribute to specify the URL to retrieve, and forms use an `action`
 attribute to specify the URL to submit the form to, htmx uses HTML _attributes_ to specify the URL that an HTTP request
 should be issued to.

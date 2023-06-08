@@ -54,7 +54,7 @@ frameworks.
 With this stack we will be rendering HTML _on the server-side_ to return to clients, rather than producing JSON.  This
 is the traditional approach to building web applications.  However, with the rise of SPAs, this approach is not as
 widely used a technique as it once was.  Today, as people are rediscovering this style of web applications, the term
-"`Server-Side Rendering`" or SSR is emerging as the way that people talk about it.  This contrasted with
+"`Server-Side Rendering`" or SSR is emerging as the way that people talk about it.  This contrasts with
 "`Client-Side Rendering`", that is, rendering templates in the browser with data retrieved in JSON form from the server,
 as is common in SPA libraries.
 

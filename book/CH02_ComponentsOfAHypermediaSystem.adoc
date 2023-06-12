@@ -313,8 +313,8 @@ this means that nearly any programming language can be used to build a hypermedi
 libraries available for building HTTP-based hypermedia servers in nearly every programming language imaginable.
 
 This turns out to be one of the best aspects of adopting hypermedia as your primary technology for building a web application: it removes
-the pressure of adopting JavaScript as a backend technology.  If you use a JavaScript-heavy Single Page Application-based
-front end, and you use JSON Data APIs, you are going to feel significant pressure to adopt JavaScript on the back end as
+the pressure to adopt JavaScript as a backend technology.  If you use a JavaScript-heavy Single Page Application-based
+front end, and you use JSON Data APIs, you are going to feel significant pressure to deploy JavaScript on the back end as
 well.
 
 In this latter situation, you already have a ton of code written in JavaScript.  Why maintain two separate code bases in
@@ -332,11 +332,9 @@ web framework and templating library that can be used to handle HTTP requests cl
 If you are doing something in big data, perhaps you'd like to use Python, which has tremendous support for that
 domain.
 
-If you are doing AI work, perhaps you'd like to use Lisp, leaning on a language with a long history in that
-area of research.
+If you are doing AI work, perhaps you'd like to use Lisp, leaning on a language with a long history in that area of research.
 
-Maybe you are a functional programming enthusiast and want to use OCaml or Haskell.  Perhaps you just really like Julia or
-Nim.
+Maybe you are a functional programming enthusiast and want to use OCaml or Haskell.  Perhaps you just really like Julia or Nim.
 
 These are all perfectly valid reasons for choosing a particular server-side technology!
 

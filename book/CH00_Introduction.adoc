@@ -158,19 +158,25 @@ ____
 [.html-note]
 .HTML Notes: Hypermedia In Practice
 ****
-At the end of each chapter you will find tips and best practices for writing HTML well.
 
-It's easy (and sometimes acceptable) to produce mediocre HTML that, for one particular application, works well enough. But websites are not islands.
-That is, they are not applications of a _platform_, but constituents of a _system_. In a systems view of the web, the purpose of writing HTML is not just to develop a particular application, but also to play along with other members of the web. 
+Clearly, HTML plays a central role in the story we tell here. At the end of each chapter we will share what we have learned about writing HTML for hypermedia-driven web applications. 
 
-Thankfully for us hypermedia advocates, a few components, most prominently search engines and assistive technologies, have enough sway to keep people caring about HTML.
-Less fortunately, lack of awareness around hypermedia means that these components are seen as annoyances to get out of the way, demons to appease, or worse, legacy leftovers to ignore.
+To start, remember that our web applications are not islands. We're writing HTML not just for a particular application, but also to play along with other members of the web. When we write with the hypermedia _system_ in mind, we're better able to tap the range of abilities available to the web.
 
-After all, web development is so much easier without all this web stuff.
+HTML is hypermedia-friendly when it is written for the full range of constituents of the hypermedia system.
+It conveys the state of an application to people viewing our sites with a browser, as well as to people listening to screenreaders that read sites aloud. It conveys the aims of our sites to search engines that scrape sites programatically. It also conveys its behavior as clearly as possible to other developers. 
+ 
 
-So why resist the tide? Why shouldn't we discard hypermedia and rewrite the web into the application platform it can clearly be? That's what the rest of this book will try to answer, in a practical, non theory-addled way. And at the ends of chapters, these HTML Notes will connect the concepts of hypermedia we discuss and the code samples we present to day-to-day web development.
 
-The executive summary: well-written HTML is easier to read and debug, more accessible to all, and ranked higher by search engines (not out of bias, but because they have an easier time scraping it). We can't fix every problem by writing good HTML. The mantra that HTML is "accessible by default" is misleading, and shunning other technologies like JavaScript is misguided. Ultimately, testing is the best indicator of quality.
 
-But writing good, spec-compliant HTML lets browsers do a bunch of work for you. Furthermore, even when they don't, it makes it easier to write scripts that do. Fewer issues will be found during testing and you can release faster. When issues do come up, you can often fix them more easily by refactoring HTML as opposed to heaping JavaScript and ARIA attributes over everything.
+
+
+
+
+
+No, we can't fix every problem with good HTML. The mantra that HTML is "accessible by default" is misleading. We would miss out on important opportunities if we  shunned other technologies like JavaScript. And we still need to test, a lot, everywhere, to ensure things work as expected. 
+
+But good HTML lets browsers do a _lot_ of work for us. 
+
+
 ****

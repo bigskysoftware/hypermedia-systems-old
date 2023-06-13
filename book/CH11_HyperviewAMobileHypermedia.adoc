@@ -104,7 +104,7 @@ To avoid using the typical thick-client architecture of native mobile apps, we t
 The web view allows us to use good-old hypermedia-based HTML.
 But to get the desired look & feel of a mobile app, we end up building a SPA in JS, losing the benefits of Hypermedia in the process.
 
-To build a mobile HDA feels and acts like a native app, HTML isn't going to cut it.
+To build a mobile HDA that acts and feels like a native app, HTML isn't going to cut it.
 We need a format designed to represent the interactions and patterns of native mobile apps.
 That's exactly what Hyperview does.
 
@@ -215,7 +215,7 @@ We've discussed two approaches for creating mobile apps using hypermedia systems
 - create a backend that returns HXML, and serve it in a mobile app with the Hyperview client
 
 I purposefully described the two approaches in a way to highlight their similarities.
-After all, they are both using hypermedia systems, just with different formats and clients.
+After all, they are both based on hypermedia systems, just with different formats and clients.
 Both approaches solve the fundamental issues with traditional, SPA-like mobile app development:
 
 - The backend controls the full state of the app.
@@ -223,7 +223,7 @@ Both approaches solve the fundamental issues with traditional, SPA-like mobile a
 - The app always runs the latest version, there's no API churn to worry about.
 
 So which approach should you use for a mobile HDA?
-Based on our experience building both types of apps, we strongly believe the Hyperview approach results in a better user experience.
+Based on our experience building both types of apps, we believe the Hyperview approach results in a better user experience.
 The web-view will always feel out-of-place on iOS and Android; there's just no good way to replicate the patterns of navigation and interaction that mobile users expect.
 Hyperview was created specifically to address the limitations of thick-client and web view approaches.
 After the initial investment to learn Hyperview, you'll get all of the benefits of the Hypermedia architecture, without the downsides of a degraded user experience.
@@ -234,9 +234,16 @@ But as we will show at the end of this chapter, it doesn't take a lot of work to
 But before we get there, we need to introduce the concepts of elements and behaviors in Hyperview.
 Then, we'll re-build our contacts app in Hyperview.
 
-//TODO  astep: consider advice to web developers wanting to go mobile
-// i.e., beyond the hypermedia concept, is this a path you recommend
-// when compared to alternatives? Avoid any sense of promotion
+.When Shouldn't You Use Hypermedia to Build a Mobile App?
+****
+Hypermedia is not always the right choice to build a mobile app.
+Just like on the web, apps that require highly dynamic UIs (such as a spreadsheet application) are better implemented with client-side code.
+Additionally, some apps need to function while fully offline.
+Since HDAs require a server to render UI, offline-first mobile apps are not a good fit for this architecture.
+However, just like on the web, developers can use a hybrid approach to build their mobile app.
+The highly dynamic screens can be built with complex client-side logic, while the less dynamic screens can be built with web views or Hyperview.
+In this way, developers can spend their _complexity budget_ on the core of the application, and keep the simple screens simple.
+****
 
 == Introduction to HXML
 

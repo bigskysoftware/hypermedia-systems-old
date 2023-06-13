@@ -5,16 +5,15 @@
 :part_url: /part/hyperview/
 :url: /hyperview-a-mobile-hypermedia/
 
-You may be forgiven for thinking the hypermedia architecture is synonymous with the Web, web browsers, and HTML.
-No doubt, the Web is the largest hypermedia system, and web browsers are the most popular hypermedia client.
-The dominance of the Web in discussions about hypermedia make it easy to forget that hypermedia is a general concept, and can be applied to all types of platforms and applications.
+You may be forgiven for thinking the hypermedia architecture is synonymous with the web, web browsers, and HTML.
+No doubt, the web is the largest hypermedia system, and web browsers are the most popular hypermedia client.
+The dominance of the web in discussions about hypermedia make it easy to forget that hypermedia is a general concept, and can be applied to all types of platforms and applications.
 In this chapter, we will see the hypermedia architecture applied to a non-web platform: native mobile applications.
 
-Mobile as a platform has different constraints than the Web.
+Mobile as a platform has different constraints than the web.
 It requires different trade-offs and design decisions.
 Nonetheless, the concepts of hypermedia, HATEOAS, and REST can be directly applied to build delightful mobile applications.
 
-// TODO astep: chapter overview changed to fit other chapters. okay?
 In this chapter we will cover shortcomings with the current state of mobile app development, and how a hypermedia architecture can address these problems. We will then look at a path toward hypermedia on mobile: Hyperview, a mobile app framework that uses the hypermedia architecture. We'll conclude with an overview of HXML, the hypermedia format used by Hyperview.
 
 == The State of Mobile App Development
@@ -38,7 +37,7 @@ The code may as well initiate HTTP calls to the server to retrieve data, and the
 Thus, developers are naturally led into a thick-client pattern that looks something like this:
 
 - The client contains code to make API requests to the server, and code to translate those responses to UI updates
-- The server implements an HTTP API that speaks JSON, and knows little about the state of the client
+- The server implements a HTTP API that speaks JSON, and knows little about the state of the client
 
 Just like with SPAs on the web, this architecture has a big downside: the app's logic gets spread across the client and server.
 Sometimes, this means that logic gets duplicated (like to validate form data).
@@ -67,26 +66,26 @@ So how can you use Hypermedia for your mobile app?
 There are two approaches employing hypermedia to build & ship native mobile apps today:
 
 - Web views, which wraps the trusty web platform in a mobile app shell
-- Hyperview, a new hypermedia format we designed specifically for mobile apps
+- Hyperview, a new hypermedia system we designed specifically for mobile apps
 
 
 === Web Views
 The simplest way to use hypermedia architecture on mobile is by leveraging web technologies.
 Both Android and iOS SDKs provide "`web views`": chromeless web browsers that can be embedded in native apps.
 Tools like Apache Cordova make it easy to take the URL of a website, and spit out native iOS and Android apps based on web views.
-If you already have a responsive web app, you can get a "`native`" Hypermedia apps for free.
+If you already have a responsive web app, you can get a "`native`" mobile HDA for free.
 Sounds too good to be true, right?
 
 Of course, there is a fundamental limitation with this approach.
-The web and mobile are different platforms, with different capabilities and UX conventions.
+The web platform and mobile platforms have different capabilities and UX conventions.
 HTML doesn't natively support common UI patterns of mobile apps.
 One of the biggest differences is around how each platform handles navigation.
 On the web, navigation is page-based, with one page replacing another and the browser providing back/forward buttons to navigate the page history.
 On mobile, navigation is more complex, and tuned for the physicality of gesture-based interactions.
 
 - To drill down, screens slide on top of each other, forming stacks of screens.
-- A nav bar at the bottom of the app allows switching between various stacks of screens.
-- Modals slide up from the bottom of the app, covering the other stacks and the nav bar.
+- Tab bars at the top or bottom of the app allow switching between various stacks of screens.
+- Modals slide up from the bottom of the app, covering the other stacks and tab bar.
 - Unlike with web pages, all of these screens are still present in memory, rendered and updating based on app state.
 
 The navigation architecture is a major difference between how mobile and web apps function.
@@ -99,23 +98,23 @@ Many other UX patterns are present in mobile apps, but are not natively supporte
 
 While these interactions are not natively supported by web browsers, they can be simulated with JS libraries.
 Of course, these libraries will never have the same feel and performance as native gestures.
-And using these libraries usually requires embracing a JS-heavy SPA architecture.
+And using them usually requires embracing a JS-heavy SPA architecture like React.
 This puts us back at square 1!
 To avoid using the typical thick-client architecture of native mobile apps, we turned to a web view.
 The web view allows us to use good-old hypermedia-based HTML.
 But to get the desired look & feel of a mobile app, we end up building a SPA in JS, losing the benefits of Hypermedia in the process.
 
-To build a hypermedia-based mobile app that feels and acts native, HTML isn't going to cut it.
+To build a mobile HDA that acts and feels like a native app, HTML isn't going to cut it.
 We need a format designed to represent the interactions and patterns of native mobile apps.
 That's exactly what Hyperview does.
 
 
 === Hyperview
 
-Hyperview is an open-source framework that provides:
+Hyperview is an open-source hypermedia system that provides:
 
-- A pre-defined hypermedia format for defining mobile apps called HXML
-- A hypermedia client for HXML that can be embedded in an app binary on iOS and Android
+- A hypermedia format for defining mobile apps called HXML
+- A hypermedia client for HXML that works on iOS and Android
 - Extension points in HXML and the client to customize the framework for a given app
 
 ==== The format
@@ -148,83 +147,83 @@ The syntax should be familiar to anyone who's worked with HTML:
 But HXML is not just a straight port of HTML with differently named tags.
 In previous chapters, we've seen how htmx enhances HTML with a handful of new attributes.
 These additions maintain the declarative nature of HTML, while giving developers the power to create rich web apps.
-In HXML, the concepts of htmx (and IntercoolerJS before it) are built into the spec.
-Specifically, HXML is not limited to "`click to navigate`" and "`press to submit`" interactions like basic HTML.
+In HXML, the concepts of htmx are built into the spec.
+Specifically, HXML is not limited to "`click a link`" and "`submit a form`" interactions like basic HTML.
 It supports a range of triggers and actions for modifying the content on a screen.
 These interactions are bundled together in a powerful concept of "`behaviors`".
 Developers can even define new behavior actions to add new capabilities to their app, without the need for scripting.
 We will learn more about behaviors later in this chapter.
 
 ==== The client
-Web developers are lucky.
-They can assume their users have access to a web browser capable of rendering any web app.
-In Hypermedia terms, the Hypermedia (HTML) client is already built and distributed to users.
-Half the work is done!
-The developer only has to build the backend to serve Hypermedia responses.
+Hyperview provides an open-source HXML client library written in React Native.
+With a little bit of configuration and a few steps on the command line, this library compiles into native app binaries for iOS or Android.
+Users install the app on their device via an app store.
+On launch, the app makes a HTTP request to the configured URL, and renders the HXML response as the first screen.
+
+It may seem a little strange that developing a HDA using Hyperview requires a single-purpose client binary.
+After all, we don't ask users to first download and install a binary to view a web app.
+No, users just enter a URL in the address bar of a general-purpose web browser.
+A single HTML client renders apps from any HTML server.
 
 .One HTML server, multiple HTML clients
 image::diagram/one-server-many-clients.svg[Many clients connect to one server]
 
-This is possible because the web is an open ecosystem built on standards.
-Any developer can build and host a web app, and any user can access it directly.
-
-As we know, that's not the case with mobile platforms.
-There is no open standard for building and distributing native mobile apps.
-And there's definitely no widely distributed "`HXML browser`".
-So how can a developer deliver a Hypermedia mobile app using HXML?
-Well, unlike on the web, the mobile developer must provide both the backend to serve HXML, and a mobile client app to render those HXML responses.
+It is theoretically possible to build an equivalent general-purpose "Hyperview browser".
+This HXML client would renders apps from any HXML server, and users would enter a URL to specify the app they want to use.
+But iOS and Android are built around the concept of single-purpose apps.
+Users expect to find and install apps from an app store, and launch them from the home screen of their device.
+Hyperview embraces this app-centric paradigm of today's popular mobile platforms.
+That means that the HXML client (app binary) renders its UI from a single pre-configured HXML server:
 
 .One HXML server, one HXML client
 image::diagram/one-server-one-hxml-client.svg[One mobile client connects to the server]
 
-It would be a lot to ask from developers to write their own HXML client.
-That's why Hyperview provides an open-source client library, written in React Native.
-This library can be used to bootstrap a new mobile app, or it can be embedded in an existing app.
-In either case, developers get a full "`HXML browser`" without needing to write it from scratch.
+Luckily, developers do not need to write a HXML client from scratch; the open-source client library does 99% of the work.
+And as we will see in the next section, there are major benefits to controlling both the client and server in a HDA.
 
 
-.The Benefits of Using Your Own Client
-****
-At first, it might seem like the Hyperview approach requires extra work to write and maintain the mobile app client.
-But there is a benefit to controlling both parts of the client-server architecture.
-Did you ever wish you could fix a web browser bug?
-Or maybe add a new HTML element or features to the browser itself?
-The open nature of the Web means that progress happens slowly.
-New features go through a lengthy standardization process.
-Browser vendors may prioritize bugs and features that don't match your individual priorities.
-As a Web developer, you may need to wait years until browsers support the feature you need.
-Or, you can try to work around it with some kludgy JS.
+==== Extensibility
 
-Well, with Hyperview, there is no standards body or lengthy process for new features.
-As a Hyperview developer, you control your backend and mobile app client.
-Do you want to add a new element to HXML?
-Go right ahead!
-In fact, the Hyperview client library was built with extensibility in mind.
+To understand the benefits of Hyperview's architecture, we need to first discuss the drawbacks of the web architecture.
+On the web, any web browser can render HTML from any web server.
+This level of compatibility can only happen with well-defined standards such as HTML5.
+But defining and evolving standards is a laborious process.
+For example, the W3C took over 7 years to go from first draft to recommendation on the HTML5 spec.
+It's not surprising, given the level of thoughtfulness that needs to go into a change that impacts so many people.
+But it means that progress happens slowly.
+As a web developer, you may need to wait years for browsers to gain widespread support for the feature you need.
+
+So what are the benefits of Hyperview's architecture?
+In a Hyperview app, _your_ mobile app only renders HXML from _your_ server.
+You don't need to worry about compatibility between your server and other mobile apps, or between your mobile app and other servers.
+There is no standards body to consult.
+If you want to add a blink feature to your mobile app, go ahead and implement a `<blink>` element in the client, and start returning `<blink>` elements in the HXML responses from your server.
+In fact, the Hyperview client library was built with this type of extensibility in mind.
 There are extension points for custom UI elements and custom behavior actions.
+We expect and encourage developers to use these extensions to make HXML more expressive and customized to their app's functionality.
 
-By extending the format and client itself, there's no need for Hyperview to include a scripting layer in HXML.
-Features that require client-side logic get "`built-in`" to the client browser.
+And by extending the HXML format and client itself, there's no need for Hyperview to include a scripting layer in HXML.
+Features that require client-side logic get "`built-in`" to the client binary.
 HXML responses remain pure, with UI and interactions represented in declarative XML.
-****
 
 
 === Which Hypermedia Architecture Should You Use?
 
-We've discussed two approaches for creating mobile apps using Hypermedia architecture:
+We've discussed two approaches for creating mobile apps using hypermedia systems:
 
 - create a backend that returns HTML, and serve it in a mobile app through a web view
 - create a backend that returns HXML, and serve it in a mobile app with the Hyperview client
 
 I purposefully described the two approaches in a way to highlight their similarities.
-After all, they are both using the Hypermedia architecture, just with different formats and clients.
+After all, they are both based on hypermedia systems, just with different formats and clients.
 Both approaches solve the fundamental issues with traditional, SPA-like mobile app development:
 
 - The backend controls the full state of the app.
 - Our app's logic is all in one place.
 - The app always runs the latest version, there's no API churn to worry about.
 
-So which approach should you use for a Hypermedia-driven mobile app?
-Based on our experience building both types of apps, we strongly believe the Hyperview approach results in a better user experience.
+So which approach should you use for a mobile HDA?
+Based on our experience building both types of apps, we believe the Hyperview approach results in a better user experience.
 The web-view will always feel out-of-place on iOS and Android; there's just no good way to replicate the patterns of navigation and interaction that mobile users expect.
 Hyperview was created specifically to address the limitations of thick-client and web view approaches.
 After the initial investment to learn Hyperview, you'll get all of the benefits of the Hypermedia architecture, without the downsides of a degraded user experience.
@@ -235,9 +234,16 @@ But as we will show at the end of this chapter, it doesn't take a lot of work to
 But before we get there, we need to introduce the concepts of elements and behaviors in Hyperview.
 Then, we'll re-build our contacts app in Hyperview.
 
-//TODO  astep: consider advice to web developers wanting to go mobile
-// i.e., beyond the hypermedia concept, is this a path you recommend
-// when compared to alternatives? Avoid any sense of promotion
+.When Shouldn't You Use Hypermedia to Build a Mobile App?
+****
+Hypermedia is not always the right choice to build a mobile app.
+Just like on the web, apps that require highly dynamic UIs (such as a spreadsheet application) are better implemented with client-side code.
+Additionally, some apps need to function while fully offline.
+Since HDAs require a server to render UI, offline-first mobile apps are not a good fit for this architecture.
+However, just like on the web, developers can use a hybrid approach to build their mobile app.
+The highly dynamic screens can be built with complex client-side logic, while the less dynamic screens can be built with web views or Hyperview.
+In this way, developers can spend their _complexity budget_ on the core of the application, and keep the simple screens simple.
+****
 
 == Introduction to HXML
 
@@ -283,7 +289,7 @@ This defines the default namespace for the doc.
 Namespaces are a feature of XML that allow one doc to contain elements defined by different developers.
 To prevent conflicts when two developers use the same name for their element, each developer defines a unique namespace.
 We will talk more about namespaces when we discuss custom elements & behaviors later in this chapter.
-For now, it's enough to know that elements in an HXML doc without an explicit namespace are considered to be part of the `https://hyperview.org/hyperview` namespace.
+For now, it's enough to know that elements in a HXML doc without an explicit namespace are considered to be part of the `https://hyperview.org/hyperview` namespace.
 
 `<screen>` represents the UI that gets rendered on a single screen of a mobile app.
 It's possible for one `<doc>` to contain multiple `<screen>` elements, but we won't get into that now.
@@ -434,7 +440,7 @@ Good examples include the app logo, or common button icons.
 The other thing to note is the presence of the `style` attribute on the `<image>` element.
 In HXML, images are required to have a style that has rules for the image's `width` and `height`.
 This is different from HTML, where `<img>` elements do not need to explicitly set a width and height.
-Web browsers will re-flow the content of a web page once the image is fetched and the dimensions are known.
+web browsers will re-flow the content of a web page once the image is fetched and the dimensions are known.
 While re-flowing content is a reasonable behavior for web-based documents, users do not expect mobile apps to re-flow as content loads.
 To maintain a static layout, HXML requires the dimensions to be known before the image loads.
 
@@ -669,7 +675,7 @@ This is a very common scenario in rich web applications, where users expect to f
 
 So with basic HTML, interactions (clicks and submits) are limited and tightly coupled to a single action (loading a new page).
 Of course, using JavaScript, we can extend HTML and add some new syntax to support our desired interactions.
-htmx (and Intercooler before it) do exactly that with a new set of attributes:
+htmx do exactly that with a new set of attributes:
 
 - Interactions can be added to any element, not just links and forms.
 - The interaction can be triggered via a click, submit, mouseover, or any other JavaScript event.
@@ -1230,7 +1236,7 @@ But, we can trigger two behaviors at the same time, each one executing a "`hide`
 
 Hyperview processes behaviors in the order they appear in the markup.
 In this case, the element with ID "`area1`" will be hidden first, followed by the element with ID "`area2`".
-Since "`hide`" is an instantaneous action (ie, it doesn't make an HTTP request), both elements will appear to hide simultaneously.
+Since "`hide`" is an instantaneous action (ie, it doesn't make a HTTP request), both elements will appear to hide simultaneously.
 But what if we triggered two actions that depend on responses from HTTP requests (like "`replace-inner`")?
 In that case, each individual action is processed as soon as Hyperview receives the HTTP response.
 Depending on network latency, the two actions could take effect in any order, and they are not guaranteed to be applied simultaneously.
@@ -1261,6 +1267,6 @@ We're covering a lot of new material, so we'll add brief summaries to our sprint
 
 There is a story for Hypermedia-Driven Applications on mobile. Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web. Using the hypermedia architecture for mobile apps can solve these problems.
 
-Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin-client to render HXML. And HXML opens a took-kit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
+Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin client to render HXML. And HXML opens a took-kit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
 
 Yes, hypermedia can work for mobile apps, too. In the next two chapters we'll show how by moving Contact.app to mobile. 

@@ -67,18 +67,3 @@ put the endless swirl of the "`new new`" aside, look back on where the web came 
 
 Perhaps it's time to give hypermedia a chance.
 
-[.design-note]
-.HTML Notes: Toward Effective HTML
-****
-Throughout the book we discuss a number of best practices for writing effective HTML. They are, in a nutshell: 
-
-* Stay close to the HTML markup you’re producing and be able to change it. Prefer frameworks and components that help you do this.
-* Apply the Locality of Behavior principle to HTML.
-* Familiarize yourself with the full range of available tags and attributes and make them part of your toolkit. Don't restrict yourself to what Markdown can do.
-// we should be able to say the s word by now
-* Aim for good fit between tag semantics and your use case; make frequent use of the HTML specs. 
-* When more specific tags don't fit, it is usually better to step back to <div> than to use a tag incorrectly. 
-* Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard and touch interaction and accessibility.
-* Prefer components that extend HTML, rather than abstracting it away.
-* To the extent possible, test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
-****

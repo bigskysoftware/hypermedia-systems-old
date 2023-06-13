@@ -726,9 +726,25 @@ And importantly, this evolution preserves the Hypermedia, server-driven architec
 ****
 
 
-//TODO astep: wc wrote a basic conclusion here, is it okay? add more?
+//TODO astep: wt wrote a basic conclusion here, is it okay? add more?
 === Mobile Hypermedia-Driven Applications
 
 That concludes our build of mobile Contact.app. Step back from the code details and consider the broader pattern: the Hypermedia-Driven Application architecture allowed for signicant code reuse, and led to a manageable stack for ongoing app updates and maintenance for both web and mobile. 
 
 Yes, there is a story for Hypermedia-Driven Applications on mobile.
+
+
+[.design-note]
+.HTML Notes: Toward Hypermedia-Friendly HTML
+****
+Throughout the book we discuss some of what we have learned about writing hypermedia-friendly HTML. Our advice in a nutshell: 
+
+* Write with the full range of web constituents in mind: people viewing your site in browsers, people listening to your site through screen readers, search and data engines scraping your site programatically, and developers reading your HTML.
+* Stay close to the HTML markup you’re producing and be able to change it. Prefer frameworks and components that extend HTML, rather than abstracting it away.
+* Apply the Locality of Behavior principle to HTML.
+* Familiarize yourself with the full range of available tags and attributes and make them part of your toolkit. Don't restrict yourself to what Markdown can do.
+// we should be able to say the s word by now
+* Aim for good fit between tag semantics and your use case; make frequent use of the HTML specs. When more specific tags don't fit, it is usually better to step back to <div> than to use a tag incorrectly. 
+* Stick with established libraries for UI interactions. If a use case requires an improvised solution, test carefully for keyboard and touch interaction and accessibility.
+* To the extent possible, test your HTML with screenreaders, with a keyboard, with different browsers and hardware, and run linters (while coding and/or in CI).
+****

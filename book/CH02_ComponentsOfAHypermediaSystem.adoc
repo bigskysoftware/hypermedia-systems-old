@@ -810,9 +810,6 @@ special nature of HTML, hypermedia and the web!
 ****
 The best-known kind of messy HTML is `<div>` soup.
 
-Advances in CSS and JavaScript technology have mostly obviated the need to add extraneous "wrapper" elements to our documents.
-However, while the number of elements can fall, the quality of usage does not necessarily improve.
-
 When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
 we either degrade the quality of our websites or create more work for ourselves -- probably both.
 
@@ -840,14 +837,13 @@ Yes, we can fix that by adding `role="button"`` and `tabindex="0"`:
 ----
 
 These are easy fixes, but they're things you have to _remember_.
-It's not obvious from the HTML source that this is a button,
+It's also not obvious from the HTML source that this is a button,
 making the source harder to read and the absence of these attributes harder to spot.
 The source code of pages with div soup is difficult to edit and debug.
 
-"`This is silly,`" you might be thinking.
-Who uses a div as a button?
-Ignoring the answer (more people than you'd think), not every UI pattern has a designated HTML element.
+Not every UI pattern has a designated HTML element.
 We often need to compose elements and augment them with attributes.
+
 Do you know, off the top of your head, the best elements and attributes to use for...
 
 // TODO dzk (maybe give the correct elements here?  I don't know them... :)

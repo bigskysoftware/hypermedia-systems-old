@@ -847,7 +847,7 @@ We often need to compose elements and augment them with attributes.
 Do you know, off the top of your head, the best elements and attributes to use for...
 
 // TODO dzk (maybe give the correct elements here?  I don't know them... :)
-// maybe 'rummange through the html tool chest before building a new component.' 
+// maybe 'rummage through the html tool chest before building a new component.' 
 * A "command palette" menu?
 * A play-pause button?
 * A search field with a search button next to it? (Check the HTML spec -- there might be things on there you don't remember from before!)

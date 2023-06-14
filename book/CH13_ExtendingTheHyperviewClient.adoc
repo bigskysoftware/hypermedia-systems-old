@@ -5,7 +5,7 @@
 
 
 In the previous chapter, we created a fully-featured native mobile version of our Contacts app.
-Aside from customizing the entrypoint URL, we didn't need to touch any code that runs on the mobile device.
+Aside from customizing the entry point URL, we didn't need to touch any code that runs on the mobile device.
 We defined our mobile app's UI and logic completely in the backend code, using Flask and HXML templates.
 This is possible because the standard Hyperview client supports all of the basic features by mobile apps.
 

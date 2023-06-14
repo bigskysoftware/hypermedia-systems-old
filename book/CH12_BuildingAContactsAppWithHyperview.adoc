@@ -6,7 +6,7 @@
 
 Earlier chapters in this book explained the benefits of building apps using the hypermedia architecture.
 These benefits were demonstrated by building a robust Contacts web application.
-Then, Chapter 11 argued that hypermedia concepts can and should be applied to platforms other than the Web.
+Then, Chapter 11 argued that hypermedia concepts can and should be applied to platforms other than the web.
 We introduced Hyperview as an example of a hypermedia format and client specifically designed for building mobile apps.
 But you may still be wondering: what is it like to create a fully-featured, production-ready mobile app using Hyperview?
 Do we have to learn a whole new language and framework?
@@ -67,7 +67,7 @@ To fix this, we can make a simple configuration change in the `demo/src/constant
 //export const ENTRY_POINT_URL = 'http://0.0.0.0:8085/index.xml'; <1>
 export const ENTRY_POINT_URL = 'http://0.0.0.0:5000/'; <2>
 ----
-<1> The default entrypoint URL in the demo app
+<1> The default entry point URL in the demo app
 <2> Setting the URL to point to our contacts app
 
 We're not up and running yet.
@@ -86,8 +86,8 @@ Specifically, let's support the following features in our mobile app:
 
 .Zero Client-Configuration in Hypermedia Applications
 ****
-For many mobile apps that use the Hyperview client, configuring this entrypoint URL is the only on-device code you need to write to deliver a full-featured app.
-Think of the entrypoint URL as the address you type into a web browser to open a web app.
+For many mobile apps that use the Hyperview client, configuring this entry point URL is the only on-device code you need to write to deliver a full-featured app.
+Think of the entry point URL as the address you type into a web browser to open a web app.
 Except in Hyperview, there is no address bar, and the browser is hard-coded to only open one URL.
 This URL will load the first screen when a user launches the app.
 Every other action the user can take will be declared in the HXML of that first screen.
@@ -99,7 +99,7 @@ We will demonstrate how to do that later in this chapter, in the section called 
 
 
 == A Searchable List of Contacts
-We will start building our Hyperview app with the entrypoint screen, the list of contacts.
+We will start building our Hyperview app with the entry point screen, the list of contacts.
 For the initial version of this screen, let's support the following features from the web app:
 
 - display a scrollable list of contacts
@@ -1283,7 +1283,7 @@ def index():
 <2> If the client wants HXML, redirect them to `/mobile/contacts`.
 <3> If the client wants HTML, redirect them to `/web/contacts`.
 
-The entrypoint is a fork in the road: if the client wants HTML, we redirect them to one path.
+The entry point is a fork in the road: if the client wants HTML, we redirect them to one path.
 If the client wants HXML, we redirect them to a different path.
 These redirects would be handled by different Flask views:
 
@@ -1315,12 +1315,12 @@ In practice, you may start out using Template Switching, but then realize you ne
 In fact, we're already doing that in the Contacts app.
 When porting the app from web to mobile, we didn't bring over certain features like archiving functionality.
 The dynamic archive UI is a power feature that wouldn't make sense on a mobile device.
-Since our HXML templates don't expose any entrypoints to the Archive functionality, we can treat it as "`web-only`" and not worry about supporting it in Hyperview.
+Since our HXML templates don't expose any entry points to the Archive functionality, we can treat it as "`web-only`" and not worry about supporting it in Hyperview.
 
 
 .Summary
 ****
-- It is possible to create a Hyperview-powered mobile app by cloning a Git repo and configuring a single entrypoint URL.
+- It is possible to create a Hyperview-powered mobile app by cloning a Git repo and configuring a single entry point URL.
 - Flask is perfectly suited for serving a Hyperview mobile app. The Jinja templating system can generate dynamic HXML based on the context from a view.
 - Using elements like `<view>`, `<text>`, `<list>`, and `<item>`, we can create native-feeling screens in HXML.
 - Using behaviors, we can implement interactions on the contacts list such as infinite scroll, search-as-you-type, and pull-to-refresh.

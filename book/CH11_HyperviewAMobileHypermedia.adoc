@@ -56,13 +56,13 @@ We’ve seen that the hypermedia architecture can address the shortcomings of SP
 But can hypermedia work for mobile apps as well?
 The answer is yes!
 
-Just like on the web, we can use Hypermedia formats on mobile and let it serve as the engine of application state.
+Just like on the web, we can use hypermedia formats on mobile and let it serve as the engine of application state.
 All of the logic is controlled from the backend, rather than being spread between two codebases.
 Hypermedia architecture also solves the annoying problem of API churn on mobile apps.
-Since the backend serves a Hypermedia response containing both data and actions, there's no way for the data and UI to get out of sync.
+Since the backend serves a hypermedia response containing both data and actions, there's no way for the data and UI to get out of sync.
 No more worries about backwards compatibility or maintaining multiple API versions.
 
-So how can you use Hypermedia for your mobile app?
+So how can you use hypermedia for your mobile app?
 There are two approaches employing hypermedia to build & ship native mobile apps today:
 
 - Web views, which wraps the trusty web platform in a mobile app shell

@@ -683,8 +683,9 @@ Htmx does exactly that with a new set of attributes:
 
 By decoupling elements, triggers, and actions, htmx allows us to build rich Hypermedia-driven applications in a way that feels very compatible with HTML syntax and server-side web development.
 
+(((HXML, behavior)))
 HXML takes the idea of defining interactions via triggers & actions and builds them into the spec.
-We call these interactions "`behaviors`".
+We call these interactions "`behaviors.`"
 We use a special `<behavior>` element to define them.
 Here's an example of a simple behavior that pushes a new mobile screen onto the navigation stack:
 
@@ -1267,6 +1268,6 @@ We're covering a lot of new material, so we'll add brief summaries to our sprint
 
 There is a story for Hypermedia-Driven Applications on mobile. Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web. Using the hypermedia architecture for mobile apps can solve these problems.
 
-Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin client to render HXML. And HXML opens a took-kit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
+Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin client to render HXML. And HXML opens a toolkit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
 
 Yes, hypermedia can work for mobile apps, too. In the next two chapters we'll show how by moving Contact.app to mobile. 

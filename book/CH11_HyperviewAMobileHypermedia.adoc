@@ -168,8 +168,8 @@ A single HTML client renders apps from any HTML server.
 .One HTML server, multiple HTML clients
 image::diagram/one-server-many-clients.svg[Many clients connect to one server]
 
-It is theoretically possible to build an equivalent general-purpose "Hyperview browser".
-This HXML client would renders apps from any HXML server, and users would enter a URL to specify the app they want to use.
+It is theoretically possible to build an equivalent general-purpose "`Hyperview browser.`"
+This HXML client would render apps from any HXML server, and users would enter a URL to specify the app they want to use.
 But iOS and Android are built around the concept of single-purpose apps.
 Users expect to find and install apps from an app store, and launch them from the home screen of their device.
 Hyperview embraces this app-centric paradigm of today's popular mobile platforms.

@@ -174,7 +174,7 @@ It conveys the state of an application to people viewing our sites with a browse
 
 
 
-No, we can't fix every problem with good HTML. The mantra that HTML is "accessible by default" is misleading. We would miss out on important opportunities if we  shunned other technologies like JavaScript. And we still need to test, a lot, everywhere, to ensure things work as expected. 
+No, we can't fix every problem with good HTML. The mantra that HTML is "accessible by default" is misleading. We would miss out on important opportunities if we shunned other technologies like JavaScript. And we still need to test, a lot, everywhere, to ensure things work as expected. 
 
 But good HTML lets browsers do a _lot_ of work for us. 
 

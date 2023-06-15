@@ -478,7 +478,7 @@ So, with only seven relatively simple additional attributes, we have addressed m
 hypermedia that we identified earlier.
 
 What's next? Recall the one other opportunity we noted: the fact that only a `click` event (on an anchor) or a `submit` event
-(on a form) can trigger a HTTP request. Let's look at how we can address that limitation.
+(on a form) can trigger an HTTP request. Let's look at how we can address that limitation.
 
 == Using Events
 

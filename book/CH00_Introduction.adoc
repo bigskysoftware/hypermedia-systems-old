@@ -166,14 +166,6 @@ To start, remember that our web applications are not islands. We're writing HTML
 HTML is hypermedia-friendly when it is written for the full range of constituents of the hypermedia system.
 It conveys the state of an application to people viewing our sites with a browser, as well as to people listening to screenreaders that read sites aloud. It conveys the aims of our sites to search engines that scrape sites programatically. It also conveys its behavior as clearly as possible to other developers. 
  
-
-
-
-
-
-
-
-
 No, we can't fix every problem with good HTML. The mantra that HTML is "accessible by default" is misleading. We would miss out on important opportunities if we shunned other technologies like JavaScript. And we still need to test, a lot, everywhere, to ensure things work as expected. 
 
 But good HTML lets browsers do a _lot_ of work for us. 

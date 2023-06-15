@@ -1015,7 +1015,7 @@ to be shorter and easier to read.
 ****
 Seasoned programmers may be suspicious of +_hyperscript+: There have been many "natural language programming" (NLP)
 projects that target non-programmers and beginner programmers, assuming that being able to read code in their
-"natural language" will give them the ability to write it as well.  This has lead to some badly written and
+"natural language" will give them the ability to write it as well.  This has led to some badly written and
 structured code and has failed to live up to the (often over the top) hype.
 
 +_hyperscript+ is _not_ an NLP programming language.  Yes, its syntax is inspired in many places

@@ -7,9 +7,10 @@
 == JSON Data APIs
 
 So far we have been focusing on using hypermedia to build Hypermedia-Driven Applications.  In doing so we are
-following the native network architecture of the web, and building a RESTful system, in the original sense
+following and taking advantage of the native network architecture of the web, and building a RESTful system, in the original sense
 of that term.
 
+(((JSON, "Data API")))
 However, today, we should acknowledge that many web applications are often _not_ built using this approach.  Instead, they use a
 Single Page Application front end library such as React to build their application, and they interact with the server
 via a JSON API.  This JSON API almost never uses hypermedia concepts.  Rather JSON APIs tend to be _Data APIs_, that
@@ -35,6 +36,7 @@ we assure you, it is.
 
 So, we have a hypermedia API for Contact.app.  Should we include a Data API for Contact.app as well?
 
+((("Data API")))
 Sure!  The existence of a hypermedia API _in no way means_ that you can't _also_ have a Data API.  In fact, this is a
 common situation in traditional web applications: there is the "`web application`" that is entered through that entry point
 URL, say `https://mywebapp.example.com/`. And there is also a _separate_ JSON API that is accessible through another
@@ -128,6 +130,7 @@ Note that by splitting these two APIs apart, you reduce the pressure to constant
 
 This is the key advantage of splitting your Data API from your Hypermedia API.
 
+((("REST API")))
 .JSON Data APIs vs JSON "`REST`" APIs
 ****
 Unfortunately, today, for historical reasons, what we are calling JSON Data APIs are often referred to as

@@ -250,6 +250,11 @@ should be issued to.
 
 == Triggering HTTP Requests
 
+(((hx-get, about)))
+(((hx-post, about)))
+(((hx-put, about)))
+(((hx-patch, about)))
+(((hx-delete, about)))
 Let's look at the first feature of htmx: the ability for any element in a web page to issue HTTP requests.  This is the
 core functionality provided by htmx, and it consists of five attributes that can be used to issue the five different
 developer-facing types of HTTP requests:
@@ -269,6 +274,7 @@ URL you wish to issue the given HTTP request type to.  Typically, this is done v
 For example, if we wanted a button to issue a `GET` request to `/contacts` then we would write the following
 HTML:
 
+(((hx-get, example)))
 .A simple htmx-powered button
 [source,html]
 ----
@@ -349,12 +355,14 @@ It turns out that the default htmx behavior is to simply put the returned conten
 request.  That's _not_ a good thing in the case of our button: we will end up with a list of contacts awkwardly embedded within
 the button element.  That will look pretty silly and is obviously not what we want.
 
+(((hx-target, about)))
 Fortunately htmx provides another attribute, `hx-target` which can be used to specify exactly _where_ in the DOM the
 new content should be placed.  The value of the `hx-target` attribute is a Cascading Style Sheet (CSS) _selector_ that
 allows you to specify the element to put the new hypermedia content into.
 
 Let's add a `div` tag that encloses the button with the id `main`.  We will then target this `div` with the response:
 
+(((hx-target, example)))
 [#listing-3-4, reftext={chapter}.{counter:listing}]
 .A simple htmx-powered button
 [source,html]
@@ -402,6 +410,15 @@ Now, perhaps we don't want to load the content from the server response _into_ t
 for whatever reason, we wish to _replace_ the entire div with the response.  To handle this, htmx provides another
 attribute, `hx-swap`, that allows you to specify exactly _how_ the content should be swapped into the DOM.
 
+(((hx-swap, about)))
+(((hx-swap, innerHTML)))
+(((hx-swap, outerHTML)))
+(((hx-swap, beforebegin)))
+(((hx-swap, afterbegin)))
+(((hx-swap, beforeend)))
+(((hx-swap, afterend)))
+(((hx-swap, delete)))
+(((hx-swap, none)))
 The `hx-swap` attribute supports the following values:
 
 * `innerHTML` - The default, replace the inner html of the target element.
@@ -488,6 +505,7 @@ button would issue its request when you clicked on the button since, well, that'
 And, yes, by default when an `hx-get` or another request-driving annotation from htmx is placed on a button, the request
 will be issued when the button is clicked.
 
+(((hx-trigger, about)))
 However, htmx generalizes this notion of an event triggering a request by using, you guessed it, another attribute:
 `hx-trigger`.  The `hx-trigger` attribute allows you to specify one or more events that will cause the element to
 trigger an HTTP request.
@@ -526,11 +544,13 @@ Let's try something a bit more realistic and potentially useful: let's add suppo
 loading the contacts, `Ctrl-L` (for "`Load`").  To do this we will need to take advantage of additional syntax that
 the `hx-trigger` attribute supports: event filters and additional arguments.
 
+((("event filter", about)))
 Event filters are a mechanism for determining if a given event should trigger a request or not.  They are applied to an
 event by adding square brackets after it: `someEvent[someFilter]`.  The filter itself is a JavaScript expression that
 will be evaluated when the given event occurs.  If the result is truthy, in the JavaScript sense, it will trigger the
 request.  If not, the request will not be triggered.
 
+(((event, keyup)))
 In the case of keyboard shortcuts, we want to catch the `keyup` event in addition to the click event:
 
 [#listing-3-9, reftext={chapter}.{counter:listing}]
@@ -547,6 +567,7 @@ In the case of keyboard shortcuts, we want to catch the `keyup` event in additio
 ----
 <1> A trigger with two events.
 
+(((event, multiple)))
 Note that we have a comma separated list of events that can trigger this element, allowing us to respond to more than
 one potential triggering event.  We still want to respond to the `click` event and load the contacts, in addition
 to handling the `Ctrl-L` keyboard shortcut.
@@ -558,6 +579,7 @@ user would need to tab onto the button to make it active and then begin typing.
 Let's fix these two issues. To fix the first one, we will use a trigger filter to test that Control key and the "`L`" key
 are pressed together:
 
+(((event filter, example)))
 [#listing-3-10, reftext={chapter}.{counter:listing}]
 .Getting better with filter on keyup
 [source,html]
@@ -580,15 +602,19 @@ you like for a filter, however: calling a global JavaScript function, for exampl
 OK, so this filter limits the keyup events that will trigger the request to only `Ctrl-L` presses.  However, we still have
 the problem that, as it stands, only `keyup` events _within_ the button will trigger the request.
 
+((("event bubbling")))
 If you are not familiar with the JavaScript event bubbling model: events typically "`bubble`" up to parent elements.  So an
 event like `keyup` will be triggered first on the focused element, and then on its parent (enclosing) element, and so
 on, until it reaches the top level `document` object that is the root of all other elements.
 
+(((hx-trigger, from:)))
+((("keyboard shortcut")))
 To support a global keyboard shortcut that works regardless of what element has focus, we will take advantage of
 event bubbling and a feature that the `hx-trigger` attribute supports: the ability to listen to _other elements_ for
 events.  The syntax for doing this is the `from:` modifier, which is added after an event name and that allows you to
 specify a specific element to listen for the given event on using a CSS selector.
 
+(((event, listener)))
 In this case, we want to listen to the `body` element, which is the parent element of all visible elements on the page.
 
 Here is what our updated `hx-trigger` attribute looks like:
@@ -612,6 +638,7 @@ request when it is clicked on and also whenever someone hits `Ctrl-L` within the
 
 And now we have a nice keyboard shortcut for our Hypermedia-Driven Application.
 
+(((hx-trigger, about)))
 The `hx-trigger` attribute supports many more modifiers, and it is more elaborate than other htmx attributes. This is because
 events, in general, are complicated and require a lot of details to get just right.  The default trigger will often
 suffice, however, and you typically don't need to reach for complicated `hx-trigger` features when using htmx.
@@ -648,6 +675,7 @@ Any place on the page should be replaceable (transclusion)::
 
 == Passing Request Parameters
 
+(((forms)))
 So far we have just looked at a situation where a button makes a simple `GET` request.  This is conceptually very
 close to what an anchor tag might do.  But there is that other native hypermedia control in HTML-based applications:
 forms.  Forms are used to pass additional information beyond just a URL up to the server in a request.
@@ -665,6 +693,7 @@ tag.
 
 Let's take our original button for retrieving contacts and repurpose it for searching contacts:
 
+(((search)))
 [#listing-3-12, reftext={chapter}.{counter:listing}]
 .An htmx-powered search button
 [source,html]
@@ -709,11 +738,13 @@ placed in some spots in HTML documents.  A good example of the latter situation 
 `form` tag is not a valid child or parent of table rows, so you can't place a form within or around a
 row of data in a table.
 
+(((hx-include, about)))
 To address this issue, htmx provides a mechanism for including input values in requests: the `hx-include` attribute.
 The `hx-include` attribute allows you to select input values that you wish to include in a request via CSS selectors.
 
 Here is the above example reworked to include the input, dropping the form:
 
+(((hx-include, example)))
 [#listing-3-13, reftext={chapter}.{counter:listing}]
 .An htmx-powered search button with `hx-include`
 [source,html]
@@ -738,21 +769,27 @@ htmx.
 
 ==== Relative CSS selectors
 
+((("relative CSS selectors", about)))
 The `hx-include` attribute and, in fact, most attributes that take a CSS selector, also support _relative_ CSS selectors.
 These allow you to specify a CSS selector _relative_ to the element it is declared on.  Here are some examples:
 
+((("relative CSS selectors", closest)))
 `closest`::
 Find the closest parent element matching the given selector, e.g., `closest form`.
 
+((("relative CSS selectors", next)))
 `next`::
 Find the next element (scanning forward) matching the given selector, e.g., `next input`.
 
+((("relative CSS selectors", previous)))
 `previous`::
 Find the previous element (scanning backwards) matching the given selector, e.g., `previous input`.
 
+((("relative CSS selectors", find)))
 `find`::
 Find the next element within this element matching the given selector, e.g., `find input`.
 
+((("relative CSS selectors", this)))
 `this`::
 The current element.
 
@@ -761,6 +798,7 @@ of their local structural layout instead.
 
 === Inline Values
 
+(((hx-vals, about)))
 A final way to include values in htmx-driven requests is to use the `hx-vals` attribute, which allows you to include
 "`static`" values in the request.  This can be useful if you have additional information that you want to include in
 requests, but you don't want to have this information embedded in, for example, hidden inputs (which would be the
@@ -768,6 +806,7 @@ standard mechanism for including additional, hidden information in HTML.)
 
 Here is an example of `hx-vals`:
 
+(((hx-vals, example)))
 .An htmx-powered button with `hx-vals`
 [source,html]
 ----
@@ -782,6 +821,7 @@ looks like this:  `/contacts?state=MT`.  Note that we switched the `hx-vals` att
 around its value.  This is because JSON strictly requires double quotes and, therefore, to avoid escaping we needed to
 use the single-quote form for the attribute value.
 
+(((hx-vals, "js: prefix")))
 You can also prefix `hx-vals` with a `js:` and pass values evaluated at the time of the request, which can be useful for
 including things like a dynamically maintained variable, or value from a third party JavaScript library.
 
@@ -809,6 +849,7 @@ HTML links and forms, your browser will keep track of all the pages that you hav
 to navigate back to a previous page and, once you have done this, you can use a forward button to go forward to the
 original page you were on.
 
+((("browser history")))
 This notion of history was one of the killer features of the early web.  Unfortunately it turns out that history becomes
 tricky when you move to the Single Page Application paradigm.  An AJAX request does not, by itself, register a web
 page in your browser's history, which is a good thing: an AJAX request may have nothing to do with the state of the
@@ -839,6 +880,8 @@ Consider the button we have been looking at to load contacts:
 As it stands, if you click this button it will retrieve the content from `/contacts` and load it into the element with the
 id `main`, but it will _not_ create a new history entry.
 
+(((hx-push-url)))
+((("back button")))
 If we wanted it to create a history entry when this request happened, we would add a new attribute to the button, the
 `hx-push-url` attribute:
 

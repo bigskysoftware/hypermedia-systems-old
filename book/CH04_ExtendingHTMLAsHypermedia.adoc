@@ -567,7 +567,7 @@ In the case of keyboard shortcuts, we want to catch the `keyup` event in additio
 ----
 <1> A trigger with two events.
 
-(((event, multiple)))
+(((events, multiple)))
 Note that we have a comma separated list of events that can trigger this element, allowing us to respond to more than
 one potential triggering event.  We still want to respond to the `click` event and load the contacts, in addition
 to handling the `Ctrl-L` keyboard shortcut.

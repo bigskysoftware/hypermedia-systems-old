@@ -166,6 +166,7 @@ There are many methods available in HTTP; the ones of most practical importance 
 `DELETE`::
   A DELETE request deletes the specified resource. This results in a mutation of state on the server.
 
+(((CRUD)))
 These methods _roughly_ line up with the "`Create/Read/Update/Delete`" or CRUD pattern found in many applications:
 
 * `POST` corresponds with Creating a resource.

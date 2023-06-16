@@ -80,10 +80,14 @@ We think most web developers, even developers who are unfamiliar with Python, sh
 along with our examples. Most of the authors of this book hadn't written much Python before writing it, and we got the
 hang of it pretty quickly.
 
+(((Flask, about)))
 == Introducing Flask: Our First Route
 
 Flask is a simple but flexible web framework for Python. We'll ease into it by touching on its core elements.
 
+(((Flask, routes)))
+(((Flask, handlers)))
+(((Flask, decorators)))
 A Flask application consists of a series of _routes_ tied to functions that execute when an HTTP request to a given path is
 made.  It uses a Python feature called "`decorators`" to declare the route that will be handled, which is then followed by
 a function to handle requests to that route.  We'll use the term "`handler`" to refer to the functions associated
@@ -133,6 +137,7 @@ For Contact.app, rather than rendering "`Hello Flask!`" at the root path, we are
 we are going to redirect to another path, the `/contacts` path.  Redirects are a feature of HTTP that allow you to
 redirect a client to another location with an HTTP response.
 
+(((Flask, redirect)))
 We are going to display a list of contacts as our root page, and, arguably, redirecting to the `/contacts` path to
 display this information is a bit more consistent with the notion of resources with REST.  This is a judgement call on our
 part, and not something we feel is too important, but it makes sense in terms of routes we will set up later in the
@@ -170,6 +175,7 @@ Initially, it will allow users to:
 * Edit the details of a contact
 * Delete a contact
 
+(((CRUD)))
 So, as you can see, Contact.app is a CRUD application, the sort of application that is perfect for an old-school
 web 1.0 approach.
 
@@ -249,6 +255,8 @@ HTML in our response to the client.  At a high level, our HTML response needs to
 * A bit of surrounding "`chrome`": a header and footer for the website that will be the same regardless of the page you
   are on.
 
+(((templates)))
+(((Jinja2, about)))
 We are using the Jinja2 templating language, which has the following features:
 
 - We can use double-curly braces, `{{ }}`,  to embed expression values in the template.
@@ -541,6 +549,7 @@ Finally, if we are unable to save the contact, we re-render the `new.html` templ
 same template as above, but the inputs will be filled in with the submitted values, and any errors associated with the
 fields will be rendered to feedback to the user as to what validation failed.
 
+((("Post/Redirect/Get (PRG)")))
 .The Post/Redirect/Get Pattern
 ****
 This handler implements a common strategy in web 1.0-style development called the
@@ -746,6 +755,7 @@ we would probably do just that.
 
 For our purposes, however, since our application is small and simple, we will leave the templates separate.
 
+(((components)))
 .Factoring Your Applications
 ****
 One thing that often trips people up who are coming to hypermedia applications from a JavaScript background is the
@@ -753,6 +763,7 @@ notion of "components".  In JavaScript-oriented applications it is common to bre
 client-side components that are then composed together.  These components are often developed and tested in isolation and
 provide a nice abstraction for developers to create testable code.
 
+(((factoring)))
 With Hypermedia-Driven Applications, in contrast, you factor your application on the server side.  As we said, the above form could be
 refactored into a shared template between the edit and create templates, allowing you to achieve a reusable and DRY (Don't
 Repeat Yourself) implementation.
@@ -771,6 +782,7 @@ another route that handles the same path as the `GET` above.
 
 Here is the new handler code:
 
+(((POST)))
 [source, python]
 ----
 @app.route("/contacts/<contact_id>/edit", methods=["POST"]) <1>
@@ -804,6 +816,7 @@ an HTTP `POST` to `/contacts/<contact_id>/delete`, and we will need to create a 
 
 Here is what the controller looks like:
 
+((("Post/Redirect/Get (PRG)")))
 .The "`delete contact`" controller code
 [source, python]
 ----
@@ -865,6 +878,7 @@ that will let us improve our contact application while retaining the hypermedia-
 
 
 // TODO dz4k rewrite
+(((components)))
 [.design-note]
 .HTML Notes: Framework Soup
 ****

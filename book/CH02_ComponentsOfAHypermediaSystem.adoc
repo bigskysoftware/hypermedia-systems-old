@@ -805,55 +805,27 @@ working in web development, and building a hypermedia-oriented library to boot, 
 special nature of HTML, hypermedia and the web!
 
 
-[.html-note]
-.HTML Notes: <div> Soup
+[.design-note]
+.HTML Note: HTML5 Soup
 ****
-The best-known kind of messy HTML is `<div>` soup.
+[quote,Confucius]
+The beginning of wisdom is to call things by their right names.
 
-When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
-we either degrade the quality of our websites or create more work for ourselves -- probably both.
+Elements like `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` have become a sort of shorthand for HTML.
 
-For example, instead of adding a button using the dedicated `<button>` element,
-a `<div>` element might have a `click` event listener added to it.
+By using these elements, a page can make false promises, like `<article>` elements being self-contained, reusable entities, to clients like browsers, search engines and scrapers that can't know better. To avoid this:
 
-[source,html]
-----
-<div class="bg-accent padding-4 rounded-2" onclick="doStuff()">Do stuff</div>
-----
+* Make sure that the element you're using fits your use case. Check the HTML spec.
+* Don't try to be specific when you can't or don't need to.
+  Sometimes, `<div>` is fine.
 
-There are two main issues with this button:
+The most authoritative resource for learning about HTML is the HTML specification.
+The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
+The single-page version is too slow to load and render on most computers. 
+There's also a developers' edition at /dev, but the standard version has nicer styling.]
+There's no need to rely on hearsay to keep up with developments in HTML.
 
-* It's not focusable -- the Tab key won't get you to it.
-* There's no way for assistive tools to tell that it's a button.
-
-Yes, we can fix that by adding `role="button"`` and `tabindex="0"`:
-
-[source,html]
-----
-<div class="bg-accent padding-4 rounded-2"
-  role="button" 
-  tabindex="0" 
-  onclick="doStuff()">Do stuff</div>
-----
-
-These are easy fixes, but they're things you have to _remember_.
-It's also not obvious from the HTML source that this is a button,
-making the source harder to read and the absence of these attributes harder to spot.
-The source code of pages with div soup is difficult to edit and debug.
-
-Not every UI pattern has a designated HTML element.
-We often need to compose elements and augment them with attributes.
-Before you do, though, rummage through the html tool chest. Sometimes you might be surprised by how much is available.
-
-For example, are you building:
-
-// TODO dzk (maybe give the correct elements here?  I don't know them... :)
-// revised: it may be too much to suggest memorizing all tags 
-* A "command palette" menu?
-* A play-pause button?
-* A search field with a search button next to it? 
-* A modal for alerts?
-* A progress bar?
- 
-To avoid div soup, become friendly with the HTML spec of available tags, and consider each tag another tool in your tool chest. There might be things there you don't remember from before! (With the 113 elements currently defined in the spec, it's more of a whole shed). 
+Section 4 of the spec features a list of all available elements,
+including what they represent, where they can occur, and what they are allowed to contain.
+It even tells you when you're allowed to leave out closing tags!
 ****

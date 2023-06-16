@@ -754,22 +754,4 @@ Available: <https://hypermedia.systems/>
 <2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
 ****
 
-[.design-note]
-.HTML Notes: Budgeting For HTML
-****
-The close relationship between content and markup means that
-good HTML is labor-intensive.
-Most sites have a separation between the authors,
-who are rarely familiar with HTML,
-and the developers, who need to develop a generic system able to handle any content that's thrown at it --
-this separation usually taking the form of a CMS.
-As a result, having markup tailored to content, which is often necessary for advanced HTML, is rarely feasible.
 
-Furthermore, for internationalized sites, content in different languages being injected into the same elements can degrade markup quality as stylistic conventions differ between languages.
-It's an expense few organizations can spare.
-
-Thus, we don't expect every site to contain perfectly conformant HTML.
-What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
-
-If you have the resources, however, putting more care in your HTML will produce a more polished site.
-****

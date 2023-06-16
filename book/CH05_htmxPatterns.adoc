@@ -1037,30 +1037,29 @@ behavior, we are still exchanging hypermedia with the server, with no JSON API r
 
 As the web was designed.
 
-// TODO dz4k rewrite
+
 [.design-note]
-.HTML Notes: Framework Soup
+.HTML Notes: "'Display: none'"
 ****
-Components encapsulate a section of a page along with its dynamic behavior.
-While encapsulating behavior is a good way to organize code,
-it can also separate elements from their surrounding context,
-which can lead to wrong or inadequate relationships between elements.
-The result is what one might call [.dfn]_component soup_,
-where information is hidden in component state,
-rather than being present in the HTML, which is now incomprehensible due to missing context.
+Sadly, not even good HTML can cure all ills.
+If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
+Test manually.
+Test automatically.
+Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
 
-Before you reach for components for reuse, consider your options.
-Lower-level mechanisms often (allow you to) produce better HTML.
-In some cases, components can actually _improve_ the clarity of your HTML.
+One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is sometimes done to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
 
-[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
-The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
+[source,css]
+----
+.vh {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	block-size: 1px;
+	inline-size: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+----
 
-In order to avoid `<div>` soup (or Markdown soup, or Component soup), you need to be aware of the markup you're producing and be able to change it.
-
-Some SPA frameworks, and some web components, make this more difficult by putting layers of abstraction between the code the developer writes and the generated markup.
-
-While these abstractions can allow developers to create richer UI or work faster,
-their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
-Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
+`vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
 ****

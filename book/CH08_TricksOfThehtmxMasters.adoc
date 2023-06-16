@@ -799,28 +799,18 @@ In this case, we are overriding the default swap style from the usual `innerHTML
 if you find yourself using `outerHTML` more frequently than `innerHTML` and want to avoid having to explicitly set that
 swap value throughout your application.
 
+
+
 [.design-note]
-.HTML Notes: "'Display: none'"
+.HTML Notes: Semantic HTML
 ****
-Sadly, not even good HTML-- or HXML -- can cure all ills.
-If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
-Test manually.
-Test automatically.
-Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
+Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
 
-One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is sometimes done to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
+[quote,https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/]
+I think being asked to write _meaningful_ HTML better lights the path to realizing that it isn't about what the text means to humans--it's about using tags for the purpose outlined in the specs to meet the needs of software like browsers, assistive technologies, and search engines.
 
-[source,css]
-----
-.vh {
-	clip: rect(0 0 0 0);
-	clip-path: inset(50%);
-	block-size: 1px;
-	inline-size: 1px;
-	overflow: hidden;
-	white-space: nowrap;
-}
-----
-
-`vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
+We recommend talking about, and writing, _conformant_ HTML.
+(We can always bikeshed further).
+Use the elements to the full extent provided by the HTML specification,
+and let the software take from it whatever meaning they can.
 ****

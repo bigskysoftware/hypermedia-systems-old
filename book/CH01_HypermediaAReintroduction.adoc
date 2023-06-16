@@ -743,3 +743,58 @@ you can take advantage of this system architecture in your own software.
 
 In the coming chapters you will develop a firm understanding of all the benefits and techniques enabled by this approach.
 We hope that, in addition, you will also become as passionate about it as we are.
+
+
+[.html-note]
+.HTML Notes: <div> Soup
+****
+The best-known kind of messy HTML is `<div>` soup.
+
+When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
+we either degrade the quality of our websites or create more work for ourselves -- probably both.
+
+For example, instead of adding a button using the dedicated `<button>` element,
+a `<div>` element might have a `click` event listener added to it.
+
+[source,html]
+----
+<div class="bg-accent padding-4 rounded-2" onclick="doStuff()">Do stuff</div>
+----
+
+There are two main issues with this button:
+
+* It's not focusable -- the Tab key won't get you to it.
+* There's no way for assistive tools to tell that it's a button.
+
+Yes, we can fix that by adding `role="button"`` and `tabindex="0"`:
+
+[source,html]
+----
+<div class="bg-accent padding-4 rounded-2"
+  role="button" 
+  tabindex="0" 
+  onclick="doStuff()">Do stuff</div>
+----
+
+These are easy fixes, but they're things you have to _remember_.
+It's also not obvious from the HTML source that this is a button,
+making the source harder to read and the absence of these attributes harder to spot.
+The source code of pages with div soup is difficult to edit and debug.
+
+To avoid div soup, become friendly with the HTML spec of available tags, and consider each tag another tool in your tool chest. There might be things there you don't remember from before! (With the 113 elements currently defined in the spec, it's more of a whole shed).
+
+Of course, not every UI pattern has a designated HTML element.
+We often need to compose elements and augment them with attributes.
+Before you do, though, rummage through the html tool chest. Sometimes you might be surprised by how much is available.
+
+For example, are you building:
+
+// TODO dzk (maybe give the correct elements here?  I don't know them... :)
+// revised: it may be too much to suggest memorizing all tags 
+// maybe: make underused or lesser known tags its own topic?
+* A "command palette" menu?
+* A play-pause button?
+* A search field with a search button next to it? 
+* A modal for alerts?
+* A progress bar? 
+****

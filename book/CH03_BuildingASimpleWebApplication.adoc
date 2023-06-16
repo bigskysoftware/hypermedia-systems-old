@@ -863,16 +863,31 @@ architecture.
 In the next few chapters we will look at https://htmx.org[htmx], a hypermedia-oriented library
 that will let us improve our contact application while retaining the hypermedia-based approach we have used so far.
 
+
+// TODO dz4k rewrite
 [.design-note]
-.HTML Notes: Semantic HTML
+.HTML Notes: Framework Soup
 ****
-Telling people to "use semantic HTML" instead of "read the spec" has led to a lot of people guessing at the meaning of tags -- "`looks pretty semantic to me!" -- instead of engaging with the spec.
+Components encapsulate a section of a page along with its dynamic behavior.
+While encapsulating behavior is a good way to organize code,
+it can also separate elements from their surrounding context,
+which can lead to wrong or inadequate relationships between elements.
+The result is what one might call [.dfn]_component soup_,
+where information is hidden in component state,
+rather than being present in the HTML, which is now incomprehensible due to missing context.
 
-[quote,https://t-ravis.com/post/doc/semantic_the_8_letter_s-word/]
-I think being asked to write _meaningful_ HTML better lights the path to realizing that it isn't about what the text means to humans--it's about using tags for the purpose outlined in the specs to meet the needs of software like browsers, assistive technologies, and search engines.
+Before you reach for components for reuse, consider your options.
+Lower-level mechanisms often (allow you to) produce better HTML.
+In some cases, components can actually _improve_ the clarity of your HTML.
 
-We recommend talking about, and writing, _conformant_ HTML.
-(We can always bikeshed further).
-Use the elements to the full extent provided by the HTML specification,
-and let the software take from it whatever meaning they can.
+[quote, Manuel Matuzović, 'https://www.matuzo.at/blog/2023/single-page-applications-criticism[Why I\'m not the biggest fan of Single Page Applications]']
+The fact that the HTML document is something that you barely touch, because everything you need in there will be injected via JavaScript, puts the document and the page structure out of focus.
+
+In order to avoid `<div>` soup (or Markdown soup, or Component soup), you need to be aware of the markup you're producing and be able to change it.
+
+Some SPA frameworks, and some web components, make this more difficult by putting layers of abstraction between the code the developer writes and the generated markup.
+
+While these abstractions can allow developers to create richer UI or work faster,
+their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
+Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
 ****

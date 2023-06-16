@@ -1149,26 +1149,57 @@ the web.
 
 
 [.design-note]
-.HTML Note: HTML5 Soup
+.HTML Notes: Accessible by Default?
 ****
-[quote,Confucius]
-The beginning of wisdom is to call things by their right names.
+Accessibility problems can arise when we try to implement controls that aren't built into HTML.
 
-Elements like `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<figure>` have become a sort of shorthand for HTML.
+For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? It's a neat hack that makes the rounds in web development communities from time to time.
 
-By using these elements, a page can make false promises, like `<article>` elements being self-contained, reusable entities, to clients like browsers, search engines and scrapers that can't know better. To avoid this:
+The problem here is that tabs have requirements beyond clicking to change content.
+Your improvised tabs may be missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
+From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Practices Guide on tabs]:
 
-* Make sure that the element you're using fits your use case. Check the HTML spec.
-* Don't try to be specific when you can't or don't need to.
-  Sometimes, `<div>` is fine.
+* Keyboard interaction
 
-The most authoritative resource for learning about HTML is the HTML specification.
-The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
-The single-page version is too slow to load and render on most computers. 
-There's also a developers' edition at /dev, but the standard version has nicer styling.]
-There's no need to rely on hearsay to keep up with developments in HTML.
+** Can the tabs be focused with the Tab key?
 
-Section 4 features a list of all available elements,
-including what they represent, where they can occur, and what they are allowed to contain.
-It even tells you when you're allowed to leave out closing tags!
+* ARIA roles, states, and properties
+
+** "`[The element that contains the tabs] has role `tablist`.`" 
+
+** "`Each [tab] has role `tab` [...]`"
+
+** "`Each element that contains the content panel for a `tab` has role `tabpanel`.`"
+
+** "`Each [tab] has the property `aria-controls` referring to its associated tabpanel element.`"
+
+** "`The active `tab` element has the state `aria-selected` set to `true` and all other `tab` elements have it set to `false`.`"
+
+** "`Each element with role `tabpanel` has the property `aria-labelledby` referring to its associated `tab` element.`"
+
+You would need to write a lot of code to make your improvised tabs fulfill all of these requirements. Some of the ARIA attributes can be added directly in HTML,
+but they are repetitive
+and others (like `aria-selected`) need to be set through JavaScript since they are dynamic.
+The keyboard interactions can be error-prone too.
+
+It's not impossible, not even that hard, to make your own tab set implementation.
+However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
+
+_Stick with established libraries_ for UI interactions. If a use case requires a bespoke solution, _test exhaustively_ for keyboard interaction and accessibility.
+
+Also consider: Does the information need to be presented as tabs?
+Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
+
+[source,html]
+----
+<details><summary>Disclosure 1</summary>
+  Disclosure 1 contents
+</details>
+<details><summary>Disclosure 2</summary>
+  Disclosure 2 contents
+</details>
+----
+
+Compromising UX just to avoid JavaScript is bad development.
+But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
 ****

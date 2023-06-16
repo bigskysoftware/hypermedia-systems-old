@@ -1347,58 +1347,29 @@ And even on these topics, sometimes a web developer has to do what a web develop
 
 Just don't make it a habit.
 
+
+
 [.design-note]
-.HTML Notes: Accessible by Default?
+.HTML Notes: HTML is for Applications
 ****
-Accessibility problems can arise when we try to implement controls that aren't built into HTML.
+A prevalent meme among developers suggests that HTML was designed for "`documents`" and is unsuitable for "`applications.`"
+In reality, hypermedia is not only a sophisticated, modern architecture for applications, but it can allow us to do away with this artificial app/document split for good.
 
-For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? It's a neat hack that makes the rounds in web development communities from time to time.
+" When I say Hypertext, I mean the simultaneous presentation of information and controls such that the information becomes the affordance through which the user obtains choices and selects actions."
+-- Roy Fielding, https://www.slideshare.net/royfielding/a-little-rest-and-relaxation[A little REST and Relaxation]
 
-The problem here is that tabs have requirements beyond clicking to change content.
-Your improvised tabs may be missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
-From the link:https://www.w3.org/WAI/ARIA/apg/patterns/tabs/[ARIA Authoring Practices Guide on tabs]:
+HTML allows documents to contain rich multimedia including images, audio, video, JavaScript programs, vector graphics and (with some help) 3D environments.
+More importantly, however, it allows interactive controls to be embedded within these documents, allowing the information itself to be the app through which it is accessed.
 
-* Keyboard interaction
+Consider: Is it not mind-boggling that a single application -- which works on all types of computers and OSs -- can let you read news, place video calls, compose documents, enter virtual worlds, and do almost any other everyday computing task?
 
-** Can the tabs be focused with the Tab key?
+Unfortunately, it is the interactive capabilities of HTML that is its least developed aspect. For reasons unknown to us, while HTML made it to version 5 and became a Living Standard, accreting many game-changing features on the way, the data interactions in it are still mainly restricted to links and forms. It's up to developers to extend HTML, and we want to do so in a way that doesn't abstract over its simplicity with an imitation of classical "native" toolkits.
 
-* ARIA roles, states, and properties
-
-** "`[The element that contains the tabs] has role `tablist`.`" 
-
-** "`Each [tab] has role `tab` [...]`"
-
-** "`Each element that contains the content panel for a `tab` has role `tabpanel`.`"
-
-** "`Each [tab] has the property `aria-controls` referring to its associated tabpanel element.`"
-
-** "`The active `tab` element has the state `aria-selected` set to `true` and all other `tab` elements have it set to `false`.`"
-
-** "`Each element with role `tabpanel` has the property `aria-labelledby` referring to its associated `tab` element.`"
-
-You would need to write a lot of code to make your improvised tabs fulfill all of these requirements. Some of the ARIA attributes can be added directly in HTML,
-but they are repetitive
-and others (like `aria-selected`) need to be set through JavaScript since they are dynamic.
-The keyboard interactions can be error-prone too.
-
-It's not impossible, not even that hard, to make your own tab set implementation.
-However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
-
-_Stick with established libraries_ for UI interactions. If a use case requires a bespoke solution, _test exhaustively_ for keyboard interaction and accessibility.
-
-Also consider: Does the information need to be presented as tabs?
-Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
-
-[source,html]
-----
-<details><summary>Disclosure 1</summary>
-  Disclosure 1 contents
-</details>
-<details><summary>Disclosure 2</summary>
-  Disclosure 2 contents
-</details>
-----
-
-Compromising UX just to avoid JavaScript is bad development.
-But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
+[quote, Leah Clark, @leah@tilde.zone]
+____
+* SOFTWARE WAS NOT SUPPOSED TO USE NATIVE TOOLKITS
+* YEARS OF WINDOWS UI LIBRARIES yet NO REAL-WORLD USE FOUND for going lower level than THE WEB
+* Wanted a window anyway for a laugh? We had a tool for that: It was called "ELECTRON"
+* "yes I would love to write 4 DIFFERENT copies of the same UI" -  Statements dreamed up by the Utterly Deranged
+____
 ****

@@ -410,6 +410,7 @@ Now, perhaps we don't want to load the content from the server response _into_ t
 for whatever reason, we wish to _replace_ the entire div with the response.  To handle this, htmx provides another
 attribute, `hx-swap`, that allows you to specify exactly _how_ the content should be swapped into the DOM.
 
+(((htmx, "swap model")))
 (((hx-swap, about)))
 (((hx-swap, innerHTML)))
 (((hx-swap, outerHTML)))

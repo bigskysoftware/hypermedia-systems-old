@@ -67,6 +67,7 @@ button with a UI that shows the progress of the archiving process, ideally with 
 progress, we want to move the progress bar along towards completion.  Then, when the archive job is done, we want to
 show a link to the user to download the contact archive file.
 
+((("Archiver")))
 In order to actually do the archiving, we are going to use a python class, `Archiver`, that implements all the
 functionality that we need.  As with the `Contact` class, we aren't going to go into the implementation details of `Archiver`, because that's beyond the scope of this book.  For now you just need to know is that it provides all the server-side
 behavior necessary to start a contact archive process and get the results when that process is done.
@@ -236,6 +237,7 @@ it can conditionally render the correct UI.
 
 That's an easy fix: we just need to pass the archiver through when we render the `index.html` template as well:
 
+((("conditional rendering")))
 .Including the archiver when we render index.html
 [source, python]
 ----
@@ -257,6 +259,7 @@ Now with that done, we can load up the page.  And, sure enough, we can see the "
 When we click on it, the button is replaced with the content "`Running...`", and we can see in our development console
 on the server-side that the job is indeed getting kicked off properly.
 
+(((polling)))
 == Polling
 
 That's definitely progress, but we don't exactly have the best progress indicator here: just some static text telling
@@ -342,6 +345,7 @@ to make our `div`-based progress bar play well with assistive technologies.
 
 Let's update our progress bar to have the proper ARIA roles and values:
 
+((("progress bar")))
 .A CSS-based progress bar
 [source, html]
 ----
@@ -547,6 +551,7 @@ is, this why we went with a `div` rather than a `progress` element!)
 Let's walk through the cause of this visual problem and how we might fix it. (If you're in a hurry to get to an answer,
 feel free to jump ahead to "`our solution.`")
 
+((("CSS Transitions")))
 It turns out that there is a native HTML technology for smoothing out changes on an element from one state to another:
 the CSS Transitions API, the same one that we discussed in Chapter 4. Using CSS Transitions, you can smoothly animate an
 element between different styling by using the `transition` property.
@@ -566,6 +571,8 @@ counterparts: it is hard to use CSS transitions without some JavaScript.
 
 But there is some good news: htmx has a way to utilize CSS transitions even when it replaces content in the DOM.
 
+(((htmx, "swap model")))
+(((htmx, settling)))
 === The "`Settling`" Step in Htmx
 
 When we discussed the htmx swap model in Chapter 4, we focused on the classes that htmx adds and removes, but we skipped
@@ -654,6 +661,7 @@ This looks pretty similar to our other handlers, doesn't it?
 
 Sure does!  That's the idea!
 
+(((auto-download)))
 == An Alternative UX: Auto-Download
 
 While we prefer the current user experience for archiving contacts, there are other alternatives. Currently, a progress

@@ -39,7 +39,6 @@ This makes htmx attractive to people who don't want to write JavaScript, and the
 wary of the complexity of Single Page Application frameworks.
 
 However, dunking on JavaScript is not the aim of the htmx project.
-// adds okay here?
 The goal of htmx is not less JavaScript, but less code, more readable and hypermedia-friendly code.
 
 Scripting has been a massive force multiplier for the web. Using scripting, web application developers are not only able
@@ -53,7 +52,7 @@ simply can't provide the level of interaction that an SPA can.
 However, in addition to this more JavaScript-centric style, we want to develop a style of scripting more compatible and
 consistent with Hypermedia-Driven Applications.
 
-
+(((scripting, "hypermedia friendly")))
 == Scripting for Hypermedia
 
 Borrowing from Roy Fielding's notion of "`constraints`" defining REST, we offer two constraints of hypermedia-friendly
@@ -126,6 +125,7 @@ Let's take a quick look at each of these scripting options, so we know what we a
 
 Note that, as with CSS, we are going to show you just enough of each of these options to give  a flavor of how they work and, we hope, spark your interest in looking into any of them more extensively.
 
+(((JavaScript)))
 == Vanilla JavaScript
 
 [quote,Merb]
@@ -264,6 +264,7 @@ incrementBtn.addEventListener("click", e => { <3>
 <3> We use `addEventListener`, which is preferable to `onclick` for many reasons.
 <4> The logic stays the same, only the structure around it changes.
 
+((("Separation of Concerns (SoC)")))
 In moving the JavaScript out to another file, we are following a software design principle known as _Separation of Concerns (SoC)._
 
 Separation of Concerns posits that the various "`concerns`" (or aspects) of a software project should be divided up into
@@ -283,6 +284,7 @@ up in JavaScript and add in an event handler for the "`click`" event.
 Now, in both the HTML and the JavaScript, this class name is just a string and there isn't any process to _verify_ that
 the button has the right classes on it or its parents to ensure that the event handler is actually added to the right element.
 
+((("jQuery soup")))
 Unfortunately, it has turned out that the careless use of CSS selectors in JavaScript can cause what is known as
 _jQuery soup_.  jQuery soup is a situation where:
 
@@ -316,6 +318,7 @@ In Contact.app we are not _concerned_ with "`structure,`" "`styling`" or "`behav
 info and presenting it to users. SoC, in the way it's formulated in web development orthodoxy, is not really an inviolate
 architectural guideline, but rather a stylistic choice that, as we can see, can even become a hindrance.
 
+((("Locality of Behavior (LoB)")))
 ==== Locality of Behavior
 
 It turns out that there is a burgeoning reaction _against_ the Separation of Concerns design principle.  Consider the
@@ -352,10 +355,11 @@ the more traditional Separation of Concerns design principle.
 
 ==== What to do with our counter?
 
+(((JavaScript, "on*")))
 So, should we go back to the `onclick` attribute way of doing things? That approach certainly wins in Locality of
 Behavior, and has the additional benefit that it is baked into HTML.
 
-Unfortunately, however, the `on*`  JavaScript attributes also come with some drawbacks:
+Unfortunately, however, the `on*` JavaScript attributes also come with some drawbacks:
 
 * They don't support custom events.
 * There is no good mechanism for associating long-lasting variables with an element -- all variables are discarded when an event listener completes executing.
@@ -378,6 +382,7 @@ need to make it clear that a given element is _invoking_ some code, which can be
 Keeping this in mind, it _is_ possible to improve LoB while writing JavaScript in a separate file, provided we have a
 reasonable system for structuring our JavaScript.
 
+((("RSJS guidelines")))
 === RSJS
 
 RSJS (the "`Reasonable System for JavaScript Structure,`" https://ricostacruz.com/rsjs/) is a set of guidelines for
@@ -477,6 +482,7 @@ Here is what our updated, RSJS-structured HTML looks like:
 
 The roles and ARIA attributes are based on the Menu and Menu Button patterns from the ARIA Authoring Practices Guide.
 
+(((ARIA)))
 .What is ARIA?
 ****
 As we web developers create more interactive, app-like websites, HTML's repertoire of elements won't have all we need.
@@ -714,7 +720,7 @@ more sense to use an off-the-shelf library, such as GitHub's https://github.com/
 But, for our relatively simple use case, vanilla JavaScript does a fine job, and we got to explore ARIA and RSJS while
 implementing it.
 
-
+(((Alpine.js)))
 == Alpine.js
 
 OK, so that's an in-depth look at how to structure plain VanillaJS-style JavaScript.  Let's turn our attention to an
@@ -728,6 +734,7 @@ much further than `on*` attributes.
 Alpine bills itself as a modern replacement for jQuery, the widely used, older JavaScript library.  As you will see, it
 definitely lives up to this promise.
 
+(((Alpine.js, installing)))
 Installing Alpine is very easy: it is a single file and is dependency-free, so you can simply include it via a CDN:
 
 .Installing Alpine
@@ -738,6 +745,7 @@ Installing Alpine is very easy: it is a single file and is dependency-free, so y
 
 You can also install it via a package manager such as NPM, or vendor it from your own server.
 
+(((Alpine.js, x-data)))
 Alpine provides a set of HTML attributes, all of which begin with the `x-` prefix, the main one of which is `x-data`.
 The content of `x-data` is a JavaScript expression which evaluates to an object.  The properties of this object can, then,
 be accessed within the element that the `x-data` attribute is located.
@@ -753,6 +761,7 @@ with one property, `count`, in an `x-data` attribute on the div for our counter:
 <div class="counter" x-data="{ count: 0 }">
 ----
 
+(((Alpine.js, x-text)))
 This defines our state, that is, the data we are going to be using to drive dynamic updates to the DOM.  With the state
 declared like this, we can now use it _within_ the div element it is declared on.  Let's add an `output` element with
 an `x-text` attribute.
@@ -793,6 +802,7 @@ code will look like:
 
 And that's all it takes.  A simple component like a counter should be simple to code, and Alpine delivers.
 
+(((Alpine.js, "x-on:click")))
 === "`x-on:click`" vs. "`onclick`"
 
 As we said, the Alpine `x-on:click` attribute (or its shorthand, the `@click` attribute) is similar to the built-in
@@ -841,6 +851,7 @@ Here is what our form tag will look like:
 ----
 <1> This form wraps around the contacts table.
 
+(((Alpine.js, x-if)))
 Next, at the top of the contacts table, we are going to add a `template` tag.  A template tag is _not_ rendered by a
 browser, by default, so you might be surprised that we are using it.  However, by adding an Alpine `x-if` attribute,
 we can tell Alpine: if a condition is true, show the HTML within this template.
@@ -866,7 +877,8 @@ to see if there are any selected contacts, quite easily:
 ----
 <1> Show this HTML if there are 1 or more selected contacts.
 <2> We will implement these buttons in just a moment.
-// remove or explain missing.css class styles?
+
+(((Alpine.js, x-model)))
 The next step is to ensure that toggling a checkbox for a given contact adds (or removes) a given contact's id from the
 `selected` property.  To do this, we will need to use a new Alpine attribute, `x-model`.  The `x-model` attribute allows
 you to _bind_ a given element to some underlying data, or its "`model.`"
@@ -889,7 +901,6 @@ With this code written, we can make the toolbar appear and disappear, based on w
 
 Very slick.
 
-// useful? or cut css?
 Before we move on, you may have noticed our code here includes some "`class=`" references. These are for css styling, and are not part of Alpine.js. We've included them only as a reminder that the menu bar we're building will require css to work well. The classes in the code above refer to a minimal css library called Missing.css. If you use other css libraries, such as Bootstrap, Tailwind, Bulma, Pico.css, etc., your styling code will be different. 
 
 ==== Implementing actions
@@ -926,6 +937,7 @@ if the user indeed intends to delete the contacts selected. Then, if the user co
 Note that we are using the short-circuiting behavior of the `&&` operator in JavaScript to avoid the call to
 `htmx.ajax()` if the `confirm()` call returns false.
 
+(((htmx, "htmx.ajax()")))
 The `htmx.ajax()` function is just a way to access the normal, HTML-driven hypermedia exchange that htmx's
 HTML attributes give you directly from JavaScript.
 
@@ -945,6 +957,7 @@ This is the key to scripting in a hypermedia-friendly manner within a Hypermedia
 So, with all of this in place, we now have a much improved experience for performing bulk actions on contacts:  less
 visual clutter and the toolbar can be extended with more options without creating bloat in the main interface of our app.
 
+((("_hyperscript")))
 == +_hyperscript+
 
 The final scripting technology we are going to look at is a bit further afield:  https://hyperscript.org[+_hyperscript+]. The authors of this book initially created +_hyperscript+ as a sibling project to htmx. We felt that JavaScript wasn't
@@ -967,6 +980,7 @@ to navigate the sometimes-verbose JavaScript DOM APIs.
 We will give a small taste of what scripting in the
 +_hyperscript+ language is like, so you can pursue the language in more depth later if you find it interesting.
 
+((("_hyperscript", installing)))
 Like htmx and AlpineJS, +_hyperscript+ can be installed via a CDN or from npm (package name `hyperscript.org`):
 
 .Installing +_hyperscript+ via CDN
@@ -1043,6 +1057,9 @@ Here is the original HTML for the search input:
 <input id="search" name="q" type="search" placeholder="Search Contacts">
 ----
 
+((("_hyperscript", "event listener")))
+((("_hyperscript", "event filter")))
+((("_hyperscript", "filter expression")))
 We will add an event listener using the `on keydown` syntax, which will fire whenever a keydown occurs.  Further, we
 can use an _event filter_ syntax in +_hyperscript+ using square brackets after the event.  In the square brackets we
 can place a _filter expression_ that will filter out `keydown` events we aren't interested in.  In our case, we only
@@ -1058,6 +1075,7 @@ So far our +_hyperscript+ looks like this:
   on keydown[altKey and code is 'KeyS'] ...
 ----
 
+((("_hyperscript", from)))
 Now, by default, +_hyperscript+ will listen for a given event _on the element where it is declared_.  So, with the script we have, we would only get `keydown` events if the search box is already focused.  That's not what
 we want!  We want to have this key work _globally_, no matter which element has focus.
 
@@ -1097,6 +1115,7 @@ at some level, you are right: JavaScript is a decent scripting language, is very
 in web development.  On the other hand, by creating an entirely new front end scripting language, we had the freedom
 to address some problems that we saw generating ugly and verbose code in JavaScript:
 
+((("_hyperscript", "async transparency")))
 Async transparency:: In +_hyperscript+, asynchronous functions (i.e., functions that return `Promise` instances) can be
 invoked _as if they were synchronous_. Changing a function from sync to async does not break any +_hyperscript+ code that
 calls it.  This is achieved by checking for a Promise when evaluating any expression, and suspending the running script
@@ -1104,13 +1123,16 @@ if one exists (only the current event handler is suspended and the main thread i
 either the explicit use of callbacks _or_ the use of explicit `async` annotations (which can't be mixed with synchronous
 code).
 
+((("_hyperscript", "array property access")))
 Array property access:: In +_hyperscript+, accessing a property on an array (other than `length` or a number) will return
 an array of the values of property on each member of that array, making array property access act like a flat-map operation.
 jQuery has a similar feature, but only for its own data structure.
 
+((("_hyperscript", "CSS syntax")))
 Native CSS Syntax:: In +_hyperscript+, you can use things like CSS class and ID literals, or CSS query literals, directly
 in the language, rather than needing to call out to a wordy DOM API, as you do in JavaScript.
 
+((("_hyperscript", "event support")))
 Deep Event Support:: Working with events in +_hyperscript+ is far more pleasant than working with them in JavaScript, with
 native support for responding to and sending events, as well as for common event-handling patterns such as "`debouncing`"
 or rate limiting events.  +_hyperscript+ also provides declarative mechanisms for synchronizing events within a given element
@@ -1134,6 +1156,7 @@ to enhance your Hypermedia-Driven Application.  However, there is another major 
 side scripting: "`off the shelf`" components.  That is, JavaScript libraries that other people have created that offer
 some sort of functionality, such as showing modal dialogs.
 
+(((components)))
 Components have become very popular in the web development works, with libraries like  https://datatables.net/[DataTables]
 providing rich user experiences with very little JavaScript code on the part of a user.  Unfortunately, if these libraries
 aren't integrated well into a website, they can begin to make an application feel "`patched together.`" Furthermore, some
@@ -1198,6 +1221,8 @@ important, as these custom events can be dispatched or listened to without addit
 
 Let's take a look at two different approaches to scripting, one using JavaScript call backs, and one using events.
 
+//TODO: keep this example of wrapping a function, but mention <dialog> tag?
+(((SweetAlert2)))
 To make things concrete, let's implement a better confirmation dialog for the `DELETE` button we created in Alpine in the
 previous section.  In the original example we used the `confirm()` function built in to JavaScript, which shows a
 pretty bare-bones system confirmation dialog.  We will replace this function with a popular JavaScript library,
@@ -1251,6 +1276,7 @@ trigger the request via events.
 
 So let's take a different approach and see how that looks.
 
+((("JavaScript library", "integrate via events")))
 ==== Integrating using events
 
 To clean this code up, we will pull the `Swal.fire()` code out to a custom JavaScript function we will create called

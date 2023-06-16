@@ -480,6 +480,7 @@ connectors that provide a go-between the HTTP requests and the model.
 This is the ideal controller of the Model-View-Controller (MVC) paradigm that was so popular in the early web: a controller
 should be "`thin`", with the model containing the majority of the logic in the system.
 
+((("Model-View-Controller (MVC)")))
 .The Model View Controller pattern
 ****
 The Model View Controller design pattern is a classic architectural pattern in software development, and was a major
@@ -504,6 +505,7 @@ another.
 With properly built "`thin`" controllers and "`fat`" models, keeping two separate APIs both in sync and yet
 still evolving separately is not as difficult or as crazy as it might sound.
 
+(((Microformats)))
 [.design-note]
 .HTML Notes: Microformats
 ****

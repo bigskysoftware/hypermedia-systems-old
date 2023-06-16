@@ -997,7 +997,7 @@ Let's go through each component of this script:
 
 * `on click` is an event listener, telling the button to listen for a `click` event and then executing the remaining code.
 * `increment` is a "`command`" in +_hyperscript+ that "`increments`" things, similar to the `++` operator in JavaScript.
-* `the` doesn't have any semantic meaning in +_hyperscript+, but can used to make scripts more readable.
+* `the` doesn't have any semantic meaning in +_hyperscript+, but can be used to make scripts more readable.
 * `textContent of` is one form of _property access_ in +_hyperscript+.  You are probably familiar with the JavaScript syntax `a.b`, meaning "Get the property `b` on object `a.`" +_hyperscript+ supports this syntax, but _also_ supports
 the forms `b of a` and `a's b`.  Which one you use should depend on which one is most readable.
 *  `previous` is an expression in +_hyperscript+ that finds the previous element in the DOM that matches some condition.

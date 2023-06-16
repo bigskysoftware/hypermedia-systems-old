@@ -768,13 +768,11 @@ _When Necessary, Create “'Islands of Interactivity'”_
 
 At some point in your web application, there may come a point where the hypermedia approach, on its own, just doesn’t cut it.
 
-A good example of this is re-ordering a list of things. This can be done in “pure” hypermedia by clicking up and down arrows or having order # drop-downs next to items. (I am ashamed to admit I have built both of these!)
+A good example of this is re-ordering a list of things. This can be done in “`pure`” hypermedia by clicking up and down arrows or having order # drop-downs next to items. (I am ashamed to admit I have built both of these!)
 
 But this experience stinks compared to what people are used to: drag-and-drop.
 
-In cases like this, it is perfectly fine to use a front-end heavy approach as an “Island of Interactivity”.
-
-Consider the SortableJS example. Here you have a sophisticated area of interactivity that allows for drag-and-drop, and that integrates with htmx and the broader hypermedia-driven application via events.
+In cases like this, it is perfectly fine to use a front-end heavy approach, such as SortableJS, as an “`Island of Interactivity.`”
 
 This is an excellent way to encapsulate richer UX within an HDA.
 ****

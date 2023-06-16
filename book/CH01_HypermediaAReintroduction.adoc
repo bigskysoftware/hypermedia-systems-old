@@ -786,15 +786,4 @@ To avoid div soup, become friendly with the HTML spec of available tags, and con
 Of course, not every UI pattern has a designated HTML element.
 We often need to compose elements and augment them with attributes.
 Before you do, though, rummage through the html tool chest. Sometimes you might be surprised by how much is available.
-
-For example, are you building:
-
-// TODO dzk (maybe give the correct elements here?  I don't know them... :)
-// revised: it may be too much to suggest memorizing all tags 
-// maybe: make underused or lesser known tags its own topic?
-* A "command palette" menu?
-* A play-pause button?
-* A search field with a search button next to it? 
-* A modal for alerts?
-* A progress bar? 
 ****

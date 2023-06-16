@@ -738,9 +738,7 @@ Yes, there is a story for Hypermedia-Driven Applications on mobile.
 [.design-note]
 .HTML Notes: Good Enough UX and Islands of Interactivity
 ****
-_Accept “good enough” UX_. 
-
-A problem many SPA developers face when coming to the HDA approach is that they look at their current SPA application and imagine implementing it exactly using hypermedia. While htmx and other hypermedia-oriented libraries significantly close the interactivity gap between hypermedia-based applications and SPAs, that gap still exists.
+ A problem many SPA developers face when coming to the HDA approach is that they look at their current SPA application and imagine implementing it exactly using hypermedia. While htmx and other hypermedia-oriented libraries significantly close the interactivity gap between hypermedia-based applications and SPAs, that gap still exists.
 
 As we saw in Chapter Two, Roy Fielding noted this tradeoff with respect to the web’s RESTful network architecture, where "information is transferred in a
 standardized form rather than one which is specific to an application's needs."
@@ -749,9 +747,7 @@ Accepting a slightly less efficient and interactive solution to a particular UX 
 
 Do not let the perfect be the enemy of the good.
 
-_When necessary, create “'Islands of Interactivity.'”_
-
-At some point in your web application, there may come a point where the hypermedia approach, on its own, just doesn’t cut it.
+Still, there may come a point in your application where the hypermedia approach, on its own, just doesn’t cut it.
 
 A good example of this is re-ordering a list of things. This can be done in “`pure`” hypermedia by clicking up and down arrows or having order # drop-downs next to items.
 

@@ -1039,15 +1039,21 @@ As the web was designed.
 
 
 [.design-note]
-.HTML Notes: "'Display: none'"
+.HTML Notes: Caution With Modals and "'Display: none'"
 ****
-Sadly, not even good HTML can cure all ills.
-If you care about machine readability, or human readability, or page weight, the most important thing to do is _testing_.
-Test manually.
-Test automatically.
-Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI).
+_Think twice about modals._ Modal windows have become popular, almost standard, in many web applications today.
 
-One common problem is with the use of `display: none;` in CSS. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is sometimes done to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
+Unfortunately, modal windows do not play well with much of the infrastructure of the web and introduce client-side state that can be difficult (though not impossible) to integrate cleanly with the hypermedia-based approach.
+
+Modal windows can be used safely for views that don't constitute a resource or correspond to a domain entity:
+
+* Alerts
+* Confirmation dialogs
+* Forms for creating/updating entities
+
+Otherwise, consider using alternatives such as inline editing, or a separate page, rather than a modal.
+
+_Use `display: none;` with care_. The issue is that it is not purely cosmetic -- it also removes elements from the accessibility tree and keyboard focus. This is sometimes done to present the same content to visual and aural interfaces. If you want to hide an element visually without hiding it from assistive technology (e.g. the element contains information that is communicated through styling), you can use this utility class:
 
 [source,css]
 ----

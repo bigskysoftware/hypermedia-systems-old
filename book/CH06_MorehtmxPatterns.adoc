@@ -1153,7 +1153,8 @@ the web.
 ****
 Accessibility problems can arise when we try to implement controls that aren't built into HTML.
 
-For example, what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? It's a neat hack that makes the rounds in web development communities from time to time.
+Earlier, in Chapter One, we looked at the example of a <div> improvised to work like a button.
+Let's look at a different example: what if you make something that looks like a set of tabs, but you use radio buttons and CSS hacks to build it? It's a neat hack that makes the rounds in web development communities from time to time.
 
 The problem here is that tabs have requirements beyond clicking to change content.
 Your improvised tabs may be missing features that will lead to user confusion and frustration, as well as some undesirable behaviors.
@@ -1183,9 +1184,10 @@ and others (like `aria-selected`) need to be set through JavaScript since they a
 The keyboard interactions can be error-prone too.
 
 It's not impossible, not even that hard, to make your own tab set implementation.
-However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resporces for testing.
+However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resources for testing.
 
-_Stick with established libraries_ for UI interactions. If a use case requires a bespoke solution, _test exhaustively_ for keyboard interaction and accessibility.
+_Stick with established libraries_ for UI interactions. If a use case requires a bespoke solution, _test exhaustively_ for keyboard interaction and accessibility. Test manually.
+Test automatically. Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI). Testing is critical to ensure machine readability, or human readability, or page weight.
 
 Also consider: Does the information need to be presented as tabs?
 Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.

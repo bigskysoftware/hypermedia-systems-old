@@ -738,7 +738,7 @@ Yes, there is a story for Hypermedia-Driven Applications on mobile.
 [.design-note]
 .HTML Notes: Three Tips
 ****
-_Think Twice About Modals_
+First, _think twice about modals._
 
 Modal windows have become popular, almost standard, in many web applications today.
 
@@ -752,7 +752,7 @@ Modal windows can be used for views that don't constitute a resource or correspo
 
 Otherwise, consider using alternatives such as inline editing, or a separate page, rather than a modal.
 
-_Accept “Good Enough” UX_
+Second, _accept “good enough” UX_. 
 
 A problem many SPA developers face when coming to the HDA approach is that they look at their current SPA application and imagine implementing it exactly using hypermedia. While htmx and other hypermedia-oriented libraries significantly close the interactivity gap between hypermedia-based applications and SPAs, that gap still exists.
 
@@ -764,7 +764,7 @@ Accepting a slightly less efficient and interactive solution to a particular UX 
 
 Do not let the perfect be the enemy of the good.
 
-_When Necessary, Create “'Islands of Interactivity'”_
+Third, _when necessary, create “'Islands of Interactivity.'”_
 
 At some point in your web application, there may come a point where the hypermedia approach, on its own, just doesn’t cut it.
 

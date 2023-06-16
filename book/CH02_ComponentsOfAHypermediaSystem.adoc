@@ -143,6 +143,7 @@ Finally, we see some new HTML content.  This content is the HTML _representation
 case a table of contents of a book.  The browser will use this HTML to replace the entire content in its display window,
 showing the user this new page, and updating the address bar to reflect the new URL.
 
+(((HTTP methods)))
 ==== HTTP methods
 
 The anchor tag above issued an HTTP `GET`, where `GET` is the _method_ of the request.  The particular method
@@ -151,18 +152,23 @@ the request is directed at.
 
 There are many methods available in HTTP; the ones of most practical importance to developers are the following:
 
+(((HTTP methods, GET)))
 `GET`::
   A GET request retrieves the representation of the specified resource. GET requests should not mutate data.
 
+(((HTTP methods, POST)))
 `POST`::
   A POST request submits data to the specified resource. This will often result in a mutation of state on the server.
 
+(((HTTP methods, PUT)))
 `PUT`::
   A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
 
+(((HTTP methods, PATCH)))
 `PATCH`::
   A PATCH request replaces the data of the specified resource. This results in a mutation of state on the server.
 
+(((HTTP methods, DELETE)))
 `DELETE`::
   A DELETE request deletes the specified resource. This results in a mutation of state on the server.
 
@@ -221,6 +227,7 @@ values that are embedded in the HTTP response, as we saw above.
 The most familiar response code for web developers is probably `404`, which stands for "`Not Found.`"  This
 is the response code that is returned by web servers when a resource that does not exist is requested from them.
 
+((("HTTP response", codes)))
 HTTP breaks response codes up into various categories:
 
 `100`-`199`::
@@ -286,19 +293,24 @@ and response codes as they were designed to be used.
 
 ==== Caching HTTP responses
 
+((("HTTP response", caching)))
 A constraint of REST (and, therefore, a feature of HTTP) is the notion of caching responses: a server can indicate to
 a client (as well as intermediary HTTP servers) that a given response can be cached for future requests to the same
 URL.
 
+((("HTTP response header","Cache-Control")))
 The cache behavior of an HTTP response from a server can be indicated with the `Cache-Control` response header.  This
 header can have a number of different values indicating the cacheability of a given response.  If, for example, the header
 contains the value `max-age=60`, this indicates that a client may cache this response for 60 seconds, and need not issue
 another HTTP request for that resource until that time limit has expired.
 
+((("HTTP response header", Vary)))
 Another important caching-related response header is `Vary`.  This response header can be used to indicate exactly what
 headers in an HTTP Request form the unique identifier for a cached result.  This becomes important to allow the browser
 to correctly cache content in situations where a particular header affects the form of the server response.
 
+((("HTTP response header", custom)))
+(((HX-Request, about)))
 A common pattern in htmx-powered applications, for example, is to use a custom header set by htmx, `HX-Request`, to
 differentiate between "`normal`" web requests and requests submitted by htmx.  To properly cache the response to these
 requests, the `HX-Request` request header must be indicated by the `Vary` response header.
@@ -355,6 +367,7 @@ Hypermedia, in this sense, provides a "`universal language`" for the web that we
 
 === Hypermedia Clients
 
+((("web browsers")))
 We now come to the final major component in a hypermedia system: the hypermedia client.  Hypermedia _clients_ are software
 that understand how to interpret a particular hypermedia, and the hypermedia controls within it, properly.  The canonical
 example, of course, is the web browser, which understands HTML and can present it to a user to interact with. Web browsers
@@ -414,8 +427,10 @@ RESTful, in the original sense, and, in fact, _can't_ be RESTful, since they are
 To re-emphasize: REST, as coined by Fielding, describes _the pre-API web_, and letting go of the current, common
 usage of the term REST to simply mean "`a JSON API`" is necessary to develop a proper understanding of the idea.
 
+(((REST, constraints)))
 === The "`Constraints`" of REST
 
+((("Fielding, Roy")))
 In his dissertation, Fielding defines various "`constraints`" to describe how a RESTful system must behave.  This approach
 can feel a little round-about and difficult to follow for many people, but it is an appropriate approach for an academic
 document.  Given a bit of time thinking about the constraints he outlines and some concrete examples of those
@@ -587,6 +602,7 @@ to archive the contact.  The JSON representation, in contrast, does not have thi
 
 What are the ramifications of this fact for a _client_ of the JSON API?
 
+((("JSON API", "vs. HTML")))
 What this means is that the JSON API client must know _in advance_ exactly what other URLs (and request methods) are
 available for working with the contact information.  If the JSON client is able to update this contact in some way, it
 must know how to do so from some source of information _external_ to the JSON message.  If the contact has a different

@@ -471,6 +471,7 @@ is happening.`"
 
 Let's add a spinner after our search input:
 
+(((hx-indicator)))
 .Adding a request indicator to search
 [source, html]
 ----
@@ -711,6 +712,7 @@ there is a nice spinner indicating that something is coming.  Much better.
 Note that all we had to do was copy and paste our indicator from the active search example into the `span`.  Once again
 we see how htmx provides flexible, composable features and building blocks. Implementing a new feature is often just copy-and-paste, maybe a tweak or two, and you are done.
 
+((("lazy loading")))
 === But That's Not Lazy!
 
 You might say "`OK, but that's not really lazy.  We are still loading the count immediately when the page is loaded,
@@ -780,6 +782,7 @@ we can omit the `hx-push-url` attribute.
 
 Here is the code for our inline "`Delete`" link:
 
+(((hx-delete, example)))
 .The existing row actions
 [source, html]
 ----
@@ -982,6 +985,7 @@ short, a few milliseconds.  That makes sense in most cases: you don't want to ha
 new content into the DOM.  But, in this case, we want to give the CSS animation time to complete before we do the swap,
 we want to give it a second, in fact.
 
+(((hx-swap, delay)))
 Fortunately htmx has an option for the `hx-swap` annotation that allows you to set the swap delay: following the swap
 type you can add `swap:` followed by a timing value to tell htmx to wait a specific amount of time before it swaps.  Let's
 update our HTML to allow a one second delay before the swap is done for the delete action:
@@ -1073,12 +1077,14 @@ Pretty easy.  One question though: how are we going to include the values of all
 request?  As it stands right now, this is just a stand-alone button, and it doesn't have any information indicating that
 it should include any other information in the `DELETE` request it makes.
 
+((("input values")))
 Fortunately, htmx has a few different ways to include values of inputs with a request.
 
 One way would be to use the `hx-include` attribute, which allows you to use a CSS selector to specify the elements
 you want to include in the request.  That would work fine here, but we are going to use another approach that is a bit
 simpler in this case.
 
+(((forms)))
 By default, if an element is a child of a `form` element and makes a non-`GET` request, htmx will include all the values of
 inputs within that form.  In situations like this, where there is a bulk operation for a table, it is common to enclose
 the whole table in a form tag, so that it is easy to add buttons that operate on the selected items.

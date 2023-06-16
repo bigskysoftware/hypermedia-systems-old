@@ -11,6 +11,7 @@ This will allow us to address user experience issues, such as long feedback cycl
 needing to write much, if any, JavaScript, and without creating a JSON API.  Everything will be implemented in hypermedia,
 using the core hypermedia concepts of the early web.
 
+(((htmx, installing)))
 == Installing Htmx
 
 The first thing we need to do is install htmx in our web application.  We are going to do this by downloading the
@@ -44,6 +45,7 @@ in common HTML, including a `head` element that we are using here to install htm
 
 Believe it or not, that's it!  This simple script tag will make htmx's functionality available across our entire application.
 
+(((hx-boost)))
 == AJAX-ifying Our Application
 
 To get our feet wet with htmx, the first feature we are going to take advantage of is known as "`boosting.`" This is
@@ -143,6 +145,7 @@ right next to one another.
 <a href="/help" hx-boost="true">Help</a>
 ----
 
+(((htmx, "attribute inheritance")))
 Htmx offers a feature to help reduce this redundancy: attribute inheritance.  With most attributes in htmx, if you
 place it on a parent, the attribute will also apply to children elements.  This is how Cascading Style Sheets work, and
 that idea inspired htmx to adopt a similar "`cascading htmx attributes`" feature.
@@ -192,6 +195,7 @@ Here we have a new link to a documentation PDF that we wish to function like a r
 `hx-boost="false"` to the link and this declaration will override the `hx-boost="true"` on the parent `div`, reverting
 it to regular link behavior and, thus, allowing for the file download behavior that we want.
 
+((("progressive enhancement")))
 === Progressive Enhancement
 
 A nice aspect of `hx-boost` is that it is an example of [.dfn]_progressive enhancement_:
@@ -279,6 +283,7 @@ used to delete the contact:
 
 This form issued an HTTP `POST` to, for example, `/contacts/42/delete`, in order to delete the contact with the ID 42.
 
+(((hx-delete)))
 We mentioned previously that one of the annoying things about HTML is that you can't issue an HTTP `DELETE`
 (or `PUT` or `PATCH`) request directly, even though these are all part of HTTP and HTTP is _obviously designed_ for
 transferring HTML.
@@ -353,6 +358,7 @@ def contacts_delete(contact_id=0):
 
 Pretty simple, and much cleaner.
 
+(((Flask, redirect)))
 ==== A response code gotcha
 
 Unfortunately, there is a problem with our updated handler: by default, in Flask the `redirect()` method responds with
@@ -435,6 +441,7 @@ As we mentioned, boosting via `hx-boost` will naturally update the location bar 
 this case we are building a custom button hypermedia control to issue a `DELETE`.  We
 need to let htmx know that we want the resulting URL from this request "`pushed`" into the location bar.
 
+(((hx-push-url)))
 We can achieve this by adding the `hx-push-url` attribute with the value `true` to our button:
 
 [source, html]
@@ -460,6 +467,7 @@ the built-in features of the web as a hypermedia system without any URL hacks.
 
 === One More Thing...
 
+(((hx-confirm)))
 There is one additional "`bonus`" feature we can add to our "`Delete Contact`" button: a confirmation dialog.  Deleting
 a contact is a destructive operation and as it stands right now, if the user inadvertently clicked the "`Delete Contact`"
 button, the application would just delete that contact.  Too bad, so sad for the user.
@@ -491,6 +499,7 @@ With this final change we now have a pretty solid "`delete contact`" mechanism: 
 and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
 all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
 
+((("progressive enhancement")))
 === Progressive Enhancement?
 
 As we noted earlier about this solution: it is _not_ a progressive enhancement to our web application. If
@@ -503,6 +512,7 @@ JavaScript. Retaining support for non-JavaScript clients requires additional wor
 is important to determine exactly how important supporting non-JavaScript clients is before you begin using htmx, or any
 other JavaScript framework, for improving your web applications.
 
+(((validation)))
 == Next Steps: Validating Contact Emails
 
 Let's move on to another improvement in our application. A big part of any web app is validating the data that is
@@ -741,6 +751,8 @@ Well, no.
 
 It turns out that you can implement this functionality in htmx, using pure HTML attributes.
 
+((hx-trigger, change))
+(((event, change)))
 In fact, all we need to do is to change our trigger.  Currently, we are using the default trigger for inputs, which is the
 `change` event.  To validate as the user types, we would want to capture the `keyup` event as well:
 
@@ -761,6 +773,7 @@ In fact, all we need to do is to change our trigger.  Currently, we are using th
 
 With this tiny change, every time a user types a character we will issue a request and validate the email.  Simple.
 
+(((debouncing)))
 === Debouncing Our Validation Requests
 
 Simple, yes, but probably not what we want: issuing a new request on every key up event would be very wasteful
@@ -801,6 +814,7 @@ There is one last issue we should address with the keyup event: as it stands we 
 are pressed, even if they are keys that have no effect on the value of the input, such as arrow keys.  It would be better
 if there were a way to only issue a request if the input value has changed.
 
+((("event modifier", changed)))
 And it turns out that htmx has support for that exact pattern, by using the `changed` modifier for events.  (Not to be
 confused with the `change` event triggered by the DOM on input elements.)
 
@@ -832,6 +846,7 @@ need to keep a client-side and server-side model in sync with one another.
 
 A great demonstration of the power of the hypermedia architecture!
 
+(((pagination)))
 == Another Application Improvement: Paging
 
 Let's move on from the contact editing page for a bit and improve the root page of the application, found
@@ -910,6 +925,7 @@ And, with that small change, we are done: we now have a very basic paging mechan
 
 And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost` in the application.  Easy!
 
+((("click to load")))
 === Click To Load
 
 This paging mechanism is fine for a basic web application, and it is used extensively on the internet.  But it has some
@@ -938,6 +954,7 @@ We want to have a button that, when clicked, appends the rows from the next page
 exiting table, rather than re-rendering the whole table.  This can be achieved by adding a new row to our table
 that has just such a button in it:
 
+(((hx-select, example)))
 [source, html]
 .Changing to "`click to load`"
 ----
@@ -989,6 +1006,7 @@ that htmx gives you with respect to how it processes server responses.
 
 So, four attributes, and we now have a sophisticated "`Click To Load`" UX, via htmx.
 
+((("infinite scroll")))
 === Infinite Scroll
 
 Another common pattern for dealing with large sets of things is known as the "`Infinite Scroll`" pattern.  In this pattern,
@@ -1008,6 +1026,7 @@ with the `hx-trigger` attribute, to trigger a request when, well, when an elemen
 
 So let's convert our button to a span and take advantage of this event:
 
+(((hx-select, example)))
 [source, html]
 .Changing to "`infinite scroll`"
 ----
@@ -1032,7 +1051,7 @@ a span and then add the `revealed` event trigger.
 The fact that switching to infinite scroll was so easy shows how well htmx generalizes HTML: just a few attributes allow
 us to dramatically expand what we can achieve in the hypermedia.
 
-And, again, we are doing all this within the native, RESTful model of the web. Despite all this new
+And, again, we are doing all this while taking advantage of the RESTful model of the web. Despite all this new
 behavior, we are still exchanging hypermedia with the server, with no JSON API response to be seen.
 
 As the web was designed.

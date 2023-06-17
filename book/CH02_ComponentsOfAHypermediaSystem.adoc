@@ -537,6 +537,7 @@ and that media type can be negotiated between the client and the server.
 
 We saw this latter aspect of the uniform interface in the `Accept` header in the requests above.
 
+((("self-descriptive messages")))
 ==== Self-descriptive messages
 
 The Self-Descriptive Messages constraint, combined with the next one, HATEOAS, form what we consider to be the core of
@@ -627,6 +628,7 @@ Browsers only (only! As if it is easy!) need to understand how to interpret and 
 gives hypermedia-based systems unprecedented flexibility in dealing with changes to both the backing representations and
 to the system itself.
 
+(((HATEOAS)))
 ==== Hypermedia As The Engine of Application State (HATEOAS)
 
 The final sub-constraint on the Uniform Interface is that, in a RESTful system, hypermedia should be "`the engine of

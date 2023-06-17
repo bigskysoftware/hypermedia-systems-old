@@ -208,6 +208,8 @@ This approach isn't perfect, of course, but it will work for our simple applicat
 approach or various other methods at a later point, when our Contact.app has taken over the internet and we can afford
 a large team of API developers.  :)
 
+((("Data API", endpoint)))
+(((JSON, endpoint)))
 === Our First JSON Endpoint: Listing All Contacts
 
 Let's add our first Data API endpoint.  It will handle an HTTP `GET` request to `/api/v1/contacts`, and return
@@ -414,6 +416,7 @@ also _authorization_, determining if they have the right to perform the request.
 
 We will set authorization aside for now and consider only authentication.
 
+(((authentication)))
 ==== Authentication in web applications
 
 In the HTML web application world, authentication has traditionally been done via a login page that asks a user for
@@ -422,6 +425,7 @@ passwords to establish that the user is who they say they are.  If the password 
 is established, indicating who the user is.  This cookie is then sent with every request that the user makes to
 the web application, allowing the application to know which user is making a given request.
 
+(((HTTP, cookies)))
 .HTTP Cookies
 ****
 HTTP Cookies are kind of a strange feature of HTTP.  In some ways they violate the goal of remaining stateless, a

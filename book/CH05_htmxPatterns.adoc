@@ -773,9 +773,9 @@ In fact, all we need to do is to change our trigger.  Currently, we are using th
 
 With this tiny change, every time a user types a character we will issue a request and validate the email.  Simple.
 
-(((debouncing)))
 === Debouncing Our Validation Requests
 
+(((debouncing)))
 Simple, yes, but probably not what we want: issuing a new request on every key up event would be very wasteful
 and could potentially overwhelm your server.  What we want instead is only issue the request if the user has paused for
 a small amount of time.  This is called "`debouncing`" the input, where requests are delayed until things have "`settled down`".

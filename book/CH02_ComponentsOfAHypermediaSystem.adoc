@@ -143,7 +143,7 @@ Finally, we see some new HTML content.  This content is the HTML _representation
 case a table of contents of a book.  The browser will use this HTML to replace the entire content in its display window,
 showing the user this new page, and updating the address bar to reflect the new URL.
 
-(((HTTP methods)))
+((("HTTP methods")))
 ==== HTTP methods
 
 The anchor tag above issued an HTTP `GET`, where `GET` is the _method_ of the request.  The particular method
@@ -152,23 +152,23 @@ the request is directed at.
 
 There are many methods available in HTTP; the ones of most practical importance to developers are the following:
 
-(((HTTP methods, GET)))
+((("HTTP methods", GET)))
 `GET`::
   A GET request retrieves the representation of the specified resource. GET requests should not mutate data.
 
-(((HTTP methods, POST)))
+((("HTTP methods", POST)))
 `POST`::
   A POST request submits data to the specified resource. This will often result in a mutation of state on the server.
 
-(((HTTP methods, PUT)))
+((("HTTP methods", PUT)))
 `PUT`::
   A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
 
-(((HTTP methods, PATCH)))
+((("HTTP methods", PATCH)))
 `PATCH`::
   A PATCH request replaces the data of the specified resource. This results in a mutation of state on the server.
 
-(((HTTP methods, DELETE)))
+((("HTTP methods", DELETE)))
 `DELETE`::
   A DELETE request deletes the specified resource. This results in a mutation of state on the server.
 
@@ -628,9 +628,10 @@ Browsers only (only! As if it is easy!) need to understand how to interpret and 
 gives hypermedia-based systems unprecedented flexibility in dealing with changes to both the backing representations and
 to the system itself.
 
-(((HATEOAS)))
+
 ==== Hypermedia As The Engine of Application State (HATEOAS)
 
+(((HATEOAS)))
 The final sub-constraint on the Uniform Interface is that, in a RESTful system, hypermedia should be "`the engine of
 application state.`" This is sometimes abbreviated as "`HATEOAS`", although Fielding prefers to use the terminology
 "`the hypermedia constraint`" when discussing it.

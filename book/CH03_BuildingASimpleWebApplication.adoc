@@ -80,9 +80,10 @@ We think most web developers, even developers who are unfamiliar with Python, sh
 along with our examples. Most of the authors of this book hadn't written much Python before writing it, and we got the
 hang of it pretty quickly.
 
-(((Flask, about)))
+
 == Introducing Flask: Our First Route
 
+(((Flask, about)))
 Flask is a simple but flexible web framework for Python. We'll ease into it by touching on its core elements.
 
 (((Flask, routes)))
@@ -549,9 +550,10 @@ Finally, if we are unable to save the contact, we re-render the `new.html` templ
 same template as above, but the inputs will be filled in with the submitted values, and any errors associated with the
 fields will be rendered to feedback to the user as to what validation failed.
 
-((("Post/Redirect/Get (PRG)")))
+
 .The Post/Redirect/Get Pattern
 ****
+((("Post/Redirect/Get (PRG)")))
 This handler implements a common strategy in web 1.0-style development called the
 https://en.wikipedia.org/wiki/Post/Redirect/Get[Post/Redirect/Get] or PRG pattern.  By issuing an HTTP redirect once
 a contact has been created and forwarding the browser on to another location, we ensure that the `POST` does not
@@ -755,9 +757,10 @@ we would probably do just that.
 
 For our purposes, however, since our application is small and simple, we will leave the templates separate.
 
-(((components)))
+
 .Factoring Your Applications
 ****
+(((components)))
 One thing that often trips people up who are coming to hypermedia applications from a JavaScript background is the
 notion of "components".  In JavaScript-oriented applications it is common to break your app up into small
 client-side components that are then composed together.  These components are often developed and tested in isolation and
@@ -811,12 +814,12 @@ applications.
 
 === Deleting A Contact
 
+((("Post/Redirect/Get (PRG)")))
 We piggybacked contact delete functionality into the same template used to edit a contact.  This second form will issue
 an HTTP `POST` to `/contacts/<contact_id>/delete`, and we will need to create a handler for that path as well.
 
 Here is what the controller looks like:
 
-((("Post/Redirect/Get (PRG)")))
 .The "`delete contact`" controller code
 [source, python]
 ----
@@ -878,10 +881,10 @@ that will let us improve our contact application while retaining the hypermedia-
 
 
 // TODO dz4k rewrite
-(((components)))
 [.design-note]
 .HTML Notes: Framework Soup
 ****
+(((components)))
 Components encapsulate a section of a page along with its dynamic behavior.
 While encapsulating behavior is a good way to organize code,
 it can also separate elements from their surrounding context,

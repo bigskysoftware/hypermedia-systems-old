@@ -52,9 +52,9 @@ via, for example, hyperlinks embedded in the media. The prefix "`hyper-`" derive
 means "`beyond`" or "`over`", indicating that hypermedia _goes beyond_ normal, passively consumed media like magazines and
 newspapers.
 
+((("hypermedia control")))
 Hyperlinks are a canonical example of what is called a [.dfn]_hypermedia control_:
 
-((("hypermedia control")))
 Hypermedia Control:: A ((hypermedia control)) is an element in a hypermedia that describes (or controls) some sort of
 interaction, often with a remote server, by encoding information about that interaction directly and completely within
 itself.
@@ -71,7 +71,7 @@ Hypertexts like HTML function alongside other technologies crucial for making an
 protocols like HTTP, other media types such as images and videos, hypermedia servers (i.e., servers providing hypermedia APIs),
 sophisticated hypermedia clients (e.g., web browsers), and so on.
 
-(((hypermedia system)))
+((("hypermedia system")))
 Because of this, we prefer the broader term _hypermedia systems_ when describing the underlying architecture of
 applications built using hypertext, to emphasize the system architecture over the particular hypermedia being used.
 
@@ -208,7 +208,7 @@ Here is what a user interaction with an anchor tag/hyperlink looks like in visua
 .An HTTP GET In Action
 image::diagram/http-get-in-action.svg[Browser sends GET request to the server with the path and hostname, server responds with page]
 
-(((GET request)))
+((("GET request")))
 When the link is clicked the browser (or, as we sometimes refer to it, the _hypermedia client_) initiates an HTTP
 `GET` request to the URL encoded in the link's `href` attribute.
 
@@ -241,7 +241,7 @@ Like an anchor tag, a form tag consists of the tag itself, `<form></form>`, comb
 content within the tag.  Note that the form tag does not have an `href` attribute, but rather has an `action` attribute
 that specifies where to issue an HTTP request.
 
-(((POST request)))
+((("POST request")))
 Furthermore, it also has a `method` attribute, which specifies exactly which HTTP "`method`" to use.  In this example
 the form is asking the browser to issue a `POST` request.
 
@@ -340,7 +340,7 @@ An HTTP response to this request might look something like this:
 <2> A property, in this case with the name `id` and the value `42`.
 <3> Another property, the email of the contact with this id.
 
-(((updateUI method)))
+((("updateUI method")))
 The JavaScript code above converts the JSON text received from the server into a JavaScript object by calling the
 `json()` method on it.  This new JavaScript object is then handed off to the `updateUI()` method.
 
@@ -353,7 +353,7 @@ What _is_ important, what is the _crucial_ aspect of this JSON-based server inte
 hypermedia.  The ((JSON API)) being used here does not return a hypermedia response.  There are no _hyperlinks_ or other
 hypermedia-style controls in it.
 
-(((Data API)))
+((("Data API")))
 This JSON API is, rather, a _Data API_.
 
 Because the response is in JSON and is _not_ hypermedia, the JavaScript `updateUI()` method must understand how to turn
@@ -369,7 +369,7 @@ It needs to know:
 - How to render this data to the browser.
 - What additional actions/API end points can be called with this data.
 
-(((tight coupling)))
+((("tight coupling")))
 In short, the logic in `updateUI()` needs to have intimate knowledge of the API endpoint at `/api/v1/contact/1`, knowledge provided
 via some side-channel beyond the response itself.  As a result, the `updateUI()` code and the
 API have a strong relationship, known as _tight coupling_: if the format of the JSON response changes, then the code for `updateUI()` will almost certainly
@@ -377,8 +377,7 @@ also need to be changed as well.
 
 ==== Single Page Applications
 
-(((Single Page Application)))
-(((SPA)))
+((("Single Page Application (SPA)")))
 This bit of JavaScript, while very modest, is the organic beginnings of a much larger conceptual approach to building
 web applications.  This is the beginning of a _Single Page Application (SPA)_.  The web application is no longer
 navigating _between_ pages using hypermedia controls as was the case with links and forms.
@@ -412,7 +411,7 @@ So, as with our simple button above, the Single Page Application approach forego
 It leaves aside the advantages of the existing RESTful architecture of the web and the built-in functionality
 found in HTML's native hypermedia controls in favor of JavaScript driven behaviors.
 
-(((thick client application)))
+((("thick client application")))
 SPAs are more much like _thick client applications_, that is, like the client-server applications of the
 1980s -- an architecture popular _before_ the web came along and that the web was, in many ways, a reaction to.
 
@@ -459,12 +458,13 @@ the Single Page Application + JSON Data API approach.  Three of the biggest are:
 
 * It leverages tried and true features of web browsers, such as caching.
 
-(((Javascript Fatigue)))
+((("Javascript Fatigue")))
+(((JSON, "API churn")))
 The first two advantages, in particular, address major pain points in modern web development:
 
 * Single Page Application infrastructure has become extremely complex, often requiring an entire team to manage.
 
-* ((JSON API churn)) -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
+* JSON API churn -- constant changes made to JSON APIs to support application needs -- has become a major pain point for
   many application teams.
 
 The combination of these two problems, along with other issues such as JavaScript library churn, has led to a phenomenon
@@ -529,8 +529,7 @@ These _hypermedia-oriented_ libraries re-center hypermedia as the core technolog
 
 === Hypermedia-Oriented JavaScript Libraries
 
-(((Multi-Page Application)))
-(((MPA)))
+((("Multi-Page Application (MPA)")))
 In the web development world there is an ongoing debate between the Single Page Application (SPA) approach and what is now being called the
 "`Multi-Page Application`" (MPA) approach.  MPA is a modern name for the old, Web 1.0 way of building web applications, using
 links and forms located on multiple web pages, submitting HTTP requests and getting HTML responses.

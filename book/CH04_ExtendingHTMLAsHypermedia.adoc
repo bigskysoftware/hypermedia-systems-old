@@ -271,10 +271,10 @@ element, issue an HTTP request of the specified type.`"
 The values of these attributes are similar to the values of both `href` on anchors and `action` on forms: you specify the
 URL you wish to issue the given HTTP request type to.  Typically, this is done via a server-relative path.
 
+(((hx-get, example)))
 For example, if we wanted a button to issue a `GET` request to `/contacts` then we would write the following
 HTML:
 
-(((hx-get, example)))
 .A simple htmx-powered button
 [source,html]
 ----
@@ -692,9 +692,9 @@ itself.
 The simplest way to pass input values with a request in htmx is to enclose the element making a request within a form
 tag.
 
+(((search)))
 Let's take our original button for retrieving contacts and repurpose it for searching contacts:
 
-(((search)))
 [#listing-3-12, reftext={chapter}.{counter:listing}]
 .An htmx-powered search button
 [source,html]
@@ -740,12 +740,12 @@ placed in some spots in HTML documents.  A good example of the latter situation 
 row of data in a table.
 
 (((hx-include, about)))
+(((hx-include, example)))
 To address this issue, htmx provides a mechanism for including input values in requests: the `hx-include` attribute.
 The `hx-include` attribute allows you to select input values that you wish to include in a request via CSS selectors.
 
 Here is the above example reworked to include the input, dropping the form:
 
-(((hx-include, example)))
 [#listing-3-13, reftext={chapter}.{counter:listing}]
 .An htmx-powered search button with `hx-include`
 [source,html]

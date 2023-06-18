@@ -208,10 +208,10 @@ This approach isn't perfect, of course, but it will work for our simple applicat
 approach or various other methods at a later point, when our Contact.app has taken over the internet and we can afford
 a large team of API developers.  :)
 
-((("Data API", endpoint)))
-(((JSON, endpoint)))
 === Our First JSON Endpoint: Listing All Contacts
 
+((("Data API", endpoint)))
+(((JSON, endpoint)))
 Let's add our first Data API endpoint.  It will handle an HTTP `GET` request to `/api/v1/contacts`, and return
 a JSON list of all contacts in the system.  In some ways it will look quite a bit like our initial code for the
 hypermedia route `/contacts`: we will load all the contacts from the contacts database and then render some text
@@ -416,9 +416,9 @@ also _authorization_, determining if they have the right to perform the request.
 
 We will set authorization aside for now and consider only authentication.
 
-(((authentication)))
 ==== Authentication in web applications
 
+(((authentication)))
 In the HTML web application world, authentication has traditionally been done via a login page that asks a user for
 their username (often their email) and a password.  This password is then checked against a database of (hashed)
 passwords to establish that the user is who they say they are.  If the password is correct, then a _session cookie_

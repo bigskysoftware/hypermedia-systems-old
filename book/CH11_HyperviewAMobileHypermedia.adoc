@@ -51,8 +51,8 @@ As a mobile developer, you can't assume that every user will be on the latest ve
 Your frontend code gets fragmented across many versions, and now your backend needs to support all of them.
 
 
-(((hypermedia, "for mobile")))
 == Hypermedia for Mobile Apps
+(((hypermedia, "for mobile")))
 We’ve seen that the hypermedia architecture can address the shortcomings of SPAs on the web.
 But can hypermedia work for mobile apps as well?
 The answer is yes!
@@ -110,17 +110,18 @@ We need a format designed to represent the interactions and patterns of native m
 That's exactly what Hyperview does.
 
 
-(((Hyperview)))
 === Hyperview
 
+(((Hyperview)))
 Hyperview is an open-source hypermedia system that provides:
 
 - A hypermedia format for defining mobile apps called HXML
 - A hypermedia client for HXML that works on iOS and Android
 - Extension points in HXML and the client to customize the framework for a given app
 
-(((HXML)))
 ==== The format
+
+(((HXML)))
 HXML was designed to feel familiar to web developers, used to working with HTML.
 Thus the choice of XML for the base format.
 In addition to familiar ergonomics, XML is compatible with server-side rendering libraries.
@@ -157,8 +158,9 @@ These interactions are bundled together in a powerful concept of "`behaviors.`"
 Developers can even define new behavior actions to add new capabilities to their app, without the need for scripting.
 We will learn more about behaviors later in this chapter.
 
-(((Hypermedia, client)))
 ==== The client
+
+(((Hypermedia, client)))
 Hyperview provides an open-source HXML client library written in React Native.
 With a little bit of configuration and a few steps on the command line, this library compiles into native app binaries for iOS or Android.
 Users install the app on their device via an app store.
@@ -251,8 +253,9 @@ In this way, developers can spend their _complexity budget_ on the core of the a
 
 == Introduction to HXML
 
-(((HXML, "Hello World!")))
 === Hello World!
+
+(((HXML, "Hello World!")))
 HXML was designed to feel natural to web developers coming from HTML.
 Let's take a closer look at the "`Hello World`" app defined in HXML:
 
@@ -335,10 +338,10 @@ Let's cover some other built-in display elements.
 
 === UI Elements
 
-(((HXML, "<list">)))
-(((HXML, "<item">)))
 ==== Lists
 
+(((HXML, "<list">)))
+(((HXML, "<item">)))
 A very common pattern in mobile apps is to scroll through a list of items.
 The physical properties of a phone screen (long & vertical) and the intuitive gesture of swiping a thumb up & down makes this a good choice for many screens.
 
@@ -425,10 +428,10 @@ A section can contain a `<section-title>` element. This is used to render some U
 This header is "`sticky`", meaning it stays on screen while scrolling through items that belong to the corresponding section.
 Finally, `<item>` elements act the same as in the regular list, but can only appear within a `<section>`.
 
-(((Hyperview, images)))
-(((HXML, "<image>")))
 ==== Images
 
+(((Hyperview, images)))
+(((HXML, "<image>")))
 Showing images in Hyperview is pretty similar to HTML, but there are a few differences.
 
 .Image element
@@ -462,9 +465,9 @@ web browsers will re-flow the content of a web page once the image is fetched an
 While re-flowing content is a reasonable behavior for web-based documents, users do not expect mobile apps to re-flow as content loads.
 To maintain a static layout, HXML requires the dimensions to be known before the image loads.
 
-(((Hyperview, inputs)))
 === Inputs
 
+(((Hyperview, inputs)))
 There's a lot to cover about inputs in Hyperview.
 Since this is meant to be an introduction and not an exhaustive resource, I'll highlight just a few types of inputs.
 Let's start with an example of the simplest type of input, a text field.
@@ -549,9 +552,9 @@ Also later in this chapter, I'll talk about support for custom elements in HXML.
 With custom elements, you can also create your own input elements.
 Custom input elements allow you to build incredible powerful interactions with simple XML syntax that integrates well with the rest of HXML.
 
-(((HXML, styling)))
 === Styling
 
+(((HXML, styling)))
 So far, we haven't mentioned how to apply styling to all of the HXML elements.
 We've seen from the Hello World app that each `<screen>` can contain a `<styles>` element.
 Let's re-visit the Hello World app and fill out the `<styles>` element.
@@ -599,9 +602,9 @@ Currently, the only available layout engine is based on flexbox.
 Style rules can get quite verbose.
 For the sake of brevity, we won't include the `<styles>` element in the rest of the examples in this chapter unless necessary.
 
-(((HXML, "custom elements")))
 === Custom elements
 
+(((HXML, "custom elements")))
 The core UI elements that ship with Hyperview are quite basic.
 Most mobile apps require richer elements to deliver a great user experience.
 Luckily, HXML can easily accommodate custom elements in its syntax.
@@ -785,9 +788,9 @@ Or, we can execute different actions for different triggers on the same element.
 We will show examples of the power of multiple behaviors at the end of this chapter.
 First we need to show the variety of supported actions and triggers.
 
-(((HXML, "behavior actions")))
 ==== Actions
 
+(((HXML, "behavior actions")))
 Behavior actions in Hyperview fall into four general categories:
 
 - Navigation actions, which load new screens and move between them
@@ -795,8 +798,9 @@ Behavior actions in Hyperview fall into four general categories:
 - System actions, which interact with OS-level capabilities.
 - Custom actions, which can execute any code you add to the client.
 
-(((HXML, "navigation actions")))
 ===== Navigation actions
+
+(((HXML, "navigation actions")))
 We've already seen the simplest type of action, `push`.
 We classify `push` as a "`navigation action`", since it's related to navigating screens in the mobile app.
 Pushing a screen onto the navigation stack is just one of several navigation actions supported in Hyperview.
@@ -867,9 +871,9 @@ iOS and Android don't provide this sort of universal navigation for native mobil
 It's on the app developers to handle this themselves.
 Navigation actions in HXML provide an easy but powerful way for developers to build an architecture that makes sense for their app.
 
-(((HXML, "update actions")))
 ===== Update actions
 
+(((HXML, "update actions")))
 Behavior actions are not just limited to navigating between screens.
 They can also be used to change the content on the current screen.
 We call these "`update actions`".
@@ -1055,9 +1059,9 @@ We won't cover them in detail, but I'll mention them briefly here:
 - `set-value`: this action can set the value of an input element such as `<text-field>`, `<switch>`, `<select-single>`, etc.
 - `select-all` and `unselect-all` work with the `<select-multiple>` element to select/deselect all options.
 
-(((Hyperview, "system actions")))
 ===== System actions
 
+(((Hyperview, "system actions")))
 Some standard Hyperview actions don't interact with the HXML at all.
 Instead, they expose functionality provided by the mobile OS.
 For example, both Android and iOS support a system-level "`Share`" UI.
@@ -1132,9 +1136,9 @@ We could even open a share sheet, or a second dialog box.
 But please don't do that in a real app!
 With great power comes great responsibility.
 
-(((Hyperview, "custom actions")))
 ===== Custom actions
 
+(((Hyperview, "custom actions")))
 You can build a lot of mobile UIs with Hyperview's standard navigation, update, and system actions.
 But the standard set may not cover all interactions you will need for your mobile app.
 Luckily, the action system is extensible.
@@ -1144,12 +1148,13 @@ Custom actions also have full access to the HXML of the current screen, so they 
 In the next chapter, we will create a custom behavior action to enhance our mobile contacts app.
 
 
-(((Hyperview, triggers)))
 ==== Triggers
 
+(((Hyperview, triggers)))
 We've already seen the simplest type of trigger, a `press` on an element. Hyperview supports many other common triggers used in mobile apps.
 
 ===== Long-press
+
 Closely related to a press is a long-press.
 A behavior with `trigger="longPress"` will trigger when the user presses and holds on the element.
 "`Long-press`" interactions are often used for shortcuts and power features.
@@ -1175,6 +1180,7 @@ A better UX would be for the long-press to bring up a contextual menu of shortcu
 This could be achieved by using `action="alert"` and opening a system dialog box with the shortcuts.
 
 ===== Load
+
 Sometimes we want an action to trigger as soon as the screen loads.
 `trigger="load"` does exactly this.
 One use case is to quickly load a shell of the screen, and then fill in the main content on the screen with a second update action.
@@ -1203,12 +1209,14 @@ It requests content from the `/content` path and replaces the container view wit
 
 
 ===== Visible
+
 Unlike `load`, the `visible` trigger will only execute the behavior when the element with the behavior is scrolled into the viewport on the mobile device.
 The `visible` action is commonly used to implement an infinite-scroll interaction on a `<list>` of `<item>` elements.
 The last item in the list includes a behavior with `trigger="visible"`.
 The `append` action will fetch the next page of items and append them to the list.
 
 ===== Refresh
+
 This trigger captures a "`pull to refresh`" action on `<list>` and `<view>` items.
 This interaction is associated with fetching up-to-date content from the backend.
 Thus, it's typically paired with an update or reload action to show the latest data on the screen.
@@ -1238,8 +1246,8 @@ For example, when the user types in a username and then blurs the field, a behav
 If the entered username is not unique, the response could include an error message letting the user know they need to pick a different username.
 
 
-(((HXML, "multiple behaviors")))
 ==== Using multiple behaviors
+(((HXML, "multiple behaviors")))
 Most of the examples shown above attach a single `<behavior>` to an element.
 But there's no such limitation in Hyperview; elements can define multiple behaviors.
 We already saw an example where a single element had different actions triggered on `press` and `longPress`.

@@ -52,9 +52,9 @@ simply can't provide the level of interaction that an SPA can.
 However, in addition to this more JavaScript-centric style, we want to develop a style of scripting more compatible and
 consistent with Hypermedia-Driven Applications.
 
-(((scripting, "hypermedia friendly")))
 == Scripting for Hypermedia
 
+(((scripting, "hypermedia friendly")))
 Borrowing from Roy Fielding's notion of "`constraints`" defining REST, we offer two constraints of hypermedia-friendly
 scripting.  You are scripting in an HDA-compatible manner if the following two constraints are adhered to:
 
@@ -125,9 +125,9 @@ Let's take a quick look at each of these scripting options, so we know what we a
 
 Note that, as with CSS, we are going to show you just enough of each of these options to give  a flavor of how they work and, we hope, spark your interest in looking into any of them more extensively.
 
-(((JavaScript)))
 == Vanilla JavaScript
 
+(((JavaScript)))
 [quote,Merb]
 No code is faster than no code.
 
@@ -318,9 +318,9 @@ In Contact.app we are not _concerned_ with "`structure,`" "`styling`" or "`behav
 info and presenting it to users. SoC, in the way it's formulated in web development orthodoxy, is not really an inviolate
 architectural guideline, but rather a stylistic choice that, as we can see, can even become a hindrance.
 
-((("Locality of Behavior (LoB)")))
 ==== Locality of Behavior
 
+((("Locality of Behavior (LoB)")))
 It turns out that there is a burgeoning reaction _against_ the Separation of Concerns design principle.  Consider the
 following web technologies and techniques:
 
@@ -382,9 +382,9 @@ need to make it clear that a given element is _invoking_ some code, which can be
 Keeping this in mind, it _is_ possible to improve LoB while writing JavaScript in a separate file, provided we have a
 reasonable system for structuring our JavaScript.
 
-((("RSJS guidelines")))
 === RSJS
 
+((("RSJS guidelines")))
 RSJS (the "`Reasonable System for JavaScript Structure,`" https://ricostacruz.com/rsjs/) is a set of guidelines for
 JavaScript architecture targeted at "`a typical non-SPA website.`" RSJS provides a solution to the lack of a standard code
 style for vanilla JavaScript that we mentioned earlier.
@@ -720,9 +720,9 @@ more sense to use an off-the-shelf library, such as GitHub's https://github.com/
 But, for our relatively simple use case, vanilla JavaScript does a fine job, and we got to explore ARIA and RSJS while
 implementing it.
 
-(((Alpine.js)))
 == Alpine.js
 
+(((Alpine.js)))
 OK, so that's an in-depth look at how to structure plain VanillaJS-style JavaScript.  Let's turn our attention to an
 actual JavaScript framework that enables a different approach for adding dynamic behavior to your application,
 https://alpinejs.dev[Alpine.js].
@@ -802,9 +802,9 @@ code will look like:
 
 And that's all it takes.  A simple component like a counter should be simple to code, and Alpine delivers.
 
-(((Alpine.js, "x-on:click")))
 === "`x-on:click`" vs. "`onclick`"
 
+(((Alpine.js, "x-on:click")))
 As we said, the Alpine `x-on:click` attribute (or its shorthand, the `@click` attribute) is similar to the built-in
 `onclick` attribute.   However, it has additional features that make it significantly more useful:
 
@@ -957,9 +957,9 @@ This is the key to scripting in a hypermedia-friendly manner within a Hypermedia
 So, with all of this in place, we now have a much improved experience for performing bulk actions on contacts:  less
 visual clutter and the toolbar can be extended with more options without creating bloat in the main interface of our app.
 
-((("_hyperscript")))
 == +_hyperscript+
 
+((("_hyperscript")))
 The final scripting technology we are going to look at is a bit further afield:  https://hyperscript.org[+_hyperscript+]. The authors of this book initially created +_hyperscript+ as a sibling project to htmx. We felt that JavaScript wasn't
 event-oriented enough, which made adding small scripting enhancements to htmx applications cumbersome. 
 
@@ -1276,9 +1276,9 @@ trigger the request via events.
 
 So let's take a different approach and see how that looks.
 
-((("JavaScript library", "integrate via events")))
 ==== Integrating using events
 
+((("JavaScript library", "integrate via events")))
 To clean this code up, we will pull the `Swal.fire()` code out to a custom JavaScript function we will create called
 `sweetConfirm()`.  `sweetConfirm()` will take the dialog options that are passed into the `fire()` method, as well as
 the element that is confirming an action.  The big difference here is

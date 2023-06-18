@@ -469,9 +469,10 @@ a CSS selector that points to the indicator for a given element.  The indicator 
 some sort of animated image, such as a gif or svg file, that spins or otherwise communicates visually that "`something
 is happening.`"
 
+(((hx-indicator)))
 Let's add a spinner after our search input:
 
-(((hx-indicator)))
+
 .Adding a request indicator to search
 [source, html]
 ----
@@ -712,9 +713,10 @@ there is a nice spinner indicating that something is coming.  Much better.
 Note that all we had to do was copy and paste our indicator from the active search example into the `span`.  Once again
 we see how htmx provides flexible, composable features and building blocks. Implementing a new feature is often just copy-and-paste, maybe a tweak or two, and you are done.
 
-((("lazy loading")))
+
 === But That's Not Lazy!
 
+((("lazy loading")))
 You might say "`OK, but that's not really lazy.  We are still loading the count immediately when the page is loaded,
 we are just doing it in a second request.  You aren't really waiting until the value is actually needed.`"
 
@@ -780,9 +782,9 @@ the URL, since we are going to be returning from the edit view for the contact t
 the case of this link, however, we are already on the list of contacts, so there is no need to update the URL, and
 we can omit the `hx-push-url` attribute.
 
+(((hx-delete, example)))
 Here is the code for our inline "`Delete`" link:
 
-(((hx-delete, example)))
 .The existing row actions
 [source, html]
 ----
@@ -1012,9 +1014,9 @@ faded to a 0 opacity, it will be removed.  Pretty fancy, and all done in a decla
 JavaScript required.  (Well, obviously htmx is written in JavaScript, but you know what we mean: we didn't have to write
 any JavaScript to implement the feature.)
 
-((("bulk delete")))
 == Bulk Delete
 
+((("bulk delete")))
 The final feature we are going to implement in this chapter is a "`Bulk Delete.`"  The current mechanism for deleting users
 is nice, but it would be annoying if a user wanted to delete five or ten contacts at a time, wouldn't it?  For the bulk
 delete feature, we want to add the ability to select rows via a checkbox input and delete them all in a single go by clicking

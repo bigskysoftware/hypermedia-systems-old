@@ -11,9 +11,10 @@ This will allow us to address user experience issues, such as long feedback cycl
 needing to write much, if any, JavaScript, and without creating a JSON API.  Everything will be implemented in hypermedia,
 using the core hypermedia concepts of the early web.
 
-(((htmx, installing)))
+
 == Installing Htmx
 
+(((htmx, installing)))
 The first thing we need to do is install htmx in our web application.  We are going to do this by downloading the
 source and saving it locally in our application, so we aren't dependent on any external systems.  This is known as "`vendoring`"
 the library.  We can grab the latest version of htmx by navigating our browser to `https://unpkg.com/htmx.org`, which will
@@ -45,9 +46,10 @@ in common HTML, including a `head` element that we are using here to install htm
 
 Believe it or not, that's it!  This simple script tag will make htmx's functionality available across our entire application.
 
-(((hx-boost)))
+
 == AJAX-ifying Our Application
 
+(((hx-boost)))
 To get our feet wet with htmx, the first feature we are going to take advantage of is known as "`boosting.`" This is
 a bit of a "`magic`" feature in that we don't need to do much beyond adding a single attribute, `hx-boost`, to the
 application. 
@@ -195,9 +197,10 @@ Here we have a new link to a documentation PDF that we wish to function like a r
 `hx-boost="false"` to the link and this declaration will override the `hx-boost="true"` on the parent `div`, reverting
 it to regular link behavior and, thus, allowing for the file download behavior that we want.
 
-((("progressive enhancement")))
+
 === Progressive Enhancement
 
+((("progressive enhancement")))
 A nice aspect of `hx-boost` is that it is an example of [.dfn]_progressive enhancement_:
 
 Progressive Enhancement:: A software design philosophy that aims to provide as much essential content and functionality
@@ -358,9 +361,10 @@ def contacts_delete(contact_id=0):
 
 Pretty simple, and much cleaner.
 
-(((Flask, redirect)))
+
 ==== A response code gotcha
 
+(((Flask, redirect)))
 Unfortunately, there is a problem with our updated handler: by default, in Flask the `redirect()` method responds with
 a `302 Found` HTTP Response Code.
 
@@ -499,9 +503,10 @@ With this final change we now have a pretty solid "`delete contact`" mechanism: 
 and HTTP Methods, we are confirming the deletion, and we have removed a lot of the cruft that normal HTML imposes on us,
 all while using declarative attributes in our HTML and staying firmly within the normal hypermedia model of the web.
 
-((("progressive enhancement")))
+
 === Progressive Enhancement?
 
+((("progressive enhancement")))
 As we noted earlier about this solution: it is _not_ a progressive enhancement to our web application. If
 someone has disabled JavaScript then this "`Delete Contact`" button will no longer work.  We would need to do additional
 work to keep the older form-based mechanism working in a JavaScript-disabled environment.
@@ -512,9 +517,10 @@ JavaScript. Retaining support for non-JavaScript clients requires additional wor
 is important to determine exactly how important supporting non-JavaScript clients is before you begin using htmx, or any
 other JavaScript framework, for improving your web applications.
 
-(((validation)))
+
 == Next Steps: Validating Contact Emails
 
+(((validation)))
 Let's move on to another improvement in our application. A big part of any web app is validating the data that is
 submitted to the server: ensuring emails are correctly formatted and unique, numeric values are valid, dates are
 acceptable, and so forth.

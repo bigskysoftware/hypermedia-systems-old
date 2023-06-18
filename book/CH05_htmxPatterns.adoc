@@ -846,9 +846,10 @@ need to keep a client-side and server-side model in sync with one another.
 
 A great demonstration of the power of the hypermedia architecture!
 
-(((pagination)))
+
 == Another Application Improvement: Paging
 
+(((pagination)))
 Let's move on from the contact editing page for a bit and improve the root page of the application, found
 at the `/contacts` path and rendering the `index.html` template.
 
@@ -925,9 +926,10 @@ And, with that small change, we are done: we now have a very basic paging mechan
 
 And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost` in the application.  Easy!
 
-((("click to load")))
+
 === Click To Load
 
+((("click to load")))
 This paging mechanism is fine for a basic web application, and it is used extensively on the internet.  But it has some
 drawbacks associated with it: every time you click the "`Next`" or "`Previous`" buttons you get a whole new page of contacts
 and lose any context you had on the previous page.
@@ -950,11 +952,11 @@ Let's see how we can implement this UX pattern in htmx.
 It's actually surprisingly simple: we can just take the existing "`Next`" link and repurpose it a bit using
 nothing but a few htmx attributes!
 
+(((hx-select, example)))
 We want to have a button that, when clicked, appends the rows from the next page of contacts to the current,
 exiting table, rather than re-rendering the whole table.  This can be achieved by adding a new row to our table
 that has just such a button in it:
 
-(((hx-select, example)))
 [source, html]
 .Changing to "`click to load`"
 ----
@@ -1006,9 +1008,10 @@ that htmx gives you with respect to how it processes server responses.
 
 So, four attributes, and we now have a sophisticated "`Click To Load`" UX, via htmx.
 
-((("infinite scroll")))
+
 === Infinite Scroll
 
+((("infinite scroll")))
 Another common pattern for dealing with large sets of things is known as the "`Infinite Scroll`" pattern.  In this pattern,
 as the last item of a list or table of elements is scrolled into view, more elements are loaded and appended to the list
 or table.
@@ -1024,9 +1027,10 @@ event occurs, we want to load when an element is "`revealed`" in the view portal
 As luck would have it, htmx offers a synthetic (non-standard) DOM event, `revealed` that can be used in tandem
 with the `hx-trigger` attribute, to trigger a request when, well, when an element is revealed.
 
+(((hx-select, example)))
 So let's convert our button to a span and take advantage of this event:
 
-(((hx-select, example)))
+
 [source, html]
 .Changing to "`infinite scroll`"
 ----
@@ -1060,6 +1064,8 @@ As the web was designed.
 [.design-note]
 .HTML Notes: Caution With Modals and "'Display: none'"
 ****
+(((modals)))
+((("display: none")))
 _Think twice about modals._ Modal windows have become popular, almost standard, in many web applications today.
 
 Unfortunately, modal windows do not play well with much of the infrastructure of the web and introduce client-side state that can be difficult (though not impossible) to integrate cleanly with the hypermedia-based approach.

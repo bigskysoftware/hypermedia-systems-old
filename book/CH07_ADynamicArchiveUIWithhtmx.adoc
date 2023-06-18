@@ -235,9 +235,10 @@ We get an error message right out of the box.  Why?  Ah, we are including the `a
 `index.html` template, but now the `archive_ui.html` template expects the archiver to be passed through to it, so
 it can conditionally render the correct UI.
 
+((("conditional rendering")))
 That's an easy fix: we just need to pass the archiver through when we render the `index.html` template as well:
 
-((("conditional rendering")))
+
 .Including the archiver when we render index.html
 [source, python]
 ----
@@ -259,9 +260,10 @@ Now with that done, we can load up the page.  And, sure enough, we can see the "
 When we click on it, the button is replaced with the content "`Running...`", and we can see in our development console
 on the server-side that the job is indeed getting kicked off properly.
 
-(((polling)))
+
 == Polling
 
+(((polling)))
 That's definitely progress, but we don't exactly have the best progress indicator here: just some static text telling
 the user that the process is running.
 
@@ -343,9 +345,9 @@ We will, however, use the proper https://developer.mozilla.org/en-US/docs/Web/Ac
 to make our `div`-based progress bar play well with assistive technologies.
 ****
 
+((("progress bar")))
 Let's update our progress bar to have the proper ARIA roles and values:
 
-((("progress bar")))
 .A CSS-based progress bar
 [source, html]
 ----
@@ -571,10 +573,11 @@ counterparts: it is hard to use CSS transitions without some JavaScript.
 
 But there is some good news: htmx has a way to utilize CSS transitions even when it replaces content in the DOM.
 
-(((htmx, "swap model")))
-(((htmx, settling)))
+
 === The "`Settling`" Step in Htmx
 
+(((htmx, "swap model")))
+(((htmx, settling)))
 When we discussed the htmx swap model in Chapter 4, we focused on the classes that htmx adds and removes, but we skipped
 over the process of "`settling.`" In htmx, settling involves several steps:  when htmx is
 about to replace a chunk of content, it looks through the new content and finds all elements with an `id` on it.  It then
@@ -661,9 +664,9 @@ This looks pretty similar to our other handlers, doesn't it?
 
 Sure does!  That's the idea!
 
-(((auto-download)))
 == An Alternative UX: Auto-Download
 
+(((auto-download)))
 While we prefer the current user experience for archiving contacts, there are other alternatives. Currently, a progress
 bar shows the progress of the process and, when it completes, the user is presented with a link to actually download the
 file. Another pattern that we see on the web is "auto-downloading", where the file downloads immediately without the user

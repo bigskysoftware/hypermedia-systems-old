@@ -34,6 +34,7 @@ simply reading from start to end.
 We have already mentioned the two primary hypermedia controls in HTML, anchors and forms, which allow a browser to
 present links and operations to a user through a browser.
 
+((("Uniform Resource Locator (URL)")))
 In the case of HTML, these links and forms typically specify the target of their operations using [.dfn]_Uniform Resource
 Locators (URLs)_:
 
@@ -143,8 +144,15 @@ Finally, we see some new HTML content.  This content is the HTML _representation
 case a table of contents of a book.  The browser will use this HTML to replace the entire content in its display window,
 showing the user this new page, and updating the address bar to reflect the new URL.
 
-((("HTTP methods")))
+
 ==== HTTP methods
+
+((("HTTP methods")))
+((("HTTP methods", GET)))
+((("HTTP methods", POST)))
+((("HTTP methods", PUT)))
+((("HTTP methods", PATCH)))
+((("HTTP methods", DELETE)))
 
 The anchor tag above issued an HTTP `GET`, where `GET` is the _method_ of the request.  The particular method
 being used in an HTTP request is perhaps the most important piece of information about it, after the actual resource that
@@ -152,23 +160,18 @@ the request is directed at.
 
 There are many methods available in HTTP; the ones of most practical importance to developers are the following:
 
-((("HTTP methods", GET)))
 `GET`::
   A GET request retrieves the representation of the specified resource. GET requests should not mutate data.
 
-((("HTTP methods", POST)))
 `POST`::
   A POST request submits data to the specified resource. This will often result in a mutation of state on the server.
 
-((("HTTP methods", PUT)))
 `PUT`::
   A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
 
-((("HTTP methods", PATCH)))
 `PATCH`::
   A PATCH request replaces the data of the specified resource. This results in a mutation of state on the server.
 
-((("HTTP methods", DELETE)))
 `DELETE`::
   A DELETE request deletes the specified resource. This results in a mutation of state on the server.
 
@@ -216,7 +219,7 @@ any mutation on the server, and `PUT`, `PATCH` and `DELETE` are left aside in pl
 applications.
 
 This is an obvious shortcoming of HTML as a hypermedia; it would be wonderful to see this fixed in the
-HTML specification. For now, we'll discuss ways to get around this in Chapter 4.
+HTML specification. For now, in Chapter 4, we'll discuss ways to get around this.
 
 ==== HTTP response codes
 
@@ -414,7 +417,7 @@ perspective: Section 5.1. This section contains the core concepts (Fielding call
 State Transfer, or REST.
 
 Before we get into the muck, however, it is important to understand that Fielding discusses REST as a _network architecture_,
-that is, as an entirely different way of architecting a distributed system.  And, further, as a novel network
+that is, as an entirely different way to architect a distributed system.  And, further, as a novel network
 architecture that should be _contrasted_ with earlier approaches to distributed systems.
 
 It is also important to emphasize that, at the time Fielding wrote his dissertation, JSON APIs and AJAX did not exist.
@@ -427,10 +430,10 @@ RESTful, in the original sense, and, in fact, _can't_ be RESTful, since they are
 To re-emphasize: REST, as coined by Fielding, describes _the pre-API web_, and letting go of the current, common
 usage of the term REST to simply mean "`a JSON API`" is necessary to develop a proper understanding of the idea.
 
-(((REST, constraints)))
 === The "`Constraints`" of REST
 
 ((("Fielding, Roy")))
+(((REST, constraints)))
 In his dissertation, Fielding defines various "`constraints`" to describe how a RESTful system must behave.  This approach
 can feel a little round-about and difficult to follow for many people, but it is an appropriate approach for an academic
 document.  Given a bit of time thinking about the constraints he outlines and some concrete examples of those

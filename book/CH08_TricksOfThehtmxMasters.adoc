@@ -168,7 +168,7 @@ Here are the other modifiers available on `hx-trigger`:
 
 ==== Trigger filters
 
-(((hx-trigger, filters)))
+(((hx-trigger, event filters)))
 The `hx-trigger` attribute also allows you to specify a _filter_ for events by using square brackets enclosing a
 JavaScript expression after the event name.
 

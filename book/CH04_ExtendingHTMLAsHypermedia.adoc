@@ -39,6 +39,7 @@ needing to replace (and re-render) the entire page.
 
 .The DOM
 ****
+((("Document Object Model (DOM)")))
 The DOM is the internal model that a browser builds up when it processes HTML, forming a tree of "`nodes`" for
 the tags and other content in the HTML.  The DOM provides a programmatic JavaScript API that allows you to update the nodes
 in a page directly, without the use of hypermedia.  Using this API, JavaScript code can insert new content, or remove or
@@ -74,6 +75,8 @@ hyperlink/anchor tag from Chapter 1.  Recall, a hyperlink is what is known as a 
 describes some sort of interaction with a server by encoding information about that interaction directly and completely
 within the control itself.
 
+(((hyperlink)))
+(((anchor tag)))
 Consider again this simple anchor tag which, when interpreted by a browser, creates a hyperlink to the website for
 this book:
 
@@ -121,6 +124,8 @@ HTML could be extended to allow _any_ element to issue a request to the server a
 
 Next, let's consider the event that triggers the request to the server on our link: a click event.
 
+(((events, click)))
+(((events, submit)))
 Well, what's so special about clicking (in the case of anchors) or submitting (in the case of forms) things?  Those are
 just two of many, many events that are fired by the DOM, after all.  Events like mouse down, or key up, or blur are all
 events you might want to use to issue an HTTP request.
@@ -137,6 +142,7 @@ HTML could be extended to allow _any_ event -- not just a click, as in the case 
 
 === Why Only GET & POST?
 
+(((HTTP methods)))
 Getting a bit more technical in our thinking leads us to the problem we noted earlier: plain HTML only
 give us access to the `GET` and `POST` actions of HTTP.
 
@@ -166,7 +172,9 @@ HTML could be extended so that it allows access to the missing three HTTP method
 
 === Why Only Replace The Entire Screen?
 
-As a final observation, consider the last aspect of a hyperlink: it replaces  the _entire_ screen when a user clicks on it.
+(((transclusion)))
+(((DOM, partial updates)))
+As a final observation, consider the last aspect of a hyperlink: it replaces the _entire_ screen when a user clicks on it.
 
 It turns out that this technical detail is the primary culprit for poor user experience in Web 1.0 Applications.
 A full page refresh can cause a flash of unstyled content, where content "jumps" on the screen as it transitions from
@@ -196,6 +204,7 @@ in a way that is _entirely within_ the hypermedia model of the web. The fundamen
 and so on, won't be changed dramatically.  Rather, these generalizations of _existing functionality_ already found within
 HTML would simply let us accomplish _more_ using HTML.
 
+(((htmx, about)))
 Htmx is a JavaScript library that extends HTML in exactly this manner, and it will be the focus of the next few chapters
 of this book.  Again, htmx is not the only JavaScript library that takes this hypermedia-oriented approach (other excellent
 examples are https://unpoly.com[Unpoly] and https://hotwire.dev[Hotwire]), but htmx is the purest in
@@ -206,6 +215,7 @@ its pursuit of extending HTML as a hypermedia.
 From a practical "`getting started`" perspective, htmx is a simple, dependency-free and stand-alone JavaScript library that
 can be added to a web application by simply including it via a `script` tag in your `head` element.
 
+(((htmx, installing)))
 Because of this simple installation model, you can take advantage of tools like public CDNs to install the library.
 
 Below is an example using the popular https://unpkg.com[unpkg] Content Delivery Network (CDN) to install version `1.9.2`
@@ -242,6 +252,7 @@ Once htmx has been installed, you can begin using it immediately.
 
 And here we get to the interesting part of htmx: htmx does not require you, the user of htmx, to actually write any JavaScript.
 
+(((htmx, attributes)))
 Instead, you will use _attributes_ placed directly on elements in your HTML to drive more dynamic behavior.  Htmx extends
 HTML as a hypermedia, and it is designed to make that extension feel as natural and consistent as possible with existing
 HTML concepts.  Just as an anchor tag uses an `href` attribute to specify the URL to retrieve, and forms use an `action`
@@ -291,6 +302,7 @@ Very easy to understand and very consistent with the rest of HTML.
 
 === It's All Just HTML
 
+(((htmx, HTML based)))
 With the request issued by the button above, we get to perhaps the most important thing to understand about htmx:
 it expects the response to this AJAX request _to be HTML_.  Htmx is an extension of HTML.  A native hypermedia control
 like an anchor tag will typically get an HTML response to an HTTP request it creates.  Similarly, htmx expects the server to
@@ -308,6 +320,8 @@ Htmx simply goes another direction and expects HTML.
 There is an important difference between the HTTP responses to "`normal`" anchor or form driven HTTP requests and to
 htmx-powered requests: in the case of htmx triggered requests, responses can be _partial_ bits of HTML.
 
+(((htmx, transclusion)))
+(((htmx, partial updates)))
 In htmx-powered interactions, as you will see, we are often not replacing the entire document.  Rather we are using
 "`transclusion`" to include content _within_ an existing document.  Because of this, it is often not necessary or desirable
 to transfer an entire HTML document from the server to the browser.
@@ -545,7 +559,7 @@ Let's try something a bit more realistic and potentially useful: let's add suppo
 loading the contacts, `Ctrl-L` (for "`Load`").  To do this we will need to take advantage of additional syntax that
 the `hx-trigger` attribute supports: event filters and additional arguments.
 
-((("event filter", about)))
+(((hx-trigger, event filters)))
 Event filters are a mechanism for determining if a given event should trigger a request or not.  They are applied to an
 event by adding square brackets after it: `someEvent[someFilter]`.  The filter itself is a JavaScript expression that
 will be evaluated when the given event occurs.  If the result is truthy, in the JavaScript sense, it will trigger the
@@ -568,7 +582,7 @@ In the case of keyboard shortcuts, we want to catch the `keyup` event in additio
 ----
 <1> A trigger with two events.
 
-(((events, multiple)))
+(((hx-trigger, multiple events)))
 Note that we have a comma separated list of events that can trigger this element, allowing us to respond to more than
 one potential triggering event.  We still want to respond to the `click` event and load the contacts, in addition
 to handling the `Ctrl-L` keyboard shortcut.
@@ -608,14 +622,14 @@ If you are not familiar with the JavaScript event bubbling model: events typical
 event like `keyup` will be triggered first on the focused element, and then on its parent (enclosing) element, and so
 on, until it reaches the top level `document` object that is the root of all other elements.
 
-(((hx-trigger, from:)))
+(((hx-trigger, "from:")))
 ((("keyboard shortcut")))
 To support a global keyboard shortcut that works regardless of what element has focus, we will take advantage of
 event bubbling and a feature that the `hx-trigger` attribute supports: the ability to listen to _other elements_ for
 events.  The syntax for doing this is the `from:` modifier, which is added after an event name and that allows you to
 specify a specific element to listen for the given event on using a CSS selector.
 
-(((event, listener)))
+(((events, listener)))
 In this case, we want to listen to the `body` element, which is the parent element of all visible elements on the page.
 
 Here is what our updated `hx-trigger` attribute looks like:
@@ -659,6 +673,7 @@ That's a grand total of eight, count 'em, _eight_ attributes that all fall squar
 normal HTML and that, by extending HTML as a hypermedia, open up a whole new world of user interaction possibilities
 within it.
 
+(((HTML, opportunities)))
 Here is a table summarizing those opportunities and which htmx attributes address them:
 
 .Opportunities for improving HTML
@@ -718,6 +733,7 @@ Let's take our original button for retrieving contacts and repurpose it for sear
 Here we have added a form tag surrounding the button along with a search input that can be used to enter a term to
 search contacts.
 
+(((htmx, form values)))
 Now, when a user clicks on the button, the value of the input with the id `search` will be included in the request.  This
 is by virtue of the fact that there is a form tag enclosing both the button and the input: when an htmx-driven request
 is triggered, htmx will look up the DOM hierarchy for an enclosing form, and, if one is found, it will include all
@@ -733,6 +749,7 @@ uses a `GET` by using the `hx-include` attribute, discussed next.
 
 === Including Inputs
 
+(((form tag, in tables)))
 While enclosing all the inputs you want included in a request is the most common approach for inputs
 in htmx requests, it isn't always possible or desirable: form tags can have layout consequences and simply cannot be
 placed in some spots in HTML documents.  A good example of the latter situation is in table row (`tr`) elements: the
@@ -805,9 +822,11 @@ A final way to include values in htmx-driven requests is to use the `hx-vals` at
 requests, but you don't want to have this information embedded in, for example, hidden inputs (which would be the
 standard mechanism for including additional, hidden information in HTML.)
 
+(((hx-vals, example)))
+(((hx-vals, JSON)))
+(((query parameters)))
 Here is an example of `hx-vals`:
 
-(((hx-vals, example)))
 .An htmx-powered button with `hx-vals`
 [source,html]
 ----
@@ -899,6 +918,7 @@ Now, when the button is clicked, the `/contacts` path will be put into the brows
 will be created for it.  Furthermore, if the user clicks the back button, the original content for the page will be
 restored, along with the original URL.
 
+(((htmx, browser history)))
 Now, the name `hx-push-url` for this attribute might sound a little obscure, but it is based on the JavaScript API,
 `history.pushState()`.  This notion of "`pushing`" derives from the fact that history entries are modeled as a stack, and
 so you are "`pushing`" new entries onto the top of the stack of history entries.

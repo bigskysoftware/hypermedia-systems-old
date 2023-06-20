@@ -162,6 +162,7 @@ Now, if you navigate to the root path, `/`, our Flask application will forward y
 
 == Contact.app Functionality
 
+(((Contact.app, specs)))
 Now that we have some understanding of how to define routes, let's get down to specifying and then implementing
 our web application.
 
@@ -218,6 +219,7 @@ def contacts():
 <3> If not, call the `Contact.all()` function.
 <4> Pass the result to the `index.html` template to render to the client.
 
+(((query strings)))
 We see the same sort of routing code we saw in our first example, but we have a more elaborate handler function.
 First, we check to see if a search query parameter named `q` is part of the request.
 
@@ -240,6 +242,7 @@ of these two functions we end up calling.
 The `Contact` Python class we're using is the "`domain
 model`" or just "`model`" class for our application, providing the "`business logic`" around the management of Contacts.
 
+(((Contact.app, model)))
 It could be working with a database (it isn't) or a simple flat file (it is), but we're going skip over the internal details of the model. Think of it as a "`normal`" domain model class, with methods on it that act in a "`normal`" manner.
 
 We will treat `Contact` as a _resource_, and focus on how to effectively provide hypermedia representations
@@ -309,6 +312,7 @@ current results match, rather than having a blank text box at the top of the scr
 Finally, we have a submit-type input.  This will render as a button and, when it is clicked, it will trigger the
 form to issue an HTTP request.
 
+(((Contact.app, table)))
 This search interface forms the top of our contact page.  Following it is a table of contacts, either all contacts or the
 contacts that match the search, if a search was done.
 

@@ -842,6 +842,7 @@ By using these elements, a page can make false promises, like `<article>` elemen
 * Don't try to be specific when you can't or don't need to.
   Sometimes, `<div>` is fine.
 
+(((HTML, spec)))
 The most authoritative resource for learning about HTML is the HTML specification.
 The current specification lives on link:https://html.spec.whatwg.org/multipage[].footnote:[
 The single-page version is too slow to load and render on most computers. 

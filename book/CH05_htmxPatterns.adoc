@@ -50,6 +50,7 @@ Believe it or not, that's it!  This simple script tag will make htmx's functiona
 == AJAX-ifying Our Application
 
 (((hx-boost)))
+(((htmx patterns, boosting)))
 To get our feet wet with htmx, the first feature we are going to take advantage of is known as "`boosting.`" This is
 a bit of a "`magic`" feature in that we don't need to do much beyond adding a single attribute, `hx-boost`, to the
 application. 
@@ -118,6 +119,7 @@ Here is an example of a form that posts messages to the `/messages` endpoint usi
 ----
 <1> As with the link, `hx-boost` makes this form AJAX-powered.
 
+((("Flash of Unstyled Content (FOUC)")))
 A big advantage of the AJAX-based request that `hx-boost` uses (and the lack of head processing that occurs) is that it
 avoids what is known as a [.dfn]_flash of unstyled content_:
 
@@ -193,6 +195,7 @@ anchor tag that you don't want to boost:
 <1> The `hx-boost` is still on the parent div.
 <2> The boosting behavior is overridden for this link.
 
+(((hx-boost, disabling)))
 Here we have a new link to a documentation PDF that we wish to function like a regular link.  We have added
 `hx-boost="false"` to the link and this declaration will override the `hx-boost="true"` on the parent `div`, reverting
 it to regular link behavior and, thus, allowing for the file download behavior that we want.
@@ -308,6 +311,7 @@ Let's update our application to do this by adding the htmx `hx-delete` attribute
 Now, when a user clicks this button, htmx will issue an HTTP `DELETE` request via AJAX to the URL for the contact
 in question.
 
+(((htmx patterns, delete)))
 A couple of things to notice:
 
 * We no longer need a `form` tag to wrap the button, because the button itself carries the hypermedia action that
@@ -407,6 +411,7 @@ This is a natural HTTP-based approach to deleting a resource.
 
 === Targeting The Right Element
 
+(((hx-target, example)))
 We aren't quite finished with our updated delete button.  Recall that, by default, htmx "`targets`" the element
 that triggers a request, and will place the HTML returned by the server inside that element.  Right now, the "`Delete Contact`"
 button is targeting itself.
@@ -437,6 +442,7 @@ Is everything working smoothly now?
 
 Well, almost.
 
+(((htmx, location bar)))
 If you click on the button you will notice that, despite the redirect, the URL in the location bar is
 not correct.  It still points to `/contacts/{{ contact.id }}`.  That's because we haven't told htmx to update
 the URL: it just issues the `DELETE` request and then updates the DOM with the response.
@@ -472,6 +478,7 @@ the built-in features of the web as a hypermedia system without any URL hacks.
 === One More Thing...
 
 (((hx-confirm)))
+(((htmx patterns, confirmation dialog)))
 There is one additional "`bonus`" feature we can add to our "`Delete Contact`" button: a confirmation dialog.  Deleting
 a contact is a destructive operation and as it stands right now, if the user inadvertently clicked the "`Delete Contact`"
 button, the application would just delete that contact.  Too bad, so sad for the user.
@@ -597,6 +604,7 @@ However, as the application currently stands, there are two annoyances.
 
 === Updating Our Input Type
 
+(((HTML, inputs)))
 For the first issue, we have a pure HTML mechanism for improving our application: HTML 5 supports inputs of
 type `email`.  All we need to do is switch our input from type `text` to type `email`, and the browser will
 enforce that the value entered properly matches the email format:
@@ -620,6 +628,7 @@ we noted.
 
 .Server-Side vs. Client-Side Validations
 ****
+(((validation, server-side vs. client-side)))
 Experienced web developers might be grinding their teeth at the code above: this validation
 is done on _the client-side_.  That is, we are relying on the browser to detect the malformed
 email and correct the user.  Unfortunately, the client-side is not trustworthy: a browser may have a
@@ -633,6 +642,7 @@ Hypermedia-Driven Applications than in Single Page Applications, because the foc
 
 === Inline Validation
 
+(((htmx patterns, inline validation)))
 While we have improved our validation experience a bit, the user must still submit the form to get any feedback
 on duplicate emails.  We can next use htmx to improve this user experience.
 
@@ -758,7 +768,9 @@ Well, no.
 It turns out that you can implement this functionality in htmx, using pure HTML attributes.
 
 ((hx-trigger, change))
+((hx-trigger, keyup))
 (((event, change)))
+(((event, keyup)))
 In fact, all we need to do is to change our trigger.  Currently, we are using the default trigger for inputs, which is the
 `change` event.  To validate as the user types, we would want to capture the `keyup` event as well:
 
@@ -855,7 +867,7 @@ A great demonstration of the power of the hypermedia architecture!
 
 == Another Application Improvement: Paging
 
-(((pagination)))
+(((htmx patterns, pagination)))
 Let's move on from the contact editing page for a bit and improve the root page of the application, found
 at the `/contacts` path and rendering the `index.html` template.
 
@@ -935,7 +947,7 @@ And, believe it or not, it is already using AJAX, thanks to our use of `hx-boost
 
 === Click To Load
 
-((("click to load")))
+(((htmx patterns, click to load)))
 This paging mechanism is fine for a basic web application, and it is used extensively on the internet.  But it has some
 drawbacks associated with it: every time you click the "`Next`" or "`Previous`" buttons you get a whole new page of contacts
 and lose any context you had on the previous page.
@@ -1017,7 +1029,7 @@ So, four attributes, and we now have a sophisticated "`Click To Load`" UX, via h
 
 === Infinite Scroll
 
-((("infinite scroll")))
+(((htmx patterns, infinite scroll)))
 Another common pattern for dealing with large sets of things is known as the "`Infinite Scroll`" pattern.  In this pattern,
 as the last item of a list or table of elements is scrolled into view, more elements are loaded and appended to the list
 or table.

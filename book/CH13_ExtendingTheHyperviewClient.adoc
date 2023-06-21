@@ -720,8 +720,8 @@ And importantly, this evolution preserves the Hypermedia, server-driven architec
 That concludes our build of mobile Contact.app.
 Step back from the code details and consider the broader pattern:
 
-- The core logic of the app resides on the server
-- Server-rendered templates power both the web and mobile apps
+- The core logic of the app resides on the server.
+- Server-rendered templates power both the web and mobile apps.
 - Platform customizations are done through scripting on the web, and client customization on mobile.
 
 The Hypermedia-Driven Application architecture allowed for significant code reuse and a manageable tech stack.

@@ -845,10 +845,9 @@ Events are built into the behavior system, and allow lightweight communication b
 .Event Behaviors
 ****
 Events are a client-side feature of Hyperview.
-Earlier chapter discussed events while working with HTML, _hyperscript and the DOM.
+In <<client-side-scripting>>, we discussed events while working with HTML, _hyperscript and the DOM.
 DOM Elements will dispatch events as a result of user interactions.
 Scripts can listen for these events, and respond to them by running arbitrary JavaScript code.
-We saw some examples of <<_hyperscript in action>> in chapter 9.  
 
 Events in Hyperview are a good deal simpler, but they don't require any scripting and can be defined declaratively in the HXML.
 This is done through the behavior system.

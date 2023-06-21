@@ -715,7 +715,7 @@ Extensions evolve the client from being a generic "`Hyperview client,`" to being
 And importantly, this evolution preserves the Hypermedia, server-driven architecture and all of its benefits.
 
 
-=== Mobile Hypermedia-Driven Applications
+== Mobile Hypermedia-Driven Applications
 
 That concludes our build of mobile Contact.app.
 Step back from the code details and consider the broader pattern:

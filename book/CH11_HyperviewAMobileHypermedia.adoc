@@ -1299,11 +1299,12 @@ For now, we hope you come away with a few key takeaways.
 First, HXML looks and feels similar to HTML.
 Web developers comfortable with server-side rendering frameworks can use the same techniques to write HXML.
 In addition to basic UI elements (`<view>`, `<text>`, `<image>`), HXML specifies elements to implement mobile-specific UIs.
-This includes layout patterns (`<screen>`, `<list>`, `<section-list>`) and input elements (`<switch>`, `<select-single>`,x `<select-multiple>`).
+This includes layout patterns (`<screen>`, `<list>`, `<section-list>`) and input elements (`<switch>`, `<select-single>`, `<select-multiple>`).
 
 Second, interactions in HXML are defined using behaviors.
 Inspired by htmx, `<behavior>` elements decouple user interactions (triggers) from the resulting actions.
 There are three broad categories of behavior actions:
+
 - Navigation actions (`push`, `back`) enable navigating between the screens of a mobile app
 - Update actions (`replace`, `append`) enable updating a screen with new fragments of HXML requested from the server.
 - System actions (`alert`, `share`) enable interacting with system-level functionality on iOS and Android.

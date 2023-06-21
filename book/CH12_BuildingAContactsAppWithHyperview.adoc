@@ -845,11 +845,10 @@ Events are built into the behavior system, and allow lightweight communication b
 .Event Behaviors
 ****
 Events are a client-side feature of Hyperview.
-Earlier chapter discussed events while working with HTML, htmx and the DOM.
+Earlier chapter discussed events while working with HTML, _hyperscript and the DOM.
 DOM Elements will dispatch events as a result of user interactions.
 Scripts can listen for these events, and respond to them by running arbitrary JavaScript code.
-We saw some examples in chapter 9.  
-// TODO astep: optional, add link to an example
+We saw some examples of <<_hyperscript in action>> in chapter 9.  
 
 Events in Hyperview are a good deal simpler, but they don't require any scripting and can be defined declaratively in the HXML.
 This is done through the behavior system.
@@ -1117,7 +1116,6 @@ Any time you make a change in the HXML, just reload the screen to see the UI upd
 So we have the app running on a physical device, but it's still not production ready.
 To get the app into the hands of our users, there's a few things we need to do:
 
-// TODO astep: optional mention UI, presentation in this list (e.g. styling, etc)?
 1. Deploy our backend in production.
 We need to use a production-grade web server like Gunicorn instead of the Flask development server.
 And we should run our app on a machine reachable on the Internet, most likely using a cloud provider like AWS or Heroku.

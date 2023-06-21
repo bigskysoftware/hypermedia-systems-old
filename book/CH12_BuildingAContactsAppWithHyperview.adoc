@@ -1315,20 +1315,15 @@ The dynamic archive UI is a power feature that wouldn't make sense on a mobile d
 Since our HXML templates don't expose any entry points to the Archive functionality, we can treat it as "`web-only`" and not worry about supporting it in Hyperview.
 
 
-.Summary
-****
-- It is possible to create a Hyperview-powered mobile app by cloning a Git repo and configuring a single entry point URL.
-- Flask is perfectly suited for serving a Hyperview mobile app. The Jinja templating system can generate dynamic HXML based on the context from a view.
-- Using elements like `<view>`, `<text>`, `<list>`, and `<item>`, we can create native-feeling screens in HXML.
-- Using behaviors, we can implement interactions on the contacts list such as infinite scroll, search-as-you-type, and pull-to-refresh.
-- Events are a client-side feature of Hyperview that allows triggering behaviors across screens. They are useful to keep state in sync throughout the app, such as after editing or deleting a contact.
-- A Hyperview-powered mobile app can be bundled and released through the iOS and Android app stores. New screens and features can be added to the app just by updating the backend!
-- The same Flask backend can support both web and mobile apps. Using HTTP content negotiation, a server can render either HTML or HXML responses from the same view. More complex apps may require the use of redirects and platform-specific views.
-****
+== Contact.app, in Hyperview
 
-We've covered a lot of ground in this chapter. Take a breath and take stock of how far we've come: we ported the core functionality of the Contact.app web application to mobile. And we did it by re-using much of our Flask backend and while sticking with Jinja templating. We again saw the utility of events for connecting different aspects of an application. 
+We've covered a lot of ground in this chapter.
+Take a breath and take stock of how far we've come: we ported the core functionality of the Contact.app web application to mobile.
+And we did it by re-using much of our Flask backend and while sticking with Jinja templating.
+We again saw the utility of events for connecting different aspects of an application. 
 
-We're not done yet. In the next chapter we'll implement custom behaviors and UI elements to finish our mobile Contact.app.
+We're not done yet.
+In the next chapter we'll implement custom behaviors and UI elements to finish our mobile Contact.app.
 
 
 

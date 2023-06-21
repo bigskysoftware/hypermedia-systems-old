@@ -715,24 +715,20 @@ Extensions evolve the client from being a generic "`Hyperview client,`" to being
 And importantly, this evolution preserves the Hypermedia, server-driven architecture and all of its benefits.
 
 
-.Summary
-****
-- With custom components and behaviors, Hyperview apps can do anything a native app can do.
-- Support for system actions (like SMS and email) can be added with a Hyperview behavior action.
-- Support for high-level UIs (like confirmation messages) can also be added with a Hyperview behavior action.
-- Support for customized screen elements (like swipeable items in lists) can be added with Hyperview custom components.
-- The standard behaviors and components that come with the Hyperview client are implemented the same way as custom behavior actions and components.
-- By customizing the Hyperview client, developers can build a mobile app that suits their specific needs while retaining the benefits of a thin-client, hypermedia architecture.
-****
-
-
-//TODO astep: wt wrote a basic conclusion here, is it okay? add more?
 === Mobile Hypermedia-Driven Applications
 
-That concludes our build of mobile Contact.app. Step back from the code details and consider the broader pattern: the Hypermedia-Driven Application architecture allowed for signicant code reuse, and led to a manageable stack for ongoing app updates and maintenance for both web and mobile. 
+That concludes our build of mobile Contact.app.
+Step back from the code details and consider the broader pattern:
+
+- The core logic of the app resides on the server
+- Server-rendered templates power both the web and mobile apps
+- Platform customizations are done through scripting on the web, and client customization on mobile.
+
+The Hypermedia-Driven Application architecture allowed for significant code reuse and a manageable tech stack.
+Ongoing app updates and maintenance for both web and mobile can be done at the same time.
+
 
 Yes, there is a story for Hypermedia-Driven Applications on mobile.
-
 
 
 [.design-note]

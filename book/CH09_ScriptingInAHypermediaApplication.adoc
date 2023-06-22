@@ -482,9 +482,9 @@ Here is what our updated, RSJS-structured HTML looks like:
 
 The roles and ARIA attributes are based on the Menu and Menu Button patterns from the ARIA Authoring Practices Guide.
 
-(((ARIA)))
 .What is ARIA?
 ****
+(((ARIA)))
 As we web developers create more interactive, app-like websites, HTML's repertoire of elements won't have all we need.
 As we have seen, using CSS and JavaScript, we can endow existing elements with extended behavior and appearances, rivaling
 those of native controls.
@@ -1115,25 +1115,26 @@ at some level, you are right: JavaScript is a decent scripting language, is very
 in web development.  On the other hand, by creating an entirely new front end scripting language, we had the freedom
 to address some problems that we saw generating ugly and verbose code in JavaScript:
 
+Async transparency:: 
 ((("_hyperscript", "async transparency")))
-Async transparency:: In +_hyperscript+, asynchronous functions (i.e., functions that return `Promise` instances) can be
+In +_hyperscript+, asynchronous functions (i.e., functions that return `Promise` instances) can be
 invoked _as if they were synchronous_. Changing a function from sync to async does not break any +_hyperscript+ code that
 calls it.  This is achieved by checking for a Promise when evaluating any expression, and suspending the running script
 if one exists (only the current event handler is suspended and the main thread is not blocked). JavaScript, instead, requires
 either the explicit use of callbacks _or_ the use of explicit `async` annotations (which can't be mixed with synchronous
 code).
 
-((("_hyperscript", "array property access")))
-Array property access:: In +_hyperscript+, accessing a property on an array (other than `length` or a number) will return
+Array property access:: ((("_hyperscript", "array property access")))
+In +_hyperscript+, accessing a property on an array (other than `length` or a number) will return
 an array of the values of property on each member of that array, making array property access act like a flat-map operation.
 jQuery has a similar feature, but only for its own data structure.
 
-((("_hyperscript", "CSS syntax")))
-Native CSS Syntax:: In +_hyperscript+, you can use things like CSS class and ID literals, or CSS query literals, directly
+Native CSS Syntax:: ((("_hyperscript", "CSS syntax")))
+In +_hyperscript+, you can use things like CSS class and ID literals, or CSS query literals, directly
 in the language, rather than needing to call out to a wordy DOM API, as you do in JavaScript.
 
-((("_hyperscript", "event support")))
-Deep Event Support:: Working with events in +_hyperscript+ is far more pleasant than working with them in JavaScript, with
+Deep Event Support:: ((("_hyperscript", "event support")))
+Working with events in +_hyperscript+ is far more pleasant than working with them in JavaScript, with
 native support for responding to and sending events, as well as for common event-handling patterns such as "`debouncing`"
 or rate limiting events.  +_hyperscript+ also provides declarative mechanisms for synchronizing events within a given element
 and across multiple elements.
@@ -1169,6 +1170,7 @@ widget demands something different.  A shame!
 Web Components is the collective name of a few standards;
 Custom Elements and Shadow DOM, and `<template>` and `<slot>`.
 
+(((Web Components)))
 All of these standards bring useful capabilities to the table.
 `<template>` elements remove their contents from the document, while still parsing them as HTML (unlike comments) and making them accessible to JavaScript.
 Custom Elements let us initialize and tear down behaviors when elements are added or removed, which would previously require manual work or MutationObservers.
@@ -1328,6 +1330,7 @@ Here is what our code looks like:
 <2> We pass the button in to the function, so an event can be triggered on it.
 <3> We pass through the SweetAlert2 configuration information.
 
+(((htmx patterns, wrapping to emit events)))
 As you can see, this event-based code is much cleaner and certainly more "`HTML-ish.`" The key to this cleaner
 implementation is that our new `sweetConfirm()` function fires an event that htmx is able to listen for.
 

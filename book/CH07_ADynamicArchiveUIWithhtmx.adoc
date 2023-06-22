@@ -156,7 +156,7 @@ With that done, we now have a button showing up in our web application to get th
 `div` has an `hx-target="this"` on it, the button will inherit that target and replace that enclosing `div` with whatever HTML
 comes back from the `POST` to `/contacts/archive`.
 
-=== Adding the Archiving End Point
+=== Adding the Archiving Endpoint
 
 Our next step is to handle the `POST` that our button is making.  We want to get the
 `Archiver` for the current user and invoke the `run()` method on it.  This will start the archive process running.  Then

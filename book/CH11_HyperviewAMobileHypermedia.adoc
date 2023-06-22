@@ -472,7 +472,6 @@ There's a lot to cover about inputs in Hyperview.
 Since this is meant to be an introduction and not an exhaustive resource, I'll highlight just a few types of inputs.
 Let's start with an example of the simplest type of input, a text field.
 
-(((HXML, "<text-field>")))
 .Text field element
 [source,xml]
 ----
@@ -488,6 +487,7 @@ Let's start with an example of the simplest type of input, a text field.
 <3> The current value set in the field
 <4> A placeholder to display when the value is empty
 
+(((HXML, "<text-field>")))
 This element should feel familiar to anyone who's created a text field in HTML.
 One difference is that most inputs in HTML use the `<input>` element with a `type` attribute, eg `<input type="text">`.
 In Hyperview, each input has a unique name, in this case `<text-field>`.
@@ -503,7 +503,6 @@ Also, unlike radio buttons on desktop, mobile OSes don't provide a strong standa
 Most mobile apps use richer, custom UIs for these interactions.
 So in HXML, we implement this UI using an element called `<select-single>`:
 
-(((HXML, "<select-single>")))
 .Select-single element
 [source,xml]
 ----
@@ -520,6 +519,7 @@ So in HXML, we implement this UI using an element called `<select-single>`:
 <2> Element representing one of the choices. The choice value is defined here.
 <3> The UI of the selection. In this example, we use text, but we can use any UI elements.
 
+(((HXML, "<select-single>")))
 The `<select-single>` element is the parent of the input for selecting one choice out of many.
 This element contains the `name` attribute used when serializing the selected choice.
 `<option>` elements within `<select-single>` represent the available choices.
@@ -805,7 +805,7 @@ We've already seen the simplest type of action, `push`.
 We classify `push` as a "`navigation action`", since it's related to navigating screens in the mobile app.
 Pushing a screen onto the navigation stack is just one of several navigation actions supported in Hyperview.
 Users also need to be able to go back to previous screens, open and close modals, switch between tabs, or jump to arbitrary screens.
-Each of these types of navigations is supported through a different value for the `action` attribute:
+Each of these types of navigation is supported through a different value for the `action` attribute:
 
 - `push`: Push a new screen into the current navigation stack. This looks like a screen sliding in from the right, on top of the current screen.
 - `new`: Open a new navigation stack as a modal. This looks like a screen sliding in from the bottom, on top of the current screen.

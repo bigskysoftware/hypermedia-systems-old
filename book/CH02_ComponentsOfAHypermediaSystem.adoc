@@ -640,7 +640,7 @@ application state.`" This is sometimes abbreviated as "`HATEOAS`", although Fiel
 "`the hypermedia constraint`" when discussing it.
 
 This constraint is closely related to the previous self-describing message constraint.  Let us consider again the two different
-implementations of the end point `/contacts/42`, one returning HTML and one returning JSON.  Let's update the situation
+implementations of the endpoint `/contacts/42`, one returning HTML and one returning JSON.  Let's update the situation
 such that the contact identified by this URL has now been archived.
 
 What do our responses look like?

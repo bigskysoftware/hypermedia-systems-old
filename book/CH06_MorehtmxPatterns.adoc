@@ -633,7 +633,7 @@ def contacts_count():
 <4> Return the string with the total number of contacts.
 
 So now we have moved the performance issue out of the `/contacts` handler code, which renders the main contacts table,
-and created a new HTTP end point that will produce this expensive-to-create count string for us.
+and created a new HTTP endpoint that will produce this expensive-to-create count string for us.
 
 Now we need to get the content from this new handler _into_ the span, somehow.  As we said earlier, the default behavior
 of htmx is to place any content it receives for a given request into the `innerHTML` of an element, and that turns out

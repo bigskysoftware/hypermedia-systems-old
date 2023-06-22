@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="111.313mm"
+   height="96.026489mm"
+   viewBox="0 0 111.313 96.026489"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="one-server-many-clients.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.8883036"
+     inkscape:cx="123.12639"
+     inkscape:cy="201.7684"
+     inkscape:window-width="1920"
+     inkscape:window-height="1019"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-34.235325,-33.948509)">
+    <g
+       aria-label="                  ┌──────────┬─┐
+                  ├──────────┴─┤
+                  │            │
+┌────────────┐    │   SERVER   │
+│            │    │            │
+│   CLIENT   │    └──▲─────────┘
+│            │       │
+│            │       │  ┌──────────┬─┐
+│            ├───────┘  ├──────────┴─┤
+│            │          │            │
+│            ├──────────▶   SERVER   │
+│            │          │            │
+│            ├─────┐    └────────────┘
+│            │     │
+│            │   ┌─▼────────┬─┐
+│            │   ├──────────┴─┤
+└────────────┘   │            │
+                 │   SERVER   │
+                 │            │
+                 └────────────┘
+"
+       id="text236"
+       style="font-weight:500;font-size:4.9389px;line-height:1;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';stroke-width:0.264583">
+      <path
+         d="m 88.874412,33.948509 h 0.370418 v 3.151018 h -0.370418 z m 0,0 h 1.664409 v 0.370418 h -1.664409 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path890" />
+      <path
+         d="m 90.538822,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path892" />
+      <path
+         d="m 93.502163,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path894" />
+      <path
+         d="m 96.465508,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path896" />
+      <path
+         d="m 99.428844,33.953448 h 2.963336 v 0.370418 h -2.963336 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path898" />
+      <path
+         d="m 102.39219,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path900" />
+      <path
+         d="m 105.35553,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path902" />
+      <path
+         d="m 108.31887,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path904" />
+      <path
+         d="m 111.28222,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path906" />
+      <path
+         d="m 114.24556,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path908" />
+      <path
+         d="m 117.2089,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path910" />
+      <path
+         d="m 121.47118,33.953448 h 0.37041 v 3.146079 h -0.37041 z m -1.29893,0 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path912" />
+      <path
+         d="m 123.13559,33.953448 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path914" />
+      <path
+         d="m 127.39786,33.953448 h 0.37041 v 3.146079 h -0.37041 z m -1.29893,0 h 1.66934 v 0.370418 h -1.66934 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path916" />
+      <path
+         d="m 88.874412,36.124456 h 0.370418 v 5.92668 h -0.370418 z m -0.0049,2.780601 h 1.669348 v 0.370417 h -1.669348 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path918" />
+      <path
+         d="m 90.538822,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path920" />
+      <path
+         d="m 93.502163,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path922" />
+      <path
+         d="m 96.465508,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path924" />
+      <path
+         d="m 99.428844,38.905057 h 2.963336 v 0.370417 h -2.963336 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path926" />
+      <path
+         d="m 102.39219,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path928" />
+      <path
+         d="m 105.35553,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path930" />
+      <path
+         d="m 108.31887,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path932" />
+      <path
+         d="m 111.28222,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path934" />
+      <path
+         d="m 114.24556,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path936" />
+      <path
+         d="m 117.2089,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path938" />
+      <path
+         d="m 121.47118,36.124456 h 0.37041 v 3.151018 h -0.37041 z m -1.29893,2.780601 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path940" />
+      <path
+         d="m 123.13559,38.905057 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path942" />
+      <path
+         d="m 127.39786,36.124456 h 0.37041 v 5.92668 h -0.37041 z m -1.29893,2.780601 h 1.66934 v 0.370417 h -1.66934 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path944" />
+      <path
+         d="m 88.874412,41.076065 h 0.370418 v 5.92668 h -0.370418 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path946" />
+      <path
+         d="m 127.39786,41.076065 h 0.37041 v 5.92668 h -0.37041 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path948" />
+      <path
+         d="m 35.534256,48.803335 h 0.370417 v 3.151018 h -0.370417 z m 0,0 h 1.664409 v 0.370417 h -1.664409 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path950" />
+      <path
+         d="m 37.198667,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path952" />
+      <path
+         d="m 40.162009,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path954" />
+      <path
+         d="m 43.125351,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path956" />
+      <path
+         d="m 46.088693,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path958" />
+      <path
+         d="m 49.052034,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path960" />
+      <path
+         d="m 52.015377,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path962" />
+      <path
+         d="m 54.978718,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path964" />
+      <path
+         d="m 57.94206,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path966" />
+      <path
+         d="m 60.905403,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path968" />
+      <path
+         d="m 63.868744,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path970" />
+      <path
+         d="m 66.832085,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path972" />
+      <path
+         d="m 69.795429,48.808274 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path974" />
+      <path
+         d="m 74.057701,48.808274 h 0.370417 v 3.146079 h -0.370417 z m -1.298931,0 h 1.669348 v 0.370417 H 72.75877 Z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path976" />
+      <path
+         d="m 88.874412,46.027673 h 0.370418 v 5.92668 h -0.370418 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path978" />
+      <path
+         d="m 100.91051,50.783834 q -0.45931,0 -0.70132,-0.07902 -0.242005,-0.07902 -0.345722,-0.271639 -0.09878,-0.197556 -0.09878,-0.563035 h 0.42968 q 0.0198,0.217312 0.0889,0.330907 0.0691,0.108655 0.21238,0.158044 0.14816,0.04445 0.42474,0.04939 0.28152,0.0049 0.43463,-0.03457 0.1531,-0.04445 0.22225,-0.148167 0.0691,-0.103717 0.0691,-0.306212 0,-0.207434 -0.079,-0.335845 -0.079,-0.128411 -0.2667,-0.227189 -0.18768,-0.103717 -0.55316,-0.217312 -0.39017,-0.123472 -0.59267,-0.242006 -0.197553,-0.123473 -0.281515,-0.291395 -0.08396,-0.172862 -0.08396,-0.454379 0,-0.321028 0.09878,-0.488951 0.09878,-0.172862 0.330908,-0.242006 0.23707,-0.07408 0.67169,-0.07408 0.42474,0 0.65193,0.06914 0.22719,0.06914 0.32597,0.237067 0.10372,0.167923 0.12347,0.488951 h -0.42474 q -0.0198,-0.172861 -0.084,-0.261761 -0.0642,-0.0889 -0.2025,-0.123473 -0.13335,-0.03457 -0.38029,-0.03457 -0.27658,0 -0.42969,0.04445 -0.14816,0.03951 -0.21237,0.13335 -0.0593,0.0889 -0.0593,0.256823 0,0.167923 0.079,0.276578 0.079,0.108656 0.2667,0.202495 0.18767,0.0889 0.56797,0.217312 0.38029,0.13335 0.57785,0.261762 0.2025,0.128411 0.28152,0.316089 0.084,0.182739 0.084,0.49389 0,0.340784 -0.10372,0.523524 -0.0988,0.182739 -0.34078,0.261761 -0.24201,0.07408 -0.70133,0.07408 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path980" />
+      <path
+         d="m 102.95523,47.390809 h 1.86196 v 0.385235 h -1.43722 v 1.03223 h 1.24954 v 0.385234 h -1.24954 v 1.170519 h 1.536 v 0.385234 h -1.96074 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path982" />
+      <path
+         d="m 105.80003,47.390809 0.49389,-0.01482 q 0.62724,-0.01976 0.95321,0.06421 0.33091,0.07902 0.45932,0.281518 0.13335,0.197556 0.14323,0.577851 0.01,0.276578 -0.0445,0.44944 -0.0543,0.172861 -0.18768,0.266701 -0.13335,0.09384 -0.37042,0.123472 v 0.02963 q 0.22719,0.03951 0.33091,0.167923 0.10372,0.123473 0.18768,0.434623 l 0.25682,0.977902 h -0.4692 l -0.21731,-0.977902 q -0.0593,-0.271639 -0.20743,-0.370417 -0.14817,-0.09878 -0.49389,-0.09878 h -0.40993 v 1.447097 h -0.42475 z m 1.15077,1.516243 q 0.27658,-0.0049 0.38029,-0.133351 0.10372,-0.128411 0.10372,-0.454378 0,-0.207434 -0.0444,-0.311151 -0.0395,-0.108656 -0.14817,-0.158045 -0.10371,-0.05433 -0.31609,-0.07902 -0.18274,-0.01976 -0.31115,-0.01976 -0.12841,0 -0.39017,0.01976 v 1.140886 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path984" />
+      <path
+         d="m 108.50161,47.390809 h 0.42475 l 0.84949,2.889257 h 0.0444 l 0.84949,-2.889257 h 0.42475 l -1.01742,3.358452 h -0.55809 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path986" />
+      <path
+         d="m 111.84525,47.390809 h 1.86197 v 0.385235 H 112.27 v 1.03223 h 1.24954 v 0.385234 H 112.27 v 1.170519 h 1.53599 v 0.385234 h -1.96074 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path988" />
+      <path
+         d="m 114.69006,47.390809 0.49389,-0.01482 q 0.62724,-0.01976 0.9532,0.06421 0.33091,0.07902 0.45932,0.281518 0.13335,0.197556 0.14323,0.577851 0.01,0.276578 -0.0444,0.44944 -0.0543,0.172861 -0.18768,0.266701 -0.13335,0.09384 -0.37042,0.123472 v 0.02963 q 0.22719,0.03951 0.33091,0.167923 0.10372,0.123473 0.18768,0.434623 l 0.25682,0.977902 h -0.46919 l -0.21732,-0.977902 q -0.0593,-0.271639 -0.20743,-0.370417 -0.14817,-0.09878 -0.49389,-0.09878 h -0.40993 v 1.447097 h -0.42474 z m 1.15076,1.516243 q 0.27658,-0.0049 0.3803,-0.133351 0.10371,-0.128411 0.10371,-0.454378 0,-0.207434 -0.0445,-0.311151 -0.0395,-0.108656 -0.14816,-0.158045 -0.10372,-0.05433 -0.31609,-0.07902 -0.18274,-0.01976 -0.31115,-0.01976 -0.12842,0 -0.39018,0.01976 v 1.140886 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path990" />
+      <path
+         d="m 127.39786,46.027673 h 0.37041 v 5.92668 h -0.37041 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path992" />
+      <path
+         d="m 35.534256,50.979282 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path994" />
+      <path
+         d="m 74.057701,50.979282 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path996" />
+      <path
+         d="m 88.874412,50.979282 h 0.370418 v 5.92668 h -0.370418 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path998" />
+      <path
+         d="m 127.39786,50.979282 h 0.37041 v 5.92668 h -0.37041 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1000" />
+      <path
+         d="m 35.534256,55.93089 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1002" />
+      <path
+         d="m 47.698774,60.701867 q -0.474134,0 -0.730957,-0.153105 -0.256823,-0.153106 -0.365479,-0.518585 -0.103717,-0.370417 -0.103717,-1.051986 0,-0.686507 0.103717,-1.051985 0.108656,-0.370418 0.36054,-0.523524 0.256823,-0.158045 0.730957,-0.158045 0.340784,0 0.543279,0.07902 0.207434,0.07902 0.31609,0.2667 0.108656,0.187679 0.138289,0.518585 h -0.419807 q -0.03457,-0.212373 -0.103716,-0.321029 -0.06421,-0.108655 -0.167923,-0.143228 -0.103717,-0.03951 -0.281517,-0.03951 -0.31609,0 -0.488951,0.118534 -0.167923,0.118533 -0.237068,0.409928 -0.06914,0.286457 -0.06914,0.834675 0,0.548217 0.06914,0.839613 0.06914,0.291395 0.232129,0.414867 0.167922,0.118534 0.479073,0.118534 0.291395,0 0.419806,-0.103717 0.128412,-0.103717 0.177801,-0.375357 h 0.419806 q -0.02963,0.321029 -0.143228,0.503768 -0.113594,0.18274 -0.325967,0.261762 -0.212373,0.07408 -0.553157,0.07408 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1004" />
+      <path
+         d="m 49.624947,57.294026 h 0.424745 v 2.96334 h 1.629837 v 0.390174 h -2.054582 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1006" />
+      <path
+         d="m 52.652495,60.262305 h 0.632179 V 57.6842 h -0.597607 v -0.390174 h 1.61996 V 57.6842 H 53.70942 v 2.578105 h 0.62724 v 0.390173 h -1.684165 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1008" />
+      <path
+         d="m 55.541752,57.294026 h 1.861966 v 0.385235 h -1.43722 v 1.03223 h 1.249542 v 0.385234 h -1.249542 v 1.170519 h 1.535998 v 0.385234 h -1.960744 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1010" />
+      <path
+         d="m 58.3026,57.294026 h 0.498829 l 1.363136,2.775662 h 0.02469 l -0.06421,-0.681568 v -2.094094 h 0.414868 v 3.358452 h -0.503768 l -1.358197,-2.775661 h -0.0247 l 0.06421,0.681568 v 2.094093 H 58.3026 Z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1012" />
+      <path
+         d="m 62.169762,57.6842 h -0.908758 v -0.390174 h 2.247199 V 57.6842 h -0.913696 v 2.968278 h -0.424745 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1014" />
+      <path
+         d="m 74.057701,55.93089 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1016" />
+      <path
+         d="m 88.874412,55.93089 h 0.370418 v 3.151018 h -0.370418 z m 0,2.780601 h 1.664409 v 0.370417 h -1.664409 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1018" />
+      <path
+         d="m 90.538822,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1020" />
+      <path
+         d="m 93.502163,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1022" />
+      <path
+         d="m 96.786536,60.158588 q -0.05433,0 -0.07902,-0.04445 -0.0247,-0.04445 0.0049,-0.09878 l 1.140885,-2.385488 q 0.03951,-0.07408 0.09384,-0.07408 0.05927,0 0.09384,0.07408 l 1.140886,2.385488 q 0.02469,0.05433 0,0.09878 -0.01976,0.04445 -0.07408,0.04445 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1024" />
+      <path
+         d="m 99.428844,58.711491 h 2.963336 v 0.370417 h -2.963336 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1026" />
+      <path
+         d="m 102.39219,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1028" />
+      <path
+         d="m 105.35553,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1030" />
+      <path
+         d="m 108.31887,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1032" />
+      <path
+         d="m 111.28222,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1034" />
+      <path
+         d="m 114.24556,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1036" />
+      <path
+         d="m 117.2089,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1038" />
+      <path
+         d="m 120.17225,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1040" />
+      <path
+         d="m 123.13559,58.711491 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1042" />
+      <path
+         d="m 127.39786,55.93089 h 0.37041 v 3.151018 h -0.37041 z m -1.29893,2.780601 h 1.66934 v 0.370417 h -1.66934 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1044" />
+      <path
+         d="m 35.534256,60.882499 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1046" />
+      <path
+         d="m 74.057701,60.882499 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1048" />
+      <path
+         d="m 97.764438,60.882499 h 0.370418 v 5.92668 h -0.370418 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1050" />
+      <path
+         d="m 35.534256,65.834107 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1052" />
+      <path
+         d="m 74.057701,65.834107 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1054" />
+      <path
+         d="m 97.764438,65.834107 h 0.370418 v 5.92668 h -0.370418 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1056" />
+      <path
+         d="m 106.65446,68.609769 h 0.37042 v 3.151018 h -0.37042 z m 0,0 h 1.66441 v 0.370417 h -1.66441 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1058" />
+      <path
+         d="m 108.31887,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1060" />
+      <path
+         d="m 111.28222,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1062" />
+      <path
+         d="m 114.24556,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1064" />
+      <path
+         d="m 117.2089,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1066" />
+      <path
+         d="m 120.17225,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1068" />
+      <path
+         d="m 123.13559,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1070" />
+      <path
+         d="m 126.09893,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1072" />
+      <path
+         d="m 129.06227,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1074" />
+      <path
+         d="m 132.02561,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1076" />
+      <path
+         d="m 134.98895,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1078" />
+      <path
+         d="m 139.25122,68.614708 h 0.37042 v 3.146079 h -0.37042 z m -1.29893,0 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1080" />
+      <path
+         d="m 140.91564,68.614708 h 2.96334 v 0.370417 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1082" />
+      <path
+         d="m 145.17791,68.614708 h 0.37042 v 3.146079 h -0.37042 z m -1.29893,0 h 1.66935 v 0.370417 h -1.66935 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1084" />
+      <path
+         d="m 35.534256,70.785716 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1086" />
+      <path
+         d="m 74.057701,70.785716 h 0.370417 v 5.92668 h -0.370417 z m -0.0049,2.7806 h 1.669348 v 0.370418 h -1.669348 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1088" />
+      <path
+         d="m 75.722111,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1090" />
+      <path
+         d="m 78.685455,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1092" />
+      <path
+         d="m 81.648796,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1094" />
+      <path
+         d="m 84.612137,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1096" />
+      <path
+         d="m 87.575481,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1098" />
+      <path
+         d="m 90.538822,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1100" />
+      <path
+         d="m 93.502163,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1102" />
+      <path
+         d="m 97.764438,70.785716 h 0.370418 v 3.151018 h -0.370418 z m -1.29893,2.7806 h 1.669348 v 0.370418 h -1.669348 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1104" />
+      <path
+         d="m 106.65446,70.785716 h 0.37042 v 5.92668 h -0.37042 z m -0.005,2.7806 h 1.66934 v 0.370418 h -1.66934 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1106" />
+      <path
+         d="m 108.31887,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1108" />
+      <path
+         d="m 111.28222,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1110" />
+      <path
+         d="m 114.24556,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1112" />
+      <path
+         d="m 117.2089,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1114" />
+      <path
+         d="m 120.17225,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1116" />
+      <path
+         d="m 123.13559,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1118" />
+      <path
+         d="m 126.09893,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1120" />
+      <path
+         d="m 129.06227,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1122" />
+      <path
+         d="m 132.02561,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1124" />
+      <path
+         d="m 134.98895,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1126" />
+      <path
+         d="m 139.25122,70.785716 h 0.37042 v 3.151018 h -0.37042 z m -1.29893,2.7806 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1128" />
+      <path
+         d="m 140.91564,73.566316 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1130" />
+      <path
+         d="m 145.17791,70.785716 h 0.37042 v 5.92668 h -0.37042 z m -1.29893,2.7806 h 1.66935 v 0.370418 h -1.66935 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1132" />
+      <path
+         d="m 35.534256,75.737324 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1134" />
+      <path
+         d="m 74.057701,75.737324 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1136" />
+      <path
+         d="m 106.65446,75.737324 h 0.37042 v 5.92668 h -0.37042 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1138" />
+      <path
+         d="m 145.17791,75.737324 h 0.37042 v 5.92668 h -0.37042 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1140" />
+      <path
+         d="m 35.534256,80.688933 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1142" />
+      <path
+         d="m 74.057701,80.688933 h 0.370417 v 5.92668 h -0.370417 z m -0.0049,2.7806 h 1.669348 v 0.370418 h -1.669348 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1144" />
+      <path
+         d="m 75.722111,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1146" />
+      <path
+         d="m 78.685455,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1148" />
+      <path
+         d="m 81.648796,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1150" />
+      <path
+         d="m 84.612137,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1152" />
+      <path
+         d="m 87.575481,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1154" />
+      <path
+         d="m 90.538822,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1156" />
+      <path
+         d="m 93.502163,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1158" />
+      <path
+         d="m 96.465508,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1160" />
+      <path
+         d="m 99.428844,83.469533 h 2.963336 v 0.370418 h -2.963336 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1162" />
+      <path
+         d="m 102.39219,83.469533 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1164" />
+      <path
+         d="m 105.6815,84.901814 q -0.0593,0.02963 -0.10372,0.0049 -0.0395,-0.02963 -0.0395,-0.07902 v -2.321283 q 0,-0.05433 0.0444,-0.07902 0.0445,-0.02469 0.0988,0.0049 l 2.38549,1.140886 q 0.0741,0.03457 0.0741,0.09384 0,0.05927 -0.0741,0.09384 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1166" />
+      <path
+         d="m 118.69057,85.445093 q -0.45932,0 -0.70133,-0.07902 -0.242,-0.07902 -0.34572,-0.27164 -0.0988,-0.197556 -0.0988,-0.563034 h 0.42969 q 0.0198,0.217311 0.0889,0.330906 0.0691,0.108656 0.21237,0.158045 0.14817,0.04445 0.42474,0.04939 0.28152,0.0049 0.43463,-0.03457 0.1531,-0.04445 0.22225,-0.148167 0.0691,-0.103717 0.0691,-0.306212 0,-0.207434 -0.079,-0.335845 -0.079,-0.128412 -0.2667,-0.22719 -0.18768,-0.103717 -0.55316,-0.217311 -0.39017,-0.123473 -0.59267,-0.242006 -0.19755,-0.123473 -0.28151,-0.291396 -0.084,-0.172861 -0.084,-0.454378 0,-0.321029 0.0988,-0.488951 0.0988,-0.172862 0.33091,-0.242007 0.23707,-0.07408 0.67169,-0.07408 0.42475,0 0.65194,0.06914 0.22719,0.06914 0.32596,0.237067 0.10372,0.167922 0.12348,0.488951 h -0.42475 q -0.0198,-0.172862 -0.084,-0.261762 -0.0642,-0.0889 -0.2025,-0.123472 -0.13335,-0.03457 -0.38029,-0.03457 -0.27658,0 -0.42969,0.04445 -0.14816,0.03951 -0.21237,0.133351 -0.0593,0.0889 -0.0593,0.256823 0,0.167922 0.079,0.276578 0.079,0.108656 0.2667,0.202495 0.18768,0.0889 0.56797,0.217311 0.3803,0.133351 0.57785,0.261762 0.2025,0.128411 0.28152,0.31609 0.084,0.182739 0.084,0.49389 0,0.340784 -0.10372,0.523523 -0.0988,0.182739 -0.34078,0.261762 -0.24201,0.07408 -0.70132,0.07408 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1168" />
+      <path
+         d="m 120.73528,82.052069 h 1.86196 v 0.385234 h -1.43721 v 1.03223 h 1.24954 v 0.385234 h -1.24954 v 1.17052 h 1.53599 v 0.385234 h -1.96074 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1170" />
+      <path
+         d="m 123.58009,82.052069 0.49389,-0.01482 q 0.62724,-0.01975 0.9532,0.06421 0.33091,0.07902 0.45932,0.281517 0.13335,0.197556 0.14323,0.577852 0.01,0.276578 -0.0444,0.44944 -0.0543,0.172861 -0.18768,0.2667 -0.13335,0.09384 -0.37042,0.123473 v 0.02963 q 0.22719,0.03951 0.33091,0.167923 0.10372,0.123472 0.18768,0.434623 l 0.25682,0.977902 h -0.46919 l -0.21732,-0.977902 q -0.0593,-0.27164 -0.20743,-0.370418 -0.14817,-0.09878 -0.49389,-0.09878 h -0.40993 v 1.447098 h -0.42474 z m 1.15076,1.516242 q 0.27658,-0.0049 0.3803,-0.13335 0.10371,-0.128411 0.10371,-0.454379 0,-0.207434 -0.0444,-0.31115 -0.0395,-0.108656 -0.14816,-0.158045 -0.10372,-0.05433 -0.31609,-0.07902 -0.18274,-0.01976 -0.31115,-0.01976 -0.12842,0 -0.39018,0.01976 v 1.140886 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1172" />
+      <path
+         d="m 126.28167,82.052069 h 0.42474 l 0.84949,2.889256 h 0.0445 l 0.84949,-2.889256 h 0.42475 l -1.01742,3.358452 h -0.55809 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1174" />
+      <path
+         d="m 129.6253,82.052069 h 1.86197 v 0.385234 h -1.43722 v 1.03223 h 1.24954 v 0.385234 h -1.24954 v 1.17052 h 1.536 v 0.385234 h -1.96075 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1176" />
+      <path
+         d="m 132.47011,82.052069 0.49389,-0.01482 q 0.62724,-0.01975 0.95321,0.06421 0.3309,0.07902 0.45931,0.281517 0.13335,0.197556 0.14323,0.577852 0.01,0.276578 -0.0444,0.44944 -0.0543,0.172861 -0.18768,0.2667 -0.13335,0.09384 -0.37041,0.123473 v 0.02963 q 0.22719,0.03951 0.3309,0.167923 0.10372,0.123472 0.18768,0.434623 l 0.25682,0.977902 h -0.46919 l -0.21731,-0.977902 q -0.0593,-0.27164 -0.20744,-0.370418 -0.14816,-0.09878 -0.49389,-0.09878 h -0.40993 v 1.447098 h -0.42474 z m 1.15076,1.516242 q 0.27658,-0.0049 0.3803,-0.13335 0.10371,-0.128411 0.10371,-0.454379 0,-0.207434 -0.0445,-0.31115 -0.0395,-0.108656 -0.14816,-0.158045 -0.10372,-0.05433 -0.31609,-0.07902 -0.18274,-0.01976 -0.31115,-0.01976 -0.12841,0 -0.39018,0.01976 v 1.140886 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1178" />
+      <path
+         d="m 145.17791,80.688933 h 0.37042 v 5.92668 h -0.37042 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1180" />
+      <path
+         d="m 35.534256,85.640541 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1182" />
+      <path
+         d="m 74.057701,85.640541 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1184" />
+      <path
+         d="m 106.65446,85.640541 h 0.37042 v 5.92668 h -0.37042 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1186" />
+      <path
+         d="m 145.17791,85.640541 h 0.37042 v 5.92668 h -0.37042 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1188" />
+      <path
+         d="m 35.534256,90.59215 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1190" />
+      <path
+         d="m 74.057701,90.59215 h 0.370417 v 5.92668 h -0.370417 z m -0.0049,2.7806 h 1.669348 v 0.370418 h -1.669348 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1192" />
+      <path
+         d="m 75.722111,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1194" />
+      <path
+         d="m 78.685455,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1196" />
+      <path
+         d="m 81.648796,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1198" />
+      <path
+         d="m 84.612137,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1200" />
+      <path
+         d="m 87.575481,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1202" />
+      <path
+         d="m 91.837753,93.37275 h 0.370417 v 3.14608 h -0.370417 z m -1.298931,0 h 1.669348 v 0.370418 h -1.669348 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1204" />
+      <path
+         d="m 106.65446,90.59215 h 0.37042 v 3.151018 h -0.37042 z m 0,2.7806 h 1.66441 v 0.370418 h -1.66441 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1206" />
+      <path
+         d="m 108.31887,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1208" />
+      <path
+         d="m 111.28222,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1210" />
+      <path
+         d="m 114.24556,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1212" />
+      <path
+         d="m 117.2089,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1214" />
+      <path
+         d="m 120.17225,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1216" />
+      <path
+         d="m 123.13559,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1218" />
+      <path
+         d="m 126.09893,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1220" />
+      <path
+         d="m 129.06227,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1222" />
+      <path
+         d="m 132.02561,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1224" />
+      <path
+         d="m 134.98895,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1226" />
+      <path
+         d="m 137.95229,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1228" />
+      <path
+         d="m 140.91564,93.37275 h 2.96334 v 0.370418 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1230" />
+      <path
+         d="m 145.17791,90.59215 h 0.37042 v 3.151018 h -0.37042 z m -1.29893,2.7806 h 1.66935 v 0.370418 h -1.66935 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1232" />
+      <path
+         d="m 35.534256,95.543758 h 0.370417 v 5.926682 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1234" />
+      <path
+         d="m 74.057701,95.543758 h 0.370417 v 5.926682 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1236" />
+      <path
+         d="m 91.837753,95.543758 h 0.370417 v 5.926682 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1238" />
+      <path
+         d="m 35.534256,100.49537 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1240" />
+      <path
+         d="m 74.057701,100.49537 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1242" />
+      <path
+         d="m 85.911068,103.27103 h 0.370417 v 3.15102 h -0.370417 z m 0,0 h 1.664409 v 0.37042 h -1.664409 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1244" />
+      <path
+         d="m 87.575481,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1246" />
+      <path
+         d="m 90.785767,102.26349 q -0.02963,-0.0543 -0.0049,-0.0988 0.02469,-0.0444 0.07902,-0.0444 h 2.321283 q 0.04939,0 0.07408,0.0444 0.02963,0.0395 0,0.0988 l -1.140886,2.38549 q -0.03457,0.0741 -0.09384,0.0741 -0.05433,0 -0.09384,-0.0741 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1248" />
+      <path
+         d="m 93.502163,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1250" />
+      <path
+         d="m 96.465508,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1252" />
+      <path
+         d="m 99.428844,103.27597 h 2.963336 v 0.37041 h -2.963336 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1254" />
+      <path
+         d="m 102.39219,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1256" />
+      <path
+         d="m 105.35553,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1258" />
+      <path
+         d="m 108.31887,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1260" />
+      <path
+         d="m 111.28222,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1262" />
+      <path
+         d="m 114.24556,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1264" />
+      <path
+         d="m 118.50783,103.27597 h 0.37041 v 3.14608 h -0.37041 z m -1.29893,0 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1266" />
+      <path
+         d="m 120.17225,103.27597 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1268" />
+      <path
+         d="m 124.43452,103.27597 h 0.37041 v 3.14608 h -0.37041 z m -1.29893,0 h 1.66934 v 0.37041 h -1.66934 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1270" />
+      <path
+         d="m 35.534256,105.44698 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1272" />
+      <path
+         d="m 74.057701,105.44698 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1274" />
+      <path
+         d="m 85.911068,105.44698 h 0.370417 v 5.92668 h -0.370417 z m -0.0049,2.7806 h 1.669348 v 0.37041 h -1.669348 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1276" />
+      <path
+         d="m 87.575481,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1278" />
+      <path
+         d="m 90.538822,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1280" />
+      <path
+         d="m 93.502163,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1282" />
+      <path
+         d="m 96.465508,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1284" />
+      <path
+         d="m 99.428844,108.22758 h 2.963336 v 0.37041 h -2.963336 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1286" />
+      <path
+         d="m 102.39219,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1288" />
+      <path
+         d="m 105.35553,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1290" />
+      <path
+         d="m 108.31887,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1292" />
+      <path
+         d="m 111.28222,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1294" />
+      <path
+         d="m 114.24556,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1296" />
+      <path
+         d="m 118.50783,105.44698 h 0.37041 v 3.15101 h -0.37041 z m -1.29893,2.7806 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1298" />
+      <path
+         d="m 120.17225,108.22758 h 2.96334 v 0.37041 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1300" />
+      <path
+         d="m 124.43452,105.44698 h 0.37041 v 5.92668 h -0.37041 z m -1.29893,2.7806 h 1.66934 v 0.37041 h -1.66934 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1302" />
+      <path
+         d="m 35.534256,110.39858 h 0.370417 v 3.15102 h -0.370417 z m 0,2.7806 h 1.664409 v 0.37042 h -1.664409 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1304" />
+      <path
+         d="m 37.198667,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1306" />
+      <path
+         d="m 40.162009,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1308" />
+      <path
+         d="m 43.125351,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1310" />
+      <path
+         d="m 46.088693,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1312" />
+      <path
+         d="m 49.052034,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1314" />
+      <path
+         d="m 52.015377,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1316" />
+      <path
+         d="m 54.978718,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1318" />
+      <path
+         d="m 57.94206,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1320" />
+      <path
+         d="m 60.905403,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1322" />
+      <path
+         d="m 63.868744,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1324" />
+      <path
+         d="m 66.832085,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1326" />
+      <path
+         d="m 69.795429,113.17918 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1328" />
+      <path
+         d="m 74.057701,110.39858 h 0.370417 v 3.15102 h -0.370417 z m -1.298931,2.7806 h 1.669348 v 0.37042 H 72.75877 Z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1330" />
+      <path
+         d="m 85.911068,110.39858 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1332" />
+      <path
+         d="m 124.43452,110.39858 h 0.37041 v 5.92668 h -0.37041 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1334" />
+      <path
+         d="m 85.911068,115.35019 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1336" />
+      <path
+         d="m 97.947178,120.10635 q -0.459318,0 -0.701324,-0.079 -0.242006,-0.079 -0.345723,-0.27164 -0.09878,-0.19756 -0.09878,-0.56303 h 0.429684 q 0.01976,0.21731 0.0889,0.3309 0.06915,0.10866 0.212373,0.15805 0.148167,0.0444 0.424745,0.0494 0.281518,0.005 0.434624,-0.0346 0.153105,-0.0444 0.22225,-0.14816 0.06915,-0.10372 0.06915,-0.30621 0,-0.20744 -0.07902,-0.33585 -0.07902,-0.12841 -0.2667,-0.22719 -0.187679,-0.10372 -0.553157,-0.21731 -0.390173,-0.12347 -0.592668,-0.24201 -0.197556,-0.12347 -0.281517,-0.29139 -0.08396,-0.17286 -0.08396,-0.45438 0,-0.32103 0.09878,-0.48895 0.09878,-0.17286 0.330907,-0.24201 0.237067,-0.0741 0.67169,-0.0741 0.424745,0 0.651935,0.0691 0.227189,0.0691 0.325967,0.23707 0.103717,0.16792 0.123473,0.48895 h -0.424746 q -0.01976,-0.17286 -0.08396,-0.26176 -0.06421,-0.0889 -0.202495,-0.12347 -0.13335,-0.0346 -0.380295,-0.0346 -0.276579,0 -0.429685,0.0444 -0.148167,0.0395 -0.212372,0.13336 -0.05927,0.0889 -0.05927,0.25682 0,0.16792 0.07902,0.27658 0.07902,0.10865 0.266701,0.20249 0.187678,0.0889 0.567973,0.21731 0.380296,0.13335 0.577852,0.26176 0.202495,0.12842 0.281517,0.31609 0.08396,0.18274 0.08396,0.49389 0,0.34079 -0.103717,0.52353 -0.09878,0.18274 -0.340784,0.26176 -0.242006,0.0741 -0.701323,0.0741 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1338" />
+      <path
+         d="m 99.991879,116.71333 h 1.861961 v 0.38523 h -1.43722 v 1.03223 h 1.24955 v 0.38524 h -1.24955 v 1.17052 h 1.536 v 0.38523 h -1.960741 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1340" />
+      <path
+         d="m 102.83669,116.71333 0.49389,-0.0148 q 0.62724,-0.0198 0.95321,0.0642 0.33091,0.079 0.45932,0.28151 0.13335,0.19756 0.14323,0.57786 0.01,0.27657 -0.0444,0.44944 -0.0543,0.17286 -0.18768,0.2667 -0.13335,0.0938 -0.37042,0.12347 v 0.0296 q 0.22719,0.0395 0.33091,0.16793 0.10371,0.12347 0.18768,0.43462 l 0.25682,0.9779 H 104.59 l -0.21731,-0.9779 q -0.0593,-0.27164 -0.20743,-0.37042 -0.14817,-0.0988 -0.49389,-0.0988 h -0.40993 v 1.4471 h -0.42475 z m 1.15077,1.51624 q 0.27658,-0.005 0.38029,-0.13335 0.10372,-0.12841 0.10372,-0.45438 0,-0.20743 -0.0444,-0.31115 -0.0395,-0.10865 -0.14817,-0.15804 -0.10371,-0.0543 -0.31609,-0.079 -0.18274,-0.0198 -0.31115,-0.0198 -0.12841,0 -0.39017,0.0198 v 1.14089 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1342" />
+      <path
+         d="m 105.53827,116.71333 h 0.42475 l 0.84949,2.88926 h 0.0444 l 0.84949,-2.88926 h 0.42475 l -1.01742,3.35845 h -0.55809 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1344" />
+      <path
+         d="m 108.88191,116.71333 h 1.86196 v 0.38523 h -1.43722 v 1.03223 h 1.24955 v 0.38524 h -1.24955 v 1.17052 h 1.536 v 0.38523 h -1.96074 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1346" />
+      <path
+         d="m 111.72672,116.71333 0.49389,-0.0148 q 0.62724,-0.0198 0.9532,0.0642 0.33091,0.079 0.45932,0.28151 0.13335,0.19756 0.14323,0.57786 0.01,0.27657 -0.0444,0.44944 -0.0543,0.17286 -0.18768,0.2667 -0.13335,0.0938 -0.37042,0.12347 v 0.0296 q 0.22719,0.0395 0.33091,0.16793 0.10372,0.12347 0.18768,0.43462 l 0.25682,0.9779 h -0.46919 l -0.21732,-0.9779 q -0.0593,-0.27164 -0.20743,-0.37042 -0.14817,-0.0988 -0.49389,-0.0988 h -0.40993 v 1.4471 h -0.42474 z m 1.15076,1.51624 q 0.27658,-0.005 0.3803,-0.13335 0.10371,-0.12841 0.10371,-0.45438 0,-0.20743 -0.0444,-0.31115 -0.0395,-0.10865 -0.14817,-0.15804 -0.10371,-0.0543 -0.31608,-0.079 -0.18274,-0.0198 -0.31116,-0.0198 -0.12841,0 -0.39017,0.0198 v 1.14089 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1348" />
+      <path
+         d="m 124.43452,115.35019 h 0.37041 v 5.92668 h -0.37041 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1350" />
+      <path
+         d="m 85.911068,120.3018 h 0.370417 v 5.92668 h -0.370417 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1352" />
+      <path
+         d="m 124.43452,120.3018 h 0.37041 v 5.92668 h -0.37041 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1354" />
+      <path
+         d="m 85.911068,125.25341 h 0.370417 v 3.15102 h -0.370417 z m 0,2.7806 h 1.664409 v 0.37042 h -1.664409 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1356" />
+      <path
+         d="m 87.575481,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1358" />
+      <path
+         d="m 90.538822,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1360" />
+      <path
+         d="m 93.502163,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1362" />
+      <path
+         d="m 96.465508,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1364" />
+      <path
+         d="m 99.428844,128.03401 h 2.963336 v 0.37042 h -2.963336 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1366" />
+      <path
+         d="m 102.39219,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1368" />
+      <path
+         d="m 105.35553,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1370" />
+      <path
+         d="m 108.31887,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1372" />
+      <path
+         d="m 111.28222,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1374" />
+      <path
+         d="m 114.24556,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1376" />
+      <path
+         d="m 117.2089,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1378" />
+      <path
+         d="m 120.17225,128.03401 h 2.96334 v 0.37042 h -2.96334 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1380" />
+      <path
+         d="m 124.43452,125.25341 h 0.37041 v 3.15102 h -0.37041 z m -1.29893,2.7806 h 1.66934 v 0.37042 h -1.66934 z"
+         style="font-weight:normal;font-family:'Berkeley Mono Variable';-inkscape-font-specification:'Berkeley Mono Variable'"
+         id="path1382" />
+    </g>
+  </g>
+</svg>

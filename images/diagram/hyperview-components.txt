@@ -1,0 +1,11 @@
+    HyperView Client               SwipeableRow
+┌──────────────────────┐     ┌──────────────────────┐
+│<swipe:row>───────────┼─────▶<swipe:row>           │
+│                      │     │  <swipe:main>        │
+│    <text>Hello</text>◀─────┼────<text>Hello</text>│
+│                      │     │  </swipe:main>       │
+│                      │     │  <swipe:button>      │
+│    <text>Edit</text>◀┼─────┼────<text>Edit</text> │
+│                      │     │  </swipe:button>     │
+│</swipe:row>          │     │</swipe:row>          │
+└──────────────────────┘     └──────────────────────┘

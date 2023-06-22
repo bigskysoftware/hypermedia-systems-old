@@ -472,7 +472,6 @@ There's a lot to cover about inputs in Hyperview.
 Since this is meant to be an introduction and not an exhaustive resource, I'll highlight just a few types of inputs.
 Let's start with an example of the simplest type of input, a text field.
 
-(((HXML, "<text-field>")))
 .Text field element
 [source,xml]
 ----
@@ -488,6 +487,7 @@ Let's start with an example of the simplest type of input, a text field.
 <3> The current value set in the field
 <4> A placeholder to display when the value is empty
 
+(((HXML, "<text-field>")))
 This element should feel familiar to anyone who's created a text field in HTML.
 One difference is that most inputs in HTML use the `<input>` element with a `type` attribute, eg `<input type="text">`.
 In Hyperview, each input has a unique name, in this case `<text-field>`.
@@ -503,7 +503,6 @@ Also, unlike radio buttons on desktop, mobile OSes don't provide a strong standa
 Most mobile apps use richer, custom UIs for these interactions.
 So in HXML, we implement this UI using an element called `<select-single>`:
 
-(((HXML, "<select-single>")))
 .Select-single element
 [source,xml]
 ----
@@ -520,6 +519,7 @@ So in HXML, we implement this UI using an element called `<select-single>`:
 <2> Element representing one of the choices. The choice value is defined here.
 <3> The UI of the selection. In this example, we use text, but we can use any UI elements.
 
+(((HXML, "<select-single>")))
 The `<select-single>` element is the parent of the input for selecting one choice out of many.
 This element contains the `name` attribute used when serializing the selected choice.
 `<option>` elements within `<select-single>` represent the available choices.
@@ -805,7 +805,7 @@ We've already seen the simplest type of action, `push`.
 We classify `push` as a "`navigation action`", since it's related to navigating screens in the mobile app.
 Pushing a screen onto the navigation stack is just one of several navigation actions supported in Hyperview.
 Users also need to be able to go back to previous screens, open and close modals, switch between tabs, or jump to arbitrary screens.
-Each of these types of navigations is supported through a different value for the `action` attribute:
+Each of these types of navigation is supported through a different value for the `action` attribute:
 
 - `push`: Push a new screen into the current navigation stack. This looks like a screen sliding in from the right, on top of the current screen.
 - `new`: Open a new navigation stack as a modal. This looks like a screen sliding in from the bottom, on top of the current screen.
@@ -1290,29 +1290,44 @@ These concepts can be mixed together too.
 It's not unusual for a production Hyperview app to contain several behaviors, some triggering together and others triggering on different interactions.
 Using multiple behaviors with custom actions keeps HXML declarative, without sacrificing functionality.
 
-// TODO astep: keep? reformat?
-We're covering a lot of new material, so we'll add brief summaries to our sprint through Hyperview and HXML. 
 
-.Summary
-****
-- HXML looks similar to HTML, but it uses elements that correspond to mobile UIs, like `<screen>`, `<header>`, `<list>` and more.
-- HXML includes input elements that implement common patterns in mobile apps, such as `<switch>`, `<select-single>`, and `<select-multiple>`.
-- New UI components can be added to HXML using namespaced elements. The Hyperview client can be easily extended to render these new elements.
-- Interactions in HXML are defined using `<behavior>` elements. Inspired by htmx, `<behavior>` elements decouple user interactions (triggers) from the resulting actions.
-- Navigation between screens in Hyperview is done using behaviors with navigation actions, like `push`, `back`, `new`, and `close`.
-- Updates to screens in Hyperview are defined using behaviors with update actions, such as `replace` and `append`.
-- System interactions in Hyperview are defined using behaviors with system actions, such as `alert` and `share`.
-- New actions can be added to HXML using namespaced attributes. The Hyperview client can be easily extended to interpret the new actions.
-****
+=== Summary
+We're covering a lot of new concepts here, and this introduction to HXML just scratches the surface.
+To learn more about HXML, we recommend consulting the link:https://hyperview.org/docs/reference_index[official reference documentation].  
+For now, we hope you come away with a few key takeaways.
 
-// TODO astep: suggested conclusion, transition
+First, HXML looks and feels similar to HTML.
+Web developers comfortable with server-side rendering frameworks can use the same techniques to write HXML.
+In addition to basic UI elements (`<view>`, `<text>`, `<image>`), HXML specifies elements to implement mobile-specific UIs.
+This includes layout patterns (`<screen>`, `<list>`, `<section-list>`) and input elements (`<switch>`, `<select-single>`, `<select-multiple>`).
+
+Second, interactions in HXML are defined using behaviors.
+Inspired by htmx, `<behavior>` elements decouple user interactions (triggers) from the resulting actions.
+There are three broad categories of behavior actions:
+
+- Navigation actions (`push`, `back`) enable navigating between the screens of a mobile app
+- Update actions (`replace`, `append`) enable updating a screen with new fragments of HXML requested from the server.
+- System actions (`alert`, `share`) enable interacting with system-level functionality on iOS and Android.
+
+Finally, HXML itself was designed for customization.
+Developers can define custom elements and custom behavior actions to expand the possible user interactions with their apps.
+
+
 == Hypermedia, for Mobile
 
-There is a story for Hypermedia-Driven Applications on mobile. Mobile app platforms push developers towards a thick-client architecture. But apps that use a thick client suffer from the same problems as SPAs on the web. Using the hypermedia architecture for mobile apps can solve these problems.
+There is a strong case for Hypermedia-Driven Applications on mobile.
+Mobile app platforms push developers towards a thick-client architecture.
+But apps that use a thick client suffer from the same problems as SPAs on the web.
+Using the hypermedia architecture for mobile apps can solve these problems.
 
-Hyperview, based on a new format called HXML, offers a path here. It provides an open-source mobile thin client to render HXML. And HXML opens a toolkit of elements and patterns that correspond to mobile UIs. Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture. That's a win.
+Hyperview, based on a new format called HXML, offers a path here.
+It provides an open-source mobile thin client to render HXML. 
+And HXML opens a toolkit of elements and patterns that correspond to mobile UIs.
+Developers can evolve Hyperview to suit their apps' requirements, while fully embracing the hypermedia architecture.
+That's a win.
 
-Yes, hypermedia can work for mobile apps, too. In the next two chapters we'll show how by moving Contact.app to mobile. 
+Yes, hypermedia can work for mobile apps, too.
+In the next two chapters we'll show how by turning the Contact.app web application into a native mobile app using Hyperview. 
 
 
 

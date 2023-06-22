@@ -82,6 +82,7 @@ It is the entire hypermedia _system architecture_ that is underappreciated and i
 Where did the idea of hypermedia come from?
 
 ((("Bush, Vannevar")))
+(((Memex)))
 While there were many precursors to the modern idea of hypertext and the more general hypermedia, many people point
 to the 1945 article _As We May Think_ written by Vannevar Bush in The Atlantic as a starting point for looking at what
 has become modern hypermedia.
@@ -176,10 +177,11 @@ the anchor tag and the form tag, in a bit of detail.
 ==== Anchor tags
 
 (((hyperlink)))
+(((anchor tag)))
 Anchor tags are so familiar as to be boring but, as the original hypermedia control, it is worth reviewing the mechanics
 of hyperlinks to get our minds in the right place for developing a deeper understanding of hypermedia.
 
-Consider a simple ((anchor tag)), embedded within a larger HTML document:
+Consider a simple anchor tag, embedded within a larger HTML document:
 
 .A simple hyperlink
 [source,html]
@@ -449,6 +451,7 @@ consider an older, clunkier and less popular approach like hypermedia?
 
 We are glad you asked!
 
+(((hypermedia, advantages)))
 It turns out that the hypermedia architecture, even in its original Web 1.0 form, has a number of advantages when compared with
 the Single Page Application + JSON Data API approach.  Three of the biggest are:
 
@@ -651,6 +654,7 @@ will become more and more apparent.
 
 == When Should You Use Hypermedia?
 
+(((hypermedia, when to use)))
 Hypermedia is often, though _not always_, a great choice for a web application.
 
 Perhaps you are building a website or application that simply doesn't _need_ a huge amount of user-interactivity.  There are
@@ -682,6 +686,7 @@ But more on that later.
 
 == When Shouldn't You Use Hypermedia?
 
+(((hypermedia, limitations)))
 So, what about that _not always_?  When isn't hypermedia going to work well for an application?
 
 One example that springs immediately to mind is an online spreadsheet application.  In the case of a spreadsheet,
@@ -713,6 +718,7 @@ Any software project has a complexity budget, explicit or not: there is only so 
 team can tolerate and every new feature and implementation choice adds at least a bit more to the overall complexity
 of the system.
 
+(((complexity budget)))
 What is particularly nasty about complexity is that it tends to grow exponentially: one day you can keep the entire
 system in your head and understand the ramifications of a particular change, and a week later the whole system seems
 intractable.  Even worse, efforts to help control complexity, such as introducing abstractions or infrastructure to
@@ -781,7 +787,7 @@ It's also not obvious from the HTML source that this is a button,
 making the source harder to read and the absence of these attributes harder to spot.
 The source code of pages with div soup is difficult to edit and debug.
 
-To avoid div soup, become friendly with the HTML spec of available tags, and consider each tag another tool in your tool chest. There might be things there you don't remember from before! (With the 113 elements currently defined in the spec, it's more of a whole shed).
+To avoid div soup, become friendly with the HTML spec of available tags, and consider each tag another tool in your tool chest. There might be things there you don't remember from before! (With the 113 elements currently defined in the spec, it's more of a tool _shed_).
 
 Of course, not every UI pattern has a designated HTML element.
 We often need to compose elements and augment them with attributes.

@@ -86,6 +86,7 @@ Specifically, let's support the following features in our mobile app:
 
 .Zero Client-Configuration in Hypermedia Applications
 ****
+(((Hyperview, entry point URL)))
 For many mobile apps that use the Hyperview client, configuring this entry point URL is the only on-device code you need to write to deliver a full-featured app.
 Think of the entry point URL as the address you type into a web browser to open a web app.
 Except in Hyperview, there is no address bar, and the browser is hard-coded to only open one URL.
@@ -297,6 +298,7 @@ image::screenshot_hyperview_list.png[List of contacts showing names and a search
 
 === Searching Contacts
 
+(((Hyperview, search)))
 So far, we have a mobile app that displays a screen with a list of contacts.
 But our UI doesn't support any interactions.
 Typing a query in the search field doesn't filter the list of contacts.
@@ -354,6 +356,7 @@ This means the actual HTTP request to our backend looks like `GET /contacts?rows
 Our backend already supports the `q` param for searching, so the response will include rows that match the string "`Car.`"
 
 === Infinite scroll
+(((Hyperview, infinite scroll)))
 If the user has hundreds or thousands of contacts, loading them all at once may result in poor app performance.
 That's why most mobile apps with long lists implement an interaction known as "`infinite scroll.`"
 The app loads a fixed number of initial items in the list, let's say 100 items.
@@ -427,6 +430,7 @@ This will continue until all of the items will be loaded on the screen.
 At that point, there will be no more contacts to return, the response will not include another "`load-more`" item, and our pagination is over.
 
 === Pull-to-refresh
+(((Hyperview, pull-to-refresh)))
 Pull-to-refresh is a common interaction in mobile apps, especially on screens featuring dynamic content.
 It works like this:
 At the top of a scrolling view, the user pulls the scrolling content downwards with a swipe-down gesture.
@@ -844,12 +848,11 @@ Events are built into the behavior system, and allow lightweight communication b
 // TODO 1cg: consider an intro to events as 'html note' topic, earlier chapters
 .Event Behaviors
 ****
+(((Hyperview, events)))
 Events are a client-side feature of Hyperview.
-Earlier chapter discussed events while working with HTML, htmx and the DOM.
+In link:/client-side-scripting/#_hyperscript[Client-Side Scripting], we discussed events while working with HTML, _hyperscript and the DOM.
 DOM Elements will dispatch events as a result of user interactions.
 Scripts can listen for these events, and respond to them by running arbitrary JavaScript code.
-We saw some examples in chapter 9.  
-// TODO astep: optional, add link to an example
 
 Events in Hyperview are a good deal simpler, but they don't require any scripting and can be defined declaratively in the HXML.
 This is done through the behavior system.
@@ -1095,6 +1098,7 @@ The screen will reload itself to show the Contact Details.
 image::screenshot_hyperview_add.png[Form to enter contact details pops up from bottom of screen]
 
 == Deploying the App
+(((Hyperview, deployment)))
 With the completion of the contact creation UI, we have a fully implemented mobile app.
 It supports searching a list of contacts, viewing the details of a contact, editing and deleting a contact, and adding a new contact.
 But so far, we've been developing the app using a simulator on our desktop computer.
@@ -1117,7 +1121,6 @@ Any time you make a change in the HXML, just reload the screen to see the UI upd
 So we have the app running on a physical device, but it's still not production ready.
 To get the app into the hands of our users, there's a few things we need to do:
 
-// TODO astep: optional mention UI, presentation in this list (e.g. styling, etc)?
 1. Deploy our backend in production.
 We need to use a production-grade web server like Gunicorn instead of the Flask development server.
 And we should run our app on a machine reachable on the Internet, most likely using a cloud provider like AWS or Heroku.
@@ -1318,30 +1321,25 @@ The dynamic archive UI is a power feature that wouldn't make sense on a mobile d
 Since our HXML templates don't expose any entry points to the Archive functionality, we can treat it as "`web-only`" and not worry about supporting it in Hyperview.
 
 
-.Summary
-****
-- It is possible to create a Hyperview-powered mobile app by cloning a Git repo and configuring a single entry point URL.
-- Flask is perfectly suited for serving a Hyperview mobile app. The Jinja templating system can generate dynamic HXML based on the context from a view.
-- Using elements like `<view>`, `<text>`, `<list>`, and `<item>`, we can create native-feeling screens in HXML.
-- Using behaviors, we can implement interactions on the contacts list such as infinite scroll, search-as-you-type, and pull-to-refresh.
-- Events are a client-side feature of Hyperview that allows triggering behaviors across screens. They are useful to keep state in sync throughout the app, such as after editing or deleting a contact.
-- A Hyperview-powered mobile app can be bundled and released through the iOS and Android app stores. New screens and features can be added to the app just by updating the backend!
-- The same Flask backend can support both web and mobile apps. Using HTTP content negotiation, a server can render either HTML or HXML responses from the same view. More complex apps may require the use of redirects and platform-specific views.
-****
+== Contact.app, in Hyperview
 
-We've covered a lot of ground in this chapter. Take a breath and take stock of how far we've come: we ported the core functionality of the Contact.app web application to mobile. And we did it by re-using much of our Flask backend and while sticking with Jinja templating. We again saw the utility of events for connecting different aspects of an application. 
+We've covered a lot of ground in this chapter.
+Take a breath and take stock of how far we've come: we ported the core functionality of the Contact.app web application to mobile.
+And we did it by re-using much of our Flask backend and while sticking with Jinja templating.
+We again saw the utility of events for connecting different aspects of an application. 
 
-We're not done yet. In the next chapter we'll implement custom behaviors and UI elements to finish our mobile Contact.app.
+We're not done yet.
+In the next chapter we'll implement custom behaviors and UI elements to finish our mobile Contact.app.
 
 
 
 [.design-note]
-.HTML Notes: API End Points
+.HTML Notes: API Endpoints
 ****
-Unlike a JSON API, the hypermedia API you produce for your hypermedia-driven application should feature end-points specialized for your particular application’s UI needs.
+Unlike a JSON API, the hypermedia API you produce for your hypermedia-driven application should feature endpoints specialized for your particular application’s UI needs.
 
 Because hypermedia APIs are not designed to be consumed by general-purpose clients you can set aside the pressure to keep them generalized and produce the content specifically needed for your application.
-Your end-points should be optimized to support your particular applications UI/UX needs, not for a general-purpose data-access model for your domain model.
+Your endpoints should be optimized to support your particular applications UI/UX needs, not for a general-purpose data-access model for your domain model.
 
 A related tip is that, when you have a hypermedia-based API, you can aggressively refactor your API in a way that is heavily discouraged when writing JSON API-based SPAs. Because hypermedia-based applications use Hypermedia As The Engine Of Application State, you are able and, in fact, encouraged, to change the shape of them as your application developers and as use cases change.
 

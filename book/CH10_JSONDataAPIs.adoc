@@ -401,7 +401,7 @@ out from the main web application, so it can evolve separately as needed.
 
 === Additional Data API Considerations
 
-Now, we would have a lot more to do if we wanted to make this a production ready JSON API. At minimum would need to add:
+Now, we would have a lot more to do if we wanted to make this a production ready JSON API. At minimum we would need to add:
 
 * Rate limiting, important for any public-facing Data API to avoid abusive clients.
 * An authentication mechanism.  (We don't have one for our web application either!)
@@ -468,11 +468,11 @@ our JSON API, it doesn't make sense to include it for JSON consumers.
 
 And what if, by some miracle, the performance issues with `Contact.count()` that we were addressing with the Lazy Load
 pattern goes away?  Well, in our Hypermedia-Driven Application we can simply revert to the old code and include the
-count directly in the request to `/contacts`.  We can remove the `contacts/count` end point and all the logic associated
+count directly in the request to `/contacts`.  We can remove the `contacts/count` endpoint and all the logic associated
 with it.  Because of the uniform interface of hypermedia, the system will continue to work just fine.
 
 But what if we had tied our JSON API and hypermedia API together, and published `/contacts/count` as a supported end
-point for our JSON API?  In that case we couldn't simply remove the end point: a (non-hypermedia) client might be
+point for our JSON API?  In that case we couldn't simply remove the endpoint: a (non-hypermedia) client might be
 relying on it.
 
 Once again you can see the flexibility of the hypermedia approach and why separating your JSON API out from your
@@ -487,9 +487,9 @@ connectors that provide a go-between the HTTP requests and the model.
 This is the ideal controller of the Model-View-Controller (MVC) paradigm that was so popular in the early web: a controller
 should be "`thin`", with the model containing the majority of the logic in the system.
 
-((("Model-View-Controller (MVC)")))
 .The Model View Controller pattern
 ****
+((("Model-View-Controller (MVC)")))
 The Model View Controller design pattern is a classic architectural pattern in software development, and was a major
 influence in early web development.  It is no longer emphasized as heavily, as web development has split into frontend
 and backend camps, but most web developers are still familiar with the idea.
@@ -512,11 +512,11 @@ another.
 With properly built "`thin`" controllers and "`fat`" models, keeping two separate APIs both in sync and yet
 still evolving separately is not as difficult or as crazy as it might sound.
 
-(((Microformats)))
 [.design-note]
 .HTML Notes: Microformats
 ****
 https://microformats.org/[Microformats] is a standard for embedding machine-readable structured data in HTML.
+(((Microformats)))
 It uses classes to mark certain elements as containing information to be extracted,
 with conventions for extracting common properties like name, URL and photo without classes.
 By adding these classes into the HTML representation of an object, we allow the properties of the object to be recovered from the HTML. For example, this simple HTML:

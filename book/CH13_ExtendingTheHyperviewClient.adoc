@@ -22,6 +22,7 @@ React Native has a healthy ecosystem of open-source libraries.
 We'll be leveraging these libraries to create our custom extensions to the Hyperview client.
 
 == Adding Phone Calls and Email
+(((Hyperview, phone calls)))
 Let's start with the most obvious feature missing from our Contacts app: phone calls.
 Mobile devices can make phone calls.
 The contacts in our app have phone numbers.
@@ -192,6 +193,7 @@ In fact, let's do that now by updating the `show.xml` template in our Flask app:
 <3> Set the attribute expected by the "`open-phone`" action.
 <4> Same idea, with a different action ("`open-email`").
 
+(((Hyperview, email)))
 We'll skip over the implementation of the second custom action, "`open-email.`"
 As you can guess, this action will open a system-level email composer to let the user send an email to their contact.
 The implementation of "`open-email`" is almost identical to "`open-phone.`"
@@ -204,6 +206,7 @@ We wrapped an existing 3rd party library, and read attributes set on the `<behav
 After re-starting our demo app, our client has new capabilities we can immediately utilize by referencing the actions from our HXML templates.
 
 == Adding Messages
+(((Hyperview, messages)))
 The phone and email actions added in the previous section are examples of "`system actions.`"
 System actions trigger some UI or capability provided by the device's OS.
 But custom actions are not limited to interacting with OS-level APIs.
@@ -715,28 +718,24 @@ Extensions evolve the client from being a generic "`Hyperview client,`" to being
 And importantly, this evolution preserves the Hypermedia, server-driven architecture and all of its benefits.
 
 
-.Summary
-****
-- With custom components and behaviors, Hyperview apps can do anything a native app can do.
-- Support for system actions (like SMS and email) can be added with a Hyperview behavior action.
-- Support for high-level UIs (like confirmation messages) can also be added with a Hyperview behavior action.
-- Support for customized screen elements (like swipeable items in lists) can be added with Hyperview custom components.
-- The standard behaviors and components that come with the Hyperview client are implemented the same way as custom behavior actions and components.
-- By customizing the Hyperview client, developers can build a mobile app that suits their specific needs while retaining the benefits of a thin-client, hypermedia architecture.
-****
+== Mobile Hypermedia-Driven Applications
 
+That concludes our build of mobile Contact.app.
+Step back from the code details and consider the broader pattern:
 
-//TODO astep: wt wrote a basic conclusion here, is it okay? add more?
-=== Mobile Hypermedia-Driven Applications
+- The core logic of the app resides on the server.
+- Server-rendered templates power both the web and mobile apps.
+- Platform customizations are done through scripting on the web, and client customization on mobile.
 
-That concludes our build of mobile Contact.app. Step back from the code details and consider the broader pattern: the Hypermedia-Driven Application architecture allowed for signicant code reuse, and led to a manageable stack for ongoing app updates and maintenance for both web and mobile. 
+The Hypermedia-Driven Application architecture allowed for significant code reuse and a manageable tech stack.
+Ongoing app updates and maintenance for both web and mobile can be done at the same time.
+
 
 Yes, there is a story for Hypermedia-Driven Applications on mobile.
 
 
-
 [.design-note]
-.HTML Notes: Good Enough UX and Islands of Interactivity
+.HTML Notes: Good-Enough UX and Islands of Interactivity
 ****
  A problem many SPA developers face when coming to the HDA approach is that they look at their current SPA application and imagine implementing it exactly using hypermedia. While htmx and other hypermedia-oriented libraries significantly close the interactivity gap between hypermedia-based applications and SPAs, that gap still exists.
 

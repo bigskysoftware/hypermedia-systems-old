@@ -10,6 +10,7 @@ we've added active search, bulk delete, some nice animations, and a slew of othe
 of interactivity that most web developers would assume requires some sort of Single-Page Application JavaScript framework,
 but we've done it using htmx-powered hypermedia instead.
 
+(((htmx patterns, download archive)))
 Let's look at how we can add a final significant feature to Contact.app: downloading an archive of all the contacts.
 
 From a hypermedia perspective, downloading a file isn't exactly rocket science: using the HTTP `Content-Disposition`
@@ -155,7 +156,7 @@ With that done, we now have a button showing up in our web application to get th
 `div` has an `hx-target="this"` on it, the button will inherit that target and replace that enclosing `div` with whatever HTML
 comes back from the `POST` to `/contacts/archive`.
 
-=== Adding the Archiving End Point
+=== Adding the Archiving Endpoint
 
 Our next step is to handle the `POST` that our button is making.  We want to get the
 `Archiver` for the current user and invoke the `run()` method on it.  This will start the archive process running.  Then
@@ -192,6 +193,7 @@ def start_archive():
 
 === Conditionally Rendering A Progress UI
 
+((("conditional rendering")))
 Now let's turn our attention to updating our archiving UI by setting `archive_ui.html` to conditionally render different content depending on the state of the archive process.  
 
 Recall that the archiver has a `status()` method. When we pass the archiver through
@@ -235,7 +237,6 @@ We get an error message right out of the box.  Why?  Ah, we are including the `a
 `index.html` template, but now the `archive_ui.html` template expects the archiver to be passed through to it, so
 it can conditionally render the correct UI.
 
-((("conditional rendering")))
 That's an easy fix: we just need to pass the archiver through when we render the `index.html` template as well:
 
 

@@ -27,6 +27,7 @@ sophisticated user interfaces using only htmx and perhaps a small bit of hyperme
 
 == Htmx Attributes
 
+(((htmx, attributes)))
 Thus far we have used about fifteen different attributes from htmx in our application.  The most important ones have been:
 
 `hx-get`, `hx-post`, etc.::
@@ -59,24 +60,25 @@ before it was removed from the DOM.
 
 In addition to these, `hx-swap` offers further control with the following modifiers:
 
-(((hx-swap, settle)))
 `settle`::
+(((hx-swap, settle))) 
 Like `swap`, this allows you to apply a specific delay between when the content has been swapped into the DOM and when
 its attributes are "`settled`", that is, updated from their old values (if any) to their new values. This can give you
 fine-grained control over CSS transitions.
 
-(((hx-swap, show)))
 `show`::
+(((hx-swap, show))) 
 Allows you to specify an element that should be shown -- that is, scrolled into the viewport of the browser if
 necessary -- when a request is completed.
 
-(((hx-swap, scroll)))
 `scroll`::
+(((hx-swap, scroll))) 
 Allows you to specify a scrollable element (that is, an element with scrollbars), that should be scrolled to the top or
 bottom when a request is completed.
 
-(((hx-swap, focus-scroll)))
+
 `focus-scroll`::
+(((hx-swap, focus-scroll))) 
 Allows you to specify that htmx should scroll to the focused element when a request completes. The default for this
 modifier is "`false.`"
 
@@ -98,6 +100,7 @@ More details and examples can be found online in the `hx-swap` https://htmx.org/
 
 === hx-trigger
 (((hx-trigger, about)))
+(((hx-trigger, element defaults)))
 Like `hx-swap`, `hx-trigger` can often be omitted when you are using htmx, because the default behavior is typically
 what you want.  Recall the default triggering events are determined by an element's type:
 
@@ -119,12 +122,12 @@ example we implemented in Contact.app:
 
 This example took advantage of two modifiers available for the `hx-trigger` attribute:
 
-(((hx-trigger, delay)))
 `delay`::
+(((hx-trigger, delay)))
 Allows you to specify a delay to wait before a request is issued.  If the event occurs again, the first event is discarded and the timer resets.  This allows you to "`debounce`" requests.
 
-(((hx-trigger, changed)))
 `changed`::
+(((hx-trigger, changed)))
 Allows you to specify that a request should only be issued when the `value` property of the given element has changed.
 
 `hx-trigger` has several additional modifiers.  This makes sense, because events are fairly complex and we want to be
@@ -132,34 +135,33 @@ able to take advantage of all the power they offer.  We will discuss events in m
 
 Here are the other modifiers available on `hx-trigger`:
 
-(((hx-trigger, once)))
 `once`::
-  The given event will only trigger a request once.
+(((hx-trigger, once)))  
+The given event will only trigger a request once.
 
-(((hx-trigger, throttle)))
 `throttle`::
-  Allows you to throttle events, only issuing them once every certain interval.  This is different than `delay` in that
-  the first event will trigger immediately, but any following events will not trigger until the throttle time period
-  has elapsed.
+(((hx-trigger, throttle)))
+Allows you to throttle events, only issuing them once every certain interval.  This is different than `delay` in that
+the first event will trigger immediately, but any following events will not trigger until the throttle time period
+has elapsed.
 
-(((hx-trigger, from)))
 `from`::
-  A CSS selector that allows you to pick another element to listen for events on.  We will see an example of this used
-  later in the chapter.
+(((hx-trigger, from)))
+A CSS selector that allows you to pick another element to listen for events on.  We will see an example of this used later in the chapter.
 
-(((hx-trigger, target)))
 `target`::
+(((hx-trigger, target)))
   A CSS selector that allows you to filter events to only those that occur directly on a given element.  In the DOM,
   events "`bubble`" to their parent elements, so a `click` event on a button will also trigger a `click` event on a parent
   `div`, all the way up to the `body` element.  Sometimes you want to specify an event directly on a given element, and
   this attribute allows you to do that.
 
-(((hx-trigger, consume)))
 `consume`::
+(((hx-trigger, consume)))
   If this option is set to `true`, the triggering event will be cancelled and not propagate to parent elements.
 
-(((hx-trigger, queue)))
 `queue`::
+(((hx-trigger, queue)))
   This option allows you to specify how events are queued in htmx.  By default, when htmx receives a triggering event,
   it will issue a request and start an event queue.  If the request is still in flight when another event is received,
   it will queue the event and, when the request finishes, trigger a new request.  By default, it only keeps the last
@@ -168,7 +170,7 @@ Here are the other modifiers available on `hx-trigger`:
 
 ==== Trigger filters
 
-(((hx-trigger, filters)))
+(((hx-trigger, event filters)))
 The `hx-trigger` attribute also allows you to specify a _filter_ for events by using square brackets enclosing a
 JavaScript expression after the event name.
 
@@ -211,6 +213,7 @@ In addition to these modifiers, `hx-trigger` offers a few "`synthetic`" events, 
 regular DOM API.  We have already seen `load` and `revealed` in our lazy loading and infinite scroll examples, but
 htmx also gives you an `intersect` event that triggers when an element intersects its parent element.
 
+(((hx-trigger, intersect)))
 This synthetic event uses the modern Intersection Observer API, which you can read more about
 at https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API[MDN].
 
@@ -226,20 +229,20 @@ Htmx offers many other less commonly used attributes for fine-tuning the behavio
 
 Here are some of the most useful ones:
 
-(((hx-push-url)))
 hx-push-url::
+(((hx-push-url)))
   "`Pushes`" the request URL (or some other value) into the navigation bar.
 
-(((hx-preserve)))
 hx-preserve::
+(((hx-preserve)))
   Preserves a bit of the DOM between requests; the original content will be kept, regardless of what is returned.
 
-(((hx-sync)))
 hx-sync::
+(((hx-sync)))
   Synchronized requests between two or more elements.
 
-(((hx-disable)))
 hx-disable::
+(((hx-disable)))
   Disables htmx behavior on this element and any children.  We will come back to this when we discuss the topic of security.
 
 Let's take a look at `hx-sync`, which allows us to synchronize AJAX requests between two or more elements.  Consider
@@ -322,20 +325,20 @@ add more functionality to your application, either via htmx itself, or by way of
 
 Here are some of the most commonly used events triggered by htmx:
 
-((("htmx events", "htmx:load")))
 `htmx:load`::
+((("htmx events", "htmx:load")))
   Triggered when new content is loaded into the DOM by htmx.
 
-((("htmx events", "htmx:configRequest")))
 `htmx:configRequest`::
+((("htmx events", "htmx:configRequest")))
   Triggered before a request is issued, allowing you to programmatically configure the request or cancel it entirely.
 
-((("htmx events", "htmx:afterRequest")))
 `htmx:afterRequest`::
+((("htmx events", "htmx:afterRequest")))
   Triggered after a request has responded.
 
-((("htmx events", "htmx:abort")))
 `htmx:abort`::
+((("htmx events", "htmx:abort")))
   A custom event that can be sent to an htmx-powered element to abort an open request.
 
 === Using the htmx:configRequest Event
@@ -379,16 +382,16 @@ executes, this `headers` property is read by htmx and used to construct the requ
 The `detail` property of the `htmx:configRequest` event contains a slew of useful properties that you can update to change the
 "shape" of the request, including:
 
-((("htmx:configRequest", "detail.parameters")))
 `detail.parameters`::
+((("htmx:configRequest", "detail.parameters")))
 Allows you to add or remove request parameters
 
-((("htmx:configRequest", "detail.target")))
 `detail.target`::
+((("htmx:configRequest", "detail.target")))
 Allows you to update the target of the request
 
-((("htmx:configRequest", "detail.verb")))
 `detail.verb`::
+((("htmx:configRequest", "detail.verb")))
 Allows you to update HTTP "verb" of the request (e.g. `GET`)
 
 So, for example, if the server-side team decided they wanted the token included as a parameter, rather than as a
@@ -533,20 +536,20 @@ but htmx supports quite a few more headers for both requests and responses.  In 
 headers present in HTTP Requests.  Here are some of the more important headers you can use to change htmx behavior with
 HTTP responses:
 
-((("response header", HX-Location)))
 `HX-Location`::
-  Causes a client-side redirection to a new location
+ ((("response header", HX-Location)))
+ Causes a client-side redirection to a new location
 
-((("response header", HX-Push-Url)))
 `HX-Push-Url`::
+((("response header", HX-Push-Url)))
   Pushes a new URL into the location bar
 
-((("response header", HX-Refresh)))
 `HX-Refresh`::
+((("response header", HX-Refresh)))
   Refreshes the current page
 
-((("response header", HX-Retarget)))
 `HX-Retarget`::
+((("response header", HX-Retarget)))
   Allows you to specify a new target to swap the response content into on the client side
 
 You can find a reference for all requests and response headers in the https://htmx.org/reference/#headers[htmx documentation].
@@ -601,7 +604,7 @@ If you want to update other content in htmx, you have a few options:
 
 The first option, and the simplest, is to "`expand the target.`" That is, rather than simply replacing a small part
 of the screen, expand the target of your htmx-driven request until it is large enough to enclose all the elements that
-need to updated on a screen.  This has the tremendous advantage of being simple and reliable.  The downside is that
+need to be updated on a screen.  This has the tremendous advantage of being simple and reliable.  The downside is that
 it may not provide the user experience that you want, and it may not play well with a particular server-side template
 layout.  Regardless, we always recommend at least thinking about this approach first.
 
@@ -609,7 +612,7 @@ layout.  Regardless, we always recommend at least thinking about this approach f
 === Out of Band Swaps
 
 ((("hx-swap-oob")))
-((("out of band swaps")))
+(((htmx, "out of band swaps")))
 A second option, a bit more complex, is to take advantage of "`Out Of Band`" content support in htmx.  When
 htmx receives a response, it will inspect it for top-level content that includes the `hx-swap-oob` attribute.  That content will be removed from the response, so it will not be swapped into the DOM in the normal manner.  Instead,
 it will be swapped in for the content that it matches by id.
@@ -667,7 +670,7 @@ requires, out of band swapping can be a powerful mechanism for content updates.
 
 === Events
 
-(((events)))
+(((htmx patterns, server-triggered events)))
 Finally, the most complex mechanism for updating content is the one we saw back in the events section: using server-triggered
 events to update elements.  This approach can be very clean, but also requires a deeper conceptual knowledge of HTML
 and events, and a commitment to the event-driven approach.  While we like this style of development, it isn't for everyone.
@@ -678,6 +681,7 @@ this approach, and we are quite fond of it.
 
 === Being Pragmatic
 
+(((hypermedia, limitations)))
 All of these approaches to the "`Updating Other Content`" problem will work, and will often work well.  However, there may
 come a point where it would just be simpler to use a different approach for your UI, like the reactive one.  As much as we like
 the hypermedia approach, the reality is that there are some UX patterns that simply cannot be implemented
@@ -698,6 +702,7 @@ experience is that, with htmx, hypermedia is a tool you can reach for frequently
 == Debugging
 
 (((events, debugging)))
+(((htmx, debugging)))
 We are not ashamed to admit: we are big fans of events.  They
 are the underlying technology of almost any interesting user interface, and are particularly useful in the DOM once they
 have been unlocked for general use in HTML.  They let you build nicely decoupled software while often preserving
@@ -798,6 +803,7 @@ with htmx.
 
 == Security Considerations
 
+(((htmx, security)))
 (((security)))
 In general, htmx and hypermedia tends to be more secure than JavaScript heavy approaches to building web applications. This
 is because, by moving much of the processing to the back end, the hypermedia approach tends not to expose as much surface
@@ -825,9 +831,7 @@ A common feature to disable using a CSP is the `eval()` feature of JavaScript, w
 JavaScript code from a string.  This has proven to be a security issue and many teams have decided that it is not worth
 the risk to keep it enabled in their web applications.
 
-((("Content Security Policy (CSP)", "and event filters")))
-((("Content Security Policy (CSP)", "eval reliance")))
-((("event filters", "eval reliance")))
+((("event filters", security)))
 Htmx does not make heavy use of `eval()` and, thus, a CSP with this restriction in place will be fine.  The one
 feature that does rely on `eval()` is event filters, discussed above.  If you decide to disable `eval()` for your
 web application, you will not be able to use the event filtering syntax.

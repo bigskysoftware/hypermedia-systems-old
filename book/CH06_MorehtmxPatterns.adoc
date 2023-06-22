@@ -52,6 +52,7 @@ search-as-you-type behavior we want.
 
 === Adding Active Search
 
+(((htmx patterns, active search)))
 To add active search behavior, we will attach a few htmx attributes to the search input.  We will leave the current form as it is, with an `action` and `method`, so that the normal
 search behavior works even if a user does not have JavaScript enabled.  This will make our "`Active Search`" improvement a nice "`progressive enhancement.`"
 
@@ -426,8 +427,8 @@ the browser's notion of history: if you click the back button it will take you t
 from.  If you submit two searches and want to go back to the first one, you can simply hit back and the browser
 will "`return`" to that search.
 
-As it stands right now, during our Active Search, we are not updating the browser's navigation bar. So, users aren't getting
-nice copy-and-pasteable links and you aren't getting history entries either, which means no back button support.  Fortunately, we've already seen how to fix this: with the `hx-push-url` attribute.
+(((htmx patterns, back button support)))
+As it stands right now, during our Active Search, we are not updating the browser's navigation bar. So, users aren't getting links that can be copied and pasted, and you aren't getting history entries either, which means no back button support.  Fortunately, we've already seen how to fix this: with the `hx-push-url` attribute.
 
 The `hx-push-url` attribute lets you tell htmx "`Please push the URL of this request into the browser's navigation bar.`"
 Push might seem like an odd verb to use here, but that's the term that the underlying browser history API uses, which
@@ -469,6 +470,7 @@ a CSS selector that points to the indicator for a given element.  The indicator 
 some sort of animated image, such as a gif or svg file, that spins or otherwise communicates visually that "`something
 is happening.`"
 
+(((htmx patterns, request indicator)))
 (((hx-indicator)))
 Let's add a spinner after our search input:
 
@@ -518,6 +520,7 @@ that don't have JavaScript enabled.
 
 == Lazy Loading
 
+(((htmx patterns, lazy loading)))
 With Active Search behind us, let's move on to a very different sort of enhancement: lazy loading.  Lazy loading is
 when the loading of a particular bit of content is deferred until later, when needed.  This is commonly used as a
 performance enhancement: you avoid the processing resources necessary to produce some data until that data is actually
@@ -630,7 +633,7 @@ def contacts_count():
 <4> Return the string with the total number of contacts.
 
 So now we have moved the performance issue out of the `/contacts` handler code, which renders the main contacts table,
-and created a new HTTP end point that will produce this expensive-to-create count string for us.
+and created a new HTTP endpoint that will produce this expensive-to-create count string for us.
 
 Now we need to get the content from this new handler _into_ the span, somehow.  As we said earlier, the default behavior
 of htmx is to place any content it receives for a given request into the `innerHTML` of an element, and that turns out
@@ -680,6 +683,7 @@ Lazy Loading is a great tool to have in your belt when optimizing web applicatio
 
 === Adding An Indicator
 
+(((htmx patterns, request indicator)))
 A shortcoming of the current implementation is that currently there is no indication that the count request is in flight,
 it just appears at some point when the request finishes.
 
@@ -716,7 +720,7 @@ we see how htmx provides flexible, composable features and building blocks. Impl
 
 === But That's Not Lazy!
 
-((("lazy loading")))
+(((htmx patterns, "lazy loading")))
 You might say "`OK, but that's not really lazy.  We are still loading the count immediately when the page is loaded,
 we are just doing it in a second request.  You aren't really waiting until the value is actually needed.`"
 
@@ -743,6 +747,7 @@ approach.
 
 == Inline Delete
 
+(((htmx patterns, inline delete)))
 For our next hypermedia trick, we are going to implement the "`Inline Delete`" pattern.  With this feature, a contact can
 be deleted directly from the table of all contacts, rather than requiring the user to navigate all the way to the edit view
 of particular contact, in order to access the "`Delete Contact`" button we added in the last chapter.
@@ -919,6 +924,7 @@ dramatically different behavior. Hypermedia is powerful in this manner.
 
 === The Htmx Swapping Model
 
+(((htmx, swap model)))
 This is pretty cool, but there is another improvement we can make if we take some time to understand the htmx content
 swapping model: it would be nice if, rather than just instantly deleting the row, we faded it out before we removed
 it.  The fade would make it clear that the row is being removed, giving the user some nice visual feedback on the
@@ -945,6 +951,8 @@ that these small delays allow _CSS transitions_ to occur.
 
 .CSS Transitions
 ****
+
+(((CSS transitions)))
 CSS transitions are a technology that allow you to animate a transition from one style to another.  So, for example, if
 you changed the height of something from 10 pixels to 20 pixels, by using a CSS transition you can make the element
 smoothly animate to the new height.  These sorts of animations are fun, often increase application usability, and are
@@ -1016,7 +1024,7 @@ any JavaScript to implement the feature.)
 
 == Bulk Delete
 
-((("bulk delete")))
+(((htmx patterns, bulk delete)))
 The final feature we are going to implement in this chapter is a "`Bulk Delete.`"  The current mechanism for deleting users
 is nice, but it would be annoying if a user wanted to delete five or ten contacts at a time, wouldn't it?  For the bulk
 delete feature, we want to add the ability to select rows via a checkbox input and delete them all in a single go by clicking
@@ -1160,6 +1168,8 @@ the web.
 [.design-note]
 .HTML Notes: Accessible by Default?
 ****
+(((ARIA)))
+(((accessibility)))
 Accessibility problems can arise when we try to implement controls that aren't built into HTML.
 
 Earlier, in Chapter One, we looked at the example of a <div> improvised to work like a button.
@@ -1196,8 +1206,9 @@ It's not impossible, not even that hard, to make your own tab set implementation
 However, it's difficult to trust that a new implementation will work for all users in all environments, since most of us have limited resources for testing.
 
 _Stick with established libraries_ for UI interactions. If a use case requires a bespoke solution, _test exhaustively_ for keyboard interaction and accessibility. Test manually.
-Test automatically. Test with screenreaders, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI). Testing is critical to ensure machine readability, or human readability, or page weight.
+Test automatically. Test with screen readers, test with a keyboard, test on different browsers and hardware, and run linters (while coding and/or in CI). Testing is critical to ensure machine readability, or human readability, or page weight.
 
+(((HTML, "<details>")))
 Also consider: Does the information need to be presented as tabs?
 Sometimes the answer is yes, but if not, a sequence of details and disclosures fulfills a very similar purpose.
 

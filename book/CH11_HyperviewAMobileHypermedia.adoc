@@ -171,8 +171,8 @@ After all, we don't ask users to first download and install a binary to view a w
 No, users just enter a URL in the address bar of a general-purpose web browser.
 A single HTML client renders apps from any HTML server.
 
-.One HTML server, multiple HTML clients
-image::diagram/one-server-many-clients.svg[Many clients connect to one server]
+.One HTML client, multiple HTML servers
+image::diagram/one-client-many-servers.svg[Many clients connect to one server]
 
 It is theoretically possible to build an equivalent general-purpose "`Hyperview browser.`"
 This HXML client would render apps from any HXML server, and users would enter a URL to specify the app they want to use.
@@ -181,7 +181,7 @@ Users expect to find and install apps from an app store, and launch them from th
 Hyperview embraces this app-centric paradigm of today's popular mobile platforms.
 That means that the HXML client (app binary) renders its UI from a single pre-configured HXML server:
 
-.One HXML server, one HXML client
+.One HXML client, one HXML server
 image::diagram/one-server-one-hxml-client.svg[One mobile client connects to the server]
 
 Luckily, developers do not need to write a HXML client from scratch; the open-source client library does 99% of the work.

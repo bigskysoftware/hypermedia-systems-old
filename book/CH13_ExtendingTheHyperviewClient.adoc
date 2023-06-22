@@ -513,8 +513,8 @@ The React Native components for the buttons and main content are created using a
 - Turn those elements into React Native components using `Hyperview.renderChildren()`.
 - Set the components as children or props of `Swipeable`.
 
-.Component rendering delegation
-image::figure_hyperview_components.png["The HyperviewClient delegates to us to render XML swipe:row element. We delegate back to render text elements."]
+.Rendering delegation between the client and the custom components
+image::diagram/hyperview-components.svg["The HyperviewClient delegates to us to render XML swipe:row element. We delegate back to render text elements."]
 
 This code may be hard to follow if you've never worked with React or React Native.
 That's OK.

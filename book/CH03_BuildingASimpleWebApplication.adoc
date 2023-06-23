@@ -885,9 +885,11 @@ that will let us improve our contact application while retaining the hypermedia-
 
 
 // TODO dz4k rewrite
-[.design-note]
-.HTML Notes: Framework Soup
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: Framework Soup
+
 (((components)))
 Components encapsulate a section of a page along with its dynamic behavior.
 While encapsulating behavior is a good way to organize code,
@@ -911,4 +913,3 @@ Some SPA frameworks, and some web components, make this more difficult by puttin
 While these abstractions can allow developers to create richer UI or work faster,
 their pervasiveness means that developers can lose sight of the actual HTML (and JavaScript) being sent to clients.
 Without diligent testing, this leads to inaccessibility, poor SEO, and bloat.
-****

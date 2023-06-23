@@ -512,9 +512,11 @@ another.
 With properly built "`thin`" controllers and "`fat`" models, keeping two separate APIs both in sync and yet
 still evolving separately is not as difficult or as crazy as it might sound.
 
-[.design-note]
-.HTML Notes: Microformats
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: Microformats
+
 https://microformats.org/[Microformats] is a standard for embedding machine-readable structured data in HTML.
 (((Microformats)))
 It uses classes to mark certain elements as containing information to be extracted,
@@ -554,5 +556,3 @@ A protocol or standard that requires websites to implement a JSON API has a high
 In comparison, any website can be augmented with microformats simply by adding a few classes.
 Other HTML-embedded data formats like microdata, Open Graph are similarly easy to adopt.
 This makes microformats useful for cross-website (dare we say _web-scale_) systems like the https://indieweb.org[IndieWeb], which uses it pervasively.
-
-****

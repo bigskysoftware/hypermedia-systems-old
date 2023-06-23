@@ -734,9 +734,11 @@ Ongoing app updates and maintenance for both web and mobile can be done at the s
 Yes, there is a story for Hypermedia-Driven Applications on mobile.
 
 
-[.design-note]
-.HTML Notes: Good-Enough UX and Islands of Interactivity
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: Good-Enough UX and Islands of Interactivity
+
  A problem many SPA developers face when coming to the HDA approach is that they look at their current SPA application and imagine implementing it exactly using hypermedia. While htmx and other hypermedia-oriented libraries significantly close the interactivity gap between hypermedia-based applications and SPAs, that gap still exists.
 
 As we saw in Chapter Two, Roy Fielding noted this tradeoff with respect to the web’s RESTful network architecture, where "information is transferred in a
@@ -755,4 +757,3 @@ But this experience stinks compared to what people are used to: drag-and-drop.
 In cases like this, it is perfectly fine to use a front-end heavy approach, such as SortableJS, as an “`Island of Interactivity.`”
 
 This is an excellent way to encapsulate richer UX within an HDA.
-****

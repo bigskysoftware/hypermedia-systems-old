@@ -1079,9 +1079,11 @@ behavior, we are still exchanging hypermedia with the server, with no JSON API r
 As the web was designed.
 
 
-[.design-note]
-.HTML Notes: Caution With Modals and "'Display: none'"
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: Caution With Modals and "'Display: none'"
+
 (((modals)))
 ((("display: none")))
 _Think twice about modals._ Modal windows have become popular, almost standard, in many web applications today.
@@ -1111,4 +1113,3 @@ _Use `display: none;` with care_. The issue is that it is not purely cosmetic --
 ----
 
 `vh` is short for "`visually hidden.`" This class uses multiple methods and workarounds to make sure no browser removes the element's function.
-****

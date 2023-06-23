@@ -1378,9 +1378,11 @@ Just don't make it a habit.
 
 
 
-[.design-note]
-.HTML Notes: HTML is for Applications
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: HTML is for Applications
+
 A prevalent meme among developers suggests that HTML was designed for "`documents`" and is unsuitable for "`applications.`"
 In reality, hypermedia is not only a sophisticated, modern architecture for applications, but it can allow us to do away with this artificial app/document split for good.
 
@@ -1401,4 +1403,3 @@ ____
 * Wanted a window anyway for a laugh? We had a tool for that: It was called "ELECTRON"
 * "yes I would love to write 4 DIFFERENT copies of the same UI" -  Statements dreamed up by the Utterly Deranged
 ____
-****

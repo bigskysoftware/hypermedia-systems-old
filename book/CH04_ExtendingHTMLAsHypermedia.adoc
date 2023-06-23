@@ -951,9 +951,11 @@ them.
 
 
 
-[.design-note]
-.HTML Notes: Budgeting For HTML
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: Budgeting For HTML
+
 The close relationship between content and markup means that
 good HTML is labor-intensive.
 Most sites have a separation between the authors,
@@ -969,4 +971,3 @@ Thus, we don't expect every site to contain perfectly conformant HTML.
 What's most important is to avoid _wrong_ HTML -- it can be better to fall back on a more generic element than to be precisely incorrect.
 
 If you have the resources, however, putting more care in your HTML will produce a more polished site.
-****

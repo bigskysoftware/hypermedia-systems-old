@@ -751,9 +751,10 @@ In the coming chapters you will develop a firm understanding of all the benefits
 We hope that, in addition, you will also become as passionate about it as we are.
 
 
+:sectnums!:
+
 [.html-note]
-.HTML Notes: <div> Soup
-****
+== HTML Notes: <div> Soup
 The best-known kind of messy HTML is `<div>` soup.
 
 When developers fall back on the generic `<div>` and `<span>` elements instead of more meaningful tags,
@@ -792,4 +793,3 @@ To avoid div soup, become friendly with the HTML spec of available tags, and con
 Of course, not every UI pattern has a designated HTML element.
 We often need to compose elements and augment them with attributes.
 Before you do, though, rummage through the html tool chest. Sometimes you might be surprised by how much is available.
-****

@@ -1165,9 +1165,11 @@ are implementing these features entirely by exchanging hypermedia with a server 
 the web.
 
 
-[.design-note]
-.HTML Notes: Accessible by Default?
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: Accessible by Default?
+
 (((ARIA)))
 (((accessibility)))
 Accessibility problems can arise when we try to implement controls that aren't built into HTML.
@@ -1224,4 +1226,3 @@ Sometimes the answer is yes, but if not, a sequence of details and disclosures f
 
 Compromising UX just to avoid JavaScript is bad development.
 But sometimes it's possible to achieve an equal (or better!) quality of UX while allowing for a simpler and more robust implementation.
-****

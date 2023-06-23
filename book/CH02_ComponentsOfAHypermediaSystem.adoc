@@ -828,9 +828,11 @@ working in web development, and building a hypermedia-oriented library to boot, 
 special nature of HTML, hypermedia and the web!
 
 
-[.design-note]
-.HTML Note: HTML5 Soup
-****
+:sectnums!:
+
+[.html-note]
+== HTML Note: HTML5 Soup
+
 [quote,Confucius]
 The beginning of wisdom is to call things by their right names.
 
@@ -852,4 +854,3 @@ There's no need to rely on hearsay to keep up with developments in HTML.
 Section 4 of the spec features a list of all available elements,
 including what they represent, where they can occur, and what they are allowed to contain.
 It even tells you when you're allowed to leave out closing tags!
-****

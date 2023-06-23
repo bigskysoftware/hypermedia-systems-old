@@ -1330,10 +1330,11 @@ Yes, hypermedia can work for mobile apps, too.
 In the next two chapters we'll show how by turning the Contact.app web application into a native mobile app using Hyperview. 
 
 
+:sectnums!:
 
-[.design-note]
-.HTML Notes: Maximize Your Server-Side Strengths
-****
+[.html-note]
+== HTML Notes: Maximize Your Server-Side Strengths
+
 A big advantage of the hypermedia-driven approach is that it makes the server-side environment far more important when building your web application. Rather than simply producing JSON, your back end is an integral component in the user experience of your web application.
 
 Because of this, it makes sense to look deeply into the functionality available there. Many older web frameworks have incredibly deep functionality available around producing HTML. Features like server-side caching can make the difference between an incredibly snappy web application and a sluggish user experience.
@@ -1355,4 +1356,3 @@ When you produce your HTML on the server side, on the other hand, the developer 
 This puts far more expressive power directly in the hands of the developer producing the HTML. Because your hypermedia API can be structured around your UI needs, you can tune each endpoint to issue as few data store requests as possible.
 
 A good rule of thumb is that every request should shoot to have three or fewer data-store accesses.
-****

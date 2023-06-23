@@ -107,6 +107,14 @@ export default () => {
                     tn.data = tn.data.slice(2); // remove dot
                 });
             })
+<<<<<<< HEAD
+=======
+
+            $$(document, ".html-note").forEach(htmlNote => {
+                htmlNote.classList.add("info");
+                htmlNote.tagName = "aside";
+            })
+>>>>>>> 1746a4b (html notes markup update)
         })
     }
 }

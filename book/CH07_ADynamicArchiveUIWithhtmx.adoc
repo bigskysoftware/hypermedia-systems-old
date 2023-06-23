@@ -707,9 +707,11 @@ pure hypermedia. It took about 16 lines of front end code and 16 lines of backen
 
 HTML, with a bit of help from a hypermedia-oriented JavaScript library such as htmx, can in fact be extremely powerful and expressive.
 
-[.design-note]
-.HTML Notes: Markdown soup
-****
+:sectnums!:
+
+[.html-note]
+== HTML Notes: Markdown soup
+
 [.dfn]_Markdown soup_ is the lesser known sibling of `<div>` soup.
 This is the result of web developers limiting themselves to the set of elements that the Markdown language provides shorthand for,
 even when these elements are incorrect.
@@ -765,6 +767,3 @@ Available: <https://hypermedia.systems/>
 ----
 <1> `reference_list` is a macro that will transform the plain text to highly-detailed HTML.
 <2> A processor can also resolve identifiers, so we don't have to manually keep the reference list in order and the in-text citations in sync.
-****
-
-

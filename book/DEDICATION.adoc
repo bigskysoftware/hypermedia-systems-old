@@ -1,0 +1,18 @@
+= Dedication
+:url: /book/dedication/
+:layout: frontmatter.njk
+:chapter: -2
+
+[.airy.padding-block]
+--
+
+[.big]_To my family and the htmx discord._ -- Carson Gross
+
+[.big]_To my wife Tarunya, for her support through the ups and downs of this project._ -- Adam Stepinski
+
+[.big]_+++<span lang="tr">Kendilerine layık olmasa da annem Lamia Akşimşek ve babam Özgür Akşimşek&#8217;e.</span>+++_ -- Deniz Akşimşek
+
+--
+
+[.secondary-font.f-row,role="justify-content:end"]
+*Next:* link:/book/contents[Table of Contents]

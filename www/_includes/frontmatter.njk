@@ -1,7 +1,8 @@
 ---
 layout: layout.njk
 ---
-
+{# {% if title %}
 <header><h1>{{ title | safe }}</h1></header>
+{% endif %} #}
 <main>{{ content | safe }}</main>
 <footer>{% include "global-footer.njk" %}</footer>

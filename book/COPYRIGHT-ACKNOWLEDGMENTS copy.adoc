@@ -1,0 +1,42 @@
+= Copyright & Acknowledgments
+:tags: frontmatter
+:!toc:
+:chapter: -1
+:layout: frontmatter.njk
+:url: /book/copyright-acknowledgments/
+
+[.allcaps.massivetext.display-font.italic,role="text-align:center"]
+Hypermedia Systems
+
+[.cite.block.italic.bold]#Hypermedia Systems#
+(C) 2023 Carson Gross, Adam Stepinski, Deniz Akşimşek
+
+*Editor:* Wm Talcott
+
+CC BY-NC-SA: This work is licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License.
+To view a copy of this license, visit
+http://creativecommons.org/licenses/by-nc-sa/4.0/
+or send a letter to Creative Commons, PO Box 1866, Mountain View,
+CA 94042, USA.
+
+
+[discrete,role="<h6> bold"]
+== Acknowledgements
+
+Thanks to:
+
+* Berkeley Graphics for their permission to use [.cite]_Berkeley Mono_ and the design of the book cover.
+* All contributors to the book: https://github.com/bigskysoftware/hypermedia-systems/graphs/contributors,
+* Manning Publications for their support in the initial stages of writing this book.
+* India Hackle for her valuable feedback and editing.
+
+[discrete,role="<h6> bold"]
+== Colophon
+
+Typefaces: Robin Casady, [.cite]#ChicagoFLF# (headings); TypeTogether, [.cite]#Literata# (body text); Berkeley Graphics, [.cite]#Berkeley Mono# (code).
+
+Tools: Asciidoc, https://asciidoc.org/ (markup language); HTML; CSS; Paged.js, https://pagedjs.org/.
+
+[.secondary-font.f-row,role="justify-content:end"]
+*Next:* link:/book/dedication[Dedication]

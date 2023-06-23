@@ -1,7 +1,7 @@
 = Copyright & Acknowledgments
 :tags: frontmatter
 :!toc:
-:chapter: -1
+:chapter: -a
 :layout: frontmatter.njk
 :url: /book/copyright-acknowledgments/
 

@@ -13,7 +13,7 @@ Hypermedia Systems
 
 *Editor:* Wm Talcott
 
-CC BY-NC-SA: This work is licensed under the Creative Commons
+*CC BY-NC-SA:* This work is licensed under the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License.
 To view a copy of this license, visit
 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -34,9 +34,9 @@ Thanks to:
 [discrete,role="<h6> bold"]
 == Colophon
 
-Typefaces: Robin Casady, [.cite]#ChicagoFLF# (headings); TypeTogether, [.cite]#Literata# (body text); Berkeley Graphics, [.cite]#Berkeley Mono# (code).
+Typefaces: [.cite]#ChicagoFLF# (by Robin Casady, headings), [.cite]#Literata# (by TypeTogether, body text), [.cite]#Berkeley Mono# (Berkeley Graphics, code).
 
-Tools: Asciidoc, https://asciidoc.org/ (markup language); HTML; CSS; Paged.js, https://pagedjs.org/.
+Tools: HTML, CSS, Asciidoc (https://asciidoc.org/, markup language), Paged.js (https://pagedjs.org/).
 
 [.secondary-font.f-row,role="justify-content:end"]
 *Next:* link:/book/dedication[Dedication]

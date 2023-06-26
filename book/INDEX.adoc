@@ -1,0 +1,366 @@
+= Index
+
+:url: /index/
+
+accessibility	154, 207
+AJAX	21, 86, 98, 102
+Alpine.js	213
+Alpine.js, installing	213
+Alpine.js, x-data	213
+Alpine.js, x-if	216
+Alpine.js, x-model	216
+Alpine.js, x-on:click	214
+Alpine.js, x-text	214
+anchor tag, <a>	17, 81
+Angular	23
+Archiver	159
+ARIA	154, 207
+authentication	239
+auto-download	172
+back button	98
+Berners-Lee, Tim	15
+browser history	97, 136
+caching	39, 136
+canceling a request	183
+complexity	24
+complexity budget	31
+components	72, 74, 222
+conditional rendering	136, 161
+Contact.app, model	59
+Contact.app, specs	57
+Contact.app, table	60
+content negotiation	309-13
+Content Security Policy (CSP)	193
+CRUD	37, 57
+CSS Transitions	149, 170
+Data API, endpoint	314
+debouncing	118
+display: none	126
+Document Object Model (DOM)	80
+DOM, partial updates	83, 86
+endpoints	68, 161, 234, 314
+event bubbling	92
+event filter, example	92
+event filters, security	193
+event modifier, changed	120
+event, change (see hx-trigger, change)	
+event, keyup (see hx-trigger, keyup)	
+events	90, 181, 189, 301
+event, click (see hx-trigger, click)	
+events, debugging	190
+events, listener	93, 182, 215, 302
+events, submit (see hx-trigger, submit)	
+factoring	72, 133, 277
+Fetch API	21
+Fielding, Roy	8, 16, 42-52, 228
+Flash of Unstyled Content (FOUC)	104
+Flask	55,
+Flask, decorators	55
+Flask, handlers	55, 58
+Flask, redirect	57, 108
+Flask, routes	55
+Flask, send_file()	169
+for loop	134,
+form tag, <form>	16, 18
+form tag, in tables	
+forms	94, 152
+GET request	18 
+HATEOAS	47, 279
+HDA (see Hypermedia-Driven Application)	
+Hotwire	84
+HOWL stack	41
+HTML, <details>	155
+HTML, 2.0	16, 25
+HTML, history of	16
+HTML, inputs	114, 137
+HTML, opportunities	94
+htmx	
+htmx events	181
+htmx events, htmx:abort	182, 183
+htmx events, htmx:afterRequest	182
+htmx events, htmx:beforeSwap	187
+htmx events, htmx:configRequest	182
+htmx events, htmx:load	182
+htmx patterns, active search	128
+htmx patterns, boosting	102
+htmx patterns, bulk delete	151
+htmx patterns, click to load	122
+htmx patterns, confirmation dialog	111
+htmx patterns, delete	108
+htmx patterns, download archive	157
+htmx patterns, infinite scroll	125
+htmx patterns, inline delete	144
+htmx patterns, inline validation	115, 118
+htmx patterns, integration using events	226
+htmx patterns, keyboard shortcut	93
+htmx patterns, lazy loading	139
+htmx patterns, lazy loading	139
+htmx patterns, pagination	120-122
+htmx patterns, request indicator	137, 143
+htmx patterns, server-triggered events	189
+htmx-indicator	138, 143
+htmx-swapping	150
+htmx, about	83, 343
+htmx, attribute inheritance	104
+htmx, attributes	85, 176
+htmx, browser history	97
+htmx, configuration	193
+htmx, debugging	190
+htmx, form values	95
+htmx, HTML based	86
+htmx, htmx.ajax	217
+htmx, installing	84, 102
+htmx, location bar	111, 136
+htmx, out of band swaps	188
+htmx, security	192
+htmx, settling	170
+htmx, swap model	148, 170
+htmx, transclusion (see ‘swap model’)	83, 86
+htmx:configRequest, detail.parameters	183
+htmx:configRequest, detail.target	183
+htmx:configRequest, detail.verb	183
+HTTP methods	36, 81
+HTTP methods, DELETE	36
+HTTP methods, GET	18, 35, 82
+HTTP methods, PATCH	36
+HTTP methods, POST	19, 36, 72, 82
+HTTP methods, PUT	37
+HTTP response codes	109
+HTTP response header, Cache-Control	39
+HTTP response header, Content-Disposition	169
+HTTP response header, Vary	40, 136
+HTTP response, caching	39
+HTTP response, codes	38, 186
+HTTP, cookies	239
+hx-boost	102-107
+hx-boost, disabling	173
+hx-confirm	112, 152
+hx-delete	85, 90, 107, 145
+hx-disable	180, 193
+hx-get	85, 124
+hx-include	95, 152
+hx-indicator	138, 143
+hx-patch	85
+hx-post	85
+hx-preserve	179
+hx-push-url	98, 111, 136, 179
+hx-put, about	85
+HX-Request	39
+hx-select, example	124
+hx-swap	150, 176
+hx-swap-oob	188
+hx-swap	88, 170, 176
+hx-swap, afterbegin	88
+hx-swap, afterend	88
+hx-swap, beforebegin	88
+hx-swap, beforeend	88
+hx-swap, delay	150
+hx-swap, delete	88
+hx-swap, focus-scroll	176
+hx-swap, innerHTML	88
+hx-swap, none	89
+hx-swap, outerHTML	88, 124, 146
+hx-swap, scroll	176
+hx-swap, settle	176
+hx-swap, show	176
+hx-sync	180
+hx-target, about	87, 176
+hx-target, example	87, 110, 129
+hx-trigger, about	90, 93, 177
+hx-trigger, change	
+hx-trigger, changed	120, 177
+hx-trigger, consume	178
+hx-trigger, delay	119, 128, 177
+hx-trigger, element defaults	90, 177
+hx-trigger, event filters	91, 178
+hx-trigger, from:	93, 178
+hx-trigger, intersect	179
+hx-trigger, keyup	92, 128
+hx-trigger, load	142
+hx-trigger, multiple events	92
+hx-trigger, once	177
+hx-trigger, queue	178
+hx-trigger, revealed	125, 144
+hx-trigger, synthetic events	125, 179
+hx-trigger, target	178
+hx-trigger, throttle	178
+hx-vals, about	96
+hx-vals, example	97
+hx-vals, js: prefix	97
+hx-vals, JSON	97
+HXML	248
+HXML, <behavior>	262-3
+HXML, <body>	253
+HXML, <date-field>	
+HXML, <doc>	
+HXML, <form>	296
+HXML, <header>	253
+HXML, <image>	255-6
+HXML, <item>	253-4
+HXML, <list>	253-4, 287
+HXML, <screen>	252-3
+HXML, <section-list>	255
+HXML, <section-title>	
+HXML, <section>	255,
+HXML, <select-multiple>	257
+HXML, <select-single>	257
+HXML, <styles>	253
+HXML, <switch>	257
+HXML, <text-field>	257
+HXML, <text>	253
+HXML, <view>	253
+HXML, action=‘alert’	305
+HXML, action=‘append’	266, 304
+HXML, action=‘back’	264
+HXML, action=‘close’	264
+HXML, action=‘hide’	270
+HXML, action=‘navigate’	264
+HXML, action=‘new’	264
+HXML, action=‘prepend’	266
+HXML, action=‘push’	264-5, 294
+HXML, action=‘reload’	264-5, 295
+HXML, action=‘replace-inner’	266, 287, 291
+HXML, action=‘replace’	266
+HXML, action=‘select-all’	271
+HXML, action=‘set-value’	271
+HXML, action=‘show’	270
+HXML, action=‘toggle’	270
+HXML, behavior actions	263
+HXML, behaviors	262
+HXML, custom elements	
+HXML, Hello World!	252
+HXML, multiple behaviors	275
+HXML, navigation actions	264
+HXML, styling	
+HXML, trigger=‘change’	287
+HXML, trigger=‘load’	274, 298
+HXML, trigger=‘longPress’	273
+HXML, trigger=‘on-event’	301-2
+HXML, trigger=‘press’	273
+HXML, trigger=‘refresh’	274, 290
+HXML, trigger=‘visible’	274, 289
+HXML, update actions	266
+hyperlink	17, 81
+hypermedia	14
+hypermedia client	249
+hypermedia control	14
+hypermedia system	14
+Hypermedia-Driven Application	9, 27-29
+hypermedia, advantages	24 
+Hypermedia, client	7, 41
+hypermedia, for mobile	246
+Hypermedia, history	15
+hypermedia, limitations	30, 189, 251, 334
+Hypermedia, servers	40
+hypermedia, when to use	29
+hyperscript	218
+hyperscript, array property access	222
+hyperscript, async transparency	222
+hyperscript, CSS syntax	222
+hyperscript, event filter	221
+hyperscript, event listener	221
+hyperscript, event support	222
+hyperscript, filter expression	220
+hyperscript, from	221
+hyperscript, installing	219
+hyperscript, keyboard shortcut	221
+hyperscript, syntax	219-20
+hypertext	14
+Hyperview	248
+Hyperview, alert	271
+Hyperview, behaviors	261
+Hyperview, client	249
+Hyperview, confirmation	305
+Hyperview, custom actions	272
+Hyperview, custom elements	259
+Hyperview, deployment	308
+Hyperview, email	316-19
+Hyperview, entry point URL	280-1
+Hyperview, events	301
+Hyperview, images	
+Hyperview, infinite scroll	288
+Hyperview, inputs	256-8
+Hyperview, installing	280
+Hyperview, messages	319-323
+Hyperview, phone calls	316-19
+Hyperview, post requests	269-70
+Hyperview, pull-to-refresh	290
+Hyperview, redirects	299
+Hyperview, search	281, 286
+Hyperview, share	271
+Hyperview, styling	258
+Hyperview, swipe gesture	324-333
+Hyperview, XML namespaces	
+input values	153
+Islands of interactivity	334
+JavaScript	22, 198
+Javascript Fatigue	24, 338
+JavaScript library, integrate via events	225
+JavaScript, on*	204
+Jinja2	59
+jQuery soup	202
+JSON	21
+JSON API	22, 229
+JSON API, vs. HTML	231-3
+JSON, API churn	24, 47 
+JSON, Data API	22, 229, 233
+JSON, endpoint	234
+Locality of Behavior (LoB)	203
+localStorage	182
+Markdown	174
+Microformats	241
+modals	126
+Model-View-Controller (MVC)	240-1
+Multi-Page Application (MPA)	26
+opacity	150
+polling	163, 167
+Post/Redirect/Get (PRG)	67, 73
+progress bar	164-5
+progressive enhancement	105, 112
+Python	54
+query parameters	58, 93, 121, 289
+query strings	58
+React	23
+reactivity	23, 215
+relative CSS selectors, about	96, 116-117
+relative CSS selectors, closest	96, 116, 124
+relative CSS selectors, find	96, 116
+relative CSS selectors, next	96, 116
+relative CSS selectors, previous	96, 116
+relative CSS selectors, this	96, 116
+response header, HX-Location	186
+response header, HX-Push-Url	186
+response header, HX-Refresh	186
+response header, HX-Retarget	186
+response header, HX-Trigger	185
+REST	8, 42, 233, 309
+REST API	233
+REST, constraints	42-58
+RSJS guidelines	204
+scripting, hypermedia friendly	196
+search	94
+security	192
+Separation of Concerns (SoC)	201
+Single Page Application (SPA)	22, 25
+Single Page Application (SPA), API Churn	24
+Single Page Application (SPA), complexity	24, 199
+Single Page Application (SPA), UX advantage	24
+SweetAlert2	224
+templating	59, 133, 277
+thick client application	23
+tight coupling	22
+transclusion	83, 86
+Transitional applications	26
+Uniform Resource Locator (URL)	34
+Unpoly	84
+updateUI method	22
+validation	113, 117, 120
+validation, server-side vs. client-side	114-115
+Vue.js	23
+W3C	16
+web browser (see ‘hypermedia client’)	7, 41, 62
+Web Components	222-224
+web stack	53
+web, 1.0	20
+	
+	

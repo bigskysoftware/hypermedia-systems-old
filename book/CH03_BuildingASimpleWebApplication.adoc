@@ -597,7 +597,7 @@ important to understand the overarching idea of _resources_ and _hypermedia repr
 getting worked up about the smaller details of your URL design.
 
 We recommend you just pick a reasonable, resource-oriented URL layout you like and then stay consistent.  Remember,
-in a hypermedia system, you can always change your end-points later, because you are using hypermedia as the engine
+in a hypermedia system, you can always change your endpoints later, because you are using hypermedia as the engine
 of application state!
 ****
 

@@ -296,7 +296,7 @@ transferring HTML.
 
 Thankfully, now, with htmx, we have a chance to rectify this situation.
 
-The "`right thing`", from a RESTful, resource oriented perspective is, rather than issuing an HTTP `POST` to
+The "`right thing,`" from a RESTful, resource-oriented perspective is, rather than issuing an HTTP `POST` to
 `/contacts/42/delete`, to issue an HTTP `DELETE` to `/contacts/42`.  We want to delete the contact.  The contact is
 a resource.  The URL for that resource is `/contacts/42`.  So the ideal is a `DELETE` request to `/contacts/42/`.
 
@@ -767,8 +767,8 @@ Well, no.
 
 It turns out that you can implement this functionality in htmx, using pure HTML attributes.
 
-((hx-trigger, change))
-((hx-trigger, keyup))
+(((hx-trigger, change)))
+(((hx-trigger, keyup)))
 (((event, change)))
 (((event, keyup)))
 In fact, all we need to do is to change our trigger.  Currently, we are using the default trigger for inputs, which is the

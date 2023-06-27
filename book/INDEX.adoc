@@ -2,136 +2,141 @@
 
 :url: /index/
 
-accessibility	154, 207
-AJAX	21, 86, 98, 102
-Alpine.js	213
-Alpine.js, installing	213
-Alpine.js, x-data	213
-Alpine.js, x-if	216
-Alpine.js, x-model	216
-Alpine.js, x-on:click	214
-Alpine.js, x-text	214
-anchor tag, <a>	17, 81
-Angular	23
-Archiver	159
-ARIA	154, 207
-authentication	239
-auto-download	172
-back button	98
-Berners-Lee, Tim	15
-browser history	97, 136
-caching	39, 136
-canceling a request	183
-complexity	24
-complexity budget	31
-components	72, 74, 222
-conditional rendering	136, 161
-Contact.app, model	59
-Contact.app, specs	57
-Contact.app, table	60
-content negotiation	309-13
-Content Security Policy (CSP)	193
-CRUD	37, 57
-CSS Transitions	149, 170
-Data API, endpoint	314
-debouncing	118
-display: none	126
-Document Object Model (DOM)	80
-DOM, partial updates	83, 86
-endpoints	68, 161, 234, 314
-event bubbling	92
-event filter, example	92
-event filters, security	193
-event modifier, changed	120
-event, change (see hx-trigger, change)	
-event, keyup (see hx-trigger, keyup)	
-events	90, 181, 189, 301
-event, click (see hx-trigger, click)	
-events, debugging	190
-events, listener	93, 182, 215, 302
-events, submit (see hx-trigger, submit)	
-factoring	72, 133, 277
-Fetch API	21
-Fielding, Roy	8, 16, 42-52, 228
-Flash of Unstyled Content (FOUC)	104
-Flask	55,
-Flask, decorators	55
-Flask, handlers	55, 58
-Flask, redirect	57, 108
-Flask, routes	55
-Flask, send_file()	169
-for loop	134,
-form tag, <form>	16, 18
-form tag, in tables	
-forms	94, 152
-GET request	18 
-HATEOAS	47, 279
-HDA (see Hypermedia-Driven Application)	
-Hotwire	84
-HOWL stack	41
-HTML, <details>	155
-HTML, 2.0	16, 25
-HTML, history of	16
-HTML, inputs	114, 137
-HTML, opportunities	94
-htmx	
-htmx events	181
-htmx events, htmx:abort	182, 183
-htmx events, htmx:afterRequest	182
-htmx events, htmx:beforeSwap	187
-htmx events, htmx:configRequest	182
-htmx events, htmx:load	182
-htmx patterns, active search	128
-htmx patterns, boosting	102
-htmx patterns, bulk delete	151
-htmx patterns, click to load	122
-htmx patterns, confirmation dialog	111
-htmx patterns, delete	108
-htmx patterns, download archive	157
-htmx patterns, infinite scroll	125
-htmx patterns, inline delete	144
-htmx patterns, inline validation	115, 118
-htmx patterns, integration using events	226
-htmx patterns, keyboard shortcut	93
-htmx patterns, lazy loading	139
-htmx patterns, lazy loading	139
-htmx patterns, pagination	120-122
-htmx patterns, request indicator	137, 143
-htmx patterns, server-triggered events	189
-htmx-indicator	138, 143
-htmx-swapping	150
-htmx, about	83, 343
-htmx, attribute inheritance	104
-htmx, attributes	85, 176
-htmx, browser history	97
-htmx, configuration	193
-htmx, debugging	190
-htmx, form values	95
-htmx, HTML based	86
-htmx, htmx.ajax	217
-htmx, installing	84, 102
-htmx, location bar	111, 136
-htmx, out of band swaps	188
-htmx, security	192
-htmx, settling	170
-htmx, swap model	148, 170
-htmx, transclusion (see ‘swap model’)	83, 86
-htmx:configRequest, detail.parameters	183
-htmx:configRequest, detail.target	183
-htmx:configRequest, detail.verb	183
-HTTP methods	36, 81
-HTTP methods, DELETE	36
-HTTP methods, GET	18, 35, 82
-HTTP methods, PATCH	36
-HTTP methods, POST	19, 36, 72, 82
-HTTP methods, PUT	37
-HTTP response codes	109
-HTTP response header, Cache-Control	39
-HTTP response header, Content-Disposition	169
-HTTP response header, Vary	40, 136
-HTTP response, caching	39
-HTTP response, codes	38, 186
-HTTP, cookies	239
+* accessibility	154, 207
+* AJAX	21, 86, 98, 102
+* Alpine.js	213
+** installing	213
+** x-data	213
+** x-if	216
+** x-model	216
+** x-on:click	214
+** x-text	214
+* anchor tag, <a>	17, 81
+* Angular	23
+* Archiver	159
+* ARIA	154, 207
+* authentication	239
+* auto-download	172
+* back button	98
+* Berners-Lee, Tim	15
+* browser history	97, 136
+* caching	39, 136
+* canceling a request	183
+* complexity	24
+* complexity budget	31
+* components	72, 74, 222
+* conditional rendering	136, 161
+* Contact.app 
+** model 59
+** specs 57
+* content negotiation	309-13
+* Content Security Policy (CSP)	193
+* CRUD	37, 57
+* CSS Transitions	149, 170
+* Data API, endpoint	314
+* debouncing	118
+* display: none	126
+* Document Object Model (DOM)	80
+* DOM, partial updates	83, 86
+* endpoints	68, 161, 234, 314
+* event bubbling	92
+* event filters 
+** example	92
+** security	193
+* event modifier, changed	120
+* event, change (see hx-trigger, change)	
+* event, keyup (see hx-trigger, keyup)	
+* event, click (see hx-trigger, click)	
+event, submit (see hx-trigger, submit)	
+* events	90, 181, 189, 301
+** debugging	190
+** listeners	93, 182, 215, 302
+* factoring	72, 133, 277
+* Fetch API	21
+* Fielding, Roy	8, 16, 42-52, 228
+* Flash of Unstyled Content (FOUC)	104
+* Flask	55,
+** decorators	55
+** handlers	55, 58
+** redirect	57, 108
+** routes	55
+** send_file()	169
+* for loop	134,
+* form tag, <form>	16, 18
+** in tables	
+* forms	94, 152
+* GET request	18 
+* HATEOAS	47, 279
+* HDA (see Hypermedia-Driven Application)	
+* Hotwire	84
+* HOWL stack	41
+HTML 
+** <details>	155
+** 2.0	16, 25
+** history of	16
+** inputs	114, 137
+** opportunities	94
+* htmx	
+** about 83, 343
+** browser history	97
+** configuration	193
+** debugging	190
+** form values	95
+** HTML based	86
+** htmx.ajax	217
+** installing	84, 102
+** location bar	111, 136
+** out of band swaps	188
+** security	192
+** settling	170
+** swap model (transclusion) 83, 86, 148, 170
+
+* htmx events 181
+** htmx:abort	182, 183
+** htmx:afterRequest	182
+** htmx:beforeSwap	187
+** htmx:configRequest	182
+** htmx:load	182
+* htmx patterns
+**  active search	128
+**  boosting	102
+**  bulk delete	151
+**  click to load	122
+**  confirmation dialog	111
+**  delete	108
+**  download archive	157
+**  infinite scroll	125
+**  inline delete	144
+**  inline validation	115, 118
+**  integration using events	226
+**  keyboard shortcut	93
+**  lazy loading	139
+**  pagination	120-122
+**  request indicator	137, 143
+**  server-triggered events	189
+* htmx-indicator	138, 143
+* htmx-swapping	150
+* htmx attributes	85, 176
+** attribute inheritance	104
+* htmx:configRequest 
+** detail.parameters	183
+** detail.target	183
+** detail.verb	183
+HTTP
+** cookies	239
+** methods	36, 81
+*** DELETE	36
+*** GET	18, 35, 82
+*** PATCH	36
+*** POST	19, 36, 72, 82
+*** PUT	37
+** response caching	39
+** response codes 38, 109, 186
+** response headers 
+*** Cache-Control	39
+*** Content-Disposition	169
+*** Vary	40, 136
+
 hx-boost	102-107
 hx-boost, disabling	173
 hx-confirm	112, 152

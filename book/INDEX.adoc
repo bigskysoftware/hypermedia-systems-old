@@ -366,7 +366,7 @@ event, submit (see hx-trigger, submit)
 * search	94
 * security	192
 * Separation of Concerns (SoC)	201
-Single Page Application (SPA)	22, 25
+* Single Page Application (SPA)	22, 25
 ** API Churn	24
 ** complexity	24, 199
 ** UX advantage	24

@@ -540,9 +540,9 @@ and that media type can be negotiated between the client and the server.
 
 We saw this latter aspect of the uniform interface in the `Accept` header in the requests above.
 
-((("self-descriptive messages")))
 ==== Self-descriptive messages
 
+((("self-descriptive messages")))
 The Self-Descriptive Messages constraint, combined with the next one, HATEOAS, form what we consider to be the core of
 the Uniform Interface, of REST and why hypermedia provides such a powerful system architecture.
 

@@ -1335,7 +1335,7 @@ In the next two chapters we'll show how by turning the Contact.app web applicati
 [.html-note]
 == Hypermedia Notes: Maximize Your Server-Side Strengths
 
-In the HyperView sections of the book, since we aren't using HTML, we are going to make broader observations on hypermedia
+In the Hyperview sections of the book, since we aren't using HTML, we are going to make broader observations on hypermedia
 rather than offer HTML-specific advice and thoughts.
 
 A big advantage of the hypermedia-driven approach is that it makes the server-side environment far more important when

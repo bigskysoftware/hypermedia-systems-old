@@ -737,23 +737,19 @@ Yes, there is a story for Hypermedia-Driven Applications on mobile.
 :sectnums!:
 
 [.html-note]
-== HTML Notes: Good-Enough UX and Islands of Interactivity
+== Hypermedia Notes: Good-Enough UX and Islands of Interactivity
 
-A problem many SPA developers face when coming to the HDA approach is that they look at their current SPA application and imagine implementing it exactly using hypermedia. While htmx and other hypermedia-oriented libraries significantly close the interactivity gap between hypermedia-based applications and SPAs, that gap still exists.
+A problem many SPA and native mobile developers face when coming to the HDA approach is that they look at their current
+application and imagine implementing it exactly using hypermedia. While htmx and HyperView significantly improve the
+user experience available via the hypermedia-driven approach, there are still times when it won't be easy to pull of
+a particular user experience.
 
-As we saw in Chapter Two, Roy Fielding noted this tradeoff with respect to the web’s RESTful network architecture, where "information is transferred in a
-standardized form rather than one which is specific to an application's needs."
+As we saw in Chapter Two, Roy Fielding noted this tradeoff with respect to the web’s RESTful network architecture,
+where "information is transferred in a standardized form rather than one which is specific to an application's needs."
 
-Accepting a slightly less efficient and interactive solution to a particular UX can save you a tremendous amount of complexity when building a web application.
+Accepting a slightly less efficient and interactive solution to a particular UX can save you a tremendous amount of
+complexity when building your applications.
 
-Do not let the perfect be the enemy of the good.
-
-Still, there may come a point in your application where the hypermedia approach, on its own, just doesn’t cut it.
-
-A good example of this is re-ordering a list of things. This can be done in “`pure`” hypermedia by clicking up and down arrows or having order # drop-downs next to items.
-
-But this experience stinks compared to what people are used to: drag-and-drop.
-
-In cases like this, it is perfectly fine to use a front-end heavy approach, such as SortableJS, as an “`Island of Interactivity.`”
-
-This is an excellent way to encapsulate richer UX within an HDA.
+Do not let the perfect be the enemy of the good.  Many advantages are to be gained by accepting a slightly less
+sophisticated user experience in some cases, and tools like htmx and HyperView make that compromise much more palatable
+when they are used properly.

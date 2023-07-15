@@ -1333,26 +1333,46 @@ In the next two chapters we'll show how by turning the Contact.app web applicati
 :sectnums!:
 
 [.html-note]
-== HTML Notes: Maximize Your Server-Side Strengths
+== Hypermedia Notes: Maximize Your Server-Side Strengths
 
-A big advantage of the hypermedia-driven approach is that it makes the server-side environment far more important when building your web application. Rather than simply producing JSON, your back end is an integral component in the user experience of your web application.
+In the HyperView sections of the book, since we aren't using HTML, we are going to make broader observations on hypermedia
+rather than offer HTML-specific advice and thoughts.
 
-Because of this, it makes sense to look deeply into the functionality available there. Many older web frameworks have incredibly deep functionality available around producing HTML. Features like server-side caching can make the difference between an incredibly snappy web application and a sluggish user experience.
+A big advantage of the hypermedia-driven approach is that it makes the server-side environment far more important when
+building your web application. Rather than simply producing JSON, your back end is an integral component in the user
+experience of your hypermedia application.
+
+Because of this, it makes sense to look deeply into the functionality available there. Many older web frameworks, for example,
+have incredibly deep functionality available around producing HTML. Features like server-side caching can make the
+difference between an incredibly snappy web application and a sluggish user experience.
 
 Take time to learn all the tools available to you.
 
-A good rule of thumb is to shoot to have responses in your application take less than 100ms to complete, and mature server side frameworks have tools to help make this happen.
+A good rule of thumb is to shoot to have server responses in your hypermedia-driven application take less than 100ms to
+complete, and mature server-side frameworks have tools to help make this happen.
 
-Server-side environments often have extremely mature mechanisms for factoring (or organizing) your code properly. The Model/View/Controller pattern is well-developed in most environments, and tools like modules, packages, etc. provide an excellent way to organize your code.
+Server-side environments often have extremely mature mechanisms for factoring (or organizing) your code properly. The
+Model/View/Controller pattern is well-developed in most environments, and tools like modules, packages, etc. provide an
+excellent way to organize your code.
 
-Whereas SPAs user interfaces are typically organized via components, hypermedia-driven applications are typically organized via template inclusion, where the server-side templates are broken up according to the HTML-rendering needs of the application, and then included in one another as needed. This tends to lead to fewer, chunkier files than you would find in a component-based application.
+Whereas today's SPA and mobile user interfaces are typically organized via components, hypermedia-driven applications
+are typically organized via template inclusion, where the server-side templates are broken up according to the
+hypermedia-rendering needs of the application, and then included in one another as needed. This tends to lead to fewer,
+chunkier files than you would find in a component-based application.
 
-Another technology to look for are Template Fragments, which allow you to render only part of a template file. This can reduce even further the number of template files required for your server-side application.
+Another technology to look for are Template Fragments, which allow you to render only part of a template file. This can
+reduce even further the number of template files required for your server-side application.
 
-A related tip is to take advantage of direct access to the data store. When an application is built using the SPA approach, the data store typically lives behind a JSON API. This level of indirection often prevents front end developers from being able to take full advantage of the tools available in the data store. GraphQL can help address this issue, but comes with security-related issues that do not appear to be well understood by many developers.
+A related tip is to take advantage of direct access to the data store. When an application is built using a thick client
+approach, the data store typically lives behind a data API (e.g. JSON). This level of indirection often prevents front
+end developers from being able to take full advantage of the tools available in the data store. GraphQL, for example,
+can help address this issue, but comes with security-related issues that do not appear to be well understood by many developers.
 
-When you produce your HTML on the server side, on the other hand, the developer creating that HTML can have full access to the data store and take advantage of, for example, joins and aggregation functions in SQL stores.
+When you produce your hypermedia on the server side, on the other hand, the developer creating that hypermedia can have
+full access to the data store and take advantage of, for example, joins and aggregation functions in SQL stores.
 
-This puts far more expressive power directly in the hands of the developer producing the HTML. Because your hypermedia API can be structured around your UI needs, you can tune each endpoint to issue as few data store requests as possible.
+This puts far more expressive power directly in the hands of the developer producing the final hypermedia. Because your
+hypermedia API can be structured around your UI needs, you can tune each endpoint to issue as few data store requests as possible.
 
-A good rule of thumb is that every request should shoot to have three or fewer data-store accesses.
+A good rule of thumb is that every request to your server should shoot to have three or fewer data-store accesses.  If
+you follow this rule of thumb, your hypermedia-driven application should be extremely snappy.

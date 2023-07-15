@@ -3,8 +3,6 @@
 :chapter: 07
 :url: /a-dynamic-archive-ui/
 
-== A Dynamic Archive UI
-
 Contact.app has come a long way from a traditional web 1.0-style web application:
 we've added active search, bulk delete, some nice animations, and a slew of other features.  We have reached a level
 of interactivity that most web developers would assume requires some sort of Single-Page Application JavaScript framework,

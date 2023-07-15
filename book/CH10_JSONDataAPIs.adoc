@@ -3,9 +3,6 @@
 :chapter: 10
 :url: /json-data-apis/
 
-[partintro]
-== JSON Data APIs
-
 So far we have been focusing on using hypermedia to build Hypermedia-Driven Applications.  In doing so we are
 following and taking advantage of the native network architecture of the web, and building a RESTful system, in the original sense
 of that term.

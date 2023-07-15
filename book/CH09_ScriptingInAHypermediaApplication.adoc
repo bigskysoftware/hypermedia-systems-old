@@ -489,8 +489,7 @@ As we web developers create more interactive, app-like websites, HTML's repertoi
 As we have seen, using CSS and JavaScript, we can endow existing elements with extended behavior and appearances, rivaling
 those of native controls.
 
-However, there is one thing web apps used to be unable to replicate. While these widgets are similar enough in appearance
-for most users to operate, assistive technology (e.g., screen readers) can only report the underlying HTML elements.
+However, there was one thing web apps couldn't replicate. While these widgets may _look_ similar enough to the real deal, assistive technology (e.g., screen readers) could only deal with the underlying HTML elements.
 
 Even if you take the time to get all the keyboard interactions right, some users often are unable to work with these custom
 elements easily.
@@ -501,33 +500,22 @@ a set of attributes you can add to HTML to make it meaningful to assistive softw
 ARIA has two main components that interact with one another:
 
 The first is the `role` attribute. This attribute has a predefined set of possible values:
-
-* `menu`
-* `dialog`
-* `radiogroup`
-* etc.
-
-The `role` attribute _does not add any behavior_ to HTML elements. Rather, it is a promise you make to the user.  When
+`menu, dialog, radiogroup` etc.
+The `role` attribute _does not add any behavior_ to HTML elements.
+Rather, it is a promise you make to the user.  When
 you annotate an element as `role='menu'`, you are saying: _I will make this element work like a menu._
 
-Because this is a promise you are making, if you add the `role` attribute to an element but you _don't_ uphold
-the promise, the experience for many users will be _worse_ than if the element had no `role` annotation on it at all.
-
-Because of this, it is written:
+If you add a `role` to an element but you _don't_ uphold the promise,
+the experience for many users will be _worse_ than if the element had no `role` at all.
+Thus, it is written:
 
 [quote, W3C, Read Me First | APG https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/]
 No ARIA is better than Bad ARIA.
 
-The second component of ARIA is a whole range of attributes, all sharing the `aria-` prefix:
-
-* `aria-expanded`
-* `aria-controls`
-* `aria-label`
-* etc.
-
+The second component of ARIA is the _states and properties_, all sharing the `aria-` prefix:
+`aria-expanded, aria-controls, aria-label` etc.
 These attributes can specify various things such as the state of a widget, the relationships between components, or
 additional semantics.
-
 Once again, these attributes are _promises_, not implementations.
 
 Rather than learn all the roles and attributes and try to combine them into a usable widget,
@@ -536,12 +524,11 @@ a web resource with practical information aimed directly at web developers.
 
 If you're new to ARIA, check out the following W3C resources:
 
- - https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/[ARIA Read Me First]
- - https://www.w3.org/WAI/ARIA/apg/patterns/[ARIA UI patterns]
- - https://www.w3.org/WAI/ARIA/apg/practices/[ARIA Good Practices]
+ - ARIA: Read Me First: https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/[]
+ - ARIA UI patterns: https://www.w3.org/WAI/ARIA/apg/patterns/[]
+ - ARIA Good Practices: https://www.w3.org/WAI/ARIA/apg/practices/[]
 
-Always remember to test your website for accessibility to ensure a maximum number of users can interact with it
-easily and effectively.
+Always remember to **test** your website for accessibility to ensure all users can interact with it easily and effectively.
 ****
 
 With this brief introduction to ARIA, let's return to our VanillaJS drop down menu.  We'll begin with the RSJS
@@ -719,6 +706,7 @@ more sense to use an off-the-shelf library, such as GitHub's https://github.com/
 
 But, for our relatively simple use case, vanilla JavaScript does a fine job, and we got to explore ARIA and RSJS while
 implementing it.
+
 
 == Alpine.js
 

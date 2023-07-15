@@ -1146,7 +1146,7 @@ side scripting: "`off the shelf`" components.  That is, JavaScript libraries tha
 some sort of functionality, such as showing modal dialogs.
 
 (((components)))
-Components have become very popular in the web development works, with libraries like  https://datatables.net/[DataTables]
+Components have become very popular in the web development world, with libraries like  https://datatables.net/[DataTables]
 providing rich user experiences with very little JavaScript code on the part of a user.  Unfortunately, if these libraries
 aren't integrated well into a website, they can begin to make an application feel "`patched together.`" Furthermore, some
 libraries go beyond simple DOM manipulation, and require that you integrate with a server endpoint, almost invariably

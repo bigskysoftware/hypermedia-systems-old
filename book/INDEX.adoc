@@ -121,10 +121,10 @@
 * htmx-indicator	138, 143
 * htmx-swapping	149
 
-* htmx attributes	85, 176
+* htmx attributes	85, 175
 ** attribute inheritance	104
 ** hx-boost	102-107
-*** disabling	173
+*** disabling	172
 ** hx-confirm	112, 152
 ** hx-delete	85, 90, 107, 145
 ** hx-disable	180, 193
@@ -133,7 +133,7 @@
 ** hx-indicator	138, 143
 ** hx-patch	85
 ** hx-post	85
-** hx-preserve	179
+** hx-preserve	180
 ** hx-push-url	98, 111, 136, 179
 ** hx-put, about	85
 ** hx-select, example	124
@@ -147,16 +147,15 @@
 ***  focus-scroll	176
 ***  innerHTML	88
 ***  none	89
-***  outerHTML	88, 124, 146
+***  outerHTML	88, 124, 147
 ***  scroll	176
 ***  settle	176
 ***  show	176
 ** hx-swap-oob	188
 ** hx-sync	180
-** hx-target 87, 110,129, 176	
+** hx-target 87, 110, 129, 176
 ** hx-trigger 90, 93, 177
 *** defaults	90, 177
-*** change	
 *** changed	120, 177
 *** consume	178
 *** delay	119, 128, 177

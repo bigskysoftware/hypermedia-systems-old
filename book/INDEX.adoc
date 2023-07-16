@@ -4,20 +4,19 @@
 
 * accessibility	154, 207
 * AJAX	21, 86, 98, 102
-* Alpine.js	213
-** installing	213
-** x-data	213
-** x-if	216
-** x-model	216
-** x-on:click	214
-** x-text	214
-* anchor tag, <a>	17, 81
-* Angular	23
-* Archiver	159
+* Alpine.js	212
+** installing	212
+** x-data	212
+** x-if	215
+** x-model	215
+** x-on:click	213
+** x-text	213
+* anchor tag, <a>	17, 80
+* Archiver	157
 * ARIA	154, 207
 * authentication	239
 * auto-download	172
-* back button	98
+* back button	97
 * Berners-Lee, Tim	15
 * browser history	97, 136
 * caching	39, 136
@@ -25,47 +24,46 @@
 * complexity	24
 * complexity budget	31
 * components	72, 74, 222
-* conditional rendering	136, 161
+* conditional rendering	135, 161
 * Contact.app 
 ** model 59
 ** specs 57
 * content negotiation	309-13
 * Content Security Policy (CSP)	193
 * CRUD	37, 57
-* CSS Transitions	149, 170
-* Data API, endpoint	314
-* debouncing	118
+* CSS Transitions	149, 169
+* Data APIs	229
+* debouncing	119
 * display: none	126
 * Document Object Model (DOM)	80
 * DOM, partial updates	83, 86
-* endpoints	68, 161, 234, 314
+* endpoints	161, 234, 314
 * event bubbling	92
-* event filters 
-** example	92
+* event filters
+** example	91
 ** security	193
 * event modifier, changed	120
 * event, change (see hx-trigger, change)	
 * event, keyup (see hx-trigger, keyup)	
 * event, click (see hx-trigger, click)	
-event, submit (see hx-trigger, submit)	
+* event, submit (see hx-trigger, submit)
 * events	90, 181, 189, 301
 ** debugging	190
 ** listeners	93, 182, 215, 302
-* factoring	72, 133, 277
+* factoring	72, 133, 278
 * Fetch API	21
-* Fielding, Roy	8, 16, 42-52, 228
+* Fielding, Roy	8, 16, 42-52, 227
 * Flash of Unstyled Content (FOUC)	104
-* Flask	55,
+* Flask	55
 ** decorators	55
 ** handlers	55, 58
-** redirect	57, 108
+** redirect	57, 108-109
 ** routes	55
 ** send_file()	169
-* for loop	134,
+* for loop	134
 * form tag, <form>	16, 18
-** in tables	
 * forms	94, 152
-* GET request	18 
+* GET request	17
 * HATEOAS	47, 279
 * HDA (see Hypermedia-Driven Application)	
 * Hotwire	84
@@ -74,10 +72,10 @@ event, submit (see hx-trigger, submit)
 ** <details>	155
 ** 2.0	16, 25
 ** history of	16
-** inputs	114, 137
+** inputs	113, 137
 ** opportunities	94
 * htmx	
-** about 83, 343
+** about 83
 ** browser history	97
 ** configuration	193
 ** debugging	190
@@ -106,22 +104,22 @@ event, submit (see hx-trigger, submit)
 **  boosting	102
 **  bulk delete	151
 **  click to load	122
-**  confirmation dialog	111
-**  delete	108
+**  confirmation dialog	111-112
+**  delete	107
 **  download archive	157
 **  infinite scroll	125
 **  inline delete	144
 **  inline validation	115, 118
-**  integration using events	226
-**  HX-Request	39
+**  integration using events	225
+**  HX-Request	39-40
 **  keyboard shortcut	93
 **  lazy loading	139
-**  pagination	120-122
+**  pagination	120-124
 **  request indicator	137, 143
 **  server-triggered events	189
 
 * htmx-indicator	138, 143
-* htmx-swapping	150
+* htmx-swapping	149
 
 * htmx attributes	85, 176
 ** attribute inheritance	104

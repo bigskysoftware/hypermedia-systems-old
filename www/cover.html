@@ -60,25 +60,6 @@ Enhancing web applications without using SPA frameworks.">
 
 <main class="">
 
-    <div class="box warn crowded color <small>" data-note>
-        <script>{
-            const me = document.currentScript.parentElement;
-            if (localStorage.dismissedNote) me.remove();
-        }</script>
-        <button class="iconbutton float:right"
-            onclick="
-                localStorage.dismissedNote = true;
-                this.closest(`[data-note]`).remove();
-            ">
-            <span aria-hidden="true">×</span>
-            <v-h>Dismiss</v-h>
-        </button>
-        <p style="margin: 0"> 
-        <strong class="allcaps margin-inline-end">Note</strong>
-        Hypermedia Systems is a rewrite of a book that fell out of contract with
-        a publisher and is currently a <strong>work in progress</strong>.</p>
-    </div>
-
     <div class="grid margin-block">
         <ul id="blurb" role=list data-cols="1 3" data-cols@s="1" data-rows="1 3"
             class="big margin-inline-end flow-gap">
@@ -96,19 +77,19 @@ Enhancing web applications without using SPA frameworks.">
             </span>
         </a></strong>
         </li>
-        <li><strong><a class="big <button>" href="https://www.amazon.com/dp/B0C9S88QV6/ref=sr_1_1?crid=1P0I3GXQK32TN">
+        <li><strong><a class="big <button>" href="https://www.amazon.com/dp/B0C9S88QV6/ref=sr_1_1">
             <span>
                 Hard copy
                 <small>(Buy on Amazon)</small>
             </span>
         </a></strong>
         </li>
-        <li><a disabled class="big <button>">
+        <li><strong><a class="big <button>" href="https://www.amazon.com/Hypermedia-Systems-Carson-Gross-ebook/dp/B0CC315VJK/ref=tmm_kin_swatch_0">
             <span>
                 Ebook
-                <small>(Coming soon)</small>
+                <small>(Buy on Amazon)</small>
             </span>
-        </a>
+        </a></strong>
         </li>
         </ul>
 

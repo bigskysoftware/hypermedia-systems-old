@@ -16,18 +16,33 @@
     }
 
     @font-face {
-        font-family: "Literata";
-        src: url("/fonts/Literata[opsz,wght].ttf") format("truetype");
+        font-family: "Yrsa";
+        src: url("/fonts/Yrsa-Regular.ttf") format("truetype");
+        size-adjust: 125%;
     }
-
     @font-face {
-        font-family: "Literata";
+        font-family: "Yrsa";
+        font-weight: bold;
+        src: url("/fonts/Yrsa-Bold.ttf") format("truetype");
+        size-adjust: 125%;
+    }
+    @font-face {
+        font-family: "Yrsa";
         font-style: italic;
-        src: url("/fonts/Literata-Italic[opsz,wght].ttf") format("truetype");
+        src: url("/fonts/Yrsa-Italic.ttf") format("truetype");
+        size-adjust: 125%;
+    }
+    @font-face {
+        font-family: "Yrsa";
+        font-weight: bold;
+        font-style: italic;
+        src: url("/fonts/Yrsa-BoldItalic.ttf") format("truetype");
+        size-adjust: 125%;
     }
 
     :root {
-        --main-font: "Literata", serif;
+        --main-font: "Yrsa", serif;
+        --secondary-font: sans-serif;
         --display-font: "Chicago FLF", "Impact", "Oswald", sans-serif;
         --mono-font: "Berkeley Mono", "Input Mono", "Iosevka", "Liberation Mono", "Victor Mono", "Consolas", monospace, monospace;
 

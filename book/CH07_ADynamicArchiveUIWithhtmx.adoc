@@ -212,7 +212,7 @@ to do just that:
         </button>
     {% elif archiver.status() == "Running" %}<2>
        Running...<3>
-    {% end %}
+    {% endif %}
 </div>
 ----
 <1> Only render the archive button if the status is "`Waiting.`"

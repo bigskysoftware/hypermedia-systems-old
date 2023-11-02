@@ -972,7 +972,7 @@ nothing but a few htmx attributes!
 
 (((hx-select, example)))
 We want to have a button that, when clicked, appends the rows from the next page of contacts to the current,
-exiting table, rather than re-rendering the whole table.  This can be achieved by adding a new row to our table
+existing table, rather than re-rendering the whole table.  This can be achieved by adding a new row to our table
 that has just such a button in it:
 
 [source, html]

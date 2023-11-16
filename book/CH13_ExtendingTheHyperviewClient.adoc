@@ -616,7 +616,7 @@ Let's add two buttons to the swipeable row.
 [source,xml]
 ----
 <item key="{{ contact.id }}">
-  <swipe:row xmlns:swipe="https://hypermedia.systems/hyperview/swipeable"> <1>
+  <swipe:row xmlns:swipe="https://hypermedia.systems/hyperview/swipeable">
     <swipe:main>
       <!-- omitted for brevity -->
     </swipe:main>

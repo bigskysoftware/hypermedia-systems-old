@@ -504,7 +504,7 @@ four opportunities for improvement that we enumerated regarding plain HTML:
 
 And, with `hx-target` and `hx-swap` we have addressed a third shortcoming: the requirement that the entire page be replaced.
 
-* Opportunity 4: We can now replace any element we want in our page via transclusion, and we can do so in any manner want.
+* Opportunity 4: We can now replace any element we want in our page via transclusion, and we can do so in any manner we want.
 
 So, with only seven relatively simple additional attributes, we have addressed most of the shortcomings of HTML as a
 hypermedia that we identified earlier.

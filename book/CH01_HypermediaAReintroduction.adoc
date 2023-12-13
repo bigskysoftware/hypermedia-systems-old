@@ -414,7 +414,7 @@ It leaves aside the advantages of the existing RESTful architecture of the web a
 found in HTML's native hypermedia controls in favor of JavaScript driven behaviors.
 
 ((("thick client application")))
-SPAs are more much like _thick client applications_, that is, like the client-server applications of the
+SPAs are much more like _thick client applications_, that is, like the client-server applications of the
 1980s -- an architecture popular _before_ the web came along and that the web was, in many ways, a reaction to.
 
 This approach isn't necessarily wrong, of course: there are times when a thick client approach is the appropriate choice

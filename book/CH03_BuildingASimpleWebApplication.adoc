@@ -94,7 +94,7 @@ made.  It uses a Python feature called "`decorators`" to declare the route that 
 a function to handle requests to that route.  We'll use the term "`handler`" to refer to the functions associated
 with a route.
 
-Let's create our first route definition, a simple "`Hello Flask`" route.  In the following Python code you will see the
+Let's create our first route definition, a simple "`Hello World`" route.  In the following Python code you will see the
 `@app` symbol.  This is the flask decorator that allows us to set up our routes.  Don't worry too much about
 how decorators work in Python, just know that this feature allows us to map a given _path_ to a particular function
 (i.e., handler).  The Flask application, when started, will take HTTP requests and look up the matching handler and
@@ -125,7 +125,7 @@ application.
 So we have the `index()` function immediately following our route definition for the root, and this will become the
 handler for the root URL in our web application.
 
-The handler in this case is dead simple, it just returns a string, "`Hello Flask!`", to the client.  This isn't
+The handler in this case is dead simple, it just returns a string, "`Hello World!`", to the client.  This isn't
 hypermedia yet, but a browser will render it just fine:
 
 .Hello Flask!
@@ -134,7 +134,7 @@ image::figure_2-1_hello_world.png[Browser window, large text: Hello World!]
 Great, there's our first step into Flask, showing the core technique we are going to use to respond to HTTP requests:
 routes mapped to handlers.
 
-For Contact.app, rather than rendering "`Hello Flask!`" at the root path, we are going to do something a little fancy:
+For Contact.app, rather than rendering "`Hello World!`" at the root path, we are going to do something a little fancy:
 we are going to redirect to another path, the `/contacts` path.  Redirects are a feature of HTTP that allow you to
 redirect a client to another location with an HTTP response.
 

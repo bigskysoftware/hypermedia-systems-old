@@ -460,7 +460,7 @@ Thankfully this isn't too bad to implement in hyperscript, so let's take a look 
 </button>
 ----
 
-Now we have a "`Cancel`" button that is disabled only when a request from the `contacts-btn` button is in flight.  And
+Now we have a "`Cancel`" button that is enabled only when a request from the `contacts-btn` button is in flight.  And
 we are taking advantage of htmx-generated and handled events, as well as the event-friendly syntax of hyperscript, to
 make it happen.  Slick!
 

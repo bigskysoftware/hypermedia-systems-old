@@ -782,7 +782,7 @@ drawbacks (it is not nearly as isolated as client-side components).
 Overall, a properly factored server-side hypermedia application can be extremely DRY.
 ****
 
-==== Handling the post to /contacts/<contact_id>
+==== Handling the post to /contacts/<contact_id>/edit
 
 Next we need to handle the HTTP `POST` request that the form in our `edit.html` template submits.  We will declare
 another route that handles the same path as the `GET` above.

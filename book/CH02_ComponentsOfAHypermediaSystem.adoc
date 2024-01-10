@@ -167,10 +167,10 @@ There are many methods available in HTTP; the ones of most practical importance 
   A POST request submits data to the specified resource. This will often result in a mutation of state on the server.
 
 `PUT`::
-  A PUT request replaces the data of the specified resource. This results in a mutation of state on the server.
+  A PUT request replaces all the data of the specified resource. This results in a mutation of state on the server.
 
 `PATCH`::
-  A PATCH request replaces the data of the specified resource. This results in a mutation of state on the server.
+  A PATCH request replaces some of the data of the specified resource. This results in a mutation of state on the server.
 
 `DELETE`::
   A DELETE request deletes the specified resource. This results in a mutation of state on the server.

@@ -128,7 +128,7 @@ handler for the root URL in our web application.
 The handler in this case is dead simple, it just returns a string, "`Hello World!`", to the client.  This isn't
 hypermedia yet, but a browser will render it just fine:
 
-.Hello Flask!
+.Hello World!
 image::figure_2-1_hello_world.png[Browser window, large text: Hello World!]
 
 Great, there's our first step into Flask, showing the core technique we are going to use to respond to HTTP requests:

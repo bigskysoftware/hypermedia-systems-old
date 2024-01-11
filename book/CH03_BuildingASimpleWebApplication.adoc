@@ -243,7 +243,7 @@ The `Contact` Python class we're using is the "`domain
 model`" or just "`model`" class for our application, providing the "`business logic`" around the management of Contacts.
 
 (((Contact.app, model)))
-It could be working with a database (it isn't) or a simple flat file (it is), but we're going skip over the internal details of the model. Think of it as a "`normal`" domain model class, with methods on it that act in a "`normal`" manner.
+It could be working with a database (it isn't) or a simple flat file (it is), but we're going to skip over the internal details of the model. Think of it as a "`normal`" domain model class, with methods on it that act in a "`normal`" manner.
 
 We will treat `Contact` as a _resource_, and focus on how to effectively provide hypermedia representations
 of that resource to clients.

@@ -626,7 +626,7 @@ _The HTTP response from the server is expected to be in HTML format, not JSON_.
 
 An HTTP response to this htmx-driven request might look something like this:
 
-.JSON
+.HTML
 [source,html]
 ----
 <details>

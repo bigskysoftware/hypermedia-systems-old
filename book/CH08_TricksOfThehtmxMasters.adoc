@@ -276,6 +276,7 @@ both buttons in a `div` and eliminate the redundant `hx-target` specification by
 Here is our updated code:
 
 (((hx-sync, example)))
+
 .Syncing two buttons
 [source, html]
 ----

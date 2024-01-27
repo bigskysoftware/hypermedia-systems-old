@@ -128,6 +128,7 @@ Note that by splitting these two APIs apart, you reduce the pressure to constant
 This is the key advantage of splitting your Data API from your Hypermedia API.
 
 ((("REST API")))
+
 .JSON Data APIs vs JSON "`REST`" APIs
 ****
 Unfortunately, today, for historical reasons, what we are calling JSON Data APIs are often referred to as

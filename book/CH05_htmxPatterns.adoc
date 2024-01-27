@@ -336,7 +336,7 @@ In the interest of keeping our application simple, we are going to omit that mor
 
 We have updated the client-side code (if HTML can be considered code) so it now issues a `DELETE` request to the appropriate
 URL, but we still have some work to do.  Since we updated both the route and the HTTP method we are using, we are going to
-need to update the server-side implementation as well to handle this new HTTP Request.
+need to update the server-side implementation as well to handle this new HTTP request.
 
 .The original server-side code for deleting a contact
 [source, python]

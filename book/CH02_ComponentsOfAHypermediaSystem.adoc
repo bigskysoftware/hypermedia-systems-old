@@ -760,7 +760,7 @@ would see the new HTML, display it properly, and allow users to select whatever 
 again, the uniform interface of REST has proven to be extremely flexible: despite a potentially radically new layout
 for our hypermedia API, clients continue to work.
 
-An important fact emerges from this:  due to this flexibility, hypermedia APIs _do not have the versioning headaches
+An important fact emerges from this:  due to this flexibility, hypermedia APIs _have fewer of the versioning headaches
 that JSON Data APIs do_.
 
 Once a Hypermedia-Driven Application has been "`entered into`" (that is, loaded through some entry point URL), all functionality
@@ -768,6 +768,11 @@ and resources are surfaced through self-describing messages.  Therefore, there i
 the client: the client simply renders the hypermedia (in this case HTML) and everything works out.  When a change occurs,
 there is no need to create a new version of the API: clients simply retrieve updated hypermedia, which encodes the new
 operations and resources in it, and display it to users to work with.
+
+_Caveat:_ there are still some temporary state inconsistencies possible when the updated hypermedia is only a fragment
+that is integrated into the existing state representation on the client, because the fragment might have implicit dependencies
+on the existing state on the client that could happen to not being satisfied after a server application update.
+There are ways to mitigate these cases.
 
 === Layered System
 

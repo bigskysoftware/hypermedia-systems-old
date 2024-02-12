@@ -105,7 +105,7 @@ and expect certain end points to behave in certain ways.
 | There is no need to remain stable over time: all URLs are discovered via HTML responses, so you can be much more aggressive in changing the shape of a hypermedia API.
 
 | It must be versioned: related to the first point, when you do make a major change, you need to version the API so that clients that are using the old API continue to work.
-| Versioning is not an issue, another strength of the hypermedia approach.
+| Versioning is less of an issue, another strength of the hypermedia approach. There are still some cases where clients can get into an inconsistent state when having an older application version open in the browser and fetching an html partial from a newer application version. The fetched endpoint might no longer exist, or return a html fragment that has dependencies on the surrounding DOM like referencing not existing `id`s or css classes. There are ways to mitigate these issues, and they happen less often because of the MPA approach where the full page is often reloaded.
 
 | It should be rate limited: since data APIs are often used by other clients, not just your own internal web application, requests should be rate limited, often by user, in order to avoid a single client overloading the system.
 | Rate limiting probably isn't as important beyond the prevention of Distributed Denial of Service (DDoS) attacks.

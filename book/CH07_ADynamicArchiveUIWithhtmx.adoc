@@ -353,7 +353,7 @@ Let's update our progress bar to have the proper ARIA roles and values:
 <div class="progress">
     <div class="progress-bar"
          role="progressbar" <1>
-         aria-valuenow="{{ archiver.progress() * 100}}}" <2>
+         aria-valuenow="{{ archiver.progress() * 100}}" <2>
          style="width:{{ archiver.progress() * 100 }}%"></div> <1>
 </div>
 ----

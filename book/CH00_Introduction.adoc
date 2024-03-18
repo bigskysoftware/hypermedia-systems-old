@@ -135,7 +135,7 @@ grown up knowing nothing but Single Page Applications and the frameworks that ar
 In particular, many young web developers began their careers by building React.js applications that interact with a Node server using a
 JSON API; they may never have learned about hypermedia as a system at all.
 
-This is a tragedy, and, frankly, a failure on the part of the thought leaders in the web development community to properly
+This is a tragedy, and, frankly, a failure on the part of the web development community to properly
 communicate and advocate for the hypermedia approach.
 
 Hypermedia was a great idea!  It still is!

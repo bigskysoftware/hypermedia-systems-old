@@ -187,9 +187,9 @@ These methods _roughly_ line up with the "`Create/Read/Update/Delete`" or CRUD p
 ****
 While HTTP Actions correspond roughly to CRUD, they are not the same. The technical specifications for these methods make
 no such connection, and are often somewhat difficult to read.  Here, for example, is the documentation
-on the distinction between a `POST` and a `PUT` from https://www.rfc-editor.org/rfc/rfc2616[RFC-2616].
+on the distinction between a `POST` and a `PUT` from https://www.rfc-editor.org/rfc/rfc9110[RFC-9110].
 
-[quote, RFC-2616, https://www.rfc-editor.org/rfc/rfc2616#section-9.6]
+[quote, RFC-9110, https://www.rfc-editor.org/rfc/rfc9110#section-9.3.4]
 ____
 The target resource in a POST request is intended to handle the enclosed representation according to the
 resource's own semantics, whereas the enclosed representation in a PUT request is defined as replacing the state of the

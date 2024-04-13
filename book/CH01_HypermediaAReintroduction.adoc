@@ -158,7 +158,7 @@ The system that Berners-Lee, Fielding and many others had created revolved aroun
 hypermedia, used to publish (at first) academic documents.  These documents were linked together via anchor tags which
 created _hyperlinks_ between them, allowing users to quickly navigate between documents.
 
-When ((HTML, 2.0)) was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e., hyperlink) as a
+When ((HTML 2.0)) was released, it introduced the notion of the `form` tag, joining the anchor tag (i.e., hyperlink) as a
 second hypermedia control.  The introduction of the form tag made building _applications_ on the web viable by providing
 a mechanism for _updating_ resources, rather than just reading them.
 

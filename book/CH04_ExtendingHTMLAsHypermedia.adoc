@@ -534,7 +534,7 @@ The default triggering event depends on the element type, and should be fairly i
 
 To demonstrate how `hx-trigger` works, consider the following situation: we want to trigger the request
 on our button when the mouse enters it.  Now, this is certainly not a _good_ UX pattern, but bear with us: we are just
-using this an example.
+using this as an example.
 
 To respond to a mouse entering the button, we would add the following attribute to our button:
 

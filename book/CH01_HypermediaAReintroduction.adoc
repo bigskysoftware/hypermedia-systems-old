@@ -543,7 +543,7 @@ was describing in his dissertation.
 These applications tend to be clunky, but they work reasonably well.  Many web developers and teams choose to accept the
 limitations of plain HTML in the interest of simplicity and reliability.
 
-Rich Harris, creator of Svelte.js, a popular SPA library, and a thought-leader on the SPA side of the debate, has proposed a mix
+Rich Harris, creator of Svelte.js, a popular SPA library, and an advocate on the SPA side of the debate, has proposed a mix
 of this older MPA style and the newer SPA style.  Harris calls this approach to building web applications "`transitional,`" in that
 it attempts to blend the MPA approach and the newer SPA approach into a coherent whole.  (This is somewhat
 similar to the "`transitional`" trend in architecture, which combines traditional and modern architectural styles.)

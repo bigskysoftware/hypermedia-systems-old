@@ -1,8 +1,6 @@
-# !!!!!!!!!!!!!!!!!!!!!!! ARCHIVED !!!!!!!!!!!!!!!!!!!!!!!
-# THIS IS AN OLD, ARCHIVED VERSION OF THE BOOK PLEASE SEE
-# https://github.com/bigskysoftware/hypermedia-systems-book
-# FOR THE LATEST VERSION
-# !!!!!!!!!!!!!!!!!!!!!!! ARCHIVED !!!!!!!!!!!!!!!!!!!!!!!
+# !!!!!!!!!!!! ARCHIVED !!!!!!!!!!!!
+# THIS IS AN OLD, ARCHIVED VERSION OF THE BOOK PLEASE SEE https://github.com/bigskysoftware/hypermedia-systems-book FOR THE LATEST VERSION
+# !!!!!!!!!!!! ARCHIVED !!!!!!!!!!!!
 
 # Hypermedia Systems
 
